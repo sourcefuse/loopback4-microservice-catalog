@@ -1,0 +1,28 @@
+{
+  "name": "AuthService",
+  "connector": "rest",
+  "baseURL": "",
+  "crud": true,
+  "options": {
+    "baseUrl": "AUTH_SERVICE_URL",
+    "headers": {
+      "accept": "application/json",
+      "content-type": "application/json"
+    }
+  },
+  "operations": [
+    {
+      "template": {
+        "method": "GET",
+        "url": "/auth/me",
+        "headers": {
+          "content-type": "application/json",
+          "Authorization": "{token}"
+        }
+      },
+      "functions": {
+        "getme": ["token"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@sourcefuse-service-catalog/root",
+  "private": false,
+  "devDependencies": {
+    "lerna": "^3.16.2"
+  }
+}
