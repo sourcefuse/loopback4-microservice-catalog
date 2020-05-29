@@ -2,8 +2,10 @@ import {Getter, inject} from '@loopback/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {VideochatDbDataSource} from '../datasources/videochat-db.datasource';
 import {VideoChatSession} from '../models/video-chat-session.model';
-import {IAuthUserWithPermissions, DefaultUserModifyCrudRepository} from '@sourcefuse-service-catalog/core';
-
+import {
+  IAuthUserWithPermissions,
+  DefaultUserModifyCrudRepository,
+} from '@sourcefuse-service-catalog/core';
 
 export class VideoChatSessionRepository extends DefaultUserModifyCrudRepository<
   VideoChatSession,

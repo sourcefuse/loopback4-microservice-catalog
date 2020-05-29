@@ -1,14 +1,14 @@
 import {Class, Model, Repository} from '@loopback/repository';
-import { VideoChatArchiveController } from './controllers/video-chat-archive.controller';
-import { VideoChatSessionController } from './controllers/video-chat-session.controller';
-import { VonageProvider } from './providers/vonage/vonage.provider';
-import { AuditLogs } from './models/audit-logs.model';
-import { VideoChatSession } from './models/video-chat-session.model';
-import { VideoChatSessionRepository } from './repositories/video-chat-session.repository';
-import { AuditLogsRepository } from './repositories/audit-logs.repository';
+import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
+import {VideoChatSessionController} from './controllers/video-chat-session.controller';
+import {VonageProvider} from './providers/vonage/vonage.provider';
+import {AuditLogs} from './models/audit-logs.model';
+import {VideoChatSession} from './models/video-chat-session.model';
+import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
+import {AuditLogsRepository} from './repositories/audit-logs.repository';
 
-import { RestApplication } from '@loopback/rest';
-import { IVideoChatServiceConfig } from './types';
+import {RestApplication} from '@loopback/rest';
+import {IVideoChatServiceConfig} from './types';
 import {
   Binding,
   Component,
@@ -17,7 +17,7 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import { VideoChatBindings } from './keys';
+import {VideoChatBindings} from './keys';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -44,16 +44,12 @@ export class VideoConfServiceComponent implements Component {
     // Mount core component
     this.application.component(CoreComponent);
 
-
     if (!(this.videChatConfig && this.videChatConfig.useCustomSequence)) {
       // Mount default sequence if needed
       this.setupSequence(this.bindings);
     }
 
-    this.repositories = [
-      AuditLogsRepository,
-      VideoChatSessionRepository,
-    ];
+    this.repositories = [AuditLogsRepository, VideoChatSessionRepository];
 
     this.models = [AuditLogs, VideoChatSession];
 
@@ -61,10 +57,7 @@ export class VideoConfServiceComponent implements Component {
       [VideoChatBindings.VideoChatProvider.key]: VonageProvider,
     };
 
-    this.controllers = [
-      VideoChatArchiveController,
-      VideoChatSessionController,
-    ];
+    this.controllers = [VideoChatArchiveController, VideoChatSessionController];
   }
 
   providers?: ProviderMap = {};
@@ -115,5 +108,4 @@ export class VideoConfServiceComponent implements Component {
     );
     this.application.component(AuthorizationComponent);
   }
-
 }
