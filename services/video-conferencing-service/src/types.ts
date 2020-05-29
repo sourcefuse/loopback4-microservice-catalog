@@ -3,7 +3,7 @@ import {
 } from '@sourcefuse-service-catalog/core';
 
 export interface IVideoChatServiceConfig extends IServiceConfig {
-  // to be filled later
+  //TODO
 }
 
 /**

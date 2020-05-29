@@ -21,13 +21,11 @@ export function getDate(dateString: string) {
 }
 
 export function getSessionOptions(sessionOptions: Partial<SessionOptions>) {
-  const data = Object.assign(
+  return Object.assign(
     {
       meetingLink: 'dummy-meeting-link',
       expireTime: getDate('October 01, 2020 00:00:00')
     },
     sessionOptions
-  )
-
-  return data;
+  );
 }
