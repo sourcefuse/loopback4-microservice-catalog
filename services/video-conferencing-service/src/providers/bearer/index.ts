@@ -8,8 +8,7 @@ export class BearerTokenVerifyProvider
 
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
-      const user = verify(token, 'secret') as IAuthUserWithPermissions;
-      return user;
+      return verify(token, 'secret') as IAuthUserWithPermissions;
     };
   }
 }
