@@ -1,56 +1,75 @@
+
+import {inject} from '@loopback/core';
+import {del, get, param} from '@loopback/rest';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {CONTENT_TYPE, STATUS_CODE} from '../enums/index copy';
+import {PermissionKeys} from '../enums/permission-keys.enum';
+import { VideoChatInterface } from '../types';
+import { VideoChatBindings } from '../keys';
+
 export class VideoChatArchiveController {
-  constructor() {}
+  constructor(
+    @inject(VideoChatBindings.VideoChatProvider)
+    private readonly videoChatProvider: VideoChatInterface,
+  ) {}
 
-  // @authorize(['CreateArchive'])
-  // @post('/archive', {
-  //   responses: {
-  //     [STATUS_CODE.OK]: {
-  //       content: {
-  //         [CONTENT_TYPE.TEXT]: {schema: getModelSchemaRef(VideoChatSession)},
-  //       },
-  //     },
-  //   },
-  // })
-  // async createArchive(
-  //   @requestBody()
-  //   meetingOptions: MeetingOptions,
-  // ): Promise<string> {
-  //   return 'meetingLink'; // return this.videoChatProvider.getMeetingLink(meetingOptions);
-  // }
+  @authorize([PermissionKeys.GetArchives])
+  @authenticate(STRATEGY.BEARER)
+  @get('/archives/{archiveId}', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'object',
+            },
+          },
+        },
+      },
+    },
+  })
+  async getArchive(@param.path.string('archiveId') archiveId: string | null) {
+    return this.videoChatProvider.getArchives(archiveId);
+  }
 
-  // @authorize(['ViewSessionToken'])
-  // @post('/session/{meetingLink}/token', {
-  //   responses: {
-  //     [STATUS_CODE.OK]: {
-  //       description: 'Notification model instance',
-  //       content: {
-  //         [CONTENT_TYPE.TEXT]: {schema: getModelSchemaRef(VideoChatSession)},
-  //       },
-  //     },
-  //   },
-  // })
-  // async getMeetingToken(
-  //   @requestBody()
-  //   sessionOptions: SessionOptions,
-  //   @param.path.string('meetingLink') meetingLink: string,
-  // ): Promise<SessionResponse> {
-  //   return {sessionId: 'session_one', token: 'secret_token'}; // return this.videoChatProvider.getToken(sessionOptions);
-  // }
+  @authorize([PermissionKeys.GetArchives])
+  @authenticate(STRATEGY.BEARER)
+  @get('/archives', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'object',
+            },
+          },
+        },
+      },
+    },
+  })
+  async getArchives() {
+    return this.videoChatProvider.getArchives(null);
+  }
 
-  // @authorize(['UpdateSession'])
-  // @patch('/session/{meetingLink}/end', {
-  //   responses: {
-  //     [STATUS_CODE.OK]: {
-  //       description: 'Notification model instance',
-  //       content: {
-  //         [CONTENT_TYPE.TEXT]: {schema: getModelSchemaRef(VideoChatSession)},
-  //       },
-  //     },
-  //   },
-  // })
-  // async endSession(
-  //   @requestBody()
-  //   sessionOptions: SessionOptions,
-  //   @param.path.string('meetingLink') meetingLink: string,
-  // ): Promise<void> {}
+  @authorize([PermissionKeys.DeleteArchive])
+  @authenticate(STRATEGY.BEARER)
+  @del('/archives/{archiveId}', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.TEXT]: {
+            schema: {
+              type: 'text',
+            },
+          },
+        },
+      },
+    },
+  })
+  async deleteArchive(
+    @param.path.string('archiveId') archiveId: string,
+  ): Promise<void> {
+    await this.videoChatProvider.getArchives(archiveId);
+  }
 }
