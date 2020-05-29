@@ -1,5 +1,6 @@
 import {model, property} from '@loopback/repository';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
+
 
 @model({
   name: 'video-session-details',
