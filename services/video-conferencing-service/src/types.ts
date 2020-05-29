@@ -128,8 +128,9 @@ export interface MeetingResponse {
  * @param expireTime set the ttl (time to live) for a session created For twilio, it is max 4 hours.
  */
 export interface SessionOptions {
-  meetingId: string;
+  meetingLink: string;
   expireTime: Date;
+  data?: string;
 }
 
 
