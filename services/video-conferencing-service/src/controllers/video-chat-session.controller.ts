@@ -10,7 +10,6 @@ import {
   SessionResponse
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
-import {} from '../types';
 import { VideoChatBindings } from '../keys';
 
 export class VideoChatSessionController {
@@ -35,8 +34,7 @@ export class VideoChatSessionController {
     @requestBody()
     meetingOptions: MeetingOptions,
   ): Promise<string> {
-    // calls getMeetingLink() method, which will create a session based on options, and return meeting
-    return 'meetingLink'; // return this.videoChatProvider.getMeetingLink(meetingOptions);
+    return 'meetingLink';
   }
 
   @authorize(['*'])
@@ -59,7 +57,7 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLink') meetingLink: string,
   ): Promise<SessionResponse> {
-    return {sessionId: 'session_one', token: 'secret_token'}; // return this.videoChatProvider.getToken(sessionOptions);
+    return {sessionId: 'session_one', token: 'secret_token'}; 
   }
 
   @authorize(['*'])
