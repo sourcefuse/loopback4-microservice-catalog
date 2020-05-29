@@ -11,6 +11,7 @@ import {
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
 import {} from '../types';
+import { VideoChatBindings } from '../keys';
 
 export class VideoChatSessionController {
   constructor(
@@ -20,7 +21,7 @@ export class VideoChatSessionController {
     private readonly videoChatProvider: VideoChatInterface,
   ) {}
 
-  @authorize(['CreateSession'])
+  @authorize(['*'])
   @post('/session', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -38,7 +39,7 @@ export class VideoChatSessionController {
     return 'meetingLink'; // return this.videoChatProvider.getMeetingLink(meetingOptions);
   }
 
-  @authorize(['ViewSessionToken'])
+  @authorize(['*'])
   @post('/session/{meetingLink}/token', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -61,7 +62,7 @@ export class VideoChatSessionController {
     return {sessionId: 'session_one', token: 'secret_token'}; // return this.videoChatProvider.getToken(sessionOptions);
   }
 
-  @authorize(['UpdateSession'])
+  @authorize(['*'])
   @patch('/session/{meetingLink}/end', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
