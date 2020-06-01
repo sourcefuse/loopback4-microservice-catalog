@@ -13,6 +13,9 @@ import {VideoChatSessionRepository} from '../repositories/video-chat-session.rep
 import {VideoChatBindings} from '../keys';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import { PermissionKeys } from '../enums/permission-keys.enum';
+import cryptoRandomString = require('crypto-random-string');
+import { VideoChatSession } from '../models';
+
 
 export class VideoChatSessionController {
   constructor(
@@ -37,7 +40,22 @@ export class VideoChatSessionController {
     @requestBody()
     meetingOptions: MeetingOptions,
   ): Promise<string> {
-    return 'meetingLink';
+    const meetingResp = await this.videoChatProvider.getMeetingLink(
+      meetingOptions,
+    );
+    
+    const meetingLink = cryptoRandomString({length: 10, type: 'url-safe'});
+
+    const videoSessionDetail = new VideoChatSession({
+      sessionId: meetingResp.sessionId,
+      meetingLink,
+      isScheduled: meetingOptions.isScheduled,
+      scheduleTime: meetingOptions.scheduleTime,
+    });
+
+    await this.videoChatSessionRepository.save(videoSessionDetail);
+
+    return meetingLink;
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -61,7 +79,7 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLink') meetingLink: string,
   ): Promise<SessionResponse> {
-    return {sessionId: 'session_one', token: 'secret_token'};
+    return this.videoChatProvider.getToken(sessionOptions);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -77,5 +95,7 @@ export class VideoChatSessionController {
     @requestBody()
     sessionOptions: SessionOptions,
     @param.path.string('meetingLink') meetingLink: string,
-  ): Promise<void> {}
+  ): Promise<void> {
+    return this.videoChatProvider.stopMeeting(meetingLink);
+  }
 }

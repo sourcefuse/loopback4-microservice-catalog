@@ -20,10 +20,7 @@ import {
  *
  */
 export interface VonageMeetingOptions extends MeetingOptions {
-  mediaMode?: VonageEnums.MediaMode;
-  archiveMode?: VonageEnums.ArchiveMode;
-  isScheduled: boolean;
-  scheduleTime?: Date;
+  endToEndEncryption?: boolean;
 }
 
 export interface VonageMeetingResponse extends MeetingResponse {
@@ -39,10 +36,7 @@ export interface VonageMeetingResponse extends MeetingResponse {
  * @param data optional string parameter if required for successfully creating session
  */
 export interface VonageSessionOptions extends SessionOptions {
-  meetingId: string;
   role?: VonageEnums.Role;
-  expireTime: Date;
-  data?: string;
 }
 /**
  * @interface VonageS3TargetOptions
@@ -85,9 +79,7 @@ export interface VonageAzureTargetOptions extends AzureTargetOptions {
  * @param hasAudio (Boolean) — (Optional) Whether the archive will record audio (true, the default) or not (false).
  * If you set both @param hasAudio and @param hasVideo to false, it will result in an error.
  * @param layout (Object) — Optional. Specify this to assign the initial layout type for the archive. This applies only to composed archives.
- *   @param type default is bestFit. Valid values for the layout property are "bestFit" (best fit),
- *             "custom" (custom), "horizontalPresentation" (horizontal presentation),
- *             "pip" (picture-in-picture), and "verticalPresentation" (vertical presentation))
+ *   @param type default is bestFit. Valid values for the layout property are "bestFit" (best fit), "custom" (custom), "horizontalPresentation" (horizontal presentation), "pip" (picture-in-picture), and "verticalPresentation" (vertical presentation))
  *   @param stylesheet if you specify a "custom" @param type, set the stylesheet property of the layout object to the stylesheet.
  * @param name (String) — (Optional) The name of the archive (for your own identification)
  * @param outputMode String) — (Optional) Whether all streams in the archive are recorded to a single file
@@ -164,7 +156,7 @@ export interface VonageVideoChat extends VideoChatInterface {
    */
   getToken(options: SessionOptions): Promise<SessionResponse>;
   /**
-   * @function startArchive store vonage/twilio/agora archives in cloud/s3/azure
+   * @function startArchive start vonage archives in cloud/s3/azure
    *
    * @param archiveOptions: object with type @interface VonageArchive
    * @returns Promise if resolved, returns archiveId and success message

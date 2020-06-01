@@ -38,7 +38,7 @@ export class VideoChatSession extends UserModifiableEntity {
     type: 'date',
     name: 'schedule_time',
   })
-  scheduleTime?: string;
+  scheduleTime?: Date;
 
   @property({
     type: 'boolean',

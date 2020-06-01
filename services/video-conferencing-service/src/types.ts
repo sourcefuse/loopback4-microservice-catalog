@@ -54,7 +54,8 @@ export interface VideoChatInterface {
  */
 export interface SessionResponse {
   sessionId: string;
-  token: string;
+  token?: string;
+  error?: string;
 }
 
 /**
@@ -113,6 +114,7 @@ export interface AzureTargetOptions {
  *
  */
 export interface MeetingOptions {
+  enableArchiving?: boolean;
   isScheduled: boolean;
   scheduleTime?: Date;
 }
