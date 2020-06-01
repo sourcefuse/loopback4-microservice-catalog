@@ -1,5 +1,10 @@
 import {HttpErrors} from '@loopback/rest';
-import {createStubInstance, expect, sinon, StubbedInstanceWithSinonAccessor} from '@loopback/testlab';
+import {
+  createStubInstance,
+  expect,
+  sinon,
+  StubbedInstanceWithSinonAccessor,
+} from '@loopback/testlab';
 import {getDate, getSessionOptions, getVideoChatSession} from '../../helpers';
 import {VideoChatSessionController} from './../../../controllers';
 import {VonageProvider} from './../../../providers/vonage';
@@ -121,7 +126,9 @@ describe('Session APIs', () => {
     });
 
     it('denies if the expire time is invalid', async () => {
-      const sessionOptions = getSessionOptions({expireTime: new Date('Invalid')});
+      const sessionOptions = getSessionOptions({
+        expireTime: new Date('Invalid'),
+      });
 
       const error = await controller
         .getMeetingToken(sessionOptions, meetingLink)
