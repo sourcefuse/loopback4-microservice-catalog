@@ -7,10 +7,10 @@ import {
   MeetingOptions,
   SessionOptions,
   VideoChatInterface,
-  SessionResponse
+  SessionResponse,
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
-import { VideoChatBindings } from '../keys';
+import {VideoChatBindings} from '../keys';
 
 export class VideoChatSessionController {
   constructor(
@@ -57,7 +57,7 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLink') meetingLink: string,
   ): Promise<SessionResponse> {
-    return {sessionId: 'session_one', token: 'secret_token'}; 
+    return {sessionId: 'session_one', token: 'secret_token'};
   }
 
   @authorize(['*'])

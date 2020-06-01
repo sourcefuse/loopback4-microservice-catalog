@@ -1,9 +1,8 @@
-import {
-  IServiceConfig,
-} from '@sourcefuse-service-catalog/core';
+import {IServiceConfig} from '@sourcefuse-service-catalog/core';
 
 export interface IVideoChatServiceConfig extends IServiceConfig {
-  //TODO
+  // TODO
+  // will be filled later
 }
 
 /**
@@ -132,5 +131,3 @@ export interface SessionOptions {
   expireTime: Date;
   data?: string;
 }
-
-

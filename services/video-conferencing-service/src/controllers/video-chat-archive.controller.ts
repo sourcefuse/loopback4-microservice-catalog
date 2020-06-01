@@ -1,12 +1,11 @@
-
 import {inject} from '@loopback/core';
 import {del, get, param} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {CONTENT_TYPE, STATUS_CODE} from '../enums/index copy';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import { VideoChatInterface } from '../types';
-import { VideoChatBindings } from '../keys';
+import {VideoChatInterface} from '../types';
+import {VideoChatBindings} from '../keys';
 
 export class VideoChatArchiveController {
   constructor(

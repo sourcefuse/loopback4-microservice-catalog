@@ -1,4 +1,4 @@
-import { VideoChatInterface, IVideoChatServiceConfig } from './types';
+import {VideoChatInterface, IVideoChatServiceConfig} from './types';
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourcefuse-service-catalog/core';
 

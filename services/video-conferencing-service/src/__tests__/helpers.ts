@@ -24,8 +24,8 @@ export function getSessionOptions(sessionOptions: Partial<SessionOptions>) {
   return Object.assign(
     {
       meetingLink: 'dummy-meeting-link',
-      expireTime: getDate('October 01, 2020 00:00:00')
+      expireTime: getDate('October 01, 2020 00:00:00'),
     },
-    sessionOptions
+    sessionOptions,
   );
 }
