@@ -1,0 +1,5 @@
+{
+  "sql-file": true,
+  "configFile": "migrations/database.json",
+  "force-exit": "true"
+}
