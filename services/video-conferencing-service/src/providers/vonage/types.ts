@@ -79,7 +79,9 @@ export interface VonageAzureTargetOptions extends AzureTargetOptions {
  * @param hasAudio (Boolean) — (Optional) Whether the archive will record audio (true, the default) or not (false).
  * If you set both @param hasAudio and @param hasVideo to false, it will result in an error.
  * @param layout (Object) — Optional. Specify this to assign the initial layout type for the archive. This applies only to composed archives.
- *   @param type default is bestFit. Valid values for the layout property are "bestFit" (best fit), "custom" (custom), "horizontalPresentation" (horizontal presentation), "pip" (picture-in-picture), and "verticalPresentation" (vertical presentation))
+ *   @param type default is bestFit. Valid values for the layout property are "bestFit" (best fit), 
+ *   "custom" (custom), "horizontalPresentation" (horizontal presentation), 
+ *   "pip" (picture-in-picture), and "verticalPresentation" (vertical presentation))
  *   @param stylesheet if you specify a "custom" @param type, set the stylesheet property of the layout object to the stylesheet.
  * @param name (String) — (Optional) The name of the archive (for your own identification)
  * @param outputMode String) — (Optional) Whether all streams in the archive are recorded to a single file

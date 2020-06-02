@@ -2,7 +2,7 @@ import { repository } from '@loopback/repository';
 import {Provider} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
-import {SessionResponse, SessionOptions} from '../../types';
+import {SessionResponse} from '../../types';
 import {VonageVideoChat, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions, VonageArchiveResponse, VonageArchiveList} from './types';
 import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
 import { VideoChatSessionRepository } from '../../repositories';
@@ -39,6 +39,8 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         } else if (meetingOptions.enableArchiving) {
           mediaMode = VonageEnums.MediaMode.Routed;
           archiveMode = VonageEnums.ArchiveMode.Always;
+        } else {
+          mediaMode = VonageEnums.MediaMode.Routed;
         }
 
         const sessionCreationOptions = {
@@ -54,12 +56,10 @@ export class VonageProvider implements Provider<VonageVideoChat> {
                 if (err) {
                   reject(err);
                 }
-                if (!session) {
-                  console.log('Sessions not fomed');
+                if (!session) {                  
                   throw new HttpErrors.BadRequest('Error creating session');
                 } else {
-                  sessionId = session.sessionId;
-                  console.log('Session ID: ' + sessionId);
+                  sessionId = session.sessionId;                  
                   resolve(sessionId);
                 }
               },
@@ -74,8 +74,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             archiveMode: VonageEnums.ArchiveMode.Always,
             sessionId: id,
           };
-        } catch (err) {
-          console.log(err);
+        } catch (err) {          
           throw new HttpErrors.BadRequest('Error creating session');
         }
       },
