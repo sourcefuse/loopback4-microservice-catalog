@@ -22,6 +22,8 @@ import {Theme} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {ThemeRepository} from '../repositories';
 
+const basePath = '/themes';
+
 export class ThemeController {
   constructor(
     @repository(ThemeRepository)
@@ -32,7 +34,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateTheme])
-  @post('/themes', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Theme model instance',
@@ -59,7 +61,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewTheme])
-  @get('/themes/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Theme model count',
@@ -75,7 +77,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewTheme])
-  @get('/themes', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Theme model instances',
@@ -98,7 +100,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateTheme])
-  @patch('/themes', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Theme PATCH success count',
@@ -124,7 +126,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewTheme])
-  @get('/themes/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Theme model instance',
@@ -148,7 +150,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateTheme])
-  @patch('/themes/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Theme PATCH success',
@@ -173,7 +175,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateTheme])
-  @put('/themes/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Theme PUT success',
@@ -191,7 +193,7 @@ export class ThemeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteTheme])
-  @del('/themes/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Theme DELETE success',

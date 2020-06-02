@@ -22,6 +22,8 @@ import {Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
 
+const basePath = '/events';
+
 export class EventController {
   constructor(
     @repository(EventRepository)
@@ -32,7 +34,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateEvent])
-  @post('/events', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Event model instance',
@@ -59,7 +61,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewEvent])
-  @get('/events/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Event model count',
@@ -75,7 +77,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewEvent])
-  @get('/events', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Event model instances',
@@ -98,7 +100,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateEvent])
-  @patch('/events', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Event PATCH success count',
@@ -124,7 +126,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewEvent])
-  @get('/events/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Event model instance',
@@ -148,7 +150,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateEvent])
-  @patch('/events/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Event PATCH success',
@@ -173,7 +175,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateEvent])
-  @put('/events/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Event PUT success',
@@ -191,7 +193,7 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteEvent])
-  @del('/events/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Event DELETE success',

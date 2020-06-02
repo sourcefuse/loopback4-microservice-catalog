@@ -6,6 +6,8 @@ import {Attachment, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
 
+const basePath = '/attachments/{id}/event';
+
 export class AttachmentEventController {
   constructor(
     @repository(AttachmentRepository)
@@ -16,7 +18,7 @@ export class AttachmentEventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewEvent])
-  @get('/attachments/{id}/event', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Event belonging to Attachment',

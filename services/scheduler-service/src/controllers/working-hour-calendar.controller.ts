@@ -6,6 +6,8 @@ import {Calendar, WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
 
+const basePath = '/working-hours/{id}/calendar';
+
 export class WorkingHourCalendarController {
   constructor(
     @repository(WorkingHourRepository)
@@ -16,7 +18,7 @@ export class WorkingHourCalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewCalendar])
-  @get('/working-hours/{id}/calendar', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Calendar belonging to WorkingHour',

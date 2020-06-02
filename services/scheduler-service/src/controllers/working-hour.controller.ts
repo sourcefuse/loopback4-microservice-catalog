@@ -22,6 +22,8 @@ import {WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
 
+const basePath = '/working-hours';
+
 export class WorkingHourController {
   constructor(
     @repository(WorkingHourRepository)
@@ -32,7 +34,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateWorkingHour])
-  @post('/working-hours', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'WorkingHour model instance',
@@ -59,7 +61,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewWorkingHour])
-  @get('/working-hours/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'WorkingHour model count',
@@ -77,7 +79,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewWorkingHour])
-  @get('/working-hours', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of WorkingHour model instances',
@@ -102,7 +104,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateWorkingHour])
-  @patch('/working-hours', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'WorkingHour PATCH success count',
@@ -128,7 +130,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewWorkingHour])
-  @get('/working-hours/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'WorkingHour model instance',
@@ -152,7 +154,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateWorkingHour])
-  @patch('/working-hours/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'WorkingHour PATCH success',
@@ -177,7 +179,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateWorkingHour])
-  @put('/working-hours/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'WorkingHour PUT success',
@@ -195,7 +197,7 @@ export class WorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteWorkingHour])
-  @del('/working-hours/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'WorkingHour DELETE success',

@@ -21,6 +21,8 @@ import {Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
 
+const basePath = '/events/{id}/attendees';
+
 export class EventAttendeeController {
   constructor(
     @repository(EventRepository) protected eventRepository: EventRepository,
@@ -30,7 +32,7 @@ export class EventAttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttendee])
-  @get('/events/{id}/attendees', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Event has many Attendee',
@@ -53,7 +55,7 @@ export class EventAttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateAttendee])
-  @post('/events/{id}/attendees', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Event model instance',
@@ -85,7 +87,7 @@ export class EventAttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttendee])
-  @patch('/events/{id}/attendees', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Event.Attendee PATCH success count',
@@ -113,7 +115,7 @@ export class EventAttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteAttendee])
-  @del('/events/{id}/attendees', {
+  @del(basePath, {
     responses: {
       '200': {
         description: 'Event.Attendee DELETE success count',

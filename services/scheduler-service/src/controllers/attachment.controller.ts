@@ -22,6 +22,8 @@ import {Attachment} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
 
+const basePath = '/attachments';
+
 export class AttachmentController {
   constructor(
     @repository(AttachmentRepository)
@@ -32,7 +34,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateAttachment])
-  @post('/attachments', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Attachment model instance',
@@ -59,7 +61,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttachment])
-  @get('/attachments/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Attachment model count',
@@ -77,7 +79,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttachment])
-  @get('/attachments', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Attachment model instances',
@@ -102,7 +104,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttachment])
-  @patch('/attachments', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Attachment PATCH success count',
@@ -128,7 +130,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttachment])
-  @get('/attachments/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Attachment model instance',
@@ -152,7 +154,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttachment])
-  @patch('/attachments/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Attachment PATCH success',
@@ -177,7 +179,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttachment])
-  @put('/attachments/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Attachment PUT success',
@@ -195,7 +197,7 @@ export class AttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteAttachment])
-  @del('/attachments/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Attachment DELETE success',

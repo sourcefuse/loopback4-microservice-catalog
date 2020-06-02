@@ -22,6 +22,8 @@ import {Settings} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SettingsRepository} from '../repositories';
 
+const basePath = '/settings';
+
 export class SettingsController {
   constructor(
     @repository(SettingsRepository)
@@ -32,7 +34,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateSettings])
-  @post('/settings', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Settings model instance',
@@ -59,7 +61,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSettings])
-  @get('/settings/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Settings model count',
@@ -75,7 +77,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSettings])
-  @get('/settings', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Settings model instances',
@@ -100,7 +102,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSettings])
-  @patch('/settings', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Settings PATCH success count',
@@ -126,7 +128,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSettings])
-  @get('/settings/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Settings model instance',
@@ -150,7 +152,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSettings])
-  @patch('/settings/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Settings PATCH success',
@@ -175,7 +177,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSettings])
-  @put('/settings/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Settings PUT success',
@@ -193,7 +195,7 @@ export class SettingsController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteSettings])
-  @del('/settings/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Settings DELETE success',

@@ -22,6 +22,8 @@ import {Calendar} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
 
+const basePath = '/calendars';
+
 export class CalendarController {
   constructor(
     @repository(CalendarRepository)
@@ -32,7 +34,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateCalendar])
-  @post('/calendars', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Calendar model instance',
@@ -59,7 +61,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewCalendar])
-  @get('/calendars/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Calendar model count',
@@ -75,7 +77,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewCalendar])
-  @get('/calendars', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Calendar model instances',
@@ -100,7 +102,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateCalendar])
-  @patch('/calendars', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Calendar PATCH success count',
@@ -126,7 +128,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewCalendar])
-  @get('/calendars/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Calendar model instance',
@@ -150,7 +152,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateCalendar])
-  @patch('/calendars/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Calendar PATCH success',
@@ -175,7 +177,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateCalendar])
-  @put('/calendars/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Calendar PUT success',
@@ -193,7 +195,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteCalendar])
-  @del('/calendars/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Calendar DELETE success',

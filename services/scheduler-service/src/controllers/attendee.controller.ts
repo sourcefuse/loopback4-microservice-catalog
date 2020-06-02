@@ -22,6 +22,8 @@ import {Attendee} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttendeeRepository} from '../repositories';
 
+const basePath = '/attendees';
+
 export class AttendeeController {
   constructor(
     @repository(AttendeeRepository)
@@ -32,7 +34,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateAttendee])
-  @post('/attendees', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Attendee model instance',
@@ -59,7 +61,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttendee])
-  @get('/attendees/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Attendee model count',
@@ -75,7 +77,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttendee])
-  @get('/attendees', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Attendee model instances',
@@ -100,7 +102,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttendee])
-  @patch('/attendees', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Attendee PATCH success count',
@@ -126,7 +128,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttendee])
-  @get('/attendees/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Attendee model instance',
@@ -149,7 +151,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttendee])
-  @patch('/attendees/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Attendee PATCH success',
@@ -174,7 +176,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttendee])
-  @put('/attendees/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Attendee PUT success',
@@ -192,7 +194,7 @@ export class AttendeeController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteAttendee])
-  @del('/attendees/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Attendee DELETE success',

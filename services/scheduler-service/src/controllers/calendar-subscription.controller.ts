@@ -21,6 +21,8 @@ import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
 
+const basePath = '/calendars/{id}/subscriptions';
+
 export class CalendarSubscriptionController {
   constructor(
     @repository(CalendarRepository)
@@ -31,7 +33,7 @@ export class CalendarSubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSubscription])
-  @get('/calendars/{id}/subscriptions', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Calendar has many Subscriptions',
@@ -57,7 +59,7 @@ export class CalendarSubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateSubscription])
-  @post('/calendars/{id}/subscriptions', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Calendar model instance',
@@ -89,7 +91,7 @@ export class CalendarSubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSubscription])
-  @patch('/calendars/{id}/subscriptions', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Calendar.Subscription PATCH success count',
@@ -117,7 +119,7 @@ export class CalendarSubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteSubscription])
-  @del('/calendars/{id}/subscriptions', {
+  @del(basePath, {
     responses: {
       '200': {
         description: 'Calendar.Subscription DELETE success count',

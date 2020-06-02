@@ -21,6 +21,8 @@ import {Attachment, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
 
+const basePath = '/events/{id}/attachments';
+
 export class EventAttachmentController {
   constructor(
     @repository(EventRepository) protected eventRepository: EventRepository,
@@ -30,7 +32,7 @@ export class EventAttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewAttachment])
-  @get('/events/{id}/attachments', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Event has many Attachment',
@@ -53,7 +55,7 @@ export class EventAttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateAttachment])
-  @post('/events/{id}/attachments', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Event model instance',
@@ -85,7 +87,7 @@ export class EventAttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateAttachment])
-  @patch('/events/{id}/attachments', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Event.Attachment PATCH success count',
@@ -113,7 +115,7 @@ export class EventAttachmentController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteAttachment])
-  @del('/events/{id}/attachments', {
+  @del(basePath, {
     responses: {
       '200': {
         description: 'Event.Attachment DELETE success count',

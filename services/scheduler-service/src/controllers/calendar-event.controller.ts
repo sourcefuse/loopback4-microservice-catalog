@@ -21,6 +21,8 @@ import {Calendar, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
 
+const basePath = '/calendars/{id}/events';
+
 export class CalendarEventController {
   constructor(
     @repository(CalendarRepository)
@@ -31,7 +33,7 @@ export class CalendarEventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewEvent])
-  @get('/calendars/{id}/events', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Calendar has many Event',
@@ -54,7 +56,7 @@ export class CalendarEventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateEvent])
-  @post('/calendars/{id}/events', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Calendar model instance',
@@ -84,7 +86,7 @@ export class CalendarEventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateEvent])
-  @patch('/calendars/{id}/events', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Calendar.Event PATCH success count',
@@ -111,7 +113,7 @@ export class CalendarEventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteEvent])
-  @del('/calendars/{id}/events', {
+  @del(basePath, {
     responses: {
       '200': {
         description: 'Calendar.Event DELETE success count',

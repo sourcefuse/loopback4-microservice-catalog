@@ -6,6 +6,8 @@ import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
 
+const basePath = '/subscriptions/{id}/calendar';
+
 export class SubscriptionCalendarController {
   constructor(
     @repository(SubscriptionRepository)
@@ -16,7 +18,7 @@ export class SubscriptionCalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewCalendar])
-  @get('/subscriptions/{id}/calendar', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Calendar belonging to Subscription',

@@ -22,6 +22,8 @@ import {Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
 
+const basePath = '/subscriptions';
+
 export class SubscriptionController {
   constructor(
     @repository(SubscriptionRepository)
@@ -32,7 +34,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateSubscription])
-  @post('/subscriptions', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Subscription model instance',
@@ -61,7 +63,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSubscription])
-  @get('/subscriptions/count', {
+  @get(`${basePath}/count`, {
     responses: {
       '200': {
         description: 'Subscription model count',
@@ -79,7 +81,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSubscription])
-  @get('/subscriptions', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Subscription model instances',
@@ -104,7 +106,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSubscription])
-  @patch('/subscriptions', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Subscription PATCH success count',
@@ -130,7 +132,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSubscription])
-  @get('/subscriptions/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       '200': {
         description: 'Subscription model instance',
@@ -154,7 +156,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSubscription])
-  @patch('/subscriptions/{id}', {
+  @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Subscription PATCH success',
@@ -179,7 +181,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateSubscription])
-  @put('/subscriptions/{id}', {
+  @put(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Subscription PUT success',
@@ -197,7 +199,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteSubscription])
-  @del('/subscriptions/{id}', {
+  @del(`${basePath}/{id}`, {
     responses: {
       '204': {
         description: 'Subscription DELETE success',

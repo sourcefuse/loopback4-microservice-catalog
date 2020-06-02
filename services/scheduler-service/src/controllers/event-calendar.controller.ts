@@ -6,6 +6,8 @@ import {Calendar, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
 
+const basePath = '/events/{id}/calendar';
+
 export class EventCalendarController {
   constructor(
     @repository(EventRepository)
@@ -16,7 +18,7 @@ export class EventCalendarController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewCalendar])
-  @get('/events/{id}/calendar', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Calendar belonging to Event',

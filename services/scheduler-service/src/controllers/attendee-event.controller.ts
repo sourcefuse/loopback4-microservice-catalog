@@ -6,6 +6,8 @@ import {Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttendeeRepository} from '../repositories';
 
+const basePath = '/attendees/{id}/event';
+
 export class AttendeeEventController {
   constructor(
     @repository(AttendeeRepository)
@@ -16,7 +18,7 @@ export class AttendeeEventController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewEvent])
-  @get('/attendees/{id}/event', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Event belonging to Attendee',

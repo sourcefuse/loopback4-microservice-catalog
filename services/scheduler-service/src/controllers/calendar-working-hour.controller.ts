@@ -21,6 +21,8 @@ import {Calendar, WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
 
+const basePath = '/calendars/{id}/working-hours';
+
 export class CalendarWorkingHourController {
   constructor(
     @repository(CalendarRepository)
@@ -31,7 +33,7 @@ export class CalendarWorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewWorkingHour])
-  @get('/calendars/{id}/working-hours', {
+  @get(basePath, {
     responses: {
       '200': {
         description: 'Array of Calendar has many WorkingHour',
@@ -54,7 +56,7 @@ export class CalendarWorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.CreateWorkingHour])
-  @post('/calendars/{id}/working-hours', {
+  @post(basePath, {
     responses: {
       '200': {
         description: 'Calendar model instance',
@@ -84,7 +86,7 @@ export class CalendarWorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.UpdateWorkingHour])
-  @patch('/calendars/{id}/working-hours', {
+  @patch(basePath, {
     responses: {
       '200': {
         description: 'Calendar.WorkingHour PATCH success count',
@@ -112,7 +114,7 @@ export class CalendarWorkingHourController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.DeleteWorkingHour])
-  @del('/calendars/{id}/working-hours', {
+  @del(basePath, {
     responses: {
       '200': {
         description: 'Calendar.WorkingHour DELETE success count',
