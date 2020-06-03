@@ -6,14 +6,15 @@ import {
   MeetingOptions,
   SessionOptions,
   VideoChatInterface,
-  SessionResponse,
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
 import {VideoChatBindings} from '../keys';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import { PermissionKeys } from '../enums/permission-keys.enum';
 import { STATUS_CODE, CONTENT_TYPE } from '@sourcefuse-service-catalog/core';
+import {SessionResponse} from './../types';
 
+import cryptoRandomString = require('crypto-random-string');
 export class VideoChatSessionController {
   constructor(
     @repository(VideoChatSessionRepository)
@@ -61,9 +62,8 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLink') meetingLink: string,
   ): Promise<SessionResponse> {
-    return {sessionId: 'session_one', token: 'secret_token'};
+    return {sessionId: 'session_one', token: 'secret_token'};	
   }
-
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.StopMeeting])
   @patch('/session/{meetingLink}/end', {

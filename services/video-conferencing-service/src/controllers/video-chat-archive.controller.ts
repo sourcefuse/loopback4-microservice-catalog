@@ -3,9 +3,9 @@ import {del, get, param} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {VideoChatInterface} from '../types';
-import {VideoChatBindings} from '../keys';
 import { STATUS_CODE, CONTENT_TYPE } from '@sourcefuse-service-catalog/core';
+import {VideoChatBindings, VideoChatInterface} from '../types';
+import {HttpErrors} from '@loopback/rest';
 
 export class VideoChatArchiveController {
   constructor(
@@ -29,6 +29,9 @@ export class VideoChatArchiveController {
     },
   })
   async getArchive(@param.path.string('archiveId') archiveId: string | null) {
+    if (!archiveId) {
+      throw new HttpErrors.BadRequest('Archive Id is Required');
+    }
     return this.videoChatProvider.getArchives(archiveId);
   }
 
@@ -69,6 +72,9 @@ export class VideoChatArchiveController {
   async deleteArchive(
     @param.path.string('archiveId') archiveId: string,
   ): Promise<void> {
+    if (!archiveId) {
+      throw new HttpErrors.BadRequest('Archive Id is Required');
+    }
     await this.videoChatProvider.deleteArchive(archiveId);
   }
 }
