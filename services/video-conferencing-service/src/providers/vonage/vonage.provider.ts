@@ -1,18 +1,12 @@
-import { repository } from '@loopback/repository';
 import {Provider} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
 import {SessionResponse} from '../../types';
 import {VonageVideoChat, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions, VonageArchiveResponse, VonageArchiveList} from './types';
 import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
-import { VideoChatSessionRepository } from '../../repositories';
-import moment from 'moment';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
-  constructor(
-    @repository(VideoChatSessionRepository)
-    private readonly videoChatSessionRepository: VideoChatSessionRepository,
-  ) {
+  constructor() {
     const VONAGE_API_KEY = process.env.API_KEY;
     const VONAGE_API_SECRET = process.env.API_SECRET;
 
@@ -29,7 +23,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       getMeetingLink: async (
         meetingOptions: VonageMeetingOptions,
       ): Promise<VonageMeetingResponse> => {
-        let mediaMode: VonageEnums.MediaMode = VonageEnums.MediaMode.Routed;
+        let mediaMode: VonageEnums.MediaMode;
         let archiveMode: VonageEnums.ArchiveMode | undefined =
           VonageEnums.ArchiveMode.Always;
         let sessionId: string;
@@ -79,61 +73,25 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         }
       },
       getToken: async (
+        sessionId: string,
         options: VonageSessionOptions,
       ): Promise<SessionResponse> => {
-        // 1. fetch session id from meeting link
-        const session = await this.videoChatSessionRepository.findOne({
-          where: {meetingLink: options.meetingLink},
-        });
 
-        if (!session) {
-          throw new HttpErrors.BadRequest(`This meeting doesn't exist`);
-        }
-
-        // check for schduled meeting:
-        if (session.isScheduled && session.scheduleTime) {
-          if (
-            moment()
-              .add(process.env.TIME_TO_START, 'minutes')
-              .isBefore(session.scheduleTime)
-          ) {
-            return {
-              sessionId: 'session-id',
-              error: `schduled meeting can't be started now`,
-            };
-          }
-        }
-        // 2. generate token with correct options
+        // generates token with correct options
         const tokenOptions: OpenTok.TokenOptions = {
           role: options.role,
           expireTime: options.expireTime.getTime(),
           data: options.data,
         };
         const token = this.VonageService.generateToken(
-          session.sessionId,
+          sessionId,
           tokenOptions,
         );
         return {
-          sessionId: session.sessionId,
+          sessionId,
           token,
         };
       },
-      stopMeeting: async (meetingLink: string): Promise<void> => {
-        // set end time for the session
-        // 1. fetch session id from meeting link
-        const session = await this.videoChatSessionRepository.findOne({
-          where: {meetingLink},
-        });
-
-        if (!session) {
-          throw new HttpErrors.BadRequest(`This meeting doesn't exist`);
-        }
-
-        await this.videoChatSessionRepository.updateById(session.id, {
-          endTime: Date.now(),
-        });
-      },
-
       getArchives: async (
         archiveId: string | null,
       ): Promise<VonageArchiveResponse | VonageArchiveList> => {

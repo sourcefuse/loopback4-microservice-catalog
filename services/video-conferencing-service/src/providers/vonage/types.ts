@@ -156,14 +156,14 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @param options: object with type @interface SessionOptions
    * @returns Promise when resolved returns object of type @interface SessionResponse
    */
-  getToken(options: SessionOptions): Promise<SessionResponse>;
+  getToken(sessionId: string, options: SessionOptions): Promise<SessionResponse>;
   /**
    * @function startArchive start vonage archives in cloud/s3/azure
    *
    * @param archiveOptions: object with type @interface VonageArchive
    * @returns Promise if resolved, returns archiveId and success message
    */
-  // startArchive(archiveOptions: VonageArchive): Promise<VonageArchiveResponse>;
+  // startArchive(archiveOptions: VonageArchive): Promise<VonageArchiveResponse>; //TODO
 
   /**
    * @function getArchives get a specific recorded/composed archive or a list of archives
@@ -184,11 +184,5 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @param archiveId archive id of an archive which was started
    * @returns Promise when returns a success object of type @interface VonageArchiveResponse
    */
-  // stopArchive(archiveId: string): Promise<VonageArchiveResponse>;
-
-  /**
-   * @function stopMeeting stops the meeting
-   * @param meetingId unique meeting id
-   */
-  stopMeeting(meetingId: string): Promise<void>;
+  // stopArchive(archiveId: string): Promise<VonageArchiveResponse>;  //TODO
 }

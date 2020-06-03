@@ -25,7 +25,7 @@ export interface VideoChatInterface {
    * @param options: object with type @interface SessionOptions
    * @returns Promise when resolved returns object of type @interface SessionResponse
    */
-  getToken(options: SessionOptions): Promise<SessionResponse>;
+  getToken(sessionId: string , options: SessionOptions): Promise<SessionResponse>;
   /**
    * @function getArchives get a specific recorded/composed archive or a list of archives
    * @param archiveId: optional archive id of type number
@@ -40,11 +40,6 @@ export interface VideoChatInterface {
    * @returns Promise then returns a successful message for deleting if promise is resolved
    */
   deleteArchive(archiveId: string): Promise<void>;
-  /**
-   * @function stopMeeting stops the meeting
-   * @param meetingId unique meeting id
-   */
-  stopMeeting(meetingId: string): Promise<void>;
 }
 
 /**
@@ -125,11 +120,9 @@ export interface MeetingResponse {
 
 /**
  * @interface SessionOptions
- * @param meetingId unique meetingId which is used inside sharing link urls.
  * @param expireTime set the ttl (time to live) for a session created For twilio, it is max 4 hours.
  */
 export interface SessionOptions {
-  meetingLink: string;
   expireTime: Date;
   data?: string;
 }
