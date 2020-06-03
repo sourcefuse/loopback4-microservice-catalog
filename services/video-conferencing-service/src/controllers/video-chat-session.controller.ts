@@ -7,17 +7,17 @@ import {
   MeetingOptions,
   SessionOptions,
   VideoChatInterface,
-  SessionResponse,
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
 import {VideoChatBindings} from '../keys';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import { PermissionKeys } from '../enums/permission-keys.enum';
-import cryptoRandomString = require('crypto-random-string');
-import { VideoChatSession } from '../models';
-import moment from 'moment';
-import { AuditLogsRepository } from '../repositories';
+import {SessionResponse} from './../types';
 
+import cryptoRandomString = require('crypto-random-string');
+import { AuditLogsRepository } from '../repositories';
+import moment from 'moment';
+import { VideoChatSession } from '../models';
 export class VideoChatSessionController {
   constructor(
     @repository(VideoChatSessionRepository)
@@ -156,7 +156,6 @@ export class VideoChatSessionController {
 
     return this.videoChatProvider.getToken(session.sessionId, sessionOptions);
   }
-
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.StopMeeting])
   @patch('/session/{meetingLink}/end', {

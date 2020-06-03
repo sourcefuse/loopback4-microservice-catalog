@@ -4,8 +4,7 @@ import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {CONTENT_TYPE, STATUS_CODE} from '../enums';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {VideoChatInterface} from '../types';
-import {VideoChatBindings} from '../keys';
+import {VideoChatBindings, VideoChatInterface} from '../types';
 
 export class VideoChatArchiveController {
   constructor(
@@ -69,6 +68,6 @@ export class VideoChatArchiveController {
   async deleteArchive(
     @param.path.string('archiveId') archiveId: string,
   ): Promise<void> {
-    await this.videoChatProvider.getArchives(archiveId);
+    await this.videoChatProvider.deleteArchive(archiveId);
   }
 }

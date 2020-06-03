@@ -1,8 +1,18 @@
+import {BindingKey} from '@loopback/core';
 import {IServiceConfig} from '@sourcefuse-service-catalog/core';
 
+/**
+ * @namespace VideoChatBindings
+ * @const VideoChatProvider Main Parent Provider which binds @interface VideoChatInterface
+ */
+export namespace VideoChatBindings {
+  export const VideoChatProvider = BindingKey.create<VideoChatInterface>(
+    'sf.videochatprovider',
+  );
+}
+
 export interface IVideoChatServiceConfig extends IServiceConfig {
-  // TODO
-  // will be filled later
+  //TODO
 }
 
 /**
@@ -25,7 +35,7 @@ export interface VideoChatInterface {
    * @param options: object with type @interface SessionOptions
    * @returns Promise when resolved returns object of type @interface SessionResponse
    */
-  getToken(sessionId: string , options: SessionOptions): Promise<SessionResponse>;
+  getToken(sessionId: string, options: SessionOptions): Promise<SessionResponse>;
   /**
    * @function getArchives get a specific recorded/composed archive or a list of archives
    * @param archiveId: optional archive id of type number
@@ -60,7 +70,8 @@ export interface SessionResponse {
  */
 export interface ArchiveResponse {
   name?: string;
-  sessionId: string;
+  sessionId: string | undefined;
+  metaData: object;
 }
 
 /**

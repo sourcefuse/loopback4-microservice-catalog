@@ -20,7 +20,11 @@ import {
  *
  */
 export interface VonageMeetingOptions extends MeetingOptions {
-  endToEndEncryption?: boolean;
+  mediaMode?: VonageEnums.MediaMode;
+  archiveMode?: VonageEnums.ArchiveMode;
+  isScheduled: boolean;
+  scheduleTime?: Date;
+  endToEndEncryption?: boolean
 }
 
 export interface VonageMeetingResponse extends MeetingResponse {
@@ -117,32 +121,6 @@ export interface VonageArchive {
  * @param name The name of the archive you supplied (this is optional)
  */
 
-export interface VonageArchiveResponse extends ArchiveResponse {
-  createdAt: number;
-  duration: number;
-  hasAudio: boolean;
-  hasVideo: boolean;
-  id: string;
-  name?: string;
-  outputMode: VonageEnums.OutputMode;
-  projectId: number;
-  reason: string;
-  resolution: string;
-  sessionId: string;
-  size: number;
-  status: string;
-  url: string | null;
-}
-
-/**
- * @interface VonageArchiveList
- * @param count number of archives
- * @param items listing archives of type @interface VonageArchiveResponse
- */
-export interface VonageArchiveList extends ArchiveResponseList {
-  count: number;
-  items: VonageArchiveResponse[];
-}
 
 export interface VonageVideoChat extends VideoChatInterface {
   /**
@@ -172,7 +150,7 @@ export interface VonageVideoChat extends VideoChatInterface {
    */
   getArchives(
     archiveId: string | null,
-  ): Promise<VonageArchiveResponse | VonageArchiveList>;
+  ): Promise<ArchiveResponse | ArchiveResponseList>;
   /**
    * @function deleteArchive delete a specific archive
    * @param archiveId id of an archive

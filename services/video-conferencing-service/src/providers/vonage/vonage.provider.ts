@@ -1,19 +1,19 @@
 import {Provider} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
-import {SessionResponse} from '../../types';
-import {VonageVideoChat, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions, VonageArchiveResponse, VonageArchiveList} from './types';
+import { SessionResponse, SessionOptions,  ArchiveResponse, ArchiveResponseList } from '../../types';
+import {
+  VonageMeetingResponse,
+  VonageMeetingOptions,
+  VonageVideoChat,
+  VonageSessionOptions,
+} from './types';
 import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
-import { AuditLogsRepository } from '../../repositories';
-import { repository } from '@loopback/repository';
-
+import { promisify } from 'util';
+import { ArchiveMode } from 'opentok'; 
 export class VonageProvider implements Provider<VonageVideoChat> {
-  constructor(
-    @repository(AuditLogsRepository)
-    public auditLogRepository: AuditLogsRepository,
-  ) {
-    const VONAGE_API_KEY = process.env.API_KEY;
-    const VONAGE_API_SECRET = process.env.API_SECRET;
+  constructor() {
+    const { VONAGE_API_KEY, VONAGE_API_SECRET } = process.env;
 
     if (!VONAGE_API_KEY || !VONAGE_API_SECRET) {
       throw new HttpErrors.BadRequest('Vonage API key or secret is not set');
@@ -28,9 +28,8 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       getMeetingLink: async (
         meetingOptions: VonageMeetingOptions,
       ): Promise<VonageMeetingResponse> => {
-        let mediaMode: VonageEnums.MediaMode;
-        let archiveMode: VonageEnums.ArchiveMode | undefined =
-          VonageEnums.ArchiveMode.Always;
+        let mediaMode: VonageEnums.MediaMode = VonageEnums.MediaMode.Routed;
+        let archiveMode: ArchiveMode = VonageEnums.ArchiveMode.Always;
         let sessionId: string;
 
         if (meetingOptions.endToEndEncryption) {
@@ -39,7 +38,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           mediaMode = VonageEnums.MediaMode.Routed;
           archiveMode = VonageEnums.ArchiveMode.Always;
         } else {
-          mediaMode = VonageEnums.MediaMode.Routed;
+          // nothing to do.
         }
 
         const sessionCreationOptions = {
@@ -131,34 +130,48 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           token,
         };
       },
+
       getArchives: async (
-        archiveId: string | null,
-      ): Promise<VonageArchiveResponse | VonageArchiveList> => {
-        const archive = {
-          createdAt: 1234,
-          duration: 1234,
-          hasAudio: true,
-          hasVideo: true,
-          id: 'abc',
-          name: 'rec-1',
-          outputMode: VonageEnums.OutputMode.Composed,
-          projectId: 123,
-          reason: '',
-          resolution: '',
-          sessionId: 'session-1',
-          size: 1,
-          status: '',
-          url: null,
-        };
-        if (!archiveId) {
+        archiveId: string | null
+      ): Promise<ArchiveResponse | ArchiveResponseList> => {
+        const getArchive = promisify(this.VonageService.getArchive);
+        const listArchives = promisify(this.VonageService.listArchives);
+        if (archiveId) {
+          const archive = await getArchive(archiveId);
           return {
-            count: 1,
-            items: [archive],
+            name: archive?.name,
+            sessionId: archive?.sessionId,
+            metaData: (archive ?? null) as object,
           };
         }
-        return archive;
+        let archives = await listArchives({});
+        archives = archives?.length ? archives: [];
+        const items = [];
+        for (const archive of archives) {
+            items.push({
+              name: archive.name,
+              sessionId: archive.sessionId,
+              metaData: archive as object,
+            });
+        }
+        return {
+          count: archives?.length ?? 0,
+          items,
+        };
       },
-      deleteArchive: async (archiveId: string): Promise<void> => {},
+      // TODO: startArchive and stopArchive needs to be uncommented/modified later
+      // startArchive: async (sessionId: string, archiveOptions: ArchiveOptions): Promise<Archive | undefined> => {
+      //   const startArchive = promisify(this.VonageService.startArchive);
+      //   return startArchive(sessionId, archiveOptions);
+      // },
+      // stopArchive: async (archiveId: string): Promise <Archive | undefined> => {
+      //   const stopArchive = promisify(this.VonageService.stopArchive);
+      //   return stopArchive(archiveId);
+      // },
+      deleteArchive: async (archiveId: string): Promise<void> => {
+        const deleteArchive = promisify(this.VonageService.deleteArchive);
+        return deleteArchive(archiveId);
+      },
     };
   }
 }

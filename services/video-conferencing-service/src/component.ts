@@ -36,7 +36,7 @@ export class VideoConfServiceComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(VideoChatBindings.Config, {optional: true})
-    private readonly videChatConfig?: IVideoChatServiceConfig,
+    private readonly videoChatConfig?: IVideoChatServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -44,7 +44,7 @@ export class VideoConfServiceComponent implements Component {
     // Mount core component
     this.application.component(CoreComponent);
 
-    if (!(this.videChatConfig && this.videChatConfig.useCustomSequence)) {
+    if (!(this.videoChatConfig && this.videoChatConfig.useCustomSequence)) {
       // Mount default sequence if needed
       this.setupSequence(this.bindings);
     }
