@@ -2,7 +2,7 @@ import {inject} from '@loopback/core';
 import {del, get, param} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {CONTENT_TYPE, STATUS_CODE} from '../enums/index copy';
+import {CONTENT_TYPE, STATUS_CODE} from '../enums';
 import {PermissionKeys} from '../enums/permission-keys.enum';
 import {VideoChatInterface} from '../types';
 import {VideoChatBindings} from '../keys';
@@ -13,8 +13,8 @@ export class VideoChatArchiveController {
     private readonly videoChatProvider: VideoChatInterface,
   ) {}
 
-  @authorize([PermissionKeys.GetArchives])
   @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.GetArchives])
   @get('/archives/{archiveId}', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -32,8 +32,8 @@ export class VideoChatArchiveController {
     return this.videoChatProvider.getArchives(archiveId);
   }
 
-  @authorize([PermissionKeys.GetArchives])
   @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.GetArchives])
   @get('/archives', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -51,8 +51,8 @@ export class VideoChatArchiveController {
     return this.videoChatProvider.getArchives(null);
   }
 
-  @authorize([PermissionKeys.DeleteArchive])
   @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.DeleteArchive])
   @del('/archives/{archiveId}', {
     responses: {
       [STATUS_CODE.OK]: {

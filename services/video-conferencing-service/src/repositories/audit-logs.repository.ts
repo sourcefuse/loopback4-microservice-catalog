@@ -5,12 +5,12 @@ import {
   DefaultCrudRepository,
   Options,
   Where,
+  juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import {AuditLogs} from '../models';
-import {VideochatDbDataSource} from './../datasources/videochat-db.datasource';
 import {IAuthUserWithPermissions} from '@sourcefuse-service-catalog/core';
 
 export class AuditLogsRepository extends DefaultCrudRepository<
@@ -18,7 +18,7 @@ export class AuditLogsRepository extends DefaultCrudRepository<
   typeof AuditLogs.prototype.id
 > {
   constructor(
-    @inject('datasources.db') dataSource: VideochatDbDataSource,
+    @inject('datasources.videochatDb') dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     private readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

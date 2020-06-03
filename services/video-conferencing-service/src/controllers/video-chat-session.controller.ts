@@ -2,7 +2,7 @@ import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {param, patch, post, requestBody} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
-import {CONTENT_TYPE, STATUS_CODE} from '../enums/index copy';
+import {CONTENT_TYPE, STATUS_CODE} from '../enums';
 import {
   MeetingOptions,
   SessionOptions,
@@ -11,6 +11,8 @@ import {
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
 import {VideoChatBindings} from '../keys';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { PermissionKeys } from '../enums/permission-keys.enum';
 
 export class VideoChatSessionController {
   constructor(
@@ -20,7 +22,8 @@ export class VideoChatSessionController {
     private readonly videoChatProvider: VideoChatInterface,
   ) {}
 
-  @authorize(['*'])
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.CreateSession])
   @post('/session', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -37,7 +40,8 @@ export class VideoChatSessionController {
     return 'meetingLink';
   }
 
-  @authorize(['*'])
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.GenerateToken])
   @post('/session/{meetingLink}/token', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -60,7 +64,8 @@ export class VideoChatSessionController {
     return {sessionId: 'session_one', token: 'secret_token'};
   }
 
-  @authorize(['*'])
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.StopMeeting])
   @patch('/session/{meetingLink}/end', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
