@@ -16,6 +16,7 @@ import { PermissionKeys } from '../enums/permission-keys.enum';
 import cryptoRandomString = require('crypto-random-string');
 import { VideoChatSession } from '../models';
 import moment from 'moment';
+import { AuditLogsRepository } from '../repositories';
 
 export class VideoChatSessionController {
   constructor(
@@ -23,6 +24,8 @@ export class VideoChatSessionController {
     private readonly videoChatSessionRepository: VideoChatSessionRepository,
     @inject(VideoChatBindings.VideoChatProvider)
     private readonly videoChatProvider: VideoChatInterface,
+    @repository(AuditLogsRepository)
+    public auditLogRepository: AuditLogsRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -69,6 +72,14 @@ export class VideoChatSessionController {
     });
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
+
+    this.auditLogRepository.create({
+      action: 'session',
+      actionType: 'getMeetingLink',
+      actedEntity: meetingLink,
+      actedAt: new Date().toString(),
+      after: videoSessionDetail,
+    });
 
     return meetingLink;
   }
@@ -164,6 +175,13 @@ export class VideoChatSessionController {
 
     await this.videoChatSessionRepository.updateById(session.id, {
       endTime: Date.now(),
+    });
+
+    this.auditLogRepository.create({
+      action: 'session',
+      actionType: 'endMeeting',
+      actedEntity: meetingLink,
+      actedAt: new Date().toString()
     });
   }
 }

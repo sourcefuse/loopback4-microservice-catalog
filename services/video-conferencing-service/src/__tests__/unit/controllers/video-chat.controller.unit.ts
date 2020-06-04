@@ -18,7 +18,7 @@ import {
 } from '../../helpers';
 import {VideoChatSessionController} from './../../../controllers';
 import {VonageProvider} from './../../../providers/vonage';
-import {VideoChatSessionRepository} from './../../../repositories';
+import {VideoChatSessionRepository, AuditLogsRepository} from './../../../repositories';
 import {VideoChatInterface} from '../../../types';
 
 describe('Session APIs', () => {
@@ -27,6 +27,8 @@ describe('Session APIs', () => {
   const meetingLink = 'dummy-meeting-link';
   const timeToStart = 30;
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
+  let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
+
   let videoChatProvider: VideoChatInterface;
   let controller: VideoChatSessionController;
 
@@ -219,12 +221,15 @@ describe('Session APIs', () => {
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
 
+    auditLogRepo = createStubInstance(AuditLogsRepository);
+
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    videoChatProvider = new VonageProvider().value();
+    videoChatProvider = new VonageProvider(auditLogRepo).value();
     controller = new VideoChatSessionController(
       videoChatSessionRepo,
       videoChatProvider,
+      auditLogRepo
     );
   }
 });

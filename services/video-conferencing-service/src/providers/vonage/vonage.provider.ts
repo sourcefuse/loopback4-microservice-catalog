@@ -4,9 +4,14 @@ import {VonageEnums} from '../../enums/video-chat.enum';
 import {SessionResponse} from '../../types';
 import {VonageVideoChat, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions, VonageArchiveResponse, VonageArchiveList} from './types';
 import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
+import { AuditLogsRepository } from '../../repositories';
+import { repository } from '@loopback/repository';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
-  constructor() {
+  constructor(
+    @repository(AuditLogsRepository)
+    public auditLogRepository: AuditLogsRepository,
+  ) {
     const VONAGE_API_KEY = process.env.API_KEY;
     const VONAGE_API_SECRET = process.env.API_SECRET;
 
@@ -63,12 +68,32 @@ export class VonageProvider implements Provider<VonageVideoChat> {
 
         try {
           const id: string = await createSession();
-          return {
+
+          const result  = {
             mediaMode: VonageEnums.MediaMode.Routed,
             archiveMode: VonageEnums.ArchiveMode.Always,
             sessionId: id,
           };
-        } catch (err) {          
+
+          this.auditLogRepository.create({
+            action: 'session',
+            actionType: 'createSession',
+            actedEntity: id,
+            actedAt: new Date().toString(),            
+            after: result,
+          });
+
+          return result;
+
+        } catch (err) {    
+
+          this.auditLogRepository.create({
+            action: 'session',
+            actionType: 'createSession',
+            actedEntity: '',
+            actedAt: new Date().toString(),            
+            after: err,
+          });      
           throw new HttpErrors.BadRequest('Error creating session');
         }
       },
@@ -87,6 +112,20 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           sessionId,
           tokenOptions,
         );
+
+        this.auditLogRepository.create({
+          action: 'session',
+          actionType: 'generateToken',
+          before: {
+            sessionId,
+            options
+          },
+          after: {
+            sessionId,
+            token,
+          },
+        });
+        
         return {
           sessionId,
           token,
