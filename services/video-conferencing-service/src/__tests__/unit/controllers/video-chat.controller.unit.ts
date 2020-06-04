@@ -13,6 +13,8 @@ import {
   getMeetingOptions,
   getVonageSessionResponse,
   getDatePastThreshold,
+  setUpMockProvider,
+  getFutureDate,
 } from '../../helpers';
 import {VideoChatSessionController} from './../../../controllers';
 import {VonageProvider} from './../../../providers/vonage';
@@ -20,9 +22,10 @@ import {VideoChatSessionRepository} from './../../../repositories';
 import {VideoChatInterface} from '../../../types';
 
 describe('Session APIs', () => {
-  let pastDate: Date;
-  let futureDate: Date;
-  let meetingLink: string;
+  const pastDate = getDate('October 01, 2019 00:00:00');
+  const futureDate = getFutureDate();
+  const meetingLink = 'dummy-meeting-link';
+  const timeToStart = 30;
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let videoChatProvider: VideoChatInterface;
   let controller: VideoChatSessionController;
@@ -30,11 +33,13 @@ describe('Session APIs', () => {
   afterEach(() => sinon.restore());
 
   describe('POST /session', () => {
-    it('returns a meeting Id of type string and saves the session Id', async () => {
-      const meetingOptions = getMeetingOptions({});
-
+    it('returns a meeting Id of type string, saves the session Id, schedules meeting', async () => {
       setUp({
         getMeetingLink: sinon.stub().returns(getVonageMeetingResponse({})),
+      });
+      const meetingOptions = getMeetingOptions({
+        isScheduled: true,
+        scheduleTime: futureDate,
       });
       const save = videoChatSessionRepo.stubs.save;
       save.resolves();
@@ -44,41 +49,23 @@ describe('Session APIs', () => {
     });
 
     it('returns an error when vonage fails to create a session', async () => {
-      const meetingOptions = getMeetingOptions({});
-
       setUp({
         getMeetingLink: sinon
           .stub()
           .rejects(new HttpErrors.BadRequest('Error creating session')),
       });
+      const meetingOptions = getMeetingOptions({});
       const error = await controller
         .getMeetingLink(meetingOptions)
         .catch(err => err);
       expect(error).instanceof(Error);
     });
 
-    it('schedules a meeting', async () => {
-      const meetingOptions = getMeetingOptions({
-        isScheduled: true,
-        scheduleTime: futureDate,
-      });
-
-      setUp({
-        getMeetingLink: sinon.stub().returns(getVonageMeetingResponse({})),
-      });
-      const save = videoChatSessionRepo.stubs.save;
-      save.resolves();
-      const result = await controller.getMeetingLink(meetingOptions);
-      expect(result).to.be.a.String();
-      sinon.assert.called(save);
-    });
-
     it('only schedules a meeting with a schedule time', async () => {
+      setUp({});
       const meetingOptions = getMeetingOptions({
         isScheduled: true,
       });
-
-      setUp({});
       const error = await controller
         .getMeetingLink(meetingOptions)
         .catch(err => err);
@@ -86,12 +73,11 @@ describe('Session APIs', () => {
     });
 
     it('does not schedule a meeting with invalid schedule time', async () => {
+      setUp({});
       const meetingOptions = getMeetingOptions({
         isScheduled: true,
         scheduleTime: getDate('Invalid'),
       });
-
-      setUp({});
       const error = await controller
         .getMeetingLink(meetingOptions)
         .catch(err => err);
@@ -99,12 +85,11 @@ describe('Session APIs', () => {
     });
 
     it('does not schedule a meeting if schedule time is in the past', async () => {
+      setUp({});
       const meetingOptions = getMeetingOptions({
         isScheduled: true,
         scheduleTime: pastDate,
       });
-
-      setUp({});
       const error = await controller
         .getMeetingLink(meetingOptions)
         .catch(err => err);
@@ -114,11 +99,10 @@ describe('Session APIs', () => {
 
   describe('POST /session/{meetingLink}/token', () => {
     it('returns a session Id and token of type string', async () => {
-      const sessionOptions = getSessionOptions({});
-
       setUp({
         getToken: sinon.stub().returns(getVonageSessionResponse({})),
-      })
+      });
+      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves(getVideoChatSession({}));
       const result = await controller.getMeetingToken(
@@ -131,12 +115,11 @@ describe('Session APIs', () => {
     });
 
     it('gives an error for invalid meeting link', async () => {
-      const sessionOptions = getSessionOptions({});
-      const invalidMeetingLink = '';
-
       setUp({
         getToken: sinon.stub().returns(getVonageSessionResponse({})),
-      })
+      });
+      const sessionOptions = getSessionOptions({});
+      const invalidMeetingLink = '';
       const error = await controller
         .getMeetingToken(sessionOptions, invalidMeetingLink)
         .catch(err => err);
@@ -144,44 +127,48 @@ describe('Session APIs', () => {
     });
 
     it('gives an error when vonage fails to generate token', async () => {
-      const sessionOptions = getSessionOptions({});
-
       setUp({
         getToken: sinon
           .stub()
           .rejects(new HttpErrors.BadRequest('Error generating token')),
       });
+      const sessionOptions = getSessionOptions({});
       const error = await controller
         .getMeetingToken(sessionOptions, meetingLink)
         .catch(err => err);
       expect(error).instanceof(Error);
-    })
+    });
 
     it('denies if the threshold time to join has not been achieved (scheduling logic)', async () => {
-      const sessionOptions = getSessionOptions({});
-
       setUp({
         getToken: sinon.stub().returns(getVonageSessionResponse({})),
-      })
+      });
+      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
-      findOne.resolves(getVideoChatSession({isScheduled: true, scheduleTime: getDatePastThreshold(+process.env.TIME_TO_START!)}));
-      const error = await controller
-        .getMeetingToken(sessionOptions, meetingLink)
+      findOne.resolves(
+        getVideoChatSession({
+          isScheduled: true,
+          scheduleTime: getDatePastThreshold(timeToStart),
+        }),
+      );
+      const error = await controller.getMeetingToken(
+        sessionOptions,
+        meetingLink,
+      );
       expect(error).eql({
         sessionId: 'dummy-session-id',
-        error: `Scheduled meeting can't be started now`
+        error: `Scheduled meeting can't be started now`,
       });
       sinon.assert.called(findOne);
     });
 
     it('denies if the expire time is invalid', async () => {
+      setUp({
+        getToken: sinon.stub().returns(getVonageSessionResponse({})),
+      });
       const sessionOptions = getSessionOptions({
         expireTime: new Date('Invalid'),
       });
-
-      setUp({
-        getToken: sinon.stub().returns(getVonageSessionResponse({})),
-      })
       const error = await controller
         .getMeetingToken(sessionOptions, meetingLink)
         .catch(err => err);
@@ -189,11 +176,10 @@ describe('Session APIs', () => {
     });
 
     it('denies if the expire time is in the past', async () => {
-      const sessionOptions = getSessionOptions({expireTime: pastDate});
-
       setUp({
         getToken: sinon.stub().returns(getVonageSessionResponse({})),
-      })
+      });
+      const sessionOptions = getSessionOptions({expireTime: pastDate});
       const error = await controller
         .getMeetingToken(sessionOptions, meetingLink)
         .catch(err => err);
@@ -203,9 +189,8 @@ describe('Session APIs', () => {
 
   describe('PATCH /session/{meetingLink}/end', () => {
     it('updates the end time', async () => {
-      const sessionOptions = getSessionOptions({});
-
       setUp({});
+      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves(getVideoChatSession({}));
       const updateById = videoChatSessionRepo.stubs.updateById;
@@ -215,24 +200,19 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(updateById);
     });
 
-    it('returns an error if this session does not exist', async() => {
-      const sessionOptions = getSessionOptions({});
-
+    it('returns an error if this session does not exist', async () => {
       setUp({});
+      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
-      findOne.rejects();
+      findOne.resolves();
       const error = await controller
         .endSession(sessionOptions, meetingLink)
         .catch(err => err);
       expect(error).instanceof(Error);
-    })
+    });
   });
 
   function setUp(providerStub: Partial<VideoChatInterface>) {
-    pastDate = getDate('October 01, 2019 00:00:00');
-    futureDate = getDate('October 01, 2020 00:00:00');
-    meetingLink = 'dummy-meeting-link';
-
     process.env.API_KEY = 'dummy';
     process.env.API_SECRET = 'dummy';
     process.env.TIME_TO_START = '30';
@@ -245,18 +225,6 @@ describe('Session APIs', () => {
     controller = new VideoChatSessionController(
       videoChatSessionRepo,
       videoChatProvider,
-    );
-  }
-
-  function setUpMockProvider(providerStub: Partial<VideoChatInterface>) {
-    return Object.assign(
-      {
-        getMeetingLink: sinon.stub().returnsThis(),
-        getToken: sinon.stub().returnsThis(),
-        getArchives: sinon.stub().returnsThis(),
-        deleteArchive: sinon.stub().returnsThis(),
-      },
-      providerStub,
     );
   }
 });

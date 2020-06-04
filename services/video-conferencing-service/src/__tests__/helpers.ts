@@ -1,8 +1,11 @@
-import {SessionOptions, MeetingOptions, SessionResponse} from '../types';
+import {SessionOptions, MeetingOptions, SessionResponse, VideoChatInterface} from '../types';
 import {VideoChatSession} from '../models';
 import {VonageMeetingResponse} from '../providers/vonage';
 import {VonageEnums} from '../enums/video-chat.enum';
 import moment from 'moment';
+import {
+  sinon,
+} from '@loopback/testlab';
 
 export function getVideoChatSession(
   videoChatSession: Partial<VideoChatSession>,
@@ -23,9 +26,32 @@ export function getDate(dateString: string) {
   return new Date(dateString);
 }
 
+export function getFutureDate() {
+  const extra = 1000;
+  const currDate = Date.now();
+  return moment(currDate)
+    .add(extra, 'm')
+    .toDate();
+}
+
 export function getDatePastThreshold(threshold: number) {
-  const currDate = Date.now()
-  return moment(currDate).add(threshold + 5, 'm').toDate();
+  const extra = 5;
+  const currDate = Date.now();
+  return moment(currDate)
+    .add(threshold + extra, 'm')
+    .toDate();
+}
+
+export function setUpMockProvider(providerStub: Partial<VideoChatInterface>) {
+  return Object.assign(
+    {
+      getMeetingLink: sinon.stub().returnsThis(),
+      getToken: sinon.stub().returnsThis(),
+      getArchives: sinon.stub().returnsThis(),
+      deleteArchive: sinon.stub().returnsThis(),
+    },
+    providerStub,
+  );
 }
 
 export function getMeetingOptions(meetingOptions: Partial<MeetingOptions>) {
@@ -41,7 +67,7 @@ export function getMeetingOptions(meetingOptions: Partial<MeetingOptions>) {
 export function getSessionOptions(sessionOptions: Partial<SessionOptions>) {
   return Object.assign(
     {
-      expireTime: getDate('October 01, 2020 00:00:00'),
+      expireTime: getFutureDate(),
     },
     sessionOptions,
   );
@@ -60,11 +86,14 @@ export function getVonageMeetingResponse(
   );
 }
 
-export function getVonageSessionResponse(sessionResponse: Partial<SessionResponse>) {
+export function getVonageSessionResponse(
+  sessionResponse: Partial<SessionResponse>,
+) {
   return Object.assign(
     {
-        sessionId: 'session-id',
-        token: 'token'
-    }
-  )
+      sessionId: 'session-id',
+      token: 'token',
+    },
+    sessionResponse 
+  );
 }
