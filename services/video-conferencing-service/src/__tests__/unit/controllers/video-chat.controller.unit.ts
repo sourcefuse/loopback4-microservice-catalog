@@ -215,8 +215,8 @@ describe('Session APIs', () => {
   });
 
   function setUp(providerStub: Partial<VideoChatInterface>) {
-    process.env.API_KEY = 'dummy';
-    process.env.API_SECRET = 'dummy';
+    process.env.VONAGE_API_KEY = 'dummy';
+    process.env.VONAGE_API_SECRET = 'dummy';
     process.env.TIME_TO_START = '30';
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);

@@ -1,4 +1,4 @@
-import {SessionOptions, MeetingOptions, SessionResponse, VideoChatInterface} from '../types';
+import {SessionOptions, MeetingOptions, SessionResponse, VideoChatInterface, ArchiveResponse, ArchiveResponseList} from '../types';
 import {VideoChatSession} from '../models';
 import {VonageMeetingResponse} from '../providers/vonage';
 import {VonageEnums} from '../enums/video-chat.enum';
@@ -95,5 +95,29 @@ export function getVonageSessionResponse(
       token: 'token',
     },
     sessionResponse 
+  );
+}
+
+export function getVonageArchiveResponse(
+  archiveResponse: Partial<ArchiveResponse>
+) {
+  return Object.assign(
+    {
+      sessionId: 'dummy-session-id',
+    },
+    archiveResponse
+  );
+}
+
+export function getVonageArchiveResponseList(
+  archiveResponseList: Partial<ArchiveResponseList>
+) {
+  const dummyCount = 1;
+  return Object.assign(
+    {
+      count: dummyCount,
+      items: [getVonageArchiveResponse]
+    },
+    archiveResponseList
   );
 }

@@ -11,8 +11,11 @@ import {
 import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
 import { promisify } from 'util';
 import { ArchiveMode } from 'opentok'; 
+import { AuditLogsRepository } from '../../repositories';
+import { repository } from '@loopback/repository';
 export class VonageProvider implements Provider<VonageVideoChat> {
-  constructor() {
+  constructor(@repository(AuditLogsRepository)
+    public auditLogRepository: AuditLogsRepository) {
     const { VONAGE_API_KEY, VONAGE_API_SECRET } = process.env;
 
     if (!VONAGE_API_KEY || !VONAGE_API_SECRET) {
