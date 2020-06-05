@@ -132,6 +132,14 @@ export class VideoChatSessionController {
       throw new HttpErrors.BadRequest(`This meeting doesn't exist`);
     }
 
+    // check if meeting is already ended
+    if(session.endTime){
+      return {
+        sessionId: session.sessionId,
+        error: `This meeting link is expired.`,
+      };
+    }
+
     // check for schduled meeting:
     if (session.isScheduled && session.scheduleTime) {
       if (
