@@ -57,7 +57,7 @@ describe('Archive APIs', () => {
       setUp({deleteArchive: sinon.stub().resolves() });
       const error = await controller.deleteArchive(invalidArchiveId).catch(err => err);
       expect(error).instanceOf(Error);
-    })
+    });
   });
 
   function setUp(providerStub: Partial<VideoChatInterface>) {

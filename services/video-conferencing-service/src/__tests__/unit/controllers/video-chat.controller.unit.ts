@@ -204,7 +204,7 @@ describe('Session APIs', () => {
         error: `This meeting link is expired.`,
       });
       sinon.assert.calledOnce(findOne);
-    })
+    });
   });
 
   describe('PATCH /session/{meetingLink}/end', () => {
