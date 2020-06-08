@@ -1,6 +1,5 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {SchedulerBindings} from '../keys';
 import {Theme, ThemeRelations} from '../models';
 
 export class ThemeRepository extends DefaultCrudRepository<
@@ -9,7 +8,7 @@ export class ThemeRepository extends DefaultCrudRepository<
   ThemeRelations
 > {
   constructor(
-    @inject(SchedulerBindings.dbConnector) dataSource: juggler.DataSource,
+    @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
   ) {
     super(Theme, dataSource);
   }

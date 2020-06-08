@@ -1,11 +1,11 @@
 import {hasMany, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 import {Event} from './event.model';
 import {Subscription} from './subscription.model';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
 import {WorkingHour} from './working-hour.model';
 
 @model({
-  name: 'calendar',
+  name: 'calendars',
 })
 export class Calendar extends UserModifiableEntity {
   @property({

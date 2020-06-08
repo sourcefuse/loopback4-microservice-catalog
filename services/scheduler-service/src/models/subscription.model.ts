@@ -1,10 +1,10 @@
 import {belongsTo, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {AccessRoleType} from './enums/access-role.enum';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
 
 @model({
-  name: 'subscription',
+  name: 'subscriptions',
 })
 export class Subscription extends UserModifiableEntity {
   @property({

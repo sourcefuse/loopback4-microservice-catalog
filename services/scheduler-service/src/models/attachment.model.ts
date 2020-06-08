@@ -1,9 +1,9 @@
 import {belongsTo, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 import {Event, EventWithRelations} from './event.model';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
 
 @model({
-  name: 'attachment',
+  name: 'attachments',
 })
 export class Attachment extends UserModifiableEntity {
   @property({

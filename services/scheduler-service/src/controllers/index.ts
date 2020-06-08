@@ -11,7 +11,6 @@ export * from './event-attendee.controller';
 export * from './event-calendar.controller';
 export * from './event-event.controller';
 export * from './event.controller';
-export * from './ping.controller';
 export * from './settings.controller';
 export * from './subscription-calendar.controller';
 export * from './subscription.controller';

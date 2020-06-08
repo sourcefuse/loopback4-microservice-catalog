@@ -1,10 +1,10 @@
 import {belongsTo, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {DayOfWeekType} from './enums/day-of-week.enum';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
 
 @model({
-  name: 'working_hour',
+  name: 'working_hours',
 })
 export class WorkingHour extends UserModifiableEntity {
   @property({
@@ -17,7 +17,16 @@ export class WorkingHour extends UserModifiableEntity {
     type: 'number',
     name: 'day_of_week',
     jsonSchema: {
-      enum: [0, 1, 2, 3, 4, 5, 6, null],
+      enum: [
+        DayOfWeekType.Monday,
+        DayOfWeekType.Tuesday,
+        DayOfWeekType.Wednesday,
+        DayOfWeekType.Thursday,
+        DayOfWeekType.Friday,
+        DayOfWeekType.Saturday,
+        DayOfWeekType.Sunday,
+        null,
+      ],
       nullable: true,
     },
   })

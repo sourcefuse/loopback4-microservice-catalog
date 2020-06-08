@@ -1,10 +1,10 @@
 import {belongsTo, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 import {ResponseStatusType} from './enums/response-status.enum';
 import {Event, EventWithRelations} from './event.model';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
 
 @model({
-  name: 'attendee',
+  name: 'attendees',
 })
 export class Attendee extends UserModifiableEntity {
   @property({

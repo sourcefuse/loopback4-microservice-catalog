@@ -5,7 +5,6 @@ import {
   juggler,
   repository,
 } from '@loopback/repository';
-import {SchedulerBindings} from '../keys';
 import {
   Calendar,
   CalendarRelations,
@@ -38,7 +37,7 @@ export class CalendarRepository extends DefaultCrudRepository<
   >;
 
   constructor(
-    @inject(SchedulerBindings.dbConnector) dataSource: juggler.DataSource,
+    @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
     @repository.getter('EventRepository')
     protected eventRepositoryGetter: Getter<EventRepository>,
     @repository.getter('WorkingHourRepository')

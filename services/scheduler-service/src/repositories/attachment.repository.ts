@@ -5,7 +5,6 @@ import {
   juggler,
   repository,
 } from '@loopback/repository';
-import {SchedulerBindings} from '../keys';
 import {Attachment, AttachmentRelations, Event} from '../models';
 import {EventRepository} from './event.repository';
 
@@ -20,7 +19,7 @@ export class AttachmentRepository extends DefaultCrudRepository<
   >;
 
   constructor(
-    @inject(SchedulerBindings.dbConnector) dataSource: juggler.DataSource,
+    @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
     @repository.getter('EventRepository')
     protected eventRepositoryGetter: Getter<EventRepository>,
   ) {
