@@ -2,7 +2,6 @@ import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {param, patch, post, requestBody} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
-import {CONTENT_TYPE, STATUS_CODE} from '../enums';
 import {
   MeetingOptions,
   SessionOptions,
@@ -13,6 +12,7 @@ import {VideoChatSessionRepository} from '../repositories/video-chat-session.rep
 import {VideoChatBindings} from '../keys';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import { PermissionKeys } from '../enums/permission-keys.enum';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourcefuse-service-catalog/core';
 
 export class VideoChatSessionController {
   constructor(

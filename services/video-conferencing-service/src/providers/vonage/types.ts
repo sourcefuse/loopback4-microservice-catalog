@@ -11,6 +11,11 @@ import {
   VideoChatInterface,
 } from '../../types';
 
+export interface VonageConfig {
+  apiKey: string;
+  apiSecret: string;
+}
+
 /**
  * @interface VonageMeetingOptions
  * @param mediaMode optional parameter used in vonage (not in twilio) for checking mode routed/relayed

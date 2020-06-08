@@ -35,7 +35,7 @@
 				<column name="id" />
 			</index>
 		</table>
-		<table name="video-session-details" >
+		<table name="video_session_details" >
 			<column name="id" type="integer" jt="4" mandatory="y" />
 			<column name="session_id" type="varchar" jt="12" mandatory="y" />
 			<column name="meeting_link" type="varchar" jt="12" />
@@ -57,7 +57,7 @@
 			<column name="upload_target" type="varchar" jt="12" />
 			<column name="end_time" type="timestamptz" jt="93" />
 			<column name="start_time" type="timestamptz" jt="93" />
-			<index name="pk_video-session-details_id" unique="PRIMARY_KEY" >
+			<index name="pk_video_session_details_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
 		</table>
@@ -66,6 +66,6 @@
 	<layout name="Default Layout" id="Layout_10818e9" show_relation="columns" >
 		<entity schema="public" name="session_attendees" color="C1D8EE" x="224" y="48" />
 		<entity schema="public" name="audit_logs" color="C1D8EE" x="240" y="160" />
-		<entity schema="public" name="video-session-details" color="C1D8EE" x="48" y="48" />
+		<entity schema="public" name="video_session_details" color="C1D8EE" x="48" y="48" />
 	</layout>
 </project>

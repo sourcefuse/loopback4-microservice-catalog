@@ -19,7 +19,7 @@ CREATE TABLE videochatms.video_session_details
   is_deleted 				bool DEFAULT false NOT NULL ,
   created_by 				integer ,
   modified_by 				integer ,
-  CONSTRAINT "pk_video-session-details_id" PRIMARY KEY ( id )
+  CONSTRAINT "pk_video_session_details_id" PRIMARY KEY ( id )
 
 );
 

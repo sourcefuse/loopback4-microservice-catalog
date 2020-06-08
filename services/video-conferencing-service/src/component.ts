@@ -18,6 +18,7 @@ import {
   ProviderMap,
 } from '@loopback/core';
 import {VideoChatBindings} from './keys';
+import { VonageBindings } from '../src/providers/vonage/keys';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -106,6 +107,11 @@ export class VideoConfServiceComponent implements Component {
         allowAlwaysPaths: ['/explorer'],
       }),
     );
+
+    bindings.push(Binding.bind(VonageBindings.config).to({
+      apiKey: process.env.VONAGE_API_KEY as string,
+      apiSecret: process.env.VONAGE_API_SECRET as string,
+    }));
     this.application.component(AuthorizationComponent);
   }
 }
