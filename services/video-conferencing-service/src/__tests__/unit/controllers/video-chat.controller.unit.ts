@@ -187,6 +187,24 @@ describe('Session APIs', () => {
         .catch(err => err);
       expect(error).instanceof(Error);
     });
+
+    it('denies if the meeting has already ended', async () => {
+      setUp({
+        getToken: sinon.stub().returns(getVonageSessionResponse({})),
+      });
+      const sessionOptions = getSessionOptions({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({isScheduled: true, endTime: pastDate}));
+      const error = await controller.getMeetingToken(
+        sessionOptions,
+        meetingLink,
+      );
+      expect(error).eql({
+        sessionId: 'dummy-session-id',
+        error: `This meeting link is expired.`,
+      });
+      sinon.assert.calledOnce(findOne);
+    })
   });
 
   describe('PATCH /session/{meetingLink}/end', () => {

@@ -9,7 +9,7 @@ import { AuditLogsRepository } from '../../../repositories';
 
 describe('Archive APIs', () => {
   const archiveId = 'dummy-archive-id';
-  const invalidArchiveId = 'dummy-invalid-archive-id';
+  const invalidArchiveId = '';
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
   let videoChatProvider: VideoChatInterface;
   let controller: VideoChatArchiveController;
@@ -52,6 +52,12 @@ describe('Archive APIs', () => {
       const result = await controller.deleteArchive(archiveId);
       expect(result).to.be.Null;
     });
+
+    it('returns an error for invalid archive id', async () => {
+      setUp({deleteArchive: sinon.stub().resolves() });
+      const error = await controller.deleteArchive(invalidArchiveId).catch(err => err);
+      expect(error).instanceOf(Error);
+    })
   });
 
   function setUp(providerStub: Partial<VideoChatInterface>) {
