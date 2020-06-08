@@ -70,6 +70,8 @@ export class Calendar extends UserModifiableEntity {
 
 export interface CalendarRelations {
   // describe navigational properties here
+  subscriptions?: Subscription[];
+  workingHours?: WorkingHour[];
 }
 
 export type CalendarWithRelations = Calendar & CalendarRelations;

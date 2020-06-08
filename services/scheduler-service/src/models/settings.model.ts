@@ -1,6 +1,6 @@
 import {model, property} from '@loopback/repository';
 import {OwnerType} from './enums/owner-type.enum';
-import {UserModifiableEntity} from './user-modifiable-entity.model';
+import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 
 @model({
   name: 'settings',
@@ -52,9 +52,3 @@ export class Settings extends UserModifiableEntity {
     super(data);
   }
 }
-
-export interface SettingsRelations {
-  // describe navigational properties here
-}
-
-export type SettingsWithRelations = Settings & SettingsRelations;

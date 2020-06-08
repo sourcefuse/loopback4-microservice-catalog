@@ -39,9 +39,3 @@ export class Theme extends UserModifiableEntity {
     super(data);
   }
 }
-
-export interface ThemeRelations {
-  // describe navigational properties here
-}
-
-export type ThemeWithRelations = Theme & ThemeRelations;

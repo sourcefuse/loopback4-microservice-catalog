@@ -1,3 +1,4 @@
+
 import {Entity, model, property} from '@loopback/repository';
 
 @model({
@@ -67,9 +68,3 @@ export class AuditLog extends Entity {
     super(data);
   }
 }
-
-export interface AuditLogRelations {
-  // describe navigational properties here
-}
-
-export type AuditLogWithRelations = AuditLog & AuditLogRelations;

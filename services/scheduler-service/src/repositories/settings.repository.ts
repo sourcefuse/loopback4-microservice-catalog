@@ -1,11 +1,10 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {Settings, SettingsRelations} from '../models';
+import {Settings} from '../models';
 
 export class SettingsRepository extends DefaultCrudRepository<
   Settings,
-  typeof Settings.prototype.id,
-  SettingsRelations
+  typeof Settings.prototype.id
 > {
   constructor(
     @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
