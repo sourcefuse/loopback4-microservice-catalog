@@ -1,5 +1,5 @@
 import {hasMany, model, property} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
+import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
 import {Event} from './event.model';
 import {Subscription} from './subscription.model';
 import {WorkingHour} from './working-hour.model';
@@ -7,7 +7,7 @@ import {WorkingHour} from './working-hour.model';
 @model({
   name: 'calendars',
 })
-export class Calendar extends UserModifiableEntity {
+export class Calendar extends UserModifiableEntity implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,
@@ -62,6 +62,18 @@ export class Calendar extends UserModifiableEntity {
 
   @hasMany(() => Subscription, {name: 'subscriptions'})
   subscriptions: Subscription[];
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_meadata',
+  })
+  extMetadata: object;
 
   constructor(data?: Partial<Calendar>) {
     super(data);

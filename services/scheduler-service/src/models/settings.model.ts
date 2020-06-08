@@ -1,11 +1,11 @@
 import {model, property} from '@loopback/repository';
 import {OwnerType} from './enums/owner-type.enum';
-import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
+import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
 
 @model({
   name: 'settings',
 })
-export class Settings extends UserModifiableEntity {
+export class Settings extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
   @property({
     type: 'string',
     id: true,
@@ -47,6 +47,18 @@ export class Settings extends UserModifiableEntity {
     name: 'setting_value',
   })
   settingValue?: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_meadata',
+  })
+  extMetadata: object;
 
   constructor(data?: Partial<Settings>) {
     super(data);

@@ -1,12 +1,12 @@
 import {belongsTo, model, property} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
+import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {DayOfWeekType} from './enums/day-of-week.enum';
 
 @model({
   name: 'working_hours',
 })
-export class WorkingHour extends UserModifiableEntity {
+export class WorkingHour extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
   @property({
     type: 'string',
     id: true,
@@ -51,6 +51,18 @@ export class WorkingHour extends UserModifiableEntity {
     },
   )
   calendarId: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_meadata',
+  })
+  extMetadata: object;
 
   constructor(data?: Partial<WorkingHour>) {
     super(data);

@@ -1,10 +1,10 @@
 import {model, property} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
+import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
 
 @model({
   name: 'themes',
 })
-export class Theme extends UserModifiableEntity {
+export class Theme extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
   @property({
     type: 'string',
     id: true,
@@ -34,6 +34,18 @@ export class Theme extends UserModifiableEntity {
     name: 'event_fg',
   })
   eventFg?: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_meadata',
+  })
+  extMetadata: object;
 
   constructor(data?: Partial<Theme>) {
     super(data);
