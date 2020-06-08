@@ -127,7 +127,6 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             token,
           },
         });
-        
         return {
           sessionId,
           token,

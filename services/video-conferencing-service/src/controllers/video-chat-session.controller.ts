@@ -2,7 +2,6 @@ import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {param, patch, post, requestBody, HttpErrors} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
-import {CONTENT_TYPE, STATUS_CODE} from '../enums';
 import {
   MeetingOptions,
   SessionOptions,
@@ -18,6 +17,8 @@ import cryptoRandomString = require('crypto-random-string');
 import { AuditLogsRepository } from '../repositories';
 import moment from 'moment';
 import { VideoChatSession } from '../models';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourcefuse-service-catalog/core';
+
 export class VideoChatSessionController {
   constructor(
     @repository(VideoChatSessionRepository)
