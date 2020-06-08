@@ -2,7 +2,7 @@ import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
 
 @model({
-  name: 'video-session-details',
+  name: 'video_session_details',
 })
 export class VideoChatSession extends UserModifiableEntity {
   @property({

@@ -21,5 +21,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "@loopback/boot": "^2.3.1"
   }
 }

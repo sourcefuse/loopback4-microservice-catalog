@@ -3,7 +3,7 @@ import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
 import {MeetingOptions, SessionOptions} from '../../types';
 import {VonageVideoChat} from './types';
-import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
+import OpenTok from 'opentok';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor() {
