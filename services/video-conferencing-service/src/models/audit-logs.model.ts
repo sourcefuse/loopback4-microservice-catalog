@@ -1,9 +1,10 @@
 import {Entity, model, property} from '@loopback/repository';
+import { ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
 
 @model({
   name: 'audit_logs',
 })
-export class AuditLogs extends Entity {
+export class AuditLogs extends Entity implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'number',
     id: true,
@@ -56,6 +57,18 @@ export class AuditLogs extends Entity {
     type: 'string',
   })
   reference?: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_meadata',
+  })
+  extMetadata: object;
 
   constructor(data?: Partial<AuditLogs>) {
     super(data);

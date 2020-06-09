@@ -1,10 +1,10 @@
 import {model, property} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourcefuse-service-catalog/core';
+import {UserModifiableEntity, ExternalIdentifierEnabledEntity} from '@sourcefuse-service-catalog/core';
 
 @model({
   name: 'video_session_details',
 })
-export class VideoChatSession extends UserModifiableEntity {
+export class VideoChatSession extends UserModifiableEntity implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'number',
     id: true,
@@ -71,6 +71,18 @@ export class VideoChatSession extends UserModifiableEntity {
     name: 'end_time',
   })
   endTime?: Date;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_meadata',
+  })
+  extMetadata: object;
 
   constructor(data?: Partial<VideoChatSession>) {
     super(data);
