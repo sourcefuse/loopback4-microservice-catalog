@@ -153,13 +153,13 @@ export class Event extends UserModifiableEntity
     type: 'string',
     name: 'ext_id',
   })
-  extId: string;
+  extId?: string;
 
   @property({
     type: 'object',
     name: 'ext_meadata',
   })
-  extMetadata: object;
+  extMetadata?: object;
 
   constructor(data?: Partial<Event>) {
     super(data);

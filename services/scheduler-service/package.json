@@ -25,7 +25,10 @@
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
   },
   "repository": {
     "type": "git",
@@ -46,6 +49,9 @@
     "@loopback/repository": "^2.5.1",
     "@loopback/rest": "^5.0.1",
     "@sourceloop/core": "^0.0.0",
+    "@sourcefuse-service-catalog/core": "^0.0.0",
+    "db-migrate": "^0.11.11",
+    "db-migrate-pg": "^1.2.2",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
     "loopback4-soft-delete": "^2.0.0",

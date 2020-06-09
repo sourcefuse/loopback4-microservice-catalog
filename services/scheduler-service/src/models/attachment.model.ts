@@ -50,13 +50,13 @@ export class Attachment extends UserModifiableEntity implements ExternalIdentifi
     type: 'string',
     name: 'ext_id',
   })
-  extId: string;
+  extId?: string;
 
   @property({
     type: 'object',
     name: 'ext_meadata',
   })
-  extMetadata: object;
+  extMetadata?: object;
 
   constructor(data?: Partial<Attachment>) {
     super(data);

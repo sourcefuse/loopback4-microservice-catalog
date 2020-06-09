@@ -52,13 +52,13 @@ export class Settings extends UserModifiableEntity implements ExternalIdentifier
     type: 'string',
     name: 'ext_id',
   })
-  extId: string;
+  extId?: string;
 
   @property({
     type: 'object',
     name: 'ext_meadata',
   })
-  extMetadata: object;
+  extMetadata?: object;
 
   constructor(data?: Partial<Settings>) {
     super(data);
