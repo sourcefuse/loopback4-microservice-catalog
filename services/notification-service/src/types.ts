@@ -1,7 +1,4 @@
-import {
-  IAuthUserWithPermissions,
-  IServiceConfig,
-} from '@sourcefuse-service-catalog/core';
+import {IAuthUserWithPermissions, IServiceConfig} from '@sourceloop/core';
 import {Config} from 'loopback4-notifications';
 
 export interface IChannelManager {

@@ -1,5 +1,5 @@
 import {model, property} from '@loopback/repository';
-import {BaseEntity} from '@sourcefuse-service-catalog/core';
+import {BaseEntity} from '@sourceloop/core';
 
 @model({
   name: 'notification_users',

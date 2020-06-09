@@ -27,7 +27,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   SuccessResponse,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {AccessResponseDto, NotificationAccess} from '../models';
 import {IChannelManager} from '../types';
 import {NotificationAccessRepository} from '../repositories';

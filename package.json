@@ -1,5 +1,5 @@
 {
-  "name": "@sourcefuse-service-catalog/root",
+  "name": "@sourceloop/root",
   "private": false,
   "scripts": {},
   "devDependencies": {
@@ -8,6 +8,7 @@
     "@commitlint/config-lerna-scopes": "^8.3.4",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
+    "cz-customizable": "^6.2.0",
     "husky": "^4.2.5",
     "lerna": "^3.16.2"
   },
@@ -19,7 +20,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-customizable"
     }
   }
 }

@@ -31,7 +31,7 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   IAuthUserWithPermissions,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {inject} from '@loopback/core';
 import {PermissionKey} from '../enums/permission-key.enum';

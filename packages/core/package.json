@@ -1,5 +1,5 @@
 {
-  "name": "@sourcefuse-service-catalog/core",
+  "name": "@sourceloop/core",
   "version": "0.0.0",
   "description": "packages",
   "keywords": [
@@ -45,9 +45,12 @@
     "@loopback/core": "^2.7.0",
     "@loopback/repository": "^2.5.1",
     "@loopback/rest": "^5.0.1",
+    "@loopback/service-proxy": "^2.3.1",
     "i18n": "^0.10.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
+    "logform": "^2.1.2",
+    "loopback-datasource-juggler": "^4.21.2",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
     "loopback4-helmet": "^1.0.3",

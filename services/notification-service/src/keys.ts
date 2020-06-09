@@ -1,6 +1,6 @@
 import {BindingKey} from '@loopback/core';
 import {INotifServiceConfig, IChannelManager} from './types';
-import {BINDING_PREFIX} from '@sourcefuse-service-catalog/core';
+import {BINDING_PREFIX} from '@sourceloop/core';
 
 export namespace NotifServiceBindings {
   export const Config = BindingKey.create<INotifServiceConfig | null>(

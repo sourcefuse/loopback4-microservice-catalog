@@ -1,6 +1,6 @@
 import {inject} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourcefuse-service-catalog/core';
+import {DefaultSoftCrudRepository} from '@sourceloop/core';
 
 import {NotificationUser} from '../models';
 

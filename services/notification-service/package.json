@@ -1,5 +1,5 @@
 {
-  "name": "@sourcefuse-service-catalog/notification-service",
+  "name": "@sourceloop/notification-service",
   "version": "0.0.0",
   "description": "services",
   "keywords": [
@@ -45,7 +45,7 @@
     "@loopback/core": "^2.7.0",
     "@loopback/repository": "^2.5.1",
     "@loopback/rest": "^5.0.1",
-    "@sourcefuse-service-catalog/core": "^0.0.0",
+    "@sourceloop/core": "^0.0.0",
     "lodash": "^4.17.15",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
