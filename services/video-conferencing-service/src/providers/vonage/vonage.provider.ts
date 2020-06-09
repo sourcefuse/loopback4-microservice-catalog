@@ -8,7 +8,7 @@ import {
   VonageVideoChat,
   VonageSessionOptions,
 } from './types';
-import OpenTok = require('opentok'); // https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
+import OpenTok from 'opentok';
 import { promisify } from 'util';
 import { ArchiveMode } from 'opentok'; 
 import { AuditLogsRepository } from '../../repositories';
@@ -57,10 +57,10 @@ export class VonageProvider implements Provider<VonageVideoChat> {
                 if (err) {
                   reject(err);
                 }
-                if (!session) {                  
+                if (!session) {  
                   throw new HttpErrors.BadRequest('Error creating session');
                 } else {
-                  sessionId = session.sessionId;                  
+                  sessionId = session.sessionId;
                   resolve(sessionId);
                 }
               },
