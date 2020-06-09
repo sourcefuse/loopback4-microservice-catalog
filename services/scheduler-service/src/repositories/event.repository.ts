@@ -1,17 +1,21 @@
 import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
-  DefaultCrudRepository,
   HasManyRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourcefuse-service-catalog/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {Attachment, Attendee, Calendar, Event, EventRelations} from '../models';
 import {AttachmentRepository} from './attachment.repository';
 import {AttendeeRepository} from './attendee.repository';
 import {CalendarRepository} from './calendar.repository';
 
-export class EventRepository extends DefaultCrudRepository<
+export class EventRepository extends DefaultUserModifyCrudRepository<
   Event,
   typeof Event.prototype.id,
   EventRelations
@@ -38,6 +42,10 @@ export class EventRepository extends DefaultCrudRepository<
 
   constructor(
     @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
     @repository.getter('CalendarRepository')
     protected calendarRepositoryGetter: Getter<CalendarRepository>,
     @repository.getter('AttendeeRepository')
@@ -45,7 +53,7 @@ export class EventRepository extends DefaultCrudRepository<
     @repository.getter('AttachmentRepository')
     protected attachmentRepositoryGetter: Getter<AttachmentRepository>,
   ) {
-    super(Event, dataSource);
+    super(Event, dataSource, getCurrentUser);
 
     this.attachments = this.createHasManyRepositoryFactoryFor(
       'attachments',

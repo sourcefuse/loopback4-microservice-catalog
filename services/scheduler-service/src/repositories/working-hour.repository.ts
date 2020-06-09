@@ -1,14 +1,14 @@
 import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 import {
-  BelongsToAccessor,
-  DefaultCrudRepository,
-  juggler,
-  repository,
-} from '@loopback/repository';
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourcefuse-service-catalog/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {Calendar, WorkingHour, WorkingHourRelations} from '../models';
 import {CalendarRepository} from './calendar.repository';
 
-export class WorkingHourRepository extends DefaultCrudRepository<
+export class WorkingHourRepository extends DefaultUserModifyCrudRepository<
   WorkingHour,
   typeof WorkingHour.prototype.id,
   WorkingHourRelations
@@ -20,10 +20,14 @@ export class WorkingHourRepository extends DefaultCrudRepository<
 
   constructor(
     @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
     @repository.getter('CalendarRepository')
     protected calendarRepositoryGetter: Getter<CalendarRepository>,
   ) {
-    super(WorkingHour, dataSource);
+    super(WorkingHour, dataSource, getCurrentUser);
 
     this.calendar = this.createBelongsToAccessorFor(
       'calendar',

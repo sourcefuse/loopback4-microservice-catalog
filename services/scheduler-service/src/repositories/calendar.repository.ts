@@ -1,10 +1,14 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
   HasManyRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourcefuse-service-catalog/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {
   Calendar,
   CalendarRelations,
@@ -16,7 +20,7 @@ import {EventRepository} from './event.repository';
 import {SubscriptionRepository} from './subscription.repository';
 import {WorkingHourRepository} from './working-hour.repository';
 
-export class CalendarRepository extends DefaultCrudRepository<
+export class CalendarRepository extends DefaultUserModifyCrudRepository<
   Calendar,
   typeof Calendar.prototype.id,
   CalendarRelations
@@ -38,6 +42,10 @@ export class CalendarRepository extends DefaultCrudRepository<
 
   constructor(
     @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
     @repository.getter('EventRepository')
     protected eventRepositoryGetter: Getter<EventRepository>,
     @repository.getter('WorkingHourRepository')
@@ -45,7 +53,7 @@ export class CalendarRepository extends DefaultCrudRepository<
     @repository.getter('SubscriptionRepository')
     protected SubscriptionRepositoryGetter: Getter<SubscriptionRepository>,
   ) {
-    super(Calendar, dataSource);
+    super(Calendar, dataSource, getCurrentUser);
     this.subscriptions = this.createHasManyRepositoryFactoryFor(
       'subscriptions',
       SubscriptionRepositoryGetter,

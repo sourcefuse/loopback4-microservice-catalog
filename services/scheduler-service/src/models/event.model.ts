@@ -1,5 +1,8 @@
 import {belongsTo, hasMany, model, property} from '@loopback/repository';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
+} from '@sourcefuse-service-catalog/core';
 import {Attachment, Attendee} from '.';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {StatusType} from './enums/status.enum';
@@ -7,7 +10,8 @@ import {StatusType} from './enums/status.enum';
 @model({
   name: 'events',
 })
-export class Event extends UserModifiableEntity implements ExternalIdentifierEnabledEntity {
+export class Event extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,
@@ -139,10 +143,10 @@ export class Event extends UserModifiableEntity implements ExternalIdentifierEna
   )
   parentEventId?: string;
 
-  @hasMany(() => Attendee, {name: 'attendees'})
+  @hasMany(() => Attendee, {name: 'attendees', keyTo: 'eventId'})
   attendees: Attendee[];
 
-  @hasMany(() => Attachment, {name: 'attachments'})
+  @hasMany(() => Attachment, {name: 'attachments', keyTo: 'eventId'})
   attachments: Attachment[];
 
   @property({

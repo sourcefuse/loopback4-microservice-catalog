@@ -1,5 +1,8 @@
 import {hasMany, model, property} from '@loopback/repository';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
+} from '@sourcefuse-service-catalog/core';
 import {Event} from './event.model';
 import {Subscription} from './subscription.model';
 import {WorkingHour} from './working-hour.model';
@@ -7,7 +10,8 @@ import {WorkingHour} from './working-hour.model';
 @model({
   name: 'calendars',
 })
-export class Calendar extends UserModifiableEntity implements ExternalIdentifierEnabledEntity {
+export class Calendar extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,
@@ -54,13 +58,13 @@ export class Calendar extends UserModifiableEntity implements ExternalIdentifier
   })
   timezone?: string;
 
-  @hasMany(() => Event, {name: 'events'})
+  @hasMany(() => Event, {name: 'events', keyTo: 'calendarId'})
   events: Event[];
 
-  @hasMany(() => WorkingHour, {name: 'workingHours'})
+  @hasMany(() => WorkingHour, {name: 'workingHours', keyTo: 'calendarId'})
   workingHours: WorkingHour[];
 
-  @hasMany(() => Subscription, {name: 'subscriptions'})
+  @hasMany(() => Subscription, {name: 'subscriptions', keyTo: 'calendarId'})
   subscriptions: Subscription[];
 
   @property({

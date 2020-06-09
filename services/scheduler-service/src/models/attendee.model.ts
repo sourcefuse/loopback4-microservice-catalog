@@ -1,12 +1,16 @@
 import {belongsTo, model, property} from '@loopback/repository';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
+} from '@sourcefuse-service-catalog/core';
 import {ResponseStatusType} from './enums/response-status.enum';
 import {Event, EventWithRelations} from './event.model';
 
 @model({
   name: 'attendees',
 })
-export class Attendee extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
+export class Attendee extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,
@@ -23,7 +27,7 @@ export class Attendee extends UserModifiableEntity implements ExternalIdentifier
     type: 'date',
     name: 'end_datetime',
   })
-  endDateTime?: string;
+  endDateTime?: Date;
 
   @property({
     type: 'boolean',
@@ -65,7 +69,7 @@ export class Attendee extends UserModifiableEntity implements ExternalIdentifier
     type: 'date',
     name: 'start_datetime',
   })
-  startDateTime?: string;
+  startDateTime?: Date;
 
   @belongsTo(
     () => Event,
