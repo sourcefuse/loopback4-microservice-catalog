@@ -15,14 +15,14 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE main.calendars (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
-    created_by varchar(100),
+    created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     deleted bool DEFAULT FALSE,
     "source" text,
     enable_working_hours bool DEFAULT FALSE,
     "location" varchar(300),
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified_by varchar(100),
+    modified_by varchar,
     owner_display_name varchar(100),
     owner_email varchar(200) NOT NULL,
     summary varchar(100),
@@ -61,7 +61,7 @@ CREATE TABLE main.subscriptions (
     is_hidden bool DEFAULT FALSE,
     is_primary bool DEFAULT FALSE,
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified_by varchar(100),
+    modified_by varchar,
     notification_settings json,
     subscriber varchar NOT NULL,
     ext_id varchar,
@@ -95,13 +95,13 @@ ALTER TABLE main.subscriptions
 CREATE TABLE main.working_hours (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     calendar_id uuid NOT NULL,
-    created_by varchar(100),
+    created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     day_of_week integer,
     deleted bool DEFAULT FALSE,
     "end" time,
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified_by varchar(100),
+    modified_by varchar,
     "start" time,
     ext_id varchar,
     ext_metadata jsonb,
@@ -125,7 +125,6 @@ CREATE TABLE main.events (
     calendar_id uuid NOT NULL,
     created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    creator_display_name varchar(100),
     deleted bool DEFAULT FALSE,
     description text,
     end_datetime timestamptz,
@@ -136,6 +135,7 @@ CREATE TABLE main.events (
     link text,
     "location" varchar(300),
     meeting_link text,
+    modified_by varchar,
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     organizer_display_name varchar(100),
     organizer_email varchar(200),
@@ -144,7 +144,6 @@ CREATE TABLE main.events (
     status varchar,
     summary text,
     timezone varchar,
-    modified_by varchar(100),
     ext_id varchar,
     ext_metadata jsonb,
     CONSTRAINT pk_events_id PRIMARY KEY (id)
@@ -190,7 +189,7 @@ CREATE TABLE main.attendees (
     is_organizer bool DEFAULT FALSE,
     messages text,
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified_by varchar(100),
+    modified_by varchar,
     response_status varchar DEFAULT 'needsAction',
     start_datetime timestamptz,
     ext_id varchar,
@@ -226,7 +225,7 @@ CREATE TABLE main.attachments (
     mimetype varchar(200),
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     title varchar(400),
-    modified_by varchar(100),
+    modified_by varchar,
     ext_id varchar,
     ext_metadata jsonb,
     CONSTRAINT pk_attachments_id PRIMARY KEY (id)
@@ -241,32 +240,12 @@ COMMENT ON COLUMN main.attachments.modified_by IS 'User/Person Email Id.';
 ALTER TABLE main.attachments
     ADD CONSTRAINT fk_attachments_events FOREIGN KEY (event_id) REFERENCES main.events (id);
 
-CREATE TABLE main.oauth_client_detail (
-    id uuid DEFAULT uuid_generate_v1 () NOT NULL,
-    access_token_validity integer,
-    additional_information varchar(200),
-    autoapprove bool DEFAULT FALSE,
-    client_id text NOT NULL,
-    client_secret text NOT NULL,
-    name varchar(100),
-    redirect_uri text,
-    refresh_token_validity integer,
-    "scope" varchar(200),
-    ext_id varchar,
-    ext_metadata jsonb,
-    CONSTRAINT pk_auth_client_id PRIMARY KEY (id)
-);
-
-COMMENT ON TABLE main.oauth_client_detail IS 'For handling Client Credentials Flow in OAuth 2.0. \nIn Future, we can use this.';
-
-COMMENT ON COLUMN main.oauth_client_detail. "scope" IS 'A comma-separated list of permissions to request';
-
 CREATE TABLE main.settings (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     deleted bool DEFAULT FALSE,
-    modified_by varchar(100),
+    modified_by varchar,
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     owner_id varchar(225) NOT NULL,
     owner_type varchar DEFAULT 'global',
@@ -301,7 +280,7 @@ CREATE TABLE main.themes (
     event_fg varchar(200),
     modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     created_by varchar,
-    modified_by varchar(100),
+    modified_by varchar,
     ext_id varchar,
     ext_metadata jsonb,
     CONSTRAINT pk_colors_id PRIMARY KEY (id)
@@ -325,7 +304,7 @@ COMMENT ON COLUMN main.themes.modified_by IS 'User/Person Email Id.';
 
 CREATE TABLE logs.audit_logs (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
-    action_by varchar(200),
+    action_by varchar,
     "after" jsonb,
     "before" jsonb,
     entity_id varchar,

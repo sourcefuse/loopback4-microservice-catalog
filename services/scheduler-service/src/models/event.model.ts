@@ -23,11 +23,6 @@ export class Event extends UserModifiableEntity
     name: 'bg_color',
   })
   bgColor?: string;
-  @property({
-    type: 'string',
-    name: 'creator_display_name',
-  })
-  creatorDisplayName?: string;
 
   @property({
     type: 'string',
