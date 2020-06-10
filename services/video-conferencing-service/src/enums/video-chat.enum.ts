@@ -5,8 +5,8 @@ export namespace VonageEnums {
   }
 
   export enum ArchiveMode {
-    Manual = 'Manual',
-    Always = 'Always',
+    Manual = 'manual',
+    Always = 'always',
   }
 
   export enum MediaMode {
