@@ -1,0 +1,1620 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" id="Project_1b2eba2" database="PostgreSQL" >
+	<schema name="logs" >
+		<table name="audit_logs" >
+			<comment><![CDATA[DB trigger based audit_logs]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="action_by" type="varchar" jt="12" >
+				<comment><![CDATA[Person/User Email ID.]]></comment>
+			</column>
+			<column name="after" type="jsonb" decimal="0" jt="2000" />
+			<column name="before" type="jsonb" decimal="0" jt="2000" />
+			<column name="entity_id" type="varchar" decimal="0" jt="12" />
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="log_type" type="varchar" length="100" decimal="0" jt="12" >
+				<defo>&#039;APPLICATION_LOGS&#039;::character varying</defo>
+			</column>
+			<column name="operation_name" type="varchar" length="10" decimal="0" jt="12" mandatory="y" />
+			<column name="operation_time" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>now()</defo>
+			</column>
+			<column name="table_name" type="varchar" length="60" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_audit_logs_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<sequence name="audit_logs_id_seq" />
+		<procedure name="audit_trigger" id="Procedure_5f35860" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION logs.audit_trigger()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE
+    USER_ID VARCHAR;
+    ENTITY_ID VARCHAR;
+BEGIN
+IF TG_OP = 'INSERT'
+THEN
+USER_ID := to_json(NEW)->'created_by';
+ENTITY_ID := to_json(NEW)->'id';
+INSERT INTO logs.audit_logs (
+  operation_name,
+  table_name,
+  log_type,
+  entity_id,
+  action_by,
+  after,
+  ext_id,
+  ext_metadata
+  )
+VALUES (
+  TG_OP,
+  TG_TABLE_NAME,
+  TG_ARGV[0],
+  ENTITY_ID,
+  USER_ID,
+  to_jsonb(NEW),
+  to_json(NEW)->'ext_id',
+  to_json(NEW)->'ext_metadata'
+  );
+RETURN NEW;
+ELSIF TG_OP = 'UPDATE'
+THEN
+USER_ID := to_json(NEW)->'modified_by';
+ENTITY_ID := to_json(NEW)->'id';
+-- IF NEW != OLD THEN
+ INSERT INTO logs.audit_logs (
+   operation_name,
+   table_name,
+   log_type,
+   entity_id,
+   action_by,
+   before,
+   after,
+   ext_id,
+   ext_metadata
+   )
+VALUES (
+  TG_OP,
+  TG_TABLE_NAME,
+  TG_ARGV[0],
+  ENTITY_ID,
+  USER_ID,
+  to_jsonb(OLD),
+  to_jsonb(NEW),
+  to_json(NEW)->'ext_id',
+  to_json(NEW)->'ext_metadata'
+  );
+-- END IF;
+ RETURN NEW;
+ELSIF TG_OP = 'DELETE'
+THEN
+USER_ID := to_json(OLD)->'modified_by';
+ENTITY_ID := to_json(OLD)->'id';
+INSERT INTO logs.audit_logs (
+  operation_name,
+  table_name,
+  log_type,
+  entity_id,
+  action_by,
+  before,
+  ext_id,
+  ext_metadata)
+VALUES (
+  TG_OP,
+  TG_TABLE_NAME,
+  TG_ARGV[0],
+  ENTITY_ID,
+  USER_ID,
+  to_jsonb(OLD),
+  to_json(OLD)->'ext_id',
+  to_json(OLD)->'ext_metadata'
+);
+RETURN OLD;
+END IF;
+END;
+$function$
+;]]></string>
+			<result_param name="returnValue" jt="1111" type="trigger" />
+			<result_param name="returnValue" jt="1111" type="trigger" />
+			<result_param name="returnValue" jt="1111" type="trigger" />
+		</procedure>
+	</schema>
+	<schema name="information_schema" catalogname="sf_schedular" >
+		<udt name="cardinal_number" udt_java_type="12" udt_precision="NONE" >
+			<udt_script><![CDATA[CREATE DOMAIN information_schema.cardinal_number integer CONSTRAINT cardinal_number_domain_check CHECK (VALUE >= 0)]]></udt_script>
+		</udt>
+		<udt name="character_data" udt_java_type="12" udt_precision="NONE" >
+			<udt_script><![CDATA[CREATE DOMAIN information_schema.character_data character varying ]]></udt_script>
+		</udt>
+		<udt name="sql_identifier" udt_java_type="12" udt_precision="NONE" >
+			<udt_script><![CDATA[CREATE DOMAIN information_schema.sql_identifier character varying ]]></udt_script>
+		</udt>
+		<udt name="time_stamp" udt_java_type="12" udt_precision="NONE" >
+			<udt_script><![CDATA[CREATE DOMAIN information_schema.time_stamp timestamp(2) with time zone DEFAULT CURRENT_TIMESTAMP(2) ]]></udt_script>
+		</udt>
+		<udt name="yes_or_no" udt_java_type="12" udt_precision="NONE" >
+			<udt_script><![CDATA[CREATE DOMAIN information_schema.yes_or_no character varying(3) CONSTRAINT yes_or_no_check CHECK (VALUE::text = ANY (ARRAY['YES'::character varying, 'NO'::character varying]::text[]))]]></udt_script>
+		</udt>
+	</schema>
+	<schema name="main" catalogname="sf_schedular" >
+		<table name="attachments" >
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="created_by" type="varchar" decimal="0" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="event_id" type="integer" jt="4" />
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="fileurl" type="text" jt="12" mandatory="y" />
+			<column name="iconlink" type="text" jt="12" />
+			<column name="mimetype" type="varchar" length="200" jt="12" />
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="title" type="varchar" length="400" jt="12" />
+			<index name="pk_attachments_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_attachments_events" to_schema="sf_schedular.main" to_table="events" >
+				<fk_column name="event_id" pk="id" />
+			</fk>
+		</table>
+		<table name="attendees" >
+			<comment><![CDATA[Events can also have multiple attendees. An attendee is usually the primary calendar of an invited user.]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="created_by" type="varchar" decimal="0" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="email" type="varchar" length="200" jt="12" mandatory="y" />
+			<column name="end_datetime" type="timestamptz" jt="93" />
+			<column name="event_id" type="integer" jt="4" mandatory="y" />
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="is_optional" type="bool" jt="-7" >
+				<defo>false</defo>
+			</column>
+			<column name="is_organizer" type="bool" jt="-7" >
+				<defo>false</defo>
+			</column>
+			<column name="messages" type="text" decimal="0" jt="12" >
+				<comment><![CDATA[Attendess Messages]]></comment>
+			</column>
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="response_status" type="responsestatus" decimal="0" jt="12" >
+				<defo>&#039;needsAction&#039;::responsestatus</defo>
+				<comment><![CDATA[The attendee's response status. Possible values are:
+"needsAction" - The attendee has not responded to the invitation.
+"declined" - The attendee has declined the invitation.
+"tentative" - The attendee has tentatively accepted the invitation.
+"accepted" - The attendee has accepted the invitation.]]></comment>
+			</column>
+			<column name="start_datetime" type="timestamptz" jt="93" >
+				<comment><![CDATA[this can be remove later.]]></comment>
+			</column>
+			<index name="pk_attendees_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_attendees_events" to_schema="sf_schedular.main" to_table="events" >
+				<fk_column name="event_id" pk="id" />
+			</fk>
+		</table>
+		<table name="calendars" >
+			<comment><![CDATA[A calendar is a collection of related events, along with additional 
+metadata such as summary, default time zone, location, etc. 
+Each calendar is identified by an ID. Calendars can have multiple owners.]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+				<comment><![CDATA[Identifier of the calendar.]]></comment>
+			</column>
+			<column name="created_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="enable_working_hours" type="bool" jt="-7" >
+				<defo>false</defo>
+			</column>
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="location" type="varchar" length="300" jt="12" >
+				<comment><![CDATA[Geographic location of the calendar as free-form text.]]></comment>
+			</column>
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="owner_display_name" type="varchar" length="100" jt="12" />
+			<column name="owner_email" type="varchar" length="200" jt="12" mandatory="y" />
+			<column name="source" type="text" jt="12" >
+				<comment><![CDATA[source like 'internal', 'google calander', 'outlook']]></comment>
+			</column>
+			<column name="summary" type="varchar" length="100" jt="12" />
+			<column name="timezone" type="varchar" length="120" jt="12" >
+				<comment><![CDATA[The time zone of the calendar.]]></comment>
+			</column>
+			<index name="pk_calendars_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="events" >
+			<comment><![CDATA[An event is an object associated with a specific date or time range. Events are identified by an ID that is unique within a calendar. Besides a start and end date-time, events contain other data such as summary, description, location, status, reminders, attachments,]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+				<comment><![CDATA[main primary key]]></comment>
+			</column>
+			<column name="bg_color" type="varchar" jt="12" />
+			<column name="calendar_id" type="integer" jt="4" />
+			<column name="created_by" type="varchar" decimal="0" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="description" type="text" decimal="0" jt="12" >
+				<comment><![CDATA[Description of the calendar.]]></comment>
+			</column>
+			<column name="end_datetime" type="timestamptz" jt="93" />
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="fg_color" type="varchar" jt="12" />
+			<column name="icaluid" type="varchar" jt="12" >
+				<comment><![CDATA[It is used to uniquely identify events accross calendaring systems 
+and must be supplied when importing events via the import method.
+Event unique identifier as defined in RFC5545.]]></comment>
+			</column>
+			<column name="is_full_day_event" type="bool" jt="-7" >
+				<defo>false</defo>
+			</column>
+			<column name="is_locked" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False.]]></comment>
+			</column>
+			<column name="link" type="text" length="400" jt="12" >
+				<comment><![CDATA[Event Link - where user can see the event detail.]]></comment>
+			</column>
+			<column name="location" type="varchar" length="300" jt="12" >
+				<comment><![CDATA[Geographic location of the event as free-form text.]]></comment>
+			</column>
+			<column name="meeting_link" type="text" length="200" jt="12" />
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="organizer_display_name" type="varchar" length="100" jt="12" />
+			<column name="organizer_email" type="varchar" length="200" jt="12" />
+			<column name="parent_event_id" type="uuid" jt="1111" />
+			<column name="start_datetime" type="timestamptz" jt="93" />
+			<column name="status" type="eventstatus" decimal="0" jt="12" >
+				<comment><![CDATA[Status of the event. Optional. Possible values are:
+"confirmed" - The event is confirmed. This is the default status.
+"tentative" - The event is tentatively confirmed.
+"cancelled" - The event is cancelled (deleted).]]></comment>
+			</column>
+			<column name="summary" type="text" jt="12" />
+			<column name="timezone" type="varchar" jt="12" />
+			<index name="pk_events_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_events_calendars" to_schema="sf_schedular.main" to_table="calendars" >
+				<fk_column name="calendar_id" pk="id" />
+			</fk>
+			<fk name="fk_events_events" to_schema="sf_schedular.main" to_table="events" >
+				<fk_column name="parent_event_id" pk="id" />
+			</fk>
+		</table>
+		<table name="settings" >
+			<comment><![CDATA[Setting resources represent settings that users can change from the Calendar UI.]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="created_by" type="varchar" decimal="0" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="owner_id" type="varchar" length="225" jt="12" mandatory="y" >
+				<comment><![CDATA[This can be an uuid or email id of user.]]></comment>
+			</column>
+			<column name="owner_type" type="varchar" jt="12" >
+				<defo>global</defo>
+				<comment><![CDATA[values are  'global', 'user', 'calendar', 'event']]></comment>
+			</column>
+			<column name="setting_name" type="varchar" length="225" jt="12" >
+				<comment><![CDATA[setting name - key of setting]]></comment>
+			</column>
+			<column name="setting_value" type="varchar" length="1500" jt="12" >
+				<comment><![CDATA[setting value - setting key value, accept any string.]]></comment>
+			</column>
+			<index name="pk_settings_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="subscriptions" >
+			<comment><![CDATA[Subscribe is a collection of all calendar entries that a user has added to their list. 
+You can use it to add and remove existing calendars to/from the users’ list. 
+You also use it to retrieve and set the values of user-specific calendar properties, such as default reminders. 
+Another example is foreground color, since different users can have different colors set for the same calendar.]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="access_role" type="accessroletype" decimal="0" jt="12" >
+				<defo>&#039;reader&#039;::accessroletype</defo>
+				<comment><![CDATA[The effective access role that the user has on the calendar. Possible values are:
+"freeBusyReader" - Provides read access to free/busy information.
+"reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.
+"writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.
+"owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to assign acess to other users.
+
+The owners of a calendar can share the calendar by giving access to other users.]]></comment>
+			</column>
+			<column name="bg_color" type="varchar" jt="12" >
+				<comment><![CDATA[The main color of the calendar in the hexadecimal format "#0088aa".]]></comment>
+			</column>
+			<column name="calendar_id" type="integer" jt="4" mandatory="y" />
+			<column name="created_by" type="varchar" decimal="0" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="default_reminders" type="json" jt="2000" >
+				<comment><![CDATA[The default reminders that the user has for this calendar.]]></comment>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation on user calendard. Read-only. Optional. The default is False.]]></comment>
+			</column>
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="fg_color" type="varchar" jt="12" >
+				<comment><![CDATA[The foreground color of the calendar in the hexadecimal format "#ffffff".]]></comment>
+			</column>
+			<column name="is_hidden" type="bool" jt="-7" >
+				<defo>false</defo>
+			</column>
+			<column name="is_primary" type="bool" jt="-7" >
+				<defo>false</defo>
+			</column>
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="notification_settings" type="json" jt="2000" >
+				<comment><![CDATA[The notifications that the user is receiving for this calendar.]]></comment>
+			</column>
+			<column name="subscriber" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<index name="pk_subscriptions_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_subscriptions_calendars" to_schema="sf_schedular.main" to_table="calendars" >
+				<fk_column name="calendar_id" pk="id" />
+			</fk>
+		</table>
+		<table name="themes" >
+			<comment><![CDATA[A global palette of calendar colors, mapping. 
+A CalendarSubscribe and event collection have color field related to this.]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="cal_bg" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[The background color associated with this color definition.]]></comment>
+			</column>
+			<column name="cal_fg" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[The foreground color that can be used to write on top of a background with 'background' color.]]></comment>
+			</column>
+			<column name="created_by" type="varchar" decimal="0" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="event_bg" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[The background color associated with this color definition.]]></comment>
+			</column>
+			<column name="event_fg" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[The foreground color that can be used to write on top of a background with 'background' color.]]></comment>
+			</column>
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<index name="pk_colors_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="working_hours" >
+			<comment><![CDATA[The hours during which appointment is available.]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>uuid_generate_v1()</defo>
+			</column>
+			<column name="calendar_id" type="integer" jt="4" />
+			<column name="created_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="day_of_week" type="integer" jt="4" >
+				<comment><![CDATA[For store the day of week as an integer. ( 0 to 6 )]]></comment>
+			</column>
+			<column name="deleted" type="bool" jt="-7" >
+				<defo>false</defo>
+				<comment><![CDATA[For doing soft delete operation. The default is False.]]></comment>
+			</column>
+			<column name="end" type="time" jt="92" />
+			<column name="ext_id" type="varchar" jt="12" />
+			<column name="ext_metadata" type="jsonb" jt="2000" />
+			<column name="modified_by" type="varchar" jt="12" >
+				<comment><![CDATA[User/Person Email Id.]]></comment>
+			</column>
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="start" type="time" jt="92" />
+			<index name="pk_working_hours_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_working_hours_calendars" to_schema="sf_schedular.main" to_table="calendars" >
+				<fk_column name="calendar_id" pk="id" />
+			</fk>
+		</table>
+		<sequence name="attendees_id_seq" />
+		<sequence name="auth_client_id_seq" />
+		<sequence name="calendar_id_seq" />
+		<sequence name="calendar_list_id_seq" />
+		<sequence name="event_attachments_id_seq" />
+		<sequence name="event_id_seq" />
+		<sequence name="theme_id_seq" />
+		<sequence name="working_hour_id_seq" />
+	</schema>
+	<schema name="pg_catalog" catalogname="sf_schedular" >
+		<procedure name="RI_FKey_cascade_del" id="Procedure_599c483" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_cascade_del"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_cascade_del$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON DELETE CASCADE]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_cascade_upd" id="Procedure_43c4acd" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_cascade_upd"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_cascade_upd$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON UPDATE CASCADE]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_check_ins" id="Procedure_58c0ec2" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_check_ins"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_check_ins$function$
+;]]></string>
+			<comment><![CDATA[referential integrity FOREIGN KEY ... REFERENCES]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_check_upd" id="Procedure_2672761" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_check_upd"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_check_upd$function$
+;]]></string>
+			<comment><![CDATA[referential integrity FOREIGN KEY ... REFERENCES]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_noaction_del" id="Procedure_c2b896" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_noaction_del"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_noaction_del$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON DELETE NO ACTION]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_noaction_upd" id="Procedure_2e21556" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_noaction_upd"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_noaction_upd$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON UPDATE NO ACTION]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_restrict_del" id="Procedure_3f5be6b" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_restrict_del"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_restrict_del$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON DELETE RESTRICT]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_restrict_upd" id="Procedure_13b3d1e" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_restrict_upd"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_restrict_upd$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON UPDATE RESTRICT]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_setdefault_del" id="Procedure_350e6a" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_setdefault_del"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_setdefault_del$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON DELETE SET DEFAULT]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_setdefault_upd" id="Procedure_48d4c29" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_setdefault_upd"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_setdefault_upd$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON UPDATE SET DEFAULT]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_setnull_del" id="Procedure_3f94252" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_setnull_del"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_setnull_del$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON DELETE SET NULL]]></comment>
+		</procedure>
+		<procedure name="RI_FKey_setnull_upd" id="Procedure_1d5d1de" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_setnull_upd"()
+ RETURNS trigger
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$RI_FKey_setnull_upd$function$
+;]]></string>
+			<comment><![CDATA[referential integrity ON UPDATE SET NULL]]></comment>
+		</procedure>
+		<procedure name="abbrev" id="Procedure_22b7c73" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abbrev(inet)
+ RETURNS text
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$inet_abbrev$function$
+;]]></string>
+			<comment><![CDATA[abbreviated display of inet value]]></comment>
+			<input_param name="$1" jt="1111" type="inet" />
+			<result_param name="returnValue" jt="12" type="text" />
+		</procedure>
+		<procedure name="abbrev" id="Procedure_16025c3" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abbrev(inet)
+ RETURNS text
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$inet_abbrev$function$
+;]]></string>
+			<comment><![CDATA[abbreviated display of inet value]]></comment>
+		</procedure>
+		<procedure name="abs" id="Procedure_3160c9a" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_5994e00" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_2a20871" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_18df2af" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_46dc3e5" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_42bc9d1" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+		</procedure>
+		<procedure name="abstime" id="Procedure_4c37fcd" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstime(timestamp with time zone)
+ RETURNS abstime
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$timestamptz_abstime$function$
+;]]></string>
+			<comment><![CDATA[convert timestamp with time zone to abstime]]></comment>
+			<input_param name="$1" jt="93" type="timestamptz" />
+			<result_param name="returnValue" jt="1111" type="abstime" />
+		</procedure>
+		<procedure name="abstime" id="Procedure_4e5fcb7" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstime(timestamp with time zone)
+ RETURNS abstime
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$timestamptz_abstime$function$
+;]]></string>
+			<comment><![CDATA[convert timestamp with time zone to abstime]]></comment>
+		</procedure>
+		<procedure name="abstimeeq" id="Procedure_4520ef0" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimeeq(abstime, abstime)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT LEAKPROOF
+AS $function$abstimeeq$function$
+;]]></string>
+			<comment><![CDATA[implementation of = operator]]></comment>
+		</procedure>
+		<procedure name="abstimege" id="Procedure_28a3ca0" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimege(abstime, abstime)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT LEAKPROOF
+AS $function$abstimege$function$
+;]]></string>
+			<comment><![CDATA[implementation of >= operator]]></comment>
+		</procedure>
+		<procedure name="abstimegt" id="Procedure_2befdeb" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimegt(abstime, abstime)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT LEAKPROOF
+AS $function$abstimegt$function$
+;]]></string>
+			<comment><![CDATA[implementation of > operator]]></comment>
+		</procedure>
+		<procedure name="abstimein" id="Procedure_1062d40" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimein(cstring)
+ RETURNS abstime
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$abstimein$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="abstimele" id="Procedure_c09411" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimele(abstime, abstime)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT LEAKPROOF
+AS $function$abstimele$function$
+;]]></string>
+			<comment><![CDATA[implementation of <= operator]]></comment>
+		</procedure>
+		<procedure name="abstimelt" id="Procedure_2167616" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimelt(abstime, abstime)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT LEAKPROOF
+AS $function$abstimelt$function$
+;]]></string>
+			<comment><![CDATA[implementation of < operator]]></comment>
+		</procedure>
+		<procedure name="abstimene" id="Procedure_3b010ae" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimene(abstime, abstime)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT LEAKPROOF
+AS $function$abstimene$function$
+;]]></string>
+			<comment><![CDATA[implementation of <> operator]]></comment>
+		</procedure>
+		<procedure name="abstimeout" id="Procedure_225c10f" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimeout(abstime)
+ RETURNS cstring
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$abstimeout$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="abstimerecv" id="Procedure_4421579" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimerecv(internal)
+ RETURNS abstime
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$abstimerecv$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="abstimesend" id="Procedure_37b8964" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimesend(abstime)
+ RETURNS bytea
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$abstimesend$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="aclcontains" id="Procedure_5e46539" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclcontains(aclitem[], aclitem)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$aclcontains$function$
+;]]></string>
+			<comment><![CDATA[contains]]></comment>
+		</procedure>
+		<procedure name="acldefault" id="Procedure_bc6a36" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.acldefault("char", oid)
+ RETURNS aclitem[]
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$acldefault_sql$function$
+;]]></string>
+			<comment><![CDATA[TODO]]></comment>
+		</procedure>
+		<procedure name="aclexplode" id="Procedure_394676a" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclexplode(acl aclitem[], OUT grantor oid, OUT grantee oid, OUT privilege_type text, OUT is_grantable boolean)
+ RETURNS SETOF record
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT ROWS 10
+AS $function$aclexplode$function$
+;]]></string>
+			<comment><![CDATA[convert ACL item array to table, for use by information schema]]></comment>
+		</procedure>
+		<procedure name="aclinsert" id="Procedure_432465b" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclinsert(aclitem[], aclitem)
+ RETURNS aclitem[]
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$aclinsert$function$
+;]]></string>
+			<comment><![CDATA[add/update ACL item]]></comment>
+		</procedure>
+		<procedure name="aclitemeq" id="Procedure_2778d0" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclitemeq(aclitem, aclitem)
+ RETURNS boolean
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$aclitem_eq$function$
+;]]></string>
+			<comment><![CDATA[implementation of = operator]]></comment>
+		</procedure>
+		<procedure name="aclitemin" id="Procedure_5413a8b" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclitemin(cstring)
+ RETURNS aclitem
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$aclitemin$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="aclitemout" id="Procedure_4de0a31" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclitemout(aclitem)
+ RETURNS cstring
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$aclitemout$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="aclremove" id="Procedure_5b873fc" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.aclremove(aclitem[], aclitem)
+ RETURNS aclitem[]
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$aclremove$function$
+;]]></string>
+			<comment><![CDATA[remove ACL item]]></comment>
+		</procedure>
+		<procedure name="acos" id="Procedure_229bfd7" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.acos(double precision)
+ RETURNS double precision
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$dacos$function$
+;]]></string>
+			<comment><![CDATA[arccosine]]></comment>
+		</procedure>
+		<procedure name="acosd" id="Procedure_129ea90" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.acosd(double precision)
+ RETURNS double precision
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$dacosd$function$
+;]]></string>
+			<comment><![CDATA[arccosine, degrees]]></comment>
+		</procedure>
+		<procedure name="age" id="Procedure_5020db2" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
+			<input_param name="$1" jt="1111" type="xid" />
+			<result_param name="returnValue" jt="4" type="int4" />
+		</procedure>
+		<procedure name="age" id="Procedure_293f970" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
+			<input_param name="$1" jt="1111" type="xid" />
+			<result_param name="returnValue" jt="4" type="int4" />
+		</procedure>
+		<procedure name="age" id="Procedure_1a22766" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
+			<input_param name="$1" jt="1111" type="xid" />
+			<result_param name="returnValue" jt="4" type="int4" />
+		</procedure>
+		<procedure name="age" id="Procedure_14e5174" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
+			<input_param name="$1" jt="1111" type="xid" />
+			<result_param name="returnValue" jt="4" type="int4" />
+		</procedure>
+		<procedure name="age" id="Procedure_e2cb5c" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
+		</procedure>
+		<procedure name="amvalidate" id="Procedure_1a6de22" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.amvalidate(oid)
+ RETURNS boolean
+ LANGUAGE internal
+ PARALLEL SAFE STRICT
+AS $function$amvalidate$function$
+;]]></string>
+			<comment><![CDATA[validate an operator class]]></comment>
+		</procedure>
+		<procedure name="any_in" id="Procedure_4451474" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.any_in(cstring)
+ RETURNS "any"
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$any_in$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="any_out" id="Procedure_2675375" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.any_out("any")
+ RETURNS cstring
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$any_out$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyarray_in" id="Procedure_c9c213" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyarray_in(cstring)
+ RETURNS anyarray
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$anyarray_in$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyarray_out" id="Procedure_4273eb" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyarray_out(anyarray)
+ RETURNS cstring
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$anyarray_out$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyarray_recv" id="Procedure_3063fe4" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyarray_recv(internal)
+ RETURNS anyarray
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$anyarray_recv$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyarray_send" id="Procedure_592aeb2" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyarray_send(anyarray)
+ RETURNS bytea
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$anyarray_send$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyelement_in" id="Procedure_45c0c02" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyelement_in(cstring)
+ RETURNS anyelement
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$anyelement_in$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyelement_out" id="Procedure_5af8569" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyelement_out(anyelement)
+ RETURNS cstring
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$anyelement_out$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyenum_in" id="Procedure_2fb7aa5" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyenum_in(cstring)
+ RETURNS anyenum
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$anyenum_in$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyenum_out" id="Procedure_1200c13" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyenum_out(anyenum)
+ RETURNS cstring
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$anyenum_out$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anynonarray_in" id="Procedure_5ce78b8" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anynonarray_in(cstring)
+ RETURNS anynonarray
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$anynonarray_in$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anynonarray_out" id="Procedure_5854165" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anynonarray_out(anynonarray)
+ RETURNS cstring
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$anynonarray_out$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyrange_in" id="Procedure_12aa307" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyrange_in(cstring, oid, integer)
+ RETURNS anyrange
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$anyrange_in$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anyrange_out" id="Procedure_48460e4" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anyrange_out(anyrange)
+ RETURNS cstring
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$anyrange_out$function$
+;]]></string>
+			<comment><![CDATA[I/O]]></comment>
+		</procedure>
+		<procedure name="anytextcat" id="Procedure_11b63e2" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.anytextcat(anynonarray, text)
+ RETURNS text
+ LANGUAGE sql
+ STABLE PARALLEL SAFE STRICT COST 1
+AS $function$select $1::pg_catalog.text || $2$function$
+;]]></string>
+			<comment><![CDATA[implementation of || operator]]></comment>
+		</procedure>
+		<procedure name="area" id="Procedure_7e89da" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.area(circle)
+ RETURNS double precision
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$circle_area$function$
+;]]></string>
+			<comment><![CDATA[area of circle]]></comment>
+			<input_param name="$1" jt="1111" type="circle" />
+			<result_param name="returnValue" jt="8" type="float8" />
+		</procedure>
+		<procedure name="area" id="Procedure_885bd7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.area(circle)
+ RETURNS double precision
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$circle_area$function$
+;]]></string>
+			<comment><![CDATA[area of circle]]></comment>
+			<input_param name="$1" jt="1111" type="circle" />
+			<result_param name="returnValue" jt="8" type="float8" />
+		</procedure>
+		<procedure name="area" id="Procedure_2d86e77" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.area(circle)
+ RETURNS double precision
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$circle_area$function$
+;]]></string>
+			<comment><![CDATA[area of circle]]></comment>
+		</procedure>
+		<procedure name="areajoinsel" id="Procedure_1bb5e7" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.areajoinsel(internal, oid, internal, smallint, internal)
+ RETURNS double precision
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$areajoinsel$function$
+;]]></string>
+			<comment><![CDATA[join selectivity for area-comparison operators]]></comment>
+		</procedure>
+		<procedure name="areasel" id="Procedure_2bd43e6" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.areasel(internal, oid, internal, integer)
+ RETURNS double precision
+ LANGUAGE internal
+ STABLE PARALLEL SAFE STRICT
+AS $function$areasel$function$
+;]]></string>
+			<comment><![CDATA[restriction selectivity for area-comparison operators]]></comment>
+		</procedure>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" host="localhost" port="5432" instance="sf_schedular" user="postgres" passwd="cG9zdGdyZXM=" />
+	<layout name="Default Layout" id="Layout_4860003" show_relation="columns" >
+		<comment><![CDATA[Scheduler]]></comment>
+		<entity schema="sf_schedular.main" name="attachments" color="C1D8EE" x="352" y="816" />
+		<entity schema="sf_schedular.main" name="attendees" color="C7F4BE" x="352" y="240" />
+		<entity schema="logs" name="audit_logs" color="3986C1" x="48" y="1216" >
+			<callout x="96" y="1168" pointer="SV" />
+		</entity>
+		<entity schema="sf_schedular.main" name="calendars" color="BED3F4" x="640" y="240" >
+			<callout x="736" y="176" pointer="SV" />
+		</entity>
+		<entity schema="sf_schedular.main" name="events" color="C7F4BE" x="48" y="240" />
+		<entity schema="sf_schedular.main" name="settings" color="C1D8EE" x="640" y="1216" />
+		<entity schema="sf_schedular.main" name="subscriptions" color="BED3F4" x="928" y="240" >
+			<callout x="336" y="80" pointer="SE" />
+		</entity>
+		<entity schema="sf_schedular.main" name="themes" color="BED3F4" x="880" y="1216" >
+			<callout x="512" y="1136" pointer="SE" />
+		</entity>
+		<entity schema="sf_schedular.main" name="working_hours" color="C1D8EE" x="640" y="624" >
+			<callout x="624" y="864" pointer="NV" />
+		</entity>
+		<group name="configuration" color="C4E0F9" >
+			<entity schema="sf_schedular.main" name="settings" />
+			<entity schema="sf_schedular.main" name="themes" />
+		</group>
+		<group name="logs" color="C4E0F9" >
+			<entity schema="logs" name="audit_logs" />
+		</group>
+		<group name="Calendar Resources" color="ECF0F7" >
+			<entity schema="sf_schedular.main" name="subscriptions" />
+			<entity schema="sf_schedular.main" name="calendars" />
+			<entity schema="sf_schedular.main" name="working_hours" />
+		</group>
+		<group name="Event Resources" color="EEF7EC" >
+			<entity schema="sf_schedular.main" name="events" />
+			<entity schema="sf_schedular.main" name="attendees" />
+			<entity schema="sf_schedular.main" name="attachments" />
+		</group>
+		<script name="SQL_Editor" id="Editor_3671622" language="SQL" >
+			<string><![CDATA[CREATE TYPE accessRoleType AS ENUM ('freeBusyReader','reader', 'writer', 'owner');
+ALTER TABLE calendar_list ADD accessRole accessRoleType default 'reader';]]></string>
+		</script>
+		<script name="SQL_Editor_001" id="Editor_14c49e0" language="SQL" >
+			<string><![CDATA[ALTER TABLE calendar ADD created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE calendar ADD modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE calendar_list ADD created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE calendar_list ADD modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL;]]></string>
+		</script>
+		<script name="SQL_Editor_002" id="Editor_1dcc6c6" language="SQL" >
+			<string><![CDATA[CREATE TYPE responseStatus AS ENUM ('needsAction','declined', 'tentative', 'accepted');
+ALTER TABLE attendees ADD responseStatus responseStatus default 'needsAction';]]></string>
+		</script>
+		<script name="SQL_Editor_003" id="Editor_366f08c" language="SQL" >
+			<string><![CDATA[CREATE TYPE eventStatus AS ENUM ('confirmed','tentative', 'cancelled');
+ALTER TABLE event ADD status eventStatus;]]></string>
+		</script>
+		<script name="SQL_Editor_004" id="Editor_b81830" language="SQL" >
+			<string><![CDATA[CREATE TABLE logs.audit_logs ( 
+	operation_name       varchar(10)  NOT NULL ,
+	operation_time       timestamptz DEFAULT now() NOT NULL ,
+	"table_name"         varchar(60)  NOT NULL ,
+	log_type             varchar(100) DEFAULT 'APPLICATION_LOGS'::character varying  ,
+	entity_id            varchar   ,
+	person_id            varchar   ,
+	"before"             jsonb   ,
+	"after"              jsonb   ,
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	CONSTRAINT pk_audit_logs_id PRIMARY KEY ( id )
+ );]]></string>
+		</script>
+		<script name="SQL_Editor_005" id="Editor_3c5c0cb" language="SQL" >
+			<string><![CDATA[CREATE SCHEMA "public";
+
+CREATE TABLE "public".calendar ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	created_by           varchar(100)   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	deleted              bool DEFAULT false  ,
+	"source"             text   ,
+	enable_working_hours bool DEFAULT false  ,
+	"location"           varchar(300)   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modify_by            varchar(100)   ,
+	owner_display_name   varchar(100)   ,
+	owner_email          varchar(200)  NOT NULL ,
+	summary              varchar(100)   ,
+	timezone             varchar(120)   ,
+	CONSTRAINT pk_calendar_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".calendar IS 'A calendar is a collection of related events, along with additional \nmetadata such as summary, default time zone, location, etc. \nEach calendar is identified by an ID. Calendars can have multiple owners.';
+
+COMMENT ON COLUMN "public".calendar.id IS 'Identifier of the calendar.';
+
+COMMENT ON COLUMN "public".calendar.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".calendar.deleted IS 'For doing soft delete operation. The default is False.';
+
+COMMENT ON COLUMN "public".calendar."source" IS 'source like ''internal'', ''google calander'', ''outlook''';
+
+COMMENT ON COLUMN "public".calendar."location" IS 'Geographic location of the calendar as free-form text.';
+
+COMMENT ON COLUMN "public".calendar.modify_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".calendar.timezone IS 'The time zone of the calendar.';
+
+CREATE TABLE "public".calendar_subscribe ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	access_role          accessroletype DEFAULT 'reader'::accessroletype  ,
+	bg_color             varchar   ,
+	calendar_id          integer  NOT NULL ,
+	created_by           varchar   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	default_reminders    json   ,
+	deleted              bool DEFAULT false  ,
+	fg_color             varchar   ,
+	is_hidden            bool DEFAULT false  ,
+	is_primary           bool DEFAULT false  ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modify_by            varchar(100)   ,
+	notification_settings json   ,
+	subscriber           varchar  NOT NULL ,
+	CONSTRAINT pk_calendar_list_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".calendar_subscribe IS 'CalendarSubscribe is a collection of all calendar entries that a user has added to their list. \nYou can use it to add and remove existing calendars to/from the users’ list. \nYou also use it to retrieve and set the values of user-specific calendar properties, such as default reminders. \nAnother example is foreground color, since different users can have different colors set for the same calendar.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.access_role IS 'The effective access role that the user has on the calendar. Possible values are:\n"freeBusyReader" - Provides read access to free/busy information.\n"reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.\n"writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.\n"owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to assign acess to other users.\n\nThe owners of a calendar can share the calendar by giving access to other users.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.bg_color IS 'The main color of the calendar in the hexadecimal format "#0088aa".';
+
+COMMENT ON COLUMN "public".calendar_subscribe.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.default_reminders IS 'The default reminders that the user has for this calendar.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.deleted IS 'For doing soft delete operation on user calendard. Read-only. Optional. The default is False.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.fg_color IS 'The foreground color of the calendar in the hexadecimal format "#ffffff".';
+
+COMMENT ON COLUMN "public".calendar_subscribe.modify_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.notification_settings IS 'The notifications that the user is receiving for this calendar.';
+
+COMMENT ON COLUMN "public".calendar_subscribe.subscriber IS 'User/Person Email Id.';
+
+CREATE TABLE "public".event ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	bg_color             varchar   ,
+	calendar_id          integer   ,
+	created_by           varchar   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	creator_display_name varchar(100)   ,
+	deleted              bool DEFAULT false  ,
+	description          text   ,
+	end_datetime         timestamptz   ,
+	fg_color             varchar   ,
+	icaluid              varchar   ,
+	is_full_day_event    bool DEFAULT false  ,
+	is_locked            bool DEFAULT false  ,
+	is_recurring         bool DEFAULT false  ,
+	link                 text   ,
+	"location"           varchar(300)   ,
+	meeting_link         text   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	organizer_display_name varchar(100)   ,
+	organizer_email      varchar(200)   ,
+	parent_event_id      integer   ,
+	start_datetime       timestamptz   ,
+	status               eventstatus   ,
+	summary              text   ,
+	timezone             varchar   ,
+	modify_by            varchar(100)   ,
+	CONSTRAINT pk_event_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".event IS 'An event is an object associated with a specific date or time range. Events are identified by an ID that is unique within a calendar. Besides a start and end date-time, events contain other data such as summary, description, location, status, reminders, attachments,';
+
+COMMENT ON COLUMN "public".event.id IS 'main primary key';
+
+COMMENT ON COLUMN "public".event.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".event.deleted IS 'For doing soft delete operation. The default is False.';
+
+COMMENT ON COLUMN "public".event.description IS 'Description of the calendar.';
+
+COMMENT ON COLUMN "public".event.icaluid IS 'It is used to uniquely identify events accross calendaring systems \nand must be supplied when importing events via the import method.';
+
+COMMENT ON COLUMN "public".event.is_locked IS 'Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False.';
+
+COMMENT ON COLUMN "public".event.link IS 'Event Link - where user can see the event detail.';
+
+COMMENT ON COLUMN "public".event."location" IS 'Geographic location of the event as free-form text.';
+
+COMMENT ON COLUMN "public".event.modify_by IS 'User/Person Email Id.';
+
+CREATE TABLE "public".event_attachment ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	created_by           varchar   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	deleted              bool DEFAULT false  ,
+	event_id             integer   ,
+	fileurl              text  NOT NULL ,
+	iconlink             text   ,
+	mimetype             varchar(200)   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	title                varchar(400)   ,
+	modify_by            varchar(100)   ,
+	CONSTRAINT pk_event_attachments_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON COLUMN "public".event_attachment.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".event_attachment.deleted IS 'For doing soft delete operation. The default is False.';
+
+COMMENT ON COLUMN "public".event_attachment.modify_by IS 'User/Person Email Id.';
+
+CREATE TABLE "public".event_attendee ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	created_by           varchar   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	deleted              bool DEFAULT false  ,
+	email                varchar(200)  NOT NULL ,
+	end_datetime         timestamptz   ,
+	event_id             integer  NOT NULL ,
+	is_optional          bool DEFAULT false  ,
+	is_organizer         bool DEFAULT false  ,
+	messages             text   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modify_by            varchar(100)   ,
+	response_status      responsestatus DEFAULT 'needsAction'::responsestatus  ,
+	start_datetime       timestamptz   ,
+	CONSTRAINT pk_attendees_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".event_attendee IS 'Events can also have multiple attendees. An attendee is usually the primary calendar of an invited user.';
+
+COMMENT ON COLUMN "public".event_attendee.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".event_attendee.deleted IS 'For doing soft delete operation. The default is False.';
+
+COMMENT ON COLUMN "public".event_attendee.messages IS 'Attendess Messages';
+
+COMMENT ON COLUMN "public".event_attendee.modify_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".event_attendee.response_status IS 'The attendee''s response status. Possible values are:\n"needsAction" - The attendee has not responded to the invitation.\n"declined" - The attendee has declined the invitation.\n"tentative" - The attendee has tentatively accepted the invitation.\n"accepted" - The attendee has accepted the invitation.';
+
+CREATE TABLE "public".oauth_client_detail ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	access_token_validity integer   ,
+	additional_information varchar(200)   ,
+	autoapprove          bool DEFAULT false  ,
+	client_id            text  NOT NULL ,
+	client_secret        text  NOT NULL ,
+	name                 varchar(100)   ,
+	redirect_uri         text   ,
+	refresh_token_validity integer   ,
+	"scope"              varchar(200)   ,
+	CONSTRAINT pk_auth_client_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".oauth_client_detail IS 'For handling Client Credentials Flow in OAuth 2.0. \nIn Future, we can use this.';
+
+COMMENT ON COLUMN "public".oauth_client_detail."scope" IS 'A comma-separated list of permissions to request';
+
+CREATE TABLE "public".settings ( 
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	format_24_hour_time  bool DEFAULT false  ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	show_declined_events bool DEFAULT false  ,
+	weekstart            integer DEFAULT 0  ,
+	modify_by            varchar(100)   ,
+	created_by           varchar   
+ );
+
+COMMENT ON TABLE "public".settings IS 'Setting resources represent settings that users can change from the Calendar UI.';
+
+COMMENT ON COLUMN "public".settings.format_24_hour_time IS 'Whether to show the time in 24 hour format.';
+
+COMMENT ON COLUMN "public".settings.show_declined_events IS 'Whether events to which the user responded “No” should be shown on the user’s calendar.';
+
+COMMENT ON COLUMN "public".settings.weekstart IS 'Whether the week should start on Sunday (0), Monday (1) or Saturday (6).';
+
+COMMENT ON COLUMN "public".settings.modify_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".settings.created_by IS 'User/Person Email Id.';
+
+CREATE TABLE "public".theme ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	cal_bg               varchar(200)   ,
+	cal_fg               varchar(200)   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	deleted              bool DEFAULT false  ,
+	event_bg             varchar(200)   ,
+	event_fg             varchar(200)   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	created_by           varchar   ,
+	modify_by            varchar(100)   ,
+	CONSTRAINT pk_colors_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".theme IS 'A global palette of calendar colors, mapping. \nA CalendarSubscribe and event collection have color field related to this.';
+
+COMMENT ON COLUMN "public".theme.cal_bg IS 'The background color associated with this color definition.';
+
+COMMENT ON COLUMN "public".theme.cal_fg IS 'The foreground color that can be used to write on top of a background with ''background'' color.';
+
+COMMENT ON COLUMN "public".theme.deleted IS 'For doing soft delete operation. The default is False.';
+
+COMMENT ON COLUMN "public".theme.event_bg IS 'The background color associated with this color definition.';
+
+COMMENT ON COLUMN "public".theme.event_fg IS 'The foreground color that can be used to write on top of a background with ''background'' color.';
+
+COMMENT ON COLUMN "public".theme.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".theme.modify_by IS 'User/Person Email Id.';
+
+CREATE TABLE "public".working_hour ( 
+	id                   integer  NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	calendar_id          integer   ,
+	created_by           varchar(100)   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	day_of_week          integer   ,
+	"end"                time   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modify_by            varchar(100)   ,
+	"start"              time   ,
+	CONSTRAINT pk_working_hour_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".working_hour IS 'The hours during which appointment is available.';
+
+COMMENT ON COLUMN "public".working_hour.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".working_hour.day_of_week IS 'For store the day of week as an integer. ( 0 to 6 )';
+
+COMMENT ON COLUMN "public".working_hour.modify_by IS 'User/Person Email Id.';
+
+ALTER TABLE "public".calendar_subscribe ADD CONSTRAINT fk_calendar_list_calendar FOREIGN KEY ( calendar_id ) REFERENCES "public".calendar( id );
+
+ALTER TABLE "public".event ADD CONSTRAINT fk_event_calendar FOREIGN KEY ( calendar_id ) REFERENCES "public".calendar( id );
+
+ALTER TABLE "public".event ADD CONSTRAINT fk_event_event FOREIGN KEY ( parent_event_id ) REFERENCES "public".event( id );
+
+ALTER TABLE "public".event_attachment ADD CONSTRAINT fk_event_attachments_event FOREIGN KEY ( event_id ) REFERENCES "public".event( id );
+
+ALTER TABLE "public".event_attendee ADD CONSTRAINT fk_event_attendees_event FOREIGN KEY ( event_id ) REFERENCES "public".event( id );
+
+ALTER TABLE "public".working_hour ADD CONSTRAINT fk_working_hour_calendar FOREIGN KEY ( calendar_id ) REFERENCES "public".calendar( id );]]></string>
+		</script>
+		<script name="SQL_Editor_006" id="Editor_5da2f64" language="SQL" >
+			<string><![CDATA[CREATE TYPE setting_owner_type AS ENUM ('global', 'user', 'calendar', 'event');
+ALTER TABLE settings ADD owner_type setting_owner_type default 'global';]]></string>
+		</script>
+		<script name="SQL_Editor_007" id="Editor_5bab850" language="SQL" >
+			<string><![CDATA[CREATE  TABLE "public".settings ( 
+	created_by           varchar   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modified_by          varchar(100)   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	owner_id             varchar(225)  NOT NULL ,
+	owner_type           varchar DEFAULT global  ,
+	setting_name         varchar(225)   ,
+	setting_value        varchar(1500)   
+ );
+
+COMMENT ON TABLE "public".settings IS 'Setting resources represent settings that users can change from the Calendar UI.';
+
+COMMENT ON COLUMN "public".settings.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".settings.modified_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".settings.owner_id IS 'This can be an uuid or email id of user.';
+
+COMMENT ON COLUMN "public".settings.owner_type IS 'values are  ''global'', ''user'', ''calendar'', ''event''';
+
+COMMENT ON COLUMN "public".settings.setting_name IS 'setting name - key of setting';
+
+COMMENT ON COLUMN "public".settings.setting_value IS 'setting value - setting key value, accept any string.';]]></string>
+		</script>
+		<script name="SQL_Editor_008" id="Editor_3a918c4" language="SQL" >
+			<string><![CDATA[CREATE  TABLE "public".calendar_subscription ( 
+	id                   uuid DEFAULT uuid_generate_v1() NOT NULL ,
+	access_role          accessroletype DEFAULT 'reader'::accessroletype  ,
+	bg_color             varchar   ,
+	calendar_id          integer  NOT NULL ,
+	created_by           varchar   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	default_reminders    json,
+	deleted              bool DEFAULT false  ,
+	fg_color             varchar   ,
+	is_hidden            bool DEFAULT false  ,
+	is_primary           bool DEFAULT false  ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modified_by          varchar(100)   ,
+	notification_settings json   ,
+	subscriber           varchar  NOT NULL ,
+	CONSTRAINT pk_calendar_list_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE "public".calendar_subscription IS 'CalendarSubscribe is a collection of all calendar entries that a user has added to their list. \nYou can use it to add and remove existing calendars to/from the users’ list. \nYou also use it to retrieve and set the values of user-specific calendar properties, such as default reminders. \nAnother example is foreground color, since different users can have different colors set for the same calendar.';
+
+COMMENT ON COLUMN "public".calendar_subscription.access_role IS 'The effective access role that the user has on the calendar. Possible values are:\n"freeBusyReader" - Provides read access to free/busy information.\n"reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.\n"writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.\n"owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to assign acess to other users.\n\nThe owners of a calendar can share the calendar by giving access to other users.';
+
+COMMENT ON COLUMN "public".calendar_subscription.bg_color IS 'The main color of the calendar in the hexadecimal format "#0088aa".';
+
+COMMENT ON COLUMN "public".calendar_subscription.created_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".calendar_subscription.default_reminders IS 'The default reminders that the user has for this calendar.';
+
+COMMENT ON COLUMN "public".calendar_subscription.deleted IS 'For doing soft delete operation on user calendard. Read-only. Optional. The default is False.';
+
+COMMENT ON COLUMN "public".calendar_subscription.fg_color IS 'The foreground color of the calendar in the hexadecimal format "#ffffff".';
+
+COMMENT ON COLUMN "public".calendar_subscription.modified_by IS 'User/Person Email Id.';
+
+COMMENT ON COLUMN "public".calendar_subscription.notification_settings IS 'The notifications that the user is receiving for this calendar.';
+
+COMMENT ON COLUMN "public".calendar_subscription.subscriber IS 'User/Person Email Id.';]]></string>
+		</script>
+		<script name="audit_logs" id="Editor_40627fc" language="SQL" >
+			<string><![CDATA[CREATE  TABLE logs.audit_logs ( 
+	id                   uuid DEFAULT uuid_generate_v1() NOT NULL ,
+	action_by            varchar(200)   ,
+	"after"              jsonb   ,
+	"before"             jsonb   ,
+	entity_id            varchar   ,
+	log_type             varchar(100) DEFAULT 'APPLICATION_LOGS'::character varying  ,
+	operation_name       varchar(10)  NOT NULL ,
+	operation_time       timestamptz DEFAULT now() NOT NULL ,
+	"table_name"         varchar(60)  NOT NULL ,
+	ext_id               varchar   ,
+	ext_metadata         jsonb   ,
+	CONSTRAINT pk_audit_logs_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON TABLE logs.audit_logs IS 'DB trigger based audit_logs';
+
+COMMENT ON COLUMN logs.audit_logs.action_by IS 'Person/User Email ID.';
+]]></string>
+		</script>
+	</layout>
+</project>
