@@ -1,5 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
-import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
+import { ExternalIdentifierEnabledEntity } from '@sourceloop/core';
 
 @model({
   name: 'audit_logs',
