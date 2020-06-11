@@ -10,6 +10,11 @@
       "message": "chore: publish release",
       "allowBranch": "master"
     },
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore: publish release",
+      "allowBranch": "master"
+    },
     "run": {
       "concurrency": 8
     },
