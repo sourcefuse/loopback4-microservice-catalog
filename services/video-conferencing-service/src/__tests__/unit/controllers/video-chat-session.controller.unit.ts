@@ -214,19 +214,20 @@ describe('Session APIs', () => {
   });
 
   describe('PATCH /session/{meetingLink}/end', () => {
-    // it('updates the end time', async () => {
-    //   setUp({});
-    //   const findOne = videoChatSessionRepo.stubs.findOne;
-    //   findOne.resolves(getVideoChatSession({endTime: futureDate}));
-    //   const dummyCount = { count: 5 };
-    //   const sessionOptions = getSessionOptions({});
-    //   const updateAll = videoChatSessionRepo.stubs.updateAll;
-    //   updateAll.resolves(dummyCount);
-    //   await controller.endSession(sessionOptions, meetingLinkId);
-    //   sinon.assert.calledWith(findOne, {where : {endTime: undefined, meetingLink: meetingLinkId}});
-    //   sinon.assert.calledWith(updateAll, {endTime: new Date()}, {meetingLink: meetingLinkId});
-    //   sinon.assert.calledOnce(auidtLogCreate);
-    // });
+    it('updates the end time', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      const dummyId = 1;
+      findOne.resolves(getVideoChatSession({id: dummyId}));
+      const sessionOptions = getSessionOptions({});
+      const updateById = videoChatSessionRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.endSession(sessionOptions, meetingLinkId);
+      sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
+      sinon.assert.calledOnce(updateById);
+      // sinon.assert.calledWith(updateById, dummyId, {endTime: new Date()});
+      // sinon.assert.calledOnce(auidtLogCreate);
+    });
 
     it('returns an error for invalid meeting link', async () => {
       setUp({});
