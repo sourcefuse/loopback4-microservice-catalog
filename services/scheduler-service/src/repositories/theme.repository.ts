@@ -12,7 +12,7 @@ export class ThemeRepository extends DefaultUserModifyCrudRepository<
   typeof Theme.prototype.id
 > {
   constructor(
-    @inject('scheduler.datasources.pgdb') dataSource: juggler.DataSource,
+    @inject('datasources.schedulerDb') dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
