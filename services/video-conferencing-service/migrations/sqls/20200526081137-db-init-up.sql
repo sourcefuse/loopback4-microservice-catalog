@@ -20,7 +20,7 @@ CREATE TABLE videochatms.video_session_details
   created_by 				integer,
   modified_by 			integer,
   ext_id            varchar,
-  ext_metadata      json
+  ext_metadata      jsonb,
   CONSTRAINT "pk_video_session_details_id" PRIMARY KEY ( id )
 
 );
@@ -34,7 +34,7 @@ CREATE TABLE videochatms.session_attendees
   modified_on 			timestamptz,
   is_deleted 				bool DEFAULT false NOT NULL,
   ext_id            varchar,
-  ext_metadata      json
+  ext_metadata      jsonb,
   CONSTRAINT pk_session_attendees_id PRIMARY KEY ( id )
 );
 
@@ -50,6 +50,6 @@ CREATE TABLE videochatms.audit_logs
 	  "after" 				  json,
     reference        	varchar,
     ext_id            varchar,
-    ext_metadata      json
+    ext_metadata      jsonb,
     CONSTRAINT pk_audit_logs_id PRIMARY KEY (id)
 );
