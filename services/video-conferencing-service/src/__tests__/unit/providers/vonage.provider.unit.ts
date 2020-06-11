@@ -9,6 +9,9 @@ import {AuditLogsRepository} from '../../../repositories';
 import {getVonageMeetingOptions, getVonageSessionOptions, getVonageArchiveList, getVonageArchive} from '../../helpers';
 
 describe('VonageProvider (unit)', () => {
+  const sessionId = 'dummy-session-id';
+  const vonageFailureError = new Error('Vonage failure');
+  const archiveId = 'dummy-archive-id';
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
   let auidtLogCreate: sinon.SinonStub;
   let vonageProvider: VonageProvider;
@@ -26,14 +29,18 @@ describe('VonageProvider (unit)', () => {
     try {
       new VonageProvider(config, auditLogRepo);
     } catch (err) {
-      return expect(err).instanceOf(Error);
+      if(err) {
+        return expect(err).instanceOf(Error);
+      } else {
+        throw new Error('This must throw.');
+      }
     }
   });
 
   describe('getMeetingLink', () => {
     it('returns a session id for archive enabled session', async () => {
       const error = null;
-      const session = {sessionId: 'dummy-session-id'};
+      const session = {sessionId: sessionId};
       sinon
         .stub(vonageProvider.VonageService, 'createSession')
         .callsArgWith(1, error, session);
@@ -50,13 +57,13 @@ describe('VonageProvider (unit)', () => {
         .which.eql('always');
       expect(result)
         .to.have.property('sessionId')
-        .which.eql('dummy-session-id');
+        .which.eql(sessionId);
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns a session id for end to end encrypted session', async () => {
       const error = null;
-      const session = {sessionId: 'dummy-session-id'};
+      const session = {sessionId: sessionId};
       sinon
         .stub(vonageProvider.VonageService, 'createSession')
         .callsArgWith(1, error, session);
@@ -72,15 +79,15 @@ describe('VonageProvider (unit)', () => {
         .which.eql('relayed');
       expect(result)
         .to.have.property('sessionId')
-        .which.eql('dummy-session-id');
+        .which.eql(sessionId);
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error if vonage fails to create session', async () => {
-      const error = new Error('Vonage failure');
+      
       sinon
         .stub(vonageProvider.VonageService, 'createSession')
-        .callsArgWith(1, error);
+        .callsArgWith(1, vonageFailureError);
 
       const meetingOptions = getVonageMeetingOptions({});
       const result = await vonageProvider
@@ -106,7 +113,6 @@ describe('VonageProvider (unit)', () => {
 
   describe('getToken', () => {
     it('generates a token', async () => {
-      const sessionId = 'dummy-session-id';
       const sessionOptions = getVonageSessionOptions({});
       sinon
         .stub(vonageProvider.VonageService, 'generateToken')
@@ -117,7 +123,7 @@ describe('VonageProvider (unit)', () => {
         .getToken(sessionId, sessionOptions);
       expect(result)
         .to.have.property('sessionId')
-        .which.eql('dummy-session-id');
+        .which.eql(sessionId);
       expect(result)
         .to.have.property('token')
         .which.eql('dummy-token');
@@ -127,7 +133,6 @@ describe('VonageProvider (unit)', () => {
 
   describe('getArchives', () => {
     it('returns an archive response for given archive id', async () => {
-      const archiveId = 'dummy-archive-id';
       const error = null;
       const archive = getVonageArchive();
       sinon
@@ -160,11 +165,9 @@ describe('VonageProvider (unit)', () => {
     });
 
     it('returns an error if vonage fails for given archive id', async () => {
-      const archiveId = 'dummy-archive-id';
-      const error = new Error('Vonage failure');
       sinon
         .stub(vonageProvider.VonageService, 'getArchive')
-        .callsArgWith(1, error);
+        .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
         .value()
@@ -175,10 +178,9 @@ describe('VonageProvider (unit)', () => {
 
     it('returns an error if vonage fails to list archives', async () => {
       const archiveId = null;
-      const error = new Error('Vonage failure');
       sinon
         .stub(vonageProvider.VonageService, 'listArchives')
-        .callsArgWith(1, error);
+        .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
         .value()
@@ -190,7 +192,6 @@ describe('VonageProvider (unit)', () => {
 
   describe('deleteArchives', () => {
     it('deletes the archive with given archive id', async () => {
-      const archiveId = 'dummy-archive-id';
       const error = null;
       const deleteArchive = sinon.stub(
         vonageProvider.VonageService,
@@ -203,11 +204,9 @@ describe('VonageProvider (unit)', () => {
     });
 
     it('reutrns an error if vonage fails to delete archive', async () => {
-      const archiveId = 'dummy-archive-id';
-      const error = new Error('Vonage failure');
       sinon
         .stub(vonageProvider.VonageService, 'deleteArchive')
-        .callsArgWith(1, error);
+        .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
         .value()

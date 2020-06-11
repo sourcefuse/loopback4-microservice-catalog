@@ -20,7 +20,7 @@ describe('Archive APIs', () => {
   const invalidArchiveId = '';
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
   let auidtLogCreate: sinon.SinonStub;
-  let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>
+  let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let videoChatProvider: VideoChatInterface;
   let config: VonageConfig;
   let controller: VideoChatArchiveController;

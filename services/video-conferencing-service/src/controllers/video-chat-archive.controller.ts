@@ -42,14 +42,15 @@ export class VideoChatArchiveController {
       }
     });
     if (!archiveExists) {
+      const errorMessage = 'Archive Not Found';
       this.auditLogRepository.create({
         action: 'archive',
         actionType: 'getArchive',
         before: { archiveId },
-        after: { errorMessage: 'Archive Not Found '},
+        after: { errorMessage: errorMessage},
         actedAt: moment().format(), 
       });
-      throw new HttpErrors.NotFound('Archive Not Found');
+      throw new HttpErrors.NotFound(errorMessage);
     }
     return this.videoChatProvider.getArchives(archiveId);
   }
@@ -97,14 +98,15 @@ export class VideoChatArchiveController {
       }
     });
     if (!archiveExists) {
+      const errorMessage = 'Archive Not Found';
       this.auditLogRepository.create({
         action: 'archive',
         actionType: 'getArchive',
         before: { archiveId },
-        after: { errorMessage: 'Archive Not Found '},
+        after: { errorMessage: errorMessage},
         actedAt: moment().format(), 
       });
-      throw new HttpErrors.NotFound('Archive Not Found');
+      throw new HttpErrors.NotFound(errorMessage);
     }
     return this.videoChatProvider.deleteArchive(archiveId);
   }

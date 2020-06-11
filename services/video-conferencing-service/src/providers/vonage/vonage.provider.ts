@@ -1,7 +1,7 @@
 import {Provider, inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
-import {SessionOptions, ArchiveResponse, ArchiveResponseList, SessionResponse} from '../../types';
+import {ArchiveResponse, ArchiveResponseList, SessionResponse} from '../../types';
 import {VonageVideoChat, VonageConfig, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions} from './types';
 import OpenTok from 'opentok';
 import { repository } from '@loopback/repository';
@@ -213,7 +213,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             },
             after: { response: 'Archive Deletion Successful!' },
             actedAt: moment().format(),
-          })
+          });
         } catch (error) {
           this.auditLogRepository.create({
             action: 'archive',

@@ -51,7 +51,7 @@ export class VideoChatSessionController {
       before: meetingOptions,
       after: {},
     };
-    let errorMessage: string = '';
+    let errorMessage: string;
 
 
     if(meetingOptions.isScheduled){
@@ -203,7 +203,7 @@ export class VideoChatSessionController {
       actedAt: moment().format(),
       after: {},
     };
-    let errorMessage: string = '';
+    let errorMessage: string;
     if (typeof meetingLinkId !== 'string' || !meetingLinkId) {        
       errorMessage = 'Meeting link should be a valid string.';
       auditLogPayload.after = { errorMessage };

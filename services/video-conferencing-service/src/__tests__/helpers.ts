@@ -13,13 +13,16 @@ import {VonageEnums} from '../enums/video-chat.enum';
 import moment from 'moment';
 import {sinon} from '@loopback/testlab';
 
+const meetingLink = 'dummy-meeting-link';
+const sessionId = 'dummy-session-id';
+
 export function getVideoChatSession(
   videoChatSession: Partial<VideoChatSession>,
 ) {
   const data = Object.assign(
     {
-      sessionId: 'dummy-session-id',
-      meetingLink: 'dummy-meeting-link',
+      sessionId: sessionId,
+      meetingLink: meetingLink,
       isScheduled: false,
     },
     videoChatSession,
@@ -73,7 +76,7 @@ export function getMeetingOptions(meetingOptions: Partial<MeetingOptions>) {
 export function getSessionOptions(sessionOptions: Partial<SessionOptions>) {
   return Object.assign(
     {
-      meetingLink: 'dummy-meeting-link',
+      meetingLink: meetingLink,
       expireTime: getFutureDate(),
     },
     sessionOptions,
@@ -85,7 +88,7 @@ export function getMeetingResponse(meetingResponse: Partial<MeetingResponse>) {
     {
       mediaMode: VonageEnums.MediaMode.Routed,
       archiveMode: VonageEnums.ArchiveMode.Always,
-      sessionId: 'session-id',
+      sessionId: sessionId,
     },
     meetingResponse,
   );
@@ -94,7 +97,7 @@ export function getMeetingResponse(meetingResponse: Partial<MeetingResponse>) {
 export function getSessionResponse(sessionResponse: Partial<SessionResponse>) {
   return Object.assign(
     {
-      sessionId: 'session-id',
+      sessionId: sessionId,
       token: 'token',
     },
     sessionResponse,
@@ -104,7 +107,7 @@ export function getSessionResponse(sessionResponse: Partial<SessionResponse>) {
 export function getArchiveResponse(archiveResponse: Partial<ArchiveResponse>) {
   return Object.assign(
     {
-      sessionId: 'dummy-session-id',
+      sessionId: sessionId,
     },
     archiveResponse,
   );
@@ -139,7 +142,7 @@ export function getVonageSessionOptions(
 ) {
   return Object.assign(
     {
-      meetingLink: 'dummy-meeting-link',
+      meetingLink: meetingLink,
       meetingId: 'dummy-meeting-id',
       expireTime: getFutureDate(),
       role: VonageEnums.Role.Subscriber,
