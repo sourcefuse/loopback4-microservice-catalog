@@ -62,13 +62,13 @@ export class AuditLogs extends Entity
     type: 'string',
     name: 'ext_id',
   })
-  extId: string;
+  extId?: string;
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
-  extMetadata: object;
+  extMetadata?: object;
 
   constructor(data?: Partial<AuditLogs>) {
     super(data);
