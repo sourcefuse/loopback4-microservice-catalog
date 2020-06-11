@@ -45,7 +45,7 @@ export class VideoChatSessionController {
   ): Promise<string> {
     let scheduledTime: Date = new Date();
 
-    if(meetingOptions.isScheduled ){
+    if(meetingOptions.isScheduled){
       if(!meetingOptions.scheduleTime){
         throw new HttpErrors.BadRequest(`Schedule time is not set.`);
       } else if (!moment(meetingOptions.scheduleTime).isValid){
@@ -67,7 +67,7 @@ export class VideoChatSessionController {
       sessionId: meetingResp.sessionId,
       meetingLink: meetingLinkId,
       isScheduled: meetingOptions.isScheduled,
-      scheduleTime: scheduledTime,
+      scheduleTime: new Date(scheduledTime),
     });
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
@@ -104,17 +104,34 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<SessionResponse> {
+    const auditLogPayload = {
+      action: 'session',
+      actionType: 'get-token',
+      before: { meetingLinkId, },
+      actedAt: moment().format(),
+      after: {},
+    };
+    let errorMessage;
 
-    if(typeof meetingLinkId !== 'string' || !meetingLinkId){
-      throw new HttpErrors.BadRequest(`Meeting link should be a valid string.`);
+    if(typeof meetingLinkId !== 'string' || !meetingLinkId) {
+      errorMessage = 'Meeting link should be a valid string';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    if(!moment(sessionOptions.expireTime).isValid){
-      throw new HttpErrors.BadRequest(`Expire time is not in correct format.`);
+    if(!moment(sessionOptions.expireTime).isValid) {
+      errorMessage = 'Expire time is not in correct format.';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
     }
 
     if(moment().isAfter(sessionOptions.expireTime)){
-      throw new HttpErrors.BadRequest('Expire time can not be in past.');
+      errorMessage = 'Expire time can not be in past.';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
     }
 
     const session = await this.videoChatSessionRepository.findOne({
@@ -124,12 +141,18 @@ export class VideoChatSessionController {
     });
 
     if (!session) {
-      throw new HttpErrors.BadRequest(`This meeting doesn't exist`);
+      errorMessage = 'Expire time can not be in past.';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
     }
 
     // check if meeting is already ended
     if(session.endTime){
-      throw new HttpErrors.BadRequest('This meeting has been expired');
+      errorMessage = 'This meeting has been expired';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
     }
 
     // check for schduled meeting:
@@ -139,7 +162,10 @@ export class VideoChatSessionController {
           .add(process.env.TIME_TO_START, 'minutes')
           .isBefore(session.scheduleTime)
       ) {
-         throw new Error(`Meeting can not be started before ${process.env.TIME} minutes earlier time than the scheduled time`)
+        errorMessage = `Meeting can not be started before ${process.env.TIME} minutes earlier time than the scheduled time`;
+        auditLogPayload.after = { errorMessage };
+        this.auditLogRepository.create(auditLogPayload);
+        throw new Error(errorMessage);
       }
     }
 
@@ -160,8 +186,19 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<void> {
-    if(typeof meetingLinkId !== 'string' || !meetingLinkId){
-      throw new HttpErrors.BadRequest(`Meeting link should be a valid string.`);
+    const auditLogPayload = {
+      action: 'session',
+      actionType: 'get-token',
+      before: { meetingLinkId, },
+      actedAt: moment().format(),
+      after: {},
+    };
+    let errorMessage: string = '';
+    if (typeof meetingLinkId !== 'string' || !meetingLinkId) {        
+      errorMessage = 'Meeting link should be a valid string.';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest('Meeting link should be a valid string.');
     }
 
     const { count } = await this.videoChatSessionRepository.updateAll({
@@ -171,7 +208,10 @@ export class VideoChatSessionController {
     });
 
     if (!count) {
-      throw new HttpErrors.NotFound('meeting Link Not Found');
+      errorMessage = 'meeting Link Not Found';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.NotFound(errorMessage);
     }
   }
 }

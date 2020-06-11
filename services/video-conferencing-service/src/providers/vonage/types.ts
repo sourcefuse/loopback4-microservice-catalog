@@ -46,7 +46,7 @@ export interface VonageMeetingResponse extends MeetingResponse {
 export interface VonageSessionOptions extends SessionOptions {
   meetingId: string;
   role?: VonageEnums.Role;
-  expireTime: Date;
+  expireTime?: Date;
   data?: string;
 }
 /**
@@ -126,10 +126,4 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @returns Promise when returns a success object of type @interface VonageArchiveResponse
    */
   // stopArchive(archiveId: string): Promise<VonageArchiveResponse>;
-
-  /**
-   * @function stopMeeting stops the meeting
-   * @param meetingId unique meeting id
-   */
-  stopMeeting(meetingId: string): Promise<void>;
 }

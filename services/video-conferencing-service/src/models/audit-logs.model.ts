@@ -39,7 +39,6 @@ export class AuditLogs extends Entity
 
   @property({
     type: 'string',
-    required: true,
     name: 'acted_entity',
   })
   actedEntity: string;

@@ -2,12 +2,13 @@ import {Provider, inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
 import {SessionOptions, ArchiveResponse, ArchiveResponseList, SessionResponse} from '../../types';
-import {VonageVideoChat, VonageConfig, VonageMeetingOptions, VonageMeetingResponse} from './types';
+import {VonageVideoChat, VonageConfig, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions} from './types';
 import OpenTok from 'opentok';
 import { repository } from '@loopback/repository';
 import { AuditLogsRepository } from '../../repositories';
 import { VonageBindings } from './keys';
 import { promisify } from 'util';
+import moment from 'moment';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
@@ -52,7 +53,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         };
 
         const createSession = () => {
-          return new Promise<string>((resolve, reject) => {
+          return new Promise<OpenTok.Session>((resolve, reject) => {
             this.VonageService.createSession(
               sessionCreationOptions,
               (err: Error | null, session: OpenTok.Session | undefined) => {
@@ -62,8 +63,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
                 if (!session) {
                   throw new HttpErrors.InternalServerError('Error creating session');
                 } else {
-                  sessionId = session.sessionId;
-                  resolve(sessionId);
+                  resolve(session);
                 }
               },
             );
@@ -71,38 +71,93 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         };
 
         try {
-          const id: string = await createSession();
+          const session = await createSession();
+          this.auditLogRepository.create({
+            action: 'session',
+            actionType: 'create-session',
+            before: sessionCreationOptions,
+            after: session,
+            actedAt: moment().format(),
+            actedEntity: session.sessionId,
+          });
           return {
             mediaMode: sessionCreationOptions.mediaMode,
             archiveMode: sessionCreationOptions.archiveMode,
-            sessionId: id,
+            sessionId: session.sessionId,
           };
         } catch (err) {
+          this.auditLogRepository.create({
+            action: 'session',
+            actionType: 'create-session',
+            before: sessionCreationOptions,
+            after: err.stack,
+            actedAt: moment().format(),
+            actedEntity: '',
+          });
           throw new HttpErrors.InternalServerError('Error creating session');
         }
       },
-      getToken: async (sessionId: string, options: SessionOptions): Promise<SessionResponse> => {
-        const token = this.VonageService.generateToken(sessionId, {});
+      getToken: async (sessionId: string, options: VonageSessionOptions): Promise<SessionResponse> => {
+        try {
+        const { expireTime, role, data } = options;
+        const requestPayload: OpenTok.TokenOptions = {
+          expireTime: expireTime ? moment(expireTime).unix() : undefined,
+          role: role ?? undefined,
+          data: data ?? undefined,
+        };
+        const token = this.VonageService.generateToken(sessionId, requestPayload);
+
+        this.auditLogRepository.create({
+          action: 'session',
+          actionType: 'get-token',
+          before: {
+            sessionId,
+            ...options,
+          },
+          after: {
+            token,
+          },
+          actedAt: moment().format(),
+          actedEntity: token,
+        });
         return {
           sessionId,
           token,
         };
+
+      } catch (error) {
+        this.auditLogRepository.create({
+          action: 'session',
+          actionType: 'get-token',
+          before: {
+            sessionId,
+            ...options,
+          },
+          after: {
+            errorStack: error.stack,
+          },
+          actedAt: moment().format(),
+        });
+        throw new HttpErrors.InternalServerError('Error occured while generating Token');
+      }
+
       },
-      stopMeeting: async (meetingId: string) => {},
 
       getArchives: async (
         archiveId: string | null
       ): Promise<ArchiveResponse | ArchiveResponseList> => {
+        try {
         const getArchive = promisify(this.VonageService.getArchive);
         const listArchives = promisify(this.VonageService.listArchives);
+        let archiveResult: ArchiveResponse | ArchiveResponseList;
         if (archiveId) {
           const archive = await getArchive(archiveId);
-          return {
+          archiveResult = {
             name: archive?.name,
             sessionId: archive?.sessionId as string,
             metaData: (archive ?? null) as object,
           };
-        }
+        } else { 
         let archives = await listArchives({});
         archives = archives?.length ? archives: [];
         const items = [];
@@ -113,10 +168,29 @@ export class VonageProvider implements Provider<VonageVideoChat> {
               metaData: archive as object,
             });
         }
-        return {
+        archiveResult = {
           count: archives?.length ?? 0,
           items,
         };
+       }
+       this.auditLogRepository.create({
+          action: 'archive',
+          actionType: archiveId ? 'getArchive' : 'getArchives',
+          before: archiveId ? { archiveId } : {},
+          after: archiveResult,
+          actedAt: moment().format(),
+       });
+       return archiveResult;
+      } catch (error) {
+        this.auditLogRepository.create({
+          action: 'archive',
+          actionType: archiveId ? 'getArchive' : 'getArchives',
+          before: archiveId ? { archiveId } : {},
+          after: { errorStack: error.stack },
+          actedAt: moment().format(),
+       });
+       throw new HttpErrors.InternalServerError('Error occured while fetching archive(s)');
+      }
       },
       // TODO: startArchive and stopArchive needs to be uncommented/modified later
       // startArchive: async (sessionId: string, archiveOptions: ArchiveOptions): Promise<Archive | undefined> => {
@@ -127,7 +201,32 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       //   const stopArchive = promisify(this.VonageService.stopArchive);
       //   return stopArchive(archiveId);
       // },
-      deleteArchive: async (archiveId: string) => {},
+      deleteArchive: async (archiveId: string) => {
+        try {
+          const deleteArchive = promisify(this.VonageService.deleteArchive);
+          await deleteArchive(archiveId);
+          this.auditLogRepository.create({
+            action: 'archive',
+            actionType: 'delete-archive',
+            before: {
+              archiveId,
+            },
+            after: { response: 'Archive Deletion Successful!' },
+            actedAt: moment().format(),
+          })
+        } catch (error) {
+          this.auditLogRepository.create({
+            action: 'archive',
+            actionType: 'delete-archive',
+            before: {
+              archiveId,
+            },
+            after: { errorStack: error.stack },
+            actedAt: moment().format(),
+          });
+          throw new HttpErrors.InternalServerError('Error occured while deleting an archive');
+        }
+      },
     };
   }
 }

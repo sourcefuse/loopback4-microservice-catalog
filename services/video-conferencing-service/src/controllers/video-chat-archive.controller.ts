@@ -1,16 +1,23 @@
 import {inject} from '@loopback/core';
-import {del, get, param} from '@loopback/rest';
+import {del, get, param, HttpErrors} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
 import {VideoChatInterface} from '../types';
 import {VideoChatBindings} from '../keys';
 import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import { repository } from '@loopback/repository';
+import { VideoChatSessionRepository, AuditLogsRepository } from '../repositories';
+import moment from 'moment';
 
 export class VideoChatArchiveController {
   constructor(
     @inject(VideoChatBindings.VideoChatProvider)
     private readonly videoChatProvider: VideoChatInterface,
+    @repository(VideoChatSessionRepository)
+    private readonly videoChatSessionRepository: VideoChatSessionRepository,
+    @repository(AuditLogsRepository)
+    private readonly auditLogRepository: AuditLogsRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -28,7 +35,22 @@ export class VideoChatArchiveController {
       },
     },
   })
-  async getArchive(@param.path.string('archiveId') archiveId: string | null) {
+  async getArchive(@param.path.string('archiveId') archiveId: string) {
+    const archiveExists = await this.videoChatSessionRepository.findOne({
+      where: {
+        archiveId,
+      }
+    });
+    if (!archiveExists) {
+      this.auditLogRepository.create({
+        action: 'archive',
+        actionType: 'getArchive',
+        before: { archiveId },
+        after: { errorMessage: 'Archive Not Found '},
+        actedAt: moment().format(), 
+      });
+      throw new HttpErrors.NotFound('Archive Not Found');
+    }
     return this.videoChatProvider.getArchives(archiveId);
   }
 
@@ -69,6 +91,21 @@ export class VideoChatArchiveController {
   async deleteArchive(
     @param.path.string('archiveId') archiveId: string,
   ): Promise<void> {
-    await this.videoChatProvider.deleteArchive(archiveId);
+    const archiveExists = await this.videoChatSessionRepository.findOne({
+      where: {
+        archiveId,
+      }
+    });
+    if (!archiveExists) {
+      this.auditLogRepository.create({
+        action: 'archive',
+        actionType: 'getArchive',
+        before: { archiveId },
+        after: { errorMessage: 'Archive Not Found '},
+        actedAt: moment().format(), 
+      });
+      throw new HttpErrors.NotFound('Archive Not Found');
+    }
+    return this.videoChatProvider.deleteArchive(archiveId);
   }
 }
