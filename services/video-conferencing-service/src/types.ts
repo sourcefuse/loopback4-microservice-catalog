@@ -40,11 +40,6 @@ export interface VideoChatInterface {
    * @returns Promise then returns a successful message for deleting if promise is resolved
    */
   deleteArchive(archiveId: string): Promise<void>;
-  /**
-   * @function stopMeeting stops the meeting
-   * @param meetingId unique meeting id
-   */
-  stopMeeting(meetingId: string): Promise<void>;
 }
 
 /**
@@ -129,6 +124,6 @@ export interface MeetingResponse {
  */
 export interface SessionOptions {
   meetingLink: string;
-  expireTime: Date;
+  expireTime?: Date;
   data?: string;
 }
