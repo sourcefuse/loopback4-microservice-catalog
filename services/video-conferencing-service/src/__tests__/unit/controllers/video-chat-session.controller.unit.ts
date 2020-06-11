@@ -23,7 +23,6 @@ import {
   AuditLogsRepository,
 } from '../../../repositories';
 import {VideoChatInterface} from '../../../types';
-import { Count } from '@loopback/repository';
 
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
@@ -225,8 +224,6 @@ describe('Session APIs', () => {
       await controller.endSession(sessionOptions, meetingLinkId);
       sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
       sinon.assert.calledOnce(updateById);
-      // sinon.assert.calledWith(updateById, dummyId, {endTime: new Date()});
-      // sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error for invalid meeting link', async () => {

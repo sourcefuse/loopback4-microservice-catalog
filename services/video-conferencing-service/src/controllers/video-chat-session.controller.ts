@@ -231,6 +231,6 @@ export class VideoChatSessionController {
       throw new HttpErrors.BadRequest(errorMessage);
     }
     
-    return await this.videoChatSessionRepository.updateById(videoSessionDetail.id, { endTime: new Date() });
+    return this.videoChatSessionRepository.updateById(videoSessionDetail.id, { endTime: new Date() });
   }
 }

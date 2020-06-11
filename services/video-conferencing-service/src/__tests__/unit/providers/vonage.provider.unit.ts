@@ -150,14 +150,14 @@ describe('VonageProvider (unit)', () => {
     });
 
     it('returns an archive response list for null archive id', async () => {
-      const archiveId = null;
+      const nullArchiveId = null;
       const error = null;
       const archives = getVonageArchiveList();
       sinon
         .stub(vonageProvider.VonageService, 'listArchives')
         .callsArgWith(1, error, archives);
 
-      const result = await vonageProvider.value().getArchives(archiveId);
+      const result = await vonageProvider.value().getArchives(nullArchiveId);
       expect(result)
         .to.have.property('count')
         .which.eql(archives.length);
@@ -177,14 +177,14 @@ describe('VonageProvider (unit)', () => {
     });
 
     it('returns an error if vonage fails to list archives', async () => {
-      const archiveId = null;
+      const nullArchiveId = null;
       sinon
         .stub(vonageProvider.VonageService, 'listArchives')
         .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
         .value()
-        .getArchives(archiveId)
+        .getArchives(nullArchiveId)
         .catch(err => err);
       expect(result).instanceOf(Error);
     });
