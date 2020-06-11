@@ -1,14 +1,3 @@
-import {Class, Model, Repository} from '@loopback/repository';
-import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
-import {VideoChatSessionController} from './controllers/video-chat-session.controller';
-import {VonageProvider} from './providers/vonage/vonage.provider';
-import {AuditLogs} from './models/audit-logs.model';
-import {VideoChatSession} from './models/video-chat-session.model';
-import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
-import {AuditLogsRepository} from './repositories/audit-logs.repository';
-
-import {RestApplication} from '@loopback/rest';
-import {IVideoChatServiceConfig} from './types';
 import {
   Binding,
   Component,
@@ -17,8 +6,8 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import {VideoChatBindings} from './keys';
-import {VonageBindings} from '../src/providers/vonage/keys';
+import {Class, Model, Repository} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -32,6 +21,17 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+
+import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
+import {VideoChatSessionController} from './controllers/video-chat-session.controller';
+import {VideoChatBindings} from './keys';
+import {AuditLogs} from './models/audit-logs.model';
+import {VideoChatSession} from './models/video-chat-session.model';
+import {VonageProvider} from './providers/vonage/vonage.provider';
+import {AuditLogsRepository} from './repositories/audit-logs.repository';
+import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
+import {IVideoChatServiceConfig} from './types';
+
 export class VideoConfServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -93,27 +93,16 @@ export class VideoConfServiceComponent implements Component {
     // Mount authentication component for default sequence
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
-    bindings.push(
-      Binding.bind(BearerVerifierBindings.Config).to({
-        authServiceUrl: '',
-        type: BearerVerifierType.service,
-      } as BearerVerifierConfig),
-    );
+    this.application.bind(BearerVerifierBindings.Config).to({
+      authServiceUrl: '',
+      type: BearerVerifierType.service,
+    } as BearerVerifierConfig);
     this.application.component(BearerVerifierComponent);
 
     // Mount authorization component for default sequence
-    bindings.push(
-      Binding.bind(AuthorizationBindings.CONFIG).to({
-        allowAlwaysPaths: ['/explorer'],
-      }),
-    );
-
-    bindings.push(
-      Binding.bind(VonageBindings.config).to({
-        apiKey: process.env.VONAGE_API_KEY as string,
-        apiSecret: process.env.VONAGE_API_SECRET as string,
-      }),
-    );
+    this.application.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer'],
+    });
     this.application.component(AuthorizationComponent);
   }
 }

@@ -34,6 +34,7 @@ module.exports = {
     {name: 'notification-service'},
     {name: 'scheduler-service'},
     {name: 'video-conferencing-service'},
+    {name: 'sandbox-testing'},
   ],
 
   appendBranchNameToCommitMessage: false,

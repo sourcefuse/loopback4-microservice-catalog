@@ -1,1 +1,1 @@
-export const BINDING_PREFIX = 'sourcefuse.services.';
+export const BINDING_PREFIX = 'sourceloop.services';

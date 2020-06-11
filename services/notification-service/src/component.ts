@@ -135,20 +135,16 @@ export class NotificationServiceComponent implements Component {
     // Mount authentication component for default sequence
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
-    bindings.push(
-      Binding.bind(BearerVerifierBindings.Config).to({
-        authServiceUrl: '',
-        type: BearerVerifierType.service,
-      } as BearerVerifierConfig),
-    );
+    this.application.bind(BearerVerifierBindings.Config).to({
+      authServiceUrl: '',
+      type: BearerVerifierType.service,
+    } as BearerVerifierConfig);
     this.application.component(BearerVerifierComponent);
 
     // Mount authorization component for default sequence
-    bindings.push(
-      Binding.bind(AuthorizationBindings.CONFIG).to({
-        allowAlwaysPaths: ['/explorer'],
-      }),
-    );
+    this.application.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer'],
+    });
     this.application.component(AuthorizationComponent);
   }
 }

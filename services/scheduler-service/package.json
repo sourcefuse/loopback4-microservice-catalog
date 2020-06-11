@@ -24,6 +24,7 @@
     "pretest": "npm run clean && npm run build",
     "test": "echo \"No tests !\"",
     "posttest": "npm run lint",
+    "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
@@ -32,7 +33,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/scheduler-service"
   },
   "author": "Sourcefuse",
   "license": "MIT",

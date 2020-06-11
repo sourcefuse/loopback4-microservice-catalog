@@ -1,9 +1,10 @@
 {
-  "name": "@sourceloop/notification-service",
+  "name": "@sourceloop/sandbox-testing",
   "version": "0.0.0",
-  "description": "services",
+  "description": "This is a sample application for sandbox testing of microservice components.",
+  "private": true,
   "keywords": [
-    "loopback-extension",
+    "loopback-application",
     "loopback"
   ],
   "main": "dist/index.js",
@@ -22,19 +23,21 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run clean && npm run build",
-    "test": "echo \"No tests !\"",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "prepublishOnly": "npm run test"
+    "docker:build": "docker build -t testing .",
+    "docker:run": "docker run -p 3000:3000 -d testing",
+    "migrate": "node ./dist/migrate",
+    "prestart": "npm run build",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "services/notification-service"
+    "type": "git"
   },
-  "author": "Sourcefuse",
-  "license": "MIT",
+  "author": "",
+  "license": "",
   "files": [
     "README.md",
     "dist",
@@ -43,16 +46,17 @@
   ],
   "dependencies": {
     "@loopback/boot": "^2.3.1",
-    "@loopback/context": "^3.8.2",
+    "@loopback/context": "^3.8.1",
     "@loopback/core": "^2.7.0",
+    "@loopback/openapi-v3": "^3.4.1",
     "@loopback/repository": "^2.5.1",
     "@loopback/rest": "^5.0.1",
+    "@loopback/rest-explorer": "^2.2.2",
+    "@loopback/service-proxy": "^2.3.0",
     "@sourceloop/core": "^0.0.0",
+    "@sourceloop/notification-service": "^0.0.0",
     "aws-sdk": "^2.694.0",
-    "lodash": "^4.17.15",
-    "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
-    "loopback4-notifications": "^1.0.0",
     "pubnub": "^4.28.0",
     "tslib": "^1.10.0"
   },
@@ -60,7 +64,6 @@
     "@loopback/build": "^5.4.1",
     "@loopback/eslint-config": "^7.0.1",
     "@loopback/testlab": "^3.1.5",
-    "@types/lodash": "^4.14.153",
     "@types/node": "^10.17.24",
     "eslint": "^7.0.0",
     "source-map-support": "^0.5.19",

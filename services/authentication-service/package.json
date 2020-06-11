@@ -2,6 +2,7 @@
   "name": "@sourceloop/authentication-service",
   "version": "0.0.0",
   "description": "services",
+  "private": true,
   "keywords": [
     "loopback-extension",
     "loopback"
@@ -24,12 +25,14 @@
     "pretest": "npm run clean && npm run build",
     "test": "echo \"No tests !\"",
     "posttest": "npm run lint",
+    "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/authentication-service"
   },
   "author": "",
   "license": "",

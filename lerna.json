@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/*", "services/*", "facades/*"],
+  "packages": ["packages/*", "services/*", "facades/*", "sandbox/*"],
   "command": {
     "bootstrap": {
       "concurrency": 4,
