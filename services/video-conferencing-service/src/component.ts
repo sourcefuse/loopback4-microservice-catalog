@@ -18,7 +18,7 @@ import {
   ProviderMap,
 } from '@loopback/core';
 import {VideoChatBindings} from './keys';
-import { VonageBindings } from '../src/providers/vonage/keys';
+import {VonageBindings} from '../src/providers/vonage/keys';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -26,7 +26,7 @@ import {
   BearerVerifierType,
   CoreComponent,
   ServiceSequence,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -108,10 +108,12 @@ export class VideoConfServiceComponent implements Component {
       }),
     );
 
-    bindings.push(Binding.bind(VonageBindings.config).to({
-      apiKey: process.env.VONAGE_API_KEY as string,
-      apiSecret: process.env.VONAGE_API_SECRET as string,
-    }));
+    bindings.push(
+      Binding.bind(VonageBindings.config).to({
+        apiKey: process.env.VONAGE_API_KEY as string,
+        apiSecret: process.env.VONAGE_API_SECRET as string,
+      }),
+    );
     this.application.component(AuthorizationComponent);
   }
 }

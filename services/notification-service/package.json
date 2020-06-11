@@ -22,7 +22,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run clean && npm run build",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test": "echo \"No tests !\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache"

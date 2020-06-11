@@ -1,11 +1,12 @@
-import { ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
 import {Entity, model, property} from '@loopback/repository';
 
 @model({
   name: 'audit_logs',
 })
-export class AuditLog extends Entity implements ExternalIdentifierEnabledEntity{
+export class AuditLog extends Entity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,

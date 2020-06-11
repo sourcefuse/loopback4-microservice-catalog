@@ -1,4 +1,4 @@
-import {IServiceConfig} from '@sourcefuse-service-catalog/core';
+import {IServiceConfig} from '@sourceloop/core';
 
 export interface IVideoChatServiceConfig extends IServiceConfig {
   // TODO

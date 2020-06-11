@@ -10,9 +10,9 @@ import {
 } from '../types';
 import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
 import {VideoChatBindings} from '../keys';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
-import { PermissionKeys } from '../enums/permission-keys.enum';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourcefuse-service-catalog/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {PermissionKeys} from '../enums/permission-keys.enum';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 export class VideoChatSessionController {
   constructor(

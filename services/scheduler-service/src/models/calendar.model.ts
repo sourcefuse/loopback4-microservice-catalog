@@ -2,7 +2,7 @@ import {hasMany, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {Event} from './event.model';
 import {Subscription} from './subscription.model';
 import {WorkingHour} from './working-hour.model';

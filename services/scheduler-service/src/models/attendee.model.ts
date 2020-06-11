@@ -2,7 +2,7 @@ import {belongsTo, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {ResponseStatusType} from './enums/response-status.enum';
 import {Event, EventWithRelations} from './event.model';
 

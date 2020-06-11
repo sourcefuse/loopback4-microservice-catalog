@@ -26,11 +26,11 @@ export abstract class DefaultUserModifyCrudRepository<
 
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
     let currentUser = await this.getCurrentUser();
-    currentUser = currentUser || options?.currentUser;
+    currentUser = currentUser ?? options?.currentUser;
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
     return super.create(entity, options);
@@ -38,14 +38,14 @@ export abstract class DefaultUserModifyCrudRepository<
 
   async createAll(entities: DataObject<T>[], options?: Options): Promise<T[]> {
     let currentUser = await this.getCurrentUser();
-    currentUser = currentUser || options?.currentUser;
+    currentUser = currentUser ?? options?.currentUser;
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     entities.forEach(entity => {
-      entity.createdBy = uid || '';
-      entity.modifiedBy = uid || '';
+      entity.createdBy = uid ?? '';
+      entity.modifiedBy = uid ?? '';
     });
     return super.createAll(entities, options);
   }
@@ -55,7 +55,7 @@ export abstract class DefaultUserModifyCrudRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
     return super.save(entity, options);
   }
@@ -65,7 +65,7 @@ export abstract class DefaultUserModifyCrudRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
     return super.update(entity, options);
   }
@@ -76,11 +76,11 @@ export abstract class DefaultUserModifyCrudRepository<
     options?: Options,
   ): Promise<Count> {
     let currentUser = await this.getCurrentUser();
-    currentUser = currentUser || options?.currentUser;
+    currentUser = currentUser ?? options?.currentUser;
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
     return super.updateAll(data, where, options);
   }
@@ -91,11 +91,11 @@ export abstract class DefaultUserModifyCrudRepository<
     options?: Options,
   ): Promise<void> {
     let currentUser = await this.getCurrentUser();
-    currentUser = currentUser || options?.currentUser;
+    currentUser = currentUser ?? options?.currentUser;
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
     return super.updateById(id, data, options);
   }
@@ -108,7 +108,7 @@ export abstract class DefaultUserModifyCrudRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    const uid = currentUser?.userTenantId || currentUser?.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
     return super.replaceById(id, data, options);
   }

@@ -1,12 +1,16 @@
 import {belongsTo, model, property} from '@loopback/repository';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {AccessRoleType} from './enums/access-role.enum';
 
 @model({
   name: 'subscriptions',
 })
-export class Subscription extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
+export class Subscription extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,

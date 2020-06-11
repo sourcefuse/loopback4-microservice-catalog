@@ -11,7 +11,7 @@ import {HttpErrors} from '@loopback/rest';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import {AuditLogs} from '../models';
-import {IAuthUserWithPermissions} from '@sourcefuse-service-catalog/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 
 export class AuditLogsRepository extends DefaultCrudRepository<
   AuditLogs,
