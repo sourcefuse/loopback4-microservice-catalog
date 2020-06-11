@@ -7,7 +7,8 @@
     },
     "version": {
       "conventionalCommits": true,
-      "message": "chore(%s): publish %s"
+      "message": "chore: publish release",
+      "allowBranch": "master"
     },
     "run": {
       "concurrency": 8
