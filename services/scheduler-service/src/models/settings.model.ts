@@ -1,11 +1,15 @@
 import {model, property} from '@loopback/repository';
 import {OwnerType} from './enums/owner-type.enum';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 
 @model({
   name: 'settings',
 })
-export class Settings extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
+export class Settings extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,

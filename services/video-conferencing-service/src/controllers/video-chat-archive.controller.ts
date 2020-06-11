@@ -5,7 +5,7 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
 import {VideoChatInterface} from '../types';
 import {VideoChatBindings} from '../keys';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourcefuse-service-catalog/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 export class VideoChatArchiveController {
   constructor(

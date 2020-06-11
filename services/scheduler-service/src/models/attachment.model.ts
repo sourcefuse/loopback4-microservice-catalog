@@ -1,11 +1,15 @@
 import {belongsTo, model, property} from '@loopback/repository';
-import {UserModifiableEntity, ExternalIdentifierEnabledEntity} from '@sourcefuse-service-catalog/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 import {Event, EventWithRelations} from './event.model';
 
 @model({
   name: 'attachments',
 })
-export class Attachment extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
+export class Attachment extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,

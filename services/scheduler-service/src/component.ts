@@ -15,7 +15,7 @@ import {
   BearerVerifierType,
   CoreComponent,
   ServiceSequence,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,

@@ -3,7 +3,7 @@ import {juggler} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Settings} from '../models';
 

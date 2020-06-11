@@ -1,10 +1,14 @@
 import {model, property} from '@loopback/repository';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 
 @model({
   name: 'themes',
 })
-export class Theme extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
+export class Theme extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,

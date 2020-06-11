@@ -2,7 +2,7 @@ import {belongsTo, hasMany, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {Attachment, Attendee} from '.';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {StatusType} from './enums/status.enum';

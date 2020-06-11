@@ -8,7 +8,7 @@ import {
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Attachment, Attendee, Calendar, Event, EventRelations} from '../models';
 import {AttachmentRepository} from './attachment.repository';

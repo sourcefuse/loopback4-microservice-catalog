@@ -1,12 +1,16 @@
 import {belongsTo, model, property} from '@loopback/repository';
-import { UserModifiableEntity, ExternalIdentifierEnabledEntity } from '@sourcefuse-service-catalog/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {DayOfWeekType} from './enums/day-of-week.enum';
 
 @model({
   name: 'working_hours',
 })
-export class WorkingHour extends UserModifiableEntity implements ExternalIdentifierEnabledEntity{
+export class WorkingHour extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
     id: true,

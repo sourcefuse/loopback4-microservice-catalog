@@ -4,14 +4,14 @@ import {VonageEnums} from '../../enums/video-chat.enum';
 import {MeetingOptions, SessionOptions} from '../../types';
 import {VonageVideoChat, VonageConfig} from './types';
 import OpenTok from 'opentok';
-import { VonageBindings } from './keys';
+import {VonageBindings} from './keys';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
     @inject(VonageBindings.config)
-    private readonly vonageConfig: VonageConfig
+    private readonly vonageConfig: VonageConfig,
   ) {
-    const { apiKey, apiSecret } = vonageConfig;
+    const {apiKey, apiSecret} = vonageConfig;
     if (!(apiKey && apiSecret)) {
       throw new HttpErrors.BadRequest('Vonage API key or secret is not set');
     }

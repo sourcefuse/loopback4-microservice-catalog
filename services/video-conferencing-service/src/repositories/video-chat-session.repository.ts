@@ -1,11 +1,11 @@
-import { juggler } from '@loopback/repository';
+import {juggler} from '@loopback/repository';
 import {Getter, inject} from '@loopback/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {VideoChatSession} from '../models/video-chat-session.model';
 import {
   IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
-} from '@sourcefuse-service-catalog/core';
+} from '@sourceloop/core';
 
 export class VideoChatSessionRepository extends DefaultUserModifyCrudRepository<
   VideoChatSession,

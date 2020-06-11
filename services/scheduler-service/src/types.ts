@@ -1,8 +1,8 @@
-import { IAuthUserWithPermissions } from '@sourcefuse-service-catalog/core';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 
 export interface CustomPermissionFn {
-    (user: IAuthUserWithPermissions): Promise<boolean>;
-  }
+  (user: IAuthUserWithPermissions): Promise<boolean>;
+}
 
 export interface ISchedulerConfig {
   jwtIssuer: string;

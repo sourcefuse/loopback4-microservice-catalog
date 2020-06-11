@@ -1,10 +1,14 @@
 import {model, property} from '@loopback/repository';
-import {UserModifiableEntity, ExternalIdentifierEnabledEntity} from '@sourcefuse-service-catalog/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 
 @model({
   name: 'video_session_details',
 })
-export class VideoChatSession extends UserModifiableEntity implements ExternalIdentifierEnabledEntity {
+export class VideoChatSession extends UserModifiableEntity
+  implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'number',
     id: true,
