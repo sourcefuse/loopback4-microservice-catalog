@@ -19,5 +19,5 @@ export class VideoChatSessionRepository extends DefaultUserModifyCrudRepository<
     >,
   ) {
     super(VideoChatSession, dataSource, getCurrentUser);
-  }
+  },
 }

@@ -211,31 +211,26 @@ export class VideoChatSessionController {
       throw new HttpErrors.BadRequest('Meeting link should be a valid string.');
     }
 
-    const checkIfMeetingIsNotEnded = await this.videoChatSessionRepository.findOne({
+    const videoSessionDetail = await this.videoChatSessionRepository.findOne({
       where: {
          meetingLink: meetingLinkId,
-         endTime : undefined,
         }
     });
 
-    if (!checkIfMeetingIsNotEnded) {
-      errorMessage = 'Meeting has been already ended.';
-      auditLogPayload.after = { errorMessage };
-      this.auditLogRepository.create(auditLogPayload);
-      throw new HttpErrors.BadRequest(errorMessage);
-    }
-
-    const { count } = await this.videoChatSessionRepository.updateAll({
-      endTime: new Date(),
-    },{
-        meetingLink: meetingLinkId,
-    });
-
-    if (!count) {
-      errorMessage = 'meeting Link Not Found';
+    if (!videoSessionDetail) {
+      errorMessage = 'Meeting Not Found';
       auditLogPayload.after = { errorMessage };
       this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.NotFound(errorMessage);
     }
+
+    if (videoSessionDetail.endTime) {
+      errorMessage = 'Meeting has already been ended!';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+    
+    return this.videoChatSessionRepository.updateById(videoSessionDetail.id, { endTime: new Date() });
   }
 }
