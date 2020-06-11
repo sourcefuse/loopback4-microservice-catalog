@@ -25,7 +25,7 @@
     "pretest": "npm run clean && npm run build",
     "test": "echo \"No tests !\"",
     "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "test:dev": "lb-nyc lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "prepublishOnly": "npm run test",
