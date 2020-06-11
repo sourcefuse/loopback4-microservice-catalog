@@ -1,3 +1,4 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -10,6 +11,7 @@ import {
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
@@ -18,9 +20,15 @@ import {
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {Event} from '../models';
+import {Attachment, Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
-import {EventRepository} from '../repositories';
+import {EventDTO} from '../models/event.dto';
+import {
+  AttachmentRepository,
+  AttendeeRepository,
+  EventRepository,
+} from '../repositories';
+import {ValidatorService} from '../services/validator.service';
 
 const basePath = '/events';
 
@@ -28,6 +36,11 @@ export class EventController {
   constructor(
     @repository(EventRepository)
     public eventRepository: EventRepository,
+    @repository(AttendeeRepository)
+    public attendeeRepository: AttendeeRepository,
+    @repository(AttachmentRepository)
+    public attachmentRepository: AttachmentRepository,
+    @service(ValidatorService) public validatorService: ValidatorService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -46,15 +59,47 @@ export class EventController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Event, {
+          schema: getModelSchemaRef(EventDTO, {
             title: 'NewEvent',
+            exclude: ['id'],
           }),
         },
       },
     })
-    event: Event,
+    req: Omit<EventDTO, 'id'>,
   ): Promise<Event> {
-    return this.eventRepository.create(event);
+    const isCalendar = await this.validatorService.calendarExists(
+      req.calendarId,
+    );
+    if (!isCalendar) throw new HttpErrors.NotFound(`Calendar does not exist`);
+
+    const isEvent = await this.validatorService.eventExists(req.parentEventId);
+    if (!isEvent) throw new HttpErrors.NotFound(`Event does not exist`);
+
+    const attendees = req.attendees;
+    const attachments = req.attachments;
+    delete req.attendees;
+    delete req.attachments;
+
+    const event = await this.eventRepository.create(req);
+    if (event?.id) {
+      const eventId = event.id;
+      if (attendees)
+        event.attendees = await Promise.all(
+          attendees.map(async (attendee: Attendee) => {
+            attendee.eventId = eventId;
+            return this.eventRepository.attendees(eventId).create(attendee);
+          }),
+        );
+      if (attachments)
+        event.attachments = await Promise.all(
+          attachments.map(async (attachment: Attachment) => {
+            attachment.eventId = eventId;
+            return this.eventRepository.attachments(eventId).create(attachment);
+          }),
+        );
+    }
+    return event;
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -184,8 +229,40 @@ export class EventController {
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() event: Event,
+    @requestBody() event: EventDTO,
   ): Promise<void> {
+    const isCalendar = await this.validatorService.calendarExists(
+      event.calendarId,
+    );
+    if (!isCalendar) throw new HttpErrors.NotFound(`Calendar does not exist`);
+
+    const attendees = event.attendees;
+    const attachments = event.attachments;
+    delete event.attendees;
+    delete event.attachments;
+
+    await this.eventRepository.replaceById(id, event);
+
+    if (attendees) {
+      for (const attendee of attendees) {
+        const isEvent = await this.validatorService.eventExists(
+          attendee.eventId,
+        );
+        if (!isEvent)
+          throw new HttpErrors.NotFound(`Attendee has invalid eventId`);
+        await this.attendeeRepository.replaceById(attendee.id, attendee);
+      }
+    }
+    if (attachments) {
+      for (const attachment of attachments) {
+        const isEvent = await this.validatorService.eventExists(
+          attachment.eventId,
+        );
+        if (!isEvent)
+          throw new HttpErrors.NotFound(`Attachment has invalid eventId`);
+        await this.attachmentRepository.replaceById(attachment.id, attachment);
+      }
+    }
     await this.eventRepository.replaceById(id, event);
   }
 

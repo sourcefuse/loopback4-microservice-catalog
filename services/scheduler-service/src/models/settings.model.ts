@@ -1,9 +1,9 @@
 import {model, property} from '@loopback/repository';
-import {OwnerType} from './enums/owner-type.enum';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
+import {OwnerType} from './enums/owner-type.enum';
 
 @model({
   name: 'settings',
@@ -20,6 +20,9 @@ export class Settings extends UserModifiableEntity
     type: 'string',
     required: true,
     name: 'owner_id',
+    jsonSchema: {
+      maxLength: 225,
+    },
   })
   ownerId: string;
 
@@ -43,12 +46,18 @@ export class Settings extends UserModifiableEntity
   @property({
     type: 'string',
     name: 'setting_name',
+    jsonSchema: {
+      maxLength: 225,
+    },
   })
   settingName?: string;
 
   @property({
     type: 'string',
     name: 'setting_value',
+    jsonSchema: {
+      maxLength: 1500,
+    },
   })
   settingValue?: string;
 
@@ -60,7 +69,7 @@ export class Settings extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 

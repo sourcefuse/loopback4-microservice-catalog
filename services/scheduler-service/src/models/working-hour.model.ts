@@ -1,9 +1,9 @@
 import {belongsTo, model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
-import {Calendar, CalendarWithRelations} from './calendar.model';
+import {Calendar} from './calendar.model';
 import {DayOfWeekType} from './enums/day-of-week.enum';
 
 @model({
@@ -64,7 +64,7 @@ export class WorkingHour extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 
@@ -74,8 +74,7 @@ export class WorkingHour extends UserModifiableEntity
 }
 
 export interface WorkingHourRelations {
-  // describe navigational properties here
-  calendar: CalendarWithRelations;
+  calendar?: Calendar;
 }
 
 export type WorkingHourWithRelations = WorkingHour & WorkingHourRelations;

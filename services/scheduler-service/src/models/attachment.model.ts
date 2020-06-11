@@ -1,9 +1,9 @@
 import {belongsTo, model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
-import {Event, EventWithRelations} from './event.model';
+import {Event} from './event.model';
 
 @model({
   name: 'attachments',
@@ -32,11 +32,17 @@ export class Attachment extends UserModifiableEntity
   @property({
     type: 'string',
     name: 'mimetype',
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   mimeType?: string;
 
   @property({
     type: 'string',
+    jsonSchema: {
+      maxLength: 400,
+    },
   })
   title?: string;
 
@@ -58,7 +64,7 @@ export class Attachment extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 
@@ -68,8 +74,7 @@ export class Attachment extends UserModifiableEntity
 }
 
 export interface AttachmentRelations {
-  // describe navigational properties here
-  event: EventWithRelations;
+  event?: Event;
 }
 
 export type AttachmentWithRelations = Attachment & AttachmentRelations;

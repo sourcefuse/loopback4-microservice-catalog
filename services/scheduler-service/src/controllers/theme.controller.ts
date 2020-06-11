@@ -48,11 +48,12 @@ export class ThemeController {
         'application/json': {
           schema: getModelSchemaRef(Theme, {
             title: 'NewTheme',
+            exclude: ['id'],
           }),
         },
       },
     })
-    theme: Theme,
+    theme: Omit<Theme, 'id'>,
   ): Promise<Theme> {
     return this.themeRepository.create(theme);
   }
