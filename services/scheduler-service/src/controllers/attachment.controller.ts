@@ -48,11 +48,12 @@ export class AttachmentController {
         'application/json': {
           schema: getModelSchemaRef(Attachment, {
             title: 'NewAttachment',
+            exclude: ['id'],
           }),
         },
       },
     })
-    attachment: Attachment,
+    attachment: Omit<Attachment, 'id'>,
   ): Promise<Attachment> {
     return this.attachmentRepository.create(attachment);
   }

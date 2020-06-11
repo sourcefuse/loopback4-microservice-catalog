@@ -48,11 +48,12 @@ export class SettingsController {
         'application/json': {
           schema: getModelSchemaRef(Settings, {
             title: 'NewSettings',
+            exclude: ['id'],
           }),
         },
       },
     })
-    settings: Settings,
+    settings: Omit<Settings, 'id'>,
   ): Promise<Settings> {
     return this.settingsRepository.create(settings);
   }

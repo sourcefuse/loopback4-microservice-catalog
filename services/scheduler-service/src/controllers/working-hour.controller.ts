@@ -48,11 +48,12 @@ export class WorkingHourController {
         'application/json': {
           schema: getModelSchemaRef(WorkingHour, {
             title: 'NewWorkingHour',
+            exclude: ['id'],
           }),
         },
       },
     })
-    workingHour: WorkingHour,
+    workingHour: Omit<WorkingHour, 'id'>,
   ): Promise<WorkingHour> {
     return this.workingHourRepository.create(workingHour);
   }

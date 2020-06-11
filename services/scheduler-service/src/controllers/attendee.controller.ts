@@ -48,11 +48,12 @@ export class AttendeeController {
         'application/json': {
           schema: getModelSchemaRef(Attendee, {
             title: 'NewAttendee',
+            exclude: ['id'],
           }),
         },
       },
     })
-    attendee: Attendee,
+    attendee: Omit<Attendee, 'id'>,
   ): Promise<Attendee> {
     return this.attendeeRepository.create(attendee);
   }

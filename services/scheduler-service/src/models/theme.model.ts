@@ -1,7 +1,7 @@
 import {model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
 
 @model({
@@ -18,24 +18,36 @@ export class Theme extends UserModifiableEntity
   @property({
     type: 'string',
     name: 'cal_bg',
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   calBg?: string;
 
   @property({
     type: 'string',
     name: 'cal_fg',
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   calFg?: string;
 
   @property({
     type: 'string',
     name: 'event_bg',
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   eventBg?: string;
 
   @property({
     type: 'string',
     name: 'event_fg',
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   eventFg?: string;
 
@@ -47,7 +59,7 @@ export class Theme extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 
