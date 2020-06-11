@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.0...@sourceloop/scheduler-service@1.0.0-alpha.1) (2020-06-11)
+
+
+### Bug Fixes
+
+* **scheduler-service:** fix datasource binding key issue ([3c9c6a6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c9c6a659a10c67377f6ecd89edc7701200112db))
+
+
+
+
+
 # 1.0.0-alpha.0 (2020-06-11)
 
 
