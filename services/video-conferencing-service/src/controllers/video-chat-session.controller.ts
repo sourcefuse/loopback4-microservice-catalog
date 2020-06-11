@@ -44,14 +44,32 @@ export class VideoChatSessionController {
     meetingOptions: MeetingOptions,
   ): Promise<string> {
     let scheduledTime: Date = new Date();
+    const auditLogPayload = {
+      action: 'session',
+      actionType: 'meeting-link',
+      actedAt: moment().format(),
+      before: meetingOptions,
+      after: {},
+    };
+    let errorMessage: string = '';
+
 
     if(meetingOptions.isScheduled){
       if(!meetingOptions.scheduleTime){
-        throw new HttpErrors.BadRequest(`Schedule time is not set.`);
-      } else if (!moment(meetingOptions.scheduleTime).isValid){
-        throw new HttpErrors.BadRequest(`Scheduled time is not in correct format.`);
+        errorMessage = 'Schedule time is not set.';
+        auditLogPayload.after = { errorMessage };
+        this.auditLogRepository.create(auditLogPayload);
+        throw new HttpErrors.BadRequest(errorMessage);
+      } else if (isNaN(meetingOptions.scheduleTime.valueOf() as number)) {
+        errorMessage = 'Scheduled time is not in correct format.';
+        auditLogPayload.after = { errorMessage };
+        this.auditLogRepository.create(auditLogPayload);
+        throw new HttpErrors.BadRequest(errorMessage);
       } else if (moment().isAfter(meetingOptions.scheduleTime)) {
-        throw new HttpErrors.BadRequest(`Meeting can't be scheduled with schedule time in past!`);
+        errorMessage = `Meeting can't be scheduled with schedule time in past!`;
+        auditLogPayload.after = { errorMessage };
+        this.auditLogRepository.create(auditLogPayload);
+        throw new HttpErrors.BadRequest(errorMessage);
       } else {
         scheduledTime = meetingOptions.scheduleTime;
       }
@@ -61,8 +79,7 @@ export class VideoChatSessionController {
       meetingOptions,
     );
 
-    const meetingLinkId = cryptoRandomString({length: 10, type: 'url-safe'});
-
+    const meetingLinkId = cryptoRandomString({length: 10, type: 'url-safe' });
     const videoSessionDetail = new VideoChatSession({
       sessionId: meetingResp.sessionId,
       meetingLink: meetingLinkId,
@@ -71,15 +88,8 @@ export class VideoChatSessionController {
     });
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
-
-    this.auditLogRepository.create({
-      action: 'session',
-      actionType: 'meeting-link',
-      actedEntity: meetingLinkId,
-      actedAt: moment().format(),
-      after: videoSessionDetail,
-    });
-
+    auditLogPayload.after = videoSessionDetail;
+    this.auditLogRepository.create(auditLogPayload);
     return meetingLinkId;
   }
 
@@ -120,7 +130,7 @@ export class VideoChatSessionController {
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    if(!moment(sessionOptions.expireTime).isValid) {
+    if(isNaN(sessionOptions.expireTime?.valueOf() as number)) {
       errorMessage = 'Expire time is not in correct format.';
       auditLogPayload.after = { errorMessage };
       this.auditLogRepository.create(auditLogPayload);
@@ -199,6 +209,20 @@ export class VideoChatSessionController {
       auditLogPayload.after = { errorMessage };
       this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest('Meeting link should be a valid string.');
+    }
+
+    const checkIfMeetingIsNotEnded = await this.videoChatSessionRepository.findOne({
+      where: {
+         meetingLink: meetingLinkId,
+         endTime : undefined,
+        }
+    });
+
+    if (!checkIfMeetingIsNotEnded) {
+      errorMessage = 'Meeting has been already ended.';
+      auditLogPayload.after = { errorMessage };
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
     }
 
     const { count } = await this.videoChatSessionRepository.updateAll({

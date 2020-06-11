@@ -38,7 +38,7 @@ export class VideoChatArchiveController {
   async getArchive(@param.path.string('archiveId') archiveId: string) {
     const archiveExists = await this.videoChatSessionRepository.findOne({
       where: {
-        archiveId,
+        archiveId: archiveId,
       }
     });
     if (!archiveExists) {
@@ -93,7 +93,7 @@ export class VideoChatArchiveController {
   ): Promise<void> {
     const archiveExists = await this.videoChatSessionRepository.findOne({
       where: {
-        archiveId,
+        archiveId: archiveId,
       }
     });
     if (!archiveExists) {
