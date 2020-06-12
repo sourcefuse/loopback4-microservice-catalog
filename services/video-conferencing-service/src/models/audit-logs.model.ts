@@ -1,5 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
-import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
+import { ExternalIdentifierEnabledEntity } from '@sourceloop/core';
 
 @model({
   name: 'audit_logs',
@@ -39,7 +39,6 @@ export class AuditLogs extends Entity
 
   @property({
     type: 'string',
-    required: true,
     name: 'acted_entity',
   })
   actedEntity: string;
@@ -63,13 +62,13 @@ export class AuditLogs extends Entity
     type: 'string',
     name: 'ext_id',
   })
-  extId: string;
+  extId?: string;
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
-  extMetadata: object;
+  extMetadata?: object;
 
   constructor(data?: Partial<AuditLogs>) {
     super(data);

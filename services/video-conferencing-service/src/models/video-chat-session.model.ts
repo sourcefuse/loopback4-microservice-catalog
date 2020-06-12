@@ -1,8 +1,5 @@
 import {model, property} from '@loopback/repository';
-import {
-  UserModifiableEntity,
-  ExternalIdentifierEnabledEntity,
-} from '@sourceloop/core';
+import {UserModifiableEntity, ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
 @model({
   name: 'video_session_details',
@@ -42,7 +39,7 @@ export class VideoChatSession extends UserModifiableEntity
     type: 'date',
     name: 'schedule_time',
   })
-  scheduleTime?: string;
+  scheduleTime?: Date;
 
   @property({
     type: 'boolean',
@@ -80,13 +77,13 @@ export class VideoChatSession extends UserModifiableEntity
     type: 'string',
     name: 'ext_id',
   })
-  extId: string;
+  extId?: string;
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
-  extMetadata: object;
+  extMetadata?: object;
 
   constructor(data?: Partial<VideoChatSession>) {
     super(data);
