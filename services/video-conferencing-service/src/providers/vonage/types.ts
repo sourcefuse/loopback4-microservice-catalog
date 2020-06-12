@@ -172,7 +172,7 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @function setUploadTarget set the upload target
    * @param config of type @interface VonageS3TargetOptions or @interface VonageAzureTargetOptions
    */
-  setUploadTarget(config: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void>;
+  setUploadTarget(config: VonageS3TargetOptions | VonageAzureTargetOptions): Promise<void>;
   /**
    * @function deleteUploadTarget delete the upload target from s3/azure
    */

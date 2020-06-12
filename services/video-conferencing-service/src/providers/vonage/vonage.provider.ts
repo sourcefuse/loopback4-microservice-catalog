@@ -229,7 +229,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           throw new HttpErrors.InternalServerError('Error occured while deleting an archive');
         }
       },
-      setUploadTarget: async (config: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void> => {
+      setUploadTarget: async (config: VonageS3TargetOptions | VonageAzureTargetOptions): Promise<void> => {
         try {
         const { apiKey, apiSecret } = this.vonageConfig;
         const ttl = 200;
@@ -243,8 +243,8 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         const token = sign(jwtPayload, apiSecret);
         let type = '';
         const credentials = {};
-        const { accessKey , secretKey, bucket, endpoint,
-         fallback, accountName, accountKey, container, domain } = config;
+        const { accessKey , secretKey, bucket, endpoint } = config as VonageS3TargetOptions;
+        const { accountName, accountKey, container, domain } = config as VonageAzureTargetOptions;
         if (accessKey && secretKey && bucket) {
           type = 'S3';
           Object.assign(credentials, {
@@ -263,7 +263,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           data: {
            type,
            config: credentials,
-           fallback,
+           fallback: config.fallback,
           },
           headers: {
             'X-OPENTOK-AUTH': token

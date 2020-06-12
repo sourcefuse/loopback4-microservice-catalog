@@ -44,7 +44,7 @@ export interface VideoChatInterface {
    * @function setUploadTarget set the upload target
    * @param config of type @interface S3TargetOptions or @interface AzureTargetOptions
    */
-  setUploadTarget(config: S3TargetOptions & AzureTargetOptions): Promise<void>;
+  setUploadTarget(config: S3TargetOptions | AzureTargetOptions): Promise<void>;
   /**
    * @function deleteUploadTarget delete the upload target from s3/azure
    */
