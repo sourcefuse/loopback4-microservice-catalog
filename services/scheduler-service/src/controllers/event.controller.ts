@@ -68,36 +68,41 @@ export class EventController {
     })
     req: Omit<EventDTO, 'id'>,
   ): Promise<Event> {
+    const {calendarId, parentEventId, attendees, attachments} = req;
     const isCalendar = await this.validatorService.calendarExists(
-      req.calendarId,
+      calendarId,
     );
-    if (!isCalendar) throw new HttpErrors.NotFound(`Calendar does not exist`);
+    if (!isCalendar) {
+      throw new HttpErrors.NotFound(`Calendar does not exist`);
+    }
 
-    const isEvent = await this.validatorService.eventExists(req.parentEventId);
-    if (!isEvent) throw new HttpErrors.NotFound(`Event does not exist`);
+    const isEvent = await this.validatorService.eventExists(parentEventId);
+    if (!isEvent) {
+      throw new HttpErrors.NotFound(`Event does not exist`);
+    }
 
-    const attendees = req.attendees;
-    const attachments = req.attachments;
     delete req.attendees;
     delete req.attachments;
 
     const event = await this.eventRepository.create(req);
     if (event?.id) {
       const eventId = event.id;
-      if (attendees)
+      if (attendees){
         event.attendees = await Promise.all(
           attendees.map(async (attendee: Attendee) => {
             attendee.eventId = eventId;
             return this.eventRepository.attendees(eventId).create(attendee);
           }),
         );
-      if (attachments)
+      }
+      if (attachments){
         event.attachments = await Promise.all(
           attachments.map(async (attachment: Attachment) => {
             attachment.eventId = eventId;
             return this.eventRepository.attachments(eventId).create(attachment);
           }),
         );
+      }
     }
     return event;
   }
@@ -234,10 +239,10 @@ export class EventController {
     const isCalendar = await this.validatorService.calendarExists(
       event.calendarId,
     );
-    if (!isCalendar) throw new HttpErrors.NotFound(`Calendar does not exist`);
-
-    const attendees = event.attendees;
-    const attachments = event.attachments;
+    if (!isCalendar) {
+      throw new HttpErrors.NotFound(`Calendar does not exist`);
+    }
+    const {attendees, attachments} = event;
     delete event.attendees;
     delete event.attachments;
 
@@ -248,8 +253,9 @@ export class EventController {
         const isEvent = await this.validatorService.eventExists(
           attendee.eventId,
         );
-        if (!isEvent)
+        if (!isEvent){
           throw new HttpErrors.NotFound(`Attendee has invalid eventId`);
+        }
         await this.attendeeRepository.replaceById(attendee.id, attendee);
       }
     }
@@ -258,8 +264,9 @@ export class EventController {
         const isEvent = await this.validatorService.eventExists(
           attachment.eventId,
         );
-        if (!isEvent)
+        if (!isEvent){
           throw new HttpErrors.NotFound(`Attachment has invalid eventId`);
+        }
         await this.attachmentRepository.replaceById(attachment.id, attachment);
       }
     }

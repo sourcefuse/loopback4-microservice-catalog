@@ -179,12 +179,10 @@ describe('Attachment Controller', () => {
       fileUrl: 'file_url',
     };
 
-    const reqToAddEntity = await client
+    return client
       .post(basePath)
       .set('authorization', `Bearer ${token}`)
       .send(enitityToAdd);
-
-    return reqToAddEntity;
   }
 
   async function deleteMockData() {

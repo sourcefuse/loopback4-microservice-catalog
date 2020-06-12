@@ -111,9 +111,9 @@ describe('Attendee Controller', () => {
 
   it('updates enitity successfully using PATCH request', async () => {
     const reqToAddEntity = await addEntity();
-
+    const email = 'updated@gmail.com';
     const entityToUpdate = {
-      email: 'updated@gmail.com',
+      email: email,
       eventId: 'event-id',
     };
 
@@ -129,14 +129,14 @@ describe('Attendee Controller', () => {
       .expect(200);
 
     expect(response.body).to.have.properties(['email']);
-    expect(response.body.email).to.be.equal('updated@gmail.com');
+    expect(response.body.email).to.be.equal(email);
   });
 
   it('updates entity using PUT request', async () => {
     const reqToAddEntity = await addEntity();
-
+    const email = 'updated@gmail.com';
     const entityToUpdate = {
-      email: 'updated@gmail.com',
+      email: email,
       eventId: 'event-id',
     };
 
@@ -152,7 +152,7 @@ describe('Attendee Controller', () => {
       .expect(200);
 
     expect(response.body).to.have.properties(['email']);
-    expect(response.body.email).to.be.equal('updated@gmail.com');
+    expect(response.body.email).to.be.equal(email);
   });
 
   it('deletes a setting successfully', async () => {
@@ -176,12 +176,10 @@ describe('Attendee Controller', () => {
       eventId: 'event-id',
     };
 
-    const reqToAddEntity = await client
+    return client
       .post(basePath)
       .set('authorization', `Bearer ${token}`)
       .send(enitityToAdd);
-
-    return reqToAddEntity;
   }
 
   async function deleteMockData() {

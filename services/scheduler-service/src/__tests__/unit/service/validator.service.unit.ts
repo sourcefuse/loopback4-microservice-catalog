@@ -8,9 +8,10 @@ import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
+  sinon
 } from '@loopback/testlab';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
-import sinon from 'sinon';
+
 import {
   Calendar,
   CalendarWithRelations,

@@ -28,13 +28,21 @@ export class ValidatorService {
       },
     });
 
-    if (calendar) return true;
-    else return false;
+    if (calendar) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   minMaxTime(timeMin?: Date, timeMax?: Date) {
-    if (timeMax && timeMin && timeMax < timeMin) return false;
-    else return true;
+    if (timeMax && timeMin && timeMax < timeMin){
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   async eventExists(eventId?: string) {
@@ -44,8 +52,12 @@ export class ValidatorService {
       },
     });
 
-    if (event) return true;
-    else return false;
+    if (event) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   async primaryToCalendarId(id: string) {
@@ -55,8 +67,12 @@ export class ValidatorService {
           and: [{subscriber: this.currentUser.email}, {isPrimary: true}],
         },
       });
-      if (subcription) id = subcription.calendarId;
-      else return null;
+      if (subcription) {
+        id = subcription.calendarId;
+      }
+      else {
+        return null;
+      }
     }
     return id;
   }

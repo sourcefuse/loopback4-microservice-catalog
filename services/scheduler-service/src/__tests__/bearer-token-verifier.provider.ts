@@ -17,10 +17,9 @@ export class BearerTokenVerifyProvider
         database.
         Use global interceptor over this to apply that check on each api.
       */
-      const user = verify(token, process.env.JWT_SECRET as string, {
+      return verify(token, process.env.JWT_SECRET as string, {
         issuer: process.env.JWT_ISSUER,
       }) as IAuthUserWithPermissions;
-      return user;
     };
   }
 }

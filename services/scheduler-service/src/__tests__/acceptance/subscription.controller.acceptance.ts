@@ -170,12 +170,10 @@ describe('Subscription Controller', () => {
       calendarId: 'dummy',
     });
 
-    const reqToAddSubscription = await client
+    return client
       .post(`/subscriptions`)
       .set('authorization', `Bearer ${token}`)
       .send(subscriptionToAdd);
-
-    return reqToAddSubscription;
   }
 
   async function deleteMockData() {

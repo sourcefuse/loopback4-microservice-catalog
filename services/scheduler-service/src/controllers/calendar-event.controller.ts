@@ -65,17 +65,20 @@ export class CalendarEventController {
     @param.query.dateTime('timeMin') timeMin?: Date,
   ): Promise<Event[]> {
     const calendarId = await this.validatorService.primaryToCalendarId(id);
-    if (!calendarId)
+    if (!calendarId){
       throw new HttpErrors.NotFound(`User does not have a primary calendar`);
-
+    }
     const calendar = await this.validatorService.calendarExists(calendarId);
-    if (!calendar) throw new HttpErrors.NotFound(`Calendar does not exist`);
+    if (!calendar) {
+      throw new HttpErrors.NotFound(`Calendar does not exist`);
+    }
 
     const correctTime = this.validatorService.minMaxTime(timeMin, timeMax);
-    if (!correctTime)
+    if (!correctTime){
       throw new HttpErrors.UnprocessableEntity(
         'timeMin cannot be greater than timeMax',
       );
+    }
     let whereClause = {};
 
     if (timeMin && timeMax) {

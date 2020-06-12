@@ -213,11 +213,10 @@ describe('Calendar Controller', () => {
       ],
     };
 
-    const reqToAddCalendar = await client
+    return client
       .post(`/calendars`)
       .set('authorization', `Bearer ${token}`)
       .send(calendarToAdd);
-    return reqToAddCalendar;
   }
 
   async function deleteMockData() {

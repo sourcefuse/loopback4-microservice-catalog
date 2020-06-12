@@ -65,15 +65,17 @@ export class CalendarController {
     delete calendarDTO.workingHours;
 
     const response = await this.calendarRepository.create(calendarDTO);
-    const calendarId: string = response.id!;
-    if (workingHours) {
-      response['workingHours'] = [];
-      for (const workingHour of workingHours) {
-        workingHour.calendarId = calendarId;
-        const workigHourResp = await this.workingHourRepository.create(
-          workingHour,
-        );
-        response.workingHours.push(workigHourResp);
+    if(response.id){
+      const calendarId: string = response.id;
+      if (workingHours) {
+        response['workingHours'] = [];
+        for (const workingHour of workingHours) {
+          workingHour.calendarId = calendarId;
+          const workigHourResp = await this.workingHourRepository.create(
+            workingHour,
+          );
+          response.workingHours.push(workigHourResp);
+        }
       }
     }
     return response;

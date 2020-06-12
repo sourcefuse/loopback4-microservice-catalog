@@ -193,12 +193,10 @@ describe('Settings Controller', () => {
       settingValue: 'string',
     };
 
-    const reqToAddSetting = await client
+    return client
       .post(`/settings`)
       .set('authorization', `Bearer ${token}`)
       .send(settingsToAdd);
-
-    return reqToAddSetting;
   }
 
   async function deleteMockData() {

@@ -175,12 +175,10 @@ describe('Theme Controller', () => {
       calFg: 'green',
     };
 
-    const reqToAddEntity = await client
+    return client
       .post(apiUrl)
       .set('authorization', `Bearer ${token}`)
       .send(enitityToAdd);
-
-    return reqToAddEntity;
   }
 
   async function deleteMockData() {

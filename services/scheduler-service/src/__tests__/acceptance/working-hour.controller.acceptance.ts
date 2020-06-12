@@ -167,12 +167,10 @@ describe('WorkingHour Controller', () => {
       dayOfWeek: 1,
     });
 
-    const reqToAddWorkingHour = await client
+    return client
       .post(`/working-hours`)
       .set('authorization', `Bearer ${token}`)
       .send(workingHourToAdd);
-
-    return reqToAddWorkingHour;
   }
 
   async function deleteMockData() {
