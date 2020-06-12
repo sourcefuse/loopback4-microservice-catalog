@@ -33,7 +33,6 @@ export class ValidatorService {
   }
 
   minMaxTime(timeMin?: Date, timeMax?: Date) {
-    console.log(timeMin, timeMax);
     if (timeMax && timeMin && timeMax < timeMin) return false;
     else return true;
   }

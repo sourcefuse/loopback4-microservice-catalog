@@ -208,20 +208,9 @@ export class CalendarController {
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() calendarDTO: CalendarDTO,
+    @requestBody() calendar: Calendar,
   ): Promise<void> {
-    let workingHours: WorkingHour[] = [];
-    if (calendarDTO.workingHours) {
-      workingHours = calendarDTO.workingHours;
-      for (const workingHour of workingHours) {
-        await this.workingHourRepository.replaceById(
-          workingHour.id,
-          workingHour,
-        );
-      }
-    }
-    delete calendarDTO.workingHours;
-    await this.calendarRepository.replaceById(id, calendarDTO);
+    await this.calendarRepository.replaceById(id, calendar);
   }
 
   @authenticate(STRATEGY.BEARER, {
