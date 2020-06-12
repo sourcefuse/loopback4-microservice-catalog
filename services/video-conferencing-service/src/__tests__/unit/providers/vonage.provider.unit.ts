@@ -23,7 +23,8 @@ describe('VonageProvider (unit)', () => {
   it('gives an error when vonage API key and secret are not set', async () => {
       config = {
           apiKey: '',
-          apiSecret: ''
+          apiSecret: '',
+          timeToStart: 30,
       }; 
 
     try {
@@ -219,7 +220,8 @@ describe('VonageProvider (unit)', () => {
   function setUp() {
     config = {
       apiKey: 'dummy',
-      apiSecret: 'dummy'
+      apiSecret: 'dummy',
+      timeToStart: 30,
     }; 
 
     auditLogRepo = createStubInstance(AuditLogsRepository);

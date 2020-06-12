@@ -99,7 +99,8 @@ describe('Archive APIs', () => {
   function setUp(providerStub: Partial<VideoChatInterface>) {
     config = {
       apiKey: 'dummy',
-      apiSecret: 'dummy'
+      apiSecret: 'dummy',
+      timeToStart: 30,
     }; 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
     auditLogRepo = createStubInstance(AuditLogsRepository);

@@ -254,9 +254,9 @@ describe('Session APIs', () => {
   function setUp(providerStub: Partial<VideoChatInterface>) {
     config = {
       apiKey: 'dummy',
-      apiSecret: 'dummy'
+      apiSecret: 'dummy',
+      timeToStart: 30,
     }; 
-    process.env.TIME_TO_START = '30';
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
 
@@ -271,6 +271,7 @@ describe('Session APIs', () => {
       videoChatSessionRepo,
       videoChatProvider,
       auditLogRepo,
+      config,
     );
   }
 });
