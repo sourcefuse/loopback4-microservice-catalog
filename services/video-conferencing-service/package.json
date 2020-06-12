@@ -23,7 +23,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run clean && npm run build",
-    "test": "echo \"No tests !\"",
+    "test": "lb-nyc lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "posttest": "npm run lint",
     "test:dev": "lb-nyc lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "migrate": "node ./dist/migrate",
