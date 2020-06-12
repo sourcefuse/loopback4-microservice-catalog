@@ -1,4 +1,9 @@
-import {Client, expect, givenHttpServerConfig, createRestAppClient} from '@loopback/testlab';
+import {
+  Client,
+  expect,
+  givenHttpServerConfig,
+  createRestAppClient,
+} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
 import {SchedulerApplication} from '../application';
 import {ThemeRepository} from '../../repositories';
@@ -71,7 +76,7 @@ describe('Theme Controller', () => {
     });
 
     await app.boot();
-    
+
     app.bind('datasources.config.schedulerDb').to({
       name: 'pgdb',
       connector: 'memory',
@@ -79,7 +84,7 @@ describe('Theme Controller', () => {
     // Start Application
     await app.start();
   }
-  
+
   it('gives status 401 when no token is passed', async () => {
     const response = await client.get(apiUrl).expect(401);
 

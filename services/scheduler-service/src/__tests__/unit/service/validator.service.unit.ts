@@ -1,9 +1,9 @@
-import {ValidatorService} from '../../services';
+import {ValidatorService} from '../../../services';
 import {
   CalendarRepository,
   SubscriptionRepository,
   EventRepository,
-} from '../../repositories';
+} from '../../../repositories';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
@@ -16,9 +16,7 @@ import {
   CalendarWithRelations,
   Event,
   Subscription,
-  SubscriptionWithRelations,
-  EventWithRelations,
-} from '../../models';
+} from '../../../models';
 import {Filter} from '@loopback/repository';
 
 describe('Validator Service', () => {
@@ -68,7 +66,7 @@ describe('Validator Service', () => {
       const eventId = 'dummy';
       const filter: Filter = {where: {id: eventId}};
       const findOne = eventRepo.stubs.findOne;
-      findOne.resolves(event as EventWithRelations);
+      findOne.resolves(event);
       const result = await validatorService.eventExists(eventId);
       expect(result).to.eql(true);
       sinon.assert.calledOnce(findOne);
@@ -106,7 +104,7 @@ describe('Validator Service', () => {
         },
       };
       const findOne = subscriptionRepo.stubs.findOne;
-      findOne.resolves(subscription as SubscriptionWithRelations);
+      findOne.resolves(subscription);
       const result = await validatorService.primaryToCalendarId(id);
       expect(result).to.eql(subscription.calendarId);
       sinon.assert.calledOnce(findOne);

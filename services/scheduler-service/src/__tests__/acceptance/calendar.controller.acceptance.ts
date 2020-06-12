@@ -1,6 +1,11 @@
-import {Client, expect, givenHttpServerConfig, createRestAppClient} from '@loopback/testlab';
+import {
+  Client,
+  expect,
+  givenHttpServerConfig,
+  createRestAppClient,
+} from '@loopback/testlab';
 import {CalendarRepository, WorkingHourRepository} from '../../repositories';
-import { SchedulerApplication } from '../application';
+import {SchedulerApplication} from '../application';
 import * as jwt from 'jsonwebtoken';
 
 describe('Calendar Controller', () => {
@@ -54,7 +59,7 @@ describe('Calendar Controller', () => {
     expiresIn: 180000,
     issuer: 'rashi',
   });
-  
+
   before(givenRunningApplicationWithCustomConfiguration);
   after(async () => {
     await app.stop();
@@ -72,7 +77,7 @@ describe('Calendar Controller', () => {
     });
 
     await app.boot();
-    
+
     app.bind('datasources.config.schedulerDb').to({
       name: 'pgdb',
       connector: 'memory',

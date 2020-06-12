@@ -1,17 +1,18 @@
 import {
   Client,
   expect,
-  createRestAppClient,
   givenHttpServerConfig,
+  createRestAppClient,
 } from '@loopback/testlab';
-import {SchedulerApplication} from '../application';
-import {SettingsRepository} from '../../repositories';
 import * as jwt from 'jsonwebtoken';
+import {SchedulerApplication} from '../application';
+import {AttendeeRepository} from '../../repositories';
 
-describe('Settings Controller', () => {
+describe('Attendee Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
-  let settingsRepo: SettingsRepository;
+  let attendeeRepo: AttendeeRepository;
+  const basePath = '/attendees';
   const pass = 'test_password';
   const testUser = {
     id: 1,
@@ -80,132 +81,114 @@ describe('Settings Controller', () => {
       name: 'pgdb',
       connector: 'memory',
     });
-    // Start Application
     await app.start();
   }
 
-  it('gives status 422 when data sent is incorrect', async () => {
-    const reqData = {};
-    const response = await client.post(`/settings`).send(reqData).expect(422);
-
-    expect(response).to.have.property('error');
-  });
-
   it('gives status 401 when no token is passed', async () => {
-    const response = await client.get(`/settings`).expect(401);
+    const response = await client.get(basePath).expect(401);
 
     expect(response).to.have.property('error');
   });
 
   it('gives status 200 when token is passed', async () => {
     await client
-      .get(`/settings`)
+      .get(basePath)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
   });
 
-  it('gives status 422 when settings details are not correct', async () => {
-    const settingsToAdd = {};
-
-    await client
-      .post(`/settings`)
-      .set('authorization', `Bearer ${token}`)
-      .send(settingsToAdd)
-      .expect(422);
-  });
-
-  it('gives status 200 and settings detail when settings is added', async () => {
-    const reqToAddSetting = await addSetting();
-    expect(reqToAddSetting.status).to.be.equal(200);
+  it('gives status 200 and enitity detail when enitity is added', async () => {
+    const reqToAddEntity = await addEntity();
+    expect(reqToAddEntity.status).to.be.equal(200);
 
     const response = await client
-      .get(`/settings/${reqToAddSetting.body.id}`)
+      .get(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    expect(response.body).to.have.properties(['ownerId']);
-    expect(response.body.ownerId).to.be.equal('ownerid');
+    expect(response.body).to.have.properties(['email']);
+    expect(response.body.email).to.be.equal('test@gmail.com');
   });
 
-  it('updates settings successfully using PATCH request', async () => {
-    const reqToAddSettings = await addSetting();
+  it('updates enitity successfully using PATCH request', async () => {
+    const reqToAddEntity = await addEntity();
 
-    const settingToUpdate = {
-      ownerId: 'updatedId',
+    const entityToUpdate = {
+      email: 'updated@gmail.com',
+      eventId: 'event-id',
     };
 
     await client
-      .patch(`/settings/${reqToAddSettings.body.id}`)
+      .patch(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
-      .send(settingToUpdate)
+      .send(entityToUpdate)
       .expect(204);
 
     const response = await client
-      .get(`/settings/${reqToAddSettings.body.id}`)
+      .get(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(response.body).to.have.properties(['ownerId']);
-    expect(response.body.ownerId).to.be.equal('updatedId');
+    expect(response.body).to.have.properties(['email']);
+    expect(response.body.email).to.be.equal('updated@gmail.com');
   });
 
-  it('updates settings using PUT request', async () => {
-    const reqToAddSettings = await addSetting();
+  it('updates entity using PUT request', async () => {
+    const reqToAddEntity = await addEntity();
 
-    const settingToUpdate = {
-      ownerId: 'updatedId',
+    const entityToUpdate = {
+      email: 'updated@gmail.com',
+      eventId: 'event-id',
     };
 
     await client
-      .put(`/settings/${reqToAddSettings.body.id}`)
+      .put(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
-      .send(settingToUpdate)
+      .send(entityToUpdate)
       .expect(204);
 
     const response = await client
-      .get(`/settings/${reqToAddSettings.body.id}`)
+      .get(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(response.body).to.have.properties(['ownerId']);
-    expect(response.body.ownerId).to.be.equal('updatedId');
+    expect(response.body).to.have.properties(['email']);
+    expect(response.body.email).to.be.equal('updated@gmail.com');
   });
 
   it('deletes a setting successfully', async () => {
-    const reqToAddSettings = await addSetting();
+    const reqToAddEntity = await addEntity();
     await client
-      .del(`/settings/${reqToAddSettings.body.id}`)
+      .del(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(204);
   });
 
   it('should return count', async () => {
     await client
-      .get(`/settings/count`)
+      .get(`${basePath}/count`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
   });
 
-  async function addSetting() {
-    const settingsToAdd = {
-      ownerId: 'ownerid',
-      ownerType: 'global',
-      settingName: 'string',
-      settingValue: 'string',
+  async function addEntity() {
+    const enitityToAdd = {
+      email: 'test@gmail.com',
+      eventId: 'event-id',
     };
 
-    const reqToAddSetting = await client
-      .post(`/settings`)
+    const reqToAddEntity = await client
+      .post(basePath)
       .set('authorization', `Bearer ${token}`)
-      .send(settingsToAdd);
+      .send(enitityToAdd);
 
-    return reqToAddSetting;
+    return reqToAddEntity;
   }
 
   async function deleteMockData() {
-    await settingsRepo.deleteAllHard();
+    await attendeeRepo.deleteAllHard();
   }
 
   async function givenRepositories() {
-    settingsRepo = await app.getRepository(SettingsRepository);
+    attendeeRepo = await app.getRepository(AttendeeRepository);
   }
 });
