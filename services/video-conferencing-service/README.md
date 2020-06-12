@@ -86,6 +86,8 @@ Successful execution will send a token.
 Used to stop the current active meeting. Meeting cannot be stopped again if it is already stopped.
 Successful execution will add the endTime attribute to a recently ending session.
 
+2. List and deleting Archive(s) 
+
 ### GET /archives
 Used to fetch a list of archives (meetings that were recorded).
 
@@ -96,6 +98,21 @@ If archive is not present, it will throw HTTP Not Found Error.
 ### DELETE /archives/{archiveId}
 Used to delete a specific archive w.r.t archiveId.
 If archive is not present, it will throw HTTP Not Found Error.
+
+3. Session Webhook
+
+### POST /webhooks/session
+Webhook API hit from a third party to add/update session attendees in a meeting.
+For configuration in vonage, see [Session Monitoring](https://tokbox.com/developer/guides/session-monitoring/)
+
+
+4. Storage Target
+
+### PUT /archives/storage-target
+Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
+
+### DELETE /archives/storage-target
+Removes custom storage target and restores to the default storage target which was preconfigured by third party.
 
 ## Feedback
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/loopback4-microservice-catalog/issues) to see if someone else in the community has already created a ticket.
