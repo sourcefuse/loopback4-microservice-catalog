@@ -3,13 +3,12 @@ import {del, get, param, HttpErrors, put, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {VideoChatInterface} from '../types';
+import {VideoChatInterface, S3TargetOptions, AzureTargetOptions} from '../types';
 import {VideoChatBindings} from '../keys';
 import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 import { repository } from '@loopback/repository';
 import { VideoChatSessionRepository, AuditLogsRepository } from '../repositories';
 import moment from 'moment';
-import { VonageS3TargetOptions, VonageAzureTargetOptions } from '../providers/vonage';
 
 export class VideoChatArchiveController {
   constructor(
@@ -128,7 +127,7 @@ export class VideoChatArchiveController {
     },
   })
   async setUploadTarget(
-    @requestBody() body: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void> {
+    @requestBody() body: S3TargetOptions & AzureTargetOptions): Promise<void> {
     const { accessKey , secretKey, bucket, accountName, accountKey, container } = body;
     if (!(accessKey && secretKey && bucket) || !(accountName && accountKey && container)) {
       throw new HttpErrors.BadRequest('missing s3/azure credentials Please check request body');
