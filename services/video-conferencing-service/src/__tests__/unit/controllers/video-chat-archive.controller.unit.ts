@@ -91,8 +91,48 @@ describe('Archive APIs', () => {
         .deleteArchive(invalidArchiveId)
         .catch(err => err);
       expect(error).instanceOf(Error);
-            sinon.assert.calledWith(findOne, {where: {archiveId: invalidArchiveId}});
+      sinon.assert.calledWith(findOne, {where: {archiveId: invalidArchiveId}});
       sinon.assert.calledOnce(auidtLogCreate);
+    });
+  });
+
+  describe('PUT /archives/storage-target', () => {
+    it('sets the upload target with S3 target options', async () => {
+      const S3Options = {
+        accessKey: '1234',
+        secretKey: '****',
+        region: 'dummy-region',
+        bucket: 'dummy-bucket',
+      };
+      await controller.setUploadTarget(S3Options);
+    });
+
+    it('sets the upload target with Azure target options', async () => {
+      const azureOptions = {
+        accountName: '1234',
+        accountKey: '1234',
+        container: 'dummy-container',
+        domain: 'dummy-domain'
+      };
+      await controller.setUploadTarget(azureOptions);
+    });
+
+    it('returns an error if options are null', async () => {
+      const S3Options = {
+        accessKey: '',
+        secretKey: '',
+        region: 'dummy-region',
+        bucket: 'dummy-bucket',
+      };
+      const error = await controller.setUploadTarget(S3Options).catch(err => err);
+      expect(error).instanceOf(Error);
+    });
+  });
+
+  describe('DEL /archives/storage-target', () => {
+    it('deletes the upload target', async () => {
+      setUp({deleteUploadTarget: sinon.stub().resolves()});
+      await controller.deleteCustomStorageTarget();
     });
   });
 

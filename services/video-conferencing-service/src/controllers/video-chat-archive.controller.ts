@@ -130,7 +130,7 @@ export class VideoChatArchiveController {
     @requestBody() body: S3TargetOptions | AzureTargetOptions): Promise<void> {
     const { accessKey , secretKey, bucket } = body as S3TargetOptions;
     const { accountName, accountKey, container } = body as AzureTargetOptions;
-    if (!(accessKey && secretKey && bucket) || !(accountName && accountKey && container)) {
+    if (!(accessKey && secretKey && bucket) && !(accountName && accountKey && container)) {
       throw new HttpErrors.BadRequest('Missing s3/azure credentials. Please check request body');
     }
     await this.videoChatProvider.setUploadTarget(body);
