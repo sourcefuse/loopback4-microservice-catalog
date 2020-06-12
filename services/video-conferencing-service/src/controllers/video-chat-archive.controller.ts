@@ -114,7 +114,7 @@ export class VideoChatArchiveController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.SetUploadTarget])
-  @put('/archive/storage-target', {
+  @put('/archives/storage-target', {
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -137,7 +137,7 @@ export class VideoChatArchiveController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.SetUploadTarget])
-  @del('/archive/storage-target', {
+  @del('/archives/storage-target', {
     responses: {
       [STATUS_CODE.OK]: {
         content: {

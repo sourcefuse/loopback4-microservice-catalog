@@ -252,12 +252,23 @@ export class VideoChatSessionController {
     const { connection: { data }, event, sessionId } = webhookPayload;
     switch(event) {
       case VonageEnums.SessionWebhookEvents.ConnectionCreated:
-        await this.sessionAttendeesRepossitory.create({
-          sessionId: sessionId,
-          attendee: data,
-          createdOn: new Date(),
-          isDeleted: false,
+        const sessionAttendeeDetail = await this.sessionAttendeesRepossitory.findOne({
+          where: {
+            attendee: data,
+          }
         });
+        if(!sessionAttendeeDetail) {
+          await this.sessionAttendeesRepossitory.create({
+            sessionId: sessionId,
+            attendee: data,
+            createdOn: new Date(),
+            isDeleted: false,
+          });
+        } else {
+          await this.sessionAttendeesRepossitory.updateById(sessionAttendeeDetail.id, {
+            modifiedOn: new Date(),
+          });
+        }
         break;
         default: break;
     }
