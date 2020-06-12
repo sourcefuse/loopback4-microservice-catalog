@@ -85,6 +85,47 @@ export interface VonageAzureTargetOptions extends AzureTargetOptions {
   fallback: VonageEnums.FallbackType;
 }
 
+/**
+ * @interface VonageConnection defining the connection, containing the following properties
+ * @param id The connection id
+ * @param data The connection data (see Connection data)
+ * @param createdAt The timestamp value this object was created
+ */
+interface VonageConnection {
+  id: string;
+  createdAt: string;
+  data: string;
+}
+
+/**
+ * @interface VonageSessionWebhookPayload
+ * @param sessionId the session id associated with this event
+ * @param projectId the projecct id associated with this event
+ * @param event connectionCreated
+ * @param timestamp Milliseconds since unix epoch time
+ * @param connection of type @interface VonageConnection
+ * @param stream An Object that defines the stream
+ *   @param id the stream id
+ *   @param connection of type @interface VonageConnection
+ *   @param createdAt the timestamp value the stream was created
+ *   @param name The name, if there was one, passed in when the publisher associated with this stream was initialized
+ *   @param videoType The type of video sent on this stream, either "camera" or "screen" (or undefined for an audio-only stream).
+ */
+export interface VonageSessionWebhookPayload {
+  sessionId: string;
+  projectId: string;
+  event: string;
+  reason: string;
+  timestamp: number;
+  connection: VonageConnection;
+  stream?: {
+    id: string;
+    connection: VonageConnection;
+    createdAt: number;
+    videoType: string | undefined;
+  }
+}
+
 
 export interface VonageVideoChat extends VideoChatInterface {
   /**
@@ -127,4 +168,9 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @returns Promise when returns a success object of type @interface VonageArchiveResponse
    */
   // stopArchive(archiveId: string): Promise<VonageArchiveResponse>;
+  /**
+   * @function setUploadTarget set the upload target
+   * @param config of type @interface VonageS3TargetOptions or @interface VonageAzureTargetOptions
+   */
+  setUploadTarget(config: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void>;
 }

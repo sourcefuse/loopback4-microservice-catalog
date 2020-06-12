@@ -2,13 +2,15 @@ import {Provider, inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
 import {ArchiveResponse, ArchiveResponseList, SessionResponse} from '../../types';
-import {VonageVideoChat, VonageConfig, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions} from './types';
+import {VonageVideoChat, VonageConfig, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions, VonageS3TargetOptions, VonageAzureTargetOptions} from './types';
 import OpenTok from 'opentok';
+import axios from 'axios';
 import { repository } from '@loopback/repository';
 import { AuditLogsRepository } from '../../repositories';
 import { VonageBindings } from './keys';
 import { promisify } from 'util';
 import moment from 'moment';
+import { sign } from 'jsonwebtoken';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
@@ -227,6 +229,46 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           throw new HttpErrors.InternalServerError('Error occured while deleting an archive');
         }
       },
-    };
+      setUploadTarget: async (config: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void> => {
+        const { apiKey, apiSecret } = this.vonageConfig;
+        const ttl = 200;
+        const jwtPayload = {
+            iss: apiKey,
+            ist: 'project',
+            iat: moment().unix(),
+            exp: moment().add(ttl, 'seconds').unix(),
+        };
+
+        const token = sign(jwtPayload, apiSecret);
+        let type = '';
+        const credentials = {};
+        const { accessKey , secretKey, bucket, endpoint,
+         fallback, accountName, accountKey, container, domain } = config;
+        if (accessKey && secretKey && bucket) {
+          type = 'S3';
+          Object.assign(credentials, {
+            accessKey, secretKey, bucket, endpoint,
+          });
+        }
+        if (accountName && accountKey && container) {
+          type = 'Azure';
+          Object.assign(credentials, {
+            accountName, accountKey, container, domain
+          });
+        }
+        await axios({
+          url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
+          method: 'put',
+          data: {
+           type,
+           config: credentials,
+           fallback,
+          },
+          headers: {
+            'X-OPENTOK-AUTH': token
+          }
+        });
+    },
   }
+}
 }

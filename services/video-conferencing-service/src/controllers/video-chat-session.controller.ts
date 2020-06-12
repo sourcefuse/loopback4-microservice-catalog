@@ -8,7 +8,6 @@ import {
   VideoChatInterface,
   SessionResponse,
 } from '../types';
-import {VideoChatSessionRepository} from '../repositories/video-chat-session.repository';
 import {VideoChatBindings} from '../keys';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import { PermissionKeys } from '../enums/permission-keys.enum';
@@ -16,9 +15,10 @@ import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
 import { VideoChatSession } from '../models';
-import { AuditLogsRepository } from '../repositories';
+import { AuditLogsRepository, VideoChatSessionRepository, SessionAttendeesRepository  } from '../repositories';
 import { VonageBindings } from '../providers/vonage/keys';
-import { VonageConfig } from '../providers/vonage';
+import { VonageConfig, VonageSessionWebhookPayload } from '../providers/vonage';
+import { VonageEnums } from '../enums';
 
 export class VideoChatSessionController {
   constructor(
@@ -28,6 +28,8 @@ export class VideoChatSessionController {
     private readonly videoChatProvider: VideoChatInterface,
     @repository(AuditLogsRepository)
     private readonly auditLogRepository: AuditLogsRepository,
+    @repository(SessionAttendeesRepository)
+    private readonly sessionAttendeesRepossitory: SessionAttendeesRepository,
     @inject(VonageBindings.config)
     private readonly config: VonageConfig
   ) {}
@@ -237,4 +239,44 @@ export class VideoChatSessionController {
     
     return this.videoChatSessionRepository.updateById(videoSessionDetail.id, { endTime: new Date() });
   }
+
+  @post('/webhooks/session', {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'POST /webhooks/session Success'
+      }
+    }
+  })
+  async checkWebhookPayload(@requestBody() webhookPayload: VonageSessionWebhookPayload) {
+   try {
+    const { connection: { data }, event, sessionId } = webhookPayload;
+    switch(event) {
+      case VonageEnums.SessionWebhookEvents.ConnectionCreated:
+        await this.sessionAttendeesRepossitory.create({
+          sessionId: sessionId,
+          attendee: data,
+          createdOn: new Date(),
+          isDeleted: false,
+        });
+        break;
+        default: break;
+    }
+    this.auditLogRepository.create({
+      action: 'session-webhook',
+      actionType: event,
+      before: webhookPayload,
+      after: { response: 'Webhook event triggered successfully' },
+      actedAt: moment().format(),
+    });
+   } catch (error) {
+     this.auditLogRepository.create({
+      action: 'session-webhook',
+      actionType: webhookPayload.event,
+      before: webhookPayload,
+      after: { errorStack: error.stack },
+      actedAt: moment().format(),
+     });
+     throw new HttpErrors.InternalServerError('Error occured triggering webhook event');
+   }
+  } 
 }

@@ -1,5 +1,5 @@
 import {inject} from '@loopback/core';
-import {del, get, param, HttpErrors} from '@loopback/rest';
+import {del, get, param, HttpErrors, put, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
@@ -9,6 +9,7 @@ import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 import { repository } from '@loopback/repository';
 import { VideoChatSessionRepository, AuditLogsRepository } from '../repositories';
 import moment from 'moment';
+import { VonageS3TargetOptions, VonageAzureTargetOptions } from '../providers/vonage';
 
 export class VideoChatArchiveController {
   constructor(
@@ -109,5 +110,31 @@ export class VideoChatArchiveController {
       throw new HttpErrors.NotFound(errorMessage);
     }
     return this.videoChatProvider.deleteArchive(archiveId);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.SetUploadTarget])
+  @put('/archive/storage-target', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.TEXT]: {
+            schema: {
+              type: 'text',
+            },
+          },
+        },
+      },
+    },
+  })
+  async setUploadTarget(
+    @param.path.string('type') archiveId: string,
+    @requestBody() body: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void> {
+    const { accessKey , secretKey, bucket,
+         fallback, accountName, accountKey, container } = body;
+    if (!(accessKey && secretKey && bucket) || !(accountName && accountKey && container)) {
+      throw new HttpErrors.BadRequest('missing s3/azure credentials Please check request body');
+    }
+    await this.videoChatProvider.setUploadTarget(body);
   }
 }

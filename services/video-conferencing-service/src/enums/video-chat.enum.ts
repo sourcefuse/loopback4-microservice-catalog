@@ -32,4 +32,11 @@ export namespace VonageEnums {
     Composed = 'composed',
     Individual = 'individual',
   }
+
+  export enum SessionWebhookEvents {
+    ConnectionCreated = 'connectionCreated',
+    ConnectionDestroyed = 'connectionDestroyed',
+    StreamCreated = 'streamCreated',
+    StreamDestroyed = 'streamDestroyed',
+  }
 }

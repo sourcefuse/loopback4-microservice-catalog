@@ -40,6 +40,11 @@ export interface VideoChatInterface {
    * @returns Promise then returns a successful message for deleting if promise is resolved
    */
   deleteArchive(archiveId: string): Promise<void>;
+  /**
+   * @function setUploadTarget set the upload target
+   * @param config of type @interface S3TargetOptions or @interface AzureTargetOptions
+   */
+  setUploadTarget(config: S3TargetOptions & AzureTargetOptions): Promise<void>;
 }
 
 /**
