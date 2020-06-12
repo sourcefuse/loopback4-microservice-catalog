@@ -1,9 +1,9 @@
 /* Replace with your SQL commands */
-DROP SCHEMA IF EXISTS main CASCADE;
+DROP SCHEMA IF EXISTS scheduler CASCADE;
 
-CREATE SCHEMA main;
+CREATE SCHEMA scheduler;
 
-GRANT ALL ON SCHEMA main TO public;
+GRANT ALL ON SCHEMA scheduler TO public;
 
 DROP SCHEMA IF EXISTS logs CASCADE;
 
@@ -13,7 +13,7 @@ GRANT ALL ON SCHEMA logs TO public;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE main.calendars (
+CREATE TABLE scheduler.calendars (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -32,23 +32,23 @@ CREATE TABLE main.calendars (
     CONSTRAINT pk_calendars_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.calendars IS 'A calendar is a collection of related events, along with additional \nmetadata such as summary, default time zone, location, etc. \nEach calendar is identified by an ID. Calendars can have multiple owners.';
+COMMENT ON TABLE scheduler.calendars IS 'A calendar is a collection of related events, along with additional \nmetadata such as summary, default time zone, location, etc. \nEach calendar is identified by an ID. Calendars can have multiple owners.';
 
-COMMENT ON COLUMN main.calendars.id IS 'Identifier of the calendar.';
+COMMENT ON COLUMN scheduler.calendars.id IS 'Identifier of the calendar.';
 
-COMMENT ON COLUMN main.calendars.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.calendars.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.calendars.deleted IS 'For doing soft delete operation. The default is False.';
+COMMENT ON COLUMN scheduler.calendars.deleted IS 'For doing soft delete operation. The default is False.';
 
-COMMENT ON COLUMN main.calendars. "source" IS 'source like ''internal'', ''google calander'', ''outlook''';
+COMMENT ON COLUMN scheduler.calendars. "source" IS 'source like ''internal'', ''google calander'', ''outlook''';
 
-COMMENT ON COLUMN main.calendars. "location" IS 'Geographic location of the calendar as free-form text.';
+COMMENT ON COLUMN scheduler.calendars. "location" IS 'Geographic location of the calendar as free-form text.';
 
-COMMENT ON COLUMN main.calendars.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.calendars.modified_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.calendars.timezone IS 'The time zone of the calendar.';
+COMMENT ON COLUMN scheduler.calendars.timezone IS 'The time zone of the calendar.';
 
-CREATE TABLE main.subscriptions (
+CREATE TABLE scheduler.subscriptions (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     access_role varchar DEFAULT 'reader',
     bg_color varchar,
@@ -69,30 +69,30 @@ CREATE TABLE main.subscriptions (
     CONSTRAINT pk_subscriptions_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.subscriptions IS 'Subscribe is a collection of all calendar entries that a user has added to their list. \nYou can use it to add and remove existing calendars to/from the users’ list. \nYou also use it to retrieve and set the values of user-specific calendar properties, such as default reminders. \nAnother example is foreground color, since different users can have different colors set for the same calendar.';
+COMMENT ON TABLE scheduler.subscriptions IS 'Subscribe is a collection of all calendar entries that a user has added to their list. \nYou can use it to add and remove existing calendars to/from the users’ list. \nYou also use it to retrieve and set the values of user-specific calendar properties, such as default reminders. \nAnother example is foreground color, since different users can have different colors set for the same calendar.';
 
-COMMENT ON COLUMN main.subscriptions.access_role IS 'The effective access role that the user has on the calendar. Possible values are:\n"freeBusyReader" - Provides read access to free/busy information.\n"reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.\n"writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.\n"owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to assign acess to other users.\n\nThe owners of a calendar can share the calendar by giving access to other users.';
+COMMENT ON COLUMN scheduler.subscriptions.access_role IS 'The effective access role that the user has on the calendar. Possible values are:\n"freeBusyReader" - Provides read access to free/busy information.\n"reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.\n"writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.\n"owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to assign acess to other users.\n\nThe owners of a calendar can share the calendar by giving access to other users.';
 
-COMMENT ON COLUMN main.subscriptions.bg_color IS 'The main color of the calendar in the hexadecimal format "#0088aa".';
+COMMENT ON COLUMN scheduler.subscriptions.bg_color IS 'The scheduler color of the calendar in the hexadecimal format "#0088aa".';
 
-COMMENT ON COLUMN main.subscriptions.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.subscriptions.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.subscriptions.default_reminders IS 'The default reminders that the user has for this calendar.';
+COMMENT ON COLUMN scheduler.subscriptions.default_reminders IS 'The default reminders that the user has for this calendar.';
 
-COMMENT ON COLUMN main.subscriptions.deleted IS 'For doing soft delete operation on user calendard. Read-only. Optional. The default is False.';
+COMMENT ON COLUMN scheduler.subscriptions.deleted IS 'For doing soft delete operation on user calendard. Read-only. Optional. The default is False.';
 
-COMMENT ON COLUMN main.subscriptions.fg_color IS 'The foreground color of the calendar in the hexadecimal format "#ffffff".';
+COMMENT ON COLUMN scheduler.subscriptions.fg_color IS 'The foreground color of the calendar in the hexadecimal format "#ffffff".';
 
-COMMENT ON COLUMN main.subscriptions.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.subscriptions.modified_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.subscriptions.notification_settings IS 'The notifications that the user is receiving for this calendar.';
+COMMENT ON COLUMN scheduler.subscriptions.notification_settings IS 'The notifications that the user is receiving for this calendar.';
 
-COMMENT ON COLUMN main.subscriptions.subscriber IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.subscriptions.subscriber IS 'User/Person Email Id.';
 
-ALTER TABLE main.subscriptions
-    ADD CONSTRAINT fk_subscriptions_calendars FOREIGN KEY (calendar_id) REFERENCES main.calendars (id);
+ALTER TABLE scheduler.subscriptions
+    ADD CONSTRAINT fk_subscriptions_calendars FOREIGN KEY (calendar_id) REFERENCES scheduler.calendars (id);
 
-CREATE TABLE main.working_hours (
+CREATE TABLE scheduler.working_hours (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     calendar_id uuid NOT NULL,
     created_by varchar,
@@ -108,18 +108,18 @@ CREATE TABLE main.working_hours (
     CONSTRAINT pk_working_hours_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.working_hours IS 'The hours during which appointment is available.';
+COMMENT ON TABLE scheduler.working_hours IS 'The hours during which appointment is available.';
 
-COMMENT ON COLUMN main.working_hours.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.working_hours.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.working_hours.day_of_week IS 'For store the day of week as an integer. ( 0 to 6 )';
+COMMENT ON COLUMN scheduler.working_hours.day_of_week IS 'For store the day of week as an integer. ( 0 to 6 )';
 
-COMMENT ON COLUMN main.working_hours.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.working_hours.modified_by IS 'User/Person Email Id.';
 
-ALTER TABLE main.working_hours
-    ADD CONSTRAINT fk_working_hours_calendars FOREIGN KEY (calendar_id) REFERENCES main.calendars (id);
+ALTER TABLE scheduler.working_hours
+    ADD CONSTRAINT fk_working_hours_calendars FOREIGN KEY (calendar_id) REFERENCES scheduler.calendars (id);
 
-CREATE TABLE main.events (
+CREATE TABLE scheduler.events (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     bg_color varchar,
     calendar_id uuid NOT NULL,
@@ -149,35 +149,35 @@ CREATE TABLE main.events (
     CONSTRAINT pk_events_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.events IS 'An event is an object associated with a specific date or time range. Events are identified by an ID that is unique within a calendar. Besides a start and end date-time, events contain other data such as summary, description, location, status, reminders, attachments,';
+COMMENT ON TABLE scheduler.events IS 'An event is an object associated with a specific date or time range. Events are identified by an ID that is unique within a calendar. Besides a start and end date-time, events contain other data such as summary, description, location, status, reminders, attachments,';
 
-COMMENT ON COLUMN main.events.id IS 'main primary key';
+COMMENT ON COLUMN scheduler.events.id IS 'scheduler primary key';
 
-COMMENT ON COLUMN main.events.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.events.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.events.deleted IS 'For doing soft delete operation. The default is False.';
+COMMENT ON COLUMN scheduler.events.deleted IS 'For doing soft delete operation. The default is False.';
 
-COMMENT ON COLUMN main.events.description IS 'Description of the calendar.';
+COMMENT ON COLUMN scheduler.events.description IS 'Description of the calendar.';
 
-COMMENT ON COLUMN main.events.icaluid IS 'It is used to uniquely identify events accross calendaring systems \nand must be supplied when importing events via the import method.\nEvent unique identifier as defined in RFC5545.';
+COMMENT ON COLUMN scheduler.events.icaluid IS 'It is used to uniquely identify events accross calendaring systems \nand must be supplied when importing events via the import method.\nEvent unique identifier as defined in RFC5545.';
 
-COMMENT ON COLUMN main.events.is_locked IS 'Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False.';
+COMMENT ON COLUMN scheduler.events.is_locked IS 'Whether this is a locked event copy where no changes can be made to the scheduler event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False.';
 
-COMMENT ON COLUMN main.events.link IS 'Event Link - where user can see the event detail.';
+COMMENT ON COLUMN scheduler.events.link IS 'Event Link - where user can see the event detail.';
 
-COMMENT ON COLUMN main.events. "location" IS 'Geographic location of the event as free-form text.';
+COMMENT ON COLUMN scheduler.events. "location" IS 'Geographic location of the event as free-form text.';
 
-COMMENT ON COLUMN main.events.status IS 'Status of the event. Optional. Possible values are:\n"confirmed" - The event is confirmed. This is the default status.\n"tentative" - The event is tentatively confirmed.\n"cancelled" - The event is cancelled (deleted).';
+COMMENT ON COLUMN scheduler.events.status IS 'Status of the event. Optional. Possible values are:\n"confirmed" - The event is confirmed. This is the default status.\n"tentative" - The event is tentatively confirmed.\n"cancelled" - The event is cancelled (deleted).';
 
-COMMENT ON COLUMN main.events.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.events.modified_by IS 'User/Person Email Id.';
 
-ALTER TABLE main.events
-    ADD CONSTRAINT fk_events_calendars FOREIGN KEY (calendar_id) REFERENCES main.calendars (id);
+ALTER TABLE scheduler.events
+    ADD CONSTRAINT fk_events_calendars FOREIGN KEY (calendar_id) REFERENCES scheduler.calendars (id);
 
-ALTER TABLE main.events
-    ADD CONSTRAINT fk_events_events FOREIGN KEY (parent_event_id) REFERENCES main.events (id);
+ALTER TABLE scheduler.events
+    ADD CONSTRAINT fk_events_events FOREIGN KEY (parent_event_id) REFERENCES scheduler.events (id);
 
-CREATE TABLE main.attendees (
+CREATE TABLE scheduler.attendees (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -197,24 +197,24 @@ CREATE TABLE main.attendees (
     CONSTRAINT pk_attendees_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.attendees IS 'Events can also have multiple attendees. An attendee is usually the primary calendar of an invited user.';
+COMMENT ON TABLE scheduler.attendees IS 'Events can also have multiple attendees. An attendee is usually the primary calendar of an invited user.';
 
-COMMENT ON COLUMN main.attendees.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.attendees.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.attendees.deleted IS 'For doing soft delete operation. The default is False.';
+COMMENT ON COLUMN scheduler.attendees.deleted IS 'For doing soft delete operation. The default is False.';
 
-COMMENT ON COLUMN main.attendees.messages IS 'Attendess Messages';
+COMMENT ON COLUMN scheduler.attendees.messages IS 'Attendess Messages';
 
-COMMENT ON COLUMN main.attendees.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.attendees.modified_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.attendees.response_status IS 'The attendee''s response status. Possible values are:\n"needsAction" - The attendee has not responded to the invitation.\n"declined" - The attendee has declined the invitation.\n"tentative" - The attendee has tentatively accepted the invitation.\n"accepted" - The attendee has accepted the invitation.';
+COMMENT ON COLUMN scheduler.attendees.response_status IS 'The attendee''s response status. Possible values are:\n"needsAction" - The attendee has not responded to the invitation.\n"declined" - The attendee has declined the invitation.\n"tentative" - The attendee has tentatively accepted the invitation.\n"accepted" - The attendee has accepted the invitation.';
 
-COMMENT ON COLUMN main.attendees.start_datetime IS 'this can be remove later.';
+COMMENT ON COLUMN scheduler.attendees.start_datetime IS 'this can be remove later.';
 
-ALTER TABLE main.attendees
-    ADD CONSTRAINT fk_attendees_events FOREIGN KEY (event_id) REFERENCES main.events (id);
+ALTER TABLE scheduler.attendees
+    ADD CONSTRAINT fk_attendees_events FOREIGN KEY (event_id) REFERENCES scheduler.events (id);
 
-CREATE TABLE main.attachments (
+CREATE TABLE scheduler.attachments (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -231,16 +231,16 @@ CREATE TABLE main.attachments (
     CONSTRAINT pk_attachments_id PRIMARY KEY (id)
 );
 
-COMMENT ON COLUMN main.attachments.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.attachments.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.attachments.deleted IS 'For doing soft delete operation. The default is False.';
+COMMENT ON COLUMN scheduler.attachments.deleted IS 'For doing soft delete operation. The default is False.';
 
-COMMENT ON COLUMN main.attachments.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.attachments.modified_by IS 'User/Person Email Id.';
 
-ALTER TABLE main.attachments
-    ADD CONSTRAINT fk_attachments_events FOREIGN KEY (event_id) REFERENCES main.events (id);
+ALTER TABLE scheduler.attachments
+    ADD CONSTRAINT fk_attachments_events FOREIGN KEY (event_id) REFERENCES scheduler.events (id);
 
-CREATE TABLE main.settings (
+CREATE TABLE scheduler.settings (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     created_by varchar,
     created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -256,21 +256,21 @@ CREATE TABLE main.settings (
     CONSTRAINT pk_settings_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.settings IS 'Setting resources represent settings that users can change from the Calendar UI.';
+COMMENT ON TABLE scheduler.settings IS 'Setting resources represent settings that users can change from the Calendar UI.';
 
-COMMENT ON COLUMN main.settings.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.settings.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.settings.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.settings.modified_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.settings.owner_id IS 'This can be an uuid or email id of user.';
+COMMENT ON COLUMN scheduler.settings.owner_id IS 'This can be an uuid or email id of user.';
 
-COMMENT ON COLUMN main.settings.owner_type IS 'values are  ''global'', ''user'', ''calendar'', ''event''';
+COMMENT ON COLUMN scheduler.settings.owner_type IS 'values are  ''global'', ''user'', ''calendar'', ''event''';
 
-COMMENT ON COLUMN main.settings.setting_name IS 'setting name - key of setting';
+COMMENT ON COLUMN scheduler.settings.setting_name IS 'setting name - key of setting';
 
-COMMENT ON COLUMN main.settings.setting_value IS 'setting value - setting key value, accept any string.';
+COMMENT ON COLUMN scheduler.settings.setting_value IS 'setting value - setting key value, accept any string.';
 
-CREATE TABLE main.themes (
+CREATE TABLE scheduler.themes (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,
     cal_bg varchar(200),
     cal_fg varchar(200),
@@ -286,21 +286,21 @@ CREATE TABLE main.themes (
     CONSTRAINT pk_colors_id PRIMARY KEY (id)
 );
 
-COMMENT ON TABLE main.themes IS 'A global palette of calendar colors, mapping. \nA Subscribe and event collection have color field related to this.';
+COMMENT ON TABLE scheduler.themes IS 'A global palette of calendar colors, mapping. \nA Subscribe and event collection have color field related to this.';
 
-COMMENT ON COLUMN main.themes.cal_bg IS 'The background color associated with this color definition.';
+COMMENT ON COLUMN scheduler.themes.cal_bg IS 'The background color associated with this color definition.';
 
-COMMENT ON COLUMN main.themes.cal_fg IS 'The foreground color that can be used to write on top of a background with ''background'' color.';
+COMMENT ON COLUMN scheduler.themes.cal_fg IS 'The foreground color that can be used to write on top of a background with ''background'' color.';
 
-COMMENT ON COLUMN main.themes.deleted IS 'For doing soft delete operation. The default is False.';
+COMMENT ON COLUMN scheduler.themes.deleted IS 'For doing soft delete operation. The default is False.';
 
-COMMENT ON COLUMN main.themes.event_bg IS 'The background color associated with this color definition.';
+COMMENT ON COLUMN scheduler.themes.event_bg IS 'The background color associated with this color definition.';
 
-COMMENT ON COLUMN main.themes.event_fg IS 'The foreground color that can be used to write on top of a background with ''background'' color.';
+COMMENT ON COLUMN scheduler.themes.event_fg IS 'The foreground color that can be used to write on top of a background with ''background'' color.';
 
-COMMENT ON COLUMN main.themes.created_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.themes.created_by IS 'User/Person Email Id.';
 
-COMMENT ON COLUMN main.themes.modified_by IS 'User/Person Email Id.';
+COMMENT ON COLUMN scheduler.themes.modified_by IS 'User/Person Email Id.';
 
 CREATE TABLE logs.audit_logs (
     id uuid DEFAULT uuid_generate_v1 () NOT NULL,

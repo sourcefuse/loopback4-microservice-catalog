@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.0",
   "description": "packages",
   "keywords": [
     "loopback-extension",
@@ -73,5 +73,9 @@
     "eslint": "^7.0.0",
     "source-map-support": "^0.5.19",
     "typescript": "~3.9.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

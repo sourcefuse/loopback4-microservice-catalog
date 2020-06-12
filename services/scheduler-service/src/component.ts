@@ -21,6 +21,36 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+import {
+  AttachmentRepository,
+  AttendeeRepository,
+  CalendarRepository,
+  EventRepository,
+  SettingsRepository,
+  SubscriptionRepository,
+  ThemeRepository,
+  WorkingHourRepository,
+} from './repositories';
+import {
+  Attachment,
+  Attendee,
+  Calendar,
+  Settings,
+  Subscription,
+  Theme,
+  WorkingHour,
+  Event,
+} from './models';
+import {
+  AttachmentController,
+  AttendeeController,
+  CalendarController,
+  EventController,
+  SettingsController,
+  SubscriptionController,
+  ThemeController,
+  WorkingHourController,
+} from './controllers';
 
 export class SchedulerServiceComponent implements Component {
   constructor(
@@ -32,6 +62,41 @@ export class SchedulerServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    this.repositories = [
+      AttachmentRepository,
+      AttendeeRepository,
+      CalendarRepository,
+      EventRepository,
+      SettingsRepository,
+      SubscriptionRepository,
+      ThemeRepository,
+      WorkingHourRepository,
+    ];
+
+    this.models = [
+      Attachment,
+      Attendee,
+      Calendar,
+      Event,
+      Settings,
+      Subscription,
+      Theme,
+      WorkingHour,
+    ];
+
+    this.providers = {};
+
+    this.controllers = [
+      AttachmentController,
+      AttendeeController,
+      CalendarController,
+      EventController,
+      SettingsController,
+      SubscriptionController,
+      ThemeController,
+      WorkingHourController,
+    ];
   }
 
   providers?: ProviderMap = {};
