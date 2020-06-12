@@ -31,6 +31,7 @@ import {VonageProvider} from './providers/vonage/vonage.provider';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
 import {IVideoChatServiceConfig} from './types';
+import { VonageBindings } from './providers/vonage/keys';
 
 export class VideoConfServiceComponent implements Component {
   constructor(
@@ -98,6 +99,12 @@ export class VideoConfServiceComponent implements Component {
       type: BearerVerifierType.service,
     } as BearerVerifierConfig);
     this.application.component(BearerVerifierComponent);
+
+    this.application.bind(VonageBindings.config).to({
+      apiKey: process.env.VONAGE_API_KEY as string,
+      apiSecret: process.env.VONAGE_API_SECRET as string,
+      timeToStart: Number(process.env.TIME_TO_START),
+    });
 
     // Mount authorization component for default sequence
     this.application.bind(AuthorizationBindings.CONFIG).to({

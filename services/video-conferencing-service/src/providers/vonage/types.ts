@@ -14,6 +14,7 @@ import {
 export interface VonageConfig {
   apiKey: string;
   apiSecret: string;
+  timeToStart: number;
 }
 
 /**

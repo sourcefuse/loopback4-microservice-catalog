@@ -17,6 +17,8 @@ import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
 import { VideoChatSession } from '../models';
 import { AuditLogsRepository } from '../repositories';
+import { VonageBindings } from '../providers/vonage/keys';
+import { VonageConfig } from '../providers/vonage';
 
 export class VideoChatSessionController {
   constructor(
@@ -26,6 +28,8 @@ export class VideoChatSessionController {
     private readonly videoChatProvider: VideoChatInterface,
     @repository(AuditLogsRepository)
     private readonly auditLogRepository: AuditLogsRepository,
+    @inject(VonageBindings.config)
+    private readonly config: VonageConfig
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -169,7 +173,7 @@ export class VideoChatSessionController {
     if (session.isScheduled && session.scheduleTime) {
       if (
         moment()
-          .add(process.env.TIME_TO_START, 'minutes')
+          .add(this.config.timeToStart, 'minutes')
           .isBefore(session.scheduleTime)
       ) {
         errorMessage = `Meeting can not be started before ${process.env.TIME} minutes earlier time than the scheduled time`;
