@@ -1,4 +1,4 @@
-import {Provider, inject} from '@loopback/core';
+import {Provider, inject, config} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
 import {ArchiveResponse, ArchiveResponseList, SessionResponse} from '../../types';
@@ -230,6 +230,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         }
       },
       setUploadTarget: async (config: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void> => {
+        try {
         const { apiKey, apiSecret } = this.vonageConfig;
         const ttl = 200;
         const jwtPayload = {
@@ -268,7 +269,60 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             'X-OPENTOK-AUTH': token
           }
         });
+        this.auditLogRepository.create({
+          action: 'archive',
+          actionType: 'set-storage-target',
+          before: config,
+          after: { response: 'Storage Target Success' },
+          actedAt: moment().format(),
+        });
+      } catch (error) {
+        this.auditLogRepository.create({
+          action: 'archive',
+          actionType: 'set-storage-target',
+          before: config,
+          after: { errorStack: error.stack },
+          actedAt: moment().format(),
+        });
+        throw new HttpErrors.InternalServerError('Error Occured while setting storage target');    
+      }
     },
+    deleteUploadTarget: async(): Promise<void> => {
+      try {
+        const { apiKey, apiSecret } = this.vonageConfig;
+        const ttl = 200;
+        const jwtPayload = {
+          iss: apiKey,
+          ist: 'project',
+          iat: moment().unix(),
+          exp: moment().add(ttl, 'seconds').unix(),
+        };
+      const token = sign(jwtPayload, apiSecret);
+      await axios({
+        url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
+        method: 'delete',
+        headers: {
+          'X-OPENTOK-AUTH': token
+        }
+      });
+      this.auditLogRepository.create({
+        action: 'archive',
+        actionType: 'set-storage-target',
+        before: config,
+        after: { response: 'successfully removed storage target from s3/azure ' },
+        actedAt: moment().format(),
+      });
+     } catch (error) {
+       this.auditLogRepository.create({
+         action: 'archive',
+         actionType: 'set-upload-target',
+         before: {},
+         after: { errorStack: error.stack },
+         actedAt: moment().format(),
+       });
+       throw new HttpErrors.InternalServerError('Error occured while removing s3/azure storage target');
+     } 
+    }
   }
 }
 }

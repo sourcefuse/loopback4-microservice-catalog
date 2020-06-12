@@ -93,7 +93,7 @@ export interface VonageAzureTargetOptions extends AzureTargetOptions {
  */
 interface VonageConnection {
   id: string;
-  createdAt: string;
+  createdAt: number;
   data: string;
 }
 
@@ -115,7 +115,7 @@ export interface VonageSessionWebhookPayload {
   sessionId: string;
   projectId: string;
   event: string;
-  reason: string;
+  reason?: string;
   timestamp: number;
   connection: VonageConnection;
   stream?: {
@@ -173,4 +173,8 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @param config of type @interface VonageS3TargetOptions or @interface VonageAzureTargetOptions
    */
   setUploadTarget(config: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void>;
+  /**
+   * @function deleteUploadTarget delete the upload target from s3/azure
+   */
+  deleteUploadTarget(): Promise<void>;
 }

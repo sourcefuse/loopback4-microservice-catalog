@@ -128,13 +128,29 @@ export class VideoChatArchiveController {
     },
   })
   async setUploadTarget(
-    @param.path.string('type') archiveId: string,
     @requestBody() body: VonageS3TargetOptions & VonageAzureTargetOptions): Promise<void> {
-    const { accessKey , secretKey, bucket,
-         fallback, accountName, accountKey, container } = body;
+    const { accessKey , secretKey, bucket, accountName, accountKey, container } = body;
     if (!(accessKey && secretKey && bucket) || !(accountName && accountKey && container)) {
       throw new HttpErrors.BadRequest('missing s3/azure credentials Please check request body');
     }
     await this.videoChatProvider.setUploadTarget(body);
+  }
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.SetUploadTarget])
+  @del('/archive/storage-target', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.TEXT]: {
+            schema: {
+              type: 'text',
+            },
+          },
+        },
+      },
+    },
+  })
+  async deleteCustomStorageTarget() {
+    return this.videoChatProvider.deleteUploadTarget(); 
   }
 }
