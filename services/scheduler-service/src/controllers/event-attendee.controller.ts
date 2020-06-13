@@ -20,7 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/events/{id}/attendees';
 

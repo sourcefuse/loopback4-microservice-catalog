@@ -5,7 +5,7 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/subscriptions/{id}/calendar';
 

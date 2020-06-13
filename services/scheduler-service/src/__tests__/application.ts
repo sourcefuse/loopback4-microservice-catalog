@@ -16,7 +16,6 @@ import * as path from 'path';
 import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
 import {MySequence} from './sequence';
 import {SchedulerServiceComponent} from '../component';
-import {ValidatorService} from '../services';
 
 export {ApplicationConfig};
 
@@ -50,7 +49,7 @@ export class SchedulerApplication extends BootMixin(
       allowAlwaysPaths: ['/explorer'],
     });
     this.component(AuthorizationComponent);
-    this.service(ValidatorService);
+
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {

@@ -21,7 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attendee} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttendeeRepository} from '../repositories';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/attendees';
 

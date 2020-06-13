@@ -17,7 +17,11 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {IAuthUserWithPermissions, STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  IAuthUserWithPermissions,
+  STATUS_CODE,
+  CONTENT_TYPE,
+} from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
@@ -28,7 +32,7 @@ import {Calendar, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository, SubscriptionRepository} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
-import { ErrorKeys } from '../models/enums/error-keys';
+import {ErrorKeys} from '../models/enums/error-keys';
 
 const basePath = '/calendars/{id}/events';
 
@@ -66,7 +70,7 @@ export class CalendarEventController {
     @param.query.dateTime('timeMin') timeMin?: Date,
   ): Promise<Event[]> {
     const calendarId = await this.validatorService.primaryToCalendarId(id);
-    if (!calendarId){
+    if (!calendarId) {
       throw new HttpErrors.NotFound(ErrorKeys.PrimaryCalendarNotExist);
     }
     const calendar = await this.validatorService.calendarExists(calendarId);
@@ -75,7 +79,7 @@ export class CalendarEventController {
     }
 
     const correctTime = this.validatorService.minMaxTime(timeMin, timeMax);
-    if (!correctTime){
+    if (!correctTime) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.CanNotBeGreater);
     }
     let whereClause = {};

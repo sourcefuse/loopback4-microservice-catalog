@@ -1,14 +1,14 @@
-import {ValidatorService} from '../../../services';
+import {ValidatorService} from '../../services';
 import {
   CalendarRepository,
   SubscriptionRepository,
   EventRepository,
-} from '../../../repositories';
+} from '../../repositories';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
-  sinon
+  sinon,
 } from '@loopback/testlab';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 
@@ -17,7 +17,7 @@ import {
   CalendarWithRelations,
   Event,
   Subscription,
-} from '../../../models';
+} from '../../models';
 import {Filter} from '@loopback/repository';
 
 describe('Validator Service', () => {

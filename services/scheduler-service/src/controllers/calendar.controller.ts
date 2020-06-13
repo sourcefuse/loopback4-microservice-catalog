@@ -22,7 +22,7 @@ import {Calendar, WorkingHour} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository, WorkingHourRepository} from '../repositories';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/calendars';
 
@@ -66,7 +66,7 @@ export class CalendarController {
     delete calendarDTO.workingHours;
 
     const response = await this.calendarRepository.create(calendarDTO);
-    if(response.id){
+    if (response.id) {
       const calendarId: string = response.id;
       if (workingHours) {
         response['workingHours'] = [];

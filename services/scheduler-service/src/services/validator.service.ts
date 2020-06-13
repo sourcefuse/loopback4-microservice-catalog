@@ -30,17 +30,15 @@ export class ValidatorService {
 
     if (calendar) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
 
   minMaxTime(timeMin?: Date, timeMax?: Date) {
-    if (timeMax && timeMin && timeMax < timeMin){
+    if (timeMax && timeMin && timeMax < timeMin) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -54,8 +52,7 @@ export class ValidatorService {
 
     if (event) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -69,8 +66,7 @@ export class ValidatorService {
       });
       if (subcription) {
         id = subcription.calendarId;
-      }
-      else {
+      } else {
         return null;
       }
     }

@@ -21,7 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/working-hours';
 
@@ -39,7 +39,9 @@ export class WorkingHourController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'WorkingHour model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(WorkingHour)}},
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(WorkingHour)},
+        },
       },
     },
   })

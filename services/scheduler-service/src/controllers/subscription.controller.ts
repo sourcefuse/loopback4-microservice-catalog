@@ -17,7 +17,11 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {IAuthUserWithPermissions, STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  IAuthUserWithPermissions,
+  STATUS_CODE,
+  CONTENT_TYPE,
+} from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,

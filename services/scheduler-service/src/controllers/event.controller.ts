@@ -29,8 +29,8 @@ import {
   EventRepository,
 } from '../repositories';
 import {ValidatorService} from '../services/validator.service';
-import { ErrorKeys } from '../models/enums/error-keys';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
+import {ErrorKeys} from '../models/enums/error-keys';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/events';
 
@@ -71,25 +71,24 @@ export class EventController {
     req: Omit<EventDTO, 'id'>,
   ): Promise<Event> {
     const {calendarId, parentEventId, attendees, attachments} = req;
-    const isCalendar = await this.validatorService.calendarExists(
-      calendarId,
-    );
+    const isCalendar = await this.validatorService.calendarExists(calendarId);
     if (!isCalendar) {
       throw new HttpErrors.NotFound(ErrorKeys.CalendarNotExist);
     }
 
-    const isEvent = await this.validatorService.eventExists(parentEventId);
-    if (!isEvent) {
-      throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
+    if (parentEventId) {
+      const isEvent = await this.validatorService.eventExists(parentEventId);
+      if (!isEvent) {
+        throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
+      }
     }
-
     delete req.attendees;
     delete req.attachments;
 
     const event = await this.eventRepository.create(req);
     if (event?.id) {
       const eventId = event.id;
-      if (attendees){
+      if (attendees) {
         event.attendees = await Promise.all(
           attendees.map(async (attendee: Attendee) => {
             attendee.eventId = eventId;
@@ -97,7 +96,7 @@ export class EventController {
           }),
         );
       }
-      if (attachments){
+      if (attachments) {
         event.attachments = await Promise.all(
           attachments.map(async (attachment: Attachment) => {
             attachment.eventId = eventId;
@@ -255,7 +254,7 @@ export class EventController {
         const isEvent = await this.validatorService.eventExists(
           attendee.eventId,
         );
-        if (!isEvent){
+        if (!isEvent) {
           throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
         }
         await this.attendeeRepository.replaceById(attendee.id, attendee);
@@ -266,13 +265,12 @@ export class EventController {
         const isEvent = await this.validatorService.eventExists(
           attachment.eventId,
         );
-        if (!isEvent){
+        if (!isEvent) {
           throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
         }
         await this.attachmentRepository.replaceById(attachment.id, attachment);
       }
     }
-    await this.eventRepository.replaceById(id, event);
   }
 
   @authenticate(STRATEGY.BEARER, {
