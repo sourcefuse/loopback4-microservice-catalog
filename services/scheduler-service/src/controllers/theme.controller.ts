@@ -21,6 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Theme} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {ThemeRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/themes';
 
@@ -36,16 +37,16 @@ export class ThemeController {
   @authorize([PermissionKey.CreateTheme])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Theme model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Theme)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Theme)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Theme, {
             title: 'NewTheme',
             exclude: ['id'],
@@ -64,9 +65,9 @@ export class ThemeController {
   @authorize([PermissionKey.ViewTheme])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Theme model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -80,10 +81,10 @@ export class ThemeController {
   @authorize([PermissionKey.ViewTheme])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Theme model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Theme, {includeRelations: true}),
@@ -103,16 +104,16 @@ export class ThemeController {
   @authorize([PermissionKey.UpdateTheme])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Theme PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Theme, {partial: true}),
         },
       },
@@ -129,10 +130,10 @@ export class ThemeController {
   @authorize([PermissionKey.ViewTheme])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Theme model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Theme, {includeRelations: true}),
           },
         },
@@ -153,7 +154,7 @@ export class ThemeController {
   @authorize([PermissionKey.UpdateTheme])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Theme PATCH success',
       },
     },
@@ -162,7 +163,7 @@ export class ThemeController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Theme, {partial: true}),
         },
       },
@@ -178,7 +179,7 @@ export class ThemeController {
   @authorize([PermissionKey.UpdateTheme])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Theme PUT success',
       },
     },
@@ -196,7 +197,7 @@ export class ThemeController {
   @authorize([PermissionKey.DeleteTheme])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Theme DELETE success',
       },
     },

@@ -22,6 +22,7 @@ import {Calendar, WorkingHour} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository, WorkingHourRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/calendars';
 
@@ -39,16 +40,16 @@ export class CalendarController {
   @authorize([PermissionKey.CreateCalendar])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Calendar)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Calendar)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(CalendarDTO, {
             title: 'NewCalendar',
             exclude: ['id'],
@@ -87,9 +88,9 @@ export class CalendarController {
   @authorize([PermissionKey.ViewCalendar])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -103,10 +104,10 @@ export class CalendarController {
   @authorize([PermissionKey.ViewCalendar])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Calendar model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Calendar, {includeRelations: true}),
@@ -128,16 +129,16 @@ export class CalendarController {
   @authorize([PermissionKey.UpdateCalendar])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Calendar, {partial: true}),
         },
       },
@@ -154,10 +155,10 @@ export class CalendarController {
   @authorize([PermissionKey.ViewCalendar])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Calendar, {includeRelations: true}),
           },
         },
@@ -178,7 +179,7 @@ export class CalendarController {
   @authorize([PermissionKey.UpdateCalendar])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Calendar PATCH success',
       },
     },
@@ -187,7 +188,7 @@ export class CalendarController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Calendar, {partial: true}),
         },
       },
@@ -203,7 +204,7 @@ export class CalendarController {
   @authorize([PermissionKey.UpdateCalendar])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Calendar PUT success',
       },
     },
@@ -221,7 +222,7 @@ export class CalendarController {
   @authorize([PermissionKey.DeleteCalendar])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Calendar DELETE success',
       },
     },

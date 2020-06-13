@@ -5,6 +5,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attachment, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/attachments/{id}/event';
 
@@ -20,10 +21,10 @@ export class AttachmentEventController {
   @authorize([PermissionKey.ViewEvent])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event belonging to Attachment',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(Event)},
           },
         },

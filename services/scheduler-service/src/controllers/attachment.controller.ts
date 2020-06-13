@@ -21,6 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attachment} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/attachments';
 
@@ -36,16 +37,16 @@ export class AttachmentController {
   @authorize([PermissionKey.CreateAttachment])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Attachment)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attachment)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attachment, {
             title: 'NewAttachment',
             exclude: ['id'],
@@ -64,9 +65,9 @@ export class AttachmentController {
   @authorize([PermissionKey.ViewAttachment])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attachment model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -82,10 +83,10 @@ export class AttachmentController {
   @authorize([PermissionKey.ViewAttachment])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Attachment model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Attachment, {includeRelations: true}),
@@ -107,16 +108,16 @@ export class AttachmentController {
   @authorize([PermissionKey.UpdateAttachment])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attachment PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attachment, {partial: true}),
         },
       },
@@ -133,10 +134,10 @@ export class AttachmentController {
   @authorize([PermissionKey.ViewAttachment])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Attachment, {includeRelations: true}),
           },
         },
@@ -157,7 +158,7 @@ export class AttachmentController {
   @authorize([PermissionKey.UpdateAttachment])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Attachment PATCH success',
       },
     },
@@ -166,7 +167,7 @@ export class AttachmentController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attachment, {partial: true}),
         },
       },
@@ -182,7 +183,7 @@ export class AttachmentController {
   @authorize([PermissionKey.UpdateAttachment])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Attachment PUT success',
       },
     },
@@ -200,7 +201,7 @@ export class AttachmentController {
   @authorize([PermissionKey.DeleteAttachment])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Attachment DELETE success',
       },
     },

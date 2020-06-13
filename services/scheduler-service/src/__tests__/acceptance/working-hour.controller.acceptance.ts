@@ -13,9 +13,6 @@ describe('WorkingHour Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
   let workingHourRepo: WorkingHourRepository;
-  const path = require('path');
-  const dotEnvPath = path.resolve('./.env');
-  require('dotenv').config({path: dotEnvPath});
   const pass = 'test_password';
   const testUser = {
     id: 1,
@@ -29,9 +26,9 @@ describe('WorkingHour Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, process.env.JWT_SECRET as string, {
+  const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
-    issuer: process.env.JWT_ISSUER,
+    issuer: 'rashi',
   });
   before(givenRunningApplicationWithCustomConfiguration);
   after(async () => {

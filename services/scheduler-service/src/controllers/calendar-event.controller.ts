@@ -17,7 +17,7 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {IAuthUserWithPermissions, STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
@@ -28,6 +28,7 @@ import {Calendar, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository, SubscriptionRepository} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
+import { ErrorKeys } from '../models/enums/error-keys';
 
 const basePath = '/calendars/{id}/events';
 
@@ -48,10 +49,10 @@ export class CalendarEventController {
   @authorize([PermissionKey.ViewEvent])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Calendar has many Event',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(Event)},
           },
         },
@@ -66,18 +67,16 @@ export class CalendarEventController {
   ): Promise<Event[]> {
     const calendarId = await this.validatorService.primaryToCalendarId(id);
     if (!calendarId){
-      throw new HttpErrors.NotFound(`User does not have a primary calendar`);
+      throw new HttpErrors.NotFound(ErrorKeys.PrimaryCalendarNotExist);
     }
     const calendar = await this.validatorService.calendarExists(calendarId);
     if (!calendar) {
-      throw new HttpErrors.NotFound(`Calendar does not exist`);
+      throw new HttpErrors.NotFound(ErrorKeys.CalendarNotExist);
     }
 
     const correctTime = this.validatorService.minMaxTime(timeMin, timeMax);
     if (!correctTime){
-      throw new HttpErrors.UnprocessableEntity(
-        'timeMin cannot be greater than timeMax',
-      );
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.CanNotBeGreater);
     }
     let whereClause = {};
 
@@ -116,9 +115,9 @@ export class CalendarEventController {
   @authorize([PermissionKey.CreateEvent])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Event)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
       },
     },
   })
@@ -126,7 +125,7 @@ export class CalendarEventController {
     @param.path.string('id') id: typeof Calendar.prototype.id,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Event, {
             title: 'NewEventInCalendar',
             exclude: ['id'],
@@ -146,9 +145,9 @@ export class CalendarEventController {
   @authorize([PermissionKey.UpdateEvent])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar.Event PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -156,7 +155,7 @@ export class CalendarEventController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Event, {partial: true}),
         },
       },
@@ -173,9 +172,9 @@ export class CalendarEventController {
   @authorize([PermissionKey.DeleteEvent])
   @del(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar.Event DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })

@@ -55,8 +55,6 @@
     "@types/jsonwebtoken": "^8.5.0",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
-    "dotenv": "^8.2.0",
-    "dotenv-extended": "^2.8.0",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
     "loopback4-soft-delete": "^2.0.0",

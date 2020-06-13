@@ -17,8 +17,8 @@ export class BearerTokenVerifyProvider
         database.
         Use global interceptor over this to apply that check on each api.
       */
-      return verify(token, process.env.JWT_SECRET as string, {
-        issuer: process.env.JWT_ISSUER,
+      return verify(token, 'kdskssdkdfs', {
+        issuer: 'rashi',
       }) as IAuthUserWithPermissions;
     };
   }

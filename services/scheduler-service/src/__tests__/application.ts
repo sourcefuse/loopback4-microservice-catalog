@@ -7,7 +7,6 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import * as dotenv from 'dotenv';
 import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -67,7 +66,5 @@ export class SchedulerApplication extends BootMixin(
         nested: true,
       },
     };
-
-    dotenv.config();
   }
 }

@@ -20,6 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/subscriptions';
 
@@ -35,10 +36,10 @@ export class CalendarSubscriptionController {
   @authorize([PermissionKey.ViewSubscription])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Calendar has many Subscriptions',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Subscription),
@@ -61,10 +62,10 @@ export class CalendarSubscriptionController {
   @authorize([PermissionKey.CreateSubscription])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Subscription)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscription)},
         },
       },
     },
@@ -73,7 +74,7 @@ export class CalendarSubscriptionController {
     @param.path.string('id') id: typeof Calendar.prototype.id,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {
             title: 'NewSubscriptionInCalendar',
             exclude: ['id'],
@@ -93,9 +94,9 @@ export class CalendarSubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar.Subscription PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -103,7 +104,7 @@ export class CalendarSubscriptionController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {partial: true}),
         },
       },
@@ -121,9 +122,9 @@ export class CalendarSubscriptionController {
   @authorize([PermissionKey.DeleteSubscription])
   @del(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar.Subscription DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })

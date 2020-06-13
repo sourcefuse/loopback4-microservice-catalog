@@ -21,6 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/working-hours';
 
@@ -36,16 +37,16 @@ export class WorkingHourController {
   @authorize([PermissionKey.CreateWorkingHour])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'WorkingHour model instance',
-        content: {'application/json': {schema: getModelSchemaRef(WorkingHour)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(WorkingHour)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkingHour, {
             title: 'NewWorkingHour',
             exclude: ['id'],
@@ -64,9 +65,9 @@ export class WorkingHourController {
   @authorize([PermissionKey.ViewWorkingHour])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'WorkingHour model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -82,10 +83,10 @@ export class WorkingHourController {
   @authorize([PermissionKey.ViewWorkingHour])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of WorkingHour model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(WorkingHour, {includeRelations: true}),
@@ -107,16 +108,16 @@ export class WorkingHourController {
   @authorize([PermissionKey.UpdateWorkingHour])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'WorkingHour PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkingHour, {partial: true}),
         },
       },
@@ -133,10 +134,10 @@ export class WorkingHourController {
   @authorize([PermissionKey.ViewWorkingHour])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'WorkingHour model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(WorkingHour, {includeRelations: true}),
           },
         },
@@ -157,7 +158,7 @@ export class WorkingHourController {
   @authorize([PermissionKey.UpdateWorkingHour])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'WorkingHour PATCH success',
       },
     },
@@ -166,7 +167,7 @@ export class WorkingHourController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkingHour, {partial: true}),
         },
       },
@@ -182,7 +183,7 @@ export class WorkingHourController {
   @authorize([PermissionKey.UpdateWorkingHour])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'WorkingHour PUT success',
       },
     },
@@ -200,7 +201,7 @@ export class WorkingHourController {
   @authorize([PermissionKey.DeleteWorkingHour])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'WorkingHour DELETE success',
       },
     },

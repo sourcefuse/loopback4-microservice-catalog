@@ -29,6 +29,8 @@ import {
   EventRepository,
 } from '../repositories';
 import {ValidatorService} from '../services/validator.service';
+import { ErrorKeys } from '../models/enums/error-keys';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/events';
 
@@ -49,16 +51,16 @@ export class EventController {
   @authorize([PermissionKey.CreateEvent])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Event)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(EventDTO, {
             title: 'NewEvent',
             exclude: ['id'],
@@ -73,12 +75,12 @@ export class EventController {
       calendarId,
     );
     if (!isCalendar) {
-      throw new HttpErrors.NotFound(`Calendar does not exist`);
+      throw new HttpErrors.NotFound(ErrorKeys.CalendarNotExist);
     }
 
     const isEvent = await this.validatorService.eventExists(parentEventId);
     if (!isEvent) {
-      throw new HttpErrors.NotFound(`Event does not exist`);
+      throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
     }
 
     delete req.attendees;
@@ -113,9 +115,9 @@ export class EventController {
   @authorize([PermissionKey.ViewEvent])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -129,10 +131,10 @@ export class EventController {
   @authorize([PermissionKey.ViewEvent])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Event model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Event, {includeRelations: true}),
@@ -152,16 +154,16 @@ export class EventController {
   @authorize([PermissionKey.UpdateEvent])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Event, {partial: true}),
         },
       },
@@ -178,10 +180,10 @@ export class EventController {
   @authorize([PermissionKey.ViewEvent])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Event, {includeRelations: true}),
           },
         },
@@ -202,7 +204,7 @@ export class EventController {
   @authorize([PermissionKey.UpdateEvent])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Event PATCH success',
       },
     },
@@ -211,7 +213,7 @@ export class EventController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Event, {partial: true}),
         },
       },
@@ -227,7 +229,7 @@ export class EventController {
   @authorize([PermissionKey.UpdateEvent])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Event PUT success',
       },
     },
@@ -240,7 +242,7 @@ export class EventController {
       event.calendarId,
     );
     if (!isCalendar) {
-      throw new HttpErrors.NotFound(`Calendar does not exist`);
+      throw new HttpErrors.NotFound(ErrorKeys.CalendarNotExist);
     }
     const {attendees, attachments} = event;
     delete event.attendees;
@@ -254,7 +256,7 @@ export class EventController {
           attendee.eventId,
         );
         if (!isEvent){
-          throw new HttpErrors.NotFound(`Attendee has invalid eventId`);
+          throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
         }
         await this.attendeeRepository.replaceById(attendee.id, attendee);
       }
@@ -265,7 +267,7 @@ export class EventController {
           attachment.eventId,
         );
         if (!isEvent){
-          throw new HttpErrors.NotFound(`Attachment has invalid eventId`);
+          throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
         }
         await this.attachmentRepository.replaceById(attachment.id, attachment);
       }
@@ -279,7 +281,7 @@ export class EventController {
   @authorize([PermissionKey.DeleteEvent])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Event DELETE success',
       },
     },

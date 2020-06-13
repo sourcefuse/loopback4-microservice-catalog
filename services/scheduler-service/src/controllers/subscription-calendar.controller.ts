@@ -5,6 +5,7 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/subscriptions/{id}/calendar';
 
@@ -20,10 +21,10 @@ export class SubscriptionCalendarController {
   @authorize([PermissionKey.ViewCalendar])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar belonging to Subscription',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(Calendar)},
           },
         },

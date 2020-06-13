@@ -20,6 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/events/{id}/attendees';
 
@@ -34,10 +35,10 @@ export class EventAttendeeController {
   @authorize([PermissionKey.ViewAttendee])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Event has many Attendee',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(Attendee)},
           },
         },
@@ -57,10 +58,10 @@ export class EventAttendeeController {
   @authorize([PermissionKey.CreateAttendee])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Attendee)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attendee)},
         },
       },
     },
@@ -69,7 +70,7 @@ export class EventAttendeeController {
     @param.path.string('id') id: typeof Event.prototype.id,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attendee, {
             title: 'NewAttendeeInEvent',
             exclude: ['id'],
@@ -89,9 +90,9 @@ export class EventAttendeeController {
   @authorize([PermissionKey.UpdateAttendee])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event.Attendee PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -99,7 +100,7 @@ export class EventAttendeeController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attendee, {partial: true}),
         },
       },
@@ -117,9 +118,9 @@ export class EventAttendeeController {
   @authorize([PermissionKey.DeleteAttendee])
   @del(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event.Attendee DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })

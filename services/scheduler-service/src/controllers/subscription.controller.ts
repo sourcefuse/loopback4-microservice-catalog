@@ -17,7 +17,7 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {IAuthUserWithPermissions, STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
@@ -47,10 +47,10 @@ export class SubscriptionController {
   @authorize([PermissionKey.CreateSubscription])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Subscription)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscription)},
         },
       },
     },
@@ -58,7 +58,7 @@ export class SubscriptionController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {
             title: 'NewSubscription',
             exclude: ['id'],
@@ -77,9 +77,9 @@ export class SubscriptionController {
   @authorize([PermissionKey.ViewSubscription])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -95,10 +95,10 @@ export class SubscriptionController {
   @authorize([PermissionKey.ViewSubscription])
   @get('calendars/subscriptions/me', {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Subscription model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Subscription, {includeRelations: true}),
@@ -143,16 +143,16 @@ export class SubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {partial: true}),
         },
       },
@@ -169,10 +169,10 @@ export class SubscriptionController {
   @authorize([PermissionKey.ViewSubscription])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Subscription, {includeRelations: true}),
           },
         },
@@ -193,7 +193,7 @@ export class SubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription PATCH success',
       },
     },
@@ -202,7 +202,7 @@ export class SubscriptionController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {partial: true}),
         },
       },
@@ -218,7 +218,7 @@ export class SubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription PUT success',
       },
     },
@@ -236,7 +236,7 @@ export class SubscriptionController {
   @authorize([PermissionKey.DeleteSubscription])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription DELETE success',
       },
     },

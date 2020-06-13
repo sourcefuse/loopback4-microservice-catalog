@@ -21,6 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attendee} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttendeeRepository} from '../repositories';
+import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
 
 const basePath = '/attendees';
 
@@ -36,16 +37,16 @@ export class AttendeeController {
   @authorize([PermissionKey.CreateAttendee])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attendee model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Attendee)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attendee)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attendee, {
             title: 'NewAttendee',
             exclude: ['id'],
@@ -64,9 +65,9 @@ export class AttendeeController {
   @authorize([PermissionKey.ViewAttendee])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attendee model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -80,10 +81,10 @@ export class AttendeeController {
   @authorize([PermissionKey.ViewAttendee])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Attendee model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Attendee, {includeRelations: true}),
@@ -105,16 +106,16 @@ export class AttendeeController {
   @authorize([PermissionKey.UpdateAttendee])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attendee PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attendee, {partial: true}),
         },
       },
@@ -131,10 +132,10 @@ export class AttendeeController {
   @authorize([PermissionKey.ViewAttendee])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Attendee model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Attendee, {includeRelations: true}),
           },
         },
@@ -154,7 +155,7 @@ export class AttendeeController {
   @authorize([PermissionKey.UpdateAttendee])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Attendee PATCH success',
       },
     },
@@ -163,7 +164,7 @@ export class AttendeeController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attendee, {partial: true}),
         },
       },
@@ -179,7 +180,7 @@ export class AttendeeController {
   @authorize([PermissionKey.UpdateAttendee])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Attendee PUT success',
       },
     },
@@ -197,7 +198,7 @@ export class AttendeeController {
   @authorize([PermissionKey.DeleteAttendee])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Attendee DELETE success',
       },
     },
