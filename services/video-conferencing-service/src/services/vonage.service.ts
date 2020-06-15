@@ -1,4 +1,11 @@
-import { VonageVideoChat, VonageSessionOptions, VonageS3TargetOptions, VonageAzureTargetOptions, VonageMeetingOptions, VonageMeetingResponse, VonageConfig } from "../providers/vonage";
+import { 
+    VonageVideoChat,
+    VonageSessionOptions,
+    VonageS3TargetOptions,
+    VonageAzureTargetOptions, 
+    VonageMeetingOptions, 
+    VonageMeetingResponse, 
+    VonageConfig } from '../providers/vonage';
 import { SessionResponse, ArchiveResponseList, ArchiveResponse } from '../types';
 import OpenTok from 'opentok';
 import moment from 'moment';
@@ -8,17 +15,13 @@ import { sign } from 'jsonwebtoken';
 import axios from 'axios';
 import { VonageEnums } from '../enums';
 import { VonageBindings } from '../providers/vonage/keys';
-import { AuditLogsRepository } from '../repositories';
 import { inject } from '@loopback/core';
-import { repository } from '@loopback/repository';
 
 export class VonageService implements VonageVideoChat {
     VonageClient: OpenTok;
     constructor(
         @inject(VonageBindings.config)
         private readonly vonageConfig: VonageConfig,
-        @repository(AuditLogsRepository)
-        private readonly auditLogRepository: AuditLogsRepository,
     ) {
         const { apiKey, apiSecret } = vonageConfig;
         if (!(apiKey && apiSecret)) {
@@ -72,11 +75,11 @@ export class VonageService implements VonageVideoChat {
             });
         };
 
-        const session = await createSession();
+        const sessionResponse = await createSession();
         return {
             mediaMode: sessionCreationOptions.mediaMode,
             archiveMode: sessionCreationOptions.archiveMode,
-            sessionId: session.sessionId,
+            sessionId: sessionResponse.sessionId,
         };
     }
     async getToken(
@@ -194,4 +197,4 @@ export class VonageService implements VonageVideoChat {
             },
         });
     }
-};
+}

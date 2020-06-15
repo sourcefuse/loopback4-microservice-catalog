@@ -169,6 +169,6 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           );
         }
       },
-    }
+    };
   }
 }
