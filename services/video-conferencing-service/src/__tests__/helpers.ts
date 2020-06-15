@@ -63,7 +63,6 @@ export function setUpMockProvider(providerStub: Partial<VideoChatInterface>) {
       getArchives: sinon.stub().returnsThis(),
       deleteArchive: sinon.stub().returnsThis(),
       setUploadTarget: sinon.stub().returnsThis(),
-      deleteUploadTarget: sinon.stub().returnsThis(),
     },
     providerStub,
   );

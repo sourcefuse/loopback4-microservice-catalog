@@ -307,7 +307,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             });
           }
           await axios({
-            url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
+            url: `https://api.opentok.com/v2/project/${this.vonageConfig.apiKey}/archive/storage`,
             method: 'put',
             data: {
               type,

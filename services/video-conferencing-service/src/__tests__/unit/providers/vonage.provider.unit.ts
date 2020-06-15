@@ -4,7 +4,12 @@ import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
 } from '@loopback/testlab';
-import {VonageProvider, VonageConfig} from '../../../providers/vonage';
+import {
+  VonageProvider,
+  VonageConfig,
+  VonageS3TargetOptions,
+  VonageAzureTargetOptions,
+} from '../../../providers/vonage';
 import {AuditLogsRepository} from '../../../repositories';
 import {
   getVonageMeetingOptions,
@@ -12,6 +17,9 @@ import {
   getVonageArchiveList,
   getVonageArchive,
 } from '../../helpers';
+import {VonageEnums} from '../../../enums';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
 describe('VonageProvider (unit)', () => {
   const sessionId = 'dummy-session-id';
@@ -134,6 +142,20 @@ describe('VonageProvider (unit)', () => {
         .which.eql('dummy-token');
       sinon.assert.calledOnce(auidtLogCreate);
     });
+
+    it('returns an error if vonage fails to generate token', async () => {
+      const sessionOptions = getVonageSessionOptions({});
+      sinon
+        .stub(vonageProvider.VonageService, 'generateToken')
+        .throws(new Error('Failed to generate token'));
+
+      const error = await vonageProvider
+        .value()
+        .getToken(sessionId, sessionOptions)
+        .catch(err => err);
+      expect(error).instanceOf(Error);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
   });
 
   describe('getArchives', () => {
@@ -218,6 +240,60 @@ describe('VonageProvider (unit)', () => {
         .deleteArchive(archiveId)
         .catch(err => err);
       expect(result).instanceOf(Error);
+    });
+  });
+
+  describe('setUploadTarget', () => {
+    const vonageS3Options: VonageS3TargetOptions = {
+      accessKey: '1234',
+      secretKey: '****',
+      region: 'dummy-region',
+      bucket: 'dummy-bucket',
+      endpoint: 'dummy-endpoint',
+      fallback: VonageEnums.FallbackType.Opentok,
+    };
+    it('sets the upload target for S3', async () => {
+      const mock = new MockAdapter(axios);
+      mock
+        .onPut(
+          `https://api.opentok.com/v2/project/${config.apiKey}/archive/storage`,
+        )
+        .reply(200);
+      await vonageProvider.value().setUploadTarget(vonageS3Options);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('sets the upload target for Azure', async () => {
+      const azureOptions: VonageAzureTargetOptions = {
+        accountName: 'dummy-account-name',
+        accountKey: 'dummy-account-key',
+        container: 'dummy-container',
+        domain: 'dummy-domain',
+        fallback: VonageEnums.FallbackType.Opentok,
+      };
+      const mock = new MockAdapter(axios);
+      mock
+        .onPut(
+          `https://api.opentok.com/v2/project/${config.apiKey}/archive/storage`,
+        )
+        .reply(200);
+      await vonageProvider.value().setUploadTarget(azureOptions);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('returns an error if vonage API fails', async () => {
+      const mock = new MockAdapter(axios);
+      mock
+        .onPut(
+          `https://api.opentok.com/v2/project/${config.apiKey}/archive/storage`,
+        )
+        .reply(400);
+      const error = await vonageProvider
+        .value()
+        .setUploadTarget(vonageS3Options)
+        .catch(err => err);
+      expect(error).instanceOf(Error);
+      sinon.assert.calledOnce(auidtLogCreate);
     });
   });
 

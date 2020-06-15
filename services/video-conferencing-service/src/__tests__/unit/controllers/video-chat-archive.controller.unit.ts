@@ -134,13 +134,6 @@ describe('Archive APIs', () => {
     });
   });
 
-  describe('DEL /archives/storage-target', () => {
-    it('deletes the upload target', async () => {
-      setUp({deleteUploadTarget: sinon.stub().resolves()});
-      await controller.deleteCustomStorageTarget();
-    });
-  });
-
   function setUp(providerStub: Partial<VideoChatInterface>) {
     config = {
       apiKey: 'dummy',
