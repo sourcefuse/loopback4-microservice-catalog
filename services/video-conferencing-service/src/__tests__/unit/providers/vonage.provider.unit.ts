@@ -1,25 +1,26 @@
 import {
-  sinon,
-  expect,
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
+  expect,
+  sinon,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import {
-  VonageProvider,
-  VonageConfig,
-  VonageS3TargetOptions,
-  VonageAzureTargetOptions,
-} from '../../../providers/vonage';
-import {AuditLogsRepository} from '../../../repositories';
-import {
-  getVonageMeetingOptions,
-  getVonageSessionOptions,
-  getVonageArchiveList,
-  getVonageArchive,
-} from '../../helpers';
-import {VonageEnums} from '../../../enums';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import {VonageEnums} from '../../../enums';
+import {
+  VonageAzureTargetOptions,
+  VonageConfig,
+  VonageProvider,
+  VonageS3TargetOptions,
+} from '../../../providers/vonage';
+import {AuditLogsRepository} from '../../../repositories';
+import {VonageService} from '../../../services/vonage.service';
+import {
+  getVonageArchive,
+  getVonageArchiveList,
+  getVonageMeetingOptions,
+  getVonageSessionOptions,
+} from '../../helpers';
 
 describe('VonageProvider (unit)', () => {
   const sessionId = 'dummy-session-id';
@@ -28,6 +29,7 @@ describe('VonageProvider (unit)', () => {
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
   let auidtLogCreate: sinon.SinonStub;
   let vonageProvider: VonageProvider;
+  let vonageService: VonageService;
   let config: VonageConfig;
 
   beforeEach(() => setUp());
@@ -41,7 +43,7 @@ describe('VonageProvider (unit)', () => {
     };
 
     try {
-      new VonageProvider(config, auditLogRepo);
+      new VonageProvider(vonageService, auditLogRepo);
     } catch (err) {
       if (err) {
         return expect(err).instanceOf(Error);
@@ -56,7 +58,7 @@ describe('VonageProvider (unit)', () => {
       const error = null;
       const session = {sessionId: sessionId};
       sinon
-        .stub(vonageProvider.VonageService, 'createSession')
+        .stub(vonageService.VonageClient, 'createSession')
         .callsArgWith(1, error, session);
 
       const meetingOptions = getVonageMeetingOptions({enableArchiving: true});
@@ -79,7 +81,7 @@ describe('VonageProvider (unit)', () => {
       const error = null;
       const session = {sessionId: sessionId};
       sinon
-        .stub(vonageProvider.VonageService, 'createSession')
+        .stub(vonageService.VonageClient, 'createSession')
         .callsArgWith(1, error, session);
 
       const meetingOptions = getVonageMeetingOptions({
@@ -99,7 +101,7 @@ describe('VonageProvider (unit)', () => {
 
     it('returns an error if vonage fails to create session', async () => {
       sinon
-        .stub(vonageProvider.VonageService, 'createSession')
+        .stub(vonageService.VonageClient, 'createSession')
         .callsArgWith(1, vonageFailureError);
 
       const meetingOptions = getVonageMeetingOptions({});
@@ -128,7 +130,7 @@ describe('VonageProvider (unit)', () => {
     it('generates a token', async () => {
       const sessionOptions = getVonageSessionOptions({});
       sinon
-        .stub(vonageProvider.VonageService, 'generateToken')
+        .stub(vonageService.VonageClient, 'generateToken')
         .returns('dummy-token');
 
       const result = await vonageProvider
@@ -146,7 +148,7 @@ describe('VonageProvider (unit)', () => {
     it('returns an error if vonage fails to generate token', async () => {
       const sessionOptions = getVonageSessionOptions({});
       sinon
-        .stub(vonageProvider.VonageService, 'generateToken')
+        .stub(vonageService.VonageClient, 'generateToken')
         .throws(new Error('Failed to generate token'));
 
       const error = await vonageProvider
@@ -163,7 +165,7 @@ describe('VonageProvider (unit)', () => {
       const error = null;
       const archive = getVonageArchive();
       sinon
-        .stub(vonageProvider.VonageService, 'getArchive')
+        .stub(vonageService.VonageClient, 'getArchive')
         .callsArgWith(1, error, archive);
 
       const result = await vonageProvider.value().getArchives(archiveId);
@@ -181,7 +183,7 @@ describe('VonageProvider (unit)', () => {
       const error = null;
       const archives = getVonageArchiveList();
       sinon
-        .stub(vonageProvider.VonageService, 'listArchives')
+        .stub(vonageService.VonageClient, 'listArchives')
         .callsArgWith(1, error, archives);
 
       const result = await vonageProvider.value().getArchives(nullArchiveId);
@@ -193,7 +195,7 @@ describe('VonageProvider (unit)', () => {
 
     it('returns an error if vonage fails for given archive id', async () => {
       sinon
-        .stub(vonageProvider.VonageService, 'getArchive')
+        .stub(vonageService.VonageClient, 'getArchive')
         .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
@@ -206,7 +208,7 @@ describe('VonageProvider (unit)', () => {
     it('returns an error if vonage fails to list archives', async () => {
       const nullArchiveId = null;
       sinon
-        .stub(vonageProvider.VonageService, 'listArchives')
+        .stub(vonageService.VonageClient, 'listArchives')
         .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
@@ -221,7 +223,7 @@ describe('VonageProvider (unit)', () => {
     it('deletes the archive with given archive id', async () => {
       const error = null;
       const deleteArchive = sinon.stub(
-        vonageProvider.VonageService,
+        vonageService.VonageClient,
         'deleteArchive',
       );
       deleteArchive.callsArgWith(1, error);
@@ -232,7 +234,7 @@ describe('VonageProvider (unit)', () => {
 
     it('reutrns an error if vonage fails to delete archive', async () => {
       sinon
-        .stub(vonageProvider.VonageService, 'deleteArchive')
+        .stub(vonageService.VonageClient, 'deleteArchive')
         .callsArgWith(1, vonageFailureError);
 
       const result = await vonageProvider
@@ -306,7 +308,8 @@ describe('VonageProvider (unit)', () => {
 
     auditLogRepo = createStubInstance(AuditLogsRepository);
 
-    vonageProvider = new VonageProvider(config, auditLogRepo);
+    vonageService = new VonageService(config);
+    vonageProvider = new VonageProvider(vonageService, auditLogRepo);
     auidtLogCreate = auditLogRepo.stubs.create;
     auidtLogCreate.resolves();
   }

@@ -5,27 +5,28 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import {
-  getDate,
-  getSessionOptions,
-  getVideoChatSession,
-  getMeetingResponse,
-  getMeetingOptions,
-  getSessionResponse,
-  getDatePastThreshold,
-  setUpMockProvider,
-  getFutureDate,
-  getWebhookPayload,
-  getSessionAttendeesModel,
-} from '../../helpers';
 import {VideoChatSessionController} from '../../../controllers';
-import {VonageProvider, VonageConfig} from '../../../providers/vonage';
+import {VonageConfig, VonageProvider} from '../../../providers/vonage';
 import {
-  VideoChatSessionRepository,
   AuditLogsRepository,
   SessionAttendeesRepository,
+  VideoChatSessionRepository,
 } from '../../../repositories';
+import {VonageService} from '../../../services/vonage.service';
 import {VideoChatInterface} from '../../../types';
+import {
+  getDate,
+  getDatePastThreshold,
+  getFutureDate,
+  getMeetingOptions,
+  getMeetingResponse,
+  getSessionAttendeesModel,
+  getSessionOptions,
+  getSessionResponse,
+  getVideoChatSession,
+  getWebhookPayload,
+  setUpMockProvider,
+} from '../../helpers';
 
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
@@ -40,6 +41,7 @@ describe('Session APIs', () => {
 
   let videoChatProvider: VideoChatInterface;
   let controller: VideoChatSessionController;
+  let vonageService: VonageService;
 
   afterEach(() => sinon.restore());
 
@@ -325,7 +327,8 @@ describe('Session APIs', () => {
 
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    videoChatProvider = new VonageProvider(config, auditLogRepo).value();
+    vonageService = new VonageService(config);
+    videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
     controller = new VideoChatSessionController(
       videoChatSessionRepo,
       videoChatProvider,

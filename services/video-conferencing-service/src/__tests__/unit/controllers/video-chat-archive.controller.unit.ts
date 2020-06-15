@@ -1,22 +1,23 @@
-import {VideoChatInterface} from '../../../types';
 import {
-  sinon,
-  expect,
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
+  expect,
+  sinon,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 import {VideoChatArchiveController} from '../../../controllers';
-import {VonageProvider, VonageConfig} from '../../../providers/vonage';
-import {
-  setUpMockProvider,
-  getArchiveResponse,
-  getArchiveResponseList,
-  getVideoChatSession,
-} from '../../helpers';
+import {VonageConfig, VonageProvider} from '../../../providers/vonage';
 import {
   AuditLogsRepository,
   VideoChatSessionRepository,
 } from '../../../repositories';
+import {VonageService} from '../../../services/vonage.service';
+import {VideoChatInterface} from '../../../types';
+import {
+  getArchiveResponse,
+  getArchiveResponseList,
+  getVideoChatSession,
+  setUpMockProvider,
+} from '../../helpers';
 
 describe('Archive APIs', () => {
   const archiveId = 'dummy-archive-id';
@@ -25,6 +26,7 @@ describe('Archive APIs', () => {
   let auidtLogCreate: sinon.SinonStub;
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let videoChatProvider: VideoChatInterface;
+  let vonageService: VonageService;
   let config: VonageConfig;
   let controller: VideoChatArchiveController;
 
@@ -147,7 +149,8 @@ describe('Archive APIs', () => {
 
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    videoChatProvider = new VonageProvider(config, auditLogRepo).value();
+    vonageService = new VonageService(config);
+    videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
 
     controller = new VideoChatArchiveController(
       videoChatProvider,
