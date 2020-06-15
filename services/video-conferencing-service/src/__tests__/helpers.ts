@@ -214,6 +214,6 @@ export function getSessionAttendeesModel() {
     attendee: "TOKENDATA",
     createdOn: new Date(),
     isDeleted: false
-  }
+  };
   return new SessionAttendees(data);
 }

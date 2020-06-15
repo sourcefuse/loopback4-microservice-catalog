@@ -250,27 +250,26 @@ export class VideoChatSessionController {
   async checkWebhookPayload(@requestBody() webhookPayload: VonageSessionWebhookPayload) {
    try {
     const { connection: { data }, event, sessionId } = webhookPayload;
-    switch(event) {
-      case VonageEnums.SessionWebhookEvents.ConnectionCreated:
-        const sessionAttendeeDetail = await this.sessionAttendeesRepossitory.findOne({
-          where: {
-            attendee: data,
-          }
-        });
-        if(!sessionAttendeeDetail) {
-          await this.sessionAttendeesRepossitory.create({
-            sessionId: sessionId,
-            attendee: data,
-            createdOn: new Date(),
-            isDeleted: false,
-          });
-        } else {
-          await this.sessionAttendeesRepossitory.updateById(sessionAttendeeDetail.id, {
-            modifiedOn: new Date(),
-          });
+
+
+    if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
+      const sessionAttendeeDetail = await this.sessionAttendeesRepossitory.findOne({
+        where: {
+          attendee: data,
         }
-        break;
-        default: break;
+      });
+      if(!sessionAttendeeDetail) {
+        await this.sessionAttendeesRepossitory.create({
+          sessionId: sessionId,
+          attendee: data,
+          createdOn: new Date(),
+          isDeleted: false,
+        });
+      } else {
+        await this.sessionAttendeesRepossitory.updateById(sessionAttendeeDetail.id, {
+          modifiedOn: new Date(),
+        });
+      }
     }
     this.auditLogRepository.create({
       action: 'session-webhook',

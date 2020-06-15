@@ -35,7 +35,7 @@ describe('Session APIs', () => {
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
   let auidtLogCreate: sinon.SinonStub;
-  let sessionAttendeesRepo: StubbedInstanceWithSinonAccessor<SessionAttendeesRepository>
+  let sessionAttendeesRepo: StubbedInstanceWithSinonAccessor<SessionAttendeesRepository>;
   let config: VonageConfig;
 
   let videoChatProvider: VideoChatInterface;

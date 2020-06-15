@@ -229,7 +229,9 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           throw new HttpErrors.InternalServerError('Error occured while deleting an archive');
         }
       },
-      setUploadTarget: async (config: VonageS3TargetOptions | VonageAzureTargetOptions): Promise<void> => {
+      setUploadTarget: async (storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions): Promise<void> => {
+        const auditLogAction = 'archive';
+        const auditLogActionType = 'set-storage-target';
         try {
         const { apiKey, apiSecret } = this.vonageConfig;
         const ttl = 200;
@@ -243,8 +245,8 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         const token = sign(jwtPayload, apiSecret);
         let type = '';
         const credentials = {};
-        const { accessKey , secretKey, bucket, endpoint } = config as VonageS3TargetOptions;
-        const { accountName, accountKey, container, domain } = config as VonageAzureTargetOptions;
+        const { accessKey , secretKey, bucket, endpoint } = storageConfig as VonageS3TargetOptions;
+        const { accountName, accountKey, container, domain } = storageConfig as VonageAzureTargetOptions;
         if (accessKey && secretKey && bucket) {
           type = 'S3';
           Object.assign(credentials, {
@@ -263,23 +265,23 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           data: {
            type,
            config: credentials,
-           fallback: config.fallback,
+           fallback: storageConfig.fallback,
           },
           headers: {
             'X-OPENTOK-AUTH': token
           }
         });
         this.auditLogRepository.create({
-          action: 'archive',
-          actionType: 'set-storage-target',
+          action: auditLogAction,
+          actionType: auditLogActionType,
           before: config,
           after: { response: 'Storage Target Success' },
           actedAt: moment().format(),
         });
       } catch (error) {
         this.auditLogRepository.create({
-          action: 'archive',
-          actionType: 'set-storage-target',
+          action: auditLogAction,
+          actionType: auditLogActionType,
           before: config,
           after: { errorStack: error.stack },
           actedAt: moment().format(),
@@ -288,6 +290,8 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       }
     },
     deleteUploadTarget: async(): Promise<void> => {
+      const auditLogAction = 'archive';
+      const auditLogActionType = 'set-storage-target';
       try {
         const { apiKey, apiSecret } = this.vonageConfig;
         const ttl = 200;
@@ -306,16 +310,16 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         }
       });
       this.auditLogRepository.create({
-        action: 'archive',
-        actionType: 'set-storage-target',
+        action: auditLogAction,
+        actionType: auditLogActionType,
         before: config,
         after: { response: 'successfully removed storage target from s3/azure ' },
         actedAt: moment().format(),
       });
      } catch (error) {
        this.auditLogRepository.create({
-         action: 'archive',
-         actionType: 'set-upload-target',
+         action: auditLogAction,
+         actionType: auditLogActionType,
          before: {},
          after: { errorStack: error.stack },
          actedAt: moment().format(),
@@ -324,5 +328,5 @@ export class VonageProvider implements Provider<VonageVideoChat> {
      } 
     }
   }
-}
+};
 }
