@@ -20,6 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attachment, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/events/{id}/attachments';
 
@@ -34,10 +35,10 @@ export class EventAttachmentController {
   @authorize([PermissionKey.ViewAttachment])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Event has many Attachment',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(Attachment)},
           },
         },
@@ -57,10 +58,10 @@ export class EventAttachmentController {
   @authorize([PermissionKey.CreateAttachment])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Attachment)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attachment)},
         },
       },
     },
@@ -69,7 +70,7 @@ export class EventAttachmentController {
     @param.path.string('id') id: typeof Event.prototype.id,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attachment, {
             title: 'NewAttachmentInEvent',
             exclude: ['id'],
@@ -89,9 +90,9 @@ export class EventAttachmentController {
   @authorize([PermissionKey.UpdateAttachment])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event.Attachment PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -99,7 +100,7 @@ export class EventAttachmentController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Attachment, {partial: true}),
         },
       },
@@ -117,9 +118,9 @@ export class EventAttachmentController {
   @authorize([PermissionKey.DeleteAttachment])
   @del(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Event.Attachment DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })

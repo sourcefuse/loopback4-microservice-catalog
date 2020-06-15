@@ -1,0 +1,6 @@
+{
+  "name": "schedulerDb",
+  "connector": "memory",
+  "localStorage": "",
+  "file": ""
+}
