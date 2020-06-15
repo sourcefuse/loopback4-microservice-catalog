@@ -338,50 +338,51 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           );
         }
       },
-      deleteUploadTarget: async (): Promise<void> => {
-        const auditLogAction = 'archive';
-        const auditLogActionType = 'set-storage-target';
-        try {
-          const {apiKey, apiSecret} = this.vonageConfig;
-          const ttl = 200;
-          const jwtPayload = {
-            iss: apiKey,
-            ist: 'project',
-            iat: moment().unix(),
-            exp: moment()
-              .add(ttl, 'seconds')
-              .unix(),
-          };
-          const token = sign(jwtPayload, apiSecret);
-          await axios({
-            url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
-            method: 'delete',
-            headers: {
-              'X-OPENTOK-AUTH': token,
-            },
-          });
-          this.auditLogRepository.create({
-            action: auditLogAction,
-            actionType: auditLogActionType,
-            before: config,
-            after: {
-              response: 'successfully removed storage target from s3/azure ',
-            },
-            actedAt: moment().format(),
-          });
-        } catch (error) {
-          this.auditLogRepository.create({
-            action: auditLogAction,
-            actionType: auditLogActionType,
-            before: {},
-            after: {errorStack: error.stack},
-            actedAt: moment().format(),
-          });
-          throw new HttpErrors.InternalServerError(
-            'Error occured while removing s3/azure storage target',
-          );
-        }
-      },
+      // TO-DO: will do modifications later
+      // deleteUploadTarget: async (): Promise<void> => {
+      //   const auditLogAction = 'archive';
+      //   const auditLogActionType = 'set-storage-target';
+      //   try {
+      //     const {apiKey, apiSecret} = this.vonageConfig;
+      //     const ttl = 200;
+      //     const jwtPayload = {
+      //       iss: apiKey,
+      //       ist: 'project',
+      //       iat: moment().unix(),
+      //       exp: moment()
+      //         .add(ttl, 'seconds')
+      //         .unix(),
+      //     };
+      //     const token = sign(jwtPayload, apiSecret);
+      //     await axios({
+      //       url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
+      //       method: 'delete',
+      //       headers: {
+      //         'X-OPENTOK-AUTH': token,
+      //       },
+      //     });
+      //     this.auditLogRepository.create({
+      //       action: auditLogAction,
+      //       actionType: auditLogActionType,
+      //       before: config,
+      //       after: {
+      //         response: 'successfully removed storage target from s3/azure ',
+      //       },
+      //       actedAt: moment().format(),
+      //     });
+      //   } catch (error) {
+      //     this.auditLogRepository.create({
+      //       action: auditLogAction,
+      //       actionType: auditLogActionType,
+      //       before: {},
+      //       after: {errorStack: error.stack},
+      //       actedAt: moment().format(),
+      //     });
+      //     throw new HttpErrors.InternalServerError(
+      //       'Error occured while removing s3/azure storage target',
+      //     );
+      //   }
+      // },
     };
   }
 }

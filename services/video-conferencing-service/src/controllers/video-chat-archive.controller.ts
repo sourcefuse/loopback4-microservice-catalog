@@ -145,22 +145,23 @@ export class VideoChatArchiveController {
     }
     await this.videoChatProvider.setUploadTarget(body);
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.SetUploadTarget])
-  @del('/archives/storage-target', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        content: {
-          [CONTENT_TYPE.TEXT]: {
-            schema: {
-              type: 'text',
-            },
-          },
-        },
-      },
-    },
-  })
-  async deleteCustomStorageTarget() {
-    return this.videoChatProvider.deleteUploadTarget();
-  }
+  // TO-DO: will do modifications later
+  // @authenticate(STRATEGY.BEARER)
+  // @authorize([PermissionKeys.SetUploadTarget])
+  // @del('/archives/storage-target', {
+  //   responses: {
+  //     [STATUS_CODE.OK]: {
+  //       content: {
+  //         [CONTENT_TYPE.TEXT]: {
+  //           schema: {
+  //             type: 'text',
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // })
+  // async deleteCustomStorageTarget() {
+  //   return this.videoChatProvider.deleteUploadTarget();
+  // }
 }
