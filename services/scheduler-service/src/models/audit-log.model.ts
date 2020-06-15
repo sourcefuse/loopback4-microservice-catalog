@@ -1,6 +1,5 @@
-import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
-
 import {Entity, model, property} from '@loopback/repository';
+import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
 @model({
   name: 'audit_logs',
@@ -41,6 +40,9 @@ export class AuditLog extends Entity
     type: 'string',
     default: 'APPLICATION_LOGS',
     name: 'log_type',
+    jsonSchema: {
+      maxLength: 100,
+    },
   })
   logType?: string;
 
@@ -48,6 +50,9 @@ export class AuditLog extends Entity
     type: 'string',
     required: true,
     name: 'operation_name',
+    jsonSchema: {
+      maxLength: 10,
+    },
   })
   operationName: string;
 
@@ -63,6 +68,9 @@ export class AuditLog extends Entity
     type: 'string',
     required: true,
     name: 'table_name',
+    jsonSchema: {
+      maxLength: 60,
+    },
   })
   tableName: string;
 
@@ -74,7 +82,7 @@ export class AuditLog extends Entity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 

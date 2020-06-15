@@ -1,17 +1,10 @@
-import {belongsTo, hasMany, model, property} from '@loopback/repository';
-import {
-  ExternalIdentifierEnabledEntity,
-  UserModifiableEntity,
-} from '@sourceloop/core';
-import {Attachment, Attendee} from '.';
-import {Calendar} from './calendar.model';
+import {model, Model, property} from '@loopback/repository';
+import {Attachment} from './attachment.model';
+import {Attendee} from './attendee.model';
 import {StatusType} from './enums/status.enum';
 
-@model({
-  name: 'events',
-})
-export class Event extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+@model()
+export class EventDTO extends Model {
   @property({
     type: 'string',
     id: true,
@@ -128,30 +121,22 @@ export class Event extends UserModifiableEntity
   })
   timezone?: string;
 
-  @belongsTo(
-    () => Calendar,
-    {keyFrom: 'calendarId', name: 'calendar'},
-    {
-      name: 'calendar_id',
-      required: true,
-    },
-  )
+  @property({
+    type: 'string',
+    required: true,
+  })
   calendarId: string;
 
-  @belongsTo(
-    () => Event,
-    {keyFrom: 'parentEventId', name: 'parentEvent'},
-    {
-      name: 'parent_event_id',
-    },
-  )
+  @property({
+    type: 'string',
+  })
   parentEventId?: string;
 
-  @hasMany(() => Attendee, {name: 'attendees', keyTo: 'eventId'})
-  attendees: Attendee[];
+  @property.array(Attachment)
+  attachments?: Attachment[];
 
-  @hasMany(() => Attachment, {name: 'attachments', keyTo: 'eventId'})
-  attachments: Attachment[];
+  @property.array(Attendee)
+  attendees?: Attendee[];
 
   @property({
     type: 'string',
@@ -165,14 +150,7 @@ export class Event extends UserModifiableEntity
   })
   extMetadata?: object;
 
-  constructor(data?: Partial<Event>) {
+  constructor(data?: Partial<EventDTO>) {
     super(data);
   }
 }
-
-export interface EventRelations {
-  calendar?: Calendar;
-  event?: Event;
-}
-
-export type EventWithRelations = Event & EventRelations;

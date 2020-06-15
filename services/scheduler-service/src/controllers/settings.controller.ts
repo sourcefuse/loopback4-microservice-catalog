@@ -21,6 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Settings} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SettingsRepository} from '../repositories';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/settings';
 
@@ -36,23 +37,24 @@ export class SettingsController {
   @authorize([PermissionKey.CreateSettings])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Settings model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Settings)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Settings)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Settings, {
             title: 'NewSettings',
+            exclude: ['id'],
           }),
         },
       },
     })
-    settings: Settings,
+    settings: Omit<Settings, 'id'>,
   ): Promise<Settings> {
     return this.settingsRepository.create(settings);
   }
@@ -63,9 +65,9 @@ export class SettingsController {
   @authorize([PermissionKey.ViewSettings])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Settings model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -79,10 +81,10 @@ export class SettingsController {
   @authorize([PermissionKey.ViewSettings])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Settings model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Settings, {includeRelations: true}),
@@ -104,16 +106,16 @@ export class SettingsController {
   @authorize([PermissionKey.UpdateSettings])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Settings PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Settings, {partial: true}),
         },
       },
@@ -130,10 +132,10 @@ export class SettingsController {
   @authorize([PermissionKey.ViewSettings])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Settings model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Settings, {includeRelations: true}),
           },
         },
@@ -154,7 +156,7 @@ export class SettingsController {
   @authorize([PermissionKey.UpdateSettings])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Settings PATCH success',
       },
     },
@@ -163,7 +165,7 @@ export class SettingsController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Settings, {partial: true}),
         },
       },
@@ -179,7 +181,7 @@ export class SettingsController {
   @authorize([PermissionKey.UpdateSettings])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Settings PUT success',
       },
     },
@@ -197,7 +199,7 @@ export class SettingsController {
   @authorize([PermissionKey.DeleteSettings])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Settings DELETE success',
       },
     },

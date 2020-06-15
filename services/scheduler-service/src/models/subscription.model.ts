@@ -1,7 +1,7 @@
 import {belongsTo, model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
 import {Calendar, CalendarWithRelations} from './calendar.model';
 import {AccessRoleType} from './enums/access-role.enum';
@@ -96,7 +96,7 @@ export class Subscription extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 
@@ -106,7 +106,7 @@ export class Subscription extends UserModifiableEntity
 }
 
 export interface SubscriptionRelations {
-  calendar: CalendarWithRelations;
+  calendar?: CalendarWithRelations;
 }
 
 export type SubscriptionWithRelations = Subscription & SubscriptionRelations;

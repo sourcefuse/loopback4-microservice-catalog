@@ -20,6 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/working-hours';
 
@@ -35,10 +36,10 @@ export class CalendarWorkingHourController {
   @authorize([PermissionKey.ViewWorkingHour])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Calendar has many WorkingHour',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(WorkingHour)},
           },
         },
@@ -58,9 +59,11 @@ export class CalendarWorkingHourController {
   @authorize([PermissionKey.CreateWorkingHour])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
-        content: {'application/json': {schema: getModelSchemaRef(WorkingHour)}},
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(WorkingHour)},
+        },
       },
     },
   })
@@ -68,7 +71,7 @@ export class CalendarWorkingHourController {
     @param.path.string('id') id: typeof Calendar.prototype.id,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkingHour, {
             title: 'NewWorkingHourInCalendar',
             exclude: ['id'],
@@ -88,9 +91,9 @@ export class CalendarWorkingHourController {
   @authorize([PermissionKey.UpdateWorkingHour])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar.WorkingHour PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -98,7 +101,7 @@ export class CalendarWorkingHourController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkingHour, {partial: true}),
         },
       },
@@ -116,9 +119,9 @@ export class CalendarWorkingHourController {
   @authorize([PermissionKey.DeleteWorkingHour])
   @del(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar.WorkingHour DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })

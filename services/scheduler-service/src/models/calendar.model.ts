@@ -32,12 +32,18 @@ export class Calendar extends UserModifiableEntity
 
   @property({
     type: 'string',
+    jsonSchema: {
+      maxLength: 300,
+    },
   })
   location?: string;
 
   @property({
     type: 'string',
     name: 'owner_display_name',
+    jsonSchema: {
+      maxLength: 100,
+    },
   })
   ownerDisplayName?: string;
 
@@ -45,16 +51,25 @@ export class Calendar extends UserModifiableEntity
     type: 'string',
     required: true,
     name: 'owner_email',
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   ownerEmail: string;
 
   @property({
     type: 'string',
+    jsonSchema: {
+      maxLength: 100,
+    },
   })
   summary?: string;
 
   @property({
     type: 'string',
+    jsonSchema: {
+      maxLength: 120,
+    },
   })
   timezone?: string;
 
@@ -75,7 +90,7 @@ export class Calendar extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 
@@ -85,9 +100,9 @@ export class Calendar extends UserModifiableEntity
 }
 
 export interface CalendarRelations {
-  // describe navigational properties here
-  subscriptions?: Subscription[];
-  workingHours?: WorkingHour[];
+  event?: Event;
+  subscriptions?: Subscription;
+  workingHours?: WorkingHour;
 }
 
 export type CalendarWithRelations = Calendar & CalendarRelations;

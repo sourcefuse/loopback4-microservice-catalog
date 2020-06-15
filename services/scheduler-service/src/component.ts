@@ -5,6 +5,7 @@ import {
   CoreBindings,
   inject,
   ProviderMap,
+  createServiceBinding,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -51,13 +52,14 @@ import {
   ThemeController,
   WorkingHourController,
 } from './controllers';
+import {ValidatorService} from './services';
 
 export class SchedulerServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
   ) {
-    this.bindings = [];
+    this.bindings = [createServiceBinding(ValidatorService)];
     this.providers = {};
 
     // Mount core component

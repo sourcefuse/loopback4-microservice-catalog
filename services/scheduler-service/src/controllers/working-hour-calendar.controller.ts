@@ -5,6 +5,7 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 const basePath = '/working-hours/{id}/calendar';
 
@@ -20,10 +21,10 @@ export class WorkingHourCalendarController {
   @authorize([PermissionKey.ViewCalendar])
   @get(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Calendar belonging to WorkingHour',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {type: 'array', items: getModelSchemaRef(Calendar)},
           },
         },

@@ -1,3 +1,4 @@
+import {inject, service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -16,11 +17,22 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {
+  IAuthUserWithPermissions,
+  STATUS_CODE,
+  CONTENT_TYPE,
+} from '@sourceloop/core';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY,
+} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Subscription} from '../models';
+import {AccessRoleType} from '../models/enums/access-role.enum';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
+import {ValidatorService} from '../services/validator.service';
 
 const basePath = '/subscriptions';
 
@@ -28,6 +40,9 @@ export class SubscriptionController {
   constructor(
     @repository(SubscriptionRepository)
     public subscriptionRepository: SubscriptionRepository,
+    @service(ValidatorService) public validatorService: ValidatorService,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -36,10 +51,10 @@ export class SubscriptionController {
   @authorize([PermissionKey.CreateSubscription])
   @post(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Subscription)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscription)},
         },
       },
     },
@@ -47,14 +62,15 @@ export class SubscriptionController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {
             title: 'NewSubscription',
+            exclude: ['id'],
           }),
         },
       },
     })
-    subscription: Subscription,
+    subscription: Omit<Subscription, 'id'>,
   ): Promise<Subscription> {
     return this.subscriptionRepository.create(subscription);
   }
@@ -65,9 +81,9 @@ export class SubscriptionController {
   @authorize([PermissionKey.ViewSubscription])
   @get(`${basePath}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -81,12 +97,12 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize([PermissionKey.ViewSubscription])
-  @get(basePath, {
+  @get('calendars/subscriptions/me', {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Subscription model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Subscription, {includeRelations: true}),
@@ -98,8 +114,31 @@ export class SubscriptionController {
   })
   async find(
     @param.filter(Subscription) filter?: Filter<Subscription>,
+    @param.query.string('minAccessRole') minAccessRole?: AccessRoleType,
   ): Promise<Subscription[]> {
-    return this.subscriptionRepository.find(filter);
+    return this.subscriptionRepository.find({
+      include: [
+        {
+          relation: 'calendar',
+          scope: {
+            fields: {
+              id: true,
+              location: true,
+              ownerDisplayName: true,
+              ownerEmail: true,
+              summary: true,
+              timezone: true,
+            },
+          },
+        },
+      ],
+      where: {
+        and: [
+          {subscriber: this.currentUser.email},
+          {accessRole: minAccessRole},
+        ],
+      },
+    });
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -108,16 +147,16 @@ export class SubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @patch(basePath, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {partial: true}),
         },
       },
@@ -134,10 +173,10 @@ export class SubscriptionController {
   @authorize([PermissionKey.ViewSubscription])
   @get(`${basePath}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Subscription, {includeRelations: true}),
           },
         },
@@ -158,7 +197,7 @@ export class SubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @patch(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription PATCH success',
       },
     },
@@ -167,7 +206,7 @@ export class SubscriptionController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscription, {partial: true}),
         },
       },
@@ -183,7 +222,7 @@ export class SubscriptionController {
   @authorize([PermissionKey.UpdateSubscription])
   @put(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription PUT success',
       },
     },
@@ -201,7 +240,7 @@ export class SubscriptionController {
   @authorize([PermissionKey.DeleteSubscription])
   @del(`${basePath}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription DELETE success',
       },
     },

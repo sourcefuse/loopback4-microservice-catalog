@@ -4,7 +4,7 @@ import {
   UserModifiableEntity,
 } from '@sourceloop/core';
 import {ResponseStatusType} from './enums/response-status.enum';
-import {Event, EventWithRelations} from './event.model';
+import {Event} from './event.model';
 
 @model({
   name: 'attendees',
@@ -20,6 +20,9 @@ export class Attendee extends UserModifiableEntity
   @property({
     type: 'string',
     required: true,
+    jsonSchema: {
+      maxLength: 200,
+    },
   })
   email: string;
 
@@ -89,7 +92,7 @@ export class Attendee extends UserModifiableEntity
 
   @property({
     type: 'object',
-    name: 'ext_meadata',
+    name: 'ext_metadata',
   })
   extMetadata?: object;
 
@@ -99,7 +102,7 @@ export class Attendee extends UserModifiableEntity
 }
 
 export interface AttendeeRelations {
-  event: EventWithRelations;
+  event?: Event;
 }
 
 export type AttendeeWithRelations = Attendee & AttendeeRelations;
