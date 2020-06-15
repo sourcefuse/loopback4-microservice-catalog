@@ -1,43 +1,43 @@
 import {Entity, model, property} from '@loopback/repository';
-import { ExternalIdentifierEnabledEntity } from '@sourceloop/core';
+import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 @model({
   name: 'session_attendees',
 })
 export class SessionAttendees extends Entity
   implements ExternalIdentifierEnabledEntity {
   @property({
-      type: 'number',
-      id: true,
-      generated: true,
+    type: 'number',
+    id: true,
+    generated: true,
   })
   id?: number;
   @property({
-      type:  'string',
-      required: true,
-      name: 'session_id',
+    type: 'string',
+    required: true,
+    name: 'session_id',
   })
   sessionId: string;
   @property({
-      type: 'string',
-      required: true,
-      name: 'attendee',
+    type: 'string',
+    required: true,
+    name: 'attendee',
   })
   attendee: string;
   @property({
-     type: 'Date',
-     required: true,
-     name: 'created_on',
+    type: 'Date',
+    required: true,
+    name: 'created_on',
   })
   createdOn: Date;
   @property({
-      type: 'Date',
-      name: 'modified_on',
+    type: 'Date',
+    name: 'modified_on',
   })
   modifiedOn?: Date;
   @property({
-      type: 'boolean',
-      name: 'is_deleted',
-      required: true,
+    type: 'boolean',
+    name: 'is_deleted',
+    required: true,
   })
   isDeleted: boolean;
   @property({

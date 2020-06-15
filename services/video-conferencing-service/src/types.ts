@@ -25,7 +25,10 @@ export interface VideoChatInterface {
    * @param options: object with type @interface SessionOptions
    * @returns Promise when resolved returns object of type @interface SessionResponse
    */
-  getToken(sessionId: string, options: SessionOptions): Promise<SessionResponse>;
+  getToken(
+    sessionId: string,
+    options: SessionOptions,
+  ): Promise<SessionResponse>;
   /**
    * @function getArchives get a specific recorded/composed archive or a list of archives
    * @param archiveId: optional archive id of type number

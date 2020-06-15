@@ -123,9 +123,8 @@ export interface VonageSessionWebhookPayload {
     connection: VonageConnection;
     createdAt: number;
     videoType: string | undefined;
-  }
+  };
 }
-
 
 export interface VonageVideoChat extends VideoChatInterface {
   /**
@@ -139,7 +138,10 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @param options: object with type @interface SessionOptions
    * @returns Promise when resolved returns object of type @interface SessionResponse
    */
-  getToken(sessionId: string, options: SessionOptions): Promise<SessionResponse>;
+  getToken(
+    sessionId: string,
+    options: SessionOptions,
+  ): Promise<SessionResponse>;
   /**
    * @function startArchive store vonage/twilio/agora archives in cloud/s3/azure
    *
@@ -172,7 +174,9 @@ export interface VonageVideoChat extends VideoChatInterface {
    * @function setUploadTarget set the upload target
    * @param config of type @interface VonageS3TargetOptions or @interface VonageAzureTargetOptions
    */
-  setUploadTarget(config: VonageS3TargetOptions | VonageAzureTargetOptions): Promise<void>;
+  setUploadTarget(
+    config: VonageS3TargetOptions | VonageAzureTargetOptions,
+  ): Promise<void>;
   /**
    * @function deleteUploadTarget delete the upload target from s3/azure
    */

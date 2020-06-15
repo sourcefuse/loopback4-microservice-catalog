@@ -31,7 +31,7 @@ import {VonageProvider} from './providers/vonage/vonage.provider';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
 import {IVideoChatServiceConfig} from './types';
-import { VonageBindings } from './providers/vonage/keys';
+import {VonageBindings} from './providers/vonage/keys';
 
 export class VideoConfServiceComponent implements Component {
   constructor(

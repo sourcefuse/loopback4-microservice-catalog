@@ -6,7 +6,12 @@ import {
 } from '@loopback/testlab';
 import {VonageProvider, VonageConfig} from '../../../providers/vonage';
 import {AuditLogsRepository} from '../../../repositories';
-import {getVonageMeetingOptions, getVonageSessionOptions, getVonageArchiveList, getVonageArchive} from '../../helpers';
+import {
+  getVonageMeetingOptions,
+  getVonageSessionOptions,
+  getVonageArchiveList,
+  getVonageArchive,
+} from '../../helpers';
 
 describe('VonageProvider (unit)', () => {
   const sessionId = 'dummy-session-id';
@@ -21,16 +26,16 @@ describe('VonageProvider (unit)', () => {
   afterEach(() => sinon.restore());
 
   it('gives an error when vonage API key and secret are not set', async () => {
-      config = {
-          apiKey: '',
-          apiSecret: '',
-          timeToStart: 30,
-      }; 
+    config = {
+      apiKey: '',
+      apiSecret: '',
+      timeToStart: 30,
+    };
 
     try {
       new VonageProvider(config, auditLogRepo);
     } catch (err) {
-      if(err) {
+      if (err) {
         return expect(err).instanceOf(Error);
       } else {
         throw new Error('This must throw.');
@@ -85,7 +90,6 @@ describe('VonageProvider (unit)', () => {
     });
 
     it('returns an error if vonage fails to create session', async () => {
-      
       sinon
         .stub(vonageProvider.VonageService, 'createSession')
         .callsArgWith(1, vonageFailureError);
@@ -222,7 +226,7 @@ describe('VonageProvider (unit)', () => {
       apiKey: 'dummy',
       apiSecret: 'dummy',
       timeToStart: 30,
-    }; 
+    };
 
     auditLogRepo = createStubInstance(AuditLogsRepository);
 

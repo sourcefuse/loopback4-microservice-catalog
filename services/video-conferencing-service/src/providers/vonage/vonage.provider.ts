@@ -1,23 +1,35 @@
 import {Provider, inject, config} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {VonageEnums} from '../../enums/video-chat.enum';
-import {ArchiveResponse, ArchiveResponseList, SessionResponse} from '../../types';
-import {VonageVideoChat, VonageConfig, VonageMeetingOptions, VonageMeetingResponse, VonageSessionOptions, VonageS3TargetOptions, VonageAzureTargetOptions} from './types';
+import {
+  ArchiveResponse,
+  ArchiveResponseList,
+  SessionResponse,
+} from '../../types';
+import {
+  VonageVideoChat,
+  VonageConfig,
+  VonageMeetingOptions,
+  VonageMeetingResponse,
+  VonageSessionOptions,
+  VonageS3TargetOptions,
+  VonageAzureTargetOptions,
+} from './types';
 import OpenTok from 'opentok';
 import axios from 'axios';
-import { repository } from '@loopback/repository';
-import { AuditLogsRepository } from '../../repositories';
-import { VonageBindings } from './keys';
-import { promisify } from 'util';
+import {repository} from '@loopback/repository';
+import {AuditLogsRepository} from '../../repositories';
+import {VonageBindings} from './keys';
+import {promisify} from 'util';
 import moment from 'moment';
-import { sign } from 'jsonwebtoken';
+import {sign} from 'jsonwebtoken';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
     @inject(VonageBindings.config)
     private readonly vonageConfig: VonageConfig,
     @repository(AuditLogsRepository)
-    private readonly auditLogRepository: AuditLogsRepository
+    private readonly auditLogRepository: AuditLogsRepository,
   ) {
     const {apiKey, apiSecret} = vonageConfig;
     if (!(apiKey && apiSecret)) {
@@ -34,13 +46,16 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         meetingOptions: VonageMeetingOptions,
       ): Promise<VonageMeetingResponse> => {
         let mediaMode: VonageEnums.MediaMode = VonageEnums.MediaMode.Routed;
-        let archiveMode: VonageEnums.ArchiveMode = VonageEnums.ArchiveMode.Manual;
+        let archiveMode: VonageEnums.ArchiveMode =
+          VonageEnums.ArchiveMode.Manual;
         let sessionId: string;
 
-        const { endToEndEncryption, enableArchiving } = meetingOptions;
+        const {endToEndEncryption, enableArchiving} = meetingOptions;
 
         if (endToEndEncryption && enableArchiving) {
-          throw new HttpErrors.BadRequest('End to end Encryption along with archiving is not possible');
+          throw new HttpErrors.BadRequest(
+            'End to end Encryption along with archiving is not possible',
+          );
         } else if (endToEndEncryption) {
           mediaMode = VonageEnums.MediaMode.Relayed;
         } else if (enableArchiving) {
@@ -63,7 +78,9 @@ export class VonageProvider implements Provider<VonageVideoChat> {
                   reject(err);
                 }
                 if (!session) {
-                  throw new HttpErrors.InternalServerError('Error creating session');
+                  throw new HttpErrors.InternalServerError(
+                    'Error creating session',
+                  );
                 } else {
                   resolve(session);
                 }
@@ -99,100 +116,108 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           throw new HttpErrors.InternalServerError('Error creating session');
         }
       },
-      getToken: async (sessionId: string, options: VonageSessionOptions): Promise<SessionResponse> => {
+      getToken: async (
+        sessionId: string,
+        options: VonageSessionOptions,
+      ): Promise<SessionResponse> => {
         try {
-        const { expireTime, role, data } = options;
-        const requestPayload: OpenTok.TokenOptions = {
-          expireTime: expireTime ? moment(expireTime).unix() : undefined,
-          role: role ?? undefined,
-          data: data ?? undefined,
-        };
-        const token = this.VonageService.generateToken(sessionId, requestPayload);
-
-        this.auditLogRepository.create({
-          action: 'session',
-          actionType: 'get-token',
-          before: {
+          const {expireTime, role, data} = options;
+          const requestPayload: OpenTok.TokenOptions = {
+            expireTime: expireTime ? moment(expireTime).unix() : undefined,
+            role: role ?? undefined,
+            data: data ?? undefined,
+          };
+          const token = this.VonageService.generateToken(
             sessionId,
-            ...options,
-          },
-          after: {
+            requestPayload,
+          );
+
+          this.auditLogRepository.create({
+            action: 'session',
+            actionType: 'get-token',
+            before: {
+              sessionId,
+              ...options,
+            },
+            after: {
+              token,
+            },
+            actedAt: moment().format(),
+            actedEntity: token,
+          });
+          return {
+            sessionId,
             token,
-          },
-          actedAt: moment().format(),
-          actedEntity: token,
-        });
-        return {
-          sessionId,
-          token,
-        };
-
-      } catch (error) {
-        this.auditLogRepository.create({
-          action: 'session',
-          actionType: 'get-token',
-          before: {
-            sessionId,
-            ...options,
-          },
-          after: {
-            errorStack: error.stack,
-          },
-          actedAt: moment().format(),
-        });
-        throw new HttpErrors.InternalServerError('Error occured while generating Token');
-      }
-
+          };
+        } catch (error) {
+          this.auditLogRepository.create({
+            action: 'session',
+            actionType: 'get-token',
+            before: {
+              sessionId,
+              ...options,
+            },
+            after: {
+              errorStack: error.stack,
+            },
+            actedAt: moment().format(),
+          });
+          throw new HttpErrors.InternalServerError(
+            'Error occured while generating Token',
+          );
+        }
       },
 
       getArchives: async (
-        archiveId: string | null
+        archiveId: string | null,
       ): Promise<ArchiveResponse | ArchiveResponseList> => {
         try {
-        const getArchive = promisify(this.VonageService.getArchive);
-        const listArchives = promisify(this.VonageService.listArchives);
-        let archiveResult: ArchiveResponse | ArchiveResponseList;
-        if (archiveId) {
-          const archive = await getArchive(archiveId);
-          archiveResult = {
-            name: archive?.name,
-            sessionId: archive?.sessionId as string,
-            metaData: (archive ?? null) as object,
-          };
-        } else { 
-        let archives = await listArchives({});
-        archives = archives?.length ? archives: [];
-        const items = [];
-        for (const archive of archives) {
-            items.push({
-              name: archive.name,
-              sessionId: archive.sessionId as string,
-              metaData: archive as object,
-            });
+          const getArchive = promisify(this.VonageService.getArchive);
+          const listArchives = promisify(this.VonageService.listArchives);
+          let archiveResult: ArchiveResponse | ArchiveResponseList;
+          if (archiveId) {
+            const archive = await getArchive(archiveId);
+            archiveResult = {
+              name: archive?.name,
+              sessionId: archive?.sessionId as string,
+              metaData: (archive ?? null) as object,
+            };
+          } else {
+            let archives = await listArchives({});
+            archives = archives?.length ? archives : [];
+            const items = [];
+            for (const archive of archives) {
+              items.push({
+                name: archive.name,
+                sessionId: archive.sessionId as string,
+                metaData: archive as object,
+              });
+            }
+            archiveResult = {
+              count: archives?.length ?? 0,
+              items,
+            };
+          }
+          this.auditLogRepository.create({
+            action: 'archive',
+            actionType: archiveId ? 'getArchive' : 'getArchives',
+            before: archiveId ? {archiveId} : {},
+            after: archiveResult,
+            actedAt: moment().format(),
+          });
+          return archiveResult;
+        } catch (error) {
+          this.auditLogRepository.create({
+            action: 'archive',
+            actionType: archiveId ? 'getArchive' : 'getArchives',
+            before: archiveId ? {archiveId} : {},
+            after: {errorStack: error.stack},
+            actedAt: moment().format(),
+          });
+          throw new HttpErrors.InternalServerError(
+            'Error occured while fetching archive(s)',
+          );
         }
-        archiveResult = {
-          count: archives?.length ?? 0,
-          items,
-        };
-       }
-       this.auditLogRepository.create({
-          action: 'archive',
-          actionType: archiveId ? 'getArchive' : 'getArchives',
-          before: archiveId ? { archiveId } : {},
-          after: archiveResult,
-          actedAt: moment().format(),
-       });
-       return archiveResult;
-      } catch (error) {
-        this.auditLogRepository.create({
-          action: 'archive',
-          actionType: archiveId ? 'getArchive' : 'getArchives',
-          before: archiveId ? { archiveId } : {},
-          after: { errorStack: error.stack },
-          actedAt: moment().format(),
-       });
-       throw new HttpErrors.InternalServerError('Error occured while fetching archive(s)');
-      }
       },
       // TODO: startArchive and stopArchive needs to be uncommented/modified later
       // startArchive: async (sessionId: string, archiveOptions: ArchiveOptions): Promise<Archive | undefined> => {
@@ -213,7 +238,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             before: {
               archiveId,
             },
-            after: { response: 'Archive Deletion Successful!' },
+            after: {response: 'Archive Deletion Successful!'},
             actedAt: moment().format(),
           });
         } catch (error) {
@@ -223,110 +248,140 @@ export class VonageProvider implements Provider<VonageVideoChat> {
             before: {
               archiveId,
             },
-            after: { errorStack: error.stack },
+            after: {errorStack: error.stack},
             actedAt: moment().format(),
           });
-          throw new HttpErrors.InternalServerError('Error occured while deleting an archive');
+          throw new HttpErrors.InternalServerError(
+            'Error occured while deleting an archive',
+          );
         }
       },
-      setUploadTarget: async (storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions): Promise<void> => {
+      setUploadTarget: async (
+        storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions,
+      ): Promise<void> => {
         const auditLogAction = 'archive';
         const auditLogActionType = 'set-storage-target';
         try {
-        const { apiKey, apiSecret } = this.vonageConfig;
-        const ttl = 200;
-        const jwtPayload = {
+          const {apiKey, apiSecret} = this.vonageConfig;
+          const ttl = 200;
+          const jwtPayload = {
             iss: apiKey,
             ist: 'project',
             iat: moment().unix(),
-            exp: moment().add(ttl, 'seconds').unix(),
-        };
+            exp: moment()
+              .add(ttl, 'seconds')
+              .unix(),
+          };
 
-        const token = sign(jwtPayload, apiSecret);
-        let type = '';
-        const credentials = {};
-        const { accessKey , secretKey, bucket, endpoint } = storageConfig as VonageS3TargetOptions;
-        const { accountName, accountKey, container, domain } = storageConfig as VonageAzureTargetOptions;
-        if (accessKey && secretKey && bucket) {
-          type = 'S3';
-          Object.assign(credentials, {
-            accessKey, secretKey, bucket, endpoint,
-          });
-        }
-        if (accountName && accountKey && container) {
-          type = 'Azure';
-          Object.assign(credentials, {
-            accountName, accountKey, container, domain
-          });
-        }
-        await axios({
-          url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
-          method: 'put',
-          data: {
-           type,
-           config: credentials,
-           fallback: storageConfig.fallback,
-          },
-          headers: {
-            'X-OPENTOK-AUTH': token
+          const token = sign(jwtPayload, apiSecret);
+          let type = '';
+          const credentials = {};
+          const {
+            accessKey,
+            secretKey,
+            bucket,
+            endpoint,
+          } = storageConfig as VonageS3TargetOptions;
+          const {
+            accountName,
+            accountKey,
+            container,
+            domain,
+          } = storageConfig as VonageAzureTargetOptions;
+          if (accessKey && secretKey && bucket) {
+            type = 'S3';
+            Object.assign(credentials, {
+              accessKey,
+              secretKey,
+              bucket,
+              endpoint,
+            });
           }
-        });
-        this.auditLogRepository.create({
-          action: auditLogAction,
-          actionType: auditLogActionType,
-          before: config,
-          after: { response: 'Storage Target Success' },
-          actedAt: moment().format(),
-        });
-      } catch (error) {
-        this.auditLogRepository.create({
-          action: auditLogAction,
-          actionType: auditLogActionType,
-          before: config,
-          after: { errorStack: error.stack },
-          actedAt: moment().format(),
-        });
-        throw new HttpErrors.InternalServerError('Error Occured while setting storage target');    
-      }
-    },
-    deleteUploadTarget: async(): Promise<void> => {
-      const auditLogAction = 'archive';
-      const auditLogActionType = 'set-storage-target';
-      try {
-        const { apiKey, apiSecret } = this.vonageConfig;
-        const ttl = 200;
-        const jwtPayload = {
-          iss: apiKey,
-          ist: 'project',
-          iat: moment().unix(),
-          exp: moment().add(ttl, 'seconds').unix(),
-        };
-      const token = sign(jwtPayload, apiSecret);
-      await axios({
-        url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
-        method: 'delete',
-        headers: {
-          'X-OPENTOK-AUTH': token
+          if (accountName && accountKey && container) {
+            type = 'Azure';
+            Object.assign(credentials, {
+              accountName,
+              accountKey,
+              container,
+              domain,
+            });
+          }
+          await axios({
+            url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
+            method: 'put',
+            data: {
+              type,
+              config: credentials,
+              fallback: storageConfig.fallback,
+            },
+            headers: {
+              'X-OPENTOK-AUTH': token,
+            },
+          });
+          this.auditLogRepository.create({
+            action: auditLogAction,
+            actionType: auditLogActionType,
+            before: config,
+            after: {response: 'Storage Target Success'},
+            actedAt: moment().format(),
+          });
+        } catch (error) {
+          this.auditLogRepository.create({
+            action: auditLogAction,
+            actionType: auditLogActionType,
+            before: config,
+            after: {errorStack: error.stack},
+            actedAt: moment().format(),
+          });
+          throw new HttpErrors.InternalServerError(
+            'Error Occured while setting storage target',
+          );
         }
-      });
-      this.auditLogRepository.create({
-        action: auditLogAction,
-        actionType: auditLogActionType,
-        before: config,
-        after: { response: 'successfully removed storage target from s3/azure ' },
-        actedAt: moment().format(),
-      });
-     } catch (error) {
-       this.auditLogRepository.create({
-         action: auditLogAction,
-         actionType: auditLogActionType,
-         before: {},
-         after: { errorStack: error.stack },
-         actedAt: moment().format(),
-       });
-       throw new HttpErrors.InternalServerError('Error occured while removing s3/azure storage target');
-     } 
-    }
+      },
+      deleteUploadTarget: async (): Promise<void> => {
+        const auditLogAction = 'archive';
+        const auditLogActionType = 'set-storage-target';
+        try {
+          const {apiKey, apiSecret} = this.vonageConfig;
+          const ttl = 200;
+          const jwtPayload = {
+            iss: apiKey,
+            ist: 'project',
+            iat: moment().unix(),
+            exp: moment()
+              .add(ttl, 'seconds')
+              .unix(),
+          };
+          const token = sign(jwtPayload, apiSecret);
+          await axios({
+            url: `https://api.opentok.com/v2/project/${process.env.TOKBOX_API_KEY}/archive/storage`,
+            method: 'delete',
+            headers: {
+              'X-OPENTOK-AUTH': token,
+            },
+          });
+          this.auditLogRepository.create({
+            action: auditLogAction,
+            actionType: auditLogActionType,
+            before: config,
+            after: {
+              response: 'successfully removed storage target from s3/azure ',
+            },
+            actedAt: moment().format(),
+          });
+        } catch (error) {
+          this.auditLogRepository.create({
+            action: auditLogAction,
+            actionType: auditLogActionType,
+            before: {},
+            after: {errorStack: error.stack},
+            actedAt: moment().format(),
+          });
+          throw new HttpErrors.InternalServerError(
+            'Error occured while removing s3/azure storage target',
+          );
+        }
+      },
+    };
   }
-};
 }

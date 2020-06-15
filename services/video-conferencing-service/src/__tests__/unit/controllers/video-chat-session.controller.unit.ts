@@ -164,10 +164,9 @@ describe('Session APIs', () => {
           scheduleTime: getDatePastThreshold(timeToStart),
         }),
       );
-      const error = await controller.getMeetingToken(
-        sessionOptions,
-        meetingLinkId,
-      ).catch(err => err);
+      const error = await controller
+        .getMeetingToken(sessionOptions, meetingLinkId)
+        .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.called(findOne);
       sinon.assert.calledOnce(auidtLogCreate);
@@ -206,10 +205,9 @@ describe('Session APIs', () => {
       const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves(getVideoChatSession({endTime: pastDate}));
-      const error = await controller.getMeetingToken(
-        sessionOptions,
-        meetingLinkId,
-      ).catch(err => err);
+      const error = await controller
+        .getMeetingToken(sessionOptions, meetingLinkId)
+        .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.calledOnce(findOne);
       sinon.assert.calledOnce(auidtLogCreate);
@@ -283,11 +281,13 @@ describe('Session APIs', () => {
 
     it('updates the attendee for event connectionCreated when attendee re-connects', async () => {
       setUp({});
-      const webhookPayload = getWebhookPayload({"connection": {
-        "id": "d053fcc8-c681-41d5-8ec2-7a9e1434a21f",
-        "createdAt": 2470257688144,
-        "data": "TOKENDATA"
-      }});
+      const webhookPayload = getWebhookPayload({
+        connection: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 2470257688144,
+          data: 'TOKENDATA',
+        },
+      });
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
       const updateById = sessionAttendeesRepo.stubs.updateById;
@@ -297,9 +297,12 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
-    it('audit logs for any other event', async() => {
+    it('audit logs for any other event', async () => {
       setUp({});
-      const webhookPayload = getWebhookPayload({"event": "connectionDestroyed", "reason": "clientDisconnected"});
+      const webhookPayload = getWebhookPayload({
+        event: 'connectionDestroyed',
+        reason: 'clientDisconnected',
+      });
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(auidtLogCreate);
     });
@@ -310,7 +313,7 @@ describe('Session APIs', () => {
       apiKey: 'dummy',
       apiSecret: 'dummy',
       timeToStart: 30,
-    }; 
+    };
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
 

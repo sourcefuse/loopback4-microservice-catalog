@@ -8,7 +8,11 @@ import {
   MeetingResponse,
 } from '../types';
 import {VideoChatSession, SessionAttendees} from '../models';
-import {VonageMeetingOptions, VonageSessionOptions, VonageSessionWebhookPayload} from '../providers/vonage';
+import {
+  VonageMeetingOptions,
+  VonageSessionOptions,
+  VonageSessionWebhookPayload,
+} from '../providers/vonage';
 import {VonageEnums} from '../enums/video-chat.enum';
 import moment from 'moment';
 import {sinon} from '@loopback/testlab';
@@ -59,7 +63,7 @@ export function setUpMockProvider(providerStub: Partial<VideoChatInterface>) {
       getArchives: sinon.stub().returnsThis(),
       deleteArchive: sinon.stub().returnsThis(),
       setUploadTarget: sinon.stub().returnsThis(),
-      deleteUploadTarget: sinon.stub().returnsThis()
+      deleteUploadTarget: sinon.stub().returnsThis(),
     },
     providerStub,
   );
@@ -172,7 +176,8 @@ export function getVonageArchive() {
 }
 
 export function getVonageArchiveList() {
-  return [getVonageArchive(),
+  return [
+    getVonageArchive(),
     {
       createdAt: 4321,
       duration: '2',
@@ -191,29 +196,31 @@ export function getVonageArchiveList() {
   ];
 }
 
-export function getWebhookPayload(vonageSessionWebhookPayload: Partial<VonageSessionWebhookPayload>) {
+export function getWebhookPayload(
+  vonageSessionWebhookPayload: Partial<VonageSessionWebhookPayload>,
+) {
   return Object.assign(
     {
-      "sessionId": sessionId,
-      "projectId": "123456",
-      "event": "connectionCreated",
-      "timestamp": 1470257688309,
-      "connection": {
-          "id": "c053fcc8-c681-41d5-8ec2-7a9e1434a21e",
-          "createdAt": 1470257688143,
-          "data": "TOKENDATA"
-      }
+      sessionId: sessionId,
+      projectId: '123456',
+      event: 'connectionCreated',
+      timestamp: 1470257688309,
+      connection: {
+        id: 'c053fcc8-c681-41d5-8ec2-7a9e1434a21e',
+        createdAt: 1470257688143,
+        data: 'TOKENDATA',
+      },
     },
-    vonageSessionWebhookPayload
+    vonageSessionWebhookPayload,
   );
 }
 
 export function getSessionAttendeesModel() {
   const data = {
     sessionId: sessionId,
-    attendee: "TOKENDATA",
+    attendee: 'TOKENDATA',
     createdOn: new Date(),
-    isDeleted: false
+    isDeleted: false,
   };
   return new SessionAttendees(data);
 }

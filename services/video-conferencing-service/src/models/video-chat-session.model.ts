@@ -1,5 +1,8 @@
 import {model, property} from '@loopback/repository';
-import {UserModifiableEntity, ExternalIdentifierEnabledEntity} from '@sourceloop/core';
+import {
+  UserModifiableEntity,
+  ExternalIdentifierEnabledEntity,
+} from '@sourceloop/core';
 
 @model({
   name: 'video_session_details',

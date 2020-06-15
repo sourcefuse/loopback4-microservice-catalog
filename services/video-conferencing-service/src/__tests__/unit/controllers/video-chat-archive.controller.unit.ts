@@ -13,7 +13,10 @@ import {
   getArchiveResponseList,
   getVideoChatSession,
 } from '../../helpers';
-import {AuditLogsRepository, VideoChatSessionRepository} from '../../../repositories';
+import {
+  AuditLogsRepository,
+  VideoChatSessionRepository,
+} from '../../../repositories';
 
 describe('Archive APIs', () => {
   const archiveId = 'dummy-archive-id';
@@ -112,7 +115,7 @@ describe('Archive APIs', () => {
         accountName: '1234',
         accountKey: '1234',
         container: 'dummy-container',
-        domain: 'dummy-domain'
+        domain: 'dummy-domain',
       };
       await controller.setUploadTarget(azureOptions);
     });
@@ -124,7 +127,9 @@ describe('Archive APIs', () => {
         region: 'dummy-region',
         bucket: 'dummy-bucket',
       };
-      const error = await controller.setUploadTarget(S3Options).catch(err => err);
+      const error = await controller
+        .setUploadTarget(S3Options)
+        .catch(err => err);
       expect(error).instanceOf(Error);
     });
   });
@@ -141,7 +146,7 @@ describe('Archive APIs', () => {
       apiKey: 'dummy',
       apiSecret: 'dummy',
       timeToStart: 30,
-    }; 
+    };
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
     auditLogRepo = createStubInstance(AuditLogsRepository);
     auidtLogCreate = auditLogRepo.stubs.create;
@@ -151,6 +156,10 @@ describe('Archive APIs', () => {
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
     videoChatProvider = new VonageProvider(config, auditLogRepo).value();
 
-    controller = new VideoChatArchiveController(videoChatProvider, videoChatSessionRepo, auditLogRepo);
+    controller = new VideoChatArchiveController(
+      videoChatProvider,
+      videoChatSessionRepo,
+      auditLogRepo,
+    );
   }
 });
