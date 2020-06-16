@@ -20,8 +20,8 @@ Various features of Video Conferncing Services:
 
 ## Install //TODO
 
-
 ```sh
+npm i @sourceloop/video-conferencing-service
 ```
 
 ## Usage - integrating with main app
@@ -32,12 +32,14 @@ Add component to application.
 
 ```ts
 ....
-export class VideoConfServiceComponent extends BootMixin(
+import { VideoConfServiceComponent } from '@sourceloop/video-conferencing-service';
+
+export class ClientComponent extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     ....
-    this.application.component(CoreComponent);
+    this.component(VideoConfServiceComponent);
     ....
   }
 }
