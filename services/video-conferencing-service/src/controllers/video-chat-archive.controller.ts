@@ -1,13 +1,17 @@
 import {inject} from '@loopback/core';
-import {del, get, param, HttpErrors} from '@loopback/rest';
+import {del, get, param, HttpErrors, put, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {VideoChatInterface} from '../types';
+import {
+  VideoChatInterface,
+  S3TargetOptions,
+  AzureTargetOptions,
+} from '../types';
 import {VideoChatBindings} from '../keys';
-import { STATUS_CODE, CONTENT_TYPE } from '@sourceloop/core';
-import { repository } from '@loopback/repository';
-import { VideoChatSessionRepository, AuditLogsRepository } from '../repositories';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {repository} from '@loopback/repository';
+import {VideoChatSessionRepository, AuditLogsRepository} from '../repositories';
 import moment from 'moment';
 
 export class VideoChatArchiveController {
@@ -39,16 +43,16 @@ export class VideoChatArchiveController {
     const archiveExists = await this.videoChatSessionRepository.findOne({
       where: {
         archiveId: archiveId,
-      }
+      },
     });
     if (!archiveExists) {
       const errorMessage = 'Archive Not Found';
       this.auditLogRepository.create({
         action: 'archive',
         actionType: 'getArchive',
-        before: { archiveId },
-        after: { errorMessage: errorMessage},
-        actedAt: moment().format(), 
+        before: {archiveId},
+        after: {errorMessage: errorMessage},
+        actedAt: moment().format(),
       });
       throw new HttpErrors.NotFound(errorMessage);
     }
@@ -95,19 +99,69 @@ export class VideoChatArchiveController {
     const archiveExists = await this.videoChatSessionRepository.findOne({
       where: {
         archiveId: archiveId,
-      }
+      },
     });
     if (!archiveExists) {
       const errorMessage = 'Archive Not Found';
       this.auditLogRepository.create({
         action: 'archive',
         actionType: 'getArchive',
-        before: { archiveId },
-        after: { errorMessage: errorMessage},
-        actedAt: moment().format(), 
+        before: {archiveId},
+        after: {errorMessage: errorMessage},
+        actedAt: moment().format(),
       });
       throw new HttpErrors.NotFound(errorMessage);
     }
     return this.videoChatProvider.deleteArchive(archiveId);
   }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.SetUploadTarget])
+  @put('/archives/storage-target', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.TEXT]: {
+            schema: {
+              type: 'text',
+            },
+          },
+        },
+      },
+    },
+  })
+  async setUploadTarget(
+    @requestBody() body: S3TargetOptions | AzureTargetOptions,
+  ): Promise<void> {
+    const {accessKey, secretKey, bucket} = body as S3TargetOptions;
+    const {accountName, accountKey, container} = body as AzureTargetOptions;
+    if (
+      !(accessKey && secretKey && bucket) &&
+      !(accountName && accountKey && container)
+    ) {
+      throw new HttpErrors.BadRequest(
+        'Missing s3/azure credentials. Please check request body',
+      );
+    }
+    await this.videoChatProvider.setUploadTarget(body);
+  }
+  // TO-DO: will do modifications later
+  // @authenticate(STRATEGY.BEARER)
+  // @authorize([PermissionKeys.SetUploadTarget])
+  // @del('/archives/storage-target', {
+  //   responses: {
+  //     [STATUS_CODE.OK]: {
+  //       content: {
+  //         [CONTENT_TYPE.TEXT]: {
+  //           schema: {
+  //             type: 'text',
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // })
+  // async deleteCustomStorageTarget() {
+  //   return this.videoChatProvider.deleteUploadTarget();
+  // }
 }

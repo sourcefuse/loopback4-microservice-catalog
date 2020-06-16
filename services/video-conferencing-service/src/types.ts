@@ -25,7 +25,10 @@ export interface VideoChatInterface {
    * @param options: object with type @interface SessionOptions
    * @returns Promise when resolved returns object of type @interface SessionResponse
    */
-  getToken(sessionId: string, options: SessionOptions): Promise<SessionResponse>;
+  getToken(
+    sessionId: string,
+    options: SessionOptions,
+  ): Promise<SessionResponse>;
   /**
    * @function getArchives get a specific recorded/composed archive or a list of archives
    * @param archiveId: optional archive id of type number
@@ -40,6 +43,15 @@ export interface VideoChatInterface {
    * @returns Promise then returns a successful message for deleting if promise is resolved
    */
   deleteArchive(archiveId: string): Promise<void>;
+  /**
+   * @function setUploadTarget set the upload target
+   * @param config of type @interface S3TargetOptions or @interface AzureTargetOptions
+   */
+  setUploadTarget(config: S3TargetOptions | AzureTargetOptions): Promise<void>;
+  // /**
+  //  * @function deleteUploadTarget delete the upload target from s3/azure
+  //  */
+  // deleteUploadTarget(): Promise<void>;
 }
 
 /**

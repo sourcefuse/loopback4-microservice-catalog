@@ -1,10 +1,9 @@
 import {Entity, model, property} from '@loopback/repository';
 import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
-
 @model({
-  name: 'audit_logs',
+  name: 'session_attendees',
 })
-export class AuditLogs extends Entity
+export class SessionAttendees extends Entity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'number',
@@ -12,65 +11,46 @@ export class AuditLogs extends Entity
     generated: true,
   })
   id?: number;
-
   @property({
     type: 'string',
     required: true,
+    name: 'session_id',
   })
-  action: string;
-
+  sessionId: string;
   @property({
     type: 'string',
     required: true,
-    name: 'action_type',
+    name: 'attendee',
   })
-  actionType: string;
-
+  attendee: string;
   @property({
-    type: 'string',
+    type: 'Date',
+    required: true,
+    name: 'created_on',
   })
-  actor?: string;
-
+  createdOn: Date;
   @property({
-    type: 'date',
-    name: 'acted_at',
+    type: 'Date',
+    name: 'modified_on',
   })
-  actedAt?: string;
-
+  modifiedOn?: Date;
   @property({
-    type: 'string',
-    name: 'acted_entity',
+    type: 'boolean',
+    name: 'is_deleted',
+    required: true,
   })
-  actedEntity: string;
-
-  @property({
-    type: 'object',
-  })
-  before?: object;
-
-  @property({
-    type: 'object',
-  })
-  after?: object;
-
-  @property({
-    type: 'string',
-  })
-  reference?: string;
-
+  isDeleted: boolean;
   @property({
     type: 'string',
     name: 'ext_id',
   })
   extId?: string;
-
   @property({
     type: 'object',
     name: 'ext_metadata',
   })
   extMetadata?: object;
-
-  constructor(data?: Partial<AuditLogs>) {
+  constructor(data?: Partial<SessionAttendees>) {
     super(data);
   }
 }

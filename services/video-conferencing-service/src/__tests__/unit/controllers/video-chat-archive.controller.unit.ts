@@ -1,19 +1,23 @@
-import {VideoChatInterface} from '../../../types';
 import {
-  sinon,
-  expect,
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
+  expect,
+  sinon,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 import {VideoChatArchiveController} from '../../../controllers';
-import {VonageProvider, VonageConfig} from '../../../providers/vonage';
+import {VonageConfig, VonageProvider} from '../../../providers/vonage';
 import {
-  setUpMockProvider,
+  AuditLogsRepository,
+  VideoChatSessionRepository,
+} from '../../../repositories';
+import {VonageService} from '../../../services/vonage.service';
+import {VideoChatInterface} from '../../../types';
+import {
   getArchiveResponse,
   getArchiveResponseList,
   getVideoChatSession,
+  setUpMockProvider,
 } from '../../helpers';
-import {AuditLogsRepository, VideoChatSessionRepository} from '../../../repositories';
 
 describe('Archive APIs', () => {
   const archiveId = 'dummy-archive-id';
@@ -22,6 +26,7 @@ describe('Archive APIs', () => {
   let auidtLogCreate: sinon.SinonStub;
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let videoChatProvider: VideoChatInterface;
+  let vonageService: VonageService;
   let config: VonageConfig;
   let controller: VideoChatArchiveController;
 
@@ -91,8 +96,43 @@ describe('Archive APIs', () => {
         .deleteArchive(invalidArchiveId)
         .catch(err => err);
       expect(error).instanceOf(Error);
-            sinon.assert.calledWith(findOne, {where: {archiveId: invalidArchiveId}});
+      sinon.assert.calledWith(findOne, {where: {archiveId: invalidArchiveId}});
       sinon.assert.calledOnce(auidtLogCreate);
+    });
+  });
+
+  describe('PUT /archives/storage-target', () => {
+    it('sets the upload target with S3 target options', async () => {
+      const S3Options = {
+        accessKey: '1234',
+        secretKey: '****',
+        region: 'dummy-region',
+        bucket: 'dummy-bucket',
+      };
+      await controller.setUploadTarget(S3Options);
+    });
+
+    it('sets the upload target with Azure target options', async () => {
+      const azureOptions = {
+        accountName: '1234',
+        accountKey: '1234',
+        container: 'dummy-container',
+        domain: 'dummy-domain',
+      };
+      await controller.setUploadTarget(azureOptions);
+    });
+
+    it('returns an error if options are null', async () => {
+      const S3Options = {
+        accessKey: '',
+        secretKey: '',
+        region: 'dummy-region',
+        bucket: 'dummy-bucket',
+      };
+      const error = await controller
+        .setUploadTarget(S3Options)
+        .catch(err => err);
+      expect(error).instanceOf(Error);
     });
   });
 
@@ -101,7 +141,7 @@ describe('Archive APIs', () => {
       apiKey: 'dummy',
       apiSecret: 'dummy',
       timeToStart: 30,
-    }; 
+    };
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
     auditLogRepo = createStubInstance(AuditLogsRepository);
     auidtLogCreate = auditLogRepo.stubs.create;
@@ -109,8 +149,13 @@ describe('Archive APIs', () => {
 
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    videoChatProvider = new VonageProvider(config, auditLogRepo).value();
+    vonageService = new VonageService(config);
+    videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
 
-    controller = new VideoChatArchiveController(videoChatProvider, videoChatSessionRepo, auditLogRepo);
+    controller = new VideoChatArchiveController(
+      videoChatProvider,
+      videoChatSessionRepo,
+      auditLogRepo,
+    );
   }
 });

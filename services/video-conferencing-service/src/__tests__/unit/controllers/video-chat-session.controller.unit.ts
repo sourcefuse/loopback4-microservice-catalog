@@ -5,24 +5,28 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
+import {VideoChatSessionController} from '../../../controllers';
+import {VonageConfig, VonageProvider} from '../../../providers/vonage';
+import {
+  AuditLogsRepository,
+  SessionAttendeesRepository,
+  VideoChatSessionRepository,
+} from '../../../repositories';
+import {VonageService} from '../../../services/vonage.service';
+import {VideoChatInterface} from '../../../types';
 import {
   getDate,
-  getSessionOptions,
-  getVideoChatSession,
-  getMeetingResponse,
-  getMeetingOptions,
-  getSessionResponse,
   getDatePastThreshold,
-  setUpMockProvider,
   getFutureDate,
+  getMeetingOptions,
+  getMeetingResponse,
+  getSessionAttendeesModel,
+  getSessionOptions,
+  getSessionResponse,
+  getVideoChatSession,
+  getWebhookPayload,
+  setUpMockProvider,
 } from '../../helpers';
-import {VideoChatSessionController} from '../../../controllers';
-import {VonageProvider, VonageConfig} from '../../../providers/vonage';
-import {
-  VideoChatSessionRepository,
-  AuditLogsRepository,
-} from '../../../repositories';
-import {VideoChatInterface} from '../../../types';
 
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
@@ -32,10 +36,12 @@ describe('Session APIs', () => {
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
   let auidtLogCreate: sinon.SinonStub;
+  let sessionAttendeesRepo: StubbedInstanceWithSinonAccessor<SessionAttendeesRepository>;
   let config: VonageConfig;
 
   let videoChatProvider: VideoChatInterface;
   let controller: VideoChatSessionController;
+  let vonageService: VonageService;
 
   afterEach(() => sinon.restore());
 
@@ -160,10 +166,9 @@ describe('Session APIs', () => {
           scheduleTime: getDatePastThreshold(timeToStart),
         }),
       );
-      const error = await controller.getMeetingToken(
-        sessionOptions,
-        meetingLinkId,
-      ).catch(err => err);
+      const error = await controller
+        .getMeetingToken(sessionOptions, meetingLinkId)
+        .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.called(findOne);
       sinon.assert.calledOnce(auidtLogCreate);
@@ -199,13 +204,12 @@ describe('Session APIs', () => {
       setUp({
         getToken: sinon.stub().returns(getSessionResponse({})),
       });
-      const sessionOptions = getSessionOptions(getVideoChatSession({endTime: pastDate}));
+      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
-      findOne.resolves();
-      const error = await controller.getMeetingToken(
-        sessionOptions,
-        meetingLinkId,
-      ).catch(err => err);
+      findOne.resolves(getVideoChatSession({endTime: pastDate}));
+      const error = await controller
+        .getMeetingToken(sessionOptions, meetingLinkId)
+        .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.calledOnce(findOne);
       sinon.assert.calledOnce(auidtLogCreate);
@@ -237,7 +241,7 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
-    it('returns an error if meeting link not found or meeting has already ended', async () => {
+    it('returns an error if meeting link not found ', async () => {
       setUp({});
       const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
@@ -249,6 +253,61 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(findOne);
       sinon.assert.calledOnce(auidtLogCreate);
     });
+
+    it('returns an error if meeting has already ended', async () => {
+      setUp({});
+      const sessionOptions = getSessionOptions({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({endTime: pastDate}));
+      const error = await controller
+        .endSession(sessionOptions, meetingLinkId)
+        .catch(err => err);
+      expect(error).instanceof(Error);
+      sinon.assert.calledOnce(findOne);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+  });
+
+  describe('POST /webhooks/session', () => {
+    it('saves the attendee for event connectionCreated when attendee connects', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({});
+      const find = sessionAttendeesRepo.stubs.find;
+      find.resolves();
+      const create = sessionAttendeesRepo.stubs.create;
+      create.resolves();
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(create);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('updates the attendee for event connectionCreated when attendee re-connects', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({
+        connection: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 2470257688144,
+          data: 'TOKENDATA',
+        },
+      });
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('audit logs for any other event', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({
+        event: 'connectionDestroyed',
+        reason: 'clientDisconnected',
+      });
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
   });
 
   function setUp(providerStub: Partial<VideoChatInterface>) {
@@ -256,7 +315,7 @@ describe('Session APIs', () => {
       apiKey: 'dummy',
       apiSecret: 'dummy',
       timeToStart: 30,
-    }; 
+    };
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
 
@@ -264,13 +323,17 @@ describe('Session APIs', () => {
     auidtLogCreate = auditLogRepo.stubs.create;
     auidtLogCreate.resolves();
 
+    sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
+
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    videoChatProvider = new VonageProvider(config, auditLogRepo).value();
+    vonageService = new VonageService(config);
+    videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
     controller = new VideoChatSessionController(
       videoChatSessionRepo,
       videoChatProvider,
       auditLogRepo,
+      sessionAttendeesRepo,
       config,
     );
   }
