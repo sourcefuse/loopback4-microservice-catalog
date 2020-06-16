@@ -40,22 +40,13 @@ export class Calendar extends UserModifiableEntity
 
   @property({
     type: 'string',
-    name: 'owner_display_name',
-    jsonSchema: {
-      maxLength: 100,
-    },
-  })
-  ownerDisplayName?: string;
-
-  @property({
-    type: 'string',
     required: true,
-    name: 'owner_email',
+    name: 'sch_identifier',
     jsonSchema: {
       maxLength: 200,
     },
   })
-  ownerEmail: string;
+  schIdentifier: string;
 
   @property({
     type: 'string',

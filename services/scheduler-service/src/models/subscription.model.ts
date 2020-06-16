@@ -63,8 +63,9 @@ export class Subscription extends UserModifiableEntity
   @property({
     type: 'string',
     required: true,
+    name:'sch_identifier'
   })
-  subscriber: string;
+  schIdentifier: string;
 
   @property({
     type: 'object',
