@@ -1,12 +1,8 @@
-import {
-  Client,
-  expect,
-  createRestAppClient,
-  givenHttpServerConfig,
-} from '@loopback/testlab';
-import {SchedulerApplication} from '../application';
-import {SettingsRepository} from '../../repositories';
+import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
+import {SettingsRepository} from '../../repositories';
+import {SchedulerApplication} from '../application';
+import {setUpApplication} from './helper';
 
 describe('Settings Controller', () => {
   let app: SchedulerApplication;
@@ -18,71 +14,24 @@ describe('Settings Controller', () => {
     username: 'test_user',
     password: pass,
     permissions: [
-      'NotAllowed',
-      'ViewSubscription',
-      'CreateSubscription',
-      'UpdateSubscription',
-      'DeleteSubscription',
-      'ViewEvent',
-      'CreateEvent',
-      'UpdateEvent',
-      'DeleteEvent',
-      'ViewCalendar',
-      'CreateCalendar',
-      'UpdateCalendar',
-      'DeleteCalendar',
-      'ViewAttachment',
-      'CreateAttachment',
-      'UpdateAttachment',
-      'DeleteAttachment',
-      'ViewAttendee',
-      'CreateAttendee',
-      'UpdateAttendee',
-      'DeleteAttendee',
       'ViewSettings',
       'CreateSettings',
       'UpdateSettings',
       'DeleteSettings',
-      'ViewTheme',
-      'CreateTheme',
-      'UpdateTheme',
-      'DeleteTheme',
-      'ViewWorkingHour',
-      'CreateWorkingHour',
-      'UpdateWorkingHour',
-      'DeleteWorkingHour',
     ],
   };
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
-    issuer: 'rashi',
+    issuer: 'sf',
   });
 
-  before(givenRunningApplicationWithCustomConfiguration);
-  after(async () => {
-    await app.stop();
+  before('setupApplication', async () => {
+    ({app, client} = await setUpApplication());
   });
+  after(async () => app.stop());
   before(givenRepositories);
-  before(() => {
-    client = createRestAppClient(app);
-  });
   afterEach(deleteMockData);
-
-  async function givenRunningApplicationWithCustomConfiguration() {
-    app = new SchedulerApplication({
-      rest: givenHttpServerConfig(),
-    });
-
-    await app.boot();
-
-    app.bind('datasources.config.schedulerDb').to({
-      name: 'pgdb',
-      connector: 'memory',
-    });
-    // Start Application
-    await app.start();
-  }
 
   it('gives status 422 when data sent is incorrect', async () => {
     const reqData = {};

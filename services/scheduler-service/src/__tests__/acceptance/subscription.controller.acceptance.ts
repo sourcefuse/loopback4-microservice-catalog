@@ -1,13 +1,9 @@
-import {
-  Client,
-  expect,
-  createRestAppClient,
-  givenHttpServerConfig,
-} from '@loopback/testlab';
+import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {SchedulerApplication} from '../application';
 import {Subscription} from '../../models';
 import {SubscriptionRepository} from '../../repositories';
+import {SchedulerApplication} from '../application';
+import {setUpApplication} from './helper';
 
 describe('Subscription Controller', () => {
   let app: SchedulerApplication;
@@ -28,32 +24,16 @@ describe('Subscription Controller', () => {
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
-    issuer: 'rashi',
+    issuer: 'sf',
   });
-  before(givenRunningApplicationWithCustomConfiguration);
-  after(async () => {
-    await app.stop();
+
+  before('setupApplication', async () => {
+    ({app, client} = await setUpApplication());
   });
+  after(async () => app.stop());
   before(givenRepositories);
-  before(() => {
-    client = createRestAppClient(app);
-  });
   afterEach(deleteMockData);
 
-  async function givenRunningApplicationWithCustomConfiguration() {
-    app = new SchedulerApplication({
-      rest: givenHttpServerConfig(),
-    });
-
-    await app.boot();
-
-    app.bind('datasources.config.schedulerDb').to({
-      name: 'pgdb',
-      connector: 'memory',
-    });
-    // Start Application
-    await app.start();
-  }
   it('gives status 422 when data sent is incorrect', async () => {
     const reqData = {};
     const response = await client
