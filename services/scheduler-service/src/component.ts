@@ -15,6 +15,7 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  IServiceConfig,
   ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -33,6 +34,7 @@ import {
   ThemeController,
   WorkingHourController,
 } from './controllers';
+import {SchedulerBindings} from './keys';
 import {
   Attachment,
   Attendee,
@@ -59,12 +61,19 @@ export class SchedulerServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(SchedulerBindings.Config, {optional: true})
+    private readonly schedulerConfig?: IServiceConfig,
   ) {
     this.bindings = [createServiceBinding(ValidatorService)];
     this.providers = {};
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    if (!(this.schedulerConfig && this.schedulerConfig.useCustomSequence)) {
+      // Mount default sequence if needed
+      this.setupSequence(this.bindings);
+    }
 
     this.repositories = [
       AttachmentRepository,
