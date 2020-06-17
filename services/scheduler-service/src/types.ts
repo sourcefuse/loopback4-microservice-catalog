@@ -7,4 +7,5 @@ export interface CustomPermissionFn {
 export interface ISchedulerConfig {
   jwtIssuer: string;
   jwtSecret: string;
+  identifierMappedTo: string;
 }
