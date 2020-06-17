@@ -1,10 +1,3 @@
-import {IServiceConfig} from '@sourceloop/core';
-
-export interface IVideoChatServiceConfig extends IServiceConfig {
-  // TODO
-  // will be filled later
-}
-
 /**
  * @interface ResponseInterface
  * @param message describes sucess/failure or any descriptive message w.r.t any API/function executed

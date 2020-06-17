@@ -15,6 +15,7 @@ import {
   BearerVerifierType,
   CoreComponent,
   ServiceSequence,
+  IServiceConfig,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
@@ -30,21 +31,25 @@ import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageProvider} from './providers/vonage/vonage.provider';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
-import {IVideoChatServiceConfig} from './types';
-import {VonageBindings} from './providers/vonage/keys';
 
 export class VideoConfServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(VideoChatBindings.Config, {optional: true})
-    private readonly videChatConfig?: IVideoChatServiceConfig,
+    private readonly videChatConfig?: IServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    this.bindings.push(
+      Binding.bind(VideoChatBindings.VideoChatProvider).toProvider(
+        VonageProvider,
+      ),
+    );
 
     if (!(this.videChatConfig && this.videChatConfig.useCustomSequence)) {
       // Mount default sequence if needed
@@ -99,12 +104,6 @@ export class VideoConfServiceComponent implements Component {
       type: BearerVerifierType.service,
     } as BearerVerifierConfig);
     this.application.component(BearerVerifierComponent);
-
-    this.application.bind(VonageBindings.config).to({
-      apiKey: process.env.VONAGE_API_KEY as string,
-      apiSecret: process.env.VONAGE_API_SECRET as string,
-      timeToStart: Number(process.env.TIME_TO_START),
-    });
 
     // Mount authorization component for default sequence
     this.application.bind(AuthorizationBindings.CONFIG).to({
