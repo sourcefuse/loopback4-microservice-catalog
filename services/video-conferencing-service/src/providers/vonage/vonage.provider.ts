@@ -13,7 +13,7 @@ import {
   VonageAzureTargetOptions,
 } from './types';
 
-import { VonageService } from '../../services/vonage.service';
+import { VonageService } from './vonage.service';
 import { AuditLogsRepository } from '../../repositories';
 import { repository } from '@loopback/repository';
 import moment from 'moment';

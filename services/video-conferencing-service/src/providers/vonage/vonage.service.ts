@@ -5,22 +5,22 @@ import {
     VonageAzureTargetOptions, 
     VonageMeetingOptions, 
     VonageMeetingResponse, 
-    VonageConfig } from '../providers/vonage';
-import { SessionResponse, ArchiveResponseList, ArchiveResponse } from '../types';
+    VonageConfig } from '.';
+import { SessionResponse, ArchiveResponseList, ArchiveResponse } from '../../types';
 import OpenTok from 'opentok';
 import moment from 'moment';
 import { HttpErrors } from '@loopback/rest';
 import { promisify } from 'util';
 import { sign } from 'jsonwebtoken';
 import axios from 'axios';
-import { VonageEnums } from '../enums';
-import { VonageBindings } from '../providers/vonage/keys';
+import { VonageEnums } from '../../enums';
+import { VonageBindings } from './keys';
 import { inject } from '@loopback/core';
 
 export class VonageService implements VonageVideoChat {
     VonageClient: OpenTok;
     constructor(
-        @inject(VonageBindings.config)
+        @inject(VonageBindings.config, {optional: true})
         private readonly vonageConfig: VonageConfig,
     ) {
         const { apiKey, apiSecret } = vonageConfig;

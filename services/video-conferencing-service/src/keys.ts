@@ -1,6 +1,6 @@
-import {VideoChatInterface, IVideoChatServiceConfig} from './types';
+import {VideoChatInterface} from './types';
 import {BindingKey} from '@loopback/core';
-import {BINDING_PREFIX} from '@sourceloop/core';
+import {BINDING_PREFIX, IServiceConfig} from '@sourceloop/core';
 
 /**
  * @namespace VideoChatBindings
@@ -11,7 +11,7 @@ export namespace VideoChatBindings {
     'sf.videochatprovider',
   );
 
-  export const Config = BindingKey.create<IVideoChatServiceConfig | null>(
+  export const Config = BindingKey.create<IServiceConfig | null>(
     `${BINDING_PREFIX}.videochat.config`,
   );
 }

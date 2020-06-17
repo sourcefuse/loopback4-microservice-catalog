@@ -12,7 +12,7 @@ import {
   SessionAttendeesRepository,
   VideoChatSessionRepository,
 } from '../../../repositories';
-import {VonageService} from '../../../services/vonage.service';
+import {VonageService} from '../../../providers/vonage/vonage.service';
 import {VideoChatInterface} from '../../../types';
 import {
   getDate,

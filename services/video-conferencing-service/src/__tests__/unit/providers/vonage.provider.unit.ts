@@ -14,7 +14,7 @@ import {
   VonageS3TargetOptions,
 } from '../../../providers/vonage';
 import {AuditLogsRepository} from '../../../repositories';
-import {VonageService} from '../../../services/vonage.service';
+import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   getVonageArchive,
   getVonageArchiveList,
@@ -42,15 +42,7 @@ describe('VonageProvider (unit)', () => {
       timeToStart: 30,
     };
 
-    try {
-      new VonageProvider(vonageService, auditLogRepo);
-    } catch (err) {
-      if (err) {
-        return expect(err).instanceOf(Error);
-      } else {
-        throw new Error('This must throw.');
-      }
-    }
+    expect.throws(() => new VonageService(config));
   });
 
   describe('getMeetingLink', () => {
