@@ -1,17 +1,13 @@
+import {Client, expect} from '@loopback/testlab';
+import * as jwt from 'jsonwebtoken';
 import {
-  Client,
-  expect,
-  givenHttpServerConfig,
-  createRestAppClient,
-} from '@loopback/testlab';
-import {
-  EventRepository,
-  AttendeeRepository,
   AttachmentRepository,
+  AttendeeRepository,
   CalendarRepository,
+  EventRepository,
 } from '../../repositories';
 import {SchedulerApplication} from '../application';
-import * as jwt from 'jsonwebtoken';
+import {setUpApplication} from './helper';
 
 describe('Event Controller', () => {
   let app: SchedulerApplication;
@@ -36,34 +32,16 @@ describe('Event Controller', () => {
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
-    issuer: 'rashi',
+    issuer: 'sf',
   });
 
-  before(givenRunningApplicationWithCustomConfiguration);
-  after(async () => {
-    await app.stop();
+  before('setupApplication', async () => {
+    ({app, client} = await setUpApplication());
   });
+  after(async () => app.stop());
+
   before(givenRepositories);
-  before(() => {
-    client = createRestAppClient(app);
-  });
-
   afterEach(deleteMockData);
-
-  async function givenRunningApplicationWithCustomConfiguration() {
-    app = new SchedulerApplication({
-      rest: givenHttpServerConfig(),
-    });
-
-    await app.boot();
-
-    app.bind('datasources.config.schedulerDb').to({
-      name: 'pgdb',
-      connector: 'memory',
-    });
-    // Start Application
-    await app.start();
-  }
 
   it('gives status 422 when data sent is incorrect', async () => {
     const reqData = {};
@@ -95,9 +73,31 @@ describe('Event Controller', () => {
       .expect(422);
   });
 
-  it('gives status 200, event detail when event is added', async () => {
-    const reqToAddEvent = await addEvent();
+  it('gives status 404 when calendarId does not exist on POST', async () => {
+    const eventToAdd = {calendarId: 'invalid'};
 
+    await client
+      .post(`/events`)
+      .set('authorization', `Bearer ${token}`)
+      .send(eventToAdd)
+      .expect(404);
+  });
+
+  it('gives status 404 when parentEventId does not exist', async () => {
+    const calendar = await client
+      .post(`/calendars`)
+      .set('authorization', `Bearer ${token}`)
+      .send({ownerEmail: 'dummy'});
+    const eventToAdd = {calendarId: calendar.body.id, parentEventId: 'invalid'};
+    await client
+      .post(`/events`)
+      .set('authorization', `Bearer ${token}`)
+      .send(eventToAdd)
+      .expect(404);
+  });
+
+  it('gives status 200 when event is added', async () => {
+    const reqToAddEvent = await addEvent();
     expect(reqToAddEvent.status).to.be.equal(200);
     const response = await client
       .get(`/events/${reqToAddEvent.body.id}`)
@@ -108,7 +108,7 @@ describe('Event Controller', () => {
     expect(response.body.isFullDayEvent).to.be.equal(false);
   });
 
-  it('gives status 200,  when an event with attachments and attenees is added', async () => {
+  it('gives status 200, when an event with attachments and attendees is added', async () => {
     const reqToAddEvent = await addEventWithRelation();
 
     expect(reqToAddEvent.status).to.be.equal(200);
@@ -155,6 +155,19 @@ describe('Event Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .send(eventToUpdate)
       .expect(204);
+  });
+
+  it('gives status 404 when calendarId does not exist on PUT request', async () => {
+    const reqToAddEvent = await addEvent();
+    const eventToUpdate = {
+      calendarId: 'invalid',
+      isFullDayEvent: true,
+    };
+    await client
+      .put(`/events/${reqToAddEvent.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(eventToUpdate)
+      .expect(404);
   });
 
   it('updates event with attendees and attachments using PUT request', async () => {
