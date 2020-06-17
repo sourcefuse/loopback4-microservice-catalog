@@ -1,12 +1,8 @@
-import {
-  Client,
-  createRestAppClient,
-  expect,
-  givenHttpServerConfig,
-} from '@loopback/testlab';
+import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
 import {ThemeRepository} from '../../repositories';
 import {SchedulerApplication} from '../application';
+import {setUpApplication} from './helper';
 
 describe('Theme Controller', () => {
   let app: SchedulerApplication;
@@ -18,41 +14,7 @@ describe('Theme Controller', () => {
     id: 1,
     username: 'test_user',
     password: pass,
-    permissions: [
-      'NotAllowed',
-      'ViewSubscription',
-      'CreateSubscription',
-      'UpdateSubscription',
-      'DeleteSubscription',
-      'ViewEvent',
-      'CreateEvent',
-      'UpdateEvent',
-      'DeleteEvent',
-      'ViewCalendar',
-      'CreateCalendar',
-      'UpdateCalendar',
-      'DeleteCalendar',
-      'ViewAttachment',
-      'CreateAttachment',
-      'UpdateAttachment',
-      'DeleteAttachment',
-      'ViewAttendee',
-      'CreateAttendee',
-      'UpdateAttendee',
-      'DeleteAttendee',
-      'ViewSettings',
-      'CreateSettings',
-      'UpdateSettings',
-      'DeleteSettings',
-      'ViewTheme',
-      'CreateTheme',
-      'UpdateTheme',
-      'DeleteTheme',
-      'ViewWorkingHour',
-      'CreateWorkingHour',
-      'UpdateWorkingHour',
-      'DeleteWorkingHour',
-    ],
+    permissions: ['ViewTheme', 'CreateTheme', 'UpdateTheme', 'DeleteTheme'],
   };
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
@@ -60,30 +22,13 @@ describe('Theme Controller', () => {
     issuer: 'sf',
   });
 
-  before(givenRunningApplicationWithCustomConfiguration);
-  after(async () => {
-    await app.stop();
+  before('setupApplication', async () => {
+    ({app, client} = await setUpApplication());
   });
+  after(async () => app.stop());
+
   before(givenRepositories);
-  before(() => {
-    client = createRestAppClient(app);
-  });
   afterEach(deleteMockData);
-
-  async function givenRunningApplicationWithCustomConfiguration() {
-    app = new SchedulerApplication({
-      rest: givenHttpServerConfig(),
-    });
-
-    await app.boot();
-
-    app.bind('datasources.config.schedulerDb').to({
-      name: 'pgdb',
-      connector: 'memory',
-    });
-    // Start Application
-    await app.start();
-  }
 
   it('gives status 401 when no token is passed', async () => {
     const response = await client.get(apiUrl).expect(401);
