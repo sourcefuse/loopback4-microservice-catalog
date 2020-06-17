@@ -18,7 +18,7 @@ export class BearerTokenVerifyProvider
         Use global interceptor over this to apply that check on each api.
       */
       return verify(token, 'kdskssdkdfs', {
-        issuer: 'rashi',
+        issuer: 'sf',
       }) as IAuthUserWithPermissions;
     };
   }

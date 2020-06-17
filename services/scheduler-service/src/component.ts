@@ -3,9 +3,9 @@ import {
   Component,
   ControllerClass,
   CoreBindings,
+  createServiceBinding,
   inject,
   ProviderMap,
-  createServiceBinding,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -23,6 +23,27 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  AttachmentController,
+  AttendeeController,
+  CalendarController,
+  CalendarEventController,
+  EventController,
+  SettingsController,
+  SubscriptionController,
+  ThemeController,
+  WorkingHourController,
+} from './controllers';
+import {
+  Attachment,
+  Attendee,
+  Calendar,
+  Event,
+  Settings,
+  Subscription,
+  Theme,
+  WorkingHour,
+} from './models';
+import {
   AttachmentRepository,
   AttendeeRepository,
   CalendarRepository,
@@ -32,26 +53,6 @@ import {
   ThemeRepository,
   WorkingHourRepository,
 } from './repositories';
-import {
-  Attachment,
-  Attendee,
-  Calendar,
-  Settings,
-  Subscription,
-  Theme,
-  WorkingHour,
-  Event,
-} from './models';
-import {
-  AttachmentController,
-  AttendeeController,
-  CalendarController,
-  EventController,
-  SettingsController,
-  SubscriptionController,
-  ThemeController,
-  WorkingHourController,
-} from './controllers';
 import {ValidatorService} from './services';
 
 export class SchedulerServiceComponent implements Component {
@@ -98,6 +99,7 @@ export class SchedulerServiceComponent implements Component {
       SubscriptionController,
       ThemeController,
       WorkingHourController,
+      CalendarEventController,
     ];
   }
 

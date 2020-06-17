@@ -1,13 +1,13 @@
 import {
   Client,
-  expect,
   createRestAppClient,
+  expect,
   givenHttpServerConfig,
 } from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {SchedulerApplication} from '../application';
 import {WorkingHour} from '../../models';
 import {WorkingHourRepository} from '../../repositories';
+import {SchedulerApplication} from '../application';
 
 describe('WorkingHour Controller', () => {
   let app: SchedulerApplication;
@@ -28,7 +28,7 @@ describe('WorkingHour Controller', () => {
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
-    issuer: 'rashi',
+    issuer: 'sf',
   });
   before(givenRunningApplicationWithCustomConfiguration);
   after(async () => {

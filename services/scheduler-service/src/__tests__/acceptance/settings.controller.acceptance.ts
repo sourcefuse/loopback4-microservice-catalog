@@ -1,12 +1,12 @@
 import {
   Client,
-  expect,
   createRestAppClient,
+  expect,
   givenHttpServerConfig,
 } from '@loopback/testlab';
-import {SchedulerApplication} from '../application';
-import {SettingsRepository} from '../../repositories';
 import * as jwt from 'jsonwebtoken';
+import {SettingsRepository} from '../../repositories';
+import {SchedulerApplication} from '../application';
 
 describe('Settings Controller', () => {
   let app: SchedulerApplication;
@@ -56,7 +56,7 @@ describe('Settings Controller', () => {
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
-    issuer: 'rashi',
+    issuer: 'sf',
   });
 
   before(givenRunningApplicationWithCustomConfiguration);
