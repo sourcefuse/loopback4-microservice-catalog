@@ -17,10 +17,11 @@ export async function main(
 }
 
 if (require.main === module) {
+  const defaulPort = 3000;
   // Run the application
   const config = {
     rest: {
-      port: +(process.env.PORT ?? 3000),
+      port: +(process.env.PORT ?? defaulPort),
       host: process.env.HOST,
       // The `gracePeriodForClose` provides a graceful close for http/https
       // servers with keep-alive clients. The default value is `Infinity`
