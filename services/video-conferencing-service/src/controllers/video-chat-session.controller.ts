@@ -69,7 +69,7 @@ export class VideoChatSessionController {
         auditLogPayload.after = {errorMessage};
         this.auditLogRepository.create(auditLogPayload);
         throw new HttpErrors.BadRequest(errorMessage);
-      } else if (isNaN(meetingOptions.scheduleTime.valueOf() as number)) {
+      } else if (isNaN(meetingOptions.scheduleTime.valueOf())) {
         errorMessage = 'Scheduled time is not in correct format.';
         auditLogPayload.after = {errorMessage};
         this.auditLogRepository.create(auditLogPayload);
@@ -139,7 +139,7 @@ export class VideoChatSessionController {
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    if (isNaN(sessionOptions.expireTime?.valueOf() as number)) {
+    if (sessionOptions.expireTime && isNaN(sessionOptions.expireTime?.valueOf())) {
       errorMessage = 'Expire time is not in correct format.';
       auditLogPayload.after = {errorMessage};
       this.auditLogRepository.create(auditLogPayload);

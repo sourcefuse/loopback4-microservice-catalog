@@ -18,7 +18,7 @@ Various features of Video Conferncing Services:
     For Vonage, you need to add this microserivce server url in your current vonage project 
     so it will receive webhook events. See Vonage Documentation for more information.
 
-## Install //TODO
+## Install 
 
 ```sh
 npm i @sourceloop/video-conferencing-service
@@ -113,8 +113,6 @@ For configuration in vonage, see [Session Monitoring](https://tokbox.com/develop
 ### PUT /archives/storage-target
 Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
 
-### DELETE /archives/storage-target
-Removes custom storage target and restores to the default storage target which was preconfigured by third party.
 
 ## Feedback
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/loopback4-microservice-catalog/issues) to see if someone else in the community has already created a ticket.

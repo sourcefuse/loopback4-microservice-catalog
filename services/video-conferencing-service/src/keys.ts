@@ -12,6 +12,6 @@ export namespace VideoChatBindings {
   );
 
   export const Config = BindingKey.create<IVideoChatServiceConfig | null>(
-    `${BINDING_PREFIX}.notification.config`,
+    `${BINDING_PREFIX}.videochat.config`,
   );
 }

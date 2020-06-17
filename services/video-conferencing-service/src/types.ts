@@ -1,8 +1,7 @@
 import {IServiceConfig} from '@sourceloop/core';
 
 export interface IVideoChatServiceConfig extends IServiceConfig {
-  // TODO
-  // will be filled later
+  useCustomSequence: boolean;
 }
 
 /**
