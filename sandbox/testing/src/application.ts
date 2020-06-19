@@ -33,7 +33,7 @@ export class TestingApplication extends BootMixin(
     this.bind(SchedulerBindings.Config).to({
       jwtIssuer: 'a',
       jwtSecret: 'a',
-      identifierMappedTo: 'testfield'
+      identifierMappedTo: 'test_field'
     })
 
     this.component(SchedulerServiceComponent);

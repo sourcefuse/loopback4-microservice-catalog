@@ -22,6 +22,9 @@ import {Attachment} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import { SchedulerBindings } from '../keys';
+import { inject } from '@loopback/core';
+import { ISchedulerConfig } from '../types';
 
 const basePath = '/attachments';
 
@@ -29,7 +32,24 @@ export class AttachmentController {
   constructor(
     @repository(AttachmentRepository)
     public attachmentRepository: AttachmentRepository,
+    @inject(SchedulerBindings.Config, {
+      optional: true,
+    })
+    private readonly schdulerConfig?: ISchedulerConfig,
   ) {}
+
+  @authorize(['*'])
+  @get(`test`, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Attachment model instance',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attachment)}},
+      },
+    },
+  })
+  async test(): Promise<string | undefined> {
+    return this.schdulerConfig?.identifierMappedTo;
+  }
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,

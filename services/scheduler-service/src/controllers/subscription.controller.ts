@@ -134,7 +134,7 @@ export class SubscriptionController {
       ],
       where: {
         and: [
-          {subscriber: this.currentUser.email},
+          {identifier: this.currentUser.email},
           {accessRole: minAccessRole},
         ],
       },

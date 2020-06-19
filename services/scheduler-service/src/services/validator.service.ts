@@ -61,7 +61,7 @@ export class ValidatorService {
     if (id === 'primary') {
       const subcription = await this.subscriptionRepository.findOne({
         where: {
-          and: [{subscriber: this.currentUser.email}, {isPrimary: true}],
+          and: [{identifier: this.currentUser.email}, {isPrimary: true}],
         },
       });
       if (subcription) {
