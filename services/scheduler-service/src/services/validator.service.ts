@@ -7,6 +7,9 @@ import {
   EventRepository,
   SubscriptionRepository,
 } from '../repositories';
+import { ISchedulerConfig } from '../types';
+import { SchedulerBindings } from '../keys';
+import { IdentifierType } from '../models/enums/identifier-type.enum';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class ValidatorService {
@@ -57,11 +60,19 @@ export class ValidatorService {
     }
   }
 
+  @inject(SchedulerBindings.Config, {
+    optional: true,
+  })
+  private readonly schdulerConfig?: ISchedulerConfig;
   async primaryToCalendarId(id: string) {
     if (id === 'primary') {
+      let identifierType = this.schdulerConfig?.identifierMappedTo;
+      if (!identifierType){
+        identifierType = IdentifierType.Id;
+      }
       const subcription = await this.subscriptionRepository.findOne({
         where: {
-          and: [{subscriber: this.currentUser.email}, {isPrimary: true}],
+          and: [{identifier: this.currentUser[identifierType]}, {isPrimary: true}],
         },
       });
       if (subcription) {

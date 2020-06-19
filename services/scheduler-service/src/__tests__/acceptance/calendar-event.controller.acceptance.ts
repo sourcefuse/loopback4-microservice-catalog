@@ -131,7 +131,7 @@ describe('Calendar Event Controller', () => {
     const calendar = await client
       .post(`/calendars`)
       .set('authorization', `Bearer ${token}`)
-      .send({ownerEmail: 'dummy'});
+      .send({identifier: 'dummy'});
 
     calendarId = calendar.body.id;
 
