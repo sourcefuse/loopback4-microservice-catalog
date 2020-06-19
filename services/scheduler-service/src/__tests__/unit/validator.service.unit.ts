@@ -102,7 +102,7 @@ describe('Validator Service', () => {
       });
       const filter: Filter = {
         where: {
-          and: [{identifier: currentUser[IdentifierType.Id]}, {isPrimary: true}],
+          and: [{identifier: currentUser[IdentifierType.Email]}, {isPrimary: true}],
         },
       };
       const findOne = subscriptionRepo.stubs.findOne;
@@ -117,7 +117,7 @@ describe('Validator Service', () => {
       const id = 'primary';
       const filter: Filter = {
         where: {
-          and: [{identifier: currentUser[IdentifierType.Id]}, {isPrimary: true}],
+          and: [{identifier: currentUser[IdentifierType.Email]}, {isPrimary: true}],
         },
       };
       const findOne = subscriptionRepo.stubs.findOne;
