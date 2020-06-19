@@ -33,7 +33,7 @@ export class VideoChatSessionController {
     @repository(AuditLogsRepository)
     private readonly auditLogRepository: AuditLogsRepository,
     @repository(SessionAttendeesRepository)
-    private readonly sessionAttendeesRepossitory: SessionAttendeesRepository,
+    private readonly sessionAttendeesRepository: SessionAttendeesRepository,
     @inject(VonageBindings.config)
     private readonly config: VonageConfig,
   ) {}
@@ -94,6 +94,7 @@ export class VideoChatSessionController {
       meetingLink: meetingLinkId,
       isScheduled: meetingOptions.isScheduled,
       scheduleTime: new Date(scheduledTime),
+      isArchived: meetingResp.isArchived
     });
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
@@ -160,7 +161,7 @@ export class VideoChatSessionController {
     });
 
     if (!session) {
-      errorMessage = 'Expire time can not be in past.';
+      errorMessage = 'Session does not exist';
       auditLogPayload.after = {errorMessage};
       this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
@@ -181,11 +182,18 @@ export class VideoChatSessionController {
           .add(this.config.timeToStart, 'minutes')
           .isBefore(session.scheduleTime)
       ) {
-        errorMessage = `Meeting can not be started before ${process.env.TIME} minutes earlier time than the scheduled time`;
+        errorMessage = `Meeting can only be started ${this.config.timeToStart} minutes before
+         the scheduled time`;
         auditLogPayload.after = {errorMessage};
         this.auditLogRepository.create(auditLogPayload);
-        throw new Error(errorMessage);
+        throw new HttpErrors.BadRequest(errorMessage);
       }
+    }
+
+    if(!session.startTime) {
+      this.videoChatSessionRepository.updateById(session.id, {
+        startTime: new Date()
+      });
     }
 
     return this.videoChatProvider.getToken(session.sessionId, sessionOptions);
@@ -202,7 +210,6 @@ export class VideoChatSessionController {
   })
   async endSession(
     @requestBody()
-    sessionOptions: SessionOptions,
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<void> {
     const auditLogPayload = {
@@ -245,6 +252,7 @@ export class VideoChatSessionController {
     });
   }
 
+  @authorize(['*'])
   @post('/webhooks/session', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -263,7 +271,7 @@ export class VideoChatSessionController {
       } = webhookPayload;
 
       if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
-        const sessionAttendeeDetail = await this.sessionAttendeesRepossitory.findOne(
+        const sessionAttendeeDetail = await this.sessionAttendeesRepository.findOne(
           {
             where: {
               attendee: data,
@@ -271,14 +279,14 @@ export class VideoChatSessionController {
           },
         );
         if (!sessionAttendeeDetail) {
-          await this.sessionAttendeesRepossitory.create({
+          await this.sessionAttendeesRepository.create({
             sessionId: sessionId,
             attendee: data,
             createdOn: new Date(),
             isDeleted: false,
           });
         } else {
-          await this.sessionAttendeesRepossitory.updateById(
+          await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             {
               modifiedOn: new Date(),
@@ -292,7 +300,7 @@ export class VideoChatSessionController {
         before: webhookPayload,
         after: {response: 'Webhook event triggered successfully'},
         actedAt: moment().format(),
-      });
+      }, { skipCurrentUser: true });
     } catch (error) {
       this.auditLogRepository.create({
         action: 'session-webhook',
@@ -300,7 +308,7 @@ export class VideoChatSessionController {
         before: webhookPayload,
         after: {errorStack: error.stack},
         actedAt: moment().format(),
-      });
+      }, { skipCurrentUser: true });
       throw new HttpErrors.InternalServerError(
         'Error occured triggering webhook event',
       );
