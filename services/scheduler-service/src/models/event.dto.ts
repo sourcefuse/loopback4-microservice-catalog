@@ -75,21 +75,12 @@ export class EventDTO extends Model {
 
   @property({
     type: 'string',
-    name: 'organizer_display_name',
-    jsonSchema: {
-      maxLength: 100,
-    },
-  })
-  organizerDisplayName?: string;
-
-  @property({
-    type: 'string',
-    name: 'organizer_email',
+    name: 'identifier',
     jsonSchema: {
       maxLength: 200,
     },
   })
-  organizerEmail?: string;
+  identifier?: string;
 
   @property({
     type: 'date',

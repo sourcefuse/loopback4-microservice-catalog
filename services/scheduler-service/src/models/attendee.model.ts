@@ -20,11 +20,12 @@ export class Attendee extends UserModifiableEntity
   @property({
     type: 'string',
     required: true,
+    name:'identifier',
     jsonSchema: {
       maxLength: 200,
     },
   })
-  email: string;
+  identifier: string;
 
   @property({
     type: 'date',
