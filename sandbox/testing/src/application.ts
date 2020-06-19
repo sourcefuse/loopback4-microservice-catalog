@@ -1,5 +1,6 @@
+import { SchedulerServiceComponent , SchedulerBindings} from '@sourceloop/scheduler-service';
 import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
+import { ApplicationConfig } from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
@@ -7,8 +8,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {NotificationServiceComponent} from '@sourceloop/notification-service';
-import path from 'path';
+import * as path from 'path';
 
 export {ApplicationConfig};
 
@@ -30,7 +30,13 @@ export class TestingApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
 
-    this.component(NotificationServiceComponent);
+    this.bind(SchedulerBindings.Config).to({
+      jwtIssuer: 'a',
+      jwtSecret: 'a',
+      identifierMappedTo: 'testfield'
+    })
+
+    this.component(SchedulerServiceComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

@@ -7,6 +7,8 @@ export async function main(
 ): Promise<TestingApplication> {
   const app = new TestingApplication(options);
   await app.boot();
+
+
   await app.start();
 
   const url = app.restServer.url;
