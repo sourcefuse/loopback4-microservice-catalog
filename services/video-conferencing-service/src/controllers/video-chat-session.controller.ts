@@ -209,7 +209,6 @@ export class VideoChatSessionController {
     },
   })
   async endSession(
-    @requestBody()
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<void> {
     const auditLogPayload = {
