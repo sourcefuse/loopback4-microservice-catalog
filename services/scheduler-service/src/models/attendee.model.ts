@@ -20,18 +20,12 @@ export class Attendee extends UserModifiableEntity
   @property({
     type: 'string',
     required: true,
-    name:'identifier',
+    name: 'identifier',
     jsonSchema: {
       maxLength: 200,
     },
   })
   identifier: string;
-
-  @property({
-    type: 'date',
-    name: 'end_datetime',
-  })
-  endDateTime?: Date;
 
   @property({
     type: 'boolean',
@@ -68,12 +62,6 @@ export class Attendee extends UserModifiableEntity
     },
   })
   responseStatus?: ResponseStatusType;
-
-  @property({
-    type: 'date',
-    name: 'start_datetime',
-  })
-  startDateTime?: Date;
 
   @belongsTo(
     () => Event,

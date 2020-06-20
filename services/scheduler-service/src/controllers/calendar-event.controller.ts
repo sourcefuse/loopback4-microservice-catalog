@@ -17,22 +17,23 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  IAuthUserWithPermissions,
-  STATUS_CODE,
-  CONTENT_TYPE,
-} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {Calendar, Event} from '../models';
+import {Calendar, Event, EventAttendeeView} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
-import {CalendarRepository, SubscriptionRepository} from '../repositories';
+import {
+  CalendarRepository,
+  SubscriptionRepository,
+  EventAttendeeViewRepository,
+} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
+import {CalendarEventService} from '../services';
 
 const basePath = '/calendars/{id}/events';
 
@@ -42,9 +43,11 @@ export class CalendarEventController {
     protected calendarRepository: CalendarRepository,
     @repository(SubscriptionRepository)
     protected subscriptionRepository: SubscriptionRepository,
-    @service(ValidatorService) public validatorService: ValidatorService,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    @repository(EventAttendeeViewRepository)
+    protected eventAttendeeViewRepository: EventAttendeeViewRepository,
+    @service(ValidatorService) protected validatorService: ValidatorService,
+    @service(CalendarEventService)
+    protected calendarEventService: CalendarEventService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -65,7 +68,7 @@ export class CalendarEventController {
   })
   async find(
     @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<Event>,
+    @param.query.object('filter') filter?: Filter<EventAttendeeView>,
     @param.query.dateTime('timeMax') timeMax?: Date,
     @param.query.dateTime('timeMin') timeMin?: Date,
   ): Promise<Event[]> {
@@ -82,34 +85,33 @@ export class CalendarEventController {
     if (!correctTime) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.CanNotBeGreater);
     }
-    let whereClause = {};
-
-    if (timeMin && timeMax) {
-      whereClause = {
-        or: [
-          {startDateTime: {between: [timeMin, timeMax]}},
-          {endDateTime: {between: [timeMin, timeMax]}},
-          {
-            and: [
-              {startDateTime: {lte: timeMin}},
-              {endDateTime: {gte: timeMax}},
-            ],
-          },
-        ],
-      };
-    } else {
-      if (timeMin) {
-        whereClause = {endDateTime: {gte: timeMin}};
-      }
-
-      if (timeMax) {
-        whereClause = {startDateTime: {lte: timeMax}};
-      }
+    const whereClause = this.calendarEventService.getWhereClause(
+      timeMin,
+      timeMax,
+    );
+    const subscription = await this.calendarEventService.primarySubscription(
+      calendarId,
+    );
+    if (!subscription) {
+      throw new HttpErrors.NotFound(ErrorKeys.SubscriptionNotExist);
     }
+    const modifiedFilter = this.calendarEventService.getFilter(
+      subscription.identifier,
+      whereClause,
+      filter,
+    );
+    const events = await this.eventAttendeeViewRepository.find(modifiedFilter);
+
+    const eventIds: string[] = [];
+    events.forEach(event => {
+      if (event.id) {
+        eventIds.push(event.id);
+      }
+    });
 
     return this.calendarRepository.events(calendarId).find({
       include: [{relation: 'attachments'}, {relation: 'attendees'}],
-      where: whereClause,
+      where: {id: {inq: eventIds}},
     });
   }
 
