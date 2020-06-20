@@ -1,4 +1,4 @@
-import {inject, service} from '@loopback/core';
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -18,11 +18,7 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, Event, EventAttendeeView} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';

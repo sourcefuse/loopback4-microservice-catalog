@@ -10,12 +10,11 @@ export class CalendarEventService {
   ) {}
 
   async primarySubscription(calendarId: string) {
-    const subscription = await this.subscriptionRepository.findOne({
+    return this.subscriptionRepository.findOne({
       where: {
         and: [{calendarId: calendarId}, {isPrimary: true}],
       },
     });
-    return subscription;
   }
 
   getWhereClause(timeMin?: Date, timeMax?: Date): Where {
