@@ -1,3 +1,4 @@
 {
-  "NotAllowedAccess": "NotAllowedAccess"
+	"NotAllowedAccess": "NotAllowedAccess",
+	"relation \"public.attachments\" does not exist": "relation \"public.attachments\" does not exist"
 }

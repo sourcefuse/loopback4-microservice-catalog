@@ -1,6 +1,7 @@
 import {inject} from '@loopback/context';
 import {
   FindRoute,
+  HttpErrors,
   InvokeMethod,
   InvokeMiddleware,
   ParseParams,
@@ -10,6 +11,13 @@ import {
   Send,
   SequenceHandler,
 } from '@loopback/rest';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
+import {
+  AuthorizationBindings,
+  AuthorizeErrorKeys,
+  AuthorizeFn,
+} from 'loopback4-authorization';
 
 const SequenceActions = RestBindings.SequenceActions;
 
@@ -25,6 +33,10 @@ export class MySequence implements SequenceHandler {
     @inject(SequenceActions.FIND_ROUTE) protected findRoute: FindRoute,
     @inject(SequenceActions.PARSE_PARAMS) protected parseParams: ParseParams,
     @inject(SequenceActions.INVOKE_METHOD) protected invoke: InvokeMethod,
+    @inject(AuthenticationBindings.USER_AUTH_ACTION)
+    protected authenticateRequest: AuthenticateFn<IAuthUserWithPermissions>,
+    @inject(AuthorizationBindings.AUTHORIZE_ACTION)
+    protected checkAuthorisation: AuthorizeFn,
     @inject(SequenceActions.SEND) public send: Send,
     @inject(SequenceActions.REJECT) public reject: Reject,
   ) {}
@@ -32,10 +44,24 @@ export class MySequence implements SequenceHandler {
   async handle(context: RequestContext): Promise<void> {
     try {
       const {request, response} = context;
+
       const finished = await this.invokeMiddleware(context);
       if (finished) return;
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
+
+      const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
+        request,
+      );
+
+      const isAccessAllowed: boolean = await this.checkAuthorisation(
+        authUser?.permissions,
+        request,
+      );
+      if (!isAccessAllowed) {
+        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+      }
+
       const result = await this.invoke(route, args);
       this.send(response, result);
     } catch (err) {
