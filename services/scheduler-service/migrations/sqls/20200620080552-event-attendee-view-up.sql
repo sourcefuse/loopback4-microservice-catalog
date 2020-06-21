@@ -16,4 +16,4 @@ SELECT et.*,
     at.messages,
     at.response_status
 FROM scheduler.events et
-    JOIN scheduler.attendees at ON et.id = at.event_id;
+    LEFT JOIN scheduler.attendees at ON et.id = at.event_id;
