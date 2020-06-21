@@ -87,7 +87,7 @@ describe('Event Controller', () => {
     const calendar = await client
       .post(`/calendars`)
       .set('authorization', `Bearer ${token}`)
-      .send({ownerEmail: 'dummy'});
+      .send({identifier: 'dummy'});
     const eventToAdd = {calendarId: calendar.body.id, parentEventId: 'invalid'};
     await client
       .post(`/events`)
@@ -186,7 +186,7 @@ describe('Event Controller', () => {
         {
           id: reqToAddEvent.body.attendees[0].id,
           eventId: reqToAddEvent.body.attendees[0].eventId,
-          email: 'dummy',
+          identifier: 'dummy',
         },
       ],
     };
@@ -217,7 +217,7 @@ describe('Event Controller', () => {
     const calendar = await client
       .post(`/calendars`)
       .set('authorization', `Bearer ${token}`)
-      .send({ownerEmail: 'dummy'});
+      .send({identifier: 'dummy'});
 
     const eventToAdd = {
       calendarId: calendar.body.id,
@@ -233,13 +233,13 @@ describe('Event Controller', () => {
     const calendar = await client
       .post(`/calendars`)
       .set('authorization', `Bearer ${token}`)
-      .send({ownerEmail: 'dummy'});
+      .send({identifier: 'dummy'});
 
     const eventToAdd = {
       calendarId: calendar.body.id,
       isFullDayEvent: false,
       attachments: [{fileUrl: 'dummy', eventId: ''}],
-      attendees: [{eventId: '', email: 'dummy'}],
+      attendees: [{eventId: '', identifier: 'dummy'}],
     };
     return client
       .post(`/events`)

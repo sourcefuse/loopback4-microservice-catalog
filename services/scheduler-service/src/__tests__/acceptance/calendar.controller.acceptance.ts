@@ -78,8 +78,8 @@ describe('Calendar Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(response.body).to.have.properties(['ownerEmail']);
-    expect(response.body.ownerEmail).to.be.equal('test@gmail.com');
+    expect(response.body).to.have.properties(['identifier']);
+    expect(response.body.identifier).to.be.equal('test@gmail.com');
   });
 
   it('add workinghours when calendar is added', async () => {
@@ -98,7 +98,7 @@ describe('Calendar Controller', () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      ownerDisplayName: 'updatedName',
+      location: 'updated_location',
     };
 
     await client
@@ -112,15 +112,15 @@ describe('Calendar Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(response.body).to.have.properties(['ownerDisplayName']);
-    expect(response.body.ownerDisplayName).to.be.equal('updatedName');
+    expect(response.body).to.have.properties(['location']);
+    expect(response.body.location).to.be.equal('updated_location');
   });
 
   it('updates calendar using PUT request', async () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      ownerEmail: 'new@gmail.com',
+      identifier: 'new@gmail.com',
     };
 
     await client
@@ -150,8 +150,7 @@ describe('Calendar Controller', () => {
       source: 'internal',
       enableWorkingHours: true,
       location: 'location',
-      ownerDisplayName: 'name',
-      ownerEmail: 'test@gmail.com',
+      identifier: 'test@gmail.com',
       summary: 'string',
       timezone: 'ist',
       workingHours: [
