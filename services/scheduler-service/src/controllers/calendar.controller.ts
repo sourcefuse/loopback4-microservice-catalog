@@ -29,6 +29,7 @@ import { SchedulerBindings } from '../keys';
 import { ISchedulerConfig } from '../types';
 
 const basePath = '/calendars';
+const calendarModelInstance = 'Calendar model instance';
 
 export class CalendarController {
   constructor(
@@ -53,7 +54,7 @@ export class CalendarController {
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Calendar model instance',
+        description: calendarModelInstance,
         content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Calendar)}},
       },
     },
@@ -81,7 +82,7 @@ export class CalendarController {
   @post('/calendars/calendarSubscription', {
     responses: {
       '200': {
-        description: 'Calendar model instance',
+        description: calendarModelInstance,
         content: {'application/json': {schema: getModelSchemaRef(CalendarDTO)}},
       },
     },
@@ -229,7 +230,7 @@ export class CalendarController {
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Calendar model instance',
+        description: calendarModelInstance,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Calendar, {includeRelations: true}),
