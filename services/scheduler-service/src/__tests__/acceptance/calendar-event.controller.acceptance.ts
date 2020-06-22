@@ -1,6 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {CalendarRepository} from '../../repositories';
+import {CalendarRepository, SubscriptionRepository} from '../../repositories';
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
 
@@ -8,6 +8,7 @@ describe('Calendar Event Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
   let calendarRepo: CalendarRepository;
+  let subscriptionRepo: SubscriptionRepository;
   let calendarId: string;
   const pass = 'test_password';
   const testUser = {
@@ -20,6 +21,7 @@ describe('Calendar Event Controller', () => {
       'UpdateEvent',
       'DeleteEvent',
       'CreateCalendar',
+      'CreateSubscription',
     ],
   };
 
@@ -136,6 +138,11 @@ describe('Calendar Event Controller', () => {
     calendarId = calendar.body.id;
 
     await client
+      .post(`/subscriptions`)
+      .set('authorization', `Bearer ${token}`)
+      .send({identifier: 'dummy', calendarId: calendarId, isPrimary: true});
+
+    await client
       .post(`/calendars/${calendarId}/events`)
       .set('authorization', `Bearer ${token}`)
       .send({isFullDayEvent: false});
@@ -143,9 +150,11 @@ describe('Calendar Event Controller', () => {
 
   async function deleteMockData() {
     await calendarRepo.deleteAllHard();
+    await subscriptionRepo.deleteAllHard();
   }
 
   async function givenRepositories() {
     calendarRepo = await app.getRepository(CalendarRepository);
+    subscriptionRepo = await app.getRepository(SubscriptionRepository);
   }
 });
