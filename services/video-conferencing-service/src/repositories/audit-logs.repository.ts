@@ -38,7 +38,7 @@ export class AuditLogsRepository extends DefaultCrudRepository<
       }
       entity.actor = currentUser.id ? currentUser.id.toString() : '';
     }
-    return super.create(entity, undefined);
+    return super.create(entity, options);
   }
 
   async createAll(
