@@ -39,7 +39,7 @@ export class ValidatorService {
   }
 
   minMaxTime(timeMin?: Date, timeMax?: Date) {
-    if (timeMax && timeMin && timeMax < timeMin) {
+    if (timeMax && timeMin && new Date(timeMax) < new Date(timeMin)) {
       return false;
     } else {
       return true;

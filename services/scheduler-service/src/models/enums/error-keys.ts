@@ -5,6 +5,9 @@ export const enum ErrorKeys {
   EventNotExist = 'Event Not Exist',
   SubscriptionNotExist = 'Subscription Not exist',
 
+  //unprocessable
+  DateInvalid = 'Date Invalid',
+
   //general
-  CanNotBeGreater = 'Right Date Can Not Greater Then Left',
+  CanNotBeGreater = 'Start Date Can Not Greater Then End Date',
 }

@@ -31,6 +31,8 @@ import {
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import { FreeBusyDTO } from '../models/free-busy.dto';
+import { EventService } from '../services';
 
 const basePath = '/events';
 
@@ -43,6 +45,7 @@ export class EventController {
     @repository(AttachmentRepository)
     public attachmentRepository: AttachmentRepository,
     @service(ValidatorService) public validatorService: ValidatorService,
+    @service(EventService) public eventService: EventService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -108,6 +111,58 @@ export class EventController {
     return event;
   }
 
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize([PermissionKey.ViewEvent, PermissionKey.ViewAttendee])
+  @get('/events/freeBusy')
+  async getFeeBusyStatus(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(FreeBusyDTO, {
+            title: 'FreeBusy request',
+          }),
+        },
+      },
+    })
+    freeBusyDTO: FreeBusyDTO,
+  ) {
+    if (
+      !this.eventService.validateDateForTimeZone(freeBusyDTO.timeMin) ||
+      !this.eventService.validateDateForTimeZone(freeBusyDTO.timeMax) ||
+      !this.validatorService.minMaxTime(
+        freeBusyDTO.timeMin,
+        freeBusyDTO.timeMax,
+      )
+    ) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.DateInvalid);
+    }
+
+    const response = {
+      timeMax: freeBusyDTO.timeMax,
+      timeMin: freeBusyDTO.timeMin,
+      calendars: {},
+    };
+
+    const calendars = [];
+    for (const item of freeBusyDTO.items) {
+      const id = item.id;
+      const busyDetailsObj = await this.eventService.getBusyDetails(
+        item.id,
+        freeBusyDTO.timeMax,
+        freeBusyDTO.timeMin,
+      );
+
+      const calendar = {
+        [id]: busyDetailsObj,
+      };
+      calendars.push(calendar);
+    }
+    response.calendars = calendars;
+    return response;
+  }
+  
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })

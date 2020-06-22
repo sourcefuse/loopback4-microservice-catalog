@@ -94,6 +94,27 @@ describe('Calendar Controller', () => {
     expect(workingHoursResponse.body.dayOfWeek).to.be.equal(1);
   });
 
+  it('add subscription when calendar is added', async () => {
+    const calendarToAdd = {
+      source: 'internal',
+      enableWorkingHours: true,
+      location: 'location',
+      identifier: 'test@gmail.com',
+      summary: 'string',
+      timezone: 'ist',
+      subscription: {
+        identifier: "test@gmail.com",
+        fgColor: "red"
+      }
+    };
+
+    await client
+      .post(`/calendars/calendarSubscription`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToAdd)
+      .expect(200);
+  });
+
   it('updates calendar successfully using PATCH request', async () => {
     const reqToAddCalendar = await addCalendar();
 
@@ -130,6 +151,35 @@ describe('Calendar Controller', () => {
       .expect(204);
   });
 
+  it('updates workinghours along with calendar using PUT request', async () => {
+    const reqToAddCalendar = await addCalendar();
+
+    const calendarToUpdate = {
+      identifier: 'new@gmail.com',
+      workingHours: [
+        {
+          dayOfWeek: 2,
+          calendarId: reqToAddCalendar.body.id,
+          id: reqToAddCalendar.body.workingHours[0].id,
+        },
+      ],
+    };
+
+    await client
+      .put(`/calendars/${reqToAddCalendar.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToUpdate)
+      .expect(204);
+
+    const workingHoursResponse = await client
+      .get(`/working-hours/`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(workingHoursResponse.body[0]).to.have.properties(['dayOfWeek']);
+    expect(workingHoursResponse.body[0].dayOfWeek).to.be.equal(2);
+  });
+  
   it('deletes a calendar successfully', async () => {
     const reqToAddCalendar = await addCalendar();
     await client

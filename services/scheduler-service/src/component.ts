@@ -57,6 +57,7 @@ import {
   EventAttendeeViewRepository,
 } from './repositories';
 import {ValidatorService, CalendarEventService} from './services';
+import { EventService } from './services/event.service';
 
 export class SchedulerServiceComponent implements Component {
   constructor(
@@ -68,6 +69,8 @@ export class SchedulerServiceComponent implements Component {
     this.bindings = [
       createServiceBinding(ValidatorService),
       createServiceBinding(CalendarEventService),
+      createServiceBinding(EventService),
+
     ];
     this.providers = {};
 
