@@ -28,12 +28,6 @@ export class Attendee extends UserModifiableEntity
   identifier: string;
 
   @property({
-    type: 'date',
-    name: 'end_datetime',
-  })
-  endDateTime?: Date;
-
-  @property({
     type: 'boolean',
     default: false,
     name: 'is_optional',
@@ -68,12 +62,6 @@ export class Attendee extends UserModifiableEntity
     },
   })
   responseStatus?: ResponseStatusType;
-
-  @property({
-    type: 'date',
-    name: 'start_datetime',
-  })
-  startDateTime?: Date;
 
   @belongsTo(
     () => Event,
