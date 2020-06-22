@@ -1,6 +1,6 @@
 /* Replace with your SQL commands */
 
-SET search_path TO main, public;
+SET search_path TO scheduler, public;
 
 ALTER TABLE scheduler.calendars RENAME COLUMN "identifier" TO "owner_email";
 ALTER TABLE scheduler.events RENAME COLUMN "identifier" TO "organizer_email";

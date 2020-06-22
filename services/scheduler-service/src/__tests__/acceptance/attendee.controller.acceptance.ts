@@ -56,15 +56,15 @@ describe('Attendee Controller', () => {
       .get(`${basePath}/${reqToAddEntity.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    expect(response.body).to.have.properties(['email']);
-    expect(response.body.email).to.be.equal('test@gmail.com');
+    expect(response.body).to.have.properties(['identifier']);
+    expect(response.body.identifier).to.be.equal('test@gmail.com');
   });
 
   it('updates enitity successfully using PATCH request', async () => {
     const reqToAddEntity = await addEntity();
-    const email = 'updated@gmail.com';
+    const identifier = 'updated@gmail.com';
     const entityToUpdate = {
-      email: email,
+      identifier: identifier,
       eventId: 'event-id',
     };
 
@@ -79,15 +79,15 @@ describe('Attendee Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(response.body).to.have.properties(['email']);
-    expect(response.body.email).to.be.equal(email);
+    expect(response.body).to.have.properties(['identifier']);
+    expect(response.body.identifier).to.be.equal(identifier);
   });
 
   it('updates entity using PUT request', async () => {
     const reqToAddEntity = await addEntity();
-    const email = 'updated@gmail.com';
+    const identifier = 'updated@gmail.com';
     const entityToUpdate = {
-      email: email,
+      identifier: identifier,
       eventId: 'event-id',
     };
 
@@ -102,8 +102,8 @@ describe('Attendee Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(response.body).to.have.properties(['email']);
-    expect(response.body.email).to.be.equal(email);
+    expect(response.body).to.have.properties(['identifier']);
+    expect(response.body.identifier).to.be.equal(identifier);
   });
 
   it('deletes a setting successfully', async () => {
@@ -123,7 +123,7 @@ describe('Attendee Controller', () => {
 
   async function addEntity() {
     const enitityToAdd = {
-      email: 'test@gmail.com',
+      identifier: 'test@gmail.com',
       eventId: 'event-id',
     };
 

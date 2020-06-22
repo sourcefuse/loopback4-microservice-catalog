@@ -19,6 +19,7 @@ import {
   Subscription,
 } from '../../models';
 import {Filter} from '@loopback/repository';
+import { IdentifierType } from '../../models/enums/identifier-type.enum';
 
 describe('Validator Service', () => {
   let calendarRepo: StubbedInstanceWithSinonAccessor<CalendarRepository>;
@@ -101,7 +102,7 @@ describe('Validator Service', () => {
       });
       const filter: Filter = {
         where: {
-          and: [{subscriber: currentUser.email}, {isPrimary: true}],
+          and: [{identifier: currentUser[IdentifierType.Id]}, {isPrimary: true}],
         },
       };
       const findOne = subscriptionRepo.stubs.findOne;
@@ -116,7 +117,7 @@ describe('Validator Service', () => {
       const id = 'primary';
       const filter: Filter = {
         where: {
-          and: [{subscriber: currentUser.email}, {isPrimary: true}],
+          and: [{identifier: currentUser[IdentifierType.Id]}, {isPrimary: true}],
         },
       };
       const findOne = subscriptionRepo.stubs.findOne;
@@ -148,6 +149,7 @@ describe('Validator Service', () => {
     eventRepo = createStubInstance(EventRepository);
     subscriptionRepo = createStubInstance(SubscriptionRepository);
     currentUser = {
+      id: 'dummy',
       email: 'dummy',
       permissions: ['dummy'],
       authClientId: 1,

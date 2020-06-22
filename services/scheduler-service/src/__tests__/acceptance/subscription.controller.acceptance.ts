@@ -107,7 +107,7 @@ describe('Subscription Controller', () => {
     const reqToAddSubscription = await addSubscription();
 
     const subscriptionToUpdate = {
-      subscriber: 'dummy',
+      identifier: 'dummy',
       calendarId: 'updatedId',
     };
 
@@ -143,7 +143,7 @@ describe('Subscription Controller', () => {
 
   async function addSubscription() {
     const subscriptionToAdd = new Subscription({
-      subscriber: 'dummy',
+      identifier: 'dummy',
       calendarId: 'dummy',
     });
 
