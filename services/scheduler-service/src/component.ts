@@ -54,8 +54,9 @@ import {
   SubscriptionRepository,
   ThemeRepository,
   WorkingHourRepository,
+  EventAttendeeViewRepository,
 } from './repositories';
-import {ValidatorService} from './services';
+import {ValidatorService, CalendarEventService} from './services';
 
 export class SchedulerServiceComponent implements Component {
   constructor(
@@ -64,7 +65,10 @@ export class SchedulerServiceComponent implements Component {
     @inject(SchedulerBindings.Config, {optional: true})
     private readonly schedulerConfig?: IServiceConfig,
   ) {
-    this.bindings = [createServiceBinding(ValidatorService)];
+    this.bindings = [
+      createServiceBinding(ValidatorService),
+      createServiceBinding(CalendarEventService),
+    ];
     this.providers = {};
 
     // Mount core component
@@ -84,6 +88,7 @@ export class SchedulerServiceComponent implements Component {
       SubscriptionRepository,
       ThemeRepository,
       WorkingHourRepository,
+      EventAttendeeViewRepository,
     ];
 
     this.models = [
