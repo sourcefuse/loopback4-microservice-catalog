@@ -80,6 +80,7 @@ export class VonageService implements VonageVideoChat {
             mediaMode: sessionCreationOptions.mediaMode,
             archiveMode: sessionCreationOptions.archiveMode,
             sessionId: sessionResponse.sessionId,
+            isArchived: Boolean(sessionCreationOptions.archiveMode)
         };
     }
     async getToken(

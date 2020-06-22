@@ -120,6 +120,7 @@ export interface MeetingOptions {
 
 export interface MeetingResponse {
   sessionId: string;
+  isArchived?: boolean;
 }
 
 /**

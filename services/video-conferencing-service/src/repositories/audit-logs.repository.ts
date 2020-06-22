@@ -31,11 +31,13 @@ export class AuditLogsRepository extends DefaultCrudRepository<
     entity: DataObject<AuditLogs>,
     options?: Options,
   ): Promise<AuditLogs> {
-    const currentUser = await this.getCurrentUser();
-    if (!currentUser) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    if(!options?.skipCurrentUser) {
+      const currentUser = await this.getCurrentUser();
+      if (!currentUser) {
+        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+      }
+      entity.actor = currentUser.id ? currentUser.id.toString() : '';
     }
-    entity.actor = currentUser.id ? currentUser.id.toString() : '';
     return super.create(entity, options);
   }
 
@@ -43,13 +45,15 @@ export class AuditLogsRepository extends DefaultCrudRepository<
     entities: DataObject<AuditLogs>[],
     options?: Options,
   ): Promise<AuditLogs[]> {
-    const currentUser = await this.getCurrentUser();
-    if (!currentUser) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    if(!options?.skipCurrentUser) {
+      const currentUser = await this.getCurrentUser();
+      if (!currentUser) {
+        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+      }
+      entities.forEach(entity => {
+        entity.actor = currentUser.id ? currentUser.id.toString() : '';
+      });
     }
-    entities.forEach(entity => {
-      entity.actor = currentUser.id ? currentUser.id.toString() : '';
-    });
     return super.createAll(entities, options);
   }
 
