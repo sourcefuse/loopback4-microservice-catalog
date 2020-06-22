@@ -34,7 +34,7 @@ export class VideoChatSessionController {
     private readonly auditLogRepository: AuditLogsRepository,
     @repository(SessionAttendeesRepository)
     private readonly sessionAttendeesRepository: SessionAttendeesRepository,
-    @inject(VonageBindings.config)
+    @inject(VonageBindings.config, {optional: true})
     private readonly config: VonageConfig,
   ) {}
 
