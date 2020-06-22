@@ -38,15 +38,11 @@ export class EventService {
     );
 
     let busyDetails: StartEndTimeDTO[] = [];
-    // busyDetails = this.addToBusyArray(busyDetails, finalAttendeesList);
-    // busyDetails = this.addToBusyArray(busyDetails, finalEventsList);
     busyDetails = this.addToBusyArray(busyDetails, eventAttendeeList);
 
-    const busyDetailObj = {
+    return {
       busy: busyDetails,
     };
-
-    return busyDetailObj;
   }
 
   validateDateForTimeZone(date: Date): boolean {
@@ -79,18 +75,17 @@ export class EventService {
     startTime: Date,
     endTime: Date,
   ): Event[] {
-    for (const times in timesObj) {
-      if (timesObj[times].startDateTime) {
-        const startDateTime = timesObj[times].startDateTime;
-        const endDateTime = timesObj[times].endDateTime;
-        if (startDateTime && startDateTime < new Date(startTime)) {
-          timesObj[times].startDateTime = new Date(startTime);
+    timesObj.forEach(function (times) {
+      const {startDateTime, endDateTime} = times;
+      if (startDateTime && endDateTime) {
+        if (startDateTime < new Date(startTime)) {
+          times.startDateTime = new Date(startTime);
         }
-        if (endDateTime && endDateTime > new Date(endTime)) {
-          timesObj[times].endDateTime = new Date(endTime);
+        if (endDateTime > new Date(endTime)) {
+          times.endDateTime = new Date(endTime);
         }
       }
-    }
+    });
     return timesObj;
   }
 }

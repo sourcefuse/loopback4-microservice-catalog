@@ -10,6 +10,7 @@ describe('Calendar Controller', () => {
   let calendarRepo: CalendarRepository;
   let workingHourRepo: WorkingHourRepository;
   const pass = 'test_password';
+  const identifier = 'test@gmail.com';
   const testUser = {
     id: 1,
     username: 'test_user',
@@ -79,7 +80,7 @@ describe('Calendar Controller', () => {
       .expect(200);
 
     expect(response.body).to.have.properties(['identifier']);
-    expect(response.body.identifier).to.be.equal('test@gmail.com');
+    expect(response.body.identifier).to.be.equal(identifier);
   });
 
   it('add workinghours when calendar is added', async () => {
@@ -99,11 +100,11 @@ describe('Calendar Controller', () => {
       source: 'internal',
       enableWorkingHours: true,
       location: 'location',
-      identifier: 'test@gmail.com',
+      identifier: identifier,
       summary: 'string',
       timezone: 'ist',
       subscription: {
-        identifier: "test@gmail.com",
+        identifier: identifier,
         fgColor: "red"
       }
     };
@@ -200,7 +201,7 @@ describe('Calendar Controller', () => {
       source: 'internal',
       enableWorkingHours: true,
       location: 'location',
-      identifier: 'test@gmail.com',
+      identifier: identifier,
       summary: 'string',
       timezone: 'ist',
       workingHours: [
