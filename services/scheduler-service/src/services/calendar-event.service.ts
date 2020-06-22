@@ -1,6 +1,7 @@
 import {bind, BindingScope} from '@loopback/core';
 import {Where, Filter, repository} from '@loopback/repository';
 import {SubscriptionRepository} from '../repositories';
+import {EventAttendeeView} from '../models';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class CalendarEventService {
@@ -46,7 +47,11 @@ export class CalendarEventService {
     return whereClause;
   }
 
-  getFilter(email: string, whereClause: Where, filter?: Filter) {
+  getFilter(
+    identifier: string,
+    whereClause: Where,
+    filter?: Filter<EventAttendeeView>,
+  ) {
     let whereFromFilter = {};
     if (filter) {
       if (filter.where) {
@@ -57,7 +62,7 @@ export class CalendarEventService {
           whereClause,
           whereFromFilter,
           {
-            or: [{organizerEmail: email}, {email: email}],
+            or: [{identifier: identifier}, {attendeeIdentifier: identifier}],
           },
         ],
       };
@@ -67,7 +72,7 @@ export class CalendarEventService {
           and: [
             whereClause,
             {
-              or: [{organizerEmail: email}, {email: email}],
+              or: [{identifier: identifier}, {attendeeIdentifier: identifier}],
             },
           ],
         },

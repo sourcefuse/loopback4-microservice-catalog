@@ -6,5 +6,5 @@ export const enum ErrorKeys {
   SubscriptionNotExist = 'Subscription Not exist',
 
   //general
-  CanNotBeGreater = 'Right Variable Can Not Greater Then Left',
+  CanNotBeGreater = 'Right Date Can Not Greater Then Left',
 }
