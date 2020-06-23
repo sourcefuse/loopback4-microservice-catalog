@@ -31,8 +31,8 @@ import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageProvider} from './providers/vonage/vonage.provider';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
-import { VonageService } from './providers/vonage/vonage.service';
-import { SessionAttendeesRepository } from './repositories';
+import {VonageService} from './providers/vonage/vonage.service';
+import {SessionAttendeesRepository} from './repositories';
 
 export class VideoConfServiceComponent implements Component {
   constructor(
@@ -60,7 +60,11 @@ export class VideoConfServiceComponent implements Component {
       this.setupSequence(this.bindings);
     }
 
-    this.repositories = [AuditLogsRepository, VideoChatSessionRepository, SessionAttendeesRepository];
+    this.repositories = [
+      AuditLogsRepository,
+      VideoChatSessionRepository,
+      SessionAttendeesRepository,
+    ];
 
     this.models = [AuditLogs, VideoChatSession];
 

@@ -1,4 +1,4 @@
-import { Provider, service } from '@loopback/core';
+import {Provider, service} from '@loopback/core';
 import {
   ArchiveResponse,
   ArchiveResponseList,
@@ -13,11 +13,11 @@ import {
   VonageAzureTargetOptions,
 } from './types';
 
-import { VonageService } from './vonage.service';
-import { AuditLogsRepository } from '../../repositories';
-import { repository } from '@loopback/repository';
+import {VonageService} from './vonage.service';
+import {AuditLogsRepository} from '../../repositories';
+import {repository} from '@loopback/repository';
 import moment from 'moment';
-import { HttpErrors } from '@loopback/rest';
+import {HttpErrors} from '@loopback/rest';
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
@@ -25,15 +25,17 @@ export class VonageProvider implements Provider<VonageVideoChat> {
     private readonly vonageService: VonageService,
     @repository(AuditLogsRepository)
     private readonly auditLogRepository: AuditLogsRepository,
-  ) { }
+  ) {}
   value() {
     return {
       getMeetingLink: async (
         meetingOptions: VonageMeetingOptions,
       ): Promise<VonageMeetingResponse> => {
         try {
-          const response = await this.vonageService.getMeetingLink(meetingOptions);
-          this.auditLogRepository.create({
+          const response = await this.vonageService.getMeetingLink(
+            meetingOptions,
+          );
+          await this.auditLogRepository.create({
             action: 'session',
             actionType: 'create-session',
             before: meetingOptions,
@@ -42,11 +44,11 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           });
           return response;
         } catch (error) {
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: 'session',
             actionType: 'create-session',
             before: meetingOptions,
-            after: { errorStack: error.stack },
+            after: {errorStack: error.stack},
             actedAt: moment().format(),
           });
           throw new HttpErrors.InternalServerError('Error creating session');
@@ -57,8 +59,11 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         options: VonageSessionOptions,
       ): Promise<SessionResponse> => {
         try {
-          const response = await this.vonageService.getToken(sessionId, options);
-          this.auditLogRepository.create({
+          const response = await this.vonageService.getToken(
+            sessionId,
+            options,
+          );
+          await this.auditLogRepository.create({
             action: 'session',
             actionType: 'get-token',
             before: {
@@ -72,7 +77,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
           });
           return response;
         } catch (error) {
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: 'session',
             actionType: 'get-token',
             before: {
@@ -94,20 +99,20 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       ): Promise<ArchiveResponse | ArchiveResponseList> => {
         try {
           const response = await this.vonageService.getArchives(archiveId);
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: 'archive',
             actionType: archiveId ? 'getArchive' : 'getArchives',
-            before: archiveId ? { archiveId } : {},
+            before: archiveId ? {archiveId} : {},
             after: response,
             actedAt: moment().format(),
           });
           return response;
         } catch (error) {
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: 'archive',
             actionType: archiveId ? 'getArchive' : 'getArchives',
-            before: archiveId ? { archiveId } : {},
-            after: { errorStack: error.stack },
+            before: archiveId ? {archiveId} : {},
+            after: {errorStack: error.stack},
             actedAt: moment().format(),
           });
           throw new HttpErrors.InternalServerError(
@@ -118,23 +123,23 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       deleteArchive: async (archiveId: string) => {
         try {
           await this.vonageService.deleteArchive(archiveId);
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: 'archive',
             actionType: 'delete-archive',
             before: {
               archiveId,
             },
-            after: { response: 'Archive Deletion Successful!' },
+            after: {response: 'Archive Deletion Successful!'},
             actedAt: moment().format(),
           });
         } catch (error) {
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: 'archive',
             actionType: 'delete-archive',
             before: {
               archiveId,
             },
-            after: { errorStack: error.stack },
+            after: {errorStack: error.stack},
             actedAt: moment().format(),
           });
           throw new HttpErrors.InternalServerError(
@@ -149,19 +154,19 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         const auditLogActionType = 'set-storage-target';
         try {
           await this.vonageService.setUploadTarget(storageConfig);
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: auditLogAction,
             actionType: auditLogActionType,
             before: storageConfig,
-            after: { response: 'Storage Target Success' },
+            after: {response: 'Storage Target Success'},
             actedAt: moment().format(),
           });
         } catch (error) {
-          this.auditLogRepository.create({
+          await this.auditLogRepository.create({
             action: auditLogAction,
             actionType: auditLogActionType,
             before: storageConfig,
-            after: { errorStack: error.stack },
+            after: {errorStack: error.stack},
             actedAt: moment().format(),
           });
           throw new HttpErrors.InternalServerError(
