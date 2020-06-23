@@ -31,7 +31,7 @@ export class AuditLogsRepository extends DefaultCrudRepository<
     entity: DataObject<AuditLogs>,
     options?: Options,
   ): Promise<AuditLogs> {
-    if(!options?.skipCurrentUser) {
+    if (!options?.skipCurrentUser) {
       const currentUser = await this.getCurrentUser();
       if (!currentUser) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
@@ -45,7 +45,7 @@ export class AuditLogsRepository extends DefaultCrudRepository<
     entities: DataObject<AuditLogs>[],
     options?: Options,
   ): Promise<AuditLogs[]> {
-    if(!options?.skipCurrentUser) {
+    if (!options?.skipCurrentUser) {
       const currentUser = await this.getCurrentUser();
       if (!currentUser) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);

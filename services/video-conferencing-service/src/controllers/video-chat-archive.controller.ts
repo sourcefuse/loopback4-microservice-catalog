@@ -47,7 +47,7 @@ export class VideoChatArchiveController {
     });
     if (!archiveExists) {
       const errorMessage = 'Archive Not Found';
-      this.auditLogRepository.create({
+      await this.auditLogRepository.create({
         action: 'archive',
         actionType: 'getArchive',
         before: {archiveId},
@@ -103,7 +103,7 @@ export class VideoChatArchiveController {
     });
     if (!archiveExists) {
       const errorMessage = 'Archive Not Found';
-      this.auditLogRepository.create({
+      await this.auditLogRepository.create({
         action: 'archive',
         actionType: 'getArchive',
         before: {archiveId},

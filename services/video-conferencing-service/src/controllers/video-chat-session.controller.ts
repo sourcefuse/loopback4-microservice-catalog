@@ -67,17 +67,17 @@ export class VideoChatSessionController {
       if (!meetingOptions.scheduleTime) {
         errorMessage = 'Schedule time is not set.';
         auditLogPayload.after = {errorMessage};
-        this.auditLogRepository.create(auditLogPayload);
+        await this.auditLogRepository.create(auditLogPayload);
         throw new HttpErrors.BadRequest(errorMessage);
       } else if (isNaN(meetingOptions.scheduleTime.valueOf())) {
         errorMessage = 'Scheduled time is not in correct format.';
         auditLogPayload.after = {errorMessage};
-        this.auditLogRepository.create(auditLogPayload);
+        await this.auditLogRepository.create(auditLogPayload);
         throw new HttpErrors.BadRequest(errorMessage);
       } else if (moment().isAfter(meetingOptions.scheduleTime)) {
         errorMessage = `Meeting can't be scheduled with schedule time in past!`;
         auditLogPayload.after = {errorMessage};
-        this.auditLogRepository.create(auditLogPayload);
+        await this.auditLogRepository.create(auditLogPayload);
         throw new HttpErrors.BadRequest(errorMessage);
       } else {
         scheduledTime = meetingOptions.scheduleTime;
@@ -94,12 +94,12 @@ export class VideoChatSessionController {
       meetingLink: meetingLinkId,
       isScheduled: meetingOptions.isScheduled,
       scheduleTime: new Date(scheduledTime),
-      isArchived: meetingResp.isArchived
+      isArchived: meetingResp.isArchived,
     });
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
     auditLogPayload.after = videoSessionDetail;
-    this.auditLogRepository.create(auditLogPayload);
+    await this.auditLogRepository.create(auditLogPayload);
     return meetingLinkId;
   }
 
@@ -136,21 +136,24 @@ export class VideoChatSessionController {
     if (typeof meetingLinkId !== 'string' || !meetingLinkId) {
       errorMessage = 'Meeting link should be a valid string';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    if (sessionOptions.expireTime && isNaN(sessionOptions.expireTime?.valueOf())) {
+    if (
+      sessionOptions.expireTime &&
+      isNaN(sessionOptions.expireTime?.valueOf())
+    ) {
       errorMessage = 'Expire time is not in correct format.';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
     if (moment().isAfter(sessionOptions.expireTime)) {
       errorMessage = 'Expire time can not be in past.';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -163,7 +166,7 @@ export class VideoChatSessionController {
     if (!session) {
       errorMessage = 'Session does not exist';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -171,7 +174,7 @@ export class VideoChatSessionController {
     if (session.endTime) {
       errorMessage = 'This meeting has been expired';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -185,14 +188,14 @@ export class VideoChatSessionController {
         errorMessage = `Meeting can only be started ${this.config.timeToStart} minutes before
          the scheduled time`;
         auditLogPayload.after = {errorMessage};
-        this.auditLogRepository.create(auditLogPayload);
+        await this.auditLogRepository.create(auditLogPayload);
         throw new HttpErrors.BadRequest(errorMessage);
       }
     }
 
-    if(!session.startTime) {
-      this.videoChatSessionRepository.updateById(session.id, {
-        startTime: new Date()
+    if (!session.startTime) {
+      await this.videoChatSessionRepository.updateById(session.id, {
+        startTime: new Date(),
       });
     }
 
@@ -213,7 +216,7 @@ export class VideoChatSessionController {
   ): Promise<void> {
     const auditLogPayload = {
       action: 'session',
-      actionType: 'get-token',
+      actionType: 'end-session',
       before: {meetingLinkId},
       actedAt: moment().format(),
       after: {},
@@ -222,7 +225,7 @@ export class VideoChatSessionController {
     if (typeof meetingLinkId !== 'string' || !meetingLinkId) {
       errorMessage = 'Meeting link should be a valid string.';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest('Meeting link should be a valid string.');
     }
 
@@ -235,20 +238,23 @@ export class VideoChatSessionController {
     if (!videoSessionDetail) {
       errorMessage = 'Meeting Not Found';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.NotFound(errorMessage);
     }
 
     if (videoSessionDetail.endTime) {
       errorMessage = 'Meeting has already been ended!';
       auditLogPayload.after = {errorMessage};
-      this.auditLogRepository.create(auditLogPayload);
+      await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    return this.videoChatSessionRepository.updateById(videoSessionDetail.id, {
+    await this.videoChatSessionRepository.updateById(videoSessionDetail.id, {
       endTime: new Date(),
     });
+
+    auditLogPayload.after = {response: 'end session successful'};
+    await this.auditLogRepository.create(auditLogPayload);
   }
 
   @authorize(['*'])
@@ -293,21 +299,27 @@ export class VideoChatSessionController {
           );
         }
       }
-      this.auditLogRepository.create({
-        action: 'session-webhook',
-        actionType: event,
-        before: webhookPayload,
-        after: {response: 'Webhook event triggered successfully'},
-        actedAt: moment().format(),
-      }, { skipCurrentUser: true });
+      await this.auditLogRepository.create(
+        {
+          action: 'session-webhook',
+          actionType: event,
+          before: webhookPayload,
+          after: {response: 'Webhook event triggered successfully'},
+          actedAt: moment().format(),
+        },
+        {skipCurrentUser: true},
+      );
     } catch (error) {
-      this.auditLogRepository.create({
-        action: 'session-webhook',
-        actionType: webhookPayload.event,
-        before: webhookPayload,
-        after: {errorStack: error.stack},
-        actedAt: moment().format(),
-      }, { skipCurrentUser: true });
+      await this.auditLogRepository.create(
+        {
+          action: 'session-webhook',
+          actionType: webhookPayload.event,
+          before: webhookPayload,
+          after: {errorStack: error.stack},
+          actedAt: moment().format(),
+        },
+        {skipCurrentUser: true},
+      );
       throw new HttpErrors.InternalServerError(
         'Error occured triggering webhook event',
       );

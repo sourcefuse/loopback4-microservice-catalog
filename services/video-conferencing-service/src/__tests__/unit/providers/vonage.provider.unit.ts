@@ -167,7 +167,9 @@ describe('VonageProvider (unit)', () => {
       expect(result)
         .to.have.property('sessionId')
         .which.eql(archive.sessionId);
-      expect(result).to.have.property('metaData').which.is.a.Object;
+      expect(result)
+        .to.have.property('metaData')
+        .which.is.an.Object();
     });
 
     it('returns an archive response list for null archive id', async () => {
@@ -182,7 +184,9 @@ describe('VonageProvider (unit)', () => {
       expect(result)
         .to.have.property('count')
         .which.eql(archives.length);
-      expect(result).to.have.property('items').which.is.an.Array;
+      expect(result)
+        .to.have.property('items')
+        .which.is.an.Array();
     });
 
     it('returns an error if vonage fails for given archive id', async () => {
