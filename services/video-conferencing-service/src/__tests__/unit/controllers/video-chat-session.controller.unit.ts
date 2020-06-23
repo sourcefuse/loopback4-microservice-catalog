@@ -227,6 +227,7 @@ describe('Session APIs', () => {
       await controller.endSession(meetingLinkId);
       sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
       sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error for invalid meeting link', async () => {
