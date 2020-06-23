@@ -20,7 +20,7 @@ export class Attendee extends UserModifiableEntity
   @property({
     type: 'string',
     required: true,
-    name:'identifier',
+    name: 'identifier',
     jsonSchema: {
       maxLength: 200,
     },

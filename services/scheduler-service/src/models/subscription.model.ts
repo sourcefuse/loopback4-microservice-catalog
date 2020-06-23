@@ -63,7 +63,7 @@ export class Subscription extends UserModifiableEntity
   @property({
     type: 'string',
     required: true,
-    name:'identifier'
+    name: 'identifier',
   })
   identifier: string;
 

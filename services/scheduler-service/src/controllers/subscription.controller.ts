@@ -33,9 +33,9 @@ import {AccessRoleType} from '../models/enums/access-role.enum';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
-import { ISchedulerConfig } from '../types';
-import { SchedulerBindings } from '../keys';
-import { IdentifierType } from '../models/enums/identifier-type.enum';
+import {ISchedulerConfig} from '../types';
+import {SchedulerBindings} from '../keys';
+import {IdentifierType} from '../models/enums/identifier-type.enum';
 
 const basePath = '/subscriptions';
 
@@ -49,7 +49,7 @@ export class SubscriptionController {
     @inject(SchedulerBindings.Config, {
       optional: true,
     })
-    private readonly schdulerConfig?: ISchedulerConfig
+    private readonly schdulerConfig?: ISchedulerConfig,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -124,7 +124,7 @@ export class SubscriptionController {
     @param.query.string('minAccessRole') minAccessRole?: AccessRoleType,
   ): Promise<Subscription[]> {
     let identifierType = this.schdulerConfig?.identifierMappedTo;
-    if (!identifierType){
+    if (!identifierType) {
       identifierType = IdentifierType.Id;
     }
     return this.subscriptionRepository.find({

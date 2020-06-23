@@ -1,3 +1,5 @@
 dist
 *.json
 migrations/
+coverage/
+.nyc_output 
