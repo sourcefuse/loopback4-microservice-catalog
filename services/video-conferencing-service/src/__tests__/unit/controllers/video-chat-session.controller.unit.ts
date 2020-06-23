@@ -222,10 +222,9 @@ describe('Session APIs', () => {
       const findOne = videoChatSessionRepo.stubs.findOne;
       const dummyId = 1;
       findOne.resolves(getVideoChatSession({id: dummyId}));
-      const sessionOptions = getSessionOptions({});
       const updateById = videoChatSessionRepo.stubs.updateById;
       updateById.resolves();
-      await controller.endSession(sessionOptions, meetingLinkId);
+      await controller.endSession(meetingLinkId);
       sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
       sinon.assert.calledOnce(updateById);
     });
@@ -233,9 +232,8 @@ describe('Session APIs', () => {
     it('returns an error for invalid meeting link', async () => {
       setUp({});
       const invalidMeetingLink = '';
-      const sessionOptions = getSessionOptions({});
       const error = await controller
-        .endSession(sessionOptions, invalidMeetingLink)
+        .endSession(invalidMeetingLink)
         .catch(err => err);
       expect(error).instanceof(Error);
       sinon.assert.calledOnce(auidtLogCreate);
@@ -243,11 +241,10 @@ describe('Session APIs', () => {
 
     it('returns an error if meeting link not found ', async () => {
       setUp({});
-      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves();
       const error = await controller
-        .endSession(sessionOptions, meetingLinkId)
+        .endSession(meetingLinkId)
         .catch(err => err);
       expect(error).instanceof(Error);
       sinon.assert.calledOnce(findOne);
@@ -256,11 +253,10 @@ describe('Session APIs', () => {
 
     it('returns an error if meeting has already ended', async () => {
       setUp({});
-      const sessionOptions = getSessionOptions({});
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves(getVideoChatSession({endTime: pastDate}));
       const error = await controller
-        .endSession(sessionOptions, meetingLinkId)
+        .endSession(meetingLinkId)
         .catch(err => err);
       expect(error).instanceof(Error);
       sinon.assert.calledOnce(findOne);
