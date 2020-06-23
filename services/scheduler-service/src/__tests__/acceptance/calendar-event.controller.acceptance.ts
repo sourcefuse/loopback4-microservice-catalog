@@ -10,6 +10,8 @@ describe('Calendar Event Controller', () => {
   let calendarRepo: CalendarRepository;
   let subscriptionRepo: SubscriptionRepository;
   let calendarId: string;
+  let subscriptionId: string;
+
   const pass = 'test_password';
   const testUser = {
     id: 1,
@@ -22,6 +24,9 @@ describe('Calendar Event Controller', () => {
       'DeleteEvent',
       'CreateCalendar',
       'CreateSubscription',
+      'DeleteSubscription',
+      'CreateAttendee',
+      'ViewAttendee',
     ],
   };
 
@@ -87,6 +92,33 @@ describe('Calendar Event Controller', () => {
       .expect(422);
   });
 
+  it('gives status 404 when primary calendar does not exist', async () => {
+    await client
+      .get(`/calendars/primary/events`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(404);
+  });
+
+  it('gives status 404 when calendar does not exist', async () => {
+    const id = 'c8bf9bcc-b486-11ea-8c6b-1002b57a26e6';
+    await client
+      .get(`/calendars/${id}/events`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(404);
+  });
+
+  it('gives status 404 when subscription does not exist', async () => {
+    await client
+      .del(`/subscriptions/${subscriptionId}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(204);
+
+    await client
+      .get(`/calendars/${calendarId}/events`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(404);
+  });
+
   it('gives status 200 when valid timeMin passed as query parameter', async () => {
     const timeMin = new Date(2020, 6, 12).toISOString();
     await client
@@ -137,15 +169,17 @@ describe('Calendar Event Controller', () => {
 
     calendarId = calendar.body.id;
 
-    await client
+    const subscription = await client
       .post(`/subscriptions`)
       .set('authorization', `Bearer ${token}`)
       .send({identifier: 'dummy', calendarId: calendarId, isPrimary: true});
 
+    subscriptionId = subscription.body.id;
+
     await client
       .post(`/calendars/${calendarId}/events`)
       .set('authorization', `Bearer ${token}`)
-      .send({isFullDayEvent: false});
+      .send({isFullDayEvent: false, identifier: 'dummy'});
   }
 
   async function deleteMockData() {
