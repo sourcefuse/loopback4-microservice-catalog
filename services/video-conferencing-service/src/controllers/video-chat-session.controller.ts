@@ -216,7 +216,7 @@ export class VideoChatSessionController {
   ): Promise<void> {
     const auditLogPayload = {
       action: 'session',
-      actionType: 'get-token',
+      actionType: 'end-session',
       before: {meetingLinkId},
       actedAt: moment().format(),
       after: {},
@@ -249,9 +249,14 @@ export class VideoChatSessionController {
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    return this.videoChatSessionRepository.updateById(videoSessionDetail.id, {
+    await this.videoChatSessionRepository.updateById(videoSessionDetail.id, {
       endTime: new Date(),
     });
+
+    auditLogPayload.after = 'Successful End session';
+    await this.auditLogRepository.create(auditLogPayload);
+
+    return;
   }
 
   @authorize(['*'])
