@@ -255,8 +255,6 @@ export class VideoChatSessionController {
 
     auditLogPayload.after = {response: 'end session successful'};
     await this.auditLogRepository.create(auditLogPayload);
-
-    return;
   }
 
   @authorize(['*'])
