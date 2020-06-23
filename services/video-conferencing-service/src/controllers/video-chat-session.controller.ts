@@ -253,7 +253,7 @@ export class VideoChatSessionController {
       endTime: new Date(),
     });
 
-    auditLogPayload.after = 'Successful End session';
+    auditLogPayload.after = {response: 'end session successful'};
     await this.auditLogRepository.create(auditLogPayload);
 
     return;
