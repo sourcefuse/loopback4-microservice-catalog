@@ -1,5 +1,5 @@
 import {IAuthUserWithPermissions} from '@sourceloop/core';
-import { IdentifierType } from './models/enums/identifier-type.enum';
+import {IdentifierType} from './models/enums/identifier-type.enum';
 
 export interface CustomPermissionFn {
   (user: IAuthUserWithPermissions): Promise<boolean>;
