@@ -64,7 +64,7 @@ Since database migrations run using db-migrate package, we need to supply .env f
 
 #### Database Model
 
-![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/scheduler_db_schema.png)
+![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/migrations/scheduler_db_schema.png)
 
 ## Using config
 
