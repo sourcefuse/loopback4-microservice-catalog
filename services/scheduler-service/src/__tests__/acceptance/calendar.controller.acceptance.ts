@@ -105,8 +105,8 @@ describe('Calendar Controller', () => {
       timezone: 'ist',
       subscription: {
         identifier,
-        fgColor: "red"
-      }
+        fgColor: 'red',
+      },
     };
 
     await client
@@ -180,7 +180,7 @@ describe('Calendar Controller', () => {
     expect(workingHoursResponse.body[0]).to.have.properties(['dayOfWeek']);
     expect(workingHoursResponse.body[0].dayOfWeek).to.be.equal(2);
   });
-  
+
   it('deletes a calendar successfully', async () => {
     const reqToAddCalendar = await addCalendar();
     await client

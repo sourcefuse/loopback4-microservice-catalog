@@ -57,8 +57,8 @@ import {
   EventAttendeeViewRepository,
 } from './repositories';
 import {ValidatorService, CalendarEventService} from './services';
-import { EventService } from './services/event.service';
-import { CalendarService } from './services/calendar.service';
+import {EventService} from './services/event.service';
+import {CalendarService} from './services/calendar.service';
 
 export class SchedulerServiceComponent implements Component {
   constructor(

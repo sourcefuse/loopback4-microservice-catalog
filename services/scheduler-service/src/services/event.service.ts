@@ -1,8 +1,8 @@
 import {bind, BindingScope} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import { ResponseStatusType } from '../models/enums/response-status.enum';
-import { Event, IStartEndTime } from '../models';
-import { EventAttendeeViewRepository } from '../repositories/event-attendee-view.repository';
+import {ResponseStatusType} from '../models/enums/response-status.enum';
+import {Event, IStartEndTime} from '../models';
+import {EventAttendeeViewRepository} from '../repositories/event-attendee-view.repository';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class EventService {
@@ -15,20 +15,26 @@ export class EventService {
     const eventAttendeeFilter = {
       where: {
         and: [
-          {or: [
-            {and: [{identifier: id}, {attendeeIdentifier: null as unknown as string}]}, 
-            {attendeeIdentifier: id}
-          ]},
+          {
+            or: [
+              {
+                and: [
+                  {identifier: id},
+                  {attendeeIdentifier: (null as unknown) as string},
+                ],
+              },
+              {attendeeIdentifier: id},
+            ],
+          },
           {responseStatus: {neq: ResponseStatusType.Declined}},
-          {and: [
-            {startDateTime: {lt: timeMax}},
-            {endDateTime: {gt: timeMin}}
-          ]},
-        ]
+          {and: [{startDateTime: {lt: timeMax}}, {endDateTime: {gt: timeMin}}]},
+        ],
       },
     };
 
-    const eventAttendeeResponse = await this.eventAttendeeViewRepository.find(eventAttendeeFilter);
+    const eventAttendeeResponse = await this.eventAttendeeViewRepository.find(
+      eventAttendeeFilter,
+    );
 
     const eventAttendeeList = this.limitTimeToBoundaryValues(
       eventAttendeeResponse,
@@ -54,16 +60,13 @@ export class EventService {
     return false;
   }
 
-  addToBusyArray(
-    busy: IStartEndTime[],
-    entityList: Event[],
-  ): IStartEndTime[] {
+  addToBusyArray(busy: IStartEndTime[], entityList: Event[]): IStartEndTime[] {
     for (const entity of entityList) {
       const {startDateTime, endDateTime} = entity;
       if (startDateTime && endDateTime) {
         const startEndTime: IStartEndTime = {
           startDateTime,
-          endDateTime
+          endDateTime,
         };
         busy.push(startEndTime);
       }
@@ -72,7 +75,7 @@ export class EventService {
   }
 
   limitTimeToBoundaryValues(
-    timesObj:  Event[],
+    timesObj: Event[],
     startTime: Date,
     endTime: Date,
   ): Event[] {

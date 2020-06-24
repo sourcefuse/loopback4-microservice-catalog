@@ -28,4 +28,3 @@ export interface IStartEndTime {
 export interface IFreeBusyItem {
   id: string;
 }
-

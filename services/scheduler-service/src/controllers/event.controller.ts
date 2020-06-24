@@ -31,8 +31,8 @@ import {
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
-import { FreeBusyDTO } from '../models/free-busy.dto';
-import { EventService } from '../services';
+import {FreeBusyDTO} from '../models/free-busy.dto';
+import {EventService} from '../services';
 
 const basePath = '/events';
 
@@ -132,10 +132,7 @@ export class EventController {
     if (
       !this.eventService.validateDateForTimeZone(timeMin) ||
       !this.eventService.validateDateForTimeZone(timeMax) ||
-      !this.validatorService.minMaxTime(
-        timeMin,
-        timeMax,
-      )
+      !this.validatorService.minMaxTime(timeMin, timeMax)
     ) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.DateInvalid);
     }
@@ -163,7 +160,7 @@ export class EventController {
     response.calendars = calendars;
     return response;
   }
-  
+
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })

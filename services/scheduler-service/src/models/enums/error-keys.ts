@@ -13,5 +13,5 @@ export const enum ErrorKeys {
 
   IdNotMatchedWithParameters = 'Id in Request Body not matching with Query Parameters',
 
-  DuplicateDayOfWeek = 'Duplicate DayOfWeek'
+  DuplicateDayOfWeek = 'Duplicate DayOfWeek',
 }

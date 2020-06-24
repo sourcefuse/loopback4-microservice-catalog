@@ -17,19 +17,31 @@ import {
   requestBody,
   HttpErrors,
 } from '@loopback/rest';
-import {authenticate, STRATEGY, AuthenticationBindings} from 'loopback4-authentication';
+import {
+  authenticate,
+  STRATEGY,
+  AuthenticationBindings,
+} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour, Subscription, IdentifierType} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
 import {PermissionKey} from '../models/enums/permission-key.enum';
-import {CalendarRepository, WorkingHourRepository, SubscriptionRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE, IAuthUserWithPermissions} from '@sourceloop/core';
-import { AccessRoleType } from '../models/enums/access-role.enum';
-import { inject, service } from '@loopback/core';
-import { SchedulerBindings } from '../keys';
-import { ISchedulerConfig } from '../types';
-import { ErrorKeys } from '../models/enums/error-keys';
-import { CalendarService } from '../services/calendar.service';
+import {
+  CalendarRepository,
+  WorkingHourRepository,
+  SubscriptionRepository,
+} from '../repositories';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {AccessRoleType} from '../models/enums/access-role.enum';
+import {inject, service} from '@loopback/core';
+import {SchedulerBindings} from '../keys';
+import {ISchedulerConfig} from '../types';
+import {ErrorKeys} from '../models/enums/error-keys';
+import {CalendarService} from '../services/calendar.service';
 
 const basePath = '/calendars';
 const calendarModelInstance = 'Calendar model instance';
@@ -48,7 +60,7 @@ export class CalendarController {
     @inject(SchedulerBindings.Config, {
       optional: true,
     })
-    private readonly schdulerConfig?: ISchedulerConfig
+    private readonly schdulerConfig?: ISchedulerConfig,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -104,7 +116,7 @@ export class CalendarController {
     })
     calendarDTO: Omit<CalendarDTO, 'id'>,
   ): Promise<CalendarDTO> {
-    if(!calendarDTO.subscription){
+    if (!calendarDTO.subscription) {
       throw new HttpErrors.NotFound(ErrorKeys.SubscriptionNotExist);
     }
     let subscription: Subscription = new Subscription();
@@ -115,10 +127,10 @@ export class CalendarController {
     let response = await this.createCalendar(calendarDTO);
 
     let identifierType = this.schdulerConfig?.identifierMappedTo;
-    if (!identifierType){
+    if (!identifierType) {
       identifierType = IdentifierType.Id;
     }
-    
+
     const subscriptionList = await this.subscriptionRepository.find({
       where: {
         identifier: this.currentUser[identifierType],
@@ -130,19 +142,21 @@ export class CalendarController {
     } else {
       subscription.isPrimary = true;
     }
-    if(response.id){
+    if (response.id) {
       subscription.calendarId = response.id;
       subscription.identifier = calendarDTO.identifier;
       subscription.accessRole = AccessRoleType.Owner;
-      const subscriptionResponse = await this.subscriptionRepository.create(subscription);
+      const subscriptionResponse = await this.subscriptionRepository.create(
+        subscription,
+      );
       const calendarDTOResp: CalendarDTO = new CalendarDTO();
       calendarDTOResp.subscription = subscriptionResponse;
       response = Object.assign(calendarDTOResp, response);
     }
     return response;
   }
-  
-  async createCalendar(calendarDTO: CalendarDTO){
+
+  async createCalendar(calendarDTO: CalendarDTO) {
     let workingHours: WorkingHour[] = [];
     if (calendarDTO.workingHours) {
       workingHours = calendarDTO.workingHours;
@@ -302,10 +316,10 @@ export class CalendarController {
       workingHours = calendarDTO.workingHours;
       await this.calendarService.checkPutValidations(workingHours, id);
       await this.calendarService.deleteWorkingHours(workingHours, id);
-      
+
       const workingHoursToAdd: WorkingHour[] = [];
       for (const workingHour of workingHours) {
-        if(workingHour.id === ""){
+        if (workingHour.id === '') {
           workingHoursToAdd.push(workingHour);
           continue;
         }
@@ -315,7 +329,7 @@ export class CalendarController {
         );
       }
 
-      for(const workingHour of workingHoursToAdd){
+      for (const workingHour of workingHoursToAdd) {
         delete workingHour.id;
         await this.workingHourRepository.create(workingHour);
       }

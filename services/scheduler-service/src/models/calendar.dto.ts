@@ -1,6 +1,6 @@
 import {model, property, Model} from '@loopback/repository';
 import {WorkingHour} from './working-hour.model';
-import { Subscription } from './subscription.model';
+import {Subscription} from './subscription.model';
 
 @model()
 export class CalendarDTO extends Model {
