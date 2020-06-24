@@ -29,10 +29,12 @@ Main feature set:
 - Event Attachment
 
 
-## Install //TODO
+## Install 
 
 
 ```sh
+npm install @sourceloop/scheduler-service
+
 ```
 
 ## Usage - integrating with main app
@@ -43,7 +45,7 @@ Add component to application.
 
 ```ts
 // application.ts
-// import {SchedulerComponent} from 'loopback4-scheduler'; //TODO
+import {SchedulerComponent} from '@sourceloop/scheduler-service'; 
 ....
 export class SchedulerServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -60,10 +62,14 @@ export class SchedulerServiceApplication extends BootMixin(
 
 Since database migrations run using db-migrate package, we need to supply .env file to provide database configuration parameters. All other configurations parameters will be injected to and from context.
 
+#### Database Model
+
+![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/scheduler_db_schema.png)
+
 ## Using config
 
 ```ts
-//import {SchedulerComponent, SchedulerBindings} from 'loopback4-scheduler'; //TODO
+import {SchedulerComponent, SchedulerBindings} from '@sourceloop/scheduler-service'; 
 ....
 export class SchedulerServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
