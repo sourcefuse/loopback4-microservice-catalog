@@ -16,7 +16,7 @@ describe('Calendar Event Service', () => {
   afterEach(() => sinon.restore());
   beforeEach(setUp);
 
-  describe('checks for primary subscription and returns it', async () => {
+  describe('checks for primary subscription and returns it', () => {
     it('returns the subscription', async () => {
       const calendarId = 'dummy';
       const subscription = new Subscription({
