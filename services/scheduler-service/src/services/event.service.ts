@@ -1,8 +1,7 @@
 import {bind, BindingScope} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import { ResponseStatusType } from '../models/enums/response-status.enum';
-import { StartEndTimeDTO } from '../models/start-end-time.dto';
-import { Event } from '../models';
+import { Event, IStartEndTime } from '../models';
 import { EventAttendeeViewRepository } from '../repositories/event-attendee-view.repository';
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -37,7 +36,7 @@ export class EventService {
       timeMax,
     );
 
-    let busyDetails: StartEndTimeDTO[] = [];
+    let busyDetails: IStartEndTime[] = [];
     busyDetails = this.addToBusyArray(busyDetails, eventAttendeeList);
 
     return {
@@ -56,14 +55,16 @@ export class EventService {
   }
 
   addToBusyArray(
-    busy: StartEndTimeDTO[],
+    busy: IStartEndTime[],
     entityList: Event[],
-  ): StartEndTimeDTO[] {
+  ): IStartEndTime[] {
     for (const entity of entityList) {
-      if (entity.startDateTime && entity.endDateTime) {
-        const startEndTime = new StartEndTimeDTO();
-        startEndTime.startDateTime = entity.startDateTime;
-        startEndTime.endDateTime = entity.endDateTime;
+      const {startDateTime, endDateTime} = entity;
+      if (startDateTime && endDateTime) {
+        const startEndTime: IStartEndTime = {
+          startDateTime,
+          endDateTime
+        };
         busy.push(startEndTime);
       }
     }

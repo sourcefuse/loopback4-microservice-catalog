@@ -1,5 +1,4 @@
 import {property} from '@loopback/repository';
-import {FreeBusyItemDTO} from './free-busy-item.dto';
 
 export class FreeBusyDTO {
   @property({
@@ -18,5 +17,15 @@ export class FreeBusyDTO {
     type: 'object',
     id: true,
   })
-  items: FreeBusyItemDTO[];
+  items: IFreeBusyItem[];
 }
+
+export interface IStartEndTime {
+  startDateTime: Date;
+  endDateTime: Date;
+}
+
+export interface IFreeBusyItem {
+  id: string;
+}
+

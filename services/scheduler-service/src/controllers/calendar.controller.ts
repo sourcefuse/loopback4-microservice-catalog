@@ -15,6 +15,7 @@ import {
   post,
   put,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {authenticate, STRATEGY, AuthenticationBindings} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -24,9 +25,11 @@ import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository, WorkingHourRepository, SubscriptionRepository} from '../repositories';
 import {STATUS_CODE, CONTENT_TYPE, IAuthUserWithPermissions} from '@sourceloop/core';
 import { AccessRoleType } from '../models/enums/access-role.enum';
-import { inject } from '@loopback/core';
+import { inject, service } from '@loopback/core';
 import { SchedulerBindings } from '../keys';
 import { ISchedulerConfig } from '../types';
+import { ErrorKeys } from '../models/enums/error-keys';
+import { CalendarService } from '../services/calendar.service';
 
 const basePath = '/calendars';
 const calendarModelInstance = 'Calendar model instance';
@@ -41,6 +44,7 @@ export class CalendarController {
     public subscriptionRepository: SubscriptionRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
+    @service(CalendarService) public calendarService: CalendarService,
     @inject(SchedulerBindings.Config, {
       optional: true,
     })
@@ -100,12 +104,15 @@ export class CalendarController {
     })
     calendarDTO: Omit<CalendarDTO, 'id'>,
   ): Promise<CalendarDTO> {
+    if(!calendarDTO.subscription){
+      throw new HttpErrors.NotFound(ErrorKeys.SubscriptionNotExist);
+    }
     let subscription: Subscription = new Subscription();
     if (calendarDTO.subscription) {
       subscription = Object.assign(calendarDTO.subscription);
     }
     delete calendarDTO.subscription;
-    const response = await this.createCalendar(calendarDTO);
+    let response = await this.createCalendar(calendarDTO);
 
     let identifierType = this.schdulerConfig?.identifierMappedTo;
     if (!identifierType){
@@ -127,7 +134,10 @@ export class CalendarController {
       subscription.calendarId = response.id;
       subscription.identifier = calendarDTO.identifier;
       subscription.accessRole = AccessRoleType.Owner;
-      await this.subscriptionRepository.create(subscription);
+      const subscriptionResponse = await this.subscriptionRepository.create(subscription);
+      const calendarDTOResp: CalendarDTO = new CalendarDTO();
+      calendarDTOResp.subscription = subscriptionResponse;
+      response = Object.assign(calendarDTOResp, response);
     }
     return response;
   }
@@ -290,11 +300,24 @@ export class CalendarController {
     let workingHours: WorkingHour[] = [];
     if (calendarDTO.workingHours) {
       workingHours = calendarDTO.workingHours;
+      await this.calendarService.checkPutValidations(workingHours, id);
+      await this.calendarService.deleteWorkingHours(workingHours, id);
+      
+      const workingHoursToAdd: WorkingHour[] = [];
       for (const workingHour of workingHours) {
+        if(workingHour.id === ""){
+          workingHoursToAdd.push(workingHour);
+          continue;
+        }
         await this.workingHourRepository.replaceById(
           workingHour.id,
           workingHour,
         );
+      }
+
+      for(const workingHour of workingHoursToAdd){
+        delete workingHour.id;
+        await this.workingHourRepository.create(workingHour);
       }
     }
     delete calendarDTO.workingHours;

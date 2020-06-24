@@ -128,20 +128,21 @@ export class EventController {
     })
     freeBusyDTO: FreeBusyDTO,
   ) {
+    const {timeMin, timeMax} = freeBusyDTO;
     if (
-      !this.eventService.validateDateForTimeZone(freeBusyDTO.timeMin) ||
-      !this.eventService.validateDateForTimeZone(freeBusyDTO.timeMax) ||
+      !this.eventService.validateDateForTimeZone(timeMin) ||
+      !this.eventService.validateDateForTimeZone(timeMax) ||
       !this.validatorService.minMaxTime(
-        freeBusyDTO.timeMin,
-        freeBusyDTO.timeMax,
+        timeMin,
+        timeMax,
       )
     ) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.DateInvalid);
     }
 
     const response = {
-      timeMax: freeBusyDTO.timeMax,
-      timeMin: freeBusyDTO.timeMin,
+      timeMax,
+      timeMin,
       calendars: {},
     };
 
@@ -150,8 +151,8 @@ export class EventController {
       const id = item.id;
       const busyDetailsObj = await this.eventService.getBusyDetails(
         item.id,
-        freeBusyDTO.timeMax,
-        freeBusyDTO.timeMin,
+        timeMax,
+        timeMin,
       );
 
       const calendar = {

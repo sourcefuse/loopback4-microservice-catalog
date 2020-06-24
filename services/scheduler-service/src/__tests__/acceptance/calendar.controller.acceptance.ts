@@ -100,11 +100,11 @@ describe('Calendar Controller', () => {
       source: 'internal',
       enableWorkingHours: true,
       location: 'location',
-      identifier: identifier,
+      identifier,
       summary: 'string',
       timezone: 'ist',
       subscription: {
-        identifier: identifier,
+        identifier,
         fgColor: "red"
       }
     };
@@ -201,7 +201,7 @@ describe('Calendar Controller', () => {
       source: 'internal',
       enableWorkingHours: true,
       location: 'location',
-      identifier: identifier,
+      identifier,
       summary: 'string',
       timezone: 'ist',
       workingHours: [
