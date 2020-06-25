@@ -11,7 +11,6 @@ describe('Calendar Event Controller', () => {
   let subscriptionRepo: SubscriptionRepository;
   let calendarId: string;
   let subscriptionId: string;
-
   const pass = 'test_password';
   const testUser = {
     id: 1,

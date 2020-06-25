@@ -64,7 +64,7 @@ describe('Attendee Controller', () => {
     const reqToAddEntity = await addEntity();
     const identifier = 'updated@gmail.com';
     const entityToUpdate = {
-      identifier: identifier,
+      identifier,
       eventId: 'event-id',
     };
 
@@ -87,7 +87,7 @@ describe('Attendee Controller', () => {
     const reqToAddEntity = await addEntity();
     const identifier = 'updated@gmail.com';
     const entityToUpdate = {
-      identifier: identifier,
+      identifier,
       eventId: 'event-id',
     };
 
