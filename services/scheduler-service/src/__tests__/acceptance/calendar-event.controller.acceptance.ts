@@ -70,6 +70,13 @@ describe('Calendar Event Controller', () => {
       .expect(200);
   });
 
+  it('gives status 200 when filter is passed', async () => {
+    await client
+      .get(`/calendars/${calendarId}/events?filter[where][deleted]=false`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
+
   it('gives status 200 when valid min max times are passed as query parameters', async () => {
     const timeMin = new Date(2020, 6, 12).toISOString();
     const timeMax = new Date(2020, 6, 13).toISOString();

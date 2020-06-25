@@ -20,13 +20,14 @@ import {
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {Attachment, Attendee, Event} from '../models';
+import {Attachment, Attendee, Event, EventAttendeeView} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventDTO} from '../models/event.dto';
 import {
   AttachmentRepository,
   AttendeeRepository,
   EventRepository,
+  EventAttendeeViewRepository,
 } from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
@@ -42,6 +43,8 @@ export class EventController {
     public attendeeRepository: AttendeeRepository,
     @repository(AttachmentRepository)
     public attachmentRepository: AttachmentRepository,
+    @repository(EventAttendeeViewRepository)
+    public eventAttendeeViewRepository: EventAttendeeViewRepository,
     @service(ValidatorService) public validatorService: ValidatorService,
   ) {}
 
@@ -143,7 +146,27 @@ export class EventController {
       },
     },
   })
-  async find(@param.filter(Event) filter?: Filter<Event>): Promise<Event[]> {
+  async find(
+    @param.filter(EventAttendeeView) filter?: Filter<EventAttendeeView>,
+  ): Promise<Event[]> {
+    const whereClause: Filter = {
+      where: filter?.where ?? {},
+    };
+
+    const events = await this.eventAttendeeViewRepository.find(whereClause);
+
+    const eventIds: string[] = [];
+    events.forEach(event => {
+      if (event.id) {
+        eventIds.push(event.id);
+      }
+    });
+
+    if (filter) {
+      filter.where = {id: {inq: eventIds}};
+    } else {
+      filter = {where: {id: {inq: eventIds}}};
+    }
     return this.eventRepository.find(filter);
   }
 
@@ -235,42 +258,9 @@ export class EventController {
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() event: EventDTO,
+    @requestBody() event: Event,
   ): Promise<void> {
-    const isCalendar = await this.validatorService.calendarExists(
-      event.calendarId,
-    );
-    if (!isCalendar) {
-      throw new HttpErrors.NotFound(ErrorKeys.CalendarNotExist);
-    }
-    const {attendees, attachments} = event;
-    delete event.attendees;
-    delete event.attachments;
-
-    await this.eventRepository.replaceById(id, event);
-
-    if (attendees) {
-      for (const attendee of attendees) {
-        const isEvent = await this.validatorService.eventExists(
-          attendee.eventId,
-        );
-        if (!isEvent) {
-          throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
-        }
-        await this.attendeeRepository.replaceById(attendee.id, attendee);
-      }
-    }
-    if (attachments) {
-      for (const attachment of attachments) {
-        const isEvent = await this.validatorService.eventExists(
-          attachment.eventId,
-        );
-        if (!isEvent) {
-          throw new HttpErrors.NotFound(ErrorKeys.EventNotExist);
-        }
-        await this.attachmentRepository.replaceById(attachment.id, attachment);
-      }
-    }
+    return this.eventRepository.replaceById(id, event);
   }
 
   @authenticate(STRATEGY.BEARER, {

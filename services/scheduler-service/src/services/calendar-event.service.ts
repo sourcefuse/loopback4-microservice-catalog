@@ -52,20 +52,27 @@ export class CalendarEventService {
     whereClause: Where,
     filter?: Filter<EventAttendeeView>,
   ) {
-    let whereFromFilter = {};
     if (filter) {
       if (filter.where) {
-        whereFromFilter = Object.assign(filter.where, whereFromFilter);
+        filter.where = {
+          and: [
+            whereClause,
+            filter.where,
+            {
+              or: [{identifier: identifier}, {attendeeIdentifier: identifier}],
+            },
+          ],
+        };
+      } else {
+        filter.where = {
+          and: [
+            whereClause,
+            {
+              or: [{identifier: identifier}, {attendeeIdentifier: identifier}],
+            },
+          ],
+        };
       }
-      filter.where = {
-        and: [
-          whereClause,
-          whereFromFilter,
-          {
-            or: [{identifier: identifier}, {attendeeIdentifier: identifier}],
-          },
-        ],
-      };
     } else {
       filter = {
         where: {

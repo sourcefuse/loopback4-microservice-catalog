@@ -5,6 +5,7 @@ import {
   AttendeeRepository,
   CalendarRepository,
   EventRepository,
+  EventAttendeeViewRepository,
 } from '../../repositories';
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
@@ -16,6 +17,8 @@ describe('Event Controller', () => {
   let attendeeRepo: AttendeeRepository;
   let attachmentRepo: AttachmentRepository;
   let calendarRepo: CalendarRepository;
+  let eventAttendeeViewRepo: EventAttendeeViewRepository;
+
   const pass = 'test_password';
   const testUser = {
     id: 1,
@@ -57,8 +60,19 @@ describe('Event Controller', () => {
   });
 
   it('gives status 200 when token is passed', async () => {
+    const reqToAddEvent = await addEventWithRelation();
+    expect(reqToAddEvent.status).to.be.equal(200);
     await client
       .get(`/events`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
+
+  it('gives status 200 when filter is passed', async () => {
+    const reqToAddEvent = await addEventWithRelation();
+    expect(reqToAddEvent.status).to.be.equal(200);
+    await client
+      .get(`/events?filter[where][deleted]=false`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
   });
@@ -110,7 +124,6 @@ describe('Event Controller', () => {
 
   it('gives status 200, when an event with attachments and attendees is added', async () => {
     const reqToAddEvent = await addEventWithRelation();
-
     expect(reqToAddEvent.status).to.be.equal(200);
     const response = await client
       .get(`/events/${reqToAddEvent.body.id}`)
@@ -148,47 +161,6 @@ describe('Event Controller', () => {
     const eventToUpdate = {
       calendarId: reqToAddEvent.body.calendarId,
       isFullDayEvent: true,
-    };
-
-    await client
-      .put(`/events/${reqToAddEvent.body.id}`)
-      .set('authorization', `Bearer ${token}`)
-      .send(eventToUpdate)
-      .expect(204);
-  });
-
-  it('gives status 404 when calendarId does not exist on PUT request', async () => {
-    const reqToAddEvent = await addEvent();
-    const eventToUpdate = {
-      calendarId: 'invalid',
-      isFullDayEvent: true,
-    };
-    await client
-      .put(`/events/${reqToAddEvent.body.id}`)
-      .set('authorization', `Bearer ${token}`)
-      .send(eventToUpdate)
-      .expect(404);
-  });
-
-  it('updates event with attendees and attachments using PUT request', async () => {
-    const reqToAddEvent = await addEventWithRelation();
-    const eventToUpdate = {
-      calendarId: reqToAddEvent.body.calendarId,
-      isFullDayEvent: true,
-      attachments: [
-        {
-          id: reqToAddEvent.body.attachments[0].id,
-          fileUrl: 'dummy',
-          eventId: reqToAddEvent.body.attachments[0].eventId,
-        },
-      ],
-      attendees: [
-        {
-          id: reqToAddEvent.body.attendees[0].id,
-          eventId: reqToAddEvent.body.attendees[0].eventId,
-          identifier: 'dummy',
-        },
-      ],
     };
 
     await client
@@ -252,12 +224,16 @@ describe('Event Controller', () => {
     await attendeeRepo.deleteAllHard();
     await attachmentRepo.deleteAllHard();
     await calendarRepo.deleteAllHard();
+    await eventAttendeeViewRepo.deleteAllHard();
   }
 
   async function givenRepositories() {
     eventRepo = await app.getRepository(EventRepository);
     attendeeRepo = await app.getRepository(AttendeeRepository);
     attachmentRepo = await app.getRepository(AttachmentRepository);
+    eventAttendeeViewRepo = await app.getRepository(
+      EventAttendeeViewRepository,
+    );
     calendarRepo = await app.getRepository(CalendarRepository);
   }
 });
