@@ -1,3 +1,10 @@
 {
-	"NotAllowedAccess": "NotAllowedAccess"
+	"NotAllowedAccess": "NotAllowedAccess",
+	"Bearer realm=\"Users\"": "Bearer realm=\"Users\"",
+	"The request body is invalid. See error object `details` property for more info.": "The request body is invalid. See error object `details` property for more info.",
+	"Right Date Can Not Greater Then Left": "Right Date Can Not Greater Then Left",
+	"Primary Calendar Not Exist": "Primary Calendar Not Exist",
+	"Calendar Not Exist": "Calendar Not Exist",
+	"Subscription Not exist": "Subscription Not exist",
+	"Event Not Exist": "Event Not Exist"
 }
