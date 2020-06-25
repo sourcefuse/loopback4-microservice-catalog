@@ -1,18 +1,24 @@
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {CalendarRepository, WorkingHourRepository} from '../../repositories';
+import {
+  CalendarRepository,
+  WorkingHourRepository,
+  SubscriptionRepository,
+} from '../../repositories';
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
+import {Subscription} from '../../models/subscription.model';
 
 describe('Calendar Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
   let calendarRepo: CalendarRepository;
   let workingHourRepo: WorkingHourRepository;
+  let subscriptionRepo: SubscriptionRepository;
   const pass = 'test_password';
   const identifier = 'test@gmail.com';
   const testUser = {
-    id: 1,
+    id: identifier,
     username: 'test_user',
     password: pass,
     permissions: [
@@ -24,6 +30,10 @@ describe('Calendar Controller', () => {
       'CreateWorkingHour',
       'UpdateWorkingHour',
       'DeleteWorkingHour',
+      'ViewSubscription',
+      'CreateSubscription',
+      'UpdateSubscription',
+      'DeleteSubscription',
     ],
   };
 
@@ -83,6 +93,30 @@ describe('Calendar Controller', () => {
     expect(response.body.identifier).to.be.equal(identifier);
   });
 
+  it('gives status 200, calendar detail when calendar is added without working hours', async () => {
+    const calendarToAdd = {
+      source: 'internal',
+      enableWorkingHours: true,
+      identifier,
+      summary: 'string',
+      timezone: 'ist',
+    };
+
+    const reqToAddCalendar = await client
+      .post(`/calendars`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToAdd);
+
+    expect(reqToAddCalendar.status).to.be.equal(200);
+    const response = await client
+      .get(`/calendars/${reqToAddCalendar.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(response.body).to.have.properties(['identifier']);
+    expect(response.body.identifier).to.be.equal(identifier);
+  });
+
   it('add workinghours when calendar is added', async () => {
     const reqToAddCalendar = await addCalendar();
 
@@ -114,6 +148,49 @@ describe('Calendar Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .send(calendarToAdd)
       .expect(200);
+  });
+
+  it('add subscription when a subscription already exist when calendar is added', async () => {
+    const subscriptionToAdd = new Subscription({
+      identifier,
+      calendarId: 'dummy',
+    });
+    await client
+      .post(`/subscriptions`)
+      .set('authorization', `Bearer ${token}`)
+      .send(subscriptionToAdd);
+
+    const calendarToAdd = {
+      source: 'internal',
+      enableWorkingHours: true,
+      location: 'location',
+      identifier,
+      summary: 'string',
+      timezone: 'ist',
+      subscription: {
+        identifier,
+        fgColor: 'red',
+      },
+    };
+
+    await client
+      .post(`/calendars/calendarSubscription`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToAdd)
+      .expect(200);
+  });
+
+  it('gives Not Found when subscription is not passed when calendar is added', async () => {
+    const calendarToAdd = {
+      source: 'internal',
+      identifier,
+    };
+
+    await client
+      .post(`/calendars/calendarSubscription`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToAdd)
+      .expect(404);
   });
 
   it('updates calendar successfully using PATCH request', async () => {
@@ -181,6 +258,84 @@ describe('Calendar Controller', () => {
     expect(workingHoursResponse.body[0].dayOfWeek).to.be.equal(2);
   });
 
+  it('gives duplicate dayOfWeek error message when duplicate dayOfWeek is passed in put request', async () => {
+    const reqToAddCalendar = await addCalendar();
+
+    const calendarToUpdate = {
+      identifier: 'new@gmail.com',
+      workingHours: [
+        {
+          dayOfWeek: 2,
+          calendarId: reqToAddCalendar.body.id,
+          id: reqToAddCalendar.body.workingHours[0].id,
+        },
+        {
+          dayOfWeek: 2,
+          calendarId: reqToAddCalendar.body.id,
+          id: reqToAddCalendar.body.workingHours[0].id,
+        },
+      ],
+    };
+
+    await client
+      .put(`/calendars/${reqToAddCalendar.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToUpdate)
+      .expect(422);
+  });
+
+  it('add working hours when working hour id is blank in put request', async () => {
+    const reqToAddCalendar = await addCalendar();
+
+    const calendarToUpdate = {
+      identifier: 'new@gmail.com',
+      workingHours: [
+        {
+          dayOfWeek: 2,
+          calendarId: reqToAddCalendar.body.id,
+          id: reqToAddCalendar.body.workingHours[0].id,
+        },
+        {
+          dayOfWeek: 1,
+          calendarId: reqToAddCalendar.body.id,
+          id: '',
+        },
+      ],
+    };
+
+    await client
+      .put(`/calendars/${reqToAddCalendar.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToUpdate)
+      .expect(204);
+  });
+
+  it('gives error message when incorect calendar Id passed in put request', async () => {
+    const reqToAddCalendar = await addCalendar();
+
+    const calendarToUpdate = {
+      identifier: 'new@gmail.com',
+      workingHours: [
+        {
+          dayOfWeek: 2,
+          calendarId: reqToAddCalendar.body.id,
+          id: reqToAddCalendar.body.workingHours[0].id,
+        },
+        {
+          dayOfWeek: 1,
+          calendarId: 'dummy',
+          id: reqToAddCalendar.body.workingHours[0].id,
+        },
+      ],
+    };
+
+    await client
+      .put(`/calendars/${reqToAddCalendar.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(calendarToUpdate)
+      .expect(422);
+  });
+
   it('deletes a calendar successfully', async () => {
     const reqToAddCalendar = await addCalendar();
     await client
@@ -225,10 +380,12 @@ describe('Calendar Controller', () => {
   async function deleteMockData() {
     await calendarRepo.deleteAllHard();
     await workingHourRepo.deleteAllHard();
+    await subscriptionRepo.deleteAllHard();
   }
 
   async function givenRepositories() {
     calendarRepo = await app.getRepository(CalendarRepository);
     workingHourRepo = await app.getRepository(WorkingHourRepository);
+    subscriptionRepo = await app.getRepository(SubscriptionRepository);
   }
 });

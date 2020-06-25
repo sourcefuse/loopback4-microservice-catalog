@@ -88,7 +88,7 @@ export class CalendarController {
     })
     calendarDTO: Omit<CalendarDTO, 'id'>,
   ): Promise<Calendar> {
-    return this.createCalendar(calendarDTO);
+    return this.calendarService.createCalendar(calendarDTO);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -103,7 +103,7 @@ export class CalendarController {
       },
     },
   })
-  async createWithSubscrription(
+  async createWithSubscription(
     @requestBody({
       content: {
         'application/json': {
@@ -119,12 +119,10 @@ export class CalendarController {
     if (!calendarDTO.subscription) {
       throw new HttpErrors.NotFound(ErrorKeys.SubscriptionNotExist);
     }
-    let subscription: Subscription = new Subscription();
-    if (calendarDTO.subscription) {
-      subscription = Object.assign(calendarDTO.subscription);
-    }
+    const subscription: Subscription = Object.assign(calendarDTO.subscription);
+
     delete calendarDTO.subscription;
-    let response = await this.createCalendar(calendarDTO);
+    let response = await this.calendarService.createCalendar(calendarDTO);
 
     let identifierType = this.schdulerConfig?.identifierMappedTo;
     if (!identifierType) {
@@ -152,30 +150,6 @@ export class CalendarController {
       const calendarDTOResp: CalendarDTO = new CalendarDTO();
       calendarDTOResp.subscription = subscriptionResponse;
       response = Object.assign(calendarDTOResp, response);
-    }
-    return response;
-  }
-
-  async createCalendar(calendarDTO: CalendarDTO) {
-    let workingHours: WorkingHour[] = [];
-    if (calendarDTO.workingHours) {
-      workingHours = calendarDTO.workingHours;
-    }
-    delete calendarDTO.workingHours;
-
-    const response = await this.calendarRepository.create(calendarDTO);
-    if (response.id) {
-      const calendarId: string = response.id;
-      if (workingHours) {
-        response['workingHours'] = [];
-        for (const workingHour of workingHours) {
-          workingHour.calendarId = calendarId;
-          const workigHourResp = await this.workingHourRepository.create(
-            workingHour,
-          );
-          response.workingHours.push(workigHourResp);
-        }
-      }
     }
     return response;
   }

@@ -121,6 +121,26 @@ describe('Event Controller', () => {
     expect(response.body.isFullDayEvent).to.be.equal(false);
   });
 
+  it('gives free busy status', async () => {
+    const freeBusyRequestBody = {
+      timeMax: '2020-06-21T13:10:00z',
+      timeMin: '2020-06-21T02:00:00z',
+      items: [
+        {
+          id: 'test@gmail.com',
+        },
+      ],
+    };
+
+    const response = await client
+      .get(`/events/freeBusy`)
+      .set('authorization', `Bearer ${token}`)
+      .send(freeBusyRequestBody)
+      .expect(200);
+
+    expect(response.body).to.have.properties(['calendars']);
+  });
+
   it('updates event successfully using PATCH request', async () => {
     const reqToAddEvent = await addEvent();
 

@@ -1,7 +1,7 @@
 import {bind, BindingScope} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {ResponseStatusType} from '../models/enums/response-status.enum';
-import {Event, IStartEndTime} from '../models';
+import {IStartEndTime} from '../models';
 import {EventAttendeeViewRepository} from '../repositories/event-attendee-view.repository';
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -36,8 +36,11 @@ export class EventService {
       eventAttendeeFilter,
     );
 
-    const eventAttendeeList = this.limitTimeToBoundaryValues(
-      eventAttendeeResponse,
+    const timesObj: IStartEndTime[] = [];
+    const timesObj2 = Object.assign(timesObj, eventAttendeeResponse);
+
+    const eventAttendeeList = await this.limitTimeToBoundaryValues(
+      timesObj2,
       timeMin,
       timeMax,
     );
@@ -60,7 +63,10 @@ export class EventService {
     return false;
   }
 
-  addToBusyArray(busy: IStartEndTime[], entityList: Event[]): IStartEndTime[] {
+  addToBusyArray(
+    busy: IStartEndTime[],
+    entityList: IStartEndTime[],
+  ): IStartEndTime[] {
     for (const entity of entityList) {
       const {startDateTime, endDateTime} = entity;
       if (startDateTime && endDateTime) {
@@ -74,11 +80,11 @@ export class EventService {
     return busy;
   }
 
-  limitTimeToBoundaryValues(
-    timesObj: Event[],
+  async limitTimeToBoundaryValues(
+    timesObj: IStartEndTime[],
     startTime: Date,
     endTime: Date,
-  ): Event[] {
+  ): Promise<IStartEndTime[]> {
     timesObj.forEach(function (times) {
       const {startDateTime, endDateTime} = times;
       if (startDateTime && endDateTime) {
