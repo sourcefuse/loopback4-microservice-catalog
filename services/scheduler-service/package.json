@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -51,7 +51,7 @@
     "@loopback/repository": "^2.5.1",
     "@loopback/rest": "^5.0.1",
     "@loopback/rest-explorer": "^2.2.4",
-    "@sourceloop/core": "^1.0.0-alpha.0",
+    "@sourceloop/core": "^1.0.0-alpha.1",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
     "loopback4-authentication": "^3.0.1",
@@ -63,10 +63,10 @@
     "@loopback/build": "^5.4.1",
     "@loopback/eslint-config": "^7.0.1",
     "@loopback/testlab": "^3.1.5",
-    "jsonwebtoken": "^8.5.1",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^10.17.24",
     "eslint": "^7.0.0",
+    "jsonwebtoken": "^8.5.1",
     "source-map-support": "^0.5.19",
     "typescript": "~3.9.3"
   },

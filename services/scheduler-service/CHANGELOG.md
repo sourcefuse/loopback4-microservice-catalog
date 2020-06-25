@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.4](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.3...@sourceloop/scheduler-service@1.0.0-alpha.4) (2020-06-25)
+
+
+### Bug Fixes
+
+* **core:** remove en.json changes ([#29](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/29)) ([09c513e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/09c513e2cb64dd6e61bc3f07a3a854a9afe3c5f4))
+* **scheduler-service:** add jsonwebtoken as dev dependency ([#32](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/32)) ([ff9688b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ff9688babba9bef68b9d015819c266f9787137a3))
+* **scheduler-service:** lint fix ([#30](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/30)) ([9dd77ad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9dd77ad94d348be4cfd7abeedcdf745639be7b65))
+* **scheduler-service:** update package lock ([9783659](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9783659cc86b396bb0492454162f4c716c874e55))
+
+
+
+
+
 # [1.0.0-alpha.3](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.2...@sourceloop/scheduler-service@1.0.0-alpha.3) (2020-06-22)
 
 

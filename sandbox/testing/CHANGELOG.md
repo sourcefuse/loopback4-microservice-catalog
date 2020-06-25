@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.2](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/sandbox-testing@1.0.0-alpha.1...@sourceloop/sandbox-testing@1.0.0-alpha.2) (2020-06-25)
+
+
+### Bug Fixes
+
+* **core:** remove en.json changes ([#29](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/29)) ([09c513e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/09c513e2cb64dd6e61bc3f07a3a854a9afe3c5f4))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/sandbox-testing@1.0.0-alpha.0...@sourceloop/sandbox-testing@1.0.0-alpha.1) (2020-06-22)
 
 
