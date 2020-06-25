@@ -59,6 +59,20 @@ describe('Subscription Controller', () => {
       .expect(200);
   });
 
+  it('gives status 200 when token and filter with where is passed', async () => {
+    await client
+      .get(`/calendars/subscriptions/me?filter[where][deleted]=false`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
+
+  it('gives status 200 when token and filter without where is passed', async () => {
+    await client
+      .get(`/calendars/subscriptions/me?filter[include][][relation]=calendar`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
+
   it('gives status 422 when Subscription details are not correct', async () => {
     const subscriptionToAdd = {};
 

@@ -33,6 +33,9 @@ import {
   SubscriptionController,
   ThemeController,
   WorkingHourController,
+  CalendarSubscriptionController,
+  CalendarWorkingHourController,
+  EventAttendeeController,
 } from './controllers';
 import {SchedulerBindings} from './keys';
 import {
@@ -57,6 +60,7 @@ import {
   EventAttendeeViewRepository,
 } from './repositories';
 import {ValidatorService, CalendarEventService} from './services';
+import {EventAttachmentController} from './controllers/event-attachment.controller';
 import {EventService} from './services/event.service';
 import {CalendarService} from './services/calendar.service';
 
@@ -118,6 +122,10 @@ export class SchedulerServiceComponent implements Component {
       ThemeController,
       WorkingHourController,
       CalendarEventController,
+      CalendarSubscriptionController,
+      CalendarWorkingHourController,
+      EventAttachmentController,
+      EventAttendeeController,
     ];
   }
 

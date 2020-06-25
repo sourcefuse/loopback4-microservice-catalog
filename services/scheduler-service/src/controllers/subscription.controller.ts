@@ -29,7 +29,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Subscription} from '../models';
-import {AccessRoleType} from '../models/enums/access-role.enum';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
@@ -121,35 +120,24 @@ export class SubscriptionController {
   })
   async find(
     @param.filter(Subscription) filter?: Filter<Subscription>,
-    @param.query.string('minAccessRole') minAccessRole?: AccessRoleType,
   ): Promise<Subscription[]> {
     let identifierType = this.schdulerConfig?.identifierMappedTo;
     if (!identifierType) {
       identifierType = IdentifierType.Id;
     }
-    return this.subscriptionRepository.find({
-      include: [
-        {
-          relation: 'calendar',
-          scope: {
-            fields: {
-              id: true,
-              location: true,
-              ownerDisplayName: true,
-              ownerEmail: true,
-              summary: true,
-              timezone: true,
-            },
-          },
-        },
-      ],
-      where: {
-        and: [
-          {identifier: this.currentUser[identifierType]},
-          {accessRole: minAccessRole},
-        ],
-      },
-    });
+
+    if (filter) {
+      if (filter.where) {
+        filter.where = {
+          and: [{identifier: this.currentUser[identifierType]}, filter.where],
+        };
+      } else {
+        filter.where = {identifier: this.currentUser[identifierType]};
+      }
+    } else {
+      filter = {where: {identifier: this.currentUser[identifierType]}};
+    }
+    return this.subscriptionRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER, {

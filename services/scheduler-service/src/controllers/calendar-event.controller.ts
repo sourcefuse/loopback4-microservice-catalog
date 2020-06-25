@@ -26,6 +26,7 @@ import {
   CalendarRepository,
   SubscriptionRepository,
   EventAttendeeViewRepository,
+  EventRepository,
 } from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
@@ -41,6 +42,8 @@ export class CalendarEventController {
     protected subscriptionRepository: SubscriptionRepository,
     @repository(EventAttendeeViewRepository)
     protected eventAttendeeViewRepository: EventAttendeeViewRepository,
+    @repository(EventRepository)
+    protected eventRepository: EventRepository,
     @service(ValidatorService) protected validatorService: ValidatorService,
     @service(CalendarEventService)
     protected calendarEventService: CalendarEventService,
@@ -96,7 +99,10 @@ export class CalendarEventController {
       whereClause,
       filter,
     );
-    const events = await this.eventAttendeeViewRepository.find(modifiedFilter);
+    const filterWhere: Filter = {
+      where: modifiedFilter.where,
+    };
+    const events = await this.eventAttendeeViewRepository.find(filterWhere);
 
     const eventIds: string[] = [];
     events.forEach(event => {
@@ -105,10 +111,12 @@ export class CalendarEventController {
       }
     });
 
-    return this.calendarRepository.events(calendarId).find({
-      include: [{relation: 'attachments'}, {relation: 'attendees'}],
-      where: {id: {inq: eventIds}},
-    });
+    if (filter) {
+      filter.where = {id: {inq: eventIds}};
+    } else {
+      filter = {where: {id: {inq: eventIds}}};
+    }
+    return this.eventRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER, {
