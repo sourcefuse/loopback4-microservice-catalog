@@ -219,7 +219,7 @@ describe('Calendar Controller', () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      identifier: 'new@gmail.com',
+      identifier,
     };
 
     await client
@@ -233,7 +233,7 @@ describe('Calendar Controller', () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      identifier: 'new@gmail.com',
+      identifier,
       workingHours: [
         {
           dayOfWeek: 2,
@@ -262,7 +262,7 @@ describe('Calendar Controller', () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      identifier: 'new@gmail.com',
+      identifier,
       workingHours: [
         {
           dayOfWeek: 2,
@@ -288,7 +288,7 @@ describe('Calendar Controller', () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      identifier: 'new@gmail.com',
+      identifier,
       workingHours: [
         {
           dayOfWeek: 2,
@@ -314,7 +314,7 @@ describe('Calendar Controller', () => {
     const reqToAddCalendar = await addCalendar();
 
     const calendarToUpdate = {
-      identifier: 'new@gmail.com',
+      identifier,
       workingHours: [
         {
           dayOfWeek: 2,

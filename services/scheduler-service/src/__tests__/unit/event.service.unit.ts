@@ -11,7 +11,8 @@ import {EventAttendeeView} from '../../models/event-attendee-view.model';
 describe('Event Service', () => {
   let eventAttendeeViewRepository: StubbedInstanceWithSinonAccessor<EventAttendeeViewRepository>;
   let eventService: EventService;
-
+  const startTime = new Date('2020-06-21T11:30:00+05:30');
+  const endTime = new Date('2020-06-21T12:30:00+05:30');
   afterEach(() => sinon.restore());
   beforeEach(setUp);
 
@@ -23,8 +24,6 @@ describe('Event Service', () => {
           endDateTime: new Date('2020-06-21T13:00:00+05:30'),
         },
       ];
-      const startTime = new Date('2020-06-21T11:30:00+05:30');
-      const endTime = new Date('2020-06-21T12:30:00+05:30');
 
       const result = await eventService.limitTimeToBoundaryValues(
         timesObj,
@@ -40,12 +39,10 @@ describe('Event Service', () => {
     it('when startDateTime > startTime ', async () => {
       const timesObj = [
         {
-          startDateTime: new Date('2020-06-21T13:00:00+05:30'),
-          endDateTime: new Date('2020-06-21T13:00:00+05:30'),
+          startDateTime: new Date('2020-06-21T13:01:00+05:30'),
+          endDateTime: new Date('2020-06-21T13:03:00+05:30'),
         },
       ];
-      const startTime = new Date('2020-06-21T11:30:00+05:30');
-      const endTime = new Date('2020-06-21T12:30:00+05:30');
 
       const result = await eventService.limitTimeToBoundaryValues(
         timesObj,
@@ -54,19 +51,17 @@ describe('Event Service', () => {
       );
       expect(result[0]).to.have.properties(['startDateTime']);
       expect(result[0].startDateTime).to.eql(
-        new Date('2020-06-21T07:30:00.000Z'),
+        new Date('2020-06-21T07:31:00.000Z'),
       );
     });
 
     it('when endDateTime < endTime ', async () => {
       const timesObj = [
         {
-          startDateTime: new Date('2020-06-21T13:00:00+05:30'),
+          startDateTime: new Date('2020-06-21T13:02:00+05:30'),
           endDateTime: new Date('2020-06-21T12:00:00+05:30'),
         },
       ];
-      const startTime = new Date('2020-06-21T11:30:00+05:30');
-      const endTime = new Date('2020-06-21T12:30:00+05:30');
 
       const result = await eventService.limitTimeToBoundaryValues(
         timesObj,
@@ -75,7 +70,7 @@ describe('Event Service', () => {
       );
       expect(result[0]).to.have.properties(['startDateTime']);
       expect(result[0].startDateTime).to.eql(
-        new Date('2020-06-21T07:30:00.000Z'),
+        new Date('2020-06-21T07:32:00.000Z'),
       );
     });
   });
@@ -87,14 +82,14 @@ describe('Event Service', () => {
       const timeMax = new Date('2020-06-21T14:00:00+05:30');
       const eventAttendeeResponse = [
         {
-          startDateTime: new Date('2020-06-21T12:30:00+05:30'),
-          endDateTime: new Date('2020-06-21T13:00:00+05:30'),
+          startDateTime: new Date('2020-06-21T12:31:00+05:30'),
+          endDateTime: new Date('2020-06-21T14:00:00+05:30'),
         },
       ];
 
       const find = eventAttendeeViewRepository.stubs.find;
       find.resolves(eventAttendeeResponse as EventAttendeeView[]);
-      const result = await eventService.getBusyDetails(id, timeMin, timeMax);
+      const result = await eventService.getBusyDetails(id, timeMax, timeMin);
       expect(result).to.have.properties(['busy']);
     });
   });
