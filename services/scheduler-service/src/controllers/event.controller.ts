@@ -328,6 +328,19 @@ export class EventController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
+    //Soft Delete
+    const attachments = await this.eventRepository.attachments(id).find();
+
+    for (const attachment of attachments) {
+      await this.attachmentRepository.deleteById(attachment.id);
+    }
+
+    const attendees = await this.eventRepository.attendees(id).find();
+
+    for (const attendee of attendees) {
+      await this.attendeeRepository.deleteById(attendee.id);
+    }
+
     await this.eventRepository.deleteById(id);
   }
 }
