@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.4...@sourceloop/scheduler-service@1.0.0-alpha.5) (2020-06-26)
+
+
+### Bug Fixes
+
+* **scheduler-service:** add filter related changes, add relation controllers ([#34](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/34)) ([230fd05](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/230fd05e723294337e1df64a60715d18c9f03b50))
+* **scheduler-service:** remove test data ([#33](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/33)) ([2b64761](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2b647612326dfabe20d0a30ba725981340c0d584))
+
+
+### Features
+
+* **scheduler-service:** SFO-58 add free busy API and calendar with subscrip… ([#26](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/26)) ([ae28530](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ae28530208e87a7fc2247d28957a9a0e4aaeadb9))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.3...@sourceloop/scheduler-service@1.0.0-alpha.4) (2020-06-25)
 
 

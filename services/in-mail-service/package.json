@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "services",
   "private": true,
   "keywords": [
@@ -48,7 +48,7 @@
     "@loopback/core": "^2.7.0",
     "@loopback/repository": "^2.5.1",
     "@loopback/rest": "^5.0.1",
-    "@sourceloop/core": "^1.0.0-alpha.1",
+    "@sourceloop/core": "^1.0.0-alpha.2",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
     "tslib": "^1.10.0"
