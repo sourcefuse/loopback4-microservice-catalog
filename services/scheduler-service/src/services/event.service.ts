@@ -1,7 +1,7 @@
 import {bind, BindingScope} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {ResponseStatusType} from '../models/enums/response-status.enum';
-import {IStartEndTime} from '../models';
+import {IStartEndTime} from '../models/free-busy.dto';
 import {EventAttendeeViewRepository} from '../repositories/event-attendee-view.repository';
 
 @bind({scope: BindingScope.TRANSIENT})
