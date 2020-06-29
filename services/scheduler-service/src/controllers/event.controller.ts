@@ -328,6 +328,9 @@ export class EventController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
+    //Soft Delete
+    await this.attachmentRepository.deleteAll({eventId: id});
+    await this.attendeeRepository.deleteAll({eventId: id});
     await this.eventRepository.deleteById(id);
   }
 }
