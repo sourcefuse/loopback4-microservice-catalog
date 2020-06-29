@@ -6,5 +6,8 @@
 	"Primary Calendar Not Exist": "Primary Calendar Not Exist",
 	"Calendar Not Exist": "Calendar Not Exist",
 	"Subscription Not exist": "Subscription Not exist",
-	"Event Not Exist": "Event Not Exist"
+	"Event Not Exist": "Event Not Exist",
+	"Start Date Can Not Greater Then End Date": "Start Date Can Not Greater Then End Date",
+	"Duplicate DayOfWeek": "Duplicate DayOfWeek",
+	"Id in Request Body not matching with Query Parameters": "Id in Request Body not matching with Query Parameters"
 }

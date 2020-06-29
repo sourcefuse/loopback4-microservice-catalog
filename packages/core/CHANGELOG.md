@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.2](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.1...@sourceloop/core@1.0.0-alpha.2) (2020-06-26)
+
+
+### Bug Fixes
+
+* **core:** cors issue fix ([#37](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/37)) ([65de212](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/65de212da742a5a8e2bbc50d480195c71a7bd55b)), closes [/github.com/strongloop/loopback-next/issues/5368#issuecomment-626233755](https://github.com//github.com/strongloop/loopback-next/issues/5368/issues/issuecomment-626233755)
+* **core:** update locale file ([5bda1d5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5bda1d54392f39f9c9dfe234b46d84d8adbf171f))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.0...@sourceloop/core@1.0.0-alpha.1) (2020-06-25)
 
 
