@@ -124,7 +124,7 @@ export class EventController {
       content: {
         'application/json': {
           schema: getModelSchemaRef(FreeBusyDTO, {
-            title: 'FreeBusy request',
+            title: 'FreeBusyRequest',
           }),
         },
       },

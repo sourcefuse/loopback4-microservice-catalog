@@ -8,6 +8,7 @@ export const enum ErrorKeys {
 
   //unprocessable
   DateInvalid = 'Date Invalid',
+  ItemInvalid = 'Item Array Invalid',
 
   //general
   CanNotBeGreater = 'Start Date Can Not Greater Then End Date',

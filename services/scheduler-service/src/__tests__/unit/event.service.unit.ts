@@ -7,6 +7,7 @@ import {
   expect,
 } from '@loopback/testlab';
 import {EventAttendeeView} from '../../models/event-attendee-view.model';
+import {EventAttendeeViewItemDTO} from '../../models/EventAttendeeViewItemDTO.dto';
 
 describe('Event Service', () => {
   let eventAttendeeViewRepository: StubbedInstanceWithSinonAccessor<EventAttendeeViewRepository>;
@@ -77,7 +78,7 @@ describe('Event Service', () => {
 
   describe('get busy details', () => {
     it('returns busy details obejct', async () => {
-      const item = new EventAttendeeView();
+      const item = new EventAttendeeViewItemDTO();
       item.id = 'test@gmail.com';
       item.extId = 'testExt';
       const timeMin = new Date('2020-06-21T12:00:00+05:30');
