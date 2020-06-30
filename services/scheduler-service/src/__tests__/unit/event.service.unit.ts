@@ -79,6 +79,7 @@ describe('Event Service', () => {
     it('returns busy details obejct', async () => {
       const item = new EventAttendeeView();
       item.id = 'test@gmail.com';
+      item.extId = 'testExt';
       const timeMin = new Date('2020-06-21T12:00:00+05:30');
       const timeMax = new Date('2020-06-21T14:00:00+05:30');
       const eventAttendeeResponse = [
