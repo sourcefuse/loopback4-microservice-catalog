@@ -1,50 +1,44 @@
 DROP VIEW scheduler.events_attendees_view;
 
-CREATE TYPE scheduler.accessRoleType AS ENUM ('freeBusyReader','reader', 'writer', 'owner');
+CREATE TYPE scheduler.accessRoleType AS ENUM
+('freeBusyReader','reader', 'writer', 'owner');
 ALTER TABLE scheduler.subscriptions ALTER COLUMN access_role DROP DEFAULT;
-ALTER TABLE scheduler.subscriptions ALTER COLUMN access_role TYPE scheduler.accessRoleType USING access_role::text::scheduler.accessRoleType;
-ALTER TABLE scheduler.subscriptions ALTER COLUMN access_role SET DEFAULT 'reader';
+ALTER TABLE scheduler.subscriptions ALTER COLUMN access_role TYPE
+scheduler.accessRoleType USING access_role::text::scheduler.accessRoleType;
+ALTER TABLE scheduler.subscriptions ALTER COLUMN access_role
+SET
+DEFAULT 'reader';
 
-CREATE TYPE scheduler.responseStatus AS ENUM ('needsAction','declined', 'tentative', 'accepted');
+CREATE TYPE scheduler.responseStatus AS ENUM
+('needsAction','declined', 'tentative', 'accepted');
 ALTER TABLE scheduler.attendees ALTER COLUMN response_status DROP DEFAULT;
-ALTER TABLE scheduler.attendees ALTER COLUMN response_status TYPE scheduler.responseStatus USING response_status::text::scheduler.responseStatus;
-ALTER TABLE scheduler.attendees ALTER COLUMN response_status SET DEFAULT 'needsAction'; 
+ALTER TABLE scheduler.attendees ALTER COLUMN response_status TYPE
+scheduler.responseStatus USING response_status::text::scheduler.responseStatus;
+ALTER TABLE scheduler.attendees ALTER COLUMN response_status
+SET
+DEFAULT 'needsAction';
 
-CREATE TYPE scheduler.setting_owner_type AS ENUM ('global', 'user', 'calendar', 'event');
+CREATE TYPE scheduler.setting_owner_type AS ENUM
+('global', 'user', 'calendar', 'event');
 ALTER TABLE scheduler.settings ALTER COLUMN owner_type DROP DEFAULT;
-ALTER TABLE scheduler.settings ALTER COLUMN owner_type TYPE scheduler.setting_owner_type USING owner_type::text::scheduler.setting_owner_type;
-ALTER TABLE scheduler.settings ALTER COLUMN owner_type SET DEFAULT 'global';
+ALTER TABLE scheduler.settings ALTER COLUMN owner_type TYPE
+scheduler.setting_owner_type USING owner_type::text::scheduler.setting_owner_type;
+ALTER TABLE scheduler.settings ALTER COLUMN owner_type
+SET
+DEFAULT 'global';
 
-CREATE TYPE scheduler.eventStatus AS ENUM ('confirmed', 'tentative', 'cancelled', 'completed');
+CREATE TYPE scheduler.eventStatus AS ENUM
+('confirmed', 'tentative', 'cancelled', 'completed');
 ALTER TABLE scheduler.events ALTER COLUMN status DROP DEFAULT;
-ALTER TABLE scheduler.events ALTER COLUMN status TYPE scheduler.eventStatus USING status::text::scheduler.eventStatus;
-ALTER TABLE scheduler.events ALTER COLUMN status SET DEFAULT 'tentative';
+ALTER TABLE scheduler.events ALTER COLUMN status TYPE
+scheduler.eventStatus USING status::text::scheduler.eventStatus;
+ALTER TABLE scheduler.events ALTER COLUMN status
+SET
+DEFAULT 'tentative';
 
-CREATE VIEW scheduler.events_attendees_view AS  SELECT et.id,
-    et.bg_color,
-    et.calendar_id,
-    et.created_by,
-    et.created_on,
-    et.deleted,
-    et.description,
-    et.end_datetime,
-    et.fg_color,
-    et.icaluid,
-    et.is_full_day_event,
-    et.is_locked,
-    et.link,
-    et.location,
-    et.meeting_link,
-    et.modified_by,
-    et.modified_on,
-    et.identifier,
-    et.parent_event_id,
-    et.start_datetime,
-    et.status,
-    et.summary,
-    et.timezone,
-    et.ext_id,
-    et.ext_metadata,
+CREATE VIEW scheduler.events_attendees_view
+AS
+  SELECT et.*,
     at.id AS attendee_id,
     at.identifier AS attendee_identifier,
     at.event_id,
@@ -52,5 +46,5 @@ CREATE VIEW scheduler.events_attendees_view AS  SELECT et.id,
     at.is_organizer,
     at.messages,
     at.response_status
-   FROM (scheduler.events et
-     LEFT JOIN scheduler.attendees at ON ((et.id = at.event_id)));
+  FROM (scheduler.events et
+    LEFT JOIN scheduler.attendees at ON ((et.id = at.event_id)));

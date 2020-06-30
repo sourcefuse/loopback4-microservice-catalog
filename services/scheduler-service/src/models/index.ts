@@ -1,7 +1,6 @@
 export * from './attachment.model';
 export * from './attendee.model';
 export * from './audit-log.model';
-export * from './auth-user.interface';
 export * from './calendar.model';
 export * from './event.model';
 export * from './settings.model';

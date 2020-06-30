@@ -36,9 +36,7 @@ export class Settings extends UserModifiableEntity
         OwnerType.User,
         OwnerType.Calendar,
         OwnerType.Event,
-        null,
       ],
-      nullable: true,
     },
   })
   ownerType?: OwnerType;
