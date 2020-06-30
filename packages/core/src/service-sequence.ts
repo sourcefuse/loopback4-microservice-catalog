@@ -3,6 +3,7 @@ import {
   FindRoute,
   HttpErrors,
   InvokeMethod,
+  InvokeMiddleware,
   ParseParams,
   Reject,
   RequestContext,
@@ -31,11 +32,20 @@ const isJsonString = (str: string) => {
 };
 
 export class ServiceSequence implements SequenceHandler {
+  /**
+   * Optional invoker for registered middleware in a chain.
+   * To be injected via SequenceActions.INVOKE_MIDDLEWARE.
+   */
+  @inject(SequenceActions.INVOKE_MIDDLEWARE, {optional: true})
+  protected invokeMiddleware: InvokeMiddleware = () => false;
+
   constructor(
     // sonarignore:start
     @inject(SequenceActions.FIND_ROUTE) protected findRoute: FindRoute,
-    @inject(SequenceActions.PARSE_PARAMS) protected parseParams: ParseParams,
-    @inject(SequenceActions.INVOKE_METHOD) protected invoke: InvokeMethod,
+    @inject(SequenceActions.PARSE_PARAMS)
+    protected parseParams: ParseParams,
+    @inject(SequenceActions.INVOKE_METHOD)
+    protected invoke: InvokeMethod,
     @inject(SequenceActions.SEND) public send: Send,
     @inject(SequenceActions.REJECT) public reject: Reject,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
@@ -62,6 +72,8 @@ export class ServiceSequence implements SequenceHandler {
         Remote Address = ${request.connection.remoteAddress}
         Remote Address (Proxy) = ${request.headers['x-forwarded-for']}`,
       );
+      const finished = await this.invokeMiddleware(context);
+      if (finished) return;
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
 

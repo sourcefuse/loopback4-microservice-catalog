@@ -3,7 +3,8 @@ import {repository} from '@loopback/repository';
 import {WorkingHourRepository, CalendarRepository} from '../repositories';
 import {ErrorKeys} from '../models/enums/error-keys';
 import {HttpErrors} from '@loopback/rest';
-import {WorkingHour, CalendarDTO} from '../models';
+import {WorkingHour} from '../models';
+import {CalendarDTO} from '../models/calendar.dto';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class CalendarService {
