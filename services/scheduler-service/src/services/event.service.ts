@@ -1,7 +1,7 @@
 import {bind, BindingScope} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {repository, Filter} from '@loopback/repository';
 import {ResponseStatusType} from '../models/enums/response-status.enum';
-import {IStartEndTime} from '../models/free-busy.dto';
+import {IStartEndTime, EventAttendeeView} from '../models';
 import {EventAttendeeViewRepository} from '../repositories/event-attendee-view.repository';
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -11,29 +11,44 @@ export class EventService {
     public eventAttendeeViewRepository: EventAttendeeViewRepository,
   ) {}
 
-  async getBusyDetails(id: string, timeMax: Date, timeMin: Date) {
+  async getBusyDetails(item: EventAttendeeView, timeMax: Date, timeMin: Date) {
+    const where = [];
+    where.push({
+      or: [
+        {responseStatus: {neq: ResponseStatusType.Declined}},
+        {responseStatus: (null as unknown) as ResponseStatusType},
+      ],
+    });
+    where.push({
+      and: [{startDateTime: {lt: timeMax}}, {endDateTime: {gt: timeMin}}],
+    });
+    where.push({
+      or: [
+        {
+          and: [
+            {identifier: item.id},
+            {attendeeIdentifier: (null as unknown) as string},
+          ],
+        },
+        {attendeeIdentifier: item.id},
+      ],
+    });
+
+    let key: keyof EventAttendeeView;
+    for (key in item) {
+      if (key !== 'id' && key !== 'responseStatus') {
+        where.push({[key]: item[key]});
+      }
+    }
+
     const eventAttendeeFilter = {
       where: {
-        and: [
-          {
-            or: [
-              {
-                and: [
-                  {identifier: id},
-                  {attendeeIdentifier: (null as unknown) as string},
-                ],
-              },
-              {attendeeIdentifier: id},
-            ],
-          },
-          {responseStatus: {neq: ResponseStatusType.Declined}},
-          {and: [{startDateTime: {lt: timeMax}}, {endDateTime: {gt: timeMin}}]},
-        ],
+        and: where,
       },
     };
 
     const eventAttendeeResponse = await this.eventAttendeeViewRepository.find(
-      eventAttendeeFilter,
+      eventAttendeeFilter as Filter<EventAttendeeView>,
     );
 
     const timesObj: IStartEndTime[] = [];

@@ -77,7 +77,8 @@ describe('Event Service', () => {
 
   describe('get busy details', () => {
     it('returns busy details obejct', async () => {
-      const id = 'test@gmail.com';
+      const item = new EventAttendeeView();
+      item.id = 'test@gmail.com';
       const timeMin = new Date('2020-06-21T12:00:00+05:30');
       const timeMax = new Date('2020-06-21T14:00:00+05:30');
       const eventAttendeeResponse = [
@@ -89,7 +90,7 @@ describe('Event Service', () => {
 
       const find = eventAttendeeViewRepository.stubs.find;
       find.resolves(eventAttendeeResponse as EventAttendeeView[]);
-      const result = await eventService.getBusyDetails(id, timeMax, timeMin);
+      const result = await eventService.getBusyDetails(item, timeMax, timeMin);
       expect(result).to.have.properties(['busy']);
     });
   });

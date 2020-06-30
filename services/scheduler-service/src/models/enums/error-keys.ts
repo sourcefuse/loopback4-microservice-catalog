@@ -4,6 +4,7 @@ export const enum ErrorKeys {
   PrimaryCalendarNotExist = 'Primary Calendar Not Exist',
   EventNotExist = 'Event Not Exist',
   SubscriptionNotExist = 'Subscription Not exist',
+  IdNotExist = 'Id Not Exist',
 
   //unprocessable
   DateInvalid = 'Date Invalid',
