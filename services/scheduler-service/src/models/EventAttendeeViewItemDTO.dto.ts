@@ -102,6 +102,7 @@ export class EventAttendeeViewItemDTO extends Model {
         StatusType.Tentative,
         StatusType.Cancelled,
         StatusType.Completed,
+        null,
       ],
       nullable: true,
     },
