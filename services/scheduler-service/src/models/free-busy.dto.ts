@@ -1,6 +1,8 @@
-import {property} from '@loopback/repository';
+import {property, Model, model} from '@loopback/repository';
+import {EventAttendeeViewItemDTO} from './EventAttendeeViewItemDTO.dto';
 
-export class FreeBusyDTO {
+@model()
+export class FreeBusyDTO extends Model {
   @property({
     type: 'date',
     required: true,
@@ -13,18 +15,11 @@ export class FreeBusyDTO {
   })
   timeMin: Date;
 
-  @property({
-    type: 'object',
-    id: true,
-  })
-  items: IFreeBusyItem[];
+  @property.array(EventAttendeeViewItemDTO)
+  items: EventAttendeeViewItemDTO[];
 }
 
 export interface IStartEndTime {
   startDateTime: Date;
   endDateTime: Date;
-}
-
-export interface IFreeBusyItem {
-  id: string;
 }
