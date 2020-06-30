@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.5...@sourceloop/scheduler-service@1.0.0-alpha.6) (2020-06-30)
+
+
+### Bug Fixes
+
+* **scheduler-service:** export fix ([#38](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/38)) ([94d15e4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/94d15e46e777f31a8726ded14d9dd80493de61eb))
+
+
+### Features
+
+* **scheduler-service:** add delete event with attachments and attendees ([#36](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/36)) ([9fd8dc6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9fd8dc6566b99e9dfb8173d3363a836cc74e39f0))
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.4...@sourceloop/scheduler-service@1.0.0-alpha.5) (2020-06-26)
 
 

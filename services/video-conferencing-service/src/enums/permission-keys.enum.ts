@@ -1,10 +1,10 @@
 export const enum PermissionKeys {
-  CreateSession = 'CreateSession',
-  GenerateToken = 'GenerateToken',
-  StartArchive = 'StartArchive',
-  StopArchive = 'StopArchive',
-  GetArchives = 'GetArchives',
-  DeleteArchive = 'DeleteArchive',
+  CreateSession = 'CreateMeetingSession',
+  GenerateToken = 'GenerateMeetingToken',
+  StartArchive = 'StartMeetingArchive',
+  StopArchive = 'StopMeetingArchive',
+  GetArchives = 'GetMeetingArchives',
+  DeleteArchive = 'DeleteMeetingArchive',
   StopMeeting = 'StopMeeting',
-  SetUploadTarget = 'SetUploadTarget',
+  SetUploadTarget = 'SetMeetingUploadTarget',
 }
