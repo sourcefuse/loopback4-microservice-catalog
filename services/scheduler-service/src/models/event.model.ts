@@ -102,6 +102,7 @@ export class Event extends UserModifiableEntity
         StatusType.Confirmed,
         StatusType.Tentative,
         StatusType.Cancelled,
+        StatusType.Completed,
         null,
       ],
       nullable: true,
