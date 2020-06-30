@@ -95,6 +95,7 @@ export class EventDTO extends Model {
         StatusType.Confirmed,
         StatusType.Tentative,
         StatusType.Cancelled,
+        StatusType.Completed,
         null,
       ],
       nullable: true,
