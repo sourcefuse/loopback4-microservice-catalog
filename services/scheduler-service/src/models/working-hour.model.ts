@@ -29,9 +29,7 @@ export class WorkingHour extends UserModifiableEntity
         DayOfWeekType.Friday,
         DayOfWeekType.Saturday,
         DayOfWeekType.Sunday,
-        null,
       ],
-      nullable: true,
     },
   })
   dayOfWeek?: DayOfWeekType;

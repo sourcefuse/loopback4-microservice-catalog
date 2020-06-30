@@ -56,9 +56,7 @@ export class Attendee extends UserModifiableEntity
         ResponseStatusType.Tentative,
         ResponseStatusType.Accepted,
         ResponseStatusType.Declined,
-        null,
       ],
-      nullable: true,
     },
   })
   responseStatus?: ResponseStatusType;

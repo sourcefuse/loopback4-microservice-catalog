@@ -27,9 +27,7 @@ export class Subscription extends UserModifiableEntity
         AccessRoleType.Reader,
         AccessRoleType.Writer,
         AccessRoleType.Owner,
-        null,
       ],
-      nullable: true,
     },
   })
   accessRole?: AccessRoleType;

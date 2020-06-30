@@ -49,9 +49,7 @@ export class EventAttendeeView extends Event {
         ResponseStatusType.Tentative,
         ResponseStatusType.Accepted,
         ResponseStatusType.Declined,
-        null,
       ],
-      nullable: true,
     },
   })
   responseStatus?: ResponseStatusType;
