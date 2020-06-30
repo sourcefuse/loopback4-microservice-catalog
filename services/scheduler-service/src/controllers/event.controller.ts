@@ -124,7 +124,7 @@ export class EventController {
       content: {
         'application/json': {
           schema: getModelSchemaRef(FreeBusyDTO, {
-            title: 'FreeBusy request',
+            title: 'FreeBusyRequest',
           }),
         },
       },
@@ -148,17 +148,21 @@ export class EventController {
 
     const calendars = [];
     for (const item of freeBusyDTO.items) {
-      const id = item.id;
-      const busyDetailsObj = await this.eventService.getBusyDetails(
-        item.id,
-        timeMax,
-        timeMin,
-      );
+      if (item.id) {
+        const id = item.id;
+        const busyDetailsObj = await this.eventService.getBusyDetails(
+          item,
+          timeMax,
+          timeMin,
+        );
 
-      const calendar = {
-        [id]: busyDetailsObj,
-      };
-      calendars.push(calendar);
+        const calendar = {
+          [id]: busyDetailsObj,
+        };
+        calendars.push(calendar);
+      } else {
+        throw new HttpErrors.UnprocessableEntity(ErrorKeys.IdNotExist);
+      }
     }
     response.calendars = calendars;
     return response;
