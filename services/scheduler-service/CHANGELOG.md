@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.7](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.6...@sourceloop/scheduler-service@1.0.0-alpha.7) (2020-07-01)
+
+
+### Features
+
+* **scheduler-service:** add migration for enums ([#40](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/40)) ([a512703](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a51270328d23f094dc14514843c920d1c23fe3fa))
+* **scheduler-service:** SFO-97 change freebusy api logic to accept more any… ([#39](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/39)) ([df38e66](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/df38e66093255589298051eb4d032c9bdcd1dba3))
+
+
+
+
+
 # [1.0.0-alpha.6](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.5...@sourceloop/scheduler-service@1.0.0-alpha.6) (2020-06-30)
 
 
