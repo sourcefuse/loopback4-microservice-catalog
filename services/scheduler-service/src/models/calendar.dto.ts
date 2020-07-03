@@ -56,6 +56,18 @@ export class CalendarDTO extends Model {
   })
   timezone?: string;
 
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: object;
+
   @property.array(WorkingHour)
   workingHours?: WorkingHour[];
 
