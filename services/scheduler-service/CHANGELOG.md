@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.8](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.7...@sourceloop/scheduler-service@1.0.0-alpha.8) (2020-07-03)
+
+
+### Features
+
+* **scheduler-service:** add ext_id along with calendar create ([#41](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/41)) ([be23fe7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be23fe77f96e4fc63f78ee472166671f5157f55c))
+
+
+
+
+
 # [1.0.0-alpha.7](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.6...@sourceloop/scheduler-service@1.0.0-alpha.7) (2020-07-01)
 
 
