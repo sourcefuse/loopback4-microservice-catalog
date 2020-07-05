@@ -23,7 +23,7 @@ import {
   AuthenticationBindings,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {Calendar, WorkingHour, Subscription, IdentifierType} from '../models';
+import {Calendar, WorkingHour, Subscription} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {
@@ -131,11 +131,6 @@ export class CalendarController {
 
     delete calendarDTO.subscription;
     let response = await this.calendarService.createCalendar(calendarDTO);
-
-    let identifierType = this.schdulerConfig?.identifierMappedTo;
-    if (!identifierType) {
-      identifierType = IdentifierType.Id;
-    }
 
     const subscriptionList = await this.subscriptionRepository.find({
       where: {
