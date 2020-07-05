@@ -66,7 +66,10 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateCalendar])
+  @authorize([
+    PermissionKey.CreateCalendar,
+    PermissionKey.CreateWorkingHour
+  ])
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -94,7 +97,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateCalendar])
+  @authorize([
+    PermissionKey.CreateCalendar, 
+    PermissionKey.CreateWorkingHour,
+    PermissionKey.ViewSubscription,
+    PermissionKey.CreateSubscription
+  ])
   @post('/calendars/calendarSubscription', {
     responses: {
       '200': {
@@ -131,7 +139,7 @@ export class CalendarController {
 
     const subscriptionList = await this.subscriptionRepository.find({
       where: {
-        identifier: this.currentUser[identifierType],
+        identifier: subscription.identifier,
       },
     });
 
@@ -273,7 +281,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateCalendar])
+  @authorize([
+    PermissionKey.UpdateCalendar,
+    PermissionKey.DeleteWorkingHour,
+    PermissionKey.CreateWorkingHour,
+    PermissionKey.UpdateWorkingHour
+  ])
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
