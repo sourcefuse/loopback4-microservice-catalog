@@ -7,4 +7,5 @@ export const enum PermissionKeys {
   DeleteArchive = 'DeleteMeetingArchive',
   StopMeeting = 'StopMeeting',
   SetUploadTarget = 'SetMeetingUploadTarget',
+  GetAttendees = 'GetMeetingAttendees',
 }
