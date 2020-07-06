@@ -101,7 +101,7 @@ export class CalendarController {
   ])
   @post('/calendars/calendarSubscription', {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: calendarModelInstance,
         content: {'application/json': {schema: getModelSchemaRef(CalendarDTO)}},
       },
@@ -145,7 +145,7 @@ export class CalendarController {
         {identifier: subscriptionIdentifier},
         {isPrimary: true}
       ]
-    }
+    };
 
     const subscriptionList = await this.subscriptionRepository.find({where});
     if (subscriptionList.length > 0) {
