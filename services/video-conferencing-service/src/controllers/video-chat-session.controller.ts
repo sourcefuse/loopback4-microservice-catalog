@@ -348,18 +348,28 @@ export class VideoChatSessionController {
       actedAt: moment().format(),
       after: {},
     };
+    let errorMessage: string;
 
     const videoSessionDetail = await this.videoChatSessionRepository.findOne({
       where: {
         meetingLink: meetingLinkId,
       },
     });
+
     if (!videoSessionDetail) {
-      const errorMessage = 'Meeting Not Found';
+      errorMessage = 'Meeting Not Found';
       auditLogPayload.after = {errorMessage};
       await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.NotFound(errorMessage);
     }
+
+    if (videoSessionDetail.endTime) {
+      errorMessage = 'Meeting has already been ended!';
+      auditLogPayload.after = {errorMessage};
+      await this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+
     const sessionAttendeeList = await this.sessionAttendeesRepository.find({
       where: {
         sessionId: videoSessionDetail?.sessionId,

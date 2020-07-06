@@ -26,6 +26,7 @@ import {
   getVideoChatSession,
   getWebhookPayload,
   setUpMockProvider,
+  getAttendeesList,
 } from '../../helpers';
 
 describe('Session APIs', () => {
@@ -304,6 +305,40 @@ describe('Session APIs', () => {
       });
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(auidtLogCreate);
+    });
+  });
+
+  describe('GET /session/{meetingLinkId}/attendees', () => {
+    it('returns a list of attendees given a valid meeting link', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({}));
+      const find = sessionAttendeesRepo.stubs.find;
+      find.resolves(getAttendeesList());
+      const result = await controller.getAttendeesList(meetingLinkId);
+      expect(result).to.eql(getAttendeesList());
+      sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
+      sinon.assert.calledWith(find, {where: {sessionId: 'dummy-session-id'}});
+    });
+
+    it('returns an error if the meeting link does not exist', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves();
+      const error = await controller
+        .getAttendeesList(meetingLinkId)
+        .catch(err => err);
+      expect(error).instanceOf(Error);
+    });
+
+    it('returns an error if the meeting has already ended', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({endTime: pastDate}));
+      const error = await controller
+        .getAttendeesList(meetingLinkId)
+        .catch(err => err);
+      expect(error).instanceOf(Error);
     });
   });
 

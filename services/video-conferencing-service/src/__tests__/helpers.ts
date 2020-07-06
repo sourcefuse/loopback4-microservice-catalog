@@ -17,7 +17,7 @@ import {VonageEnums} from '../enums/video-chat.enum';
 import moment from 'moment';
 import {sinon} from '@loopback/testlab';
 
-const meetingLink = 'dummy-meeting-link';
+const meetingLink = 'dummy-meeting-link-id';
 const sessionId = 'dummy-session-id';
 
 export function getVideoChatSession(
@@ -222,4 +222,21 @@ export function getSessionAttendeesModel() {
     isDeleted: false,
   };
   return new SessionAttendees(data);
+}
+
+export function getAttendeesList() {
+  return [
+    new SessionAttendees({
+      sessionId: sessionId,
+      attendee: 'User1',
+      createdOn: getDate('July 01, 2019 00:00:00'),
+      isDeleted: false,
+    }),
+    new SessionAttendees({
+      sessionId: sessionId,
+      attendee: 'User2',
+      createdOn: getDate('July 01, 2019 00:00:00'),
+      isDeleted: false,
+    }),
+  ];
 }
