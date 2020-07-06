@@ -23,7 +23,7 @@ import {
   AuthenticationBindings,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {Calendar, WorkingHour, Subscription} from '../models';
+import {Calendar, WorkingHour, Subscription, IdentifierType} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {
@@ -67,8 +67,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([
-    PermissionKey.CreateCalendar,
-    PermissionKey.CreateWorkingHour
+    PermissionKey.CreateCalendar
   ])
   @post(basePath, {
     responses: {
@@ -98,10 +97,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([
-    PermissionKey.CreateCalendar, 
-    PermissionKey.CreateWorkingHour,
-    PermissionKey.ViewSubscription,
-    PermissionKey.CreateSubscription
+    PermissionKey.CreateCalendar
   ])
   @post('/calendars/calendarSubscription', {
     responses: {
@@ -131,21 +127,41 @@ export class CalendarController {
 
     delete calendarDTO.subscription;
     let response = await this.calendarService.createCalendar(calendarDTO);
+    let identifierType = this.schdulerConfig?.identifierMappedTo;
+    if (!identifierType) {
+      identifierType = IdentifierType.Id;
+    }
+    
+    let subscriptionIdentifier;
+    if(subscription.identifier){
+      subscriptionIdentifier = subscription.identifier;
+    }
+    else{
+      subscriptionIdentifier = this.currentUser[identifierType];
+    }
 
-    const subscriptionList = await this.subscriptionRepository.find({
-      where: {
-        identifier: subscription.identifier,
-      },
-    });
+    const where = {
+      and: [
+        {identifier: subscriptionIdentifier},
+        {isPrimary: true}
+      ]
+    }
 
+    const subscriptionList = await this.subscriptionRepository.find({where});
     if (subscriptionList.length > 0) {
       subscription.isPrimary = false;
     } else {
       subscription.isPrimary = true;
     }
+
     if (response.id) {
       subscription.calendarId = response.id;
-      subscription.identifier = calendarDTO.identifier;
+      if(subscriptionIdentifier){
+        subscription.identifier = subscriptionIdentifier;
+      }
+      else{
+        throw new HttpErrors.NotFound(ErrorKeys.SubscriptionIdentifierNotExist);
+      }
       subscription.accessRole = AccessRoleType.Owner;
       const subscriptionResponse = await this.subscriptionRepository.create(
         subscription,
@@ -277,10 +293,7 @@ export class CalendarController {
     passReqToCallback: true,
   })
   @authorize([
-    PermissionKey.UpdateCalendar,
-    PermissionKey.DeleteWorkingHour,
-    PermissionKey.CreateWorkingHour,
-    PermissionKey.UpdateWorkingHour
+    PermissionKey.UpdateCalendar
   ])
   @put(`${basePath}/{id}`, {
     responses: {
