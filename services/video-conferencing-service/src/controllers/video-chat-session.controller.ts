@@ -366,7 +366,7 @@ export class VideoChatSessionController {
       },
     });
 
-    auditLogPayload.after = {response: 'get attendees successful'}
+    auditLogPayload.after = {response: 'get attendees successful'};
     await this.auditLogRepository.create(auditLogPayload);
 
     return sessionAttendeeList;
