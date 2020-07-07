@@ -66,9 +66,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([
-    PermissionKey.CreateCalendar
-  ])
+  @authorize([PermissionKey.CreateCalendar])
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -96,9 +94,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([
-    PermissionKey.CreateCalendar
-  ])
+  @authorize([PermissionKey.CreateCalendar])
   @post('/calendars/calendarSubscription', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -131,20 +127,16 @@ export class CalendarController {
     if (!identifierType) {
       identifierType = IdentifierType.Id;
     }
-    
+
     let subscriptionIdentifier;
-    if(subscription.identifier){
+    if (subscription.identifier) {
       subscriptionIdentifier = subscription.identifier;
-    }
-    else{
+    } else {
       subscriptionIdentifier = this.currentUser[identifierType];
     }
 
     const where = {
-      and: [
-        {identifier: subscriptionIdentifier},
-        {isPrimary: true}
-      ]
+      and: [{identifier: subscriptionIdentifier}, {isPrimary: true}],
     };
 
     const subscriptionList = await this.subscriptionRepository.find({where});
@@ -156,10 +148,9 @@ export class CalendarController {
 
     if (response.id) {
       subscription.calendarId = response.id;
-      if(subscriptionIdentifier){
+      if (subscriptionIdentifier) {
         subscription.identifier = subscriptionIdentifier;
-      }
-      else{
+      } else {
         throw new HttpErrors.NotFound(ErrorKeys.SubscriptionIdentifierNotExist);
       }
       subscription.accessRole = AccessRoleType.Owner;
@@ -292,9 +283,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([
-    PermissionKey.UpdateCalendar
-  ])
+  @authorize([PermissionKey.UpdateCalendar])
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
