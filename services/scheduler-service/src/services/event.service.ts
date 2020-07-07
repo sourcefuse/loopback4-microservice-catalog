@@ -5,7 +5,7 @@ import {IStartEndTime, EventAttendeeView} from '../models';
 import {EventAttendeeViewRepository} from '../repositories/event-attendee-view.repository';
 import {EventAttendeeViewItemDTO} from '../models/EventAttendeeViewItemDTO.dto';
 import {HttpErrors} from '@loopback/rest';
-import {ErrorKeys} from '../models/enums';
+import {ErrorKeys, StatusType} from '../models/enums';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class EventService {
@@ -20,6 +20,9 @@ export class EventService {
     timeMin: Date,
   ) {
     const where = [];
+    where.push({
+      status: {neq: StatusType.Cancelled},
+    });
     where.push({
       or: [
         {responseStatus: {neq: ResponseStatusType.Declined}},
