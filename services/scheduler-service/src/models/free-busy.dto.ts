@@ -1,5 +1,5 @@
 import {property, Model, model} from '@loopback/repository';
-import {EventAttendeeViewItemDTO} from './EventAttendeeViewItemDTO.dto';
+import {EventAttendeeViewItemDTO} from './event-attendee-view-item.dto';
 
 @model()
 export class FreeBusyDTO extends Model {
