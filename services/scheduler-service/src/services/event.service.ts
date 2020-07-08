@@ -3,7 +3,7 @@ import {repository, Filter} from '@loopback/repository';
 import {ResponseStatusType} from '../models/enums/response-status.enum';
 import {IStartEndTime, EventAttendeeView} from '../models';
 import {EventAttendeeViewRepository} from '../repositories/event-attendee-view.repository';
-import {EventAttendeeViewItemDTO} from '../models/EventAttendeeViewItemDTO.dto';
+import {EventAttendeeViewItemDTO} from '../models/event-attendee-view-item.dto';
 import {HttpErrors} from '@loopback/rest';
 import {ErrorKeys, StatusType} from '../models/enums';
 
