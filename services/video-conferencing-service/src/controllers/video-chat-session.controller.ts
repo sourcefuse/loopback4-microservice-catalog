@@ -275,27 +275,55 @@ export class VideoChatSessionController {
         sessionId,
       } = webhookPayload;
 
-      if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
-        const sessionAttendeeDetail = await this.sessionAttendeesRepository.findOne(
-          {
-            where: {
-              sessionId: sessionId,
-              attendee: data,
-            },
+      const sessionAttendeeDetail = await this.sessionAttendeesRepository.findOne(
+        {
+          where: {
+            sessionId: sessionId,
+            attendee: data,
           },
-        );
-        if (!sessionAttendeeDetail) {
+        },
+      );
+      if (!sessionAttendeeDetail) {
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           await this.sessionAttendeesRepository.create({
             sessionId: sessionId,
             attendee: data,
             createdOn: new Date(),
             isDeleted: false,
+            extMetadata: {webhookPayload: webhookPayload},
           });
-        } else {
+        }
+      } else {
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             {
               modifiedOn: new Date(),
+              isDeleted: false,
+              extMetadata: {webhookPayload: webhookPayload},
+            },
+          );
+        } else if (
+          event ===
+          (VonageEnums.SessionWebhookEvents.StreamCreated ||
+            VonageEnums.SessionWebhookEvents.StreamDestroyed)
+        ) {
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            {
+              modifiedOn: new Date(),
+              extMetadata: {webhookPayload: webhookPayload},
+            },
+          );
+        } else if (
+          event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
+        ) {
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            {
+              modifiedOn: new Date(),
+              isDeleted: true,
+              extMetadata: {webhookPayload: webhookPayload},
             },
           );
         }

@@ -279,9 +279,10 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
-    it('updates the attendee for event connectionCreated when attendee re-connects', async () => {
+    it('updates the metaData and isDeleted status for event connectionCreated if the attendee already exists', async () => {
       setUp({});
       const webhookPayload = getWebhookPayload({
+        event: 'connectionCreated',
         connection: {
           id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
           createdAt: 2470257688144,
@@ -297,13 +298,82 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
-    it('audit logs for any other event', async () => {
+    it('updates the metaData and isDeleted status for event connectionDestroyed if the attendee already exists', async () => {
       setUp({});
       const webhookPayload = getWebhookPayload({
         event: 'connectionDestroyed',
         reason: 'clientDisconnected',
+        connection: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 2470257688144,
+          data: 'TOKENDATA',
+        },
       });
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('updates the metaData and isDeleted status for event streamCreated if the attendee already exists', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({
+        event: 'streamCreated',
+        connection: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 2470257688144,
+          data: 'TOKENDATA',
+        },
+        stream: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 1591599253840,
+          connection: {
+            id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+            createdAt: 2470257688144,
+            data: 'TOKENDATA',
+          },
+          videoType: 'camera',
+        },
+      });
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('updates the metaData and isDeleted status for event streamDestroyed if the attendee already exists', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({
+        event: 'streamDestroyed',
+        reason: 'clientDisconnected',
+        connection: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 2470257688144,
+          data: 'TOKENDATA',
+        },
+        stream: {
+          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+          createdAt: 1591599253840,
+          connection: {
+            id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+            createdAt: 2470257688144,
+            data: 'TOKENDATA',
+          },
+          videoType: 'camera',
+        },
+      });
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
       sinon.assert.calledOnce(auidtLogCreate);
     });
   });
