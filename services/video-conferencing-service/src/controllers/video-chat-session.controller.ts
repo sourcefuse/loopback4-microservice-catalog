@@ -294,38 +294,48 @@ export class VideoChatSessionController {
           });
         }
       } else {
+        const updatedAttendee = {
+          modifiedOn: new Date(),
+          isDeleted: sessionAttendeeDetail.isDeleted,
+          extMetadata: {webhookPayload: webhookPayload},
+        };
         if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
+          updatedAttendee.isDeleted = false;
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
-            {
-              modifiedOn: new Date(),
-              isDeleted: false,
-              extMetadata: {webhookPayload: webhookPayload},
-            },
+            updatedAttendee,
           );
-        } else if (
-          event ===
-          (VonageEnums.SessionWebhookEvents.StreamCreated ||
-            VonageEnums.SessionWebhookEvents.StreamDestroyed)
-        ) {
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
-            {
-              modifiedOn: new Date(),
-              extMetadata: {webhookPayload: webhookPayload},
-            },
+            updatedAttendee,
           );
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
+          if (
+            webhookPayload.reason === 'forceUnpublished' ||
+            webhookPayload.reason === 'mediaStopped'
+          ) {
+            await this.sessionAttendeesRepository.updateById(
+              sessionAttendeeDetail.id,
+              updatedAttendee,
+            );
+          } else {
+            updatedAttendee.isDeleted = true;
+            await this.sessionAttendeesRepository.updateById(
+              sessionAttendeeDetail.id,
+              updatedAttendee,
+            );
+          }
         } else if (
           event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
         ) {
+          updatedAttendee.isDeleted = true;
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
-            {
-              modifiedOn: new Date(),
-              isDeleted: true,
-              extMetadata: {webhookPayload: webhookPayload},
-            },
+            updatedAttendee,
           );
+        } else {
+          //DO NOTHING
         }
       }
       await this.auditLogRepository.create(
@@ -358,6 +368,7 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.GetAttendees])
   @get('/session/{meetingLinkId}/attendees', {
+    parameters: [{name: 'areActive', schema: {type: 'string'}, in: 'query'}],
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -368,6 +379,7 @@ export class VideoChatSessionController {
   })
   async getAttendeesList(
     @param.path.string('meetingLinkId') meetingLinkId: string,
+    @param.query.string('areActive') areActive: string,
   ): Promise<SessionAttendees[]> {
     const auditLogPayload = {
       action: 'session',
@@ -391,10 +403,20 @@ export class VideoChatSessionController {
       throw new HttpErrors.NotFound(errorMessage);
     }
 
-    const sessionAttendeeList = await this.sessionAttendeesRepository.find({
-      where: {
+    let whereFilter = {};
+    if (areActive === 'true') {
+      whereFilter = {
         sessionId: videoSessionDetail?.sessionId,
-      },
+        isDeleted: false,
+      };
+    } else {
+      whereFilter = {
+        sessionId: videoSessionDetail?.sessionId,
+      };
+    }
+
+    const sessionAttendeeList = await this.sessionAttendeesRepository.find({
+      where: whereFilter,
     });
 
     auditLogPayload.after = {response: 'get attendees successful'};
