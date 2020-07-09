@@ -214,6 +214,17 @@ export function getWebhookPayload(
   );
 }
 
+export const stream = {
+  id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+  createdAt: 1591599253840,
+  connection: {
+    id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
+    createdAt: 2470257688144,
+    data: 'TOKENDATA',
+  },
+  videoType: 'camera',
+};
+
 export function getSessionAttendeesModel() {
   const data = {
     sessionId: sessionId,

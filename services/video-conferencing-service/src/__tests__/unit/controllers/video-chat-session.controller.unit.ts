@@ -27,6 +27,7 @@ import {
   getWebhookPayload,
   setUpMockProvider,
   getAttendeesList,
+  stream,
 } from '../../helpers';
 
 describe('Session APIs', () => {
@@ -310,16 +311,7 @@ describe('Session APIs', () => {
       setUp({});
       const webhookPayload = getWebhookPayload({
         event: 'streamCreated',
-        stream: {
-          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
-          createdAt: 1591599253840,
-          connection: {
-            id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
-            createdAt: 2470257688144,
-            data: 'TOKENDATA',
-          },
-          videoType: 'camera',
-        },
+        stream: stream,
       });
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
@@ -335,16 +327,7 @@ describe('Session APIs', () => {
       const webhookPayload = getWebhookPayload({
         event: 'streamDestroyed',
         reason: 'clientDisconnected',
-        stream: {
-          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
-          createdAt: 1591599253840,
-          connection: {
-            id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
-            createdAt: 2470257688144,
-            data: 'TOKENDATA',
-          },
-          videoType: 'camera',
-        },
+        stream: stream,
       });
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());

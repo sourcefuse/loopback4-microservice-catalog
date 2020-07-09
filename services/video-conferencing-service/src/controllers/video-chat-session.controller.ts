@@ -305,12 +305,16 @@ export class VideoChatSessionController {
             sessionAttendeeDetail.id,
             updatedAttendee,
           );
-        } else if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
+        }
+
+        if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             updatedAttendee,
           );
-        } else if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
+        }
+
+        if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
           if (
             webhookPayload.reason === 'forceUnpublished' ||
             webhookPayload.reason === 'mediaStopped'
@@ -326,16 +330,14 @@ export class VideoChatSessionController {
               updatedAttendee,
             );
           }
-        } else if (
-          event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
-        ) {
+        }
+
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed) {
           updatedAttendee.isDeleted = true;
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             updatedAttendee,
           );
-        } else {
-          //DO NOTHING
         }
       }
       await this.auditLogRepository.create(
