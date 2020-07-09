@@ -363,13 +363,6 @@ export class VideoChatSessionController {
       throw new HttpErrors.NotFound(errorMessage);
     }
 
-    if (videoSessionDetail.endTime) {
-      errorMessage = 'Meeting has already been ended!';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
-      throw new HttpErrors.BadRequest(errorMessage);
-    }
-
     const sessionAttendeeList = await this.sessionAttendeesRepository.find({
       where: {
         sessionId: videoSessionDetail?.sessionId,
