@@ -330,16 +330,6 @@ describe('Session APIs', () => {
         .catch(err => err);
       expect(error).instanceOf(Error);
     });
-
-    it('returns an error if the meeting has already ended', async () => {
-      setUp({});
-      const findOne = videoChatSessionRepo.stubs.findOne;
-      findOne.resolves(getVideoChatSession({endTime: pastDate}));
-      const error = await controller
-        .getAttendeesList(meetingLinkId)
-        .catch(err => err);
-      expect(error).instanceOf(Error);
-    });
   });
 
   function setUp(providerStub: Partial<VideoChatInterface>) {
