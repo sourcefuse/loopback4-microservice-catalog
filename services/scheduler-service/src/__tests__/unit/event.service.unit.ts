@@ -7,7 +7,7 @@ import {
   expect,
 } from '@loopback/testlab';
 import {EventAttendeeView} from '../../models/event-attendee-view.model';
-import {EventAttendeeViewItemDTO} from '../../models/EventAttendeeViewItemDTO.dto';
+import {EventAttendeeViewItemDTO} from '../../models/event-attendee-view-item.dto';
 
 describe('Event Service', () => {
   let eventAttendeeViewRepository: StubbedInstanceWithSinonAccessor<EventAttendeeViewRepository>;

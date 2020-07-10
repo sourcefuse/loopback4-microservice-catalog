@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.9](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.8...@sourceloop/scheduler-service@1.0.0-alpha.9) (2020-07-08)
+
+
+### Bug Fixes
+
+* **scheduler-service:** export event attendee dto and renamed it ([#49](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/49)) ([0727584](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0727584adfda05f728855480fd295c175aafed88))
+
+
+### Features
+
+* **scheduler-service:** add cancelled event consition in free busy api ([#47](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/47)) ([211a675](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/211a6755378791c160c2caffb1e580af24637a49))
+* **scheduler-service:** add subcription get API ([#50](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/50)) ([5329d39](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5329d39888e4e9d8244a433029d347718464ffbc))
+* **scheduler-service:** SFO-102 add permissions in calendar ([#42](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/42)) ([12d1868](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12d18686e61986dd4dbb8919d78d7845fc1847da))
+* **scheduler-service:** SFO-106 add update triggers ([#48](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/48)) ([dbb96b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dbb96b69fc983b8842ff1b9bb3427b7dff0d7639))
+
+
+
+
+
 # [1.0.0-alpha.8](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.7...@sourceloop/scheduler-service@1.0.0-alpha.8) (2020-07-03)
 
 

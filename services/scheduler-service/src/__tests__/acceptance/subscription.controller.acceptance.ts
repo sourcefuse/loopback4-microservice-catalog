@@ -59,6 +59,13 @@ describe('Subscription Controller', () => {
       .expect(200);
   });
 
+  it('get subscriptions gives status 200 when token is passed', async () => {
+    await client
+      .get(`/subscriptions`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
+
   it('gives status 200 when token and filter with where is passed', async () => {
     await client
       .get(`/calendars/subscriptions/me?filter[where][deleted]=false`)

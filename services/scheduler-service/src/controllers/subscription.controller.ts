@@ -118,7 +118,7 @@ export class SubscriptionController {
       },
     },
   })
-  async find(
+  async findMe(
     @param.filter(Subscription) filter?: Filter<Subscription>,
   ): Promise<Subscription[]> {
     let identifierType = this.schdulerConfig?.identifierMappedTo;
@@ -137,6 +137,31 @@ export class SubscriptionController {
     } else {
       filter = {where: {identifier: this.currentUser[identifierType]}};
     }
+    return this.subscriptionRepository.find(filter);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize([PermissionKey.ViewSubscription])
+  @get(basePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Subscription model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Subscription, {includeRelations: true}),
+            },
+          },
+        },
+      },
+    },
+  })
+  async find(
+    @param.filter(Subscription) filter?: Filter<Subscription>,
+  ): Promise<Subscription[]> {
     return this.subscriptionRepository.find(filter);
   }
 

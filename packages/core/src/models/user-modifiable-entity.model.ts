@@ -4,13 +4,13 @@ import {BaseEntity} from './base-entity.model';
 
 export abstract class UserModifiableEntity extends BaseEntity {
   @property({
-    type: 'number',
+    type: 'string',
     name: 'created_by',
   })
   createdBy?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     name: 'modified_by',
   })
   modifiedBy?: string;

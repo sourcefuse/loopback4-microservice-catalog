@@ -8,6 +8,7 @@ export * from './subscription.model';
 export * from './theme.model';
 export * from './working-hour.model';
 export * from './event-attendee-view.model';
+export * from './event-attendee-view-item.dto';
 export * from './enums/identifier-type.enum';
 export * from './free-busy.dto';
 export * from './calendar.dto';

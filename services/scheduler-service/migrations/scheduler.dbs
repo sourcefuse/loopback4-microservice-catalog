@@ -524,6 +524,30 @@ A Subscribe and event collection have color field related to this.]]></comment>
 		<trigger name="events_audit_trigger" table="events" id="Trigger_252" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER events_audit_trigger AFTER INSERT OR DELETE OR UPDATE ON scheduler.events FOR EACH ROW EXECUTE PROCEDURE logs.audit_trigger('Events_logs')]]></string>
 		</trigger>
+		<trigger name="mdt_attachments" table="attachments" id="Trigger_df6" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_attachments BEFORE UPDATE ON scheduler.attachments FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_attendees" table="attendees" id="Trigger_b28" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_attendees BEFORE UPDATE ON scheduler.attendees FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_calendars" table="calendars" id="Trigger_10c4" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_calendars BEFORE UPDATE ON scheduler.calendars FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_events" table="events" id="Trigger_1c82" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_events BEFORE UPDATE ON scheduler.events FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_settings" table="settings" id="Trigger_2682" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_settings BEFORE UPDATE ON scheduler.settings FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_subscriptions" table="subscriptions" id="Trigger_1ca4" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_subscriptions BEFORE UPDATE ON scheduler.subscriptions FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_themes" table="themes" id="Trigger_2056" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_themes BEFORE UPDATE ON scheduler.themes FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
+		<trigger name="mdt_working_hours" table="working_hours" id="Trigger_21a5" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_working_hours BEFORE UPDATE ON scheduler.working_hours FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime()]]></string>
+		</trigger>
 		<trigger name="subscription_audit_trigger" table="subscriptions" id="Trigger_1e6d" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER subscription_audit_trigger AFTER INSERT OR DELETE OR UPDATE ON scheduler.subscriptions FOR EACH ROW EXECUTE PROCEDURE logs.audit_trigger('Subscription_logs')]]></string>
 		</trigger>
@@ -657,15 +681,6 @@ AS $function$RI_FKey_setnull_upd$function$
 ;]]></string>
 			<comment><![CDATA[referential integrity ON UPDATE SET NULL]]></comment>
 		</procedure>
-		<procedure name="abbrev" id="Procedure_16025c3" isSystem="false" params_known="n" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abbrev(inet)
- RETURNS text
- LANGUAGE internal
- IMMUTABLE PARALLEL SAFE STRICT
-AS $function$inet_abbrev$function$
-;]]></string>
-			<comment><![CDATA[abbreviated display of inet value]]></comment>
-		</procedure>
 		<procedure name="abbrev" id="Procedure_22b7c73" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abbrev(inet)
  RETURNS text
@@ -677,38 +692,16 @@ AS $function$inet_abbrev$function$
 			<input_param name="$1" jt="1111" type="inet" />
 			<result_param name="returnValue" jt="12" type="text" />
 		</procedure>
-		<procedure name="abs" id="Procedure_42bc9d1" isSystem="false" params_known="n" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
- RETURNS real
+		<procedure name="abbrev" id="Procedure_16025c3" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abbrev(inet)
+ RETURNS text
  LANGUAGE internal
  IMMUTABLE PARALLEL SAFE STRICT
-AS $function$float4abs$function$
+AS $function$inet_abbrev$function$
 ;]]></string>
-			<comment><![CDATA[absolute value]]></comment>
+			<comment><![CDATA[abbreviated display of inet value]]></comment>
 		</procedure>
-		<procedure name="abs" id="Procedure_46dc3e5" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
- RETURNS real
- LANGUAGE internal
- IMMUTABLE PARALLEL SAFE STRICT
-AS $function$float4abs$function$
-;]]></string>
-			<comment><![CDATA[absolute value]]></comment>
-			<input_param name="$1" jt="7" type="float4" />
-			<result_param name="returnValue" jt="7" type="float4" />
-		</procedure>
-		<procedure name="abs" id="Procedure_18df2af" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
- RETURNS real
- LANGUAGE internal
- IMMUTABLE PARALLEL SAFE STRICT
-AS $function$float4abs$function$
-;]]></string>
-			<comment><![CDATA[absolute value]]></comment>
-			<input_param name="$1" jt="7" type="float4" />
-			<result_param name="returnValue" jt="7" type="float4" />
-		</procedure>
-		<procedure name="abs" id="Procedure_2a20871" isSystem="false" params_known="y" >
+		<procedure name="abs" id="Procedure_3160c9a" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
  RETURNS real
  LANGUAGE internal
@@ -730,7 +723,7 @@ AS $function$float4abs$function$
 			<input_param name="$1" jt="7" type="float4" />
 			<result_param name="returnValue" jt="7" type="float4" />
 		</procedure>
-		<procedure name="abs" id="Procedure_3160c9a" isSystem="false" params_known="y" >
+		<procedure name="abs" id="Procedure_2a20871" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
  RETURNS real
  LANGUAGE internal
@@ -741,14 +734,36 @@ AS $function$float4abs$function$
 			<input_param name="$1" jt="7" type="float4" />
 			<result_param name="returnValue" jt="7" type="float4" />
 		</procedure>
-		<procedure name="abstime" id="Procedure_4e5fcb7" isSystem="false" params_known="n" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstime(timestamp with time zone)
- RETURNS abstime
+		<procedure name="abs" id="Procedure_18df2af" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
  LANGUAGE internal
  IMMUTABLE PARALLEL SAFE STRICT
-AS $function$timestamptz_abstime$function$
+AS $function$float4abs$function$
 ;]]></string>
-			<comment><![CDATA[convert timestamp with time zone to abstime]]></comment>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_46dc3e5" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
+			<input_param name="$1" jt="7" type="float4" />
+			<result_param name="returnValue" jt="7" type="float4" />
+		</procedure>
+		<procedure name="abs" id="Procedure_42bc9d1" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abs(real)
+ RETURNS real
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$float4abs$function$
+;]]></string>
+			<comment><![CDATA[absolute value]]></comment>
 		</procedure>
 		<procedure name="abstime" id="Procedure_4c37fcd" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstime(timestamp with time zone)
@@ -760,6 +775,15 @@ AS $function$timestamptz_abstime$function$
 			<comment><![CDATA[convert timestamp with time zone to abstime]]></comment>
 			<input_param name="$1" jt="93" type="timestamptz" />
 			<result_param name="returnValue" jt="1111" type="abstime" />
+		</procedure>
+		<procedure name="abstime" id="Procedure_4e5fcb7" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstime(timestamp with time zone)
+ RETURNS abstime
+ LANGUAGE internal
+ IMMUTABLE PARALLEL SAFE STRICT
+AS $function$timestamptz_abstime$function$
+;]]></string>
+			<comment><![CDATA[convert timestamp with time zone to abstime]]></comment>
 		</procedure>
 		<procedure name="abstimeeq" id="Procedure_4520ef0" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.abstimeeq(abstime, abstime)
@@ -941,27 +965,7 @@ AS $function$dacosd$function$
 ;]]></string>
 			<comment><![CDATA[arccosine, degrees]]></comment>
 		</procedure>
-		<procedure name="age" id="Procedure_e2cb5c" isSystem="false" params_known="n" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
- RETURNS integer
- LANGUAGE internal
- STABLE PARALLEL RESTRICTED STRICT
-AS $function$xid_age$function$
-;]]></string>
-			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
-		</procedure>
-		<procedure name="age" id="Procedure_14e5174" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
- RETURNS integer
- LANGUAGE internal
- STABLE PARALLEL RESTRICTED STRICT
-AS $function$xid_age$function$
-;]]></string>
-			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
-			<input_param name="$1" jt="1111" type="xid" />
-			<result_param name="returnValue" jt="4" type="int4" />
-		</procedure>
-		<procedure name="age" id="Procedure_1a22766" isSystem="false" params_known="y" >
+		<procedure name="age" id="Procedure_5020db2" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
  RETURNS integer
  LANGUAGE internal
@@ -983,7 +987,7 @@ AS $function$xid_age$function$
 			<input_param name="$1" jt="1111" type="xid" />
 			<result_param name="returnValue" jt="4" type="int4" />
 		</procedure>
-		<procedure name="age" id="Procedure_5020db2" isSystem="false" params_known="y" >
+		<procedure name="age" id="Procedure_1a22766" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
  RETURNS integer
  LANGUAGE internal
@@ -993,6 +997,26 @@ AS $function$xid_age$function$
 			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
 			<input_param name="$1" jt="1111" type="xid" />
 			<result_param name="returnValue" jt="4" type="int4" />
+		</procedure>
+		<procedure name="age" id="Procedure_14e5174" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
+			<input_param name="$1" jt="1111" type="xid" />
+			<result_param name="returnValue" jt="4" type="int4" />
+		</procedure>
+		<procedure name="age" id="Procedure_e2cb5c" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.age(xid)
+ RETURNS integer
+ LANGUAGE internal
+ STABLE PARALLEL RESTRICTED STRICT
+AS $function$xid_age$function$
+;]]></string>
+			<comment><![CDATA[age of a transaction ID, in transactions before current transaction]]></comment>
 		</procedure>
 		<procedure name="amvalidate" id="Procedure_1a6de22" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.amvalidate(oid)
@@ -1138,7 +1162,7 @@ AS $function$select $1::pg_catalog.text || $2$function$
 ;]]></string>
 			<comment><![CDATA[implementation of || operator]]></comment>
 		</procedure>
-		<procedure name="area" id="Procedure_2d86e77" isSystem="false" params_known="n" >
+		<procedure name="area" id="Procedure_7e89da" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.area(circle)
  RETURNS double precision
  LANGUAGE internal
@@ -1146,6 +1170,8 @@ AS $function$select $1::pg_catalog.text || $2$function$
 AS $function$circle_area$function$
 ;]]></string>
 			<comment><![CDATA[area of circle]]></comment>
+			<input_param name="$1" jt="1111" type="circle" />
+			<result_param name="returnValue" jt="8" type="float8" />
 		</procedure>
 		<procedure name="area" id="Procedure_885bd7" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.area(circle)
@@ -1158,7 +1184,7 @@ AS $function$circle_area$function$
 			<input_param name="$1" jt="1111" type="circle" />
 			<result_param name="returnValue" jt="8" type="float8" />
 		</procedure>
-		<procedure name="area" id="Procedure_7e89da" isSystem="false" params_known="y" >
+		<procedure name="area" id="Procedure_2d86e77" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.area(circle)
  RETURNS double precision
  LANGUAGE internal
@@ -1166,8 +1192,6 @@ AS $function$circle_area$function$
 AS $function$circle_area$function$
 ;]]></string>
 			<comment><![CDATA[area of circle]]></comment>
-			<input_param name="$1" jt="1111" type="circle" />
-			<result_param name="returnValue" jt="8" type="float8" />
 		</procedure>
 		<procedure name="areajoinsel" id="Procedure_1bb5e7" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog.areajoinsel(internal, oid, internal, smallint, internal)
@@ -1710,10 +1734,30 @@ $function$
 ;]]></string>
 		</script>
 		<script name="SQL_Editor_010" id="Editor_436" language="SQL" >
-			<string><![CDATA[CREATE TYPE scheduler.eventStatus AS ENUM ('confirmed','tentative', 'cancelled');
+			<string><![CDATA[CREATE TYPE scheduler.eventStatus AS ENUM ('confirmed','tentative', 'cancelled', 'completed');
 ALTER TABLE scheduler.events ALTER COLUMN status DROP DEFAULT;
 ALTER TABLE scheduler.events ALTER COLUMN status TYPE scheduler.eventStatus USING status::text::scheduler.eventStatus;
 ALTER TABLE scheduler.events ALTER COLUMN status SET DEFAULT 'confirmed';]]></string>
+		</script>
+		<script name="SQL_Editor_011" id="Editor_c3f" language="SQL" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION scheduler.moddatetime()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    NEW.modified_on = now();
+    RETURN NEW;
+END;
+$function$;
+
+CREATE TRIGGER mdt_calendars BEFORE UPDATE ON scheduler.calendars FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_subscriptions BEFORE UPDATE ON scheduler.subscriptions FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_working_hours BEFORE UPDATE ON scheduler.working_hours FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_events BEFORE UPDATE ON scheduler.events FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_attendees BEFORE UPDATE ON scheduler.attendees FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_attachments BEFORE UPDATE ON scheduler.attachments FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_themes BEFORE UPDATE ON scheduler.themes FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();
+CREATE TRIGGER mdt_settings BEFORE UPDATE ON scheduler.settings FOR EACH ROW EXECUTE PROCEDURE scheduler.moddatetime();]]></string>
 		</script>
 		<script name="audit_logs" id="Editor_40627fc" language="SQL" >
 			<string><![CDATA[CREATE  TABLE logs.audit_logs ( 
