@@ -1,6 +1,6 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
-import {param, patch, post, requestBody, HttpErrors} from '@loopback/rest';
+import {param, patch, post, requestBody, HttpErrors, get} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {
   MeetingOptions,
@@ -14,7 +14,7 @@ import {PermissionKeys} from '../enums/permission-keys.enum';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
-import {VideoChatSession} from '../models';
+import {VideoChatSession, SessionAttendees} from '../models';
 import {
   AuditLogsRepository,
   VideoChatSessionRepository,
@@ -275,28 +275,58 @@ export class VideoChatSessionController {
         sessionId,
       } = webhookPayload;
 
-      if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
-        const sessionAttendeeDetail = await this.sessionAttendeesRepository.findOne(
-          {
-            where: {
-              attendee: data,
-            },
+      const sessionAttendeeDetail = await this.sessionAttendeesRepository.findOne(
+        {
+          where: {
+            sessionId: sessionId,
+            attendee: data,
           },
-        );
-        if (!sessionAttendeeDetail) {
+        },
+      );
+      if (!sessionAttendeeDetail) {
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           await this.sessionAttendeesRepository.create({
             sessionId: sessionId,
             attendee: data,
             createdOn: new Date(),
             isDeleted: false,
+            extMetadata: {webhookPayload: webhookPayload},
           });
-        } else {
+        }
+      } else {
+        const updatedAttendee = {
+          modifiedOn: new Date(),
+          isDeleted: sessionAttendeeDetail.isDeleted,
+          extMetadata: {webhookPayload: webhookPayload},
+        };
+
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
+          updatedAttendee.isDeleted = false;
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
-            {
-              modifiedOn: new Date(),
-            },
+            updatedAttendee,
           );
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            updatedAttendee,
+          );
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
+          await this.processStreamDestroyedEvent(
+            webhookPayload,
+            sessionAttendeeDetail,
+            updatedAttendee,
+          );
+        } else if (
+          event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
+        ) {
+          updatedAttendee.isDeleted = true;
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            updatedAttendee,
+          );
+        } else {
+          //DO NOTHING
         }
       }
       await this.auditLogRepository.create(
@@ -324,5 +354,87 @@ export class VideoChatSessionController {
         'Error occured triggering webhook event',
       );
     }
+  }
+
+  async processStreamDestroyedEvent(
+    webhookPayload: VonageSessionWebhookPayload,
+    sessionAttendeeDetail: SessionAttendees,
+    updatedAttendee: Partial<SessionAttendees>,
+  ) {
+    if (
+      webhookPayload.reason === 'forceUnpublished' ||
+      webhookPayload.reason === 'mediaStopped'
+    ) {
+      await this.sessionAttendeesRepository.updateById(
+        sessionAttendeeDetail.id,
+        updatedAttendee,
+      );
+    } else {
+      updatedAttendee.isDeleted = true;
+      await this.sessionAttendeesRepository.updateById(
+        sessionAttendeeDetail.id,
+        updatedAttendee,
+      );
+    }
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.GetAttendees])
+  @get('/session/{meetingLinkId}/attendees', {
+    parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],
+    responses: {
+      [STATUS_CODE.OK]: {
+        content: {
+          [CONTENT_TYPE.TEXT]: {schema: {type: 'array'}},
+        },
+      },
+    },
+  })
+  async getAttendeesList(
+    @param.path.string('meetingLinkId') meetingLinkId: string,
+    @param.query.string('active') active: string,
+  ): Promise<SessionAttendees[]> {
+    const auditLogPayload = {
+      action: 'session',
+      actionType: 'session-attendees-list',
+      before: {meetingLinkId},
+      actedAt: moment().format(),
+      after: {},
+    };
+    let errorMessage: string;
+
+    const videoSessionDetail = await this.videoChatSessionRepository.findOne({
+      where: {
+        meetingLink: meetingLinkId,
+      },
+    });
+
+    if (!videoSessionDetail) {
+      errorMessage = 'Meeting Not Found';
+      auditLogPayload.after = {errorMessage};
+      await this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.NotFound(errorMessage);
+    }
+
+    let whereFilter = {};
+    if (active === 'true') {
+      whereFilter = {
+        sessionId: videoSessionDetail?.sessionId,
+        isDeleted: false,
+      };
+    } else {
+      whereFilter = {
+        sessionId: videoSessionDetail?.sessionId,
+      };
+    }
+
+    const sessionAttendeeList = await this.sessionAttendeesRepository.find({
+      where: whereFilter,
+    });
+
+    auditLogPayload.after = {response: 'get attendees successful'};
+    await this.auditLogRepository.create(auditLogPayload);
+
+    return sessionAttendeeList;
   }
 }

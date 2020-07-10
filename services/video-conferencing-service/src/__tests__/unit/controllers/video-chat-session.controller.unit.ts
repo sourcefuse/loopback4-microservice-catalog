@@ -26,6 +26,8 @@ import {
   getVideoChatSession,
   getWebhookPayload,
   setUpMockProvider,
+  getAttendeesList,
+  stream,
 } from '../../helpers';
 
 describe('Session APIs', () => {
@@ -278,14 +280,23 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
-    it('updates the attendee for event connectionCreated when attendee re-connects', async () => {
+    it('updates the metaData and isDeleted status for event connectionCreated if the attendee already exists', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({});
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('updates the metaData and isDeleted status for event connectionDestroyed if the attendee already exists', async () => {
       setUp({});
       const webhookPayload = getWebhookPayload({
-        connection: {
-          id: 'd053fcc8-c681-41d5-8ec2-7a9e1434a21f',
-          createdAt: 2470257688144,
-          data: 'TOKENDATA',
-        },
+        event: 'connectionDestroyed',
+        reason: 'clientDisconnected',
       });
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
@@ -296,14 +307,73 @@ describe('Session APIs', () => {
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
-    it('audit logs for any other event', async () => {
+    it('updates the metaData and isDeleted status for event streamCreated if the attendee already exists', async () => {
       setUp({});
       const webhookPayload = getWebhookPayload({
-        event: 'connectionDestroyed',
-        reason: 'clientDisconnected',
+        event: 'streamCreated',
+        stream: stream,
       });
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
       sinon.assert.calledOnce(auidtLogCreate);
+    });
+
+    it('updates the metaData and isDeleted status for event streamDestroyed if the attendee already exists', async () => {
+      setUp({});
+      const webhookPayload = getWebhookPayload({
+        event: 'streamDestroyed',
+        reason: 'clientDisconnected',
+        stream: stream,
+      });
+      const findOne = sessionAttendeesRepo.stubs.findOne;
+      findOne.resolves(getSessionAttendeesModel());
+      const updateById = sessionAttendeesRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.checkWebhookPayload(webhookPayload);
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auidtLogCreate);
+    });
+  });
+
+  describe('GET /session/{meetingLinkId}/attendees', () => {
+    it('returns a list of all attendees given a valid meeting link', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({}));
+      const find = sessionAttendeesRepo.stubs.find;
+      find.resolves(getAttendeesList());
+      const result = await controller.getAttendeesList(meetingLinkId, 'false');
+      expect(result).to.eql(getAttendeesList());
+      sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
+      sinon.assert.calledWith(find, {where: {sessionId: 'dummy-session-id'}});
+    });
+
+    it('returns an error if the meeting link does not exist', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves();
+      const error = await controller
+        .getAttendeesList(meetingLinkId, 'false')
+        .catch(err => err);
+      expect(error).instanceOf(Error);
+    });
+
+    it('returns active attendees only if areActive is true', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({}));
+      const find = sessionAttendeesRepo.stubs.find;
+      find.resolves(getAttendeesList());
+      const result = await controller.getAttendeesList(meetingLinkId, 'true');
+      expect(result).to.eql(getAttendeesList());
+      sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
+      sinon.assert.calledWith(find, {
+        where: {sessionId: 'dummy-session-id', isDeleted: false},
+      });
     });
   });
 
