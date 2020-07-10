@@ -299,45 +299,34 @@ export class VideoChatSessionController {
           isDeleted: sessionAttendeeDetail.isDeleted,
           extMetadata: {webhookPayload: webhookPayload},
         };
+
         if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           updatedAttendee.isDeleted = false;
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             updatedAttendee,
           );
-        }
-
-        if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             updatedAttendee,
           );
-        }
-
-        if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
-          if (
-            webhookPayload.reason === 'forceUnpublished' ||
-            webhookPayload.reason === 'mediaStopped'
-          ) {
-            await this.sessionAttendeesRepository.updateById(
-              sessionAttendeeDetail.id,
-              updatedAttendee,
-            );
-          } else {
-            updatedAttendee.isDeleted = true;
-            await this.sessionAttendeesRepository.updateById(
-              sessionAttendeeDetail.id,
-              updatedAttendee,
-            );
-          }
-        }
-
-        if (event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed) {
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
+          await this.processStreamDestroyedEvent(
+            webhookPayload,
+            sessionAttendeeDetail,
+            updatedAttendee,
+          );
+        } else if (
+          event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
+        ) {
           updatedAttendee.isDeleted = true;
           await this.sessionAttendeesRepository.updateById(
             sessionAttendeeDetail.id,
             updatedAttendee,
           );
+        } else {
+          //DO NOTHING
         }
       }
       await this.auditLogRepository.create(
@@ -367,10 +356,32 @@ export class VideoChatSessionController {
     }
   }
 
+  async processStreamDestroyedEvent(
+    webhookPayload: VonageSessionWebhookPayload,
+    sessionAttendeeDetail: SessionAttendees,
+    updatedAttendee: Partial<SessionAttendees>,
+  ) {
+    if (
+      webhookPayload.reason === 'forceUnpublished' ||
+      webhookPayload.reason === 'mediaStopped'
+    ) {
+      await this.sessionAttendeesRepository.updateById(
+        sessionAttendeeDetail.id,
+        updatedAttendee,
+      );
+    } else {
+      updatedAttendee.isDeleted = true;
+      await this.sessionAttendeesRepository.updateById(
+        sessionAttendeeDetail.id,
+        updatedAttendee,
+      );
+    }
+  }
+
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.GetAttendees])
   @get('/session/{meetingLinkId}/attendees', {
-    parameters: [{name: 'areActive', schema: {type: 'string'}, in: 'query'}],
+    parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -381,7 +392,7 @@ export class VideoChatSessionController {
   })
   async getAttendeesList(
     @param.path.string('meetingLinkId') meetingLinkId: string,
-    @param.query.string('areActive') areActive: string,
+    @param.query.string('active') active: string,
   ): Promise<SessionAttendees[]> {
     const auditLogPayload = {
       action: 'session',
@@ -406,7 +417,7 @@ export class VideoChatSessionController {
     }
 
     let whereFilter = {};
-    if (areActive === 'true') {
+    if (active === 'true') {
       whereFilter = {
         sessionId: videoSessionDetail?.sessionId,
         isDeleted: false,
