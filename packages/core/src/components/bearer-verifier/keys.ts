@@ -38,4 +38,5 @@ export interface IAuthUserWithPermissions<
   middleName?: string;
   tenantId?: TID;
   userTenantId?: UTID;
+  passwordExpiryTime?: Date;
 }

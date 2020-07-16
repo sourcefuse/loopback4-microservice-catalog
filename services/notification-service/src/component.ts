@@ -81,7 +81,7 @@ export class NotificationServiceComponent implements Component {
 
     if (!(this.notifConfig && this.notifConfig.useCustomSequence)) {
       // Mount default sequence if needed
-      this.setupSequence(this.bindings);
+      this.setupSequence();
     }
 
     this.repositories = [
@@ -127,9 +127,8 @@ export class NotificationServiceComponent implements Component {
   /**
    * Setup ServiceSequence by default if no other sequnce provided
    *
-   * @param bindings Binding array
    */
-  setupSequence(bindings: Binding[]) {
+  setupSequence() {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence

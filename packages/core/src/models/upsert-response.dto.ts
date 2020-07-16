@@ -1,6 +1,6 @@
 import {Model, model, property} from '@loopback/repository';
 
-@model()
+@model({settings: {strict: false}})
 export class UpsertResponse extends Model {
   @property({
     type: 'object',
@@ -16,6 +16,10 @@ export class UpsertResponse extends Model {
     type: 'object',
   })
   failed?: object;
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
 
   constructor(data?: Partial<UpsertResponse>) {
     super(data);

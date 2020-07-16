@@ -13,3 +13,6 @@ export interface INotifServiceConfig extends IServiceConfig {
   useCustomSMSProvider: boolean;
   useCustomPushProvider: boolean;
 }
+
+export const NotifDbSourceName = 'NotifDb';
+export const NotifAccessCacheSourceName = 'NotifAccessCache';

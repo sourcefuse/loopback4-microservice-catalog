@@ -1,0 +1,20 @@
+{
+  "ids": {
+    "users": 126,
+    "auth_clients": 27,
+    "user_permissions": 1,
+    "roles": 71,
+    "user_credentials": 27,
+    "tenant_configs": 1,
+    "user_prefs": 4
+  },
+  "models": {
+    "users": {},
+    "auth_clients": {},
+    "user_permissions": {},
+    "roles": {},
+    "user_credentials": {},
+    "tenant_configs": {},
+    "user_prefs": {}
+  }
+}

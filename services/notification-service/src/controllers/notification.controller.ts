@@ -1,4 +1,4 @@
-import {inject} from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -29,8 +29,8 @@ export class NotificationController {
   constructor(
     @repository(NotificationRepository)
     public notificationRepository: NotificationRepository,
-    @inject(NotificationBindings.NotificationProvider)
-    private readonly notifProvider: INotification,
+    @inject.getter(NotificationBindings.NotificationProvider)
+    private readonly notifProvider: Getter<INotification>,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -55,7 +55,8 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
-    await this.notifProvider.publish(notification);
+    const provider = await this.notifProvider();
+    await provider.publish(notification);
     if (notification.body.length > maxBodyLen) {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
@@ -84,9 +85,10 @@ export class NotificationController {
     })
     notifications: Notification[],
   ): Promise<Notification[]> {
+    const provider = await this.notifProvider();
     notifications.forEach(notification => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.notifProvider.publish(notification);
+      provider.publish(notification);
       if (notification.body.length > maxBodyLen) {
         notification.body = notification.body.substring(0, maxBodyLen - 1);
       }
@@ -112,7 +114,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.ViewNotification])
+  @authorize(['*'])
   @get('/notifications', {
     responses: {
       [STATUS_CODE.OK]: {

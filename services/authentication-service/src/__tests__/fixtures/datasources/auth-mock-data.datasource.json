@@ -1,0 +1,6 @@
+{
+  "name": "authMockData",
+  "connector": "memory",
+  "localStorage": "",
+  "file": ""
+}
