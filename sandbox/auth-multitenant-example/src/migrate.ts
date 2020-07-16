@@ -1,6 +1,6 @@
 import {AuthMultitenantExampleApplication} from './application';
 
-export async function migrate(args: string[]) {
+export async function migrate(args: string[]): Promise<void> {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
   console.log('Migrating schemas (%s existing schema)', existingSchema);
 

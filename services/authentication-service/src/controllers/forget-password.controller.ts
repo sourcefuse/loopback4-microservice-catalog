@@ -91,7 +91,7 @@ export class ForgetPasswordController {
       };
       // Default expiry is 30 minutes
       const expiryDuration = parseInt(
-        process.env.FORGOT_PASSWORD_LINK_EXPIRY || '1800',
+        process.env.FORGOT_PASSWORD_LINK_EXPIRY ?? '1800',
       );
       const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
         expiresIn: expiryDuration,

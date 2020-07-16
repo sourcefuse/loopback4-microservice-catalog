@@ -486,7 +486,7 @@ export class LoginController {
     @param.query.string('code') code: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
   ): Promise<void> {
-    const clientId = process.env.KEYCLOAK_CLIENT_ID || '';
+    const clientId = process.env.KEYCLOAK_CLIENT_ID ?? '';
     if (!this.user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
