@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/sandbox-testing@1.0.0-alpha.4...@sourceloop/sandbox-testing@1.0.0-alpha.5) (2020-07-16)
+
+
+### Features
+
+* **authentication-service:** add auth service to source loop catalog ([909f304](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/909f304dc056a08cf0dfcfdbabe400ca6e1aa9ee))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/sandbox-testing@1.0.0-alpha.3...@sourceloop/sandbox-testing@1.0.0-alpha.4) (2020-07-08)
 
 **Note:** Version bump only for package @sourceloop/sandbox-testing

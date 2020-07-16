@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.5...@sourceloop/video-conferencing-service@1.0.0-alpha.6) (2020-07-16)
+
+
+### Features
+
+* **authentication-service:** add auth service to source loop catalog ([909f304](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/909f304dc056a08cf0dfcfdbabe400ca6e1aa9ee))
+* **video-conferencing-service:** SFO-103,SFO-107 implement GET attendee list, allow webhook to handle more events ([#44](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/44)) ([e2b7fad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e2b7fad2ac821cbb6865bde5a208243e742094e6))
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.4...@sourceloop/video-conferencing-service@1.0.0-alpha.5) (2020-07-08)
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service
