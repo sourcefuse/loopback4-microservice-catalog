@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.4...@sourceloop/core@1.0.0-alpha.5) (2020-07-19)
+
+
+### Bug Fixes
+
+* **authentication-service:** fix password expiry time check and relay state for keycloak ([8e8a27d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8e8a27d174ff18fcc7f17e14dca5a5140137a69a))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.3...@sourceloop/core@1.0.0-alpha.4) (2020-07-16)
 
 
