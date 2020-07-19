@@ -66,6 +66,14 @@ const queryGen = (req: Request) => {
   };
 };
 
+const keycloakQueryGen = (req: Request) => {
+  return {
+    state: Object.keys(req.query)
+      .map(key => `${key}=${req.query[key]}`)
+      .join('&'),
+  };
+};
+
 const userAgentKey = 'user-agent';
 
 export class LoginController {
@@ -433,7 +441,7 @@ export class LoginController {
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
     },
-    queryGen,
+    keycloakQueryGen,
   )
   @authorize(['*'])
   @get('/auth/keycloak', {
@@ -467,7 +475,7 @@ export class LoginController {
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
     },
-    queryGen,
+    keycloakQueryGen,
   )
   @authorize(['*'])
   @get('/auth/keycloak-auth-redirect', {
@@ -484,10 +492,11 @@ export class LoginController {
   })
   async keycloakCallback(
     @param.query.string('code') code: string,
+    @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
   ): Promise<void> {
-    const clientId = process.env.KEYCLOAK_CLIENT_ID ?? '';
-    if (!this.user) {
+    const clientId = new URLSearchParams(state).get('client_id');
+    if (!clientId || !this.user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     const client = await this.authClientRepository.findOne({

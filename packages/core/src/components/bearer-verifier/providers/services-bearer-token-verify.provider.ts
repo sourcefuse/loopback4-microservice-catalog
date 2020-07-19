@@ -23,7 +23,7 @@ export class ServicesBearerTokenVerifyProvider
       }
 
       if (
-        !user.passwordExpiryTime ||
+        user.passwordExpiryTime &&
         moment().isSameOrAfter(moment(user.passwordExpiryTime))
       ) {
         throw new HttpErrors.Unauthorized('PasswordExpiryError');
