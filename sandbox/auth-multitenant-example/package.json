@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/auth-multitenant-example",
-  "version": "1.1.0-alpha.3",
+  "version": "1.1.0-alpha.4",
   "description": "This is a sample application for sandbox testing of auth microservice components.",
   "private": true,
   "keywords": [
@@ -53,7 +53,7 @@
     "@loopback/rest": "^5.0.1",
     "@loopback/rest-explorer": "^2.2.2",
     "@loopback/service-proxy": "^2.3.0",
-    "@sourceloop/authentication-service": "^1.0.0-alpha.7",
+    "@sourceloop/authentication-service": "^1.0.0-alpha.8",
     "@sourceloop/core": "^1.0.0-alpha.6",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.8.0",

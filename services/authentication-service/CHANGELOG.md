@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.8](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.7...@sourceloop/authentication-service@1.0.0-alpha.8) (2020-07-20)
+
+
+### Bug Fixes
+
+* **authentication-service:** fix token expiry err ([65d6386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/65d63865167f72e7a262a06ea8293699c51eb88c))
+
+
+
+
+
 # [1.0.0-alpha.7](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.6...@sourceloop/authentication-service@1.0.0-alpha.7) (2020-07-20)
 
 
