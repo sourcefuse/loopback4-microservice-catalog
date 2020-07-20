@@ -110,17 +110,17 @@ export class SecureSequence implements SequenceHandler {
       );
 
       const error = this._rejectErrors(err);
-      // if (
-      //   // sonarignore:start
-      //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      //   !(error.message && (error.message as any).name === 'TokenExpiredError')
-      //   // sonarignore:end
-      // ) {
-      error.message = this.i18n.__({
-        phrase: error.message || 'Some error occured. Please try again',
-        locale: process.env.LOCALE ?? 'en',
-      });
-      // }
+      if (
+        // sonarignore:start
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        !(error.message && (error.message as any).message === 'TokenExpired')
+        // sonarignore:end
+      ) {
+        error.message = this.i18n.__({
+          phrase: error.message || 'Some error occured. Please try again',
+          locale: process.env.LOCALE ?? 'en',
+        });
+      }
       this.reject(context, error);
     } finally {
       this.logger.info(
