@@ -3,14 +3,15 @@ import {
   FindRoute,
   HttpErrors,
   InvokeMethod,
+  InvokeMiddleware,
   ParseParams,
   Reject,
   RequestContext,
   RestBindings,
   Send,
   SequenceHandler,
-  InvokeMiddleware,
 } from '@loopback/rest';
+import {ILogger, LOGGER, SFCoreBindings} from '@sourceloop/core';
 import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -20,7 +21,6 @@ import {
 
 import {AuthClient} from './models';
 import {AuthUser} from './modules/auth';
-import {LOGGER, ILogger, SFCoreBindings} from '@sourceloop/core';
 
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
@@ -100,17 +100,17 @@ export class MySequence implements SequenceHandler {
       );
 
       const error = this._rejectErrors(err);
-      if (
-        // sonarignore:start
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        !(error.message && (error.message as any).name === 'TokenExpiredError')
-        // sonarignore:end
-      ) {
-        error.message = this.i18n.__({
-          phrase: error.message || 'Some error occured. Please try again',
-          locale: process.env.LOCALE ?? 'en',
-        });
-      }
+      // if (
+      //   // sonarignore:start
+      //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      //   !(error.message && (error.message as any).name === 'TokenExpiredError')
+      //   // sonarignore:end
+      // ) {
+      error.message = this.i18n.__({
+        phrase: error.message || 'Some error occured. Please try again',
+        locale: process.env.LOCALE ?? 'en',
+      });
+      // }
       this.reject(context, error);
     } finally {
       this.logger.info(
