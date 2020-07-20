@@ -1,7 +1,7 @@
 import {Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';
-import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
 
 import {IAuthUserWithPermissions} from '../keys';
@@ -19,7 +19,7 @@ export class ServicesBearerTokenVerifyProvider
           issuer: process.env.JWT_ISSUER,
         }) as IAuthUserWithPermissions;
       } catch (error) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+        throw new HttpErrors.Unauthorized('TokenExpired');
       }
 
       if (

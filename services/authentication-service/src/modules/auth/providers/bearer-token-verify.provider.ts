@@ -3,7 +3,7 @@ import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
 import {verify} from 'jsonwebtoken';
-import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
 
 import {RevokedTokenRepository} from '../../../repositories';
@@ -31,7 +31,7 @@ export class BearerTokenVerifyProvider
         }) as AuthUser;
       } catch (error) {
         this.logger.error(JSON.stringify(error));
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+        throw new HttpErrors.Unauthorized('TokenExpired');
       }
 
       if (

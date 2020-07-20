@@ -19,7 +19,7 @@ export class FacadesBearerTokenVerifyProvider
         }
         return await this.authService.getme(req.headers.authorization);
       } catch (error) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+        throw new HttpErrors.Unauthorized('TokenExpired');
       }
     };
   }
