@@ -25,10 +25,8 @@ export class TokenResponse extends Model {
 
   @property({
     type: 'string',
-    description: ModelPropertyDescriptionString.reqStrPropDesc,
-    required: true,
   })
-  pubnubToken: string;
+  pubnubToken?: string;
 
   constructor(data?: Partial<TokenResponse>) {
     super(data);

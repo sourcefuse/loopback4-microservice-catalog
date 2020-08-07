@@ -3,14 +3,15 @@ import {
   FindRoute,
   HttpErrors,
   InvokeMethod,
+  InvokeMiddleware,
   ParseParams,
   Reject,
   RequestContext,
   RestBindings,
   Send,
   SequenceHandler,
-  InvokeMiddleware,
 } from '@loopback/rest';
+import {isString} from 'lodash';
 import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -116,10 +117,15 @@ export class SecureSequence implements SequenceHandler {
         !(error.message && (error.message as any).message === 'TokenExpired')
         // sonarignore:end
       ) {
-        error.message = this.i18n.__({
-          phrase: error.message || 'Some error occured. Please try again',
-          locale: process.env.LOCALE ?? 'en',
-        });
+        if (isString(error.message)) {
+          error.message = this.i18n.__({
+            phrase: error.message,
+            locale: process.env.LOCALE ?? 'en',
+          });
+        } else {
+          error.message =
+            error.message || 'Some error occured. Please try again';
+        }
       }
       this.reject(context, error);
     } finally {

@@ -19,6 +19,8 @@ import {
   ErrorCodes,
   getAge,
   IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
   STATUS_CODE,
   SuccessResponse,
   UserStatus,
@@ -41,6 +43,7 @@ import {
 } from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {URLSearchParams} from 'url';
+
 import {AuthClient, RefreshToken, User, UserTenant} from '../../models';
 import {
   AuthClientRepository,
@@ -102,6 +105,7 @@ export class LoginController {
     public tenantConfigRepo: TenantConfigRepository,
     @inject(RestBindings.Http.REQUEST)
     private readonly req: Request,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -139,7 +143,7 @@ export class LoginController {
     } else if (!req.client_secret) {
       throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
     } else if (userStatus?.status === UserStatus.REGISTERED) {
-      throw new HttpErrors.BadRequest('Your Sign-Up request is in process');
+      throw new HttpErrors.BadRequest('User not active yet');
     } else {
       // Do nothing and move ahead
     }
@@ -158,6 +162,7 @@ export class LoginController {
         code: token,
       };
     } catch (error) {
+      this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     }
   }
@@ -225,6 +230,7 @@ export class LoginController {
         userAgent: this.req.headers[userAgentKey],
       });
     } catch (error) {
+      this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     }
   }
@@ -276,6 +282,7 @@ export class LoginController {
         userAgent: this.req.headers[userAgentKey],
       });
     } catch (error) {
+      this.logger.error(error);
       if (error.name === 'TokenExpiredError') {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
       } else if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
@@ -424,7 +431,8 @@ export class LoginController {
       });
       response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
-      throw new HttpErrors.InternalServerError(AuthErrorKeys.UnknownError);
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     }
   }
 
@@ -522,7 +530,8 @@ export class LoginController {
         `${client.redirectUrl}?code=${token}&user=${this.user.username}`,
       );
     } catch (error) {
-      throw new HttpErrors.InternalServerError(AuthErrorKeys.UnknownError);
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     }
   }
 
@@ -689,30 +698,14 @@ export class LoginController {
       authUser.status = userTenant.status;
       const role = await this.roleRepo.findById(userTenant.roleId);
       if (!role) {
+        this.logger.error('Role not found for the user');
         throw new HttpErrors.UnprocessableEntity(
           AuthenticateErrorKeys.UnprocessableData,
         );
       }
 
-      /*
-      preparing jwt token for pubnub without user permissions
-      This will be a proper token but won't be able to access any
-      apis in our system
-      */
       const size = 32;
       const ms = 1000;
-      const pubnubToken: string = randomBytes(size).toString('hex');
-      // Set pubnub token into redis for later verification
-      await this.refreshTokenRepo.set(
-        pubnubToken,
-        {
-          clientId: authClient.clientId,
-          userId: user.id,
-          username: user.username,
-        },
-        {ttl: authClient.accessTokenExpiration * ms},
-      );
-      authUser.pubnubToken = pubnubToken;
 
       const utPerms = await this.utPermsRepo.find({
         where: {
@@ -752,13 +745,13 @@ export class LoginController {
       return new TokenResponse({
         accessToken,
         refreshToken,
-        pubnubToken,
         expires: moment()
           .add(authClient.accessTokenExpiration, 's')
           .toDate()
           .getTime(),
       });
     } catch (error) {
+      this.logger.error(error);
       if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
         throw error;
       } else {
