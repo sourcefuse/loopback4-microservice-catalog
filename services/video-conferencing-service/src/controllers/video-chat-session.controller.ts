@@ -213,7 +213,20 @@ export class VideoChatSessionController {
   })
   async editMeeting(
     @param.path.string('meetingLinkId') meetingLinkId: string,
-    @requestBody() body: Partial<MeetingOptions>,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: {
+            type: 'object',
+            properties: {
+              isScheduled: {type: 'boolean'},
+              scheduleTime: {type: 'string'},
+            },
+          },
+        },
+      },
+    })
+    body: Partial<MeetingOptions>,
   ): Promise<void> {
     const {isScheduled, scheduleTime} = body;
     let errorMessage = '';
@@ -225,11 +238,13 @@ export class VideoChatSessionController {
       actedAt: moment().format(),
       after: {},
     };
+
     const sessionDetail = await this.videoChatSessionRepository.findOne({
       where: {
         meetingLink: meetingLinkId,
       },
     });
+
     if (!sessionDetail) {
       errorMessage = `Meeting link ${meetingLinkId} not found`;
       auditLogPayload.after = {
@@ -237,6 +252,7 @@ export class VideoChatSessionController {
       };
       throw new HttpErrors.NotFound(errorMessage);
     }
+
     if (isScheduled && !scheduleTime) {
       errorMessage = `Schedule Time is required if isScheduled is set to true`;
       auditLogPayload.after = {
@@ -245,6 +261,7 @@ export class VideoChatSessionController {
       await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
+
     if (scheduleTime && isNaN(moment(scheduleTime).valueOf())) {
       errorMessage = `Schedule Time is Not in correct format`;
       auditLogPayload.after = {
@@ -253,6 +270,7 @@ export class VideoChatSessionController {
       await this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
+
     if (moment().isAfter(scheduleTime)) {
       errorMessage = 'Schedule Time cannot be set in the past';
       auditLogPayload.after = {
@@ -268,19 +286,12 @@ export class VideoChatSessionController {
     } else {
       updateData.scheduleTime = new Date();
     }
-    try {
-      await this.videoChatSessionRepository.updateById(
-        sessionDetail.id,
-        updateData,
-      );
-      await this.auditLogRepository.create(auditLogPayload);
-    } catch (error) {
-      auditLogPayload.after = {errorStack: error.stack};
-      await this.auditLogRepository.create(auditLogPayload);
-      throw new HttpErrors.InternalServerError(
-        'Error Updating Meeting Details',
-      );
-    }
+
+    await this.videoChatSessionRepository.updateById(
+      sessionDetail.id,
+      updateData,
+    );
+    await this.auditLogRepository.create(auditLogPayload);
   }
 
   @authenticate(STRATEGY.BEARER)
