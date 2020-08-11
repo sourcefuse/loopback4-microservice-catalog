@@ -203,6 +203,87 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.EditMeeting])
+  @patch('/session/{meetingLinkId}', {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Session details PATCH success',
+      },
+    },
+  })
+  async editMeeting(
+    @param.path.string('meetingLinkId') meetingLinkId: string,
+    @requestBody() body: Partial<MeetingOptions>,
+  ): Promise<void> {
+    const {isScheduled, scheduleTime} = body;
+    let errorMessage = '';
+
+    const auditLogPayload = {
+      action: 'session',
+      actionType: 'edit-meeting',
+      before: {meetingLinkId, isScheduled, scheduleTime},
+      actedAt: moment().format(),
+      after: {},
+    };
+    const sessionDetail = await this.videoChatSessionRepository.findOne({
+      where: {
+        meetingLink: meetingLinkId,
+      },
+    });
+    if (!sessionDetail) {
+      errorMessage = `Meeting link ${meetingLinkId} not found`;
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      throw new HttpErrors.NotFound(errorMessage);
+    }
+    if (isScheduled && !scheduleTime) {
+      errorMessage = `Schedule Time is required if isScheduled is set to true`;
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      await this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+    if (scheduleTime && isNaN(moment(scheduleTime).valueOf())) {
+      errorMessage = `Schedule Time is Not in correct format`;
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      await this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+    if (moment().isAfter(scheduleTime)) {
+      errorMessage = 'Schedule Time cannot be set in the past';
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      await this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+
+    const updateData: Partial<VideoChatSession> = {};
+    if (isScheduled) {
+      updateData.scheduleTime = scheduleTime;
+    } else {
+      updateData.scheduleTime = new Date();
+    }
+    try {
+      await this.videoChatSessionRepository.updateById(
+        sessionDetail.id,
+        updateData,
+      );
+      await this.auditLogRepository.create(auditLogPayload);
+    } catch (error) {
+      auditLogPayload.after = {errorStack: error.stack};
+      await this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.InternalServerError(
+        'Error Updating Meeting Details',
+      );
+    }
+  }
+
+  @authenticate(STRATEGY.BEARER)
   @authorize([PermissionKeys.StopMeeting])
   @patch('/session/{meetingLinkId}/end', {
     responses: {
