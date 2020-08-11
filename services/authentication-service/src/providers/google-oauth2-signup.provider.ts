@@ -8,7 +8,6 @@ export class GoogleOauth2SignupProvider implements Provider<GoogleSignUpFn> {
 
   value(): GoogleSignUpFn {
     return async profile => {
-      console.log('hello this is default provider');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     };
   }
