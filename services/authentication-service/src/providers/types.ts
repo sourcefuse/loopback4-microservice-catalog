@@ -1,7 +1,6 @@
-import {Request} from '@loopback/rest';
-import {IAuthUser} from 'loopback4-authentication';
 import * as GoogleStrategy from 'passport-google-oauth20';
+import {User, UserRelations} from '../models';
 
 export interface GoogleSignUpFn {
-  (profile: GoogleStrategy.Profile, cb: GoogleStrategy.VerifyCallback, req?: Request): Promise<IAuthUser | null>;
+  (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
 }

@@ -33,6 +33,7 @@ import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {IAuthServiceConfig} from './types';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
+import {GoogleOauth2SignupProvider, SignUpBindings} from './providers';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
@@ -130,6 +131,9 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[
       Strategies.Passport.KEYCLOAK_VERIFIER.key
     ] = KeycloakVerifyProvider;
+    this.providers[
+      SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key
+    ] = GoogleOauth2SignupProvider;
   }
 
   setupAuthorizationComponent() {
