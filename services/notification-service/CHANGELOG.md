@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.9](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.8...@sourceloop/notification-service@1.0.0-alpha.9) (2020-08-12)
+
+
+### Reverts
+
+* Revert "chore: publish release" ([643209b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/643209b46d2611a696fed91bdc4a153bf8d24f96))
+
+
+
+
+
 # [1.0.0-alpha.8](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.7...@sourceloop/notification-service@1.0.0-alpha.8) (2020-08-07)
 
 **Note:** Version bump only for package @sourceloop/notification-service

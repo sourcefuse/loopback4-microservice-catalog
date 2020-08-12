@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.15](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.14...@sourceloop/scheduler-service@1.0.0-alpha.15) (2020-08-12)
+
+
+### Reverts
+
+* Revert "chore: publish release" ([643209b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/643209b46d2611a696fed91bdc4a153bf8d24f96))
+
+
+
+
+
 # [1.0.0-alpha.14](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.13...@sourceloop/scheduler-service@1.0.0-alpha.14) (2020-08-07)
 
 **Note:** Version bump only for package @sourceloop/scheduler-service
