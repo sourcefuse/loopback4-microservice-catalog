@@ -20,13 +20,18 @@ export class GoogleOauth2VerifyProvider
 
   value(): VerifyFunction.GoogleAuthFn {
     return async (accessToken, refreshToken, profile) => {
-      const user = await this.userRepository.findOne({
+      let user = await this.userRepository.findOne({
         where: {
           email: profile._json.email,
         },
       });
       if (!user) {
-        return this.signupProvider(profile);
+        const newUser = await this.signupProvider(profile);
+        if (newUser) {
+          user = newUser;
+        } else {
+          throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+        }
       }
       const creds = await this.userCredsRepository.findOne({
         where: {
