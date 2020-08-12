@@ -65,11 +65,10 @@ export class User extends UserModifiableEntity implements IAuthUser {
   phone?: string;
 
   @property({
-    type: 'array',
-    itemType: 'number',
+    type: 'string',
     name: 'auth_client_ids',
   })
-  authClientIds: number[];
+  authClientIds: string;
 
   @property({
     type: 'date',

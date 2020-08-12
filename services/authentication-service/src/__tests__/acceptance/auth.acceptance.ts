@@ -425,7 +425,7 @@ describe('Authentication microservice', () => {
         lastName: 'User',
         username: 'test_user',
         dob: '1996-11-05',
-        authClientIds: [1],
+        authClientIds: `{1}`,
         email: 'xyz@gmail.com',
       },
       {
@@ -434,7 +434,7 @@ describe('Authentication microservice', () => {
         lastName: 'Teacher',
         username: 'test_teacher',
         dob: '1996-11-05',
-        authClientIds: [1],
+        authClientIds: `{1}`,
       },
     );
     await userTenantRepo.create(

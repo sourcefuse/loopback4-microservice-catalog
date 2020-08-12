@@ -61,7 +61,7 @@ export class ResourceOwnerVerifyProvider
           clientId,
         },
       });
-      if (!client || user.authClientIds.indexOf(client.id || 0) < 0) {
+      if (!client || user.authClientIds.indexOf(String(client.id || 0)) < 0) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       } else if (!client.clientSecret || client.clientSecret !== clientSecret) {
         throw new HttpErrors.Unauthorized(
