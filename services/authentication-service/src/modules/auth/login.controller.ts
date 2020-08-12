@@ -681,7 +681,13 @@ export class LoginController {
         );
       }
 
-      if (user.authClientIds.indexOf(authClient.id || 0) < 0) {
+      if (
+        user.authClientIds &&
+        user.authClientIds
+          .substring(1, user.authClientIds.length - 1)
+          .split(',')
+          .indexOf(String(authClient.id || 0)) < 0
+      ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }
 
