@@ -59,6 +59,7 @@
     "loopback4-helmet": "^1.1.0",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
+    "passport-google-oauth20": "^2.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
@@ -70,6 +71,7 @@
     "@types/lodash": "^4.14.157",
     "@types/moment-timezone": "^0.5.13",
     "@types/node": "^10.17.24",
+    "@types/passport-google-oauth20": "^2.0.3",
     "eslint": "^7.0.0",
     "source-map-support": "^0.5.19",
     "typescript": "~3.9.3"
