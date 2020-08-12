@@ -3,17 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.0.0-alpha.11](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.10...@sourceloop/authentication-service@1.0.0-alpha.11) (2020-08-12)
-
-
-### Features
-
-* **authentication-service:** google signup provider for creating user while logging with google ([#63](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/63)) ([c8ca37d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c8ca37ddfaaf38a152649266a720ee3b20de088f))
-
-
-
-
-
 # [1.0.0-alpha.10](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.9...@sourceloop/authentication-service@1.0.0-alpha.10) (2020-08-07)
 
 **Note:** Version bump only for package @sourceloop/authentication-service

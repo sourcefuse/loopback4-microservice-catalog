@@ -3,17 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.0.0-alpha.11](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.10...@sourceloop/video-conferencing-service@1.0.0-alpha.11) (2020-08-12)
-
-
-### Features
-
-* **video-conferencing-service:** add PATCH /session/{meetingLink} API to edit meeting details and add unit tests ([#62](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/62)) ([9ce9a2a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ce9a2aa2ef629163fe38e476fbbde81563aee2f))
-
-
-
-
-
 # [1.0.0-alpha.10](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.9...@sourceloop/video-conferencing-service@1.0.0-alpha.10) (2020-08-07)
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service
