@@ -1,6 +1,14 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
-import {param, patch, post, requestBody, HttpErrors, get} from '@loopback/rest';
+import {
+  param,
+  patch,
+  post,
+  requestBody,
+  HttpErrors,
+  get,
+  getModelSchemaRef,
+} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {
   MeetingOptions,
@@ -200,6 +208,98 @@ export class VideoChatSessionController {
     }
 
     return this.videoChatProvider.getToken(session.sessionId, sessionOptions);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionKeys.EditMeeting])
+  @patch('/session/{meetingLinkId}', {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Session details PATCH success',
+      },
+    },
+  })
+  async editMeeting(
+    @param.path.string('meetingLinkId') meetingLinkId: string,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(VideoChatSession, {partial: true}),
+        },
+      },
+    })
+    body: Partial<VideoChatSession>,
+  ): Promise<void> {
+    const {isScheduled, scheduleTime} = body;
+    let errorMessage = '';
+
+    const auditLogPayload = {
+      action: 'session',
+      actionType: 'edit-meeting',
+      before: {meetingLinkId, isScheduled, scheduleTime},
+      actedAt: moment().format(),
+      after: {},
+    };
+
+    const sessionDetail = await this.videoChatSessionRepository.findOne({
+      where: {
+        meetingLink: meetingLinkId,
+      },
+    });
+
+    if (!sessionDetail) {
+      errorMessage = `Meeting link ${meetingLinkId} not found`;
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.NotFound(errorMessage);
+    }
+
+    if (isScheduled && !scheduleTime) {
+      errorMessage = `Schedule Time is required if isScheduled is set to true`;
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+
+    if (scheduleTime && isNaN(moment(scheduleTime).valueOf())) {
+      errorMessage = `Schedule Time is Not in correct format`;
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+
+    if (moment().isAfter(scheduleTime)) {
+      errorMessage = 'Schedule Time cannot be set in the past';
+      auditLogPayload.after = {
+        errorMessage,
+      };
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
+      throw new HttpErrors.BadRequest(errorMessage);
+    }
+
+    const updateData: Partial<VideoChatSession> = {};
+    if (isScheduled) {
+      updateData.scheduleTime = scheduleTime;
+    } else {
+      updateData.scheduleTime = new Date();
+    }
+
+    await this.videoChatSessionRepository.updateById(
+      sessionDetail.id,
+      updateData,
+    );
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.auditLogRepository.create(auditLogPayload);
   }
 
   @authenticate(STRATEGY.BEARER)
