@@ -1,6 +1,14 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
-import {param, patch, post, requestBody, HttpErrors, get} from '@loopback/rest';
+import {
+  param,
+  patch,
+  post,
+  requestBody,
+  HttpErrors,
+  get,
+  getModelSchemaRef,
+} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {
   MeetingOptions,
@@ -216,17 +224,11 @@ export class VideoChatSessionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: {
-            type: 'object',
-            properties: {
-              isScheduled: {type: 'boolean'},
-              scheduleTime: {type: 'string'},
-            },
-          },
+          schema: getModelSchemaRef(VideoChatSession, {partial: true}),
         },
       },
     })
-    body: Partial<MeetingOptions>,
+    body: Partial<VideoChatSession>,
   ): Promise<void> {
     const {isScheduled, scheduleTime} = body;
     let errorMessage = '';
@@ -250,6 +252,8 @@ export class VideoChatSessionController {
       auditLogPayload.after = {
         errorMessage,
       };
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.NotFound(errorMessage);
     }
 
@@ -258,7 +262,8 @@ export class VideoChatSessionController {
       auditLogPayload.after = {
         errorMessage,
       };
-      await this.auditLogRepository.create(auditLogPayload);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -267,7 +272,8 @@ export class VideoChatSessionController {
       auditLogPayload.after = {
         errorMessage,
       };
-      await this.auditLogRepository.create(auditLogPayload);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -276,7 +282,8 @@ export class VideoChatSessionController {
       auditLogPayload.after = {
         errorMessage,
       };
-      await this.auditLogRepository.create(auditLogPayload);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.auditLogRepository.create(auditLogPayload);
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -291,7 +298,8 @@ export class VideoChatSessionController {
       sessionDetail.id,
       updateData,
     );
-    await this.auditLogRepository.create(auditLogPayload);
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.auditLogRepository.create(auditLogPayload);
   }
 
   @authenticate(STRATEGY.BEARER)
