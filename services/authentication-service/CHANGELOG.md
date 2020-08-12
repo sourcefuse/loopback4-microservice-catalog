@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.12](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.11...@sourceloop/authentication-service@1.0.0-alpha.12) (2020-08-12)
+
+
+### Bug Fixes
+
+* **authentication-service:** change in user model ([#64](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/64)) ([1ac5b83](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1ac5b83fb713e63965b1bf1888e99055a139b2dc))
+
+
+### BREAKING CHANGES
+
+* **authentication-service:** it can impact user flow
+
+
+
+
+
 # [1.0.0-alpha.11](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.10...@sourceloop/authentication-service@1.0.0-alpha.11) (2020-08-12)
 
 
