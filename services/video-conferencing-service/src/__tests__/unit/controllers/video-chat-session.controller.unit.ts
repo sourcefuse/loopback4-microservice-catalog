@@ -37,7 +37,7 @@ describe('Session APIs', () => {
   const timeToStart = 30;
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
-  let auidtLogCreate: sinon.SinonStub;
+  let auditLogCreate: sinon.SinonStub;
   let sessionAttendeesRepo: StubbedInstanceWithSinonAccessor<SessionAttendeesRepository>;
   let config: VonageConfig;
 
@@ -61,7 +61,7 @@ describe('Session APIs', () => {
       const result = await controller.getMeetingLink(meetingOptions);
       expect(result).to.be.a.String();
       sinon.assert.calledOnce(save);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('returns an error when provider fails to create a session', async () => {
@@ -140,7 +140,7 @@ describe('Session APIs', () => {
         .getMeetingToken(sessionOptions, invalidMeetingLink)
         .catch(err => err);
       expect(error).instanceof(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('gives an error when provider fails to generate token', async () => {
@@ -173,7 +173,7 @@ describe('Session APIs', () => {
         .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.called(findOne);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('denies if the expire time is invalid', async () => {
@@ -187,7 +187,7 @@ describe('Session APIs', () => {
         .getMeetingToken(sessionOptions, meetingLinkId)
         .catch(err => err);
       expect(error).instanceof(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('denies if the expire time is in the past', async () => {
@@ -199,7 +199,7 @@ describe('Session APIs', () => {
         .getMeetingToken(sessionOptions, meetingLinkId)
         .catch(err => err);
       expect(error).instanceof(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('denies if the meeting has already ended', async () => {
@@ -214,7 +214,126 @@ describe('Session APIs', () => {
         .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.calledOnce(findOne);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
+    });
+  });
+
+  describe('PATCH /session/{meetingLink},', () => {
+    it('updates the scheduled Meeting time if the meeting is schedeuled', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      const dummyId = 1;
+      findOne.resolves(getVideoChatSession({id: dummyId}));
+      const updateById = videoChatSessionRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.editMeeting(meetingLinkId, {
+        scheduleTime: futureDate,
+        isScheduled: true,
+      });
+      sinon.assert.calledWith(findOne, {
+        where: {
+          meetingLink: meetingLinkId,
+        },
+      });
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auditLogCreate);
+    });
+    it('updates the meeting if it is not scheduled', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      const dummyId = 1;
+      findOne.resolves(getVideoChatSession({id: dummyId}));
+      const updateById = videoChatSessionRepo.stubs.updateById;
+      updateById.resolves();
+      await controller.editMeeting(meetingLinkId, {
+        isScheduled: false,
+      });
+      sinon.assert.calledWith(findOne, {
+        where: {
+          meetingLink: meetingLinkId,
+        },
+      });
+      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(auditLogCreate);
+    });
+    it('returns an error for invalid meeting link', async () => {
+      setUp({});
+      const invalidMeetingLink = '';
+      const error = await controller
+        .endSession(invalidMeetingLink)
+        .catch(err => err);
+      sinon.assert.calledOnce(auditLogCreate);
+      expect(error).instanceof(Error);
+    });
+    it('returns an error if meeting link not found ', async () => {
+      setUp({});
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves();
+      const error = await controller
+        .endSession(meetingLinkId)
+        .catch(err => err);
+      expect(error).instanceof(Error);
+      sinon.assert.calledOnce(auditLogCreate);
+      sinon.assert.calledOnce(findOne);
+    });
+    it('returns an error if isScheduled is true but scheduleTime is not provided', async () => {
+      setUp({});
+      const meetingOptions = getMeetingOptions({
+        isScheduled: true,
+      });
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({}));
+      const error = await controller
+        .editMeeting(meetingLinkId, meetingOptions)
+        .catch(err => err);
+      expect(error).instanceof(Error);
+      sinon.assert.calledWith(findOne, {
+        where: {
+          meetingLink: meetingLinkId,
+        },
+      });
+      sinon.assert.calledOnce(auditLogCreate);
+      sinon.assert.calledOnce(findOne);
+    });
+    it('does not schedule a meeting with invalid schedule time', async () => {
+      setUp({});
+      const meetingOptions = getMeetingOptions({
+        isScheduled: true,
+        scheduleTime: getDate('Invalid'),
+      });
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({}));
+      const error = await controller
+        .editMeeting(meetingLinkId, meetingOptions)
+        .catch(err => err);
+      expect(error).instanceof(Error);
+      sinon.assert.calledWith(findOne, {
+        where: {
+          meetingLink: meetingLinkId,
+        },
+      });
+      sinon.assert.calledOnce(auditLogCreate);
+      sinon.assert.calledOnce(findOne);
+    });
+    it('does not schedule a meeting if schedule time is in the past', async () => {
+      setUp({});
+      const meetingOptions = getMeetingOptions({
+        isScheduled: true,
+        scheduleTime: pastDate,
+      });
+      const findOne = videoChatSessionRepo.stubs.findOne;
+      findOne.resolves(getVideoChatSession({}));
+      const error = await controller
+        .editMeeting(meetingLinkId, meetingOptions)
+        .catch(err => err);
+      sinon.assert.calledWith(findOne, {
+        where: {
+          meetingLink: meetingLinkId,
+        },
+      });
+      sinon.assert.calledOnce(auditLogCreate);
+      sinon.assert.calledOnce(findOne);
+      expect(error).instanceof(Error);
     });
   });
 
@@ -229,7 +348,7 @@ describe('Session APIs', () => {
       await controller.endSession(meetingLinkId);
       sinon.assert.calledWith(findOne, {where: {meetingLink: meetingLinkId}});
       sinon.assert.calledOnce(updateById);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('returns an error for invalid meeting link', async () => {
@@ -239,7 +358,7 @@ describe('Session APIs', () => {
         .endSession(invalidMeetingLink)
         .catch(err => err);
       expect(error).instanceof(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('returns an error if meeting link not found ', async () => {
@@ -251,7 +370,7 @@ describe('Session APIs', () => {
         .catch(err => err);
       expect(error).instanceof(Error);
       sinon.assert.calledOnce(findOne);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('returns an error if meeting has already ended', async () => {
@@ -263,7 +382,7 @@ describe('Session APIs', () => {
         .catch(err => err);
       expect(error).instanceof(Error);
       sinon.assert.calledOnce(findOne);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
   });
 
@@ -277,7 +396,7 @@ describe('Session APIs', () => {
       create.resolves();
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(create);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('updates the metaData and isDeleted status for event connectionCreated if the attendee already exists', async () => {
@@ -289,7 +408,7 @@ describe('Session APIs', () => {
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(updateById);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('updates the metaData and isDeleted status for event connectionDestroyed if the attendee already exists', async () => {
@@ -304,7 +423,7 @@ describe('Session APIs', () => {
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(updateById);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('updates the metaData and isDeleted status for event streamCreated if the attendee already exists', async () => {
@@ -319,7 +438,7 @@ describe('Session APIs', () => {
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(updateById);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
 
     it('updates the metaData and isDeleted status for event streamDestroyed if the attendee already exists', async () => {
@@ -335,7 +454,7 @@ describe('Session APIs', () => {
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
       sinon.assert.calledOnce(updateById);
-      sinon.assert.calledOnce(auidtLogCreate);
+      sinon.assert.calledOnce(auditLogCreate);
     });
   });
 
@@ -387,8 +506,8 @@ describe('Session APIs', () => {
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
 
     auditLogRepo = createStubInstance(AuditLogsRepository);
-    auidtLogCreate = auditLogRepo.stubs.create;
-    auidtLogCreate.resolves();
+    auditLogCreate = auditLogRepo.stubs.create;
+    auditLogCreate.resolves();
 
     sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
 
