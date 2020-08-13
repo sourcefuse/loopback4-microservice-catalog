@@ -63,11 +63,9 @@ export class ResourceOwnerVerifyProvider
       });
       if (
         !client ||
-        (user.authClientIds &&
-          user.authClientIds
-            .substring(1, user.authClientIds.length - 1)
-            .split(',')
-            .indexOf(String(client.id || 0)) < 0)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        (user.authClientIds.indexOf(client.id || 0) < 0)
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       } else if (!client.clientSecret || client.clientSecret !== clientSecret) {
