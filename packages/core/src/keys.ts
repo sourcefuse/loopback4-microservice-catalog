@@ -6,7 +6,7 @@ export namespace SFCoreBindings {
   export const i18n = BindingKey.create<i18nAPI>(`${BINDING_PREFIX}.i18n`);
 
   export const config = BindingKey.create<CoreConfig>(
-    'sf.videochatprovider.vonage.config',
+    'sf.packages.core.config',
   );
 }
 
