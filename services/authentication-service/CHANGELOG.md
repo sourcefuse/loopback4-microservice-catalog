@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.13](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.12...@sourceloop/authentication-service@1.0.0-alpha.13) (2020-08-13)
+
+
+### Bug Fixes
+
+* **authentication-service:** change in condition of auth clientID ([#65](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/65)) ([0dbc278](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0dbc2785942602ea654ac7af986f2523a05d9874))
+
+
+### BREAKING CHANGES
+
+* **authentication-service:** this will break login flow
+
+SFO-0
+
+* fix(authentication-service): prettier fix
+
+prettier fix
+
+SFO-0
+
+
+
+
+
 # [1.0.0-alpha.12](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.11...@sourceloop/authentication-service@1.0.0-alpha.12) (2020-08-12)
 
 
