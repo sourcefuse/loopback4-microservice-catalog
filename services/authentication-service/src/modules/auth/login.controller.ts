@@ -35,7 +35,12 @@ import {
   ClientAuthCode,
   STRATEGY,
 } from 'loopback4-authentication';
-import {AuthorizationBindings, authorize, AuthorizeErrorKeys, UserPermissionsFn} from 'loopback4-authorization';
+import {
+  AuthorizationBindings,
+  authorize,
+  AuthorizeErrorKeys,
+  UserPermissionsFn,
+} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {URLSearchParams} from 'url';
 
@@ -101,8 +106,7 @@ export class LoginController {
     @inject(RestBindings.Http.REQUEST)
     private readonly req: Request,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
-  ) {
-  }
+  ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(STRATEGY.LOCAL)
@@ -122,7 +126,7 @@ export class LoginController {
   })
   async login(
     @requestBody()
-      req: LoginRequest,
+    req: LoginRequest,
   ): Promise<{
     code: string;
   }> {
@@ -366,11 +370,10 @@ export class LoginController {
   })
   async loginViaGoogle(
     @param.query.string('client_id')
-      clientId?: string,
+    clientId?: string,
     @param.query.string('client_secret')
-      clientSecret?: string,
-  ): Promise<void> {
-  }
+    clientSecret?: string,
+  ): Promise<void> {}
 
   @authenticate(
     STRATEGY.GOOGLE_OAUTH2,
@@ -463,11 +466,10 @@ export class LoginController {
   })
   async loginViaKeycloak(
     @param.query.string('client_id')
-      clientId?: string,
+    clientId?: string,
     @param.query.string('client_secret')
-      clientSecret?: string,
-  ): Promise<void> {
-  }
+    clientSecret?: string,
+  ): Promise<void> {}
 
   @authenticate(
     STRATEGY.KEYCLOAK,
@@ -550,10 +552,10 @@ export class LoginController {
         },
       },
     })
-      req: ResetPassword,
+    req: ResetPassword,
     @param.header.string('Authorization') auth: string,
     @inject(AuthenticationBindings.CURRENT_USER)
-      currentUser: IAuthUserWithPermissions,
+    currentUser: IAuthUserWithPermissions,
   ): Promise<SuccessResponse> {
     const token = auth?.replace(/bearer /i, '');
     if (!token || !req.refreshToken) {
@@ -682,7 +684,7 @@ export class LoginController {
       if (
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        (user.authClientIds.indexOf(authClient.id || 0) < 0)
+        user.authClientIds.indexOf(authClient.id || 0) < 0
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }

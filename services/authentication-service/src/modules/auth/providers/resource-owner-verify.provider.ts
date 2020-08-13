@@ -65,7 +65,7 @@ export class ResourceOwnerVerifyProvider
         !client ||
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        (user.authClientIds.indexOf(client.id || 0) < 0)
+        user.authClientIds.indexOf(client.id || 0) < 0
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       } else if (!client.clientSecret || client.clientSecret !== clientSecret) {
