@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.13...@sourceloop/authentication-service@1.0.0-alpha.14) (2020-08-19)
+
+
+### Bug Fixes
+
+* **authentication-service:** change in login.controller.ts ([#66](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/66)) ([834785c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/834785c5a5a461ee517c5b7edd21ab097f20edd8))
+
+
+
+
+
 # [1.0.0-alpha.13](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.12...@sourceloop/authentication-service@1.0.0-alpha.13) (2020-08-13)
 
 
