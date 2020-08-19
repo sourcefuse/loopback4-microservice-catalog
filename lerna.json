@@ -13,10 +13,16 @@
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": "master",
+      "noPrivate": true
     },
     "run": {
-      "concurrency": 8
+      "concurrency": 1,
+      "ignore": [
+        "@sourceloop/in-mail-service",
+        "@sourceloop/auth-multitenant-example",
+        "@sourceloop/sandbox-testing"
+      ]
     },
     "clean": {
       "loglevel": "silent",

@@ -429,7 +429,9 @@ export class LoginController {
         subject: this.user.username,
         issuer: process.env.JWT_ISSUER,
       });
-      response.redirect(`${client.redirectUrl}?code=${token}&username=${this.user.username}`);
+      response.redirect(
+        `${client.redirectUrl}?code=${token}&username=${this.user.username}`,
+      );
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

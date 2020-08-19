@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "lb-tsc",
+    "build": "npm run clean && lb-tsc",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run prettier:check && npm run eslint",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
@@ -21,7 +21,7 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run clean && npm run build",
+    "pretest": "npm run build",
     "test": "lb-nyc lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "posttest": "npm run lint",
     "prepublishOnly": "npm run test",
