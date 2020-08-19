@@ -11,7 +11,7 @@ import {configure} from 'i18n';
 import {LocaleKey} from './enums';
 import {SFCoreBindings} from './keys';
 import {LoggerExtensionComponent} from './components';
-import { CoreConfig } from './types';
+import {CoreConfig} from './types';
 
 export class CoreComponent implements Component {
   constructor(
@@ -25,10 +25,9 @@ export class CoreComponent implements Component {
 
     // Configure locale provider
 
-    if(this.coreConfig && this.coreConfig.configObject){
+    if (this.coreConfig && this.coreConfig.configObject) {
       configure(this.coreConfig.configObject);
-    }
-    else {
+    } else {
       configure({
         locales: [
           LocaleKey.en,
@@ -52,7 +51,7 @@ export class CoreComponent implements Component {
         // sonarignore:end
       });
     }
-    
+
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
   }
 

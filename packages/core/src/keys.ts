@@ -1,6 +1,6 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from './constants';
-import { CoreConfig } from './types';
+import {CoreConfig} from './types';
 
 export namespace SFCoreBindings {
   export const i18n = BindingKey.create<i18nAPI>(`${BINDING_PREFIX}.i18n`);
@@ -9,4 +9,3 @@ export namespace SFCoreBindings {
     'sf.packages.core.config',
   );
 }
-
