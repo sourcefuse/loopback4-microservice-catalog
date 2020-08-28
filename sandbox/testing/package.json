@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/sandbox-testing",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "description": "This is a sample application for sandbox testing of microservice components.",
   "private": true,
   "keywords": [
@@ -53,8 +53,8 @@
     "@loopback/rest": "^5.0.1",
     "@loopback/rest-explorer": "^2.2.2",
     "@loopback/service-proxy": "^2.3.0",
-    "@sourceloop/core": "^1.0.0-alpha.8",
-    "@sourceloop/notification-service": "^1.0.0-alpha.9",
+    "@sourceloop/core": "^1.0.0-alpha.9",
+    "@sourceloop/notification-service": "^1.0.0-alpha.10",
     "aws-sdk": "^2.694.0",
     "loopback-connector-postgresql": "^3.9.1",
     "loopback4-authorization": "^2.3.2",

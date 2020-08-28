@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.9](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.8...@sourceloop/core@1.0.0-alpha.9) (2020-08-28)
+
+
+### Bug Fixes
+
+* **core:** fix token expiry issue ([ddfe938](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ddfe938b984d039a7eac528623d1feda1fa939f2))
+
+
+
+
+
 # [1.0.0-alpha.8](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.7...@sourceloop/core@1.0.0-alpha.8) (2020-08-07)
 
 **Note:** Version bump only for package @sourceloop/core
