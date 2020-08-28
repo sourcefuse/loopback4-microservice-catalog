@@ -1,14 +1,16 @@
-import {Provider} from '@loopback/context';
+import {Provider, inject} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
 
 import {IAuthUserWithPermissions} from '../keys';
+import {AuthenticateErrorKeys} from '../../../enums';
+import {ILogger, LOGGER} from '../../logger-extension';
 
 export class ServicesBearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn> {
-  constructor() {}
+  constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
 
   value(): VerifyFunction.BearerFn {
     return async token => {
@@ -19,6 +21,7 @@ export class ServicesBearerTokenVerifyProvider
           issuer: process.env.JWT_ISSUER,
         }) as IAuthUserWithPermissions;
       } catch (error) {
+        this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
 
@@ -26,7 +29,9 @@ export class ServicesBearerTokenVerifyProvider
         user.passwordExpiryTime &&
         moment().isSameOrAfter(moment(user.passwordExpiryTime))
       ) {
-        throw new HttpErrors.Unauthorized('PasswordExpiryError');
+        throw new HttpErrors.Unauthorized(
+          AuthenticateErrorKeys.PasswordExpiryError,
+        );
       }
       return user;
     };

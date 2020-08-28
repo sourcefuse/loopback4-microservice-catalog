@@ -12,7 +12,11 @@ import {
   SequenceHandler,
 } from '@loopback/rest';
 import {isString} from 'lodash';
-import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
+import {
+  AuthenticateFn,
+  AuthenticationBindings,
+  AuthErrorKeys,
+} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizeErrorKeys,
@@ -101,8 +105,17 @@ export class ServiceSequence implements SequenceHandler {
       const error = this._rejectErrors(err);
       if (
         // sonarignore:start
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        !(error.message && (error.message as any).message === 'TokenExpired')
+        !(
+          error.message &&
+          [
+            AuthErrorKeys.TokenInvalid,
+            AuthErrorKeys.TokenExpired,
+            'TokenExpired',
+          ].includes(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (error.message as any).message,
+          )
+        )
         // sonarignore:end
       ) {
         if (isString(error.message)) {

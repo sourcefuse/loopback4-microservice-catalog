@@ -3,8 +3,11 @@
 This document describes how to develop microservices living in loopback4-microservice-catalog monorepo.
 
 - [Setting up development environment](#setting-up-development-environment)
+- [Setup Codebase](#setup-codebase)
 - [Building the project](#building-the-project)
 - [File naming convention](#file-naming-convention)
+- [Develop a new microservice](#develop-a-new-microservice)
+- [Sonar Setup in VS Code](#sonar-setup-in-vs-code)
 - [Commit message guidelines](#commit-message-guidelines)
 
 ## Setting up development environment
@@ -17,6 +20,8 @@ extensions installed:
   for automatic formatting of source files on save.
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   to highlight and auto-fix linting problems directly in the editor.
+- [SonarLint for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
+- [TypeScript Hero](https://marketplace.visualstudio.com/items?itemName=rbbit.typescript-hero)
 
 Our monorepo comes with few preconfigured
 [VSCode Tasks](https://code.visualstudio.com/docs/editor/tasks):
@@ -24,6 +29,16 @@ Our monorepo comes with few preconfigured
 - The build task is configured to run the TypeScript compiler
 - The test task is configured to run `npm test` (which runs the build before
   running any tests).
+
+## Setup Codebase
+
+1. Open root folder of this repo in VS Code.
+2. Install lerna globally `npm i -g lerna`
+3. Run `lerna bootstrap`
+4. Create .env files for all the micro service packages.
+5. Run DB migrations using `lerna run db:migrate`.
+6. Build all microservices in one go - `lerna run build`.
+7. Run `lerna run start` to start all the micro services in one go.
 
 ## Building the project
 
@@ -135,6 +150,236 @@ src/__tests__/acceptance/application.acceptance.ts
 src/__tests__/integration/user.controller.integration.ts
 src/__tests__/unit/application.unit.ts
 ```
+
+## Develop a new microservice
+
+1. **lb4 <service_name>** - Generate a new loopback-next application under the required folder, either facades or services.
+2. **.dockerignore** - Replace node_modules with coverage
+3. **.prettierignore** - Add coverage
+4. **.eslintrc.js** - Just copy below as is
+
+   ```json
+     module.exports = {
+       extends: '@loopback/eslint-config',
+       rules: {
+         'no-extra-boolean-cast': 'off',
+         '@typescript-eslint/interface-name-prefix': 'off',
+         'no-prototype-builtins': 'off',
+       },
+       parserOptions: {
+         project: './tsconfig.json',
+         tsconfigRootDir: __dirname,
+       },
+     };
+   ```
+
+5. **Necessary deps** - Add symlink-resolver package to devDependencies
+
+   ```sh
+   lerna add -D symlink-resolver --scope={service name}
+   ```
+
+   then add these two in scripts of package.json
+
+   ```json
+   "symlink-resolver": "symlink-resolver",
+   "resolve-links": "npm run symlink-resolver build ./node_modules",
+   ```
+
+6. **Dotenv** - Add dotenv packages for environment keys handling. Run below
+
+   ```sh
+   lerna add dotenv --scope={service name}
+   lerna add dotenv-extended --scope={service name}
+   lerna add -D @types/dotenv --scope={service name}
+   ```
+
+7. **Env files** - Add .env.defaults and .env.example and specify required keys
+8. **Load .env** - Add below code to the top of `application.ts` before super call.
+
+   ```ts
+   const port = 3000;
+   dotenv.config();
+   dotenvExt.load({
+     schema: '.env.example',
+     errorOnMissing: true,
+     includeProcessEnv: true,
+   });
+   options.rest = options.rest || {};
+   options.rest.port = +(process.env.PORT || port);
+   options.rest.host = process.env.HOST;
+   ```
+
+   Import dotenv related packages
+
+   ```ts
+   import * as dotenv from 'dotenv';
+   import * as dotenvExt from 'dotenv-extended';
+   ```
+
+9. **Add Sourceloop core** - Add @sourceloop/core as dependency to the module
+
+   ```sh
+   lerna add @sourceloop/core --scope={service name}
+   ```
+
+In application.ts,
+
+```ts
+import {CoreComponent, ServiceSequence} from '@sourceloop/core';
+
+this.component(CoreComponent);
+
+// Set up the custom sequence
+this.sequence(ServiceSequence);
+```
+
+10. **Add Rakuten core** - Add rakuten-core as dependency to the module
+
+    ```sh
+    lerna add rakuten-core --scope={service name}
+    ```
+
+In application.ts,
+
+    ```ts
+    this.component(RakutenCoreComponent);
+    ```
+
+11. **Bearer Verifier** - Add bearer verifier to your service
+
+```sh
+lerna add loopback4-authentication --scope={service name}
+lerna add loopback4-authorization --scope={service name}
+```
+
+Add below to application.ts
+
+```ts
+  ...
+  import {AuthenticationComponent} from 'loopback4-authentication';
+  import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+  } from 'loopback4-authorization';
+  import {
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  } from '@sourceloop/core';
+  ...
+    // Add authentication component
+  this.component(AuthenticationComponent);
+
+  // Add bearer verifier component
+  this.bind(BearerVerifierBindings.Config).to({
+    authServiceUrl: '',
+    type: BearerVerifierType.service,
+  } as BearerVerifierConfig);
+  this.component(BearerVerifierComponent);
+
+  // Add authorization component
+  this.bind(AuthorizationBindings.CONFIG).to({
+    allowAlwaysPaths: ['/explorer'],
+  });
+  this.component(AuthorizationComponent);
+```
+
+Use BearerVerifierType.facade for facades.
+
+12. **Setup project for test coverage** -
+
+    Create a file named .nycrc and copy this data in it
+
+    ```json
+    {
+      "extends": "@istanbuljs/nyc-config-typescript",
+      "all": true,
+      "reporter": ["html", "text-summary"]
+    }
+    ```
+
+    Install nyc for coverage reporting
+
+    ```sh
+      lerna add -D @istanbuljs/nyc-config-typescript --scope={service name}
+      lerna add -D nyc --scope={service name}
+    ```
+
+    then add these in scripts of package.json
+
+    ```json
+    "coverage": "nyc npm run test",
+    ```
+
+13. **Setup sequence** - Remove auto-generated sequence.ts and change to ServiceSequence in application.ts.
+14. **Fix api explorer** - Update base path in index.html for facades.
+
+```html
+<body>
+  <div class="info">
+    <h1>auth-facade</h1>
+    <p>Version 1.0.0</p>
+
+    <h3>OpenAPI spec: <a href="${basePath}/openapi.json">/openapi.json</a></h3>
+    <h3>API Explorer: <a href="${basePath}/explorer">/explorer</a></h3>
+  </div>
+
+  <footer class="power">
+    <a href="https://v4.loopback.io" target="_blank">
+      <img
+        src="https://loopback.io/images/branding/powered-by-loopback/blue/powered-by-loopback-sm.png"
+        alt="Powered by loopback"
+      />
+    </a>
+  </footer>
+</body>
+```
+
+14. **Update home-page.controller.ts** - Update the home-page.controller.ts with base path related changes, only in facades.
+
+```ts
+this.html = fs.readFileSync(
+  path.join(__dirname, '../../public/index.html'),
+  'utf-8',
+);
+// Replace base path placeholder from env
+this.html = this.html.replace(/\$\{basePath\}/g, process.env.BASE_PATH ?? '');
+```
+
+Create home-page.controller.ts if not already there.
+
+## Sonar Setup in VS Code
+
+1. Go to [Sonar Cloud](https://sonarcloud.io/)
+2. Login with your SF Github ID
+3. Go to `My Account` from top-right user profile menu.
+4. Move to `Security` tab.
+5. Add a recognizable token name and click on `Generate token`
+6. Install Sonarlint extension in VS Code IDE
+7. Open Settings in VS Code IDE
+8. Search for `sonarlint` using search box at the top
+9. Look for `Sonarlint › Connected Mode: Servers`
+10. Click on `Edit in settings.json`. settings.json under system user directory will open.
+11. Add the below configuration
+
+```json
+  "sonarlint.connectedMode.servers": [
+    {
+      "serverId": "sf_sonar", // Connection identifier
+      "serverUrl": "https://sonarcloud.io/", // SonarQube/SonarCloud URL - https//sonarcloud.io for SonarCloud
+      "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "organizationKey": "sourcefuse-cloud"
+    }
+  ],
+```
+
+Replace value of token with your own user token generated in step 5 from sonar cloud.
+
+**Note** - Sonarlint requires latest java runtime. Please install if not done already.
+
+Close and reopen VS Code.
 
 ## Commit message guidelines
 
