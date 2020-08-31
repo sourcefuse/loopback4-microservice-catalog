@@ -5,26 +5,7 @@ import {
   UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
 } from '@sourceloop/core';
-
-export enum VisibilityMarker {
-  read = 'read',
-  new = 'new',
-  unread = 'unread',
-}
-
-export enum PartyTypeMarker {
-  from = 'from',
-  to = 'to',
-  cc = 'cc',
-  bcc = 'bcc',
-}
-
-export enum StorageMarker {
-  draft = 'draft',
-  send = 'send',
-  inbox = 'inbox',
-  trash = 'trash',
-}
+import {PartyTypeMarker, VisibilityMarker, StorageMarker} from '../types';
 
 @model({
   name: 'group',

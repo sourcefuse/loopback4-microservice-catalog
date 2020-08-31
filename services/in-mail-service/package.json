@@ -26,7 +26,7 @@
     "test": "echo \"No tests !\"",
     "posttest": "npm run lint",
     "prepublishOnly": "npm run test",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
@@ -51,10 +51,12 @@
     "@loopback/core": "^2.0.0",
     "@loopback/openapi-v3": "^3.0.0",
     "@loopback/repository": "^2.0.0",
+    "@loopback/repository-tests": "^0.12.13",
     "@loopback/rest": "^5.0.1",
     "@sourceloop/core": "^1.0.0-alpha.9",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "^2.3.2",
+    "loopback4-soft-delete": "^3.0.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {

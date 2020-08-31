@@ -6,7 +6,11 @@ import {
   AuthenticationBindings,
   STRATEGY,
 } from 'loopback4-authentication';
-import {IAuthUserWithPermissions, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  IAuthUserWithPermissions,
+  CONTENT_TYPE,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {
   ComposeMailBody,
   ForwardMailBody,
@@ -16,16 +20,16 @@ import {
   GroupRepository,
   MessageRepository,
   ThreadRepository,
+  AttachmentRepository,
 } from '../repositories';
 import {
   Attachment,
   Message,
   Meta,
-  PartyTypeMarker,
   Group,
   StatusMarker,
-  StorageMarker,
-  VisibilityMarker,
+  IdResponse,
+  IdArrays,
 } from '../models';
 import {
   getModelSchemaRef,
@@ -34,24 +38,60 @@ import {
   patch,
   put,
 } from '@loopback/openapi-v3';
+import {PermissionsEnums, PartyTypeMarker, StorageMarker} from '../types';
 
 const FORBIDDEN_ERROR_MESSAGE =
   'Forbidden request due to unauthorized token in header.';
 const NOT_FOUND_MESSAGE = 'Message identity does not exist.';
 const ID_RESPONSE_SCHEMA = '#/components/schemas/idResponse';
+const COMPOSE_MAIL_SCHEMA = '#/components/schemas/composeMailBody';
 
 @api({
-  basePath: '/originator/{version}',
   paths: {},
   components: {
     schemas: {
-      idResponse: {
+      idResponse: getModelSchemaRef(IdResponse),
+      composeMailBody: {
         type: 'object',
-        title: 'Message Compose Response Schema',
         properties: {
-          id: {type: 'string', example: '123e4567-e89b-12d3-a456-426614174000'},
-          version: {type: 'string', example: '20200101'},
+          threadId: {
+            type: 'string',
+          },
+          groups: {
+            type: 'array',
+            items: getModelSchemaRef(Group, {
+              partial: true,
+            }),
+          },
+          attachments: {
+            type: 'array',
+            items: getModelSchemaRef(Attachment, {
+              partial: true,
+            }),
+          },
+          meta: {
+            type: 'array',
+            items: getModelSchemaRef(Meta, {
+              partial: true,
+            }),
+          },
+          body: {
+            type: 'string',
+          },
+          subject: {
+            type: 'string',
+          },
+          status: {
+            type: 'string',
+          },
+          extId: {
+            type: 'string',
+          },
+          extMetadata: {
+            type: 'object',
+          },
         },
+        required: ['body', 'groups', 'status'],
       },
     },
   },
@@ -64,25 +104,29 @@ export class OriginatorController {
     public threadRepository: ThreadRepository,
     @repository(GroupRepository)
     public groupRepository: GroupRepository,
+    @repository(AttachmentRepository)
+    public attachmentRepository: AttachmentRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     public user: IAuthUserWithPermissions,
   ) {}
-
+  getInMailIdentifierType(type: string | undefined): string {
+    return String(type === 'user' ? this.user.id : this.user.email);
+  }
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
+  @authorize([PermissionsEnums.ComposeMail])
   @post('mails', {
     summary: 'ComposeAPI. For drafting, reply on and create new message',
     responses: {
       201: {
         description: 'collect single message for user by message identifier',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {$ref: ID_RESPONSE_SCHEMA},
           },
         },
       } as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
   async composeMail(
@@ -90,82 +134,14 @@ export class OriginatorController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: {
-            type: 'object',
-            properties: {
-              threadId: {
-                type: 'string',
-              },
-              groups: {
-                type: 'array',
-                items: getModelSchemaRef(Group, {
-                  partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
-                }),
-              },
-              attachments: {
-                type: 'array',
-                items: getModelSchemaRef(Attachment, {
-                  partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
-                }),
-              },
-              meta: {
-                type: 'array',
-                items: getModelSchemaRef(Meta, {
-                  partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
-                }),
-              },
-              body: {
-                type: 'string',
-              },
-              subject: {
-                type: 'string',
-              },
-              status: {
-                type: 'string',
-              },
-              extId: {
-                type: 'string',
-              },
-              extMetadata: {
-                type: 'object',
-              },
-            },
-            required: ['body', 'group', 'status'],
+            $ref: COMPOSE_MAIL_SCHEMA,
           },
         },
       },
     })
     composeMailBody: ComposeMailBody,
-    @param.path.string('version') version: string,
   ) {
-    let {
-      groups,
+    const {
       extId,
       extMetadata,
       meta,
@@ -175,8 +151,14 @@ export class OriginatorController {
       body,
       threadId,
     } = composeMailBody;
+    let {groups} = composeMailBody;
     // from will be fetched from the authenticated user
     groups = groups.filter(group => group?.type !== PartyTypeMarker.from);
+    if (!groups?.length) {
+      throw new HttpErrors.BadRequest(
+        'Please add atlease one receipient in a group',
+      );
+    }
     const thread = await this.threadRepository.incrementOrCreate(threadId, {
       subject,
       extId,
@@ -184,10 +166,13 @@ export class OriginatorController {
     });
     groups = groups.concat([
       new Group({
-        party: this.user.email,
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
         type: PartyTypeMarker.from,
         threadId: thread.id,
-        storage: StorageMarker.send,
+        storage:
+          status === StorageMarker.draft
+            ? StorageMarker.draft
+            : StorageMarker.send,
       }),
     ]);
     const transaction = await this.messageRepository.beginTransaction();
@@ -196,6 +181,10 @@ export class OriginatorController {
         group.threadId = thread.id;
         group.extId = extId;
         group.extMetadata = extMetadata;
+        group.storage =
+          status === StorageMarker.draft
+            ? StorageMarker.draft
+            : StorageMarker.send;
       });
       if (attachments?.length) {
         attachments.forEach(attachment => {
@@ -214,7 +203,10 @@ export class OriginatorController {
           Object.assign(
             {},
             {
-              sender: this.user.email,
+              sender:
+                process.env.INMAIL_IDENTIFIER_TYPE === 'user'
+                  ? this.user.id
+                  : this.user.email,
               threadId: thread.id,
               extId,
               extMetadata,
@@ -231,29 +223,27 @@ export class OriginatorController {
         ),
       );
       await transaction.commit();
-      return {version, id: mail.id};
+      return {id: mail.id};
     } catch (e) {
       await transaction.rollback();
       throw e;
     }
   }
-
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
+  @authorize([PermissionsEnums.UpdateMail])
   @put('mails/{messageId}', {
     summary: 'Update API. Update draft messages.',
     responses: {
-      201: {
+      [CONTENT_TYPE.JSON]: {
         description: 'collect single message for user by message identifier',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {$ref: ID_RESPONSE_SCHEMA},
           },
         },
       } as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
-      405: {description: "Asked message can't update."},
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
     security: [{BearerAuth: []}],
   })
@@ -262,79 +252,15 @@ export class OriginatorController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: {
-            type: 'object',
-            properties: {
-              groups: {
-                type: 'array',
-                items: getModelSchemaRef(Group, {
-                  partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
-                }),
-              },
-              attachments: {
-                type: 'array',
-                items: getModelSchemaRef(Attachment, {
-                  partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
-                }),
-              },
-              meta: {
-                type: 'array',
-                items: getModelSchemaRef(Meta, {
-                  partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
-                }),
-              },
-              body: {
-                type: 'string',
-              },
-              subject: {
-                type: 'string',
-              },
-              status: {
-                type: 'string',
-              },
-              extId: {
-                type: 'string',
-              },
-              extMetadata: {
-                type: 'object',
-              },
-            },
-            required: ['body', 'group'],
+            $ref: COMPOSE_MAIL_SCHEMA,
           },
         },
       },
     })
     composeMailBody: ComposeMailBody,
-    @param.path.string('version') version: string,
     @param.path.string('messageId') messageId: string,
   ) {
-    const {extId, extMetadata, subject, body} = composeMailBody;
+    const {extId, extMetadata, subject, body, status} = composeMailBody;
     const mail = await this.messageRepository.findOne({
       where: {
         id: messageId,
@@ -350,27 +276,15 @@ export class OriginatorController {
     }
     const transaction = await this.messageRepository.beginTransaction();
     // removing previous mails
-    await this.messageRepository.attachments(messageId).patch(
-      {
-        deleted: true,
-      },
-      {},
-      {transaction},
-    );
-    await this.messageRepository.meta(messageId).patch(
-      {
-        deleted: true,
-      },
-      {},
-      {transaction},
-    );
-    await this.messageRepository.groups(messageId).patch(
-      {
-        deleted: true,
-      },
-      {},
-      {transaction},
-    );
+    await this.messageRepository
+      .attachments(messageId)
+      .patch({deleted: true}, {}, {transaction});
+    await this.messageRepository
+      .meta(messageId)
+      .patch({deleted: true}, {}, {transaction});
+    await this.messageRepository
+      .groups(messageId)
+      .patch({deleted: true}, {}, {transaction});
     //
     // Root id is not allowed to update
     const createdOnBy = {
@@ -381,19 +295,29 @@ export class OriginatorController {
       .map(e => {
         Object.assign(e, createdOnBy);
         e.extId = extId;
+        e.storage =
+          status === StorageMarker.draft
+            ? StorageMarker.draft
+            : StorageMarker.send;
         e.extMetadata = extMetadata;
         e.threadId = mail.threadId;
         return new Group(e);
       })
       .concat([
         new Group({
-          party: this.user.email,
+          party: this.getInMailIdentifierType(
+            process.env.INMAIL_IDENTIFIER_TYPE,
+          ),
           type: PartyTypeMarker.from,
           extId: extId,
           extMetadata,
           threadId: mail.threadId,
           createdBy: this.user.id,
           createdOn: new Date(),
+          storage:
+            status === StorageMarker.draft
+              ? StorageMarker.draft
+              : StorageMarker.send,
         }),
       ]);
     const meta = composeMailBody.meta
@@ -436,26 +360,188 @@ export class OriginatorController {
     );
     await transaction.commit();
     return {
-      version,
       id: mail.id,
     };
   }
-
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
-  @patch('mails/{messageId}/forward', {
-    summary: 'API provide interface to forward single message.',
+  @authorize([PermissionsEnums.ReplyMail])
+  @patch('threads/{threadId}/mails/{messageId}/replies', {
+    summary: 'API provides interface to reply to a single message',
     responses: {
-      201: {
+      [STATUS_CODE.OK]: {
+        description: 'Message is replied back to the sender',
+      },
+    },
+  })
+  async replyMail(
+    @param.path.string('threadId') threadId: string,
+    @param.path.string('messageId') messageId: string,
+    @param.query.boolean('replyAll') replyAll: boolean,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: {
+            type: 'object',
+            properties: {
+              attachments: {
+                type: 'array',
+                items: getModelSchemaRef(Attachment, {
+                  partial: true,
+                }),
+              },
+              meta: {
+                type: 'array',
+                items: getModelSchemaRef(Meta, {
+                  partial: true,
+                }),
+              },
+              body: {
+                type: 'string',
+              },
+              subject: {
+                type: 'string',
+              },
+              status: {
+                type: 'string',
+              },
+              extId: {
+                type: 'string',
+              },
+            },
+            required: ['body', 'group', 'status'],
+          },
+        },
+      },
+    })
+    mailBody: ComposeMailBody,
+  ): Promise<{userIds: string[]}> {
+    const {attachments, subject, status, body, meta, extId} = mailBody;
+    const messageFilter: Filter<Message> = {
+      where: {
+        id: messageId,
+        threadId,
+      },
+    };
+    if (extId) {
+      Object.assign(messageFilter.where, {
+        extId,
+      });
+    }
+
+    const message = await this.messageRepository.findOne(messageFilter);
+
+    if (!message) {
+      throw new HttpErrors.NotFound('Inmail not found');
+    }
+
+    if (attachments?.length) {
+      attachments.forEach(attachment => {
+        attachment.extId = message.extId;
+        attachment.extMetadata = message.extMetadata;
+      });
+    }
+
+    if (meta?.length) {
+      meta.forEach(m => {
+        m.extId = message.extId;
+        m.extMetadata = message.extMetadata;
+      });
+    }
+    const transaction = await this.messageRepository.beginTransaction();
+    try {
+      const newMessage = await this.messageRepository.createRelational(
+        {
+          sender: this.getInMailIdentifierType(
+            process.env.INMAIL_IDENTIFIER_TYPE,
+          ),
+          body,
+          status,
+          subject,
+          extId,
+          extMetadata: message.extMetadata,
+          attachments,
+          meta,
+        },
+        {transaction},
+      );
+
+      const senderGroup = new Group({
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+        threadId,
+        extId: message.extId,
+        extMetadata: message.extMetadata,
+        type: PartyTypeMarker.from,
+        storage:
+          status === StorageMarker.draft
+            ? StorageMarker.draft
+            : StorageMarker.send,
+      });
+
+      const receiverGroupWhere: Filter<Group> = {
+        where: {
+          threadId,
+          messageId,
+        },
+      };
+
+      if (!replyAll) {
+        Object.assign(receiverGroupWhere.where, {
+          party: message.sender,
+        });
+      } else {
+        Object.assign(receiverGroupWhere.where, {
+          party: {
+            neq: this.getInMailIdentifierType(
+              process.env.INMAIL_IDENTIFIER_TYPE,
+            ),
+          },
+        });
+      }
+      const groups = await this.groupRepository.find(receiverGroupWhere);
+      if (!groups?.length) {
+        throw new HttpErrors.NotFound('Group not found');
+      }
+      const recipientGroupPromise: Promise<Group>[] = [
+        this.groupRepository.create(senderGroup),
+      ];
+      groups.forEach(group => {
+        delete group.id;
+        group.messageId = String(newMessage.id);
+        group.createdOn = new Date();
+        group.type = PartyTypeMarker.to;
+        group.storage =
+          status === StorageMarker.draft
+            ? StorageMarker.draft
+            : StorageMarker.send;
+        recipientGroupPromise.push(
+          this.groupRepository.create(group, {transaction}),
+        );
+      });
+      await Promise.all(recipientGroupPromise);
+      await transaction.commit();
+      return {
+        userIds: groups.map(group => group.party),
+      };
+    } catch (error) {
+      await transaction.rollback();
+      throw new HttpErrors.UnprocessableEntity('Error replying email');
+    }
+  }
+  @authenticate(STRATEGY.BEARER)
+  @authorize([PermissionsEnums.ComposeMail])
+  @patch('threads/{threadId}/forward', {
+    summary: 'API provides interface to forward single message.',
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Message is forwarded to another recipient',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {$ref: ID_RESPONSE_SCHEMA},
           },
         },
       } as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
   async forward(
@@ -469,16 +555,28 @@ export class OriginatorController {
                 type: 'array',
                 items: getModelSchemaRef(Group, {
                   partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
                 }),
+              },
+              subject: {
+                type: 'string',
+              },
+              body: {
+                type: 'string',
+              },
+              attachments: {
+                type: 'array',
+                items: getModelSchemaRef(Attachment, {
+                  partial: true,
+                }),
+              },
+              meta: {
+                type: 'array',
+                items: getModelSchemaRef(Meta, {
+                  partial: true,
+                }),
+              },
+              status: {
+                type: 'string',
               },
             },
             required: ['groups'],
@@ -486,60 +584,91 @@ export class OriginatorController {
         },
       },
     })
-    body: ForwardMailBody,
-    @param.path.string('messageId') messageId: string,
-    @param.path.string('version') version: string,
+    forwardMailBody: ForwardMailBody,
+    @param.path.string('threadId') threadId: string,
   ) {
-    const message = await this.messageRepository.findOne({
+    const thread = await this.threadRepository.findOne({
       where: {
-        id: messageId,
+        id: threadId,
       },
     });
-    if (!message) {
-      throw new HttpErrors.NotFound('Mail not Found');
+    if (!thread) {
+      throw new HttpErrors.NotFound('Thread not found');
     }
     const createdOnBy = {
       createdBy: this.user.id,
       createdOn: new Date(),
     };
-    const {groups} = body;
+    const {groups, attachments, body, subject, status} = forwardMailBody;
     const transaction = await this.messageRepository.beginTransaction();
+    const mail = await this.messageRepository.create(
+      {
+        sender: this.getInMailIdentifierType(
+          process.env.INMAIL_IDENTIFIER_TYPE,
+        ),
+        threadId: thread.id,
+        extId: thread.extId,
+        extMetadata: {...thread.extMetadata, forwarded: true},
+        status,
+        body,
+        subject,
+      },
+      {
+        transaction,
+      },
+    );
     try {
       await Promise.all(
         groups.map(group => {
           // new group will be created on forward message
           Object.assign(group, createdOnBy);
-          if (message.extId) group.extId = message.extId;
-          if (message.extId) group.extMetadata = message.extMetadata;
-          Object.assign(group, {threadId: message.threadId});
-          return this.messageRepository.groups(message.id).create(group, {
+          if (thread.extId) group.extId = thread.extId;
+          if (thread.extMetadata) group.extMetadata = thread.extMetadata;
+          Object.assign(group, {
+            threadId: thread.id,
+            messageId: mail.id,
+          });
+          return this.messageRepository.groups(mail.id).create(group, {
             transaction,
           });
         }),
       );
+      if (attachments?.length) {
+        await Promise.all(
+          attachments.map(attachment => {
+            // new group will be created on forward message
+            Object.assign(attachment, createdOnBy);
+            if (thread.extId) attachment.extId = thread.extId;
+            if (thread.extId) attachment.extMetadata = thread.extMetadata;
+            return this.messageRepository
+              .attachments(mail.id)
+              .create(attachment, {
+                transaction,
+              });
+          }),
+        );
+      }
       await this.threadRepository.incrementOrCreate(
-        message.threadId,
+        thread.id,
         {},
         {transaction},
       );
       await transaction.commit();
       return {
-        version,
-        id: messageId,
+        id: threadId,
       };
     } catch (error) {
       await transaction.rollback();
       throw error;
     }
   }
-
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
+  @authorize([PermissionsEnums.AddAttachments])
   @post('mails/{messageId}/attachments', {
     summary:
       'API provides an interface for adding attachment before message is sent.',
     responses: {
-      201: {
+      [STATUS_CODE.OK]: {
         description: 'collect single attachment for user by message identifier',
         content: {
           [CONTENT_TYPE.JSON]: {
@@ -547,17 +676,17 @@ export class OriginatorController {
               type: 'object',
               title: 'Attachment add response schema',
               properties: {
-                attachmentId: {
-                  type: 'string',
-                  example: '123e4567-e89b-12d3-a456-426614174000',
+                items: {
+                  type: 'array',
+                  items: getModelSchemaRef(Attachment),
                 },
               },
             },
           },
         },
       } as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
   async addAttachment(
@@ -571,15 +700,6 @@ export class OriginatorController {
                 type: 'array',
                 items: getModelSchemaRef(Attachment, {
                   partial: true,
-                  exclude: [
-                    'extId',
-                    'extMetadata',
-                    'createdBy',
-                    'createdOn',
-                    'modifiedBy',
-                    'modifiedOn',
-                    'deleted',
-                  ],
                 }),
               },
             },
@@ -590,11 +710,9 @@ export class OriginatorController {
     body: {
       attachments: Attachment[];
     },
-    @param.path.string('version') version: string,
     @param.path.string('messageId') messageId: string,
     @param.query.object('filter') filter?: Partial<Message>,
   ): Promise<{
-    version: string;
     items: Attachment[];
   }> {
     const messageFilter: Filter<Message> = {
@@ -626,30 +744,27 @@ export class OriginatorController {
     }
     return {
       items: await Promise.all(items),
-      version,
     };
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
+  @authorize([PermissionsEnums.DeleteAttachment])
   @del('mails/{messageId}/attachments/{attachmentId}', {
     summary:
       'API provides an interface for removing attachment before message is sent',
     responses: {
-      200: {
+      [STATUS_CODE.OK]: {
         description: 'Deletetion of Attachment Successful!',
       } as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
   async removeAttachment(
     @param.path.string('messageId') messageId: string,
-    @param.path.string('version') version: string,
     @param.path.string('attachmentId') attachmentId: string,
     @param.query.object('filter') filter: Partial<Message>,
   ): Promise<{
-    version: string;
     item: string;
   }> {
     const messageFilter: Filter<Message> = {
@@ -672,37 +787,45 @@ export class OriginatorController {
     await this.messageRepository.attachments(messageId).patch({
       deleted: true,
     });
-    return {version, item: attachmentId};
+    return {item: attachmentId};
   }
-
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
-  @del('mails/{messageId}/{storage}/{action}', {
-    summary:
-      'API provides an interface for moving message to trash from inbox, draft, sent.',
+  @authorize([PermissionsEnums.TrashMail])
+  @del('mails/bulk/{storage}/{action}', {
+    summary: 'API for moving mails to trash and then delete',
     responses: {
-      200: {
-        description: 'Trash/Deletetion of Mail sucessful!',
+      [STATUS_CODE.OK]: {
+        description: 'Trash/Deletion of Mail(s) sucessful!',
       } as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
-  async trash(
-    @param.path.string('version') version: string,
-    @param.path.string('messageId') messageId: string,
+  async trashBulk(
     @param.path.string('storage') storage: StorageMarker,
-    @param.query.object('filter') filter: Partial<Group>,
     @param.path.string('action') action: 'delete' | 'trash',
-  ): Promise<{
-    version: string;
-    item: Group;
-  }> {
+    @param.query.object('filter') filter: Partial<Group>,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(IdArrays, {
+            partial: true,
+          }),
+        },
+      },
+    })
+    body: IdArrays,
+  ) {
+    const {messageIds} = body;
     const groupWhere = {
       where: {
         storage,
-        messageId,
-        party: this.user.email,
+        messageIds: {
+          inq: {
+            messageIds,
+          },
+        },
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
       },
     };
     if (filter) {
@@ -710,16 +833,21 @@ export class OriginatorController {
         ...filter,
       });
     }
-    const group = await this.groupRepository.findOne(groupWhere);
-    if (!group) {
+    const groups = await this.groupRepository.find(groupWhere);
+    const groupUpdatePromise: Promise<void>[] = [];
+    if (!groups?.length) {
       throw new HttpErrors.NotFound('Group Not Found');
     }
     if (action === 'trash') {
       if (storage === StorageMarker.trash) {
         throw new HttpErrors.BadRequest('Mail is already in trash');
       }
-      group.deleted = false;
-      group.storage = StorageMarker.trash;
+      groups.forEach(group => {
+        group.deleted = false;
+        group.storage = StorageMarker.trash;
+        group.modifiedOn = new Date();
+        groupUpdatePromise.push(this.groupRepository.update(group));
+      });
     }
     if (action === 'delete') {
       if (storage !== StorageMarker.trash) {
@@ -727,35 +855,49 @@ export class OriginatorController {
           'Mail must be in trash for permanent deletion',
         );
       }
-      group.deleted = true;
+      groups.forEach(group => {
+        group.deleted = true;
+        group.modifiedOn = new Date();
+        groupUpdatePromise.push(this.groupRepository.update(group));
+      });
     }
-    await this.groupRepository.update(group);
-    return {version, item: group};
+    await Promise.all(groupUpdatePromise);
+    return {items: groups};
   }
-
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
-  @patch('mails/{messageId}/restore', {
+  @authorize([PermissionsEnums.RestoreMail])
+  @patch('mails/bulk/restore', {
     summary: 'API provides an interface for restore message from trash.',
     responses: {
-      200: {description: 'Restor Message Successful!'} as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.OK]: {
+        description: 'Restore Message Successful!',
+      } as ResponseObject,
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
   async restore(
-    @param.path.string('version') version: string,
-    @param.path.string('messageId') messageId: string,
     @param.query.object('filter') filter: Partial<Group>,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(IdArrays, {
+            partial: true,
+          }),
+        },
+      },
+    })
+    body: IdArrays,
   ): Promise<{
-    version: string;
-    item: Group;
+    item: Group[];
   }> {
     const groupWhere = {
       where: {
         storage: {eq: StorageMarker.trash},
-        messageId: {eq: messageId},
-        party: {eq: this.user.email},
+        messageId: {inq: body.messageIds},
+        party: {
+          eq: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+        },
       },
     };
     if (filter) {
@@ -763,47 +905,50 @@ export class OriginatorController {
         ...filter,
       });
     }
-    const group = await this.groupRepository.findOne(groupWhere);
-    if (!group) {
+    const groups = await this.groupRepository.find(groupWhere);
+    if (!groups.length) {
       throw new HttpErrors.NotFound('Trashed Message not Found');
     }
-    if (
-      [PartyTypeMarker.to, PartyTypeMarker.bcc, PartyTypeMarker.cc].includes(
-        group.type,
-      )
-    ) {
-      group.storage = StorageMarker.inbox;
-    } else {
-      group.storage = StorageMarker.send;
-    }
-    await this.groupRepository.update(group);
+    const groupsUpdatePromise: Promise<void>[] = [];
+    groups.forEach(group => {
+      if (
+        [PartyTypeMarker.to, PartyTypeMarker.bcc, PartyTypeMarker.cc].includes(
+          group.type,
+        )
+      ) {
+        group.storage = StorageMarker.inbox;
+      } else {
+        group.storage = StorageMarker.send;
+      }
+      groupsUpdatePromise.push(this.groupRepository.update(group));
+    });
+    await Promise.all(groupsUpdatePromise);
     return {
-      version,
-      item: group,
+      item: groups,
     };
   }
-
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
+  @authorize([PermissionsEnums.ComposeMail])
   @patch('mails/{messageId}/send', {
     summary: 'API for sending a drafted message.',
     responses: {
-      200: {description: 'Mail is Successfully sent!'} as ResponseObject,
-      403: {description: FORBIDDEN_ERROR_MESSAGE},
-      404: {description: NOT_FOUND_MESSAGE},
+      [STATUS_CODE.OK]: {
+        description: 'Mail is Successfully sent!',
+      } as ResponseObject,
+      [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
+      [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
   async sendDraft(
-    @param.path.string('version') version: string,
     @param.path.string('messageId') messageId: string,
     @param.query.object('filter') filter: Partial<Message>,
   ): Promise<{
-    version: string;
     id: string;
   }> {
     const messageFilter: Filter<Message> = {
       where: {
         id: messageId,
+        status: StorageMarker.draft,
       },
     };
     if (filter) {
@@ -815,25 +960,25 @@ export class OriginatorController {
     if (!message) {
       throw new HttpErrors.NotFound(NOT_FOUND_MESSAGE);
     }
-    const transaction = await this.messageRepository.beginTransaction();
-    await this.messageRepository.updateById(
-      String(message.id),
-      {
-        status: StatusMarker.send,
+    const groups = await this.groupRepository.find({
+      where: {
+        messageId,
       },
-      {transaction},
-    );
-    await this.messageRepository.groups(messageId).patch(
-      {
-        storage: StorageMarker.inbox,
-        visibility: VisibilityMarker.new,
-        modifiedBy: this.user.id,
-        modifiedOn: new Date(),
-      },
-      {messageId: {eq: messageId}},
-      {transaction},
-    );
-    await transaction.commit();
-    return {version, id: messageId};
+    });
+    await this.messageRepository.updateById(String(message.id), {
+      status: StatusMarker.send,
+    });
+    const groupUpdatePromise: Promise<void>[] = [];
+    groups.forEach(group => {
+      if (group.type === PartyTypeMarker.from) {
+        group.storage = StorageMarker.send;
+      } else {
+        group.storage = StorageMarker.inbox;
+      }
+      group.modifiedOn = new Date();
+      groupUpdatePromise.push(this.groupRepository.update(group));
+    });
+    await Promise.all(groupUpdatePromise);
+    return {id: messageId};
   }
 }
