@@ -1,9 +1,7 @@
 // array containing array of Ids.
 import {property, model, Model} from '@loopback/repository';
 
-@model({
-  name: 'IdArrays',
-})
+@model()
 export class IdArrays extends Model {
   @property({
     type: 'array',
