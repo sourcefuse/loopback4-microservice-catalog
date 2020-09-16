@@ -1,8 +1,6 @@
 import {property, model, Model} from '@loopback/repository';
 
-@model({
-  name: 'IdResponse',
-})
+@model()
 export class IdResponse extends Model {
   @property({
     type: 'string',
