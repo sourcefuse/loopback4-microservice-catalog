@@ -2,7 +2,6 @@
   "name": "@sourceloop/in-mail-service",
   "version": "1.0.0-alpha.12",
   "description": "services",
-  "private": false,
   "keywords": [
     "loopback-extension",
     "loopback"
@@ -73,5 +72,9 @@
     "eslint-plugin-mocha": "^6.3.0",
     "source-map-support": "^0.5.16",
     "typescript": "~3.8.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
