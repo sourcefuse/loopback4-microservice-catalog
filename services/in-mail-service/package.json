@@ -2,7 +2,7 @@
   "name": "@sourceloop/in-mail-service",
   "version": "1.0.0-alpha.11",
   "description": "services",
-  "private": true,
+  "private": false,
   "keywords": [
     "loopback-extension",
     "loopback"
