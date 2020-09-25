@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.11](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.9...@sourceloop/core@1.0.0-alpha.11) (2020-09-18)
+
+
+### Features
+
+* **core:** make initialisation object of i18n configurable ([#57](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/57)) ([41a3c41](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/41a3c41b8a1fb961ec03088eaad31dee94ee242b))
+
+
+
+
+
 # [1.0.0-alpha.10](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.9...@sourceloop/core@1.0.0-alpha.10) (2020-08-31)
 
 ### New Feature

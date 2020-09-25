@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.13](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.12...@sourceloop/in-mail-service@1.0.0-alpha.13) (2020-09-18)
+
+**Note:** Version bump only for package @sourceloop/in-mail-service
+
+
+
+
+
+# [1.0.0-alpha.12](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.11...@sourceloop/in-mail-service@1.0.0-alpha.12) (2020-09-18)
+
+
+### Bug Fixes
+
+* **in-mail-service:** made public ([2c9dfc9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c9dfc9f5b9f039e1d2ea7cd9e613af9a7ec6a33))
+
+
+
+
+
+# [1.0.0-alpha.11](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.10...@sourceloop/in-mail-service@1.0.0-alpha.11) (2020-09-18)
+
+
+### Bug Fixes
+
+* **in-mail-service:** fix build issue ([fcaa6f4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fcaa6f4cf292328842b4f07a43ed8363cf47285c))
+* **in-mail-service:** fix identation using prettier ([#79](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/79)) ([68eb6cb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/68eb6cb401590c26a3516ed3490cc5e8a99a6227))
+* **in-mail-service:** modify package.json and package-lock.json ([#80](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/80)) ([18164db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/18164db56e5741136834f3dbdabcb0807418a064))
+* **in-mail-service:** remove inmail from ignore ([0749b95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0749b9575911636f670794bf64aafe5c86d6ba20))
+
+
+### Features
+
+* **in-mail-service:** Implementation of In-mail service ([#68](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/68)) ([5dc4797](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5dc479715e65c5c4f35bcf0523b386332a4454df))
+
+
+
+
+
 # [1.0.0-alpha.10](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.9...@sourceloop/in-mail-service@1.0.0-alpha.10) (2020-08-28)
 
 **Note:** Version bump only for package @sourceloop/in-mail-service
