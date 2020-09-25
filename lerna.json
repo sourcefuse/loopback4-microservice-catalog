@@ -20,7 +20,8 @@
       "concurrency": 1,
       "ignore": [
         "@sourceloop/auth-multitenant-example",
-        "@sourceloop/sandbox-testing"
+        "@sourceloop/sandbox-testing",
+        "sourceloop/notification-socket-example"
       ]
     },
     "clean": {

@@ -1,0 +1,71 @@
+{
+  "name": "@sourceloop/notification-socket-example",
+  "version": "1.0.0",
+  "description": "sandbox",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "scripts": {
+    "build": "npm run clean && lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run build",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t notification-socket-example .",
+    "docker:run": "docker run -p 3000:3000 -d notification-socket-example",
+    "migrate": "node ./dist/migrate",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run build",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^2.3.1",
+    "@loopback/context": "^3.8.2",
+    "@loopback/core": "^2.7.1",
+    "@loopback/repository": "^2.5.1",
+    "@loopback/repository-json-schema": "^2.4.3",
+    "@loopback/rest": "^5.0.1",
+    "@loopback/rest-explorer": "^2.2.3",
+    "@loopback/service-proxy": "^2.3.0",
+    "@sourceloop/core": "^1.0.0-alpha.12",
+    "@sourceloop/notification-service": "^1.0.0-alpha.12",
+    "loopback4-authorization": "^2.3.2",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.1.1",
+    "@loopback/eslint-config": "^8.0.4",
+    "@loopback/testlab": "^3.2.1",
+    "@types/node": "^10.17.27",
+    "eslint": "^7.5.0",
+    "source-map-support": "^0.5.19",
+    "typescript": "~3.9.7"
+  }
+}
