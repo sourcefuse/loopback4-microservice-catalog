@@ -18,7 +18,7 @@ export class HomePageController {
     );
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['CreateSession'], resource: 'session'})
   @get('/', {
     responses: {
       [STATUS_CODE.OK]: {

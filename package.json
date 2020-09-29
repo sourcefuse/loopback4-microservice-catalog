@@ -22,5 +22,8 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
+  },
+  "dependencies": {
+    "loopback4-authorization": "file:../../projects/casbin-integration/loopback4-authorization"
   }
 }

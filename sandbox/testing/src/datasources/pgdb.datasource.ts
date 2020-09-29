@@ -8,7 +8,7 @@ const config = {
   host: 'localhost',
   port: 5432,
   user: 'postgres',
-  password: 'postgrestest',
+  password: 'postgres',
   database: 'alivio-notifs-1',
   schema: 'main',
 };
