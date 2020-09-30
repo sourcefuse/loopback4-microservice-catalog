@@ -7,6 +7,9 @@ import {
   RestExplorerComponent
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import {BearerVerifierBindings, BearerVerifierComponent, BearerVerifierConfig, BearerVerifierType} from '@sourceloop/core';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -25,6 +28,12 @@ export class TestingApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+    dotenv.config();
+    dotenvExt.load({
+      schema: '.env.example',
+      errorOnMissing: true,
+      includeProcessEnv: true,
+    });
 
     // Set up the custom sequence
     this.sequence(MySequence);
@@ -38,11 +47,19 @@ export class TestingApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
 
+
+
+    this.component(AuthenticationComponent);
+    // Mount bearer verifier component
+    this.bind(BearerVerifierBindings.Config).to({
+      authServiceUrl: '',
+      type: BearerVerifierType.service,
+    } as BearerVerifierConfig);
+    this.component(BearerVerifierComponent);
+
     this.bind(AuthorizationBindings.CONFIG).to({
       allowAlwaysPaths: ['/explorer'],
     });
-
-    this.component(AuthenticationComponent);
     this.component(AuthorizationComponent);
 
     this.bind(VonageBindings.config).to({

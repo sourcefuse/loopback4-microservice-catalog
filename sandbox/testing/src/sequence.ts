@@ -53,16 +53,6 @@ export class MySequence implements SequenceHandler {
       const args = await this.parseParams(request, route);
       console.log('in sequence');
 
-      // Providing sample output of authentication, for sake of simplicity
-      // const authUser: IAuthUserWithPermissions = {
-      //   id: '0851e3b-156b-4b7f-85e9-48f0953a6cc8',
-      //   username: 'test_user',
-      //   permissions: ['read'],
-      //   authClientId: 1,
-      //   role: 'admin',
-      //   firstName: 'Test',
-      //   lastName: 'user',
-      // };
 
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,

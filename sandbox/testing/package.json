@@ -56,6 +56,8 @@
     "@sourceloop/core": "^1.0.0-alpha.9",
     "@sourceloop/video-conferencing-service": "file:../../services/video-conferencing-service",
     "aws-sdk": "^2.694.0",
+    "dotenv": "^8.2.0",
+    "dotenv-extended": "^2.8.0",
     "loopback-connector-postgresql": "^3.9.1",
     "loopback4-authentication": "^4.0.1",
     "loopback4-authorization": "file:../../../../projects/casbin-integration/loopback4-authorization",

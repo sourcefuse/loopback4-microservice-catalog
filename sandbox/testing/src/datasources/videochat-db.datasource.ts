@@ -7,7 +7,7 @@ import {
 import {juggler} from '@loopback/repository';
 
 const config = {
-  name: 'pgdb',
+  name: 'videochatDb',
   connector: 'postgresql',
   url: '',
   host: 'localhost',
