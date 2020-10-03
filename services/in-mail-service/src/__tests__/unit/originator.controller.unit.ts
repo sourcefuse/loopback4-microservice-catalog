@@ -1,38 +1,27 @@
 import {
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
-  sinon,
+  sinon, StubbedInstanceWithSinonAccessor
 } from '@loopback/testlab';
-import {
-  MessageRepository,
-  ThreadRepository,
-  GroupRepository,
-  AttachmentRepository,
-} from '../../repositories';
-import {StorageMarker} from '../../types';
 import {OriginatorController} from '../../controllers';
 import {
-  group,
+  AttachmentRepository, GroupRepository, MessageRepository,
+  ThreadRepository
+} from '../../repositories';
+import {StorageMarker} from '../../types';
+import {
+  getSampleDataWithOutGroup, getSampleMailData, group,
   message,
-  user,
-  thread,
-  getSampleMailData,
-  getSampleDataWithOutGroup,
-  transactionStub,
-  messageIds,
+  messageIds, thread,
+  transactionStub, user
 } from './sample-data';
-
 const sampleMessageId = 'sample-message-id';
-const sampleThreadId = 'sample-thread-id';
 const sampleExtId = 'sample-ext-id';
-
 let messageRepository: StubbedInstanceWithSinonAccessor<MessageRepository>;
 let threadRepository: StubbedInstanceWithSinonAccessor<ThreadRepository>;
 let groupRepository: StubbedInstanceWithSinonAccessor<GroupRepository>;
 let attachmentRepository: StubbedInstanceWithSinonAccessor<AttachmentRepository>;
 let controller: OriginatorController;
-
 const setUpStub = () => {
   messageRepository = createStubInstance(MessageRepository);
   threadRepository = createStubInstance(ThreadRepository);
@@ -46,7 +35,6 @@ const setUpStub = () => {
     user,
   );
 };
-
 describe('originatorcontroller(unit) as', () => {
   describe('POST /mails', () => {
     it('compose a mail with attachments and meta-data', async () => {
@@ -70,100 +58,6 @@ describe('originatorcontroller(unit) as', () => {
         .composeMail(getSampleDataWithOutGroup)
         .catch(error => error);
       expect(controllerResult).instanceOf(Error);
-    });
-  });
-  describe('PATCH threads/{threadId}/mails/{messageId}/replies', () => {
-    it('Replies to a sender', async () => {
-      setUpStub();
-      const messageFindOneStub = messageRepository.stubs.findOne;
-      messageFindOneStub.resolves(message);
-
-      const messageCreateStub = messageRepository.stubs.createRelational;
-      messageCreateStub.resolves(message);
-
-      const beginTransactionStub = messageRepository.stubs.beginTransaction;
-      beginTransactionStub.resolves(transactionStub);
-
-      const groupFindStub = groupRepository.stubs.find;
-      groupFindStub.resolves([group]);
-
-      const groupCreateStub = groupRepository.stubs.create;
-      groupCreateStub.resolves(group);
-
-      const controllerResult = await controller.replyMail(
-        sampleThreadId,
-        sampleMessageId,
-        false,
-        getSampleMailData,
-      );
-      // eslint-disable-next-line no-unused-expressions
-      expect(controllerResult).to.have.a.property('userIds').which.is.an.Array;
-      sinon.assert.calledOnce(messageFindOneStub);
-      sinon.assert.calledOnce(messageCreateStub);
-      sinon.assert.calledOnce(beginTransactionStub);
-      sinon.assert.calledOnce(groupFindStub);
-      sinon.assert.calledTwice(groupCreateStub);
-    });
-    it('Replies to everyone', async () => {
-      setUpStub();
-      const messageFindOneStub = messageRepository.stubs.findOne;
-      messageFindOneStub.resolves(message);
-
-      const messageCreateStub = messageRepository.stubs.createRelational;
-      messageCreateStub.resolves(message);
-
-      const beginTransactionStub = messageRepository.stubs.beginTransaction;
-      beginTransactionStub.resolves(transactionStub);
-
-      const groupFindStub = groupRepository.stubs.find;
-      groupFindStub.resolves([group]);
-
-      const groupCreateStub = groupRepository.stubs.create;
-      groupCreateStub.resolves(group);
-
-      const controllerResult = await controller.replyMail(
-        sampleThreadId,
-        sampleMessageId,
-        true,
-        getSampleMailData,
-      );
-      // eslint-disable-next-line no-unused-expressions
-      expect(controllerResult).to.have.a.property('userIds').which.is.an.Array;
-      sinon.assert.calledOnce(messageFindOneStub);
-      sinon.assert.calledOnce(messageCreateStub);
-      sinon.assert.calledOnce(beginTransactionStub);
-      sinon.assert.calledOnce(groupFindStub);
-      sinon.assert.calledTwice(groupCreateStub);
-    });
-    it('Throws an error if a message is not found', async () => {
-      setUpStub();
-      const messageFindOneStub = messageRepository.stubs.findOne;
-      messageFindOneStub.resolves();
-
-      const controllerResult = await controller
-        .replyMail(sampleThreadId, sampleMessageId, false, getSampleMailData)
-        .catch(error => error);
-      expect(controllerResult).instanceOf(Error);
-      sinon.assert.calledOnce(messageFindOneStub);
-    });
-    it('Throws an error if receiver is not found', async () => {
-      setUpStub();
-      const messageFindOneStub = messageRepository.stubs.findOne;
-      messageFindOneStub.resolves(message);
-
-      const beginTransactionStub = messageRepository.stubs.beginTransaction;
-      beginTransactionStub.resolves(transactionStub);
-
-      const groupFindStub = groupRepository.stubs.find;
-      groupFindStub.resolves([]);
-
-      const controllerResult = await controller
-        .replyMail(sampleThreadId, sampleMessageId, false, getSampleMailData)
-        .catch(error => error);
-      expect(controllerResult).instanceOf(Error);
-      sinon.assert.calledOnce(messageFindOneStub);
-      sinon.assert.calledOnce(beginTransactionStub);
-      sinon.assert.calledOnce(groupFindStub);
     });
   });
   describe('DELETE /mails/bulk/{storage}/{action}', () => {

@@ -8,7 +8,7 @@ any client application
 ## Installation
 
 ```bash
-   npm i @sourceloop/inmail-service
+   npm i @sourceloop/in-mail-service
 ```
 
 ## Implementation
@@ -32,7 +32,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import { InMailServiceComponent } from '@sourceloop/inmail-service';
+import { InMailServiceComponent } from '@sourceloop/in-mail-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
@@ -120,7 +120,7 @@ export class VideochatDbDataSource extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = 'inmail';
   static readonly defaultConfig = config;
-  
+
   constructor(
     // You need to set datasource configuration name as 'datasources.config.inmail' otherwise you might get Errors
     @inject('datasources.config.inmail', {optional: true})
@@ -153,7 +153,7 @@ Content-Type: application/json in the response and in request if the API method 
 
 #### API Details
 
-##### POST /originator/{version}/mails
+##### POST /mails
 
 **Description:** Compose or draft a Mail to various Recipients
 
@@ -168,7 +168,7 @@ Content-Type: application/json in the response and in request if the API method 
     }
   ],
   "attachments": [ // Optional
-    { 
+    {
       "name": "string", // name of the attachment file
       "path": "string", // It can be url like s3 url
       "thumbnail": "string", // Smaller/Compressed version of attachment path. can be s3 url
@@ -195,7 +195,7 @@ Content-Type: application/json in the response and in request if the API method 
   "version": "string" // API vewrsion
 }
 ```
-##### PUT /originator/{version}/mails/{messageId}
+##### PUT /mails/{messageId}
 
 **Description:** Update Drafted Messages such as modifying attachment, receipients, message body, subject etc.
 
@@ -213,7 +213,7 @@ Content-Type: application/json in the response and in request if the API method 
     }
   ],
   "attachments": [ // Optional
-    { 
+    {
       "name": "string", // name of the attachment file
       "path": "string", // It can be url like s3 url
       "thumbnail": "string", // Smaller/Compressed version of attachment path. can be s3 url
@@ -241,7 +241,7 @@ Success Response:
 }
 ```
 
-##### POST /originator/{version}/mails/{messageId}/attachments
+##### POST /mails/{messageId}/attachments
 
 **Description:** add an attachment to an existing drafted mail
 
@@ -270,7 +270,7 @@ Success Response:
   "version": "string", // an API version
 }
 ```
-##### DELETE /originator/{version}/mails/bulk/{storage}/{action}
+##### DELETE /mails/bulk/{storage}/{action}
 
 **Description:** Move inbox/sent items to trash or delete the trashed item
 
@@ -289,14 +289,14 @@ Success Response:
 ```
 
 **Successful Response:**
-```javascript 
-{ 
+```javascript
+{
   "version" : "string", // the API version
   "item": "Array<object>" // recipient/sender details which was marked for deletion/trash
 }
 ```
 
-##### PATCH /originator/{version}/mails/bulk/restore
+##### PATCH /mails/bulk/restore
 
 **Description:** Restore the trashed Mail
 
@@ -316,7 +316,7 @@ Success Response:
 }
 ```
 
-##### PATCH /originator/{version}/mails/{messageId}/forward 
+##### PATCH /mails/{messageId}/forward
 
 **Description:** Forward the mail to another receipient
 
@@ -343,7 +343,7 @@ Success Response:
 }
 ```
 
-##### PATCH /originator/{version}/mails/{messageId}/send
+##### PATCH /mails/{messageId}/send
 
 **Description:** Send the drafted mail to the receipent
 
@@ -359,8 +359,23 @@ Successful response
 }
 ```
 
+##### PATCH /mails/marking/{markType}
 
-##### GET /collector/{version}/threads/{threadId}
+**Description:** mark the mails as read/unread/important/not-important
+
+**Request path Parameter:**
+
+{markType}: read/unread/important/not-important
+
+Successful response
+```javascript
+{
+  success : true,
+}
+```
+
+
+##### GET /threads/{threadId}
 
 **Request path Parameters:**
 
@@ -378,7 +393,7 @@ filter: Object which contains attribute(s) key value pairs of thread model which
 }
 ```
 
-##### GET /collector/{version}/threads
+##### GET /threads
 
 **Request query parameter(s):**
 
@@ -386,14 +401,14 @@ groupFilter: Object which contains attribute(s) key value pairs of group model w
 threadFilter: Object which contains attribute(s) key value pairs of thread model which is used to filter items.
 
 **Successful Response:**
-```javascript 
+```javascript
 {
    "version": "string", // the API version
    "items": "array"  // array containing thread details and the corresponding messages, attachments etc.
 }
 ```
 
-##### GET /collector/{version}/mails
+##### GET /mails
 
 **Request query parameter(s):**
 

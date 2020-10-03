@@ -1,32 +1,26 @@
 import {
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
-  sinon,
+  sinon, StubbedInstanceWithSinonAccessor
 } from '@loopback/testlab';
+import {CollectorController} from '../../controllers';
 import {
-  MessageRepository,
+  AttachmentRepository, GroupRepository, MessageRepository,
   MetaRepository,
-  ThreadRepository,
-  GroupRepository,
-  AttachmentRepository,
+  ThreadRepository
 } from '../../repositories';
 import {StorageMarker} from '../../types';
-import {CollectorController} from '../../controllers';
-import {group, message, user, thread} from './sample-data';
-
+import {group, message, thread, user} from './sample-data';
 const groups = [group];
 const sampleMessageId = 'sample-message-id';
 const sampleThreadId = 'sample-thread-id';
 const sampleExtId = 'sample-ext-id';
-
 let messageRepository: StubbedInstanceWithSinonAccessor<MessageRepository>;
 let threadRepository: StubbedInstanceWithSinonAccessor<ThreadRepository>;
 let groupRepository: StubbedInstanceWithSinonAccessor<GroupRepository>;
 let attachmentRepository: StubbedInstanceWithSinonAccessor<AttachmentRepository>;
 let metaRepository: StubbedInstanceWithSinonAccessor<MetaRepository>;
 let controller: CollectorController;
-
 const setUpStub = () => {
   messageRepository = createStubInstance(MessageRepository);
   threadRepository = createStubInstance(ThreadRepository);
@@ -42,7 +36,6 @@ const setUpStub = () => {
     user,
   );
 };
-
 describe('CollectorController (unit) as', () => {
   describe('GET collector/threads/{threadId}', () => {
     it('gets a thread', async () => {

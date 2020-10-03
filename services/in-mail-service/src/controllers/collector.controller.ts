@@ -1,32 +1,30 @@
 import {inject} from '@loopback/context';
+import {Filter, repository} from '@loopback/repository';
 import {
   get,
-  ResponseObject,
-  param,
-  HttpErrors,
   getModelSchemaRef,
+  HttpErrors,
+  param,
+  ResponseObject
 } from '@loopback/rest';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {repository, Filter} from '@loopback/repository';
-import {
-  AttachmentRepository,
-  MessageRepository,
-  GroupRepository,
-  ThreadRepository,
-  MetaRepository,
-} from '../repositories';
-import {Message, Thread, Group} from '../models';
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
-  STATUS_CODE,
+  STATUS_CODE
 } from '@sourceloop/core';
-import {PermissionsEnums} from '../types';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY
+} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {Group, Message, Thread} from '../models';
+import {
+  AttachmentRepository,
+  GroupRepository, MessageRepository,
+  MetaRepository, ThreadRepository
+} from '../repositories';
+import {PermissionsEnums, VisibilityMarker} from '../types';
 
 const NOT_FOUND_MESSAGE = 'Message identity does not exist';
 const FORBIDDEN_ERROR_MESSAGE =
@@ -43,6 +41,10 @@ export class CollectorController {
     @inject(AuthenticationBindings.CURRENT_USER)
     public user: IAuthUserWithPermissions,
   ) {}
+
+  getInMailIdentifierType(type: string | undefined): string {
+    return String(type === 'user' ? this.user.id : this.user.email);
+  }
 
   @authenticate(STRATEGY.BEARER)
   @authorize([PermissionsEnums.GetThread])
@@ -75,14 +77,21 @@ export class CollectorController {
   ) {
     const {count} = await this.groupRepository.count({
       threadId,
-      party:
-        process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-          ? this.user.id
-          : this.user.email,
+      party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
     });
     if (!count) {
       throw new HttpErrors.BadRequest('Group not found');
     }
+    const messageIdObject = await this.groupRepository.find(
+      {
+        where: {
+          threadId: threadId,
+          party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
+        },
+        fields: {messageId: true}
+      }
+    );
+    const messageIds = messageIdObject.map(msg => msg.messageId);
     const threadFilter: Filter<Thread> = {
       where: {
         id: threadId,
@@ -91,6 +100,7 @@ export class CollectorController {
         {
           relation: 'message',
           scope: {
+            where: {id: {inq: messageIds}},
             include: [
               {
                 relation: 'meta',
@@ -98,11 +108,11 @@ export class CollectorController {
               {
                 relation: 'group',
                 scope: {
-                  where: {
-                    party:
-                      process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-                        ? this.user.id
-                        : this.user.email,
+                  fields: {
+                    messageId: true,
+                    party: true,
+                    type: true,
+                    isImportant: true,
                   },
                 },
               },
@@ -124,6 +134,11 @@ export class CollectorController {
     if (!thread) {
       throw new Error('Thread not found');
     }
+    this.groupRepository.updateAll({visibility: VisibilityMarker.read},
+      {
+        threadId: threadId,
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
+      });
     return {items: thread};
   }
 
@@ -163,10 +178,7 @@ export class CollectorController {
   }> {
     const {count} = await this.groupRepository.count({
       messageId,
-      party:
-        process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-          ? this.user.id
-          : this.user.email,
+      party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
     });
     if (!count) {
       throw new HttpErrors.BadRequest('Group not found');
@@ -183,10 +195,7 @@ export class CollectorController {
           relation: 'group',
           scope: {
             where: {
-              party:
-                process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-                  ? this.user.id
-                  : this.user.email,
+              party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
             },
           },
         },
@@ -202,6 +211,9 @@ export class CollectorController {
       });
     }
     const message = await this.messageRepository.findOne(messageFilter);
+    this.groupRepository.updateAll({visibility: VisibilityMarker.read}, {
+      messageId: message?.id, party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
+    });
     if (!message) {
       throw new HttpErrors.NotFound('Message Not Found');
     }
@@ -331,9 +343,40 @@ export class CollectorController {
         id: {inq: messageIds},
       });
     }
+    filterMessage.include = [
+      {
+        relation: 'group',
+        scope: {
+          fields: {
+            party: true,
+            type: true,
+            messageId: true,
+            visibility: true,
+            isImportant: true,
+            storage: true
+          },
+        }
+      }
+    ];
     const mails = await this.messageRepository.find(filterMessage);
+    mails.forEach(mail => {
+      if (mail.group) {
+        mail.group = mail.group.map(grp => {
+          if (grp.party !== this.user.id) {
+            delete grp.visibility;
+            delete grp.isImportant;
+            delete grp.storage;
+          }
+          return grp;
+        });
+      }
+    });
     return {
       items: mails,
     };
   }
+
+
 }
+
+

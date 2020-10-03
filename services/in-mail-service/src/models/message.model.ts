@@ -1,18 +1,15 @@
 import {
-  model,
-  property,
-  hasMany,
-  belongsTo,
-  AnyObject,
+  AnyObject, belongsTo, hasMany, model,
+  property
 } from '@loopback/repository';
+import {
+  ExternalIdentifierEnabledEntity,
+  UserModifiableEntity
+} from '@sourceloop/core';
 import {Attachment} from './attachment.model';
 import {Group} from './group.model';
 import {Meta} from './meta.model';
 import {Thread} from './thread.model';
-import {
-  ExternalIdentifierEnabledEntity,
-  UserModifiableEntity,
-} from '@sourceloop/core';
 
 export enum StatusMarker {
   draft = 'draft',
@@ -87,7 +84,7 @@ export class Message extends UserModifiableEntity
     keyTo: 'messageId',
     name: 'group',
   })
-  groups: Group[];
+  group: Group[];
 
   @hasMany(() => Meta, {
     keyFrom: 'id',
@@ -114,7 +111,7 @@ export class Message extends UserModifiableEntity
 
 export interface MessageRelations {
   meta: Meta[];
-  groups: Group[];
+  group: Group[];
   attachments: Attachment[];
 }
 

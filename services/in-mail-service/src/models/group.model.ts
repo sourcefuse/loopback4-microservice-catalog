@@ -1,11 +1,10 @@
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
+import {
+  ExternalIdentifierEnabledEntity, UserModifiableEntity
+} from '@sourceloop/core';
+import {PartyTypeMarker, StorageMarker, VisibilityMarker} from '../types';
 import {Message} from './message.model';
 import {Thread} from './thread.model';
-import {
-  UserModifiableEntity,
-  ExternalIdentifierEnabledEntity,
-} from '@sourceloop/core';
-import {PartyTypeMarker, VisibilityMarker, StorageMarker} from '../types';
 
 @model({
   name: 'group',
@@ -35,6 +34,12 @@ export class Group extends UserModifiableEntity
     },
   })
   type: PartyTypeMarker;
+
+  @property({
+    type: 'boolean',
+    name: 'is_important'
+  })
+  isImportant?: boolean;
 
   @property({
     type: 'string',
