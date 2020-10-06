@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {inject} from '@loopback/core';
 import {
   FindRoute,

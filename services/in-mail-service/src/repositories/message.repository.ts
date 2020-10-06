@@ -1,8 +1,9 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  BelongsToAccessor, HasManyRepositoryFactory,
-
-  juggler, repository
+  BelongsToAccessor,
+  HasManyRepositoryFactory,
+  juggler,
+  repository,
 } from '@loopback/repository';
 import {DataObject, Options} from '@loopback/repository/src/common-types';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
@@ -10,14 +11,12 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
 import {
   Attachment,
-  Group, Message,
+  Group,
+  Message,
   MessageRelations,
-
-
-
-
-  MessageWithRelations, Meta,
-  Thread
+  MessageWithRelations,
+  Meta,
+  Thread,
 } from '../models';
 import {AttachmentRepository} from './attachment.repository';
 import {GroupRepository} from './group.repository';
@@ -27,7 +26,7 @@ export class MessageRepository extends DefaultTransactionSoftCrudRepository<
   Message,
   typeof Message.prototype.id,
   MessageRelations
-  > {
+> {
   public readonly attachments: HasManyRepositoryFactory<
     Attachment,
     typeof Message.prototype.id

@@ -1,10 +1,13 @@
 import {
-  AnyObject, belongsTo, hasMany, model,
-  property
+  AnyObject,
+  belongsTo,
+  hasMany,
+  model,
+  property,
 } from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
-  UserModifiableEntity
+  UserModifiableEntity,
 } from '@sourceloop/core';
 import {Attachment} from './attachment.model';
 import {Group} from './group.model';

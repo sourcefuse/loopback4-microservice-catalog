@@ -1,13 +1,16 @@
 import {
   createStubInstance,
   expect,
-  sinon, StubbedInstanceWithSinonAccessor
+  sinon,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 import {CollectorController} from '../../controllers';
 import {
-  AttachmentRepository, GroupRepository, MessageRepository,
+  AttachmentRepository,
+  GroupRepository,
+  MessageRepository,
   MetaRepository,
-  ThreadRepository
+  ThreadRepository,
 } from '../../repositories';
 import {StorageMarker} from '../../types';
 import {group, message, thread, user} from './sample-data';

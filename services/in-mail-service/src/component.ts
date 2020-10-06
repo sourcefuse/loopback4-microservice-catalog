@@ -1,34 +1,37 @@
 import {
-  Binding, Component,
-
-
-  ControllerClass, CoreBindings,
-  inject
+  Binding,
+  Component,
+  ControllerClass,
+  CoreBindings,
+  inject,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   BearerVerifierBindings,
-
-
-  BearerVerifierComponent, BearerVerifierConfig,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
   BearerVerifierType,
-
-
-  CoreComponent, ServiceSequence
+  CoreComponent,
+  ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
-  AuthorizationComponent
+  AuthorizationComponent,
 } from 'loopback4-authorization';
-import {CollectorController, OriginatorController, ReplyAndForwardController} from './controllers';
+import {
+  CollectorController,
+  OriginatorController,
+  ReplyAndForwardController,
+} from './controllers';
 import {Attachment, Group, Message, Meta, Thread} from './models';
 import {
   AttachmentRepository,
-
-  GroupRepository, MessageRepository, MetaRepository,
-  ThreadRepository
+  GroupRepository,
+  MessageRepository,
+  MetaRepository,
+  ThreadRepository,
 } from './repositories';
 
 export class InMailServiceComponent implements Component {
@@ -51,7 +54,11 @@ export class InMailServiceComponent implements Component {
   ) {
     this.application.component(CoreComponent);
     this.models = [Meta, Thread, Message, Group, Attachment];
-    this.controllers = [OriginatorController, CollectorController, ReplyAndForwardController];
+    this.controllers = [
+      OriginatorController,
+      CollectorController,
+      ReplyAndForwardController,
+    ];
     this.repositories = [
       MetaRepository,
       ThreadRepository,

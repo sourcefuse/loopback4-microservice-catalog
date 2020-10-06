@@ -1,4 +1,5 @@
 import {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ApplicationConfig,
   NotificationSocketExampleApplication,
 } from './application';

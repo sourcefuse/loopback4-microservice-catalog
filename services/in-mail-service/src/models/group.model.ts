@@ -1,6 +1,7 @@
 import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {
-  ExternalIdentifierEnabledEntity, UserModifiableEntity
+  ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
 import {PartyTypeMarker, StorageMarker, VisibilityMarker} from '../types';
 import {Message} from './message.model';
@@ -37,7 +38,7 @@ export class Group extends UserModifiableEntity
 
   @property({
     type: 'boolean',
-    name: 'is_important'
+    name: 'is_important',
   })
   isImportant?: boolean;
 

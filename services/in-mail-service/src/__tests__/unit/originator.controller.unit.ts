@@ -1,19 +1,26 @@
 import {
   createStubInstance,
   expect,
-  sinon, StubbedInstanceWithSinonAccessor
+  sinon,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 import {OriginatorController} from '../../controllers';
 import {
-  AttachmentRepository, GroupRepository, MessageRepository,
-  ThreadRepository
+  AttachmentRepository,
+  GroupRepository,
+  MessageRepository,
+  ThreadRepository,
 } from '../../repositories';
 import {StorageMarker} from '../../types';
 import {
-  getSampleDataWithOutGroup, getSampleMailData, group,
+  getSampleDataWithOutGroup,
+  getSampleMailData,
+  group,
   message,
-  messageIds, thread,
-  transactionStub, user
+  messageIds,
+  thread,
+  transactionStub,
+  user,
 } from './sample-data';
 const sampleMessageId = 'sample-message-id';
 const sampleExtId = 'sample-ext-id';

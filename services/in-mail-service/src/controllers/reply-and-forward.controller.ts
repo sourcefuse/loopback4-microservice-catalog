@@ -1,43 +1,34 @@
 import {inject} from '@loopback/context';
 import {
   getModelSchemaRef,
-
   param,
   patch,
-  requestBody
+  requestBody,
 } from '@loopback/openapi-v3';
 import {Filter, repository} from '@loopback/repository';
 import {api, HttpErrors, ResponseObject} from '@loopback/rest';
 import {
-  CONTENT_TYPE, IAuthUserWithPermissions,
-
-  STATUS_CODE
+  CONTENT_TYPE,
+  IAuthUserWithPermissions,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
-  STRATEGY
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {Attachment, Group, IdResponse, Message, Meta} from '../models';
 import {
-  Attachment,
-
-
-  Group,
-
-
-  IdResponse, Message,
-  Meta
-} from '../models';
-import {
-  AttachmentRepository, GroupRepository,
+  AttachmentRepository,
+  GroupRepository,
   MessageRepository,
-  ThreadRepository
+  ThreadRepository,
 } from '../repositories';
 import {PartyTypeMarker, PermissionsEnums, StorageMarker} from '../types';
 import {
   ComposeMailBody,
-  ForwardMailBody
+  ForwardMailBody,
 } from '../types/compose-mail-body.type';
 
 const FORBIDDEN_ERROR_MESSAGE =
@@ -233,11 +224,16 @@ export class ReplyAndForwardController {
       if (!replyAll) {
         receiverGroupWhere += ` and party = '${message.sender}'`;
       } else {
-        const user = this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE);
+        const user = this.getInMailIdentifierType(
+          process.env.INMAIL_IDENTIFIER_TYPE,
+        );
         receiverGroupWhere += ` and party <> '${user}'`;
       }
-      const groups: Group[] = await this.groupRepository.execute(`SELECT party, thread_id as "threadId", type from main.group
-      where ${receiverGroupWhere} `, []) as Group[];
+      const groups: Group[] = (await this.groupRepository.execute(
+        `SELECT party, thread_id as "threadId", type from main.group
+      where ${receiverGroupWhere} `,
+        [],
+      )) as Group[];
       if (!groups.length) {
         throw new HttpErrors.NotFound('Group not found');
       }
@@ -249,10 +245,8 @@ export class ReplyAndForwardController {
         group.messageId = String(newMessage.id);
         group.createdOn = new Date();
         group.type =
-          group.type === PartyTypeMarker.from
-            ? PartyTypeMarker.to : group.type;
-        group.storage =
-          StorageMarker.inbox;
+          group.type === PartyTypeMarker.from ? PartyTypeMarker.to : group.type;
+        group.storage = StorageMarker.inbox;
         recipientGroupPromise.push(
           this.groupRepository.create(group, {transaction}),
         );

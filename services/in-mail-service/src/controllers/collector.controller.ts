@@ -5,24 +5,26 @@ import {
   getModelSchemaRef,
   HttpErrors,
   param,
-  ResponseObject
+  ResponseObject,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
-  STATUS_CODE
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
-  STRATEGY
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Group, Message, Thread} from '../models';
 import {
   AttachmentRepository,
-  GroupRepository, MessageRepository,
-  MetaRepository, ThreadRepository
+  GroupRepository,
+  MessageRepository,
+  MetaRepository,
+  ThreadRepository,
 } from '../repositories';
 import {PermissionsEnums, VisibilityMarker} from '../types';
 
@@ -82,16 +84,17 @@ export class CollectorController {
     if (!count) {
       throw new HttpErrors.BadRequest('Group not found');
     }
-    const messageIdObject = await this.groupRepository.find(
-      {
-        where: {
-          threadId: threadId,
-          party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
-        },
-        fields: {messageId: true}
-      }
-    );
-    const messageIds = messageIdObject.map(msg => msg.messageId);
+    const messageIdObject = await this.groupRepository.find({
+      where: {
+        threadId: threadId,
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+      },
+      fields: {messageId: true},
+    });
+    let messageIds: string[] = [];
+    if (messageIdObject) {
+      messageIds = messageIdObject.map(msg => msg.messageId);
+    }
     const threadFilter: Filter<Thread> = {
       where: {
         id: threadId,
@@ -134,11 +137,13 @@ export class CollectorController {
     if (!thread) {
       throw new Error('Thread not found');
     }
-    this.groupRepository.updateAll({visibility: VisibilityMarker.read},
+    await this.groupRepository.updateAll(
+      {visibility: VisibilityMarker.read},
       {
         threadId: threadId,
-        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
-      });
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+      },
+    );
     return {items: thread};
   }
 
@@ -178,7 +183,7 @@ export class CollectorController {
   }> {
     const {count} = await this.groupRepository.count({
       messageId,
-      party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
+      party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
     });
     if (!count) {
       throw new HttpErrors.BadRequest('Group not found');
@@ -195,7 +200,9 @@ export class CollectorController {
           relation: 'group',
           scope: {
             where: {
-              party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
+              party: this.getInMailIdentifierType(
+                process.env.INMAIL_IDENTIFIER_TYPE,
+              ),
             },
           },
         },
@@ -211,9 +218,14 @@ export class CollectorController {
       });
     }
     const message = await this.messageRepository.findOne(messageFilter);
-    this.groupRepository.updateAll({visibility: VisibilityMarker.read}, {
-      messageId: message?.id, party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE)
-    });
+
+    await this.groupRepository.updateAll(
+      {visibility: VisibilityMarker.read},
+      {
+        messageId: message?.id,
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+      },
+    );
     if (!message) {
       throw new HttpErrors.NotFound('Message Not Found');
     }
@@ -353,10 +365,10 @@ export class CollectorController {
             messageId: true,
             visibility: true,
             isImportant: true,
-            storage: true
+            storage: true,
           },
-        }
-      }
+        },
+      },
     ];
     const mails = await this.messageRepository.find(filterMessage);
     mails.forEach(mail => {
@@ -375,8 +387,4 @@ export class CollectorController {
       items: mails,
     };
   }
-
-
 }
-
-

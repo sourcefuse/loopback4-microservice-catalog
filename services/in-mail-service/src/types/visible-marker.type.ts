@@ -3,5 +3,5 @@ export enum VisibilityMarker {
   new = 'new',
   unread = 'unread',
   important = 'important',
-  NotImportant = 'not-important'
+  NotImportant = 'not-important',
 }

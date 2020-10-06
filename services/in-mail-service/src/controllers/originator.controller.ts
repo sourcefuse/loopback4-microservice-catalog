@@ -1,45 +1,46 @@
 import {inject} from '@loopback/context';
 import {
   getModelSchemaRef,
-
   param,
   patch,
-  put, requestBody
+  put,
+  requestBody,
 } from '@loopback/openapi-v3';
 import {DataObject, Filter, repository} from '@loopback/repository';
 import {api, del, HttpErrors, post, ResponseObject} from '@loopback/rest';
 import {
-  CONTENT_TYPE, IAuthUserWithPermissions,
-
-  STATUS_CODE
+  CONTENT_TYPE,
+  IAuthUserWithPermissions,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
-  STRATEGY
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {
   Attachment,
-
-
   Group,
-
-
-  IdArrays, IdResponse, Message,
+  IdArrays,
+  IdResponse,
+  Message,
   Meta,
-
-  StatusMarker
+  StatusMarker,
 } from '../models';
 import {
-  AttachmentRepository, GroupRepository,
+  AttachmentRepository,
+  GroupRepository,
   MessageRepository,
-  ThreadRepository
+  ThreadRepository,
 } from '../repositories';
-import {PartyTypeMarker, PermissionsEnums, StorageMarker, VisibilityMarker} from '../types';
 import {
-  ComposeMailBody
-} from '../types/compose-mail-body.type';
+  PartyTypeMarker,
+  PermissionsEnums,
+  StorageMarker,
+  VisibilityMarker,
+} from '../types';
+import {ComposeMailBody} from '../types/compose-mail-body.type';
 
 const FORBIDDEN_ERROR_MESSAGE =
   'Forbidden request due to unauthorized token in header.';
@@ -172,8 +173,7 @@ export class OriginatorController {
           extMetadata = {
             markedTo: groups,
           };
-        }
-        else {
+        } else {
           extMetadata.markedTo = groups;
         }
         groups = [];
@@ -183,12 +183,13 @@ export class OriginatorController {
         group.extId = extId;
         group.extMetadata = extMetadata;
         group.isImportant = isImportant;
-        group.storage =
-          StorageMarker.inbox;
+        group.storage = StorageMarker.inbox;
       });
       groups = groups.concat([
         new Group({
-          party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+          party: this.getInMailIdentifierType(
+            process.env.INMAIL_IDENTIFIER_TYPE,
+          ),
           type: PartyTypeMarker.from,
           threadId: thread.id,
           extId: extId,
@@ -315,23 +316,19 @@ export class OriginatorController {
         };
       }
       extMetadata.markedTo = composeMailBody.groups;
-    }
-    else {
-      groups = composeMailBody.groups
-        .map(e => {
-          Object.assign(e, createdOnBy);
-          e.extId = extId;
-          e.storage = StorageMarker.inbox;
-          e.extMetadata = extMetadata;
-          e.threadId = mail.threadId;
-          return new Group(e);
-        });
+    } else {
+      groups = composeMailBody.groups.map(e => {
+        Object.assign(e, createdOnBy);
+        e.extId = extId;
+        e.storage = StorageMarker.inbox;
+        e.extMetadata = extMetadata;
+        e.threadId = mail.threadId;
+        return new Group(e);
+      });
     }
     groups = groups.concat([
       new Group({
-        party: this.getInMailIdentifierType(
-          process.env.INMAIL_IDENTIFIER_TYPE,
-        ),
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
         type: PartyTypeMarker.from,
         extId: extId,
         extMetadata,
@@ -346,19 +343,19 @@ export class OriginatorController {
     ]);
     const meta = composeMailBody.meta
       ? composeMailBody.meta.map(e => {
-        Object.assign(e, createdOnBy);
-        e.extId = extId;
-        e.extMetadata = extMetadata;
-        return new Meta(e);
-      })
+          Object.assign(e, createdOnBy);
+          e.extId = extId;
+          e.extMetadata = extMetadata;
+          return new Meta(e);
+        })
       : [];
     const attachments = composeMailBody.attachments
       ? composeMailBody.attachments.map(e => {
-        Object.assign(e, createdOnBy);
-        e.extId = extId;
-        e.extMetadata = extMetadata;
-        return new Attachment(e);
-      })
+          Object.assign(e, createdOnBy);
+          e.extId = extId;
+          e.extMetadata = extMetadata;
+          return new Attachment(e);
+        })
       : [];
     const messageUpdateData: DataObject<Message> = {
       extId,
@@ -567,9 +564,10 @@ export class OriginatorController {
         throw new HttpErrors.BadRequest('Mail is already in trash');
       }
       if (storage === StorageMarker.draft) {
-        throw new HttpErrors.BadRequest('Can Only delete the messages in Draft');
-      }
-      else {
+        throw new HttpErrors.BadRequest(
+          'Can Only delete the messages in Draft',
+        );
+      } else {
         groups.forEach(group => {
           group.deleted = false;
           group.storage = StorageMarker.trash;
@@ -695,7 +693,9 @@ export class OriginatorController {
         messageId,
       },
     });
-    groups = groups.concat(message.extMetadata?.markedTo);
+    if (message.extMetadata?.markedTo) {
+      groups = groups.concat(message.extMetadata?.markedTo);
+    }
     await this.messageRepository.updateById(String(message.id), {
       status: StatusMarker.send,
     });
@@ -713,14 +713,12 @@ export class OriginatorController {
         group.extId = message.extId;
         groupCreatePromise.push(this.groupRepository.create(group));
       }
-
-
     });
     await Promise.all(groupUpdatePromise);
     await Promise.all(groupCreatePromise);
     return {
       id: messageId,
-      to: message.extMetadata?.markedTo
+      to: message.extMetadata?.markedTo,
     };
   }
 
@@ -750,57 +748,79 @@ export class OriginatorController {
     try {
       const whereFilterMessageId = {
         messageId: {inq: idArray.messageIds},
-        party: process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-          ? this.user.id
-          : this.user.email
+        party:
+          process.env.INMAIL_IDENTIFIER_TYPE === 'user'
+            ? this.user.id
+            : this.user.email,
       };
       const whereFilterThreadId = {
         threadId: {inq: idArray.threadIds},
-        party: process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-          ? this.user.id
-          : this.user.email
+        party:
+          process.env.INMAIL_IDENTIFIER_TYPE === 'user'
+            ? this.user.id
+            : this.user.email,
       };
       switch (markType) {
-        case VisibilityMarker.read:
+        case VisibilityMarker.read: {
           const updateObjRead = {visibility: VisibilityMarker.read};
           if (idArray.messageIds) {
-            await this.groupRepository.updateAll(updateObjRead, whereFilterMessageId
+            await this.groupRepository.updateAll(
+              updateObjRead,
+              whereFilterMessageId,
             );
           }
           if (idArray.threadIds) {
-            await this.groupRepository.updateAll(updateObjRead, whereFilterThreadId);
+            await this.groupRepository.updateAll(
+              updateObjRead,
+              whereFilterThreadId,
+            );
           }
           return {
-            success: true
+            success: true,
           };
-        case VisibilityMarker.unread:
+        }
+        case VisibilityMarker.unread: {
           const updateObjUnread = {visibility: VisibilityMarker.unread};
           if (idArray.messageIds) {
-            await this.groupRepository.updateAll(updateObjUnread,
-              whereFilterMessageId);
+            await this.groupRepository.updateAll(
+              updateObjUnread,
+              whereFilterMessageId,
+            );
           }
           if (idArray.threadIds) {
-            await this.groupRepository.updateAll(updateObjUnread, whereFilterThreadId);
+            await this.groupRepository.updateAll(
+              updateObjUnread,
+              whereFilterThreadId,
+            );
           }
           return {
-            success: true
+            success: true,
           };
-        case VisibilityMarker.important:
-          await this.groupRepository.updateAll({isImportant: true}, whereFilterMessageId);
+        }
+        case VisibilityMarker.important: {
+          await this.groupRepository.updateAll(
+            {isImportant: true},
+            whereFilterMessageId,
+          );
           return {
-            success: true
+            success: true,
           };
-        case VisibilityMarker.NotImportant:
-          await this.groupRepository.updateAll({isImportant: false}, whereFilterMessageId);
+        }
+        case VisibilityMarker.NotImportant: {
+          await this.groupRepository.updateAll(
+            {isImportant: false},
+            whereFilterMessageId,
+          );
           return {
-            success: true
+            success: true,
           };
-        default: throw new HttpErrors.BadRequest('Please select a proper mark Type');
+        }
+        default: {
+          throw new HttpErrors.BadRequest('Please select a proper mark Type');
+        }
       }
-    }
-    catch (e) {
-      throw new HttpErrors.InternalServerError("An error occured");
+    } catch (e) {
+      throw new HttpErrors.InternalServerError('An error occured');
     }
   }
-
 }
