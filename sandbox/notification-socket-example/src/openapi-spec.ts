@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {ApplicationConfig} from '@loopback/core';
 import {NotificationSocketExampleApplication} from './application';
 

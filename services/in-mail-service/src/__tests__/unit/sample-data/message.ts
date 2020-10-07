@@ -11,7 +11,7 @@ export const message = new Message({
     gmail: {},
   },
   attachments: [],
-  groups: [],
+  group: [],
   meta: [],
   threadId: '12344343',
 });

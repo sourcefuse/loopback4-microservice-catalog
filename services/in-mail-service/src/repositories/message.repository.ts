@@ -1,26 +1,26 @@
+import {Getter, inject} from '@loopback/core';
 import {
-  repository,
-  HasManyRepositoryFactory,
   BelongsToAccessor,
+  HasManyRepositoryFactory,
   juggler,
+  repository,
 } from '@loopback/repository';
+import {DataObject, Options} from '@loopback/repository/src/common-types';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
 import {
-  Message,
-  MessageRelations,
   Attachment,
   Group,
+  Message,
+  MessageRelations,
+  MessageWithRelations,
   Meta,
   Thread,
-  MessageWithRelations,
 } from '../models';
-import {inject, Getter} from '@loopback/core';
 import {AttachmentRepository} from './attachment.repository';
 import {GroupRepository} from './group.repository';
 import {MetaRepository} from './meta.repository';
-import {DataObject, Options} from '@loopback/repository/src/common-types';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
 
 export class MessageRepository extends DefaultTransactionSoftCrudRepository<
   Message,
@@ -89,9 +89,9 @@ export class MessageRepository extends DefaultTransactionSoftCrudRepository<
     const extractedEntity = (({
       meta = [],
       attachments = [],
-      groups = [],
+      group = [],
       ...o
-    }) => ({meta, attachments, groups, message: o}))(entity);
+    }) => ({meta, attachments, group, message: o}))(entity);
     try {
       const currentUser = await this.getCurrentUser();
       const createdOnBy = {
@@ -104,9 +104,9 @@ export class MessageRepository extends DefaultTransactionSoftCrudRepository<
       Object.assign(extractedEntity.message, createdOnBy);
       const message = await this.create(extractedEntity.message);
 
-      if (entity.groups) {
+      if (entity.group) {
         await Promise.all(
-          (entity.groups as Array<Group>).map(group => {
+          (entity.group as Array<Group>).map(group => {
             Object.assign(group, createdOnBy);
             return this.groups(message.id).create(group, transactionOptions);
           }),

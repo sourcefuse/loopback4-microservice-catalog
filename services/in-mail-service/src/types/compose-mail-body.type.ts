@@ -1,5 +1,5 @@
-import {Attachment, Meta, Group} from '../models';
 import {AnyObject} from '@loopback/repository';
+import {Attachment, Group, Meta} from '../models';
 import {StorageMarker} from './storage-marker.type';
 
 export type ComposeMailBody = {
@@ -13,6 +13,7 @@ export type ComposeMailBody = {
   status: StorageMarker.draft | StorageMarker.send;
   extId?: string;
   extMetadata?: AnyObject;
+  isImportant?: boolean;
 };
 
 export type ForwardMailBody = {
