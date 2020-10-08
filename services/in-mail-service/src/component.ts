@@ -13,6 +13,7 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -20,6 +21,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+
 import {
   CollectorController,
   OriginatorController,
@@ -78,5 +80,18 @@ export class InMailServiceComponent implements Component {
       allowAlwaysPaths: ['/explorer'],
     });
     this.application.component(AuthorizationComponent);
+
+    this.application.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'In-mail Service',
+        version: '1.0.0',
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC,
+      },
+      servers: [{url: '/'}],
+    });
   }
 }

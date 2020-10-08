@@ -8,7 +8,7 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {CoreComponent} from '@sourceloop/core';
+import {CoreComponent, SECURITY_SCHEME_SPEC} from '@sourceloop/core';
 import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -40,7 +40,7 @@ export class AuthenticationServiceComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(AuthServiceBindings.Config, {optional: true})
-    private readonly notifConfig?: IAuthServiceConfig,
+    private readonly authConfig?: IAuthServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -53,6 +53,19 @@ export class AuthenticationServiceComponent implements Component {
 
     // Mount authorization component
     this.setupAuthorizationComponent();
+
+    this.application.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'Authentication Service',
+        version: '1.0.0',
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC,
+      },
+      servers: [{url: '/'}],
+    });
 
     // Mount Helmet component
     this.application.component(Loopback4HelmetComponent);

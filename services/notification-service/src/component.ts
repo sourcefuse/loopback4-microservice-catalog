@@ -14,6 +14,7 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -56,6 +57,19 @@ export class NotificationServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    this.application.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'Notification Service',
+        version: '1.0.0',
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC,
+      },
+      servers: [{url: '/'}],
+    });
 
     // Mount notifications component
     this.application.component(NotificationsComponent);

@@ -14,8 +14,9 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
-  ServiceSequence,
   IServiceConfig,
+  SECURITY_SCHEME_SPEC,
+  ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
@@ -29,10 +30,10 @@ import {VideoChatBindings} from './keys';
 import {AuditLogs} from './models/audit-logs.model';
 import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageProvider} from './providers/vonage/vonage.provider';
-import {AuditLogsRepository} from './repositories/audit-logs.repository';
-import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
 import {VonageService} from './providers/vonage/vonage.service';
 import {SessionAttendeesRepository} from './repositories';
+import {AuditLogsRepository} from './repositories/audit-logs.repository';
+import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
 
 export class VideoConfServiceComponent implements Component {
   constructor(
@@ -46,6 +47,19 @@ export class VideoConfServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    this.application.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'Video Conferencing Service',
+        version: '1.0.0',
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC,
+      },
+      servers: [{url: '/'}],
+    });
 
     this.bindings.push(
       Binding.bind(VideoChatBindings.VideoChatProvider).toProvider(

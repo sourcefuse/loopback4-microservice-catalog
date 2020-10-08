@@ -16,6 +16,7 @@ import {
   BearerVerifierType,
   CoreComponent,
   IServiceConfig,
+  SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -81,6 +82,19 @@ export class SchedulerServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    this.application.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'Scheduler Service',
+        version: '1.0.0',
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC,
+      },
+      servers: [{url: '/'}],
+    });
 
     if (!(this.schedulerConfig && this.schedulerConfig.useCustomSequence)) {
       // Mount default sequence if needed
