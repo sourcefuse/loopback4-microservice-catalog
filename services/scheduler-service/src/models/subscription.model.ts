@@ -1,4 +1,4 @@
-import {belongsTo, model, property} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
@@ -97,7 +97,7 @@ export class Subscription extends UserModifiableEntity
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<Subscription>) {
     super(data);

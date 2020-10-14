@@ -1,4 +1,4 @@
-import {model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
@@ -69,7 +69,7 @@ export class Settings extends UserModifiableEntity
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<Settings>) {
     super(data);

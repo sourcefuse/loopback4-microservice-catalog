@@ -1,4 +1,4 @@
-import {model, Model, property} from '@loopback/repository';
+import {AnyObject, model, Model, property} from '@loopback/repository';
 import {StatusType} from './enums';
 
 @model()
@@ -35,7 +35,7 @@ export class EventAttendeeViewItemDTO extends Model {
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   @property({
     type: 'string',
