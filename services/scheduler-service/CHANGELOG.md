@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.21](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.20...@sourceloop/scheduler-service@1.0.0-alpha.21) (2020-10-15)
+
+
+### Bug Fixes
+
+* **in-mail-service:** fix test script ([aacc353](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aacc35397e8b3cd6be55d6b9b672e66ad4f1d7b2))
+
+
+
+
+
 # [1.0.0-alpha.20](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.19...@sourceloop/scheduler-service@1.0.0-alpha.20) (2020-10-08)
 
 

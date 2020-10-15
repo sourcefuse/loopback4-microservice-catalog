@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.17](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.16...@sourceloop/in-mail-service@1.0.0-alpha.17) (2020-10-15)
+
+
+### Bug Fixes
+
+* **in-mail-service:** fix test script ([aacc353](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aacc35397e8b3cd6be55d6b9b672e66ad4f1d7b2))
+
+
+
+
+
 # [1.0.0-alpha.16](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.15...@sourceloop/in-mail-service@1.0.0-alpha.16) (2020-10-08)
 
 
