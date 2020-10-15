@@ -1,4 +1,4 @@
-import {belongsTo, model, property} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
@@ -64,7 +64,7 @@ export class WorkingHour extends UserModifiableEntity
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<WorkingHour>) {
     super(data);

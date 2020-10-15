@@ -1,4 +1,4 @@
-import {model, Model, property} from '@loopback/repository';
+import {AnyObject, model, Model, property} from '@loopback/repository';
 import {Attachment} from './attachment.model';
 import {Attendee} from './attendee.model';
 import {StatusType} from './enums/status.enum';
@@ -138,7 +138,7 @@ export class EventDTO extends Model {
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<EventDTO>) {
     super(data);

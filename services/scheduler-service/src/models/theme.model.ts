@@ -1,4 +1,4 @@
-import {model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
@@ -61,7 +61,7 @@ export class Theme extends UserModifiableEntity
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<Theme>) {
     super(data);

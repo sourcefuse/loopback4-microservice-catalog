@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import {AnyObject, Entity, model, property} from '@loopback/repository';
 import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
 @model({
@@ -84,7 +84,7 @@ export class AuditLog extends Entity
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<AuditLog>) {
     super(data);

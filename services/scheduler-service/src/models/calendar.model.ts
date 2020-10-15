@@ -1,4 +1,4 @@
-import {hasMany, model, property} from '@loopback/repository';
+import {AnyObject, hasMany, model, property} from '@loopback/repository';
 import {
   ExternalIdentifierEnabledEntity,
   UserModifiableEntity,
@@ -83,7 +83,7 @@ export class Calendar extends UserModifiableEntity
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<Calendar>) {
     super(data);

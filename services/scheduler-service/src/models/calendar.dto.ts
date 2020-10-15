@@ -1,6 +1,6 @@
-import {model, property, Model} from '@loopback/repository';
-import {WorkingHour} from './working-hour.model';
+import {AnyObject, model, Model, property} from '@loopback/repository';
 import {Subscription} from './subscription.model';
+import {WorkingHour} from './working-hour.model';
 
 @model()
 export class CalendarDTO extends Model {
@@ -66,7 +66,7 @@ export class CalendarDTO extends Model {
     type: 'object',
     name: 'ext_metadata',
   })
-  extMetadata?: object;
+  extMetadata?: AnyObject;
 
   @property.array(WorkingHour)
   workingHours?: WorkingHour[];
