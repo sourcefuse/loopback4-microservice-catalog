@@ -6,7 +6,9 @@ import {
   PubNubReceiver,
 } from 'loopback4-notifications';
 
-@model()
+@model({
+  name: 'notification_access',
+})
 export class NotificationAccess extends Entity implements Config {
   @property({
     type: 'object',
