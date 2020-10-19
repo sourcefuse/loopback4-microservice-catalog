@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.13...@sourceloop/core@1.0.0-alpha.14) (2020-10-19)
+
+
+### Bug Fixes
+
+* fix for translations config binding bug ([#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86)) ([aefab86](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aefab868d116ab8fce465aa743cebada5d099d8d))
+
+
+
+
+
 # [1.0.0-alpha.13](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.12...@sourceloop/core@1.0.0-alpha.13) (2020-10-08)
 
 

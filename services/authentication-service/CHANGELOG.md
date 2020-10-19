@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.19](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.18...@sourceloop/authentication-service@1.0.0-alpha.19) (2020-10-19)
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
 # [1.0.0-alpha.18](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.17...@sourceloop/authentication-service@1.0.0-alpha.18) (2020-10-08)
 
 
