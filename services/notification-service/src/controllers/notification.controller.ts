@@ -14,15 +14,19 @@ import {
   param,
   post,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authenticate, STRATEGY, AuthErrorKeys} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {INotification, NotificationBindings} from 'loopback4-notifications';
 
 import {PermissionKey} from '../enums/permission-key.enum';
-import {Notification} from '../models';
-import {NotificationRepository} from '../repositories';
+import {Notification, NotificationUser} from '../models';
+import {
+  NotificationRepository,
+  NotificationUserRepository,
+} from '../repositories';
 
 const maxBodyLen = 1000;
 export class NotificationController {
@@ -31,6 +35,8 @@ export class NotificationController {
     public notificationRepository: NotificationRepository,
     @inject.getter(NotificationBindings.NotificationProvider)
     private readonly notifProvider: Getter<INotification>,
+    @repository(NotificationUserRepository)
+    public notificationUserRepository: NotificationUserRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -60,7 +66,16 @@ export class NotificationController {
     if (notification.body.length > maxBodyLen) {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
-    return this.notificationRepository.create(notification);
+    const notif = await this.notificationRepository.create(notification);
+
+    const notifUser = new NotificationUser();
+    if (!notif || !notif.id) {
+      throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
+    }
+    notifUser.notificationId = notif.id;
+    notifUser.isRead = false;
+    await this.notificationUserRepository.create(notifUser);
+    return notif;
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -93,7 +108,19 @@ export class NotificationController {
         notification.body = notification.body.substring(0, maxBodyLen - 1);
       }
     });
-    return this.notificationRepository.createAll(notifications);
+    const notifs = await this.notificationRepository.createAll(notifications);
+    const notifUsers: NotificationUser[] = [];
+    notifs.forEach(notif => {
+      const notifUser = new NotificationUser();
+      if (!notif || !notif.id) {
+        throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
+      }
+      notifUser.notificationId = notif.id;
+      notifUser.isRead = false;
+      notifUsers.push(notifUser);
+    });
+    await this.notificationUserRepository.createAll(notifUsers);
+    return notifs;
   }
 
   @authenticate(STRATEGY.BEARER)
