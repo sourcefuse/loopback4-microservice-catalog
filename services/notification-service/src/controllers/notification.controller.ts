@@ -85,7 +85,10 @@ export class NotificationController {
       [STATUS_CODE.OK]: {
         description: 'Array of Notifications',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
+          [CONTENT_TYPE.JSON]: {
+            type: 'array',
+            items: getModelSchemaRef(Notification),
+          },
         },
       },
     },
@@ -94,7 +97,10 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {exclude: ['id']}),
+          schema: {
+            type: 'array',
+            items: getModelSchemaRef(Notification, {exclude: ['id']}),
+          },
         },
       },
     })
