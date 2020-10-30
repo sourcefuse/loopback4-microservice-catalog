@@ -33,8 +33,12 @@ import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {IAuthServiceConfig} from './types';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
-import {GoogleOauth2SignupProvider, SignUpBindings, KeyCloakSignUpBindings} from './providers';
-import { KeyCloakSignupProvider } from './providers/keycloak-signup.provider';
+import {
+  GoogleOauth2SignupProvider,
+  SignUpBindings,
+  KeyCloakSignUpBindings,
+} from './providers';
+import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(

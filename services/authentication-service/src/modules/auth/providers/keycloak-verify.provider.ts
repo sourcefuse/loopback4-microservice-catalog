@@ -5,8 +5,8 @@ import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
 
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-import { KeyCloakSignUpBindings } from '../../../providers/keys';
-import { KeyCloakSignUpFn } from '../../../providers/types';
+import {KeyCloakSignUpBindings} from '../../../providers/keys';
+import {KeyCloakSignUpFn} from '../../../providers/types';
 
 export class KeycloakVerifyProvider
   implements Provider<VerifyFunction.KeycloakAuthFn> {
