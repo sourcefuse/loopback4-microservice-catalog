@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.16](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.15...@sourceloop/notification-service@1.0.0-alpha.16) (2020-10-30)
+
+
+### Bug Fixes
+
+* **notification-service:** bulk notification fix for accepting array and showing the same in swagger ([#88](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/88)) ([5d8ab0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5d8ab0cad710ef7f452ebdf291f97b36f2a9a046))
+
+
+
+
+
 # [1.0.0-alpha.15](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.14...@sourceloop/notification-service@1.0.0-alpha.15) (2020-10-27)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.20](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.19...@sourceloop/authentication-service@1.0.0-alpha.20) (2020-10-30)
+
+
+### Features
+
+* **authentication-service:** added keycloak signup provider ([#89](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/89)) ([8f37477](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f37477f758b917bb7ac53021966491087536c2d))
+
+
+
+
+
 # [1.0.0-alpha.19](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.18...@sourceloop/authentication-service@1.0.0-alpha.19) (2020-10-19)
 
 **Note:** Version bump only for package @sourceloop/authentication-service
