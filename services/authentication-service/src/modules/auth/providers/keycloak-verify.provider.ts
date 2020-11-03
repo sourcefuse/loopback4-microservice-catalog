@@ -5,8 +5,8 @@ import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
 
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-import {KeyCloakSignUpBindings} from '../../../providers/keys';
 import {KeyCloakSignUpFn} from '../../../providers/types';
+import {SignUpBindings} from '../../../providers';
 
 export class KeycloakVerifyProvider
   implements Provider<VerifyFunction.KeycloakAuthFn> {
@@ -15,7 +15,7 @@ export class KeycloakVerifyProvider
     public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
     public userCredsRepository: UserCredentialsRepository,
-    @inject(KeyCloakSignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER)
+    @inject(SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER)
     private readonly signupProvider: KeyCloakSignUpFn,
   ) {}
 
