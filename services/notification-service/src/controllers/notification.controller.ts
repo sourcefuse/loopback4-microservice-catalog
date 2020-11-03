@@ -27,6 +27,7 @@ import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
+import {ErrorKeys} from '../enums/error-keys.enum';
 
 const maxBodyLen = 1000;
 export class NotificationController {
@@ -67,14 +68,12 @@ export class NotificationController {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
     const notif = await this.notificationRepository.create(notification);
-
-    const notifUser = new NotificationUser();
     if (!notif || !notif.id) {
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
     }
-    notifUser.notificationId = notif.id;
-    notifUser.isRead = false;
-    await this.notificationUserRepository.create(notifUser);
+
+    const receiversToCreate = this.createNotifUsers(notif);
+    await this.notificationUserRepository.createAll(receiversToCreate);
     return notif;
   }
 
@@ -117,13 +116,12 @@ export class NotificationController {
     const notifs = await this.notificationRepository.createAll(notifications);
     const notifUsers: NotificationUser[] = [];
     notifs.forEach(notif => {
-      const notifUser = new NotificationUser();
       if (!notif || !notif.id) {
         throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
       }
-      notifUser.notificationId = notif.id;
-      notifUser.isRead = false;
-      notifUsers.push(notifUser);
+
+      const receiversToCreate = this.createNotifUsers(notif);
+      notifUsers.push(...receiversToCreate);
     });
     await this.notificationUserRepository.createAll(notifUsers);
     return notifs;
@@ -181,5 +179,17 @@ export class NotificationController {
   })
   async findById(@param.path.string('id') id: string): Promise<Notification> {
     return this.notificationRepository.findById(id);
+  }
+
+  createNotifUsers(notif: Notification) {
+    if (!notif.receiver || !notif.receiver.to) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.ReceiverNotFound);
+    }
+    return notif.receiver.to.map(to => {
+      const notifUser = new NotificationUser();
+      notifUser.notificationId = notif.id ?? '';
+      notifUser.userId = to.id;
+      return notifUser;
+    });
   }
 }
