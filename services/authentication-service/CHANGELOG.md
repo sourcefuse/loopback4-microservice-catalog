@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.21...@sourceloop/authentication-service@1.0.0-alpha.22) (2020-11-03)
+
+
+### Bug Fixes
+
+* **authentication-service:** change interface for signup provider ([27938d0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27938d08ec87bf154b7b7dc7420e19caf6efce70))
+
+
+
+
+
 # [1.0.0-alpha.21](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.20...@sourceloop/authentication-service@1.0.0-alpha.21) (2020-11-03)
 
 
