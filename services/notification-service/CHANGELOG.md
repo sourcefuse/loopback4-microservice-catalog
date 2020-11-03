@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.17](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.16...@sourceloop/notification-service@1.0.0-alpha.17) (2020-11-03)
+
+
+### Features
+
+* **notification-service:** add relation for notification user ([aa1b07d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aa1b07d2383d6467d6bd4db4b512da29b1a258ac))
+
+
+
+
+
 # [1.0.0-alpha.16](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.15...@sourceloop/notification-service@1.0.0-alpha.16) (2020-10-30)
 
 
