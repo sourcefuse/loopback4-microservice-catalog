@@ -1,10 +1,11 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
 import {
   Message,
   Receiver,
   MessageType,
   MessageOptions,
 } from 'loopback4-notifications';
+import {NotificationUser} from './notification-user.model';
 
 @model({
   name: 'notifications',
@@ -53,7 +54,16 @@ export class Notification extends Entity implements Message {
   })
   options?: MessageOptions;
 
+  @hasMany(() => NotificationUser, {keyTo: 'notificationId'})
+  notificationUsers: NotificationUser[];
+
   constructor(data?: Partial<Notification>) {
     super(data);
   }
 }
+
+export interface NotificationRelations {
+  notificationUsers: NotificationUser[];
+}
+
+export type NotificationWithRelations = Notification & NotificationRelations;

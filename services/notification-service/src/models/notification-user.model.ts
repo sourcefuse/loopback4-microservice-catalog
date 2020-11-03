@@ -1,5 +1,6 @@
-import {model, property} from '@loopback/repository';
+import {model, property, belongsTo} from '@loopback/repository';
 import {BaseEntity} from '@sourceloop/core';
+import {Notification} from './notification.model';
 
 @model({
   name: 'notification_users',
@@ -11,11 +12,14 @@ export class NotificationUser extends BaseEntity {
   })
   id?: string;
 
-  @property({
-    type: 'string',
-    required: true,
-    name: 'notification_id',
-  })
+  @belongsTo(
+    () => Notification,
+    {name: 'notification'},
+    {
+      name: 'notification_id',
+      required: true,
+    },
+  )
   notificationId: string;
 
   @property({
@@ -36,3 +40,10 @@ export class NotificationUser extends BaseEntity {
     super(data);
   }
 }
+
+export interface NotificationUserRelations {
+  notificaTION: Notification;
+}
+
+export type NotificationUserWithRelations = NotificationUser &
+  NotificationUserRelations;
