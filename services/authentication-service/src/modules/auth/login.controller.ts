@@ -430,7 +430,9 @@ export class LoginController {
         issuer: process.env.JWT_ISSUER,
       });
       response.redirect(
-        `${client.redirectUrl}?code=${token}&username=${this.user.username}`,
+        `${client.redirectUrl}?code=${token}&username=${encodeURI(
+          this.user.username,
+        )}`,
       );
     } catch (error) {
       this.logger.error(error);
@@ -529,7 +531,9 @@ export class LoginController {
         issuer: process.env.JWT_ISSUER,
       });
       response.redirect(
-        `${client.redirectUrl}?code=${token}&user=${this.user.username}`,
+        `${client.redirectUrl}?code=${token}&user=${encodeURI(
+          this.user.username,
+        )}`,
       );
     } catch (error) {
       this.logger.error(error);
