@@ -31,10 +31,10 @@ export class NotificationUser extends BaseEntity {
 
   @property({
     type: 'boolean',
-    required: true,
+    default: false,
     name: 'is_read',
   })
-  isRead: boolean;
+  isRead?: boolean;
 
   constructor(data?: Partial<NotificationUser>) {
     super(data);

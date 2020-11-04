@@ -317,7 +317,7 @@ export class NotificationUserController {
 
   private _createFilterBuilder(
     currentUser: IAuthUserWithPermissions,
-    filter?: Filter<NotificationUser>,
+    filter: Filter<NotificationUser> = {},
   ) {
     const filterBuilder = new FilterBuilder(filter);
     if (filter) {

@@ -34,6 +34,8 @@ import {
   NotificationController,
   NotificationUserController,
   PubnubNotificationController,
+  NotificationNotificationUserController,
+  NotificationUserNotificationController,
 } from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
@@ -114,6 +116,8 @@ export class NotificationServiceComponent implements Component {
       NotificationController,
       NotificationUserController,
       PubnubNotificationController,
+      NotificationNotificationUserController,
+      NotificationUserNotificationController,
     ];
   }
 
