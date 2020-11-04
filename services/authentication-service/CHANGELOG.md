@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.23](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.22...@sourceloop/authentication-service@1.0.0-alpha.23) (2020-11-04)
+
+
+### Bug Fixes
+
+* **authentication-service:** fix uri encodin issue for redirection ([6656a5e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6656a5e7b30cb7c39b49f20641ce91fbf0d6be63))
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.21...@sourceloop/authentication-service@1.0.0-alpha.22) (2020-11-03)
 
 
