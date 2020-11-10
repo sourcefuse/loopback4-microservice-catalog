@@ -728,7 +728,7 @@ export class LoginController {
       });
       authUser.allowedResources = userResources.map(
         userResource =>
-          userResource.resourceName + '/' + userResource.resourceValue,
+          `${userResource.resourceName}/${userResource.resourceValue}`,
       );
       const utPerms = await this.utPermsRepo.find({
         where: {

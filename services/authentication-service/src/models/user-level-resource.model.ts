@@ -10,6 +10,7 @@ export class UserLevelResource extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,
+    name: 'id',
   })
   id?: string;
 
@@ -26,12 +27,14 @@ export class UserLevelResource extends UserModifiableEntity {
   @property({
     type: 'string',
     required: true,
+    name: 'resource_name',
   })
   resourceName: string;
 
   @property({
     type: 'string',
     required: true,
+    name: 'resource_value',
   })
   resourceValue: string;
 
@@ -39,6 +42,7 @@ export class UserLevelResource extends UserModifiableEntity {
     type: 'boolean',
     required: true,
     default: true,
+    name: 'allowed',
   })
   allowed: boolean;
 
