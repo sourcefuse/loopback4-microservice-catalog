@@ -1,5 +1,4 @@
 import {belongsTo, model, property} from '@loopback/repository';
-import {UserPermission, UserResource} from 'loopback4-authorization';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 import {UserTenant} from './user-tenant.model';
