@@ -13,10 +13,12 @@ import {RefreshTokenRequest} from './refresh-token-request.model';
 import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ResetPasswordWithClient} from './reset-password-with-client.model';
+import {UserLevelResource} from './user-level-resource.model';
 
 export * from './user.model';
 export * from './tenant.model';
 export * from './role.model';
+export * from './user-level-resource.model';
 export * from './user-level-permission.model';
 export * from './auth-client.model';
 export * from './refresh-token.model';
@@ -37,6 +39,7 @@ export const models = [
   Role,
   AuthClient,
   UserLevelPermission,
+  UserLevelResource,
   RefreshToken,
   RevokedToken,
   UserCredentials,

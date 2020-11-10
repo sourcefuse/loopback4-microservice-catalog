@@ -51,6 +51,7 @@ import {
   RevokedTokenRepository,
   RoleRepository,
   UserLevelPermissionRepository,
+  UserLevelResourceRepository,
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
@@ -95,6 +96,8 @@ export class LoginController {
     public roleRepo: RoleRepository,
     @repository(UserLevelPermissionRepository)
     public utPermsRepo: UserLevelPermissionRepository,
+    @repository(UserLevelResourceRepository)
+    public userResourcesRepository: UserLevelResourceRepository,
     @repository(UserTenantRepository)
     public userTenantRepo: UserTenantRepository,
     @repository(RefreshTokenRepository)
@@ -713,6 +716,19 @@ export class LoginController {
       const size = 32;
       const ms = 1000;
 
+      const userResources = await this.userResourcesRepository.find({
+        where: {
+          userTenantId: userTenant.id,
+        },
+        fields: {
+          resourceName: true,
+          resourceValue: true,
+          allowed: true,
+        },
+      });
+      authUser.allowedResources = userResources.map(userResource => {
+        return userResource.resourceName + '/' + userResource.resourceValue;
+      });
       const utPerms = await this.utPermsRepo.find({
         where: {
           userTenantId: userTenant.id,
