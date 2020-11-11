@@ -25,7 +25,7 @@ export class VideoChatArchiveController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.GetArchives])
+  @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives/{archiveId}', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -60,7 +60,7 @@ export class VideoChatArchiveController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.GetArchives])
+  @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -79,7 +79,7 @@ export class VideoChatArchiveController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.DeleteArchive])
+  @authorize({permissions: [PermissionKeys.DeleteArchive]})
   @del('/archives/{archiveId}', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -116,7 +116,7 @@ export class VideoChatArchiveController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.SetUploadTarget])
+  @authorize({permissions: [PermissionKeys.SetUploadTarget]})
   @put('/archives/storage-target', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -147,7 +147,7 @@ export class VideoChatArchiveController {
   }
   // TO-DO: will do modifications later
   // @authenticate(STRATEGY.BEARER)
-  // @authorize([PermissionKeys.SetUploadTarget])
+  // @authorize({permissions:[PermissionKeys.SetUploadTarget]})
   // @del('/archives/storage-target', {
   //   responses: {
   //     [STATUS_CODE.OK]: {

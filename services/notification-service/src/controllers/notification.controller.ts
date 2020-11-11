@@ -41,7 +41,7 @@ export class NotificationController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.CreateNotification])
+  @authorize({permissions: [PermissionKey.CreateNotification]})
   @post('/notifications', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -78,7 +78,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.CreateNotification])
+  @authorize({permissions: [PermissionKey.CreateNotification]})
   @post('/notifications/bulk', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -128,7 +128,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @get('/notifications/count', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -145,7 +145,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/notifications', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -166,7 +166,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @get('/notifications/{id}', {
     responses: {
       [STATUS_CODE.OK]: {

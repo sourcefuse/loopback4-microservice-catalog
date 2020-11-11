@@ -56,7 +56,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "loopback4-authentication": "^4.0.1",
-    "loopback4-authorization": "^2.3.2",
+    "loopback4-authorization": "3.1.1",
     "loopback4-helmet": "^1.1.0",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",

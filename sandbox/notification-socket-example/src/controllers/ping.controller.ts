@@ -37,7 +37,7 @@ export class PingController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
   // Map to `GET /ping`
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/ping', {
     responses: {
       '200': PING_RESPONSE,

@@ -113,7 +113,7 @@ export class LoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(STRATEGY.LOCAL)
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/auth/login', {
     description:
       'Gets you the code that will be used for getting token (webapps)',
@@ -172,7 +172,7 @@ export class LoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(STRATEGY.OAUTH2_RESOURCE_OWNER_GRANT)
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/auth/login-token', {
     description:
       'Gets you refresh token and access token in one hit. (mobile app)',
@@ -238,7 +238,7 @@ export class LoginController {
     }
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/auth/token', {
     description:
       ' Send the code received from the above api and this api will send you refresh token and access token (webapps)',
@@ -296,7 +296,7 @@ export class LoginController {
     }
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/auth/token-refresh', {
     description:
       ' Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
@@ -358,7 +358,7 @@ export class LoginController {
     },
     queryGen,
   )
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/auth/google', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -391,7 +391,7 @@ export class LoginController {
     },
     queryGen,
   )
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/auth/google-auth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -456,7 +456,7 @@ export class LoginController {
     },
     keycloakQueryGen,
   )
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/auth/keycloak', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -490,7 +490,7 @@ export class LoginController {
     },
     keycloakQueryGen,
   )
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/auth/keycloak-auth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -541,7 +541,7 @@ export class LoginController {
   }
 
   @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @patch(`auth/change-password`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -627,7 +627,7 @@ export class LoginController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/auth/me', {
     description: 'To get the user details',
     responses: {

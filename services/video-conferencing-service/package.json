@@ -69,7 +69,7 @@
     "dotenv-extended": "^2.8.0",
     "loopback-connector-postgresql": "^3.9.1",
     "loopback4-authentication": "^3.0.1",
-    "loopback4-authorization": "^2.3.2",
+    "loopback4-authorization": "3.1.1",
     "loopback4-soft-delete": "^1.3.0",
     "moment": "^2.26.0",
     "opentok": "^2.10.0",

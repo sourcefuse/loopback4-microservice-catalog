@@ -115,7 +115,7 @@ export class OriginatorController {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.ComposeMail])
+  @authorize({permissions: [PermissionsEnums.ComposeMail]})
   @post('mails', {
     summary: 'ComposeAPI. For drafting, reply on and create new message',
     responses: {
@@ -246,7 +246,7 @@ export class OriginatorController {
     }
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.UpdateMail])
+  @authorize({permissions: [PermissionsEnums.UpdateMail]})
   @put('mails/{messageId}', {
     summary: 'Update API. Update draft messages.',
     responses: {
@@ -386,7 +386,7 @@ export class OriginatorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.AddAttachments])
+  @authorize({permissions: [PermissionsEnums.AddAttachments]})
   @post('mails/{messageId}/attachments', {
     summary:
       'API provides an interface for adding attachment before message is sent.',
@@ -471,7 +471,7 @@ export class OriginatorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.DeleteAttachment])
+  @authorize({permissions: [PermissionsEnums.DeleteAttachment]})
   @del('mails/{messageId}/attachments/{attachmentId}', {
     summary:
       'API provides an interface for removing attachment before message is sent',
@@ -513,7 +513,7 @@ export class OriginatorController {
     return {item: attachmentId};
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.TrashMail])
+  @authorize({permissions: [PermissionsEnums.TrashMail]})
   @del('mails/bulk/{storage}/{action}', {
     summary: 'API for moving mails to trash and then delete',
     responses: {
@@ -592,7 +592,7 @@ export class OriginatorController {
     return {items: groups};
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.RestoreMail])
+  @authorize({permissions: [PermissionsEnums.RestoreMail]})
   @patch('mails/bulk/restore', {
     summary: 'API provides an interface for restore message from trash.',
     responses: {
@@ -655,7 +655,7 @@ export class OriginatorController {
     };
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.ComposeMail])
+  @authorize({permissions: [PermissionsEnums.ComposeMail]})
   @patch('mails/{messageId}/send', {
     summary: 'API for sending a drafted message.',
     responses: {
@@ -723,7 +723,7 @@ export class OriginatorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.UpdateMail])
+  @authorize({permissions: [PermissionsEnums.UpdateMail]})
   @patch('mails/marking/{markType}', {
     summary: 'API provides interface to mark read, unread and important',
     responses: {

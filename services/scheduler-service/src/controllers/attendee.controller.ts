@@ -34,7 +34,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateAttendee])
+  @authorize({permissions: [PermissionKey.CreateAttendee]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,7 +62,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttendee])
+  @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -78,7 +78,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttendee])
+  @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -103,7 +103,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttendee])
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -129,7 +129,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttendee])
+  @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -152,7 +152,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttendee])
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -177,7 +177,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttendee])
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -195,7 +195,7 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteAttendee])
+  @authorize({permissions: [PermissionKey.DeleteAttendee]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

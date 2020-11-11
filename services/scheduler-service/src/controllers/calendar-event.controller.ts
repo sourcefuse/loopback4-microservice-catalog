@@ -52,7 +52,7 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewEvent])
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -122,7 +122,7 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateEvent])
+  @authorize({permissions: [PermissionKey.CreateEvent]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -152,7 +152,7 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateEvent])
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -179,7 +179,7 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteEvent])
+  @authorize({permissions: [PermissionKey.DeleteEvent]})
   @del(basePath, {
     responses: {
       [STATUS_CODE.OK]: {

@@ -33,7 +33,7 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSubscription])
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -59,7 +59,7 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateSubscription])
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -91,7 +91,7 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSubscription])
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -119,7 +119,7 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteSubscription])
+  @authorize({permissions: [PermissionKey.DeleteSubscription]})
   @del(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
