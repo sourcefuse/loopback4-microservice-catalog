@@ -49,7 +49,7 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.GetThread])
+  @authorize({permissions: [PermissionsEnums.GetThread]})
   @get('threads/{threadId}', {
     summary:
       'GET Thread Message API. Collect complete single message thread based on thread identity.',
@@ -148,7 +148,7 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.GetInMail])
+  @authorize({permissions: [PermissionsEnums.GetInMail]})
   @get('mails/{messageId}', {
     summary:
       'GET Message API. Collect a single message based on message identity.',
@@ -235,7 +235,7 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.GetThread])
+  @authorize({permissions: [PermissionsEnums.GetThread]})
   @get('threads', {
     summary: 'Thread List API. Collect a list of all threads.',
     responses: {
@@ -299,7 +299,7 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.GetInMails])
+  @authorize({permissions: [PermissionsEnums.GetInMails]})
   @get('mails', {
     summary: 'Collect a list of all messages.',
     responses: {

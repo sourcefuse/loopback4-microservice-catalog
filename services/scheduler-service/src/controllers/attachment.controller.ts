@@ -34,7 +34,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateAttachment])
+  @authorize({permissions: [PermissionKey.CreateAttachment]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,7 +62,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttachment])
+  @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -80,7 +80,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttachment])
+  @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -105,7 +105,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttachment])
+  @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -131,7 +131,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttachment])
+  @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -155,7 +155,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttachment])
+  @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -180,7 +180,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttachment])
+  @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -198,7 +198,7 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteAttachment])
+  @authorize({permissions: [PermissionKey.DeleteAttachment]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

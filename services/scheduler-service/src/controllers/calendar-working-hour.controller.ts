@@ -33,7 +33,7 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewWorkingHour])
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -56,7 +56,7 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateWorkingHour])
+  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -88,7 +88,7 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateWorkingHour])
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -116,7 +116,7 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteWorkingHour])
+  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   @del(basePath, {
     responses: {
       [STATUS_CODE.OK]: {

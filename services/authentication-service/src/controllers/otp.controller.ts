@@ -21,7 +21,7 @@ export class OtpController {
     public otpRepository: OtpRepository,
   ) {}
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/otp-caches', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -43,7 +43,7 @@ export class OtpController {
     await this.otpRepository.set(otp.username, otp, {ttl: otpCacheTtl});
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/otp-caches/{id}', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -56,7 +56,7 @@ export class OtpController {
     return this.otpRepository.get(id);
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @del('/otp-caches/{id}', {
     responses: {
       '204': {

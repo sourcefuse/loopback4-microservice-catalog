@@ -45,7 +45,7 @@ export class PubnubNotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CanGetNotificationAccess])
+  @authorize({permissions: [PermissionKey.CanGetNotificationAccess]})
   @patch('/notifications/access/{id}', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -92,7 +92,7 @@ export class PubnubNotificationController {
     });
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @del('/notifications/access/{id}', {
     responses: {
       [STATUS_CODE.OK]: {

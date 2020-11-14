@@ -54,7 +54,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateEvent])
+  @authorize({permissions: [PermissionKey.CreateEvent]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -117,7 +117,9 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewEvent, PermissionKey.ViewAttendee])
+  @authorize({
+    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewAttendee],
+  })
   @get('/events/freeBusy')
   async getFeeBusyStatus(
     @requestBody({
@@ -171,7 +173,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewEvent])
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -187,7 +189,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewEvent])
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -230,7 +232,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateEvent])
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -256,7 +258,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewEvent])
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -280,7 +282,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateEvent])
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -305,7 +307,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateEvent])
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -323,7 +325,7 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteEvent])
+  @authorize({permissions: [PermissionKey.DeleteEvent]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

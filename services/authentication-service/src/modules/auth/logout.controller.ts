@@ -37,7 +37,7 @@ export class LogoutController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/logout', {
     description: 'To logout',
     responses: {

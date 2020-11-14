@@ -32,7 +32,7 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewAttachment])
+  @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -55,7 +55,7 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateAttachment])
+  @authorize({permissions: [PermissionKey.CreateAttachment]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -87,7 +87,7 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateAttachment])
+  @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -115,7 +115,7 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteAttachment])
+  @authorize({permissions: [PermissionKey.DeleteAttachment]})
   @del(basePath, {
     responses: {
       [STATUS_CODE.OK]: {

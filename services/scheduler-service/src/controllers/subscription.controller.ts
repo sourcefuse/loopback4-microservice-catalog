@@ -54,7 +54,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateSubscription])
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -84,7 +84,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSubscription])
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -102,7 +102,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSubscription])
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get('calendars/subscriptions/me', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -143,7 +143,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSubscription])
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -168,7 +168,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSubscription])
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -194,7 +194,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSubscription])
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -218,7 +218,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSubscription])
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -243,7 +243,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSubscription])
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -261,7 +261,7 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteSubscription])
+  @authorize({permissions: [PermissionKey.DeleteSubscription]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

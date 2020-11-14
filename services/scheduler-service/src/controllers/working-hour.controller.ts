@@ -34,7 +34,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateWorkingHour])
+  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -64,7 +64,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewWorkingHour])
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -82,7 +82,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewWorkingHour])
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -107,7 +107,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateWorkingHour])
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -133,7 +133,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewWorkingHour])
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -157,7 +157,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateWorkingHour])
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -182,7 +182,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateWorkingHour])
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -200,7 +200,7 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteWorkingHour])
+  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

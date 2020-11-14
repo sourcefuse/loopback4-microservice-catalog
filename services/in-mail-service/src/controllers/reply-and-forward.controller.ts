@@ -103,7 +103,7 @@ export class ReplyAndForwardController {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.ReplyMail])
+  @authorize({permissions: [PermissionsEnums.ReplyMail]})
   @patch('threads/{threadId}/mails/{messageId}/replies', {
     summary: 'API provides interface to reply to a single message',
     responses: {
@@ -262,7 +262,7 @@ export class ReplyAndForwardController {
     }
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionsEnums.ComposeMail])
+  @authorize({permissions: [PermissionsEnums.ComposeMail]})
   @patch('threads/{threadId}/forward', {
     summary: 'API provides interface to forward single message.',
     responses: {

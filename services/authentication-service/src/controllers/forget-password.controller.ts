@@ -44,7 +44,7 @@ export class ForgetPasswordController {
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post(`auth/forget-password`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -112,7 +112,7 @@ export class ForgetPasswordController {
     }
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get(`auth/verify-reset-password-link`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -148,7 +148,7 @@ export class ForgetPasswordController {
   }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @patch(`auth/reset-password`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

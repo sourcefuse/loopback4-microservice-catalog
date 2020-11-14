@@ -34,7 +34,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateTheme])
+  @authorize({permissions: [PermissionKey.CreateTheme]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,7 +62,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewTheme])
+  @authorize({permissions: [PermissionKey.ViewTheme]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -78,7 +78,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewTheme])
+  @authorize({permissions: [PermissionKey.ViewTheme]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -101,7 +101,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateTheme])
+  @authorize({permissions: [PermissionKey.UpdateTheme]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -127,7 +127,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewTheme])
+  @authorize({permissions: [PermissionKey.ViewTheme]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -151,7 +151,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateTheme])
+  @authorize({permissions: [PermissionKey.UpdateTheme]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -176,7 +176,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateTheme])
+  @authorize({permissions: [PermissionKey.UpdateTheme]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -194,7 +194,7 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteTheme])
+  @authorize({permissions: [PermissionKey.DeleteTheme]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

@@ -47,7 +47,7 @@ export class VideoChatSessionController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.CreateSession])
+  @authorize({permissions: [PermissionKeys.CreateSession]})
   @post('/session', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -112,7 +112,7 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.GenerateToken])
+  @authorize({permissions: [PermissionKeys.GenerateToken]})
   @post('/session/{meetingLinkId}/token', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -211,7 +211,7 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.EditMeeting])
+  @authorize({permissions: [PermissionKeys.EditMeeting]})
   @patch('/session/{meetingLinkId}', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -303,7 +303,7 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.StopMeeting])
+  @authorize({permissions: [PermissionKeys.StopMeeting]})
   @patch('/session/{meetingLinkId}/end', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -357,7 +357,7 @@ export class VideoChatSessionController {
     await this.auditLogRepository.create(auditLogPayload);
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @post('/webhooks/session', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -479,7 +479,7 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKeys.GetAttendees])
+  @authorize({permissions: [PermissionKeys.GetAttendees]})
   @get('/session/{meetingLinkId}/attendees', {
     parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],
     responses: {

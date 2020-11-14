@@ -45,7 +45,7 @@ export class NotificationUserController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -80,7 +80,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @post(`${basePath}/bulk`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -121,7 +121,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -144,7 +144,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -171,7 +171,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -203,7 +203,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -225,7 +225,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @patch(`${basePath}/{id}`, {
     responses: {
       '204': {
@@ -253,7 +253,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @put(`${basePath}/{id}`, {
     responses: {
       '204': {
@@ -274,7 +274,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewNotification])
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   @del(`${basePath}/{id}`, {
     responses: {
       '204': {
