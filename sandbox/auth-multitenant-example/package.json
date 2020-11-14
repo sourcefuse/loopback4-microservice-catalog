@@ -60,7 +60,7 @@
     "loopback-connector-kv-redis": "^3.0.3",
     "loopback-connector-postgresql": "^3.9.1",
     "loopback4-authentication": "^4.0.1",
-    "loopback4-authorization": "^2.3.2",
+    "loopback4-authorization": "3.1.1",
     "tslib": "^1.10.0"
   },
   "devDependencies": {

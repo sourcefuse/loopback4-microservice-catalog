@@ -7,12 +7,14 @@ import {TenantConfigRepository} from './tenant-config.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserLevelPermissionRepository} from './user-level-permission.repository';
+import {UserLevelResourceRepository} from './user-level-resource.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserRepository} from './user.repository';
 
 export * from './user.repository';
 export * from './role.repository';
 export * from './user-level-permission.repository';
+export * from './user-level-resource.repository';
 export * from './refresh-token.repository';
 export * from './auth-client.repository';
 export * from './revoked-token.repository';
@@ -34,4 +36,5 @@ export const repositories = [
   TenantConfigRepository,
   UserTenantRepository,
   TenantRepository,
+  UserLevelResourceRepository,
 ];

@@ -32,7 +32,7 @@ export class AuthClientController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @post(baseUrl, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -55,7 +55,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @get(`${baseUrl}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -72,7 +72,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @get(baseUrl, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -93,7 +93,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @patch(baseUrl, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -118,7 +118,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @get(`${baseUrl}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -132,7 +132,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @patch(`${baseUrl}/{id}`, {
     responses: {
       '204': {
@@ -155,7 +155,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @put(`${baseUrl}/{id}`, {
     responses: {
       '204': {
@@ -171,7 +171,7 @@ export class AuthClientController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize([PermissionKey.NotAllowed])
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   @del(`${baseUrl}/{id}`, {
     responses: {
       '204': {

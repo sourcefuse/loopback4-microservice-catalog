@@ -66,7 +66,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateCalendar])
+  @authorize({permissions: [PermissionKey.CreateCalendar]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -94,7 +94,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateCalendar])
+  @authorize({permissions: [PermissionKey.CreateCalendar]})
   @post('/calendars/calendarSubscription', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -167,7 +167,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewCalendar])
+  @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -183,7 +183,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewCalendar])
+  @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -208,7 +208,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateCalendar])
+  @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -234,7 +234,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewCalendar])
+  @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -258,7 +258,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateCalendar])
+  @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -283,7 +283,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateCalendar])
+  @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -325,7 +325,7 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteCalendar])
+  @authorize({permissions: [PermissionKey.DeleteCalendar]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

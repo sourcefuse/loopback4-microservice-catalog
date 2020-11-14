@@ -39,4 +39,5 @@ export interface IAuthUserWithPermissions<
   tenantId?: TID;
   userTenantId?: UTID;
   passwordExpiryTime?: Date;
+  allowedResources?: string[];
 }

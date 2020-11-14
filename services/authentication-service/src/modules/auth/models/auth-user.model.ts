@@ -54,7 +54,7 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
     1. userAgent
     2. deviceId `,
   })
-  deviceInfo: DeviceInfo;
+  deviceInfo?: DeviceInfo;
 
   @property({
     type: 'string',
@@ -80,6 +80,12 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
     type: 'date',
   })
   passwordExpiryTime?: Date;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  allowedResources?: string[];
 
   @property({
     type: 'number',

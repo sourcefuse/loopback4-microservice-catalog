@@ -34,7 +34,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.CreateSettings])
+  @authorize({permissions: [PermissionKey.CreateSettings]})
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,7 +62,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSettings])
+  @authorize({permissions: [PermissionKey.ViewSettings]})
   @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -78,7 +78,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSettings])
+  @authorize({permissions: [PermissionKey.ViewSettings]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -103,7 +103,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSettings])
+  @authorize({permissions: [PermissionKey.UpdateSettings]})
   @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -129,7 +129,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.ViewSettings])
+  @authorize({permissions: [PermissionKey.ViewSettings]})
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -153,7 +153,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSettings])
+  @authorize({permissions: [PermissionKey.UpdateSettings]})
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -178,7 +178,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.UpdateSettings])
+  @authorize({permissions: [PermissionKey.UpdateSettings]})
   @put(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -196,7 +196,7 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize([PermissionKey.DeleteSettings])
+  @authorize({permissions: [PermissionKey.DeleteSettings]})
   @del(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

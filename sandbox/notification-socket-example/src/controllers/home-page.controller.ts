@@ -19,7 +19,7 @@ export class HomePageController {
     );
   }
 
-  @authorize(['*'])
+  @authorize({permissions: ['*']})
   @get('/', {
     responses: {
       [STATUS_CODE.OK]: {
