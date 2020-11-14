@@ -38,9 +38,7 @@ describe('Archive APIs', () => {
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves(getVideoChatSession({archiveId: archiveId}));
       const result = await controller.getArchive(archiveId);
-      expect(result)
-        .to.have.property('sessionId')
-        .which.is.a.String();
+      expect(result).to.have.property('sessionId').which.is.a.String();
       sinon.assert.calledWith(findOne, {where: {archiveId}});
     });
 
@@ -61,12 +59,8 @@ describe('Archive APIs', () => {
     it('returns an archive list', async () => {
       setUp({getArchives: sinon.stub().returns(getArchiveResponseList({}))});
       const result = await controller.getArchives();
-      expect(result)
-        .to.have.property('count')
-        .which.is.a.Number();
-      expect(result)
-        .to.have.property('items')
-        .which.is.an.Array();
+      expect(result).to.have.property('count').which.is.a.Number();
+      expect(result).to.have.property('items').which.is.an.Array();
     });
 
     it('returns a count of zero when no archvies exist', async () => {
@@ -76,12 +70,8 @@ describe('Archive APIs', () => {
           .returns(getArchiveResponseList({count: 0, items: []})),
       });
       const result = await controller.getArchives();
-      expect(result)
-        .to.have.property('count')
-        .which.eql(0);
-      expect(result)
-        .to.have.property('items')
-        .which.eql([]);
+      expect(result).to.have.property('count').which.eql(0);
+      expect(result).to.have.property('items').which.eql([]);
     });
   });
 

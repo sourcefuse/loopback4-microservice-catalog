@@ -7,7 +7,8 @@ import {
 @model({
   name: 'video_session_details',
 })
-export class VideoChatSession extends UserModifiableEntity
+export class VideoChatSession
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'number',
