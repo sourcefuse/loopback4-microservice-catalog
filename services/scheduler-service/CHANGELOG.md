@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.23](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.22...@sourceloop/scheduler-service@1.0.0-alpha.23) (2020-11-15)
+
+
+### Features
+
+* **authentication-service:** LB4-Authorization dependancy upgrade ([#92](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/92)) ([6541ad1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6541ad1c68c5d764f1ef211b0c6d77b263a1520f))
+
+
+### BREAKING CHANGES
+
+* **authentication-service:** Loopback4-authorization authorize metadata changes
+
+RPMS-413
+
+* fix(authentication-service): removed code smells
+
+RPMS-413
+
+* fix(authentication-service): code smells, and added name attribute to entity
+
+RPMS-413
+
+* feat(authentication-service): update lb4-authorization to 3.1.1
+
+Updated controller authorize decorator
+
+RPMS-413
+
+* feat(core): updated project dependencies, resolved test script issues
+
+Updated loopback4-authorization to 3.1.1, and added loopback/metadata in in-mail and video
+conferencing services, as test cases were failing.
+
+
+
+RPMS-413
+
+Co-authored-by: Mudassir Lakdawala <mudassirlakdawala7@gmail.com>
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.21...@sourceloop/scheduler-service@1.0.0-alpha.22) (2020-10-19)
 
 **Note:** Version bump only for package @sourceloop/scheduler-service

@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.18](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.17...@sourceloop/video-conferencing-service@1.0.0-alpha.18) (2020-11-15)
+
+
+### Bug Fixes
+
+* **video-conferencing-service:** Casbin fix ([#94](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/94)) ([f80d33d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f80d33ddcff51bb6c4c5537bf6604f9cfe929409))
+
+
+### Features
+
+* **authentication-service:** LB4-Authorization dependancy upgrade ([#92](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/92)) ([6541ad1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6541ad1c68c5d764f1ef211b0c6d77b263a1520f))
+
+
+### BREAKING CHANGES
+
+* **video-conferencing-service:** updated loopback4-authorization
+
+RPMS-413
+
+* fix(video-conferencing-service): fixed lint issues
+
+RPMS-413
+
+Co-authored-by: Mudassir Lakdawala <mudassirlakdawala7@gmail.com>
+* **authentication-service:** Loopback4-authorization authorize metadata changes
+
+RPMS-413
+
+* fix(authentication-service): removed code smells
+
+RPMS-413
+
+* fix(authentication-service): code smells, and added name attribute to entity
+
+RPMS-413
+
+* feat(authentication-service): update lb4-authorization to 3.1.1
+
+Updated controller authorize decorator
+
+RPMS-413
+
+* feat(core): updated project dependencies, resolved test script issues
+
+Updated loopback4-authorization to 3.1.1, and added loopback/metadata in in-mail and video
+conferencing services, as test cases were failing.
+
+
+
+RPMS-413
+
+Co-authored-by: Mudassir Lakdawala <mudassirlakdawala7@gmail.com>
+
+
+
+
+
 # [1.0.0-alpha.17](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.16...@sourceloop/video-conferencing-service@1.0.0-alpha.17) (2020-10-19)
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service
