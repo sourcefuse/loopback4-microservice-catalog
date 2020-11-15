@@ -3,7 +3,8 @@ import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 @model({
   name: 'session_attendees',
 })
-export class SessionAttendees extends Entity
+export class SessionAttendees
+  extends Entity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'number',

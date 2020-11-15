@@ -57,15 +57,9 @@ describe('VonageProvider (unit)', () => {
       const result = await vonageProvider
         .value()
         .getMeetingLink(meetingOptions);
-      expect(result)
-        .to.have.property('mediaMode')
-        .which.eql('routed');
-      expect(result)
-        .to.have.property('archiveMode')
-        .which.eql('always');
-      expect(result)
-        .to.have.property('sessionId')
-        .which.eql(sessionId);
+      expect(result).to.have.property('mediaMode').which.eql('routed');
+      expect(result).to.have.property('archiveMode').which.eql('always');
+      expect(result).to.have.property('sessionId').which.eql(sessionId);
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
@@ -82,12 +76,8 @@ describe('VonageProvider (unit)', () => {
       const result = await vonageProvider
         .value()
         .getMeetingLink(meetingOptions);
-      expect(result)
-        .to.have.property('mediaMode')
-        .which.eql('relayed');
-      expect(result)
-        .to.have.property('sessionId')
-        .which.eql(sessionId);
+      expect(result).to.have.property('mediaMode').which.eql('relayed');
+      expect(result).to.have.property('sessionId').which.eql(sessionId);
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
@@ -128,12 +118,8 @@ describe('VonageProvider (unit)', () => {
       const result = await vonageProvider
         .value()
         .getToken(sessionId, sessionOptions);
-      expect(result)
-        .to.have.property('sessionId')
-        .which.eql(sessionId);
-      expect(result)
-        .to.have.property('token')
-        .which.eql('dummy-token');
+      expect(result).to.have.property('sessionId').which.eql(sessionId);
+      expect(result).to.have.property('token').which.eql('dummy-token');
       sinon.assert.calledOnce(auidtLogCreate);
     });
 
@@ -161,15 +147,9 @@ describe('VonageProvider (unit)', () => {
         .callsArgWith(1, error, archive);
 
       const result = await vonageProvider.value().getArchives(archiveId);
-      expect(result)
-        .to.have.property('name')
-        .which.eql(archive.name);
-      expect(result)
-        .to.have.property('sessionId')
-        .which.eql(archive.sessionId);
-      expect(result)
-        .to.have.property('metaData')
-        .which.is.an.Object();
+      expect(result).to.have.property('name').which.eql(archive.name);
+      expect(result).to.have.property('sessionId').which.eql(archive.sessionId);
+      expect(result).to.have.property('metaData').which.is.an.Object();
     });
 
     it('returns an archive response list for null archive id', async () => {
@@ -181,12 +161,8 @@ describe('VonageProvider (unit)', () => {
         .callsArgWith(1, error, archives);
 
       const result = await vonageProvider.value().getArchives(nullArchiveId);
-      expect(result)
-        .to.have.property('count')
-        .which.eql(archives.length);
-      expect(result)
-        .to.have.property('items')
-        .which.is.an.Array();
+      expect(result).to.have.property('count').which.eql(archives.length);
+      expect(result).to.have.property('items').which.is.an.Array();
     });
 
     it('returns an error if vonage fails for given archive id', async () => {

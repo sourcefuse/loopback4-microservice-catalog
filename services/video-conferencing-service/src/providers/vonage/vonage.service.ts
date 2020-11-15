@@ -147,9 +147,7 @@ export class VonageService implements VonageVideoChat {
       iss: apiKey,
       ist: 'project',
       iat: moment().unix(),
-      exp: moment()
-        .add(ttl, 'seconds')
-        .unix(),
+      exp: moment().add(ttl, 'seconds').unix(),
     };
 
     const token = sign(jwtPayload, apiSecret);

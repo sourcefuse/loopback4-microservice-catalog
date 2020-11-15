@@ -42,9 +42,7 @@ export function getDate(dateString: string) {
 export function getFutureDate() {
   const extra = 1000;
   const currDate = Date.now();
-  return moment(currDate)
-    .add(extra, 'm')
-    .toDate();
+  return moment(currDate).add(extra, 'm').toDate();
 }
 
 export function getDatePastThreshold(threshold: number) {
