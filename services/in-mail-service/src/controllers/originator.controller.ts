@@ -194,6 +194,7 @@ export class OriginatorController {
           threadId: thread.id,
           extId: extId,
           isImportant: isImportant,
+          visibility: VisibilityMarker.read,
           extMetadata: extMetadata,
           storage:
             status === StorageMarker.draft

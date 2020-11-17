@@ -1,4 +1,4 @@
-import {Thread, Group} from '../../../models';
+import {Group, Thread} from '../../../models';
 
 export const thread = new Thread({
   id: 'random-thread-id',

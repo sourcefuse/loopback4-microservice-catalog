@@ -21,7 +21,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-
 import {
   CollectorController,
   OriginatorController,
@@ -34,6 +33,7 @@ import {
   MessageRepository,
   MetaRepository,
   ThreadRepository,
+  ThreadViewRepository,
 } from './repositories';
 
 export class InMailServiceComponent implements Component {
@@ -67,6 +67,7 @@ export class InMailServiceComponent implements Component {
       AttachmentRepository,
       MessageRepository,
       GroupRepository,
+      ThreadViewRepository,
     ];
     this.application.sequence(ServiceSequence);
     // Set up default home page
