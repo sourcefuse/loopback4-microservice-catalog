@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "1.0.0-alpha.19",
+  "version": "1.0.0-alpha.20",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -53,7 +53,7 @@
     "@loopback/repository": "^2.5.1",
     "@loopback/repository-tests": "^0.12.13",
     "@loopback/rest": "^5.0.1",
-    "@sourceloop/core": "^1.0.0-alpha.15",
+    "@sourceloop/core": "^1.0.0-alpha.16",
     "loopback4-authentication": "^3.0.1",
     "loopback4-authorization": "3.1.1",
     "loopback4-soft-delete": "^3.0.0",

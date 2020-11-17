@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.16](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.15...@sourceloop/core@1.0.0-alpha.16) (2020-11-17)
+
+
+### Features
+
+* **core:** change default repos to non abstract for mixins to work ([091ec6b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/091ec6bb74d8ad1d096a3fcb12bb434ee188448f))
+
+
+
+
+
 # [1.0.0-alpha.15](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.14...@sourceloop/core@1.0.0-alpha.15) (2020-11-15)
 
 

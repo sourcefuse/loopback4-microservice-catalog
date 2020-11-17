@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.20](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.19...@sourceloop/in-mail-service@1.0.0-alpha.20) (2020-11-17)
+
+
+### Features
+
+* **changes in the get api's:** inmail service update SFO-162 ([#95](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/95)) ([2917e71](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2917e71331201c2e393458a876c518321be43476))
+
+
+
+
+
 # [1.0.0-alpha.19](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.18...@sourceloop/in-mail-service@1.0.0-alpha.19) (2020-11-15)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.21](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.20...@sourceloop/notification-service@1.0.0-alpha.21) (2020-11-17)
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
 # [1.0.0-alpha.20](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.19...@sourceloop/notification-service@1.0.0-alpha.20) (2020-11-15)
 
 
