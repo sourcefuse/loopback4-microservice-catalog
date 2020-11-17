@@ -7,7 +7,7 @@ import {SoftCrudRepository} from 'loopback4-soft-delete';
 import {IAuthUserWithPermissions} from '../components';
 import {UserModifiableEntity} from '../models';
 
-export abstract class DefaultUserModifyCrudRepository<
+export class DefaultUserModifyCrudRepository<
   T extends UserModifiableEntity,
   ID,
   Relations extends object = {}

@@ -1,6 +1,6 @@
 import {SoftCrudRepository, SoftDeleteEntity} from 'loopback4-soft-delete';
 
-export abstract class DefaultSoftCrudRepository<
+export class DefaultSoftCrudRepository<
   T extends SoftDeleteEntity,
   ID,
   Relations extends object = {}
