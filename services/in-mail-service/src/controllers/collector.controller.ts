@@ -1,5 +1,11 @@
 import {inject} from '@loopback/context';
-import {Filter, repository} from '@loopback/repository';
+import {
+  AnyObject,
+  Filter,
+  FilterBuilder,
+  repository,
+  WhereBuilder,
+} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -25,6 +31,7 @@ import {
   MessageRepository,
   MetaRepository,
   ThreadRepository,
+  ThreadViewRepository,
 } from '../repositories';
 import {PermissionsEnums, VisibilityMarker} from '../types';
 
@@ -38,6 +45,8 @@ export class CollectorController {
     @repository(MetaRepository) public metaRepository: MetaRepository,
     @repository(GroupRepository) public groupRepository: GroupRepository,
     @repository(ThreadRepository) public threadRepository: ThreadRepository,
+    @repository(ThreadViewRepository)
+    public threadViewRepository: ThreadViewRepository,
     @repository(AttachmentRepository)
     public attachmentRepository: AttachmentRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
@@ -95,48 +104,11 @@ export class CollectorController {
     if (messageIdObject) {
       messageIds = messageIdObject.map(msg => msg.messageId);
     }
-    const threadFilter: Filter<Thread> = {
+    const threadView = await this.threadViewRepository.find({
       where: {
-        id: threadId,
+        messageId: {inq: messageIds},
       },
-      include: [
-        {
-          relation: 'message',
-          scope: {
-            where: {id: {inq: messageIds}},
-            include: [
-              {
-                relation: 'meta',
-              },
-              {
-                relation: 'group',
-                scope: {
-                  fields: {
-                    messageId: true,
-                    party: true,
-                    type: true,
-                    isImportant: true,
-                  },
-                },
-              },
-              {
-                relation: 'attachment',
-              },
-            ],
-          },
-        },
-      ],
-      order: ['createdOn DESC'],
-    };
-    if (filter) {
-      Object.assign(threadFilter.where, {
-        ...filter,
-      });
-    }
-    const thread = await this.threadRepository.findOne(threadFilter);
-    if (!thread) {
-      throw new Error('Thread not found');
-    }
+    });
     await this.groupRepository.updateAll(
       {visibility: VisibilityMarker.read},
       {
@@ -144,7 +116,8 @@ export class CollectorController {
         party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
       },
     );
-    return {items: thread};
+
+    return {items: threadView, messageCount: threadView.length};
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -329,33 +302,67 @@ export class CollectorController {
     @param.query.object('groupFilter') filterGroup: Filter<Group>,
   ): Promise<{
     items: Message[];
+    totalCount: number;
+    unreadCount: number;
   }> {
     const messageIds = (await this.groupRepository.find(filterGroup))
       .map(({messageId}) => messageId)
       .filter((v, i, a) => a.indexOf(v) === i);
 
+    const filter = this.createFetchMailListFilter(filterMessage, messageIds);
+
     if (!messageIds?.length) {
       return {
         items: [],
+        totalCount: 0,
+        unreadCount: 0,
       };
     }
 
-    if (!filterMessage) {
-      filterMessage = {
-        where: {
-          id: {inq: messageIds},
-        },
-      };
-    } else if (!filterMessage.where) {
-      filterMessage.where = {
-        id: {inq: messageIds},
-      };
+    const mails = await this.messageRepository.find(filter);
+    mails.forEach((mail: AnyObject) => {
+      if (mail.group) {
+        mail.group = mail.group.map((grp: Group) => {
+          if (grp.party !== this.user.id) {
+            delete grp.visibility;
+            delete grp.isImportant;
+            delete grp.storage;
+          }
+          return grp;
+        });
+      }
+    });
+    const totalCount = await this.messageRepository.count(filter.where);
+    const where = filterGroup.where;
+    const whereBuilder = new WhereBuilder<Group>();
+    if (where) {
+      whereBuilder.and(where, {
+        visibility: {neq: VisibilityMarker.read},
+      });
     } else {
-      Object.assign(filterMessage.where, {
+      whereBuilder.neq('visibility', VisibilityMarker.read);
+    }
+    const unreadCount = await this.groupRepository.count(whereBuilder.build());
+    return {
+      items: mails,
+      totalCount: totalCount.count,
+      unreadCount: unreadCount.count,
+    };
+  }
+
+  createFetchMailListFilter(filter: Filter<Message>, messageIds: string[]) {
+    const whereClause = filter.where;
+    const filterBuilder = new FilterBuilder(filter);
+    const whereBuilder = new WhereBuilder<Message>();
+    if (whereClause) {
+      whereBuilder.and(whereClause, {
         id: {inq: messageIds},
       });
     }
-    filterMessage.include = [
+    if (!whereClause) {
+      whereBuilder.inq('id', messageIds);
+    }
+    filterBuilder.include(
       {
         relation: 'group',
         scope: {
@@ -369,22 +376,19 @@ export class CollectorController {
           },
         },
       },
-    ];
-    const mails = await this.messageRepository.find(filterMessage);
-    mails.forEach(mail => {
-      if (mail.group) {
-        mail.group = mail.group.map(grp => {
-          if (grp.party !== this.user.id) {
-            delete grp.visibility;
-            delete grp.isImportant;
-            delete grp.storage;
-          }
-          return grp;
-        });
-      }
-    });
-    return {
-      items: mails,
-    };
+      {
+        relation: 'attachment',
+        scope: {
+          fields: {
+            messageId: true,
+            id: true,
+            name: true,
+            mime: true,
+          },
+        },
+      },
+    );
+    filterBuilder.where(whereBuilder.build());
+    return filterBuilder.build();
   }
 }
