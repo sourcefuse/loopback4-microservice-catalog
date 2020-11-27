@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.28](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.27...@sourceloop/authentication-service@1.0.0-alpha.28) (2020-11-27)
+
+
+### Features
+
+* **authentication-service:** adds fullName property to user model ([#98](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/98)) ([2f8a3cd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2f8a3cd04d134a438c0de8e98a4e783005b7a09e))
+
+
+
+
+
 # [1.0.0-alpha.27](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.26...@sourceloop/authentication-service@1.0.0-alpha.27) (2020-11-24)
 
 
