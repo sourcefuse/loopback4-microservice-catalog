@@ -47,6 +47,12 @@ export class User extends UserModifiableEntity implements IAuthUser {
 
   @property({
     type: 'string',
+    name: 'full_name',
+  })
+  fullName?: string;
+
+  @property({
+    type: 'string',
     required: true,
   })
   username: string;
