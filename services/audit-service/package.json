@@ -29,7 +29,9 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/audit-service"
   },
   "author": "",
   "license": "",
@@ -57,5 +59,9 @@
     "source-map-support": "^0.5.19",
     "typescript": "~3.9.7",
     "widdershins": "^4.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
