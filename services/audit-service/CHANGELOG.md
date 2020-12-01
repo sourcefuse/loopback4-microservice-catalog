@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.2](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.1...@sourceloop/audit-service@1.1.0-alpha.2) (2020-12-01)
+
+
+### Bug Fixes
+
+* **audit-service:** update audit with sequence ([048b9db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/048b9db256cb97fa72647cb103c3307b6145ceab))
+
+
+
+
+
 # [1.1.0-alpha.1](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.0...@sourceloop/audit-service@1.1.0-alpha.1) (2020-12-01)
 
 
