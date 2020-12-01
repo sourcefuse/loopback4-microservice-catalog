@@ -44,6 +44,8 @@
   "dependencies": {
     "@loopback/boot": "^2.4.0",
     "@loopback/core": "^2.7.0",
+    "@loopback/repository": "^2.5.1",
+    "@loopback/rest": "^5.0.1",
     "@sourceloop/audit-log": "^1.0.1",
     "@sourceloop/core": "^1.0.0-alpha.16",
     "loopback4-authentication": "^4.0.1",
@@ -52,8 +54,8 @@
   },
   "devDependencies": {
     "@loopback/build": "^5.4.1",
-    "@loopback/eslint-config": "^8.0.4",
-    "@loopback/testlab": "^3.2.1",
+    "@loopback/eslint-config": "^7.0.1",
+    "@loopback/testlab": "^3.1.5",
     "@types/node": "^10.17.27",
     "eslint": "^7.5.0",
     "source-map-support": "^0.5.19",
