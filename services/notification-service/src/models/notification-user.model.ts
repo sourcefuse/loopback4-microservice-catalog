@@ -1,4 +1,4 @@
-import {model, property, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo, AnyObject} from '@loopback/repository';
 import {BaseEntity} from '@sourceloop/core';
 import {Notification} from './notification.model';
 
@@ -35,6 +35,13 @@ export class NotificationUser extends BaseEntity {
     name: 'is_read',
   })
   isRead?: boolean;
+
+  @property({
+    type: 'object',
+    required: false,
+    name: 'action_meta',
+  })
+  actionMeta?: AnyObject;
 
   constructor(data?: Partial<NotificationUser>) {
     super(data);
