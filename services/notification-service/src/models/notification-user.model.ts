@@ -6,7 +6,7 @@ import {Notification} from './notification.model';
   name: 'notification_users',
   settings: {
     strict: false,
-  }
+  },
 })
 export class NotificationUser extends BaseEntity {
   @property({
@@ -51,7 +51,6 @@ export class NotificationUser extends BaseEntity {
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
-
 
   constructor(data?: Partial<NotificationUser>) {
     super(data);
