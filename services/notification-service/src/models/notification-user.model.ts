@@ -1,9 +1,12 @@
-import {model, property, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo, AnyObject} from '@loopback/repository';
 import {BaseEntity} from '@sourceloop/core';
 import {Notification} from './notification.model';
 
 @model({
   name: 'notification_users',
+  settings: {
+    strict: false,
+  }
 })
 export class NotificationUser extends BaseEntity {
   @property({
@@ -35,6 +38,20 @@ export class NotificationUser extends BaseEntity {
     name: 'is_read',
   })
   isRead?: boolean;
+
+  @property({
+    type: 'object',
+    required: false,
+    name: 'action_meta',
+  })
+  actionMeta?: AnyObject;
+
+  // Define well-known properties here
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
+
 
   constructor(data?: Partial<NotificationUser>) {
     super(data);
