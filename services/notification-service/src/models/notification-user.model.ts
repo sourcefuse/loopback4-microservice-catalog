@@ -4,6 +4,9 @@ import {Notification} from './notification.model';
 
 @model({
   name: 'notification_users',
+  settings: {
+    strict: false,
+  }
 })
 export class NotificationUser extends BaseEntity {
   @property({
