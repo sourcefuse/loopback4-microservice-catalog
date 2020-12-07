@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.23](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.22...@sourceloop/notification-service@1.0.0-alpha.23) (2020-12-07)
+
+
+### Features
+
+* **notification-service:** adds actionMeta property to NotificationUser model ([#99](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/99)) ([bbc1075](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bbc1075836de1f9a6047bc1d3ca14a5d19ebba97))
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.21...@sourceloop/notification-service@1.0.0-alpha.22) (2020-12-07)
 
 **Note:** Version bump only for package @sourceloop/notification-service
