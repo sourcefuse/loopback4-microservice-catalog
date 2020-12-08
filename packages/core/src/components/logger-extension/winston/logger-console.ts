@@ -13,7 +13,7 @@ export class WinstonConsoleLogger extends WinstonLoggerBase {
   constructor() {
     super();
     const logFormat = format.combine(
-      // format.colorize(),
+      format.uncolorize(),
       format.timestamp(),
       format.printf(
         (log: LogEntry) => `[${log.timestamp}] ${log.level} :: ${log.message}`,
