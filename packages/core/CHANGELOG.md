@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.18](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.17...@sourceloop/core@1.0.0-alpha.18) (2020-12-08)
+
+
+### Bug Fixes
+
+* **core:** remove colorize fromlogger ([c3f8dca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3f8dcadb9fb9eb8bb0efcd08237430c83a6999a))
+
+
+
+
+
 # [1.0.0-alpha.17](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.16...@sourceloop/core@1.0.0-alpha.17) (2020-12-07)
 
 
