@@ -65,6 +65,8 @@ export class SecureSequence implements SequenceHandler {
     protected rateLimitAction: RateLimitAction,
     @inject(SFCoreBindings.i18n)
     protected i18n: i18nAPI, // sonarignore:end
+    @inject(RateLimitSecurityBindings.CONFIG, {optional: true})
+    private readonly rateLimitConfig?: object,
     @inject(HelmetSecurityBindings.CONFIG, {optional: true})
     private readonly helmetConfig?: object,
   ) {}
@@ -89,7 +91,10 @@ export class SecureSequence implements SequenceHandler {
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
 
-      await this.rateLimitAction(request, response);
+      if (this.rateLimitConfig) {
+        await this.rateLimitAction(request, response);
+      }
+
       if (this.helmetConfig) {
         await this.helmetAction(request, response);
       }
