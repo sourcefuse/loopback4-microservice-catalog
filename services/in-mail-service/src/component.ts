@@ -78,7 +78,7 @@ export class InMailServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-    
+
     // Set up default home page
     this.application.component(AuthenticationComponent);
     this.application.bind(BearerVerifierBindings.Config).to({
