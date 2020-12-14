@@ -1,4 +1,6 @@
+import {inject, service} from '@loopback/core';
 import {
+  AnyObject,
   Count,
   CountSchema,
   Filter,
@@ -10,38 +12,37 @@ import {
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
   put,
   requestBody,
-  HttpErrors,
 } from '@loopback/rest';
 import {
+  CONTENT_TYPE,
+  IAuthUserWithPermissions,
+  STATUS_CODE,
+} from '@sourceloop/core';
+import {
   authenticate,
-  STRATEGY,
   AuthenticationBindings,
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {Calendar, WorkingHour, Subscription, IdentifierType} from '../models';
+import {SchedulerBindings} from '../keys';
+import {Calendar, IdentifierType, Subscription, WorkingHour} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
+import {AccessRoleType} from '../models/enums/access-role.enum';
+import {ErrorKeys} from '../models/enums/error-keys';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {
   CalendarRepository,
-  WorkingHourRepository,
   SubscriptionRepository,
+  WorkingHourRepository,
 } from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AccessRoleType} from '../models/enums/access-role.enum';
-import {inject, service} from '@loopback/core';
-import {SchedulerBindings} from '../keys';
-import {ISchedulerConfig} from '../types';
-import {ErrorKeys} from '../models/enums/error-keys';
 import {CalendarService} from '../services/calendar.service';
+import {ISchedulerConfig} from '../types';
 
 const basePath = '/calendars';
 const calendarModelInstance = 'Calendar model instance';
@@ -122,7 +123,6 @@ export class CalendarController {
     const subscription: Subscription = Object.assign(calendarDTO.subscription);
 
     delete calendarDTO.subscription;
-    let response = await this.calendarService.createCalendar(calendarDTO);
     let identifierType = this.schdulerConfig?.identifierMappedTo;
     if (!identifierType) {
       identifierType = IdentifierType.Id;
@@ -135,9 +135,23 @@ export class CalendarController {
       subscriptionIdentifier = this.currentUser[identifierType];
     }
 
-    const where = {
-      and: [{identifier: subscriptionIdentifier}, {isPrimary: true}],
+    let where = {
+      and: [
+        {identifier: subscriptionIdentifier},
+        {isPrimary: true},
+      ] as AnyObject[],
     };
+    if (calendarDTO.multiOrgId) {
+      where = {
+        and: [
+          {identifier: subscriptionIdentifier},
+          {isPrimary: true},
+          {extId: calendarDTO.multiOrgId},
+        ],
+      };
+      delete calendarDTO.multiOrgId;
+    }
+    let response = await this.calendarService.createCalendar(calendarDTO);
 
     const subscriptionList = await this.subscriptionRepository.find({where});
     if (subscriptionList.length > 0) {

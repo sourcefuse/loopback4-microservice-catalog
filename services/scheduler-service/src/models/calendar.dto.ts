@@ -1,6 +1,6 @@
-import {model, property, Model} from '@loopback/repository';
-import {WorkingHour} from './working-hour.model';
+import {model, Model, property} from '@loopback/repository';
 import {Subscription} from './subscription.model';
+import {WorkingHour} from './working-hour.model';
 
 @model()
 export class CalendarDTO extends Model {
@@ -75,6 +75,11 @@ export class CalendarDTO extends Model {
     type: 'object',
   })
   subscription?: Subscription;
+
+  @property({
+    type: 'string',
+  })
+  multiOrgId?: string;
 
   constructor(data?: Partial<CalendarDTO>) {
     super(data);
