@@ -46,26 +46,26 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^2.3.1",
-    "@loopback/context": "^3.8.2",
-    "@loopback/core": "^2.7.1",
-    "@loopback/repository": "^2.5.1",
-    "@loopback/repository-json-schema": "^2.4.3",
-    "@loopback/rest": "^5.0.1",
-    "@loopback/rest-explorer": "^2.2.3",
-    "@loopback/service-proxy": "^2.3.0",
+    "@loopback/boot": "^3.1.0",
+    "@loopback/context": "^3.13.0",
+    "@loopback/core": "^2.12.0",
+    "@loopback/repository": "^3.2.0",
+    "@loopback/repository-json-schema": "^3.1.0",
+    "@loopback/rest": "^9.0.0",
+    "@loopback/rest-explorer": "^3.0.3",
+    "@loopback/service-proxy": "^3.0.3",
     "@sourceloop/core": "^1.0.0-alpha.18",
     "@sourceloop/notification-service": "^1.0.0-alpha.25",
-    "loopback4-authorization": "3.1.1",
+    "loopback4-authorization": "^3.2.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^6.1.1",
-    "@loopback/eslint-config": "^8.0.4",
-    "@loopback/testlab": "^3.2.1",
-    "@types/node": "^10.17.27",
-    "eslint": "^7.5.0",
+    "@loopback/build": "^6.2.6",
+    "@loopback/eslint-config": "^10.0.2",
+    "@loopback/testlab": "^3.2.8",
+    "@types/node": "^10.17.44",
+    "eslint": "^7.12.1",
     "source-map-support": "^0.5.19",
-    "typescript": "~3.9.7"
+    "typescript": "~4.0.5"
   }
 }
