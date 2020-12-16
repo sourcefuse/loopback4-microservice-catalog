@@ -9,7 +9,8 @@ import {Group} from './group.model';
 @model({
   name: 'v_thread',
 })
-export class ThreadView extends UserModifiableEntity
+export class ThreadView
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

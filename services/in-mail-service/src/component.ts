@@ -74,7 +74,7 @@ export class InMailServiceComponent implements Component {
       ThreadViewRepository,
     ];
 
-    if (!(this.inMailConfig && this.inMailConfig.useCustomSequence)) {
+    if (!this.inMailConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence();
     }

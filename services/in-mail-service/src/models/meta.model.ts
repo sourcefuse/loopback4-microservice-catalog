@@ -8,7 +8,8 @@ import {
 @model({
   name: 'meta',
 })
-export class Meta extends UserModifiableEntity
+export class Meta
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

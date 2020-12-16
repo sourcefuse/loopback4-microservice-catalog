@@ -8,7 +8,8 @@ import {
 @model({
   name: 'attachment',
 })
-export class Attachment extends UserModifiableEntity
+export class Attachment
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',
