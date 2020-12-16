@@ -69,7 +69,7 @@ export class VideoConfServiceComponent implements Component {
 
     this.application.service(VonageService);
 
-    if (!(this.videChatConfig && this.videChatConfig.useCustomSequence)) {
+    if (!this.videChatConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence(this.bindings);
     }
