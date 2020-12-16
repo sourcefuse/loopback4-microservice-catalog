@@ -176,8 +176,7 @@ export class SecureSequence implements SequenceHandler {
     ) {
       return JSON.parse(err.message).error as Error;
     } else if (
-      err.message &&
-      err.message.message &&
+      err.message?.message &&
       isJsonString(err.message.message) &&
       JSON.parse(err.message.message).error
     ) {
