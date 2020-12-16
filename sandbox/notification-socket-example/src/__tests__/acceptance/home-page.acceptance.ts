@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Client} from '@loopback/testlab';
 import {NotificationSocketExampleApplication} from '../..';
 import {setupApplication} from './test-helper';

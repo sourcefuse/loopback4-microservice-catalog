@@ -2,7 +2,6 @@ import {NotificationSocketExampleApplication} from '../..';
 import {
   createRestAppClient,
   givenHttpServerConfig,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Client,
 } from '@loopback/testlab';
 

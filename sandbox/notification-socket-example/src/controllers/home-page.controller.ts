@@ -2,7 +2,6 @@ import {get} from '@loopback/openapi-v3';
 import * as fs from 'fs';
 import * as path from 'path';
 import {inject} from '@loopback/context';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {RestBindings, Response} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
