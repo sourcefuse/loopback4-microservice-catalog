@@ -50,9 +50,7 @@ export class UserTenantRepository extends DefaultSoftCrudRepository<
     @repository.getter('RoleRepository')
     protected roleRepositoryGetter: Getter<RoleRepository>,
     @repository.getter('UserLevelPermissionRepository')
-    protected userLevelPermissionRepositoryGetter: Getter<
-      UserLevelPermissionRepository
-    >,
+    protected userLevelPermissionRepositoryGetter: Getter<UserLevelPermissionRepository>,
   ) {
     super(UserTenant, dataSource);
     this.userLevelPermissions = this.createHasManyRepositoryFactoryFor(

@@ -84,7 +84,7 @@ export class AuthenticationServiceComponent implements Component {
     );
 
     // Mount default sequence if needed
-    if (!(this.authConfig && this.authConfig.useCustomSequence)) {
+    if (!this.authConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence();
     }

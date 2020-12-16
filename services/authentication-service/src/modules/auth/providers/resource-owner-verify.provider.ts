@@ -63,7 +63,7 @@ export class ResourceOwnerVerifyProvider
       });
       if (
         !client ||
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         user.authClientIds.indexOf(client.id || 0) < 0
       ) {

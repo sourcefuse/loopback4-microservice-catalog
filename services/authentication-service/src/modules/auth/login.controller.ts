@@ -221,8 +221,7 @@ export class LoginController {
       };
 
       if (
-        payload.user &&
-        payload.user.id &&
+        payload.user?.id &&
         !(await this.userRepo.firstTimeUser(payload.user.id))
       ) {
         await this.userRepo.updateLastLogin(payload.user.id);
@@ -687,7 +686,7 @@ export class LoginController {
       }
 
       if (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         user.authClientIds.indexOf(authClient.id || 0) < 0
       ) {
