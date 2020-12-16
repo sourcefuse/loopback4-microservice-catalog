@@ -13,6 +13,7 @@ import {SFCoreBindings} from './keys';
 import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
+import {RateLimiterComponent} from 'loopback4-ratelimiter';
 
 export class CoreComponent implements Component {
   constructor(
@@ -25,6 +26,7 @@ export class CoreComponent implements Component {
     this.application.component(LoggerExtensionComponent);
 
     this.application.component(Loopback4HelmetComponent);
+    this.application.component(RateLimiterComponent);
 
     // Configure locale provider
 
