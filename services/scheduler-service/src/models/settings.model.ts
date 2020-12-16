@@ -8,7 +8,8 @@ import {OwnerType} from './enums/owner-type.enum';
 @model({
   name: 'settings',
 })
-export class Settings extends UserModifiableEntity
+export class Settings
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

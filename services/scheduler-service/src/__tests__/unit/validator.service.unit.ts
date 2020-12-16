@@ -38,7 +38,7 @@ describe('Validator Service', () => {
       });
 
       const calendarId = 'dummy';
-      const filter: Filter = {where: {id: calendarId}};
+      const filter: Filter<Calendar> = {where: {id: calendarId}};
       const findOne = calendarRepo.stubs.findOne;
       findOne.resolves(calendar as CalendarWithRelations);
       const result = await validatorService.calendarExists(calendarId);
@@ -49,7 +49,7 @@ describe('Validator Service', () => {
 
     it('returns false if calendar does not exist', async () => {
       const calendarId = 'dummy';
-      const filter: Filter = {where: {id: calendarId}};
+      const filter: Filter<Calendar> = {where: {id: calendarId}};
       const findOne = calendarRepo.stubs.findOne;
       findOne.resolves(null);
       const result = await validatorService.calendarExists(calendarId);
@@ -66,7 +66,7 @@ describe('Validator Service', () => {
       });
 
       const eventId = 'dummy';
-      const filter: Filter = {where: {id: eventId}};
+      const filter: Filter<Event> = {where: {id: eventId}};
       const findOne = eventRepo.stubs.findOne;
       findOne.resolves(event);
       const result = await validatorService.eventExists(eventId);
@@ -77,7 +77,7 @@ describe('Validator Service', () => {
 
     it('returns false if event does not exist', async () => {
       const eventId = 'dummy';
-      const filter: Filter = {where: {id: eventId}};
+      const filter: Filter<Event> = {where: {id: eventId}};
       const findOne = eventRepo.stubs.findOne;
       findOne.resolves(null);
       const result = await validatorService.eventExists(eventId);
@@ -100,7 +100,7 @@ describe('Validator Service', () => {
         id: 'dummy',
         calendarId: 'dummy',
       });
-      const filter: Filter = {
+      const filter: Filter<Subscription> = {
         where: {
           and: [
             {identifier: currentUser[IdentifierType.Id]},
@@ -118,7 +118,7 @@ describe('Validator Service', () => {
 
     it('returns null when no calendarId exists when id equals "primary"', async () => {
       const id = 'primary';
-      const filter: Filter = {
+      const filter: Filter<Subscription> = {
         where: {
           and: [
             {identifier: currentUser[IdentifierType.Id]},

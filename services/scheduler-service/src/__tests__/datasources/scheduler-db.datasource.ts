@@ -8,7 +8,8 @@ import {juggler} from '@loopback/repository';
 import * as config from './scheduler-db.datasource.config.json';
 
 @lifeCycleObserver('datasource')
-export class SchedulerDbDataSource extends juggler.DataSource
+export class SchedulerDbDataSource
+  extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = 'schedulerDb';
 

@@ -208,7 +208,7 @@ export class EventController {
   async find(
     @param.filter(EventAttendeeView) filter?: Filter<EventAttendeeView>,
   ): Promise<Event[]> {
-    const whereClause: Filter = {
+    const whereClause: Filter<EventAttendeeView> = {
       where: filter?.where ?? {},
     };
 
@@ -220,13 +220,8 @@ export class EventController {
         eventIds.push(event.id);
       }
     });
-
-    if (filter) {
-      filter.where = {id: {inq: eventIds}};
-    } else {
-      filter = {where: {id: {inq: eventIds}}};
-    }
-    return this.eventRepository.find(filter);
+    const eventFilter: Filter<Event> = {where: {id: {inq: eventIds}}};
+    return this.eventRepository.find(eventFilter);
   }
 
   @authenticate(STRATEGY.BEARER, {

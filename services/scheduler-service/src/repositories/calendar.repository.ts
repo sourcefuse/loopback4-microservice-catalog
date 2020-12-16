@@ -51,7 +51,7 @@ export class CalendarRepository extends DefaultUserModifyCrudRepository<
     @repository.getter('WorkingHourRepository')
     protected workingHourRepositoryGetter: Getter<WorkingHourRepository>,
     @repository.getter('SubscriptionRepository')
-    protected SubscriptionRepositoryGetter: Getter<SubscriptionRepository>,
+    protected SubscriptionRepositoryGetter: Getter<SubscriptionRepository> /* eslint-disable-line @typescript-eslint/naming-convention */,
   ) {
     super(Calendar, dataSource, getCurrentUser);
     this.subscriptions = this.createHasManyRepositoryFactoryFor(

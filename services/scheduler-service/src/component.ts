@@ -96,7 +96,7 @@ export class SchedulerServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    if (!(this.schedulerConfig && this.schedulerConfig.useCustomSequence)) {
+    if (!this.schedulerConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence(this.bindings);
     }
