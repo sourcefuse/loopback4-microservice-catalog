@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.7](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.6...@sourceloop/auth-multitenant-example@2.0.0-alpha.7) (2020-12-18)
+
+
+### Features
+
+* **core:** added helmet, rate limit in sequence when respective configs are present ([#101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/101)) ([cbcc00c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cbcc00ca058299c284aa8a6857ccf73ed0621536))
+
+
+
+
+
 # [2.0.0-alpha.6](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.5...@sourceloop/auth-multitenant-example@2.0.0-alpha.6) (2020-12-08)
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

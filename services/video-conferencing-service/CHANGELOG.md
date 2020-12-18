@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.21...@sourceloop/video-conferencing-service@1.0.0-alpha.22) (2020-12-18)
+
+
+### Features
+
+* **core:** added helmet, rate limit in sequence when respective configs are present ([#101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/101)) ([cbcc00c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cbcc00ca058299c284aa8a6857ccf73ed0621536))
+
+
+
+
+
 # [1.0.0-alpha.21](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.20...@sourceloop/video-conferencing-service@1.0.0-alpha.21) (2020-12-08)
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service
