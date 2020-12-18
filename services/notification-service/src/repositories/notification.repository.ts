@@ -23,9 +23,7 @@ export class NotificationRepository extends DefaultCrudRepository<
     @inject(`datasources.${NotifDbSourceName}`)
     dataSource: juggler.DataSource,
     @repository.getter('NotificationUserRepository')
-    protected notificationUserRepositoryGetter: Getter<
-      NotificationUserRepository
-    >,
+    protected notificationUserRepositoryGetter: Getter<NotificationUserRepository>,
   ) {
     super(Notification, dataSource);
     this.notificationUsers = this.createHasManyRepositoryFactoryFor(

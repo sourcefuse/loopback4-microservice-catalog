@@ -65,6 +65,10 @@ export class SecureSequence implements SequenceHandler {
     protected rateLimitAction: RateLimitAction,
     @inject(SFCoreBindings.i18n)
     protected i18n: i18nAPI, // sonarignore:end
+    @inject(RateLimitSecurityBindings.CONFIG, {optional: true})
+    private readonly rateLimitConfig?: object,
+    @inject(HelmetSecurityBindings.CONFIG, {optional: true})
+    private readonly helmetConfig?: object,
   ) {}
 
   async handle(context: RequestContext) {
@@ -87,8 +91,13 @@ export class SecureSequence implements SequenceHandler {
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
 
-      await this.rateLimitAction(request, response);
-      await this.helmetAction(request, response);
+      if (this.rateLimitConfig) {
+        await this.rateLimitAction(request, response);
+      }
+
+      if (this.helmetConfig) {
+        await this.helmetAction(request, response);
+      }
 
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
@@ -167,8 +176,7 @@ export class SecureSequence implements SequenceHandler {
     ) {
       return JSON.parse(err.message).error as Error;
     } else if (
-      err.message &&
-      err.message.message &&
+      err.message?.message &&
       isJsonString(err.message.message) &&
       JSON.parse(err.message.message).error
     ) {

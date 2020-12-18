@@ -99,7 +99,7 @@ export class CalendarEventController {
       whereClause,
       filter,
     );
-    const filterWhere: Filter = {
+    const filterWhere: Filter<EventAttendeeView> = {
       where: modifiedFilter.where,
     };
     const events = await this.eventAttendeeViewRepository.find(filterWhere);
@@ -111,12 +111,8 @@ export class CalendarEventController {
       }
     });
 
-    if (filter) {
-      filter.where = {id: {inq: eventIds}};
-    } else {
-      filter = {where: {id: {inq: eventIds}}};
-    }
-    return this.eventRepository.find(filter);
+    const eventFilter: Filter<Event> = {where: {id: {inq: eventIds}}};
+    return this.eventRepository.find(eventFilter);
   }
 
   @authenticate(STRATEGY.BEARER, {

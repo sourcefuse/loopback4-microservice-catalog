@@ -7,7 +7,8 @@ import {UserTenant} from './user-tenant.model';
 @model({
   name: 'user_resources',
 })
-export class UserLevelResource extends UserModifiableEntity
+export class UserLevelResource
+  extends UserModifiableEntity
   implements IUserResource<string> {
   @property({
     type: 'string',

@@ -7,7 +7,8 @@ import {
 @model({
   name: 'themes',
 })
-export class Theme extends UserModifiableEntity
+export class Theme
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

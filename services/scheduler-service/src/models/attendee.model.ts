@@ -9,7 +9,8 @@ import {Event} from './event.model';
 @model({
   name: 'attendees',
 })
-export class Attendee extends UserModifiableEntity
+export class Attendee
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

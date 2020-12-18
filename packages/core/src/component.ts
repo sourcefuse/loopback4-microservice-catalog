@@ -12,6 +12,8 @@ import {LocaleKey} from './enums';
 import {SFCoreBindings} from './keys';
 import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
+import {Loopback4HelmetComponent} from 'loopback4-helmet';
+import {RateLimiterComponent} from 'loopback4-ratelimiter';
 
 export class CoreComponent implements Component {
   constructor(
@@ -23,9 +25,12 @@ export class CoreComponent implements Component {
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 
+    this.application.component(Loopback4HelmetComponent);
+    this.application.component(RateLimiterComponent);
+
     // Configure locale provider
 
-    if (this.coreConfig && this.coreConfig.configObject) {
+    if (this.coreConfig?.configObject) {
       configure({...this.coreConfig.configObject, register: this.localeObj});
     } else {
       configure({

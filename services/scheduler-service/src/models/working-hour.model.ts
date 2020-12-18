@@ -9,7 +9,8 @@ import {DayOfWeekType} from './enums/day-of-week.enum';
 @model({
   name: 'working_hours',
 })
-export class WorkingHour extends UserModifiableEntity
+export class WorkingHour
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

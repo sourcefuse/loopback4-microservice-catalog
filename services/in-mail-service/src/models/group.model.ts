@@ -10,7 +10,8 @@ import {Thread} from './thread.model';
 @model({
   name: 'group',
 })
-export class Group extends UserModifiableEntity
+export class Group
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

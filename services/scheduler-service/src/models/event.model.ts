@@ -16,7 +16,8 @@ import {StatusType} from './enums/status.enum';
 @model({
   name: 'events',
 })
-export class Event extends UserModifiableEntity
+export class Event
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

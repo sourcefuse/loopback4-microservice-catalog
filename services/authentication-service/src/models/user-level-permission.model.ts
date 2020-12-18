@@ -7,7 +7,8 @@ import {UserTenant} from './user-tenant.model';
 @model({
   name: 'user_permissions',
 })
-export class UserLevelPermission extends UserModifiableEntity
+export class UserLevelPermission
+  extends UserModifiableEntity
   implements UserPermission<string> {
   @property({
     type: 'string',

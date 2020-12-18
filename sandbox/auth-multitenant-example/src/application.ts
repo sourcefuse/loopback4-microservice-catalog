@@ -1,16 +1,23 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import {RestApplication, Request} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
+import {SecureSequence} from '@sourceloop/core';
+import {
+  AuthenticationServiceComponent,
+  AuthServiceBindings,
+} from '@sourceloop/authentication-service';
+import {HelmetSecurityBindings} from 'loopback4-helmet';
+import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
+import {RedisDataSource} from './datasources/redis.datasource';
 
 export {ApplicationConfig};
 
@@ -45,9 +52,26 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
-    this.component(RestExplorerComponent);
 
     this.component(AuthenticationServiceComponent);
+
+    this.sequence(SecureSequence);
+
+    this.bind(AuthServiceBindings.Config).to({useCustomSequence: true});
+    this.bind(RateLimitSecurityBindings.CONFIG).to({
+      name: 'redis',
+      max: process.env.RATE_LIMITER_MAX_REQS,
+      windowsMs: process.env.RATE_LIMITER_WINDOW_MS,
+      keyGenerator: function (req: Request) {
+        return req.ip;
+      }
+    });
+    this.bind(HelmetSecurityBindings.CONFIG).to({
+      frameguard: {action: process.env.X_FRAME_OPTIONS}
+    });
+    this.bind('datasources.redis').to(RedisDataSource);
+
+    this.component(RestExplorerComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

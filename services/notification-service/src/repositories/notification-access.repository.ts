@@ -4,9 +4,7 @@ import {DefaultKeyValueRepository, juggler} from '@loopback/repository';
 import {NotificationAccess} from '../models/notification-access.model';
 import {NotifAccessCacheSourceName} from '../types';
 
-export class NotificationAccessRepository extends DefaultKeyValueRepository<
-  NotificationAccess
-> {
+export class NotificationAccessRepository extends DefaultKeyValueRepository<NotificationAccess> {
   constructor(
     @inject(`datasources.${NotifAccessCacheSourceName}`)
     dataSource: juggler.DataSource,

@@ -8,7 +8,8 @@ import {Event} from './event.model';
 @model({
   name: 'attachments',
 })
-export class Attachment extends UserModifiableEntity
+export class Attachment
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

@@ -35,6 +35,8 @@ import {
   ThreadRepository,
   ThreadViewRepository,
 } from './repositories';
+import {InMailBindings} from './keys';
+import {IInMailServiceConfig} from './types';
 
 export class InMailServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -53,6 +55,8 @@ export class InMailServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(InMailBindings.Config, {optional: true})
+    private readonly inMailConfig?: IInMailServiceConfig,
   ) {
     this.application.component(CoreComponent);
     this.models = [Meta, Thread, Message, Group, Attachment];
@@ -69,7 +73,12 @@ export class InMailServiceComponent implements Component {
       GroupRepository,
       ThreadViewRepository,
     ];
-    this.application.sequence(ServiceSequence);
+
+    if (!this.inMailConfig?.useCustomSequence) {
+      // Mount default sequence if needed
+      this.setupSequence();
+    }
+
     // Set up default home page
     this.application.component(AuthenticationComponent);
     this.application.bind(BearerVerifierBindings.Config).to({
@@ -94,5 +103,12 @@ export class InMailServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
+  }
+
+  /**
+   * Setup ServiceSequence by default if no other sequnce provided
+   */
+  setupSequence() {
+    this.application.sequence(ServiceSequence);
   }
 }

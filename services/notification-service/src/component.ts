@@ -75,27 +75,27 @@ export class NotificationServiceComponent implements Component {
 
     // Mount notifications component
     this.application.component(NotificationsComponent);
-    if (!(this.notifConfig && this.notifConfig.useCustomEmailProvider)) {
+    if (!this.notifConfig?.useCustomEmailProvider) {
       this.bindings.push(
         Binding.bind(NotificationBindings.EmailProvider).toProvider(
           SesProvider,
         ),
       );
     }
-    if (!(this.notifConfig && this.notifConfig.useCustomPushProvider)) {
+    if (!this.notifConfig?.useCustomPushProvider) {
       this.bindings.push(
         Binding.bind(NotificationBindings.PushProvider).toProvider(
           PubNubProvider,
         ),
       );
     }
-    if (!(this.notifConfig && this.notifConfig.useCustomSMSProvider)) {
+    if (!this.notifConfig?.useCustomSMSProvider) {
       this.bindings.push(
         Binding.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider),
       );
     }
 
-    if (!(this.notifConfig && this.notifConfig.useCustomSequence)) {
+    if (!this.notifConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence();
     }

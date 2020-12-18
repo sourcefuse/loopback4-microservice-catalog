@@ -1,4 +1,4 @@
-import {NotificationSocketExampleApplication} from '../..';
+import {AuthMultitenantExampleApplication} from '../..';
 import {
   createRestAppClient,
   givenHttpServerConfig,
@@ -7,14 +7,11 @@ import {
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
-    // Customize the server configuration here.
-    // Empty values (undefined, '') will be ignored by the helper.
-    //
-    // host: process.env.HOST,
-    // port: +process.env.PORT,
+    host: process.env.HOST,
+    port: +(process.env.PORT ?? 3000),
   });
 
-  const app = new NotificationSocketExampleApplication({
+  const app = new AuthMultitenantExampleApplication({
     rest: restConfig,
   });
 
@@ -27,6 +24,6 @@ export async function setupApplication(): Promise<AppWithClient> {
 }
 
 export interface AppWithClient {
-  app: NotificationSocketExampleApplication;
+  app: AuthMultitenantExampleApplication;
   client: Client;
 }

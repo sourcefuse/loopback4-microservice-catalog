@@ -9,7 +9,8 @@ import {
 @model({
   name: 'thread',
 })
-export class Thread extends UserModifiableEntity
+export class Thread
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

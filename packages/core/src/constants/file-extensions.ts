@@ -1,4 +1,5 @@
 export class FileExtensions {
+  /* eslint-disable-next-line  @typescript-eslint/naming-convention */
   static readonly Prohibited = [
     '.0xe',
     '.A6P',

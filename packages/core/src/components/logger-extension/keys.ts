@@ -18,6 +18,7 @@ export namespace LOGGER {
   /**
    * Enum to define the supported log levels
    */
+  /* eslint-disable-next-line  @typescript-eslint/naming-convention */
   export enum LOG_LEVEL {
     DEBUG,
     INFO,

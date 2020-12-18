@@ -6,7 +6,7 @@ import {
 import {SubscriptionRepository} from '../../repositories';
 import sinon from 'sinon';
 import {CalendarEventService} from '../../services';
-import {Subscription} from '../../models';
+import {EventAttendeeView, Subscription} from '../../models';
 import {Filter} from '@loopback/repository';
 
 describe('Calendar Event Service', () => {
@@ -24,7 +24,7 @@ describe('Calendar Event Service', () => {
         calendarId: calendarId,
         isPrimary: true,
       });
-      const filter: Filter = {
+      const filter: Filter<Subscription> = {
         where: {
           and: [{calendarId: calendarId}, {isPrimary: true}],
         },
@@ -78,7 +78,7 @@ describe('Calendar Event Service', () => {
       const timeMax = new Date(2019, 6, 1);
       const whereClause = {startDateTime: {lte: timeMax}};
       const identifier = 'dummy';
-      const filter: Filter = {};
+      const filter: Filter<EventAttendeeView> = {};
       filter.where = {isOptional: true};
       const result = calendarEventService.getFilter(
         identifier,

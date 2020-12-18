@@ -55,7 +55,7 @@ export class AuditServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    if (!(this.notifConfig && this.notifConfig.useCustomSequence)) {
+    if (!this.notifConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence();
     }

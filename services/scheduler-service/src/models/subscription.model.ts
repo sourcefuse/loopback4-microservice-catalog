@@ -9,7 +9,8 @@ import {AccessRoleType} from './enums/access-role.enum';
 @model({
   name: 'subscriptions',
 })
-export class Subscription extends UserModifiableEntity
+export class Subscription
+  extends UserModifiableEntity
   implements ExternalIdentifierEnabledEntity {
   @property({
     type: 'string',

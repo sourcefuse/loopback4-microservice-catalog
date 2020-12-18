@@ -4,9 +4,7 @@ import {DefaultKeyValueRepository, juggler} from '@loopback/repository';
 import {RefreshToken} from '../models';
 import {AuthCacheSourceName} from '../types';
 
-export class RefreshTokenRepository extends DefaultKeyValueRepository<
-  RefreshToken
-> {
+export class RefreshTokenRepository extends DefaultKeyValueRepository<RefreshToken> {
   constructor(
     @inject(`datasources.${AuthCacheSourceName}`)
     dataSource: juggler.DataSource,
