@@ -8,6 +8,7 @@ export * from './keys';
 export * from './models';
 export * from './repositories';
 export * from './secure-sequence';
+export * from './casbin-secure-sequence';
 export * from './service-sequence';
 export * from './utils';
 export * from './types';
