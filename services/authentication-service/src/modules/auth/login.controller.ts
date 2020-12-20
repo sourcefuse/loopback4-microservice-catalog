@@ -21,6 +21,7 @@ import {
   IAuthUserWithPermissions,
   ILogger,
   LOGGER,
+  OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   SuccessResponse,
   UserStatus,
@@ -542,6 +543,7 @@ export class LoginController {
   @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @authorize({permissions: ['*']})
   @patch(`auth/change-password`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'If User password successfully changed.',
@@ -628,6 +630,7 @@ export class LoginController {
   })
   @authorize({permissions: ['*']})
   @get('/auth/me', {
+    security: OPERATION_SECURITY_SPEC,
     description: 'To get the user details',
     responses: {
       [STATUS_CODE.OK]: {

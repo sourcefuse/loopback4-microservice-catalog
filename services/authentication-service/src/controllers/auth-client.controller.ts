@@ -21,7 +21,11 @@ import {AuthClient} from '../models';
 import {AuthClientRepository} from '../repositories';
 import {authorize} from 'loopback4-authorization';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import {PermissionKey} from '../permission-key.enum';
 
 const baseUrl = '/auth-clients';
@@ -34,6 +38,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @post(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuthClient model instance',
@@ -57,6 +62,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @get(`${baseUrl}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuthClient model count',
@@ -74,6 +80,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @get(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of AuthClient model instances',
@@ -95,6 +102,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @patch(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuthClient PATCH success count',
@@ -120,6 +128,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @get(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuthClient model instance',
@@ -134,6 +143,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @patch(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'AuthClient PATCH success',
@@ -157,6 +167,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @put(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'AuthClient PUT success',
@@ -173,6 +184,7 @@ export class AuthClientController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.NotAllowed]})
   @del(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'AuthClient DELETE success',

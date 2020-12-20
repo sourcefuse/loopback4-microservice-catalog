@@ -7,7 +7,11 @@ import {
   Where,
 } from '@loopback/repository';
 import {get, getModelSchemaRef, param, post, requestBody} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
@@ -26,6 +30,7 @@ export class AuditController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateAudit]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuditLog model instance',
@@ -52,6 +57,7 @@ export class AuditController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewAudit]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuditLog model count',
@@ -66,6 +72,7 @@ export class AuditController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewAudit]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of AuditLog model instances',
@@ -89,6 +96,7 @@ export class AuditController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewAudit]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuditLog model instance',

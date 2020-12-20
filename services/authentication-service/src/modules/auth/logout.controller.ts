@@ -13,6 +13,7 @@ import {
   AuthenticateErrorKeys,
   CONTENT_TYPE,
   ErrorCodes,
+  OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   SuccessResponse,
 } from '@sourceloop/core';
@@ -39,6 +40,7 @@ export class LogoutController {
   })
   @authorize({permissions: ['*']})
   @post('/logout', {
+    security: OPERATION_SECURITY_SPEC,
     description: 'To logout',
     responses: {
       [STATUS_CODE.OK]: {
