@@ -7,7 +7,12 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {SecureSequence} from '@sourceloop/core';
+import {
+  CasbinAuthorizationProvider,
+  CasbinEnforcerConfigProvider,
+  CasbinResValModifierProvider,
+  CasbinSecureSequence,
+} from '@sourceloop/core';
 import {
   AuthenticationServiceComponent,
   AuthServiceBindings,
@@ -18,6 +23,10 @@ import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
 import {RedisDataSource} from './datasources/redis.datasource';
+import {
+  AuthorizationBindings,
+  UserPermissionsProvider,
+} from 'loopback4-authorization';
 
 export {ApplicationConfig};
 
@@ -55,7 +64,7 @@ export class AuthMultitenantExampleApplication extends BootMixin(
 
     this.component(AuthenticationServiceComponent);
 
-    this.sequence(SecureSequence);
+    this.sequence(CasbinSecureSequence);
 
     this.bind(AuthServiceBindings.Config).to({useCustomSequence: true});
     this.bind(RateLimitSecurityBindings.CONFIG).to({
@@ -64,12 +73,26 @@ export class AuthMultitenantExampleApplication extends BootMixin(
       windowsMs: process.env.RATE_LIMITER_WINDOW_MS,
       keyGenerator: function (req: Request) {
         return req.ip;
-      }
+      },
     });
     this.bind(HelmetSecurityBindings.CONFIG).to({
-      frameguard: {action: process.env.X_FRAME_OPTIONS}
+      frameguard: {action: process.env.X_FRAME_OPTIONS},
     });
     this.bind('datasources.redis').to(RedisDataSource);
+
+    this.bind(AuthorizationBindings.CASBIN_ENFORCER_CONFIG_GETTER).toProvider(
+      CasbinEnforcerConfigProvider,
+    );
+
+    this.bind(AuthorizationBindings.CASBIN_RESOURCE_MODIFIER_FN).toProvider(
+      CasbinResValModifierProvider,
+    );
+    this.bind(AuthorizationBindings.CASBIN_AUTHORIZE_ACTION).toProvider(
+      CasbinAuthorizationProvider,
+    );
+    this.bind(AuthorizationBindings.USER_PERMISSIONS).toProvider(
+      UserPermissionsProvider,
+    );
 
     this.component(RestExplorerComponent);
 

@@ -31,7 +31,10 @@
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "start": "node -r source-map-support/register .",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
   },
   "repository": {
     "type": "git"
@@ -55,6 +58,9 @@
     "@loopback/service-proxy": "^3.0.3",
     "@sourceloop/authentication-service": "^1.0.0-alpha.34",
     "@sourceloop/core": "^1.0.0-alpha.19",
+    "bcrypt": "^5.0.0",
+    "db-migrate": "^0.11.11",
+    "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.8.0",
     "loopback-connector-kv-redis": "^3.0.3",
@@ -69,6 +75,7 @@
     "@loopback/build": "^6.2.6",
     "@loopback/eslint-config": "^10.0.2",
     "@loopback/testlab": "^3.2.8",
+    "@types/bcrypt": "^3.0.0",
     "@types/node": "^10.17.44",
     "eslint": "^7.12.1",
     "source-map-support": "^0.5.19",
