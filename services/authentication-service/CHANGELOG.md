@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.34](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.33...@sourceloop/authentication-service@1.0.0-alpha.34) (2020-12-20)
+
+
+### Bug Fixes
+
+* **authentication-service:** add security spec ([d829a85](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d829a850faca316237ec485c00d160efb04a461e))
+
+
+
+
+
 # [1.0.0-alpha.33](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.32...@sourceloop/authentication-service@1.0.0-alpha.33) (2020-12-20)
 
 

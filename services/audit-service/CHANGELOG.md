@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.6](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.5...@sourceloop/audit-service@1.1.0-alpha.6) (2020-12-20)
+
+
+### Bug Fixes
+
+* **authentication-service:** add security spec ([d829a85](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d829a850faca316237ec485c00d160efb04a461e))
+
+
+
+
+
 # [1.1.0-alpha.5](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.4...@sourceloop/audit-service@1.1.0-alpha.5) (2020-12-18)
 
 
