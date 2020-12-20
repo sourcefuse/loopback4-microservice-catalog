@@ -12,7 +12,11 @@ import {
   SequenceHandler,
 } from '@loopback/rest';
 import {isString} from 'lodash';
-import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
+import {
+  AuthenticateFn,
+  AuthenticationBindings,
+  IAuthClient,
+} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizeErrorKeys,
@@ -57,6 +61,8 @@ export class SecureSequence implements SequenceHandler {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthenticationBindings.USER_AUTH_ACTION)
     protected authenticateRequest: AuthenticateFn<IAuthUserWithPermissions>,
+    @inject(AuthenticationBindings.CLIENT_AUTH_ACTION)
+    protected authenticateClientRequest: AuthenticateFn<IAuthClient>,
     @inject(AuthorizationBindings.AUTHORIZE_ACTION)
     protected checkAuthorisation: AuthorizeFn,
     @inject(HelmetSecurityBindings.HELMET_SECURITY_ACTION)
@@ -102,6 +108,7 @@ export class SecureSequence implements SequenceHandler {
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
       );
+      await this.authenticateClientRequest(request);
       const isAccessAllowed: boolean = await this.checkAuthorisation(
         authUser?.permissions,
         request,

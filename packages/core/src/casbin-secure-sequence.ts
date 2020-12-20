@@ -12,7 +12,11 @@ import {
   SequenceHandler,
 } from '@loopback/rest';
 import {isString} from 'lodash';
-import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
+import {
+  AuthenticateFn,
+  AuthenticationBindings,
+  IAuthClient,
+} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizeErrorKeys,
@@ -58,6 +62,8 @@ export class CasbinSecureSequence implements SequenceHandler {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthenticationBindings.USER_AUTH_ACTION)
     protected authenticateRequest: AuthenticateFn<IAuthUserWithPermissions>,
+    @inject(AuthenticationBindings.CLIENT_AUTH_ACTION)
+    protected authenticateClientRequest: AuthenticateFn<IAuthClient>,
     @inject(AuthorizationBindings.CASBIN_AUTHORIZE_ACTION)
     protected checkAuthorisation: CasbinAuthorizeFn,
     @inject(AuthorizationBindings.CASBIN_RESOURCE_MODIFIER_FN)
@@ -105,6 +111,7 @@ export class CasbinSecureSequence implements SequenceHandler {
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
       );
+      await this.authenticateClientRequest(request);
       const resVal = await this.casbinResModifierFn(args, request);
 
       const isAccessAllowed: boolean = await this.checkAuthorisation(
