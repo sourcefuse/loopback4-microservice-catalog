@@ -9,8 +9,12 @@ import {
 
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-import {KeyCloakSignUpFn} from '../../../providers/types';
-import {SignUpBindings} from '../../../providers';
+import {
+  KeyCloakPostVerifyFn,
+  KeyCloakPreVerifyFn,
+  KeyCloakSignUpFn,
+} from '../../../providers/types';
+import {SignUpBindings, VerifyBindings} from '../../../providers';
 
 export class KeycloakVerifyProvider
   implements Provider<VerifyFunction.KeycloakAuthFn> {
@@ -21,6 +25,10 @@ export class KeycloakVerifyProvider
     public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER)
     private readonly signupProvider: KeyCloakSignUpFn,
+    @inject(VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER)
+    private readonly preVerifyProvider: KeyCloakPreVerifyFn,
+    @inject(VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER)
+    private readonly postVerifyProvider: KeyCloakPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.KeycloakAuthFn {
@@ -30,6 +38,12 @@ export class KeycloakVerifyProvider
           email: profile.email,
         },
       });
+      user = await this.preVerifyProvider(
+        accessToken,
+        refreshToken,
+        profile,
+        user,
+      );
       if (!user) {
         const newUser = await this.signupProvider(profile);
         if (newUser) {
@@ -58,7 +72,7 @@ export class KeycloakVerifyProvider
       authUser.permissions = [];
       authUser.externalAuthToken = accessToken;
       authUser.externalRefreshToken = refreshToken;
-      return authUser;
+      return this.postVerifyProvider(profile, authUser);
     };
   }
 }

@@ -7,6 +7,35 @@ export interface GoogleSignUpFn {
   (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
 }
 
+export interface GooglePreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: GoogleStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface GooglePostVerifyFn {
+  (
+    profile: GoogleStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
 export interface KeyCloakSignUpFn {
   (profile: KeycloakProfile): Promise<IAuthUser | null>;
+}
+
+export interface KeyCloakPreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: KeycloakProfile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface KeyCloakPostVerifyFn {
+  (profile: KeycloakProfile, user: IAuthUser | null): Promise<IAuthUser | null>;
 }

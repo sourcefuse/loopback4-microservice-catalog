@@ -33,7 +33,15 @@ import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {IAuthServiceConfig} from './types';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
-import {GoogleOauth2SignupProvider, SignUpBindings} from './providers';
+import {
+  GoogleOauth2SignupProvider,
+  GooglePostVerifyProvider,
+  GooglePreVerifyProvider,
+  KeyCloakPostVerifyProvider,
+  KeyCloakPreVerifyProvider,
+  SignUpBindings,
+  VerifyBindings,
+} from './providers';
 import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 
 export class AuthenticationServiceComponent implements Component {
@@ -154,6 +162,18 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[
       SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key
     ] = GoogleOauth2SignupProvider;
+    this.providers[
+      VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER.key
+    ] = KeyCloakPreVerifyProvider;
+    this.providers[
+      VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER.key
+    ] = KeyCloakPostVerifyProvider;
+    this.providers[
+      VerifyBindings.GOOGLE_PRE_VERIFY_PROVIDER.key
+    ] = GooglePreVerifyProvider;
+    this.providers[
+      VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key
+    ] = GooglePostVerifyProvider;
   }
 
   setupAuthorizationComponent() {
