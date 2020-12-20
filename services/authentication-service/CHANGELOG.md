@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.33](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.32...@sourceloop/authentication-service@1.0.0-alpha.33) (2020-12-20)
+
+
+### Features
+
+* **authentication-service:** add capability to add pre-verify and post verify providers ([a3ad710](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a3ad710299f6f5ccd42bf64860500d29ee65a45e))
+
+
+
+
+
 # [1.0.0-alpha.32](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.31...@sourceloop/authentication-service@1.0.0-alpha.32) (2020-12-18)
 
 
