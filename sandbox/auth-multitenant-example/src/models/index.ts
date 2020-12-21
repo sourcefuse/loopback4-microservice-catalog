@@ -6,3 +6,5 @@ export * from './user-dto.model';
 export * from './user-level-permission.model';
 export * from './user-tenant.model';
 export * from './user.model';
+export * from './user-level-resource.model';
+export * from './to-do.model';

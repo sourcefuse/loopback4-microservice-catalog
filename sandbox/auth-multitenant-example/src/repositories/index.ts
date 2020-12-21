@@ -5,3 +5,5 @@ export * from './user-credentials-ext.repository';
 export * from './user-level-permission-ext.repository';
 export * from './user-tenant-ext.repository';
 export * from './user-ext.repository';
+export * from './user-level-resource.repository';
+export * from './to-do.repository';
