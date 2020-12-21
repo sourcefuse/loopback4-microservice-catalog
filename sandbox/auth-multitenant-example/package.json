@@ -59,6 +59,7 @@
     "@sourceloop/authentication-service": "^1.0.0-alpha.34",
     "@sourceloop/core": "^1.0.0-alpha.19",
     "bcrypt": "^5.0.0",
+    "casbin": "^5.2.1",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",

@@ -1,6 +1,6 @@
 import {Getter, inject, Provider} from '@loopback/context';
 import {HttpErrors, Request, RestBindings} from '@loopback/rest';
-import {ILogger, LOGGER} from '../components';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {
   AuthorizationBindings,
   AuthorizationMetadata,

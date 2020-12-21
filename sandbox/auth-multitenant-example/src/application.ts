@@ -7,12 +7,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {
-  CasbinAuthorizationProvider,
-  CasbinEnforcerConfigProvider,
-  CasbinResValModifierProvider,
-  CasbinSecureSequence,
-} from '@sourceloop/core';
+import {CasbinSecureSequence} from '@sourceloop/core';
 import {
   AuthenticationServiceComponent,
   AuthServiceBindings,
@@ -27,6 +22,11 @@ import {
   AuthorizationBindings,
   UserPermissionsProvider,
 } from 'loopback4-authorization';
+import {
+  CasbinEnforcerConfigProvider,
+  CasbinResValModifierProvider,
+  CasbinAuthorizationProvider,
+} from './providers';
 
 export {ApplicationConfig};
 

@@ -1,6 +1,6 @@
 import {Provider, inject, Getter} from '@loopback/core';
 import {HttpErrors, Request} from '@loopback/rest';
-import {IAuthUserWithPermissions, ILogger, LOGGER} from '../components';
+import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
 import {
   CasbinAuthorizeFn,
   AuthorizationBindings,
