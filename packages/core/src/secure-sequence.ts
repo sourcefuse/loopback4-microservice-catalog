@@ -105,10 +105,10 @@ export class SecureSequence implements SequenceHandler {
         await this.helmetAction(request, response);
       }
 
+      await this.authenticateClientRequest(request);
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
       );
-      await this.authenticateClientRequest(request);
       const isAccessAllowed: boolean = await this.checkAuthorisation(
         authUser?.permissions,
         request,
