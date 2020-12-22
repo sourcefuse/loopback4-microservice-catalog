@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "1.0.0-alpha.27",
+  "version": "1.0.0-alpha.28",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -51,7 +51,7 @@
     "@loopback/repository": "^3.2.0",
     "@loopback/rest": "^9.0.0",
     "@loopback/rest-explorer": "^3.0.3",
-    "@sourceloop/core": "^1.0.0-alpha.19",
+    "@sourceloop/core": "^1.0.0-alpha.20",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
     "loopback4-authentication": "^4.1.0",
