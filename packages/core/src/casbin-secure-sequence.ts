@@ -20,7 +20,8 @@ import {
 import {
   AuthorizationBindings,
   AuthorizeErrorKeys,
-  AuthorizeFn,
+  CasbinAuthorizeFn,
+  CasbinResourceModifierFn,
 } from 'loopback4-authorization';
 import {HelmetAction, HelmetSecurityBindings} from 'loopback4-helmet';
 import {
@@ -41,7 +42,7 @@ const isJsonString = (str: string) => {
   return true;
 };
 
-export class SecureSequence implements SequenceHandler {
+export class CasbinSecureSequence implements SequenceHandler {
   /**
    * Optional invoker for registered middleware in a chain.
    * To be injected via SequenceActions.INVOKE_MIDDLEWARE.
@@ -63,8 +64,10 @@ export class SecureSequence implements SequenceHandler {
     protected authenticateRequest: AuthenticateFn<IAuthUserWithPermissions>,
     @inject(AuthenticationBindings.CLIENT_AUTH_ACTION)
     protected authenticateClientRequest: AuthenticateFn<IAuthClient>,
-    @inject(AuthorizationBindings.AUTHORIZE_ACTION)
-    protected checkAuthorisation: AuthorizeFn,
+    @inject(AuthorizationBindings.CASBIN_AUTHORIZE_ACTION)
+    protected checkAuthorisation: CasbinAuthorizeFn,
+    @inject(AuthorizationBindings.CASBIN_RESOURCE_MODIFIER_FN)
+    protected casbinResModifierFn: CasbinResourceModifierFn,
     @inject(HelmetSecurityBindings.HELMET_SECURITY_ACTION)
     protected helmetAction: HelmetAction,
     @inject(RateLimitSecurityBindings.RATELIMIT_SECURITY_ACTION)
@@ -109,8 +112,11 @@ export class SecureSequence implements SequenceHandler {
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
       );
+      const resVal = await this.casbinResModifierFn(args, request);
+
       const isAccessAllowed: boolean = await this.checkAuthorisation(
-        authUser?.permissions,
+        authUser,
+        resVal,
         request,
       );
       if (!isAccessAllowed) {
