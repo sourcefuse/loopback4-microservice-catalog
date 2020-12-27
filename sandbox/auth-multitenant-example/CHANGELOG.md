@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.10](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.9...@sourceloop/auth-multitenant-example@2.0.0-alpha.10) (2020-12-22)
+
+
+### Features
+
+* **core:** added casbin secure sequence ([#107](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/107)) ([9699e92](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9699e92b82d76c0c8299207a303d6bebbec85e92))
+
+
+
+
+
 # [2.0.0-alpha.9](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.8...@sourceloop/auth-multitenant-example@2.0.0-alpha.9) (2020-12-20)
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example
