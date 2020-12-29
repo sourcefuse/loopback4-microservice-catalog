@@ -29,17 +29,17 @@ import {
   SesProvider,
   SnsProvider,
 } from 'loopback4-notifications';
-
 import {
   NotificationController,
-  NotificationUserController,
-  PubnubNotificationController,
   NotificationNotificationUserController,
+  NotificationUserController,
   NotificationUserNotificationController,
+  PubnubNotificationController,
 } from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
 import {ChannelManagerProvider} from './providers';
+import {NotificationUserProvider} from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
@@ -110,6 +110,8 @@ export class NotificationServiceComponent implements Component {
 
     this.providers = {
       [NotifServiceBindings.ChannelManager.key]: ChannelManagerProvider,
+      [NotifServiceBindings.NotificationUserManager
+        .key]: NotificationUserProvider,
     };
 
     this.controllers = [

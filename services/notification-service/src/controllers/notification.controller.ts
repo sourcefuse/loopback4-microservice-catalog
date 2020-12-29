@@ -11,23 +11,24 @@ import {
   getFilterSchemaFor,
   getModelSchemaRef,
   getWhereSchemaFor,
+  HttpErrors,
   param,
   post,
   requestBody,
-  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {authenticate, STRATEGY, AuthErrorKeys} from 'loopback4-authentication';
+import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {INotification, NotificationBindings} from 'loopback4-notifications';
-
+import {ErrorKeys} from '../enums/error-keys.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
+import {NotifServiceBindings} from '../keys';
 import {Notification, NotificationUser} from '../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
-import {ErrorKeys} from '../enums/error-keys.enum';
+import {INotificationUserManager} from '../types';
 
 const maxBodyLen = 1000;
 export class NotificationController {
@@ -38,6 +39,8 @@ export class NotificationController {
     private readonly notifProvider: Getter<INotification>,
     @repository(NotificationUserRepository)
     public notificationUserRepository: NotificationUserRepository,
+    @inject(NotifServiceBindings.NotificationUserManager)
+    private readonly notifUserService: INotificationUserManager,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -188,7 +191,7 @@ export class NotificationController {
     return notif.receiver.to.map(to => {
       const notifUser = new NotificationUser();
       notifUser.notificationId = notif.id ?? '';
-      notifUser.userId = to.id;
+      notifUser.userId = this.notifUserService.getUserId(to);
       return notifUser;
     });
   }

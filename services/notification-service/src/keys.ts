@@ -1,6 +1,10 @@
 import {BindingKey} from '@loopback/core';
-import {INotifServiceConfig, IChannelManager} from './types';
 import {BINDING_PREFIX} from '@sourceloop/core';
+import {
+  IChannelManager,
+  INotificationUserManager,
+  INotifServiceConfig,
+} from './types';
 
 export namespace NotifServiceBindings {
   export const Config = BindingKey.create<INotifServiceConfig | null>(
@@ -8,5 +12,8 @@ export namespace NotifServiceBindings {
   );
   export const ChannelManager = BindingKey.create<IChannelManager | null>(
     `${BINDING_PREFIX}.notification.channnelMgr`,
+  );
+  export const NotificationUserManager = BindingKey.create<INotificationUserManager | null>(
+    `${BINDING_PREFIX}.notification.notifUserMgr`,
   );
 }
