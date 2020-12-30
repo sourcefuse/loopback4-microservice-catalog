@@ -14,10 +14,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  HelmetSecurityBindings,
-  Loopback4HelmetComponent,
-} from 'loopback4-helmet';
 
 import {controllers} from './controllers';
 import {AuthServiceBindings} from './keys';
@@ -75,21 +71,6 @@ export class AuthenticationServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
-
-    // Mount Helmet component
-    this.application.component(Loopback4HelmetComponent);
-    this.bindings.push(
-      Binding.bind(HelmetSecurityBindings.CONFIG).to({
-        referrerPolicy: {
-          policy: 'same-origin',
-        },
-        contentSecurityPolicy: {
-          directives: {
-            frameSrc: ["'self'"],
-          },
-        },
-      }),
-    );
 
     // Mount default sequence if needed
     if (!this.authConfig?.useCustomSequence) {

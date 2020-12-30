@@ -56,7 +56,7 @@
     "loopback4-authentication": "^4.1.0",
     "loopback4-authorization": "^3.2.0",
     "loopback4-helmet": "^2.0.0",
-    "loopback4-ratelimiter": "^2.0.0",
+    "loopback4-ratelimiter": "^2.1.0",
     "loopback4-soft-delete": "^3.1.0",
     "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",

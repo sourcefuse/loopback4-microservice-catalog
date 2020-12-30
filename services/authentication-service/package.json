@@ -57,7 +57,6 @@
     "lodash": "^4.17.20",
     "loopback4-authentication": "^4.1.0",
     "loopback4-authorization": "^3.2.0",
-    "loopback4-helmet": "^1.1.0",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "passport-google-oauth20": "^2.0.0",

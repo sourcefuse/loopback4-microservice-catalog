@@ -12,9 +12,8 @@ export class AuthServiceDataSource extends juggler.DataSource {
     @inject('datasources.config.AuthService', {optional: true})
     dsConfig: object = config,
   ) {
-    Object.assign(dsConfig, {
-      options: {baseUrl: conf.authServiceUrl},
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (dsConfig as any).options.baseUrl = conf.authServiceUrl;
     super(dsConfig);
   }
 }
