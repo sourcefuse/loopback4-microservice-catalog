@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.28](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.27...@sourceloop/notification-service@1.0.0-alpha.28) (2020-12-30)
+
+
+### Bug Fixes
+
+* **notification-service:** update method to fetch user id for notification user ([#111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/111)) ([26246d7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/26246d75c51875c8e854b596f0399b078dc593d7))
+
+
+
+
+
 # [1.0.0-alpha.27](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.26...@sourceloop/notification-service@1.0.0-alpha.27) (2020-12-22)
 
 **Note:** Version bump only for package @sourceloop/notification-service

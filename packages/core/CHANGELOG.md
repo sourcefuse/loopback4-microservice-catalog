@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.21](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.20...@sourceloop/core@1.0.0-alpha.21) (2020-12-30)
+
+
+### Features
+
+* **Transactional Repo:** Added base repo ([#108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/108)) ([e98d2b8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e98d2b8e2b204e492e8a916a7b48b52993fb7690))
+
+
+
+
+
 # [1.0.0-alpha.20](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.19...@sourceloop/core@1.0.0-alpha.20) (2020-12-22)
 
 
