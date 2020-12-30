@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.30](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.29...@sourceloop/scheduler-service@1.0.0-alpha.30) (2020-12-30)
+
+**Note:** Version bump only for package @sourceloop/scheduler-service
+
+
+
+
+
 # [1.0.0-alpha.29](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/scheduler-service@1.0.0-alpha.28...@sourceloop/scheduler-service@1.0.0-alpha.29) (2020-12-30)
 
 **Note:** Version bump only for package @sourceloop/scheduler-service

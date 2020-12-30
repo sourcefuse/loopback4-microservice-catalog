@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.21...@sourceloop/core@1.0.0-alpha.22) (2020-12-30)
+
+
+### Bug Fixes
+
+* **authentication-service:** fix facades bearer verifier data source config not updating issue ([da1a96b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/da1a96b115ec65db2529d9f127a2637dfd82d5d9))
+
+
+
+
+
 # [1.0.0-alpha.21](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.20...@sourceloop/core@1.0.0-alpha.21) (2020-12-30)
 
 
