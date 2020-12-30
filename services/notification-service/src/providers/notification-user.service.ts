@@ -1,5 +1,5 @@
 import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
-import {Subscriber} from 'loopback4-notifications';
+import {Notification, NotificationUser} from '../models';
 import {INotificationUserManager} from '../types';
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -9,7 +9,14 @@ export class NotificationUserProvider
 
   value() {
     return {
-      getUserId: (receiver: Subscriber) => receiver.id,
+      getNotifUsers: (notif: Notification) => {
+        return notif.receiver.to.map(to => {
+          const notifUser = new NotificationUser();
+          notifUser.notificationId = notif.id ?? '';
+          notifUser.userId = to.id;
+          return notifUser;
+        });
+      },
     };
   }
 }

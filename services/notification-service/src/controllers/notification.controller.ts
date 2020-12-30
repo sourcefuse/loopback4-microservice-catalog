@@ -188,11 +188,7 @@ export class NotificationController {
     if (!notif.receiver || !notif.receiver.to) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.ReceiverNotFound);
     }
-    return notif.receiver.to.map(to => {
-      const notifUser = new NotificationUser();
-      notifUser.notificationId = notif.id ?? '';
-      notifUser.userId = this.notifUserService.getUserId(to);
-      return notifUser;
-    });
+
+    return this.notifUserService.getNotifUsers(notif);
   }
 }

@@ -1,5 +1,6 @@
 import {IAuthUserWithPermissions, IServiceConfig} from '@sourceloop/core';
-import {Config, Subscriber} from 'loopback4-notifications';
+import {Config} from 'loopback4-notifications';
+import {Notification, NotificationUser} from './models';
 
 export interface IChannelManager {
   isChannelAccessAllowed(
@@ -9,7 +10,7 @@ export interface IChannelManager {
 }
 
 export interface INotificationUserManager {
-  getUserId(receiver: Subscriber): string;
+  getNotifUsers(notif: Notification): NotificationUser[];
 }
 
 export interface INotifServiceConfig extends IServiceConfig {
