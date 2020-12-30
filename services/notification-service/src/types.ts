@@ -10,7 +10,7 @@ export interface IChannelManager {
 }
 
 export interface INotificationUserManager {
-  getNotifUsers(notif: Notification): NotificationUser[];
+  getNotifUsers(notif: Notification): Promise<NotificationUser[]>;
 }
 
 export interface INotifServiceConfig extends IServiceConfig {

@@ -9,13 +9,15 @@ export class NotificationUserProvider
 
   value() {
     return {
-      getNotifUsers: (notif: Notification) => {
-        return notif.receiver.to.map(to => {
-          const notifUser = new NotificationUser();
-          notifUser.notificationId = notif.id ?? '';
-          notifUser.userId = to.id;
-          return notifUser;
-        });
+      getNotifUsers: async (notif: Notification) => {
+        return Promise.resolve(
+          notif.receiver.to.map(to => {
+            const notifUser = new NotificationUser();
+            notifUser.notificationId = notif.id ?? '';
+            notifUser.userId = to.id;
+            return notifUser;
+          }),
+        );
       },
     };
   }
