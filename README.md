@@ -73,11 +73,11 @@ If you've noticed a bug or have a question or have a feature request, [search th
 
 ### Contributing
 
-* [Development Guidelines](DEVELOPING)
+* [Development Guidelines](DEVELOPING.md)
 
 ### Code of Conduct
 
-Code of conduct guidelines [here.](CODE_OF_CONDUCT)
+Code of conduct guidelines [here.](CODE_OF_CONDUCT.md)
 
 ### License
 
