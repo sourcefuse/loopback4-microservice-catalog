@@ -2,25 +2,36 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 The `loopback4-microservice-catalog` is a collection of pre-built microservices that aim to reduce time to market for Enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack4 Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack4 applications or use the [LoopBack 4 Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker.
 
-The current catalog consists of the following services (TODO: link to readmes):
+The current catalog consists of the following services:
 
-* audit-service
-* authentication-service
-* in-mail-service
-* notification-service
-* scheduler-service
-* video-conferencing-service
+* [audit-service](services/audit-service)
+* [authentication-service](services/authentication-service)
+* [in-mail-service](services/in-mail-service)
+* [notification-service](services/notification-service)
+* [scheduler-service](services/scheduler-service)
+* [video-conferencing-service](services/video-conferencing-service)
 
 TODO: note roadmap for upcoming services, infrastructure modules that are available, etc.
 
 ## Table of Contents
 
-[TOC]
-
+- [loopback4-microservice-catalog](#loopback4-microservice-catalog)
+    * [Table of Contents](#table-of-contents)
+        + [Long Term Support](#long-term-support)
+        + [Documentation](#documentation)
+        + [Getting Started](#getting-started)
+        + [Reference Infrastructure Architectures](#reference-infrastructure-architectures)  
+        + [Related Projects](#related-projects)
+        + [Feedback](#feedback)
+        + [Contributing](#contributing)
+        + [Code of Conduct](#code-of-conduct)
+        + [License](#license)
+    
 ### Long Term Support
 
 TODO: Establish LTS policy or document here that the catalog is still in development and has not reached an LTS release yet.
@@ -38,9 +49,13 @@ TODO: Establish LTS policy or document here that the catalog is still in develop
 
 TODO: Point to starter app but provide basic walkthrough from the start using the lb4 CLI
 
+### Reference Infrastructure Architectures
+
+TODO: Provide examples of cloud deployments or k8s deployment
+
 ### Related Projects
 
-The `loopback4-microservice-catalog` utilizes many extensions created by SourceFus
+The `loopback4-microservice-catalog` utilizes many extensions created by SourceFuse.
 
 * [sourcefuse/loopback4-ratelimiter: A rate limiting extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-ratelimiter)
 * [sourcefuse/loopback4-notifications: An extension for setting up various notification mechanisms in loopback4 application, vis-a-vis, Push notification, SMS notification, Email notification (github.com)](https://github.com/sourcefuse/loopback4-notifications)
@@ -51,7 +66,6 @@ The `loopback4-microservice-catalog` utilizes many extensions created by SourceF
 * [sourcefuse/loopback4-authorization: An authorization extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-authorization)
 * [sourcefuse/loopback4-helmet: A loopback4 extension for helmetjs integration (github.com)](https://github.com/sourcefuse/loopback4-helmet)
 * [sourcefuse/loopback4-vault: A loopback-next extension for HashiCorp's Vault integration in loopback-next applications (github.com)](https://github.com/sourcefuse/loopback4-vault)
-* 
 
 ### Feedback
 
