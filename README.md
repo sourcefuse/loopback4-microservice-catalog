@@ -47,7 +47,160 @@ TODO: Establish LTS policy or document here that the catalog is still in develop
 
 ### Getting Started
 
-TODO: Point to starter app but provide basic walkthrough from the start using the lb4 CLI
+For specifics of installing and configuring a particular service, please refer to that service's documentation. The guide here is intended to show the general method for installing and configuring the services. We are going to utilize a fictional service, `@sourceloop/example-service`, as an example. All services load their environment configurations using `dotenv` and `dotenv-extended`.
+
+Install the Loopback4 CLI
+
+```bash
+npm install -g @loopback/cli
+```
+
+Generate an application
+
+```bash
+lb4 app
+? Project name: example-application
+? Project description: Example Application For SourceLoop LoopBack4 Microservice Catalog
+? Project root directory: example-application
+? Application class name: ExampleApplicationApplication
+? Select features to enable in the project Enable eslint, Enable prettier, Enable mocha, Enable loopbackBuild, Enable vs
+code, Enable docker, Enable repositories, Enable services
+    force .yo-rc.json
+   create .eslintignore
+   create .eslintrc.js
+   create .mocharc.json
+   create .npmrc
+   create .prettierignore
+   create .prettierrc
+   create DEVELOPING.md
+   create package.json
+   create tsconfig.json
+   create .vscode\launch.json
+   create .vscode\settings.json
+   create .vscode\tasks.json
+   create .gitignore
+   create .dockerignore
+   create Dockerfile
+   create README.md
+   create public\index.html
+   create src\application.ts
+   create src\index.ts
+   create src\migrate.ts
+   create src\openapi-spec.ts
+   create src\sequence.ts
+   create src\controllers\index.ts
+   create src\controllers\ping.controller.ts
+   create src\controllers\README.md
+   create src\datasources\README.md
+   create src\models\README.md
+   create src\repositories\README.md
+   create src\__tests__\README.md
+   create src\__tests__\acceptance\home-page.acceptance.ts
+   create src\__tests__\acceptance\ping.controller.acceptance.ts
+   create src\__tests__\acceptance\test-helper.ts
+npm WARN deprecated debug@4.2.0: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+npm WARN deprecated fsevents@2.1.3: "Please update to latest v2.3 or v2.2"
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@~2.1.2 (node_modules\chokidar\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+npm WARN example-application@0.0.1 No license field.
+
+added 637 packages from 816 contributors and audited 646 packages in 16.345s
+
+87 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+
+Application example-application was created in example-application.
+
+Next steps:
+
+$ cd example-application
+$ npm start
+```
+
+Install `dotenv`, `dotenv-extended` and `@sourceloop/in-mail-service`.
+
+```bash
+cd example-application
+npm i --save dotenv dotenv-extended @sourceloop/example-service
+touch .env.example
+```
+
+Update `src/application.ts` to use the new service and the environment variables.
+
+```typescript
+import {BootMixin} from '@loopback/boot';
+import {ApplicationConfig} from '@loopback/core';
+import {
+  RestExplorerBindings,
+  RestExplorerComponent,
+} from '@loopback/rest-explorer';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
+import {ServiceMixin} from '@loopback/service-proxy';
+import path from 'path';
+import {MySequence} from './sequence';
+
+import { InMailServiceComponent } from '@sourceloop/example-service';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
+
+export {ApplicationConfig};
+
+const port = 3000;
+export class ExampleApplicationApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    dotenv.config();
+    dotenvExt.load({
+      schema: '.env.example',
+      errorOnMissing: true,
+      includeProcessEnv: true,
+    });
+    options.rest = options.rest || {};
+    options.rest.port = +(process.env.PORT ?? port);
+    options.rest.host = process.env.HOST;
+    super(options);
+
+    // Set up the custom sequence
+    this.sequence(MySequence);
+
+    // Set up default home page
+    this.static('/', path.join(__dirname, '../public'));
+
+    // Customize @loopback/rest-explorer configuration here
+    this.configure(RestExplorerBindings.COMPONENT).to({
+      path: '/explorer',
+    });
+    this.component(RestExplorerComponent);
+    this.component(InMailServiceComponent)
+
+    this.projectRoot = __dirname;
+    // Customize @loopback/boot Booter Conventions here
+    this.bootOptions = {
+      controllers: {
+        // Customize ControllerBooter Conventions here
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+      },
+    };
+  }
+}
+
+```
+
+Modify the environment variable file to have the following contents:
+
+```
+NODE_ENV=
+```
+
+You can now run the example service with `npm start`. 
 
 ### Reference Infrastructure Architectures
 

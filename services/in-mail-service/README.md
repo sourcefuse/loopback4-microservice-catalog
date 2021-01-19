@@ -1,8 +1,10 @@
+
+
 # in-mail-service
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
-A Loopback Microservice primarily used for in-mail implemetation to compose, view in-mails for
+A Loopback Microservice primarily used for in-mail implementation to compose, view in-mails for
 any client application
 
 ## Installation
@@ -20,7 +22,7 @@ use migrations folder to set up your database.
 
 ### Implementation
 
-Create a new Application using Loopback Cli and add the Component for Inmail Service in application.ts
+Create a new Application using Loopback CLI and add the Component for InMailService in `application.ts`
 
 ```typescript
 import {BootMixin} from '@loopback/boot';
@@ -80,25 +82,42 @@ export class Client extends BootMixin(
 ```
 ### Setting Environment Variables
 
-Do not forget to set Environment variables
+Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
 ```environment
-NODE_ENV=
-LOG_LEVEL=
-HOST=
-PORT=
-DB_HOST=
-DB_PORT=
-DB_USER=
-DB_PASSWORD=
-DB_DATABASE=
-DB_SCHEMA=
-JWT_SECRET=
-JWT_ISSUER=
+NODE_ENV=dev
+LOG_LEVEL=DEBUG
+HOST=0.0.0.0
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=pg_service_user
+DB_PASSWORD=pg_service_user_password
+DB_DATABASE=in_mail_db
+DB_SCHEMA=public
+JWT_SECRET=super_secret_string
+JWT_ISSUER=https://authentication.service
 ```
 
-### Setting up Datasource
 
-Here is a Sample Implementation datasource Implemention using environment Variables
+
+| Name          | Required | Default Value | Description                                                  |
+| ------------- | -------- | ------------- | ------------------------------------------------------------ |
+| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`           |
+| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
+| `HOST`        | Y        |               | Host for the service to run under, i.e. `0.0.0.0`            |
+| `PORT`        | Y        | `3000`        | Port for the service to listen on.                           |
+| `DB_HOST`     | Y        |               | Hostname for the database server.                            |
+| `DB_PORT`     | Y        |               | Port for the database server.                                |
+| `DB_USER`     | Y        |               | User for the database.                                       |
+| `DB_PASSWORD` | Y        |               | Password for the database user.                              |
+| `DB_DATABASE` | Y        |               | Database to connect to on the database server.               |
+| `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
+| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                      |
+| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                     |
+
+### Setting up a `DataSource`
+
+Here is a Sample Implementation `DataSource` implementation using environment variables.
 ```TypeScript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
@@ -136,7 +155,7 @@ export class VideochatDbDataSource extends juggler.DataSource
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.
-Content-Type: application/json in the response and in request if the API method is NOT GET
+`Content-Type: application/json` in the response and in request if the API method is NOT GET
 
 #### Common Request path Parameters
 
