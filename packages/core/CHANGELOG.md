@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.23](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.22...@sourceloop/core@1.0.0-alpha.23) (2021-01-19)
+
+
+### Features
+
+* **core:** SFO-169: added metrics functionality in core ([#114](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/114)) ([bc8ba4d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bc8ba4d1c429ee69279c3da3d854aab25484b695))
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.21...@sourceloop/core@1.0.0-alpha.22) (2020-12-30)
 
 
