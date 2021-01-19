@@ -14,6 +14,7 @@ import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
+import * as swstats from 'swagger-stats';
 
 export class CoreComponent implements Component {
   constructor(
@@ -27,6 +28,17 @@ export class CoreComponent implements Component {
 
     this.application.component(Loopback4HelmetComponent);
     this.application.component(RateLimiterComponent);
+
+    // Enable OBF
+    if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
+      this.application.expressMiddleware(
+        'swStats',
+        swstats.getMiddleware({
+          uriPath: this.coreConfig?.obfPath ?? `/obf`,
+          swaggerSpec: this.coreConfig?.openapiSpec,
+        }),
+      );
+    }
 
     // Configure locale provider
 
