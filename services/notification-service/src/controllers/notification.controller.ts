@@ -30,7 +30,7 @@ import {
   NotificationUserRepository,
 } from '../repositories';
 import {INotificationUserManager} from '../types';
-const basePath='/notifications';
+const basePath = '/notifications';
 
 const maxBodyLen = 1000;
 export class NotificationController {

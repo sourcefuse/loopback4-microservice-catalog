@@ -309,7 +309,8 @@ export class NotificationUserController {
     where?: Where<NotificationUser>,
   ): Promise<Count> {
     return this.notificationUserRepository.deleteAll(
-      this._createWhereBuilder(currentUser, where).build());
+      this._createWhereBuilder(currentUser, where).build(),
+    );
   }
 
   private async _verifyOwned(
