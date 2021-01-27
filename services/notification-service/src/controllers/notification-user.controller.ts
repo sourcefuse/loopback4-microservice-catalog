@@ -274,7 +274,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
   @del(`${basePath}/{id}`, {
     responses: {
       '204': {
@@ -289,6 +289,27 @@ export class NotificationUserController {
   ): Promise<void> {
     await this._verifyOwned(id, currentUser);
     await this.notificationUserRepository.deleteById(id);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @del(basePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Notification DELETE success',
+      },
+    },
+  })
+  async deleteAll(
+    @inject(AuthenticationBindings.CURRENT_USER)
+    currentUser: IAuthUserWithPermissions,
+    @param.query.object('where', getWhereSchemaFor(NotificationUser))
+    where?: Where<NotificationUser>,
+  ): Promise<Count> {
+    return this.notificationUserRepository.deleteAll(
+      this._createWhereBuilder(currentUser, where).build());
   }
 
   private async _verifyOwned(

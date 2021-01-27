@@ -7,6 +7,7 @@ import {
   Where,
 } from '@loopback/repository';
 import {
+  del,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
@@ -182,6 +183,22 @@ export class NotificationController {
   })
   async findById(@param.path.string('id') id: string): Promise<Notification> {
     return this.notificationRepository.findById(id);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @del('/notifications', {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Notification DELETE success',
+      },
+    },
+  })
+  async deleteAll(
+    @param.query.object('where', getWhereSchemaFor(Notification))
+    where?: Where<Notification>,
+  ): Promise<Count> {
+    return this.notificationRepository.deleteAll(where);
   }
 
   createNotifUsers(notif: Notification) {
