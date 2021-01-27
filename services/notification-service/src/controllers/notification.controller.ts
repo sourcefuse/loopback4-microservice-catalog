@@ -30,6 +30,7 @@ import {
   NotificationUserRepository,
 } from '../repositories';
 import {INotificationUserManager} from '../types';
+const basePath='/notifications';
 
 const maxBodyLen = 1000;
 export class NotificationController {
@@ -46,7 +47,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post('/notifications', {
+  @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
@@ -83,7 +84,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post('/notifications/bulk', {
+  @post(`${basePath}/bulk`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Notifications',
@@ -133,7 +134,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get('/notifications/count', {
+  @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model count',
@@ -150,7 +151,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get('/notifications', {
+  @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Notification model instances',
@@ -171,7 +172,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get('/notifications/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
@@ -187,7 +188,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteNotification]})
-  @del('/notifications', {
+  @del(basePath, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Notification DELETE success',
