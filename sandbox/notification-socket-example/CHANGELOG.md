@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.11](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-socket-example@2.0.0-alpha.10...@sourceloop/notification-socket-example@2.0.0-alpha.11) (2021-01-30)
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 # [2.0.0-alpha.10](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-socket-example@2.0.0-alpha.9...@sourceloop/notification-socket-example@2.0.0-alpha.10) (2021-01-19)
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

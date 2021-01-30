@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.31](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.30...@sourceloop/notification-service@1.0.0-alpha.31) (2021-01-30)
+
+
+### Features
+
+* **notification-service:** adds delete APIs for notification and notification users ([#115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/115)) ([2462bd6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2462bd6f214726224257a1382f75df470db623c1))
+
+
+
+
+
 # [1.0.0-alpha.30](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.29...@sourceloop/notification-service@1.0.0-alpha.30) (2021-01-19)
 
 **Note:** Version bump only for package @sourceloop/notification-service
