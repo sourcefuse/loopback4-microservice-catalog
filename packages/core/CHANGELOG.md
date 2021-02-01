@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.24](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.23...@sourceloop/core@1.0.0-alpha.24) (2021-02-01)
+
+
+### Bug Fixes
+
+* **core:** change in core to rectify publish issue ([#116](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/116)) ([194c5e8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/194c5e8f4c33f2d088e84e0df8420fefa6ecd825))
+
+
+
+
+
 # [1.0.0-alpha.23](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.22...@sourceloop/core@1.0.0-alpha.23) (2021-01-19)
 
 
