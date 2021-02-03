@@ -308,7 +308,7 @@ export class NotificationUserController {
     @param.query.object('where', getWhereSchemaFor(NotificationUser))
     where?: Where<NotificationUser>,
   ): Promise<Count> {
-    return this.notificationUserRepository.deleteAll(
+    return this.notificationUserRepository.deleteAllHard(
       this._createWhereBuilder(currentUser, where).build(),
     );
   }
