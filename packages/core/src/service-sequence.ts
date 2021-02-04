@@ -1,5 +1,6 @@
 import {inject} from '@loopback/context';
 import {
+  ExpressRequestHandler,
   FindRoute,
   HttpErrors,
   InvokeMethod,
@@ -43,6 +44,8 @@ export class ServiceSequence implements SequenceHandler {
    */
   @inject(SequenceActions.INVOKE_MIDDLEWARE, {optional: true})
   protected invokeMiddleware: InvokeMiddleware = () => false;
+  @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
+  protected expressMiddlewares: ExpressRequestHandler[] = [];
 
   constructor(
     // sonarignore:start
@@ -77,6 +80,9 @@ export class ServiceSequence implements SequenceHandler {
         Remote Address = ${request.connection.remoteAddress}
         Remote Address (Proxy) = ${request.headers['x-forwarded-for']}`,
       );
+
+      await this.invokeMiddleware(context, this.expressMiddlewares);
+
       const finished = await this.invokeMiddleware(context);
       if (finished) return;
       const route = this.findRoute(request);

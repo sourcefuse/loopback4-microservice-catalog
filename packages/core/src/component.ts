@@ -5,7 +5,7 @@ import {
   inject,
   CoreBindings,
 } from '@loopback/core';
-import {RestApplication} from '@loopback/rest';
+import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 
 import {LocaleKey} from './enums';
@@ -22,6 +22,8 @@ export class CoreComponent implements Component {
     private readonly application: RestApplication,
     @inject(SFCoreBindings.config, {optional: true})
     private readonly coreConfig: CoreConfig,
+    @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
+    private readonly expressMiddlewares: ExpressRequestHandler[],
   ) {
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
@@ -31,13 +33,16 @@ export class CoreComponent implements Component {
 
     // Enable OBF
     if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
-      this.application.expressMiddleware(
-        'swStats',
-        swstats.getMiddleware({
-          uriPath: this.coreConfig?.obfPath ?? `/obf`,
-          swaggerSpec: this.coreConfig?.openapiSpec,
-        }),
-      );
+      const middlewares = [];
+      if (this.expressMiddlewares) {
+        middlewares.push(...this.expressMiddlewares);
+      }
+      const swStatsMiddleware = swstats.getMiddleware({
+        uriPath: this.coreConfig?.obfPath ?? `/obf`,
+        swaggerSpec: this.coreConfig?.openapiSpec,
+      });
+      middlewares.push(swStatsMiddleware);
+      this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
     }
 
     // Configure locale provider
