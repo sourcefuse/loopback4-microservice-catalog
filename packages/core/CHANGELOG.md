@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.25](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.24...@sourceloop/core@1.0.0-alpha.25) (2021-02-04)
+
+
+### Features
+
+* **core:** added swagger stats ([#118](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/118)) ([4413c2a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4413c2a5e400d834964d8cee2d4a3dae87b358b6))
+
+
+
+
+
 # [1.0.0-alpha.24](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.23...@sourceloop/core@1.0.0-alpha.24) (2021-02-01)
 
 

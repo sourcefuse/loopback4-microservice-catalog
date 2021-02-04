@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.33](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.32...@sourceloop/notification-service@1.0.0-alpha.33) (2021-02-04)
+
+
+### Bug Fixes
+
+* **notification-service:** hard deleting notif users for gdpr compliance ([#117](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/117)) ([af33640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/af33640203a8c7029b7e0b52a44361c1f630ba0a))
+
+
+
+
+
 # [1.0.0-alpha.32](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-service@1.0.0-alpha.31...@sourceloop/notification-service@1.0.0-alpha.32) (2021-02-01)
 
 **Note:** Version bump only for package @sourceloop/notification-service

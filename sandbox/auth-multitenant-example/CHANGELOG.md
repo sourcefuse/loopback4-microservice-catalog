@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.15](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.14...@sourceloop/auth-multitenant-example@2.0.0-alpha.15) (2021-02-04)
+
+
+### Features
+
+* **core:** added swagger stats ([#118](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/118)) ([4413c2a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4413c2a5e400d834964d8cee2d4a3dae87b358b6))
+
+
+
+
+
 # [2.0.0-alpha.14](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.13...@sourceloop/auth-multitenant-example@2.0.0-alpha.14) (2021-02-01)
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

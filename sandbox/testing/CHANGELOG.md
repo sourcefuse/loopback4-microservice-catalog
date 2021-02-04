@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.35](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/sandbox-testing@1.0.0-alpha.34...@sourceloop/sandbox-testing@1.0.0-alpha.35) (2021-02-04)
+
+**Note:** Version bump only for package @sourceloop/sandbox-testing
+
+
+
+
+
 # [1.0.0-alpha.34](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/sandbox-testing@1.0.0-alpha.33...@sourceloop/sandbox-testing@1.0.0-alpha.34) (2021-02-01)
 
 **Note:** Version bump only for package @sourceloop/sandbox-testing
