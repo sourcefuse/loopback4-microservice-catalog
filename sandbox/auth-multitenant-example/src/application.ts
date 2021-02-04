@@ -7,7 +7,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {CasbinSecureSequence} from '@sourceloop/core';
+import {CasbinSecureSequence, SFCoreBindings} from '@sourceloop/core';
 import {
   AuthenticationServiceComponent,
   AuthServiceBindings,
@@ -27,6 +27,7 @@ import {
   CasbinResValModifierProvider,
   CasbinAuthorizationProvider,
 } from './providers';
+import * as openapi from './openapi.json';
 
 export {ApplicationConfig};
 
@@ -60,6 +61,11 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
+    });
+    this.bind(SFCoreBindings.config).to({
+      openapiSpec: openapi,
+      enableObf: true,
+      obfPath: '/obf',
     });
 
     this.component(AuthenticationServiceComponent);
