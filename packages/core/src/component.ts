@@ -41,7 +41,6 @@ export class CoreComponent implements Component {
     }
 
     // Configure locale provider
-
     if (this.coreConfig?.configObject) {
       configure({...this.coreConfig.configObject, register: this.localeObj});
     } else {
