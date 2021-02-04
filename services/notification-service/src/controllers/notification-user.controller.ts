@@ -313,6 +313,28 @@ export class NotificationUserController {
     );
   }
 
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @del(`${basePath}/hard`, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Notification DELETE success',
+      },
+    },
+  })
+  async deleteAllHard(
+    @inject(AuthenticationBindings.CURRENT_USER)
+    currentUser: IAuthUserWithPermissions,
+    @param.query.object('where', getWhereSchemaFor(NotificationUser))
+    where?: Where<NotificationUser>,
+  ): Promise<Count> {
+    return this.notificationUserRepository.deleteAllHard(
+      this._createWhereBuilder(currentUser, where).build(),
+    );
+  }
+
   private async _verifyOwned(
     id: string,
     currentUser: IAuthUserWithPermissions,
