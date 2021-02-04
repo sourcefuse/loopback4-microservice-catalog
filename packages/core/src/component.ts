@@ -25,6 +25,8 @@ export class CoreComponent implements Component {
     @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
     private readonly expressMiddlewares: ExpressRequestHandler[],
   ) {
+    const middlewares = [];
+
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 
@@ -33,7 +35,6 @@ export class CoreComponent implements Component {
 
     // Enable OBF
     if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
-      const middlewares = [];
       if (this.expressMiddlewares) {
         middlewares.push(...this.expressMiddlewares);
       }
@@ -42,7 +43,6 @@ export class CoreComponent implements Component {
         swaggerSpec: this.coreConfig?.openapiSpec,
       });
       middlewares.push(swStatsMiddleware);
-      this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
     }
 
     // Configure locale provider
@@ -72,6 +72,8 @@ export class CoreComponent implements Component {
         // sonarignore:end
       });
     }
+
+    this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
 
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
   }

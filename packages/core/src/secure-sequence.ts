@@ -96,7 +96,7 @@ export class SecureSequence implements SequenceHandler {
         Remote Address (Proxy) = ${request.headers['x-forwarded-for']}`,
       );
 
-      if (this.expressMiddlewares.length) {
+      if (this.expressMiddlewares?.length) {
         await this.invokeMiddleware(context, this.expressMiddlewares);
       }
 
