@@ -82,7 +82,10 @@ export class ServiceSequence implements SequenceHandler {
       );
 
       if (this.expressMiddlewares?.length) {
-        const responseGenerated = await this.invokeMiddleware(context, this.expressMiddlewares);
+        const responseGenerated = await this.invokeMiddleware(
+          context,
+          this.expressMiddlewares,
+        );
         if (responseGenerated) return;
       }
 

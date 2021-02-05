@@ -98,9 +98,12 @@ export class CasbinSecureSequence implements SequenceHandler {
         Remote Address = ${request.connection.remoteAddress}
         Remote Address (Proxy) = ${request.headers['x-forwarded-for']}`,
       );
-      
+
       if (this.expressMiddlewares?.length) {
-        const responseGenerated = await this.invokeMiddleware(context, this.expressMiddlewares);
+        const responseGenerated = await this.invokeMiddleware(
+          context,
+          this.expressMiddlewares,
+        );
         if (responseGenerated) return;
       }
 
