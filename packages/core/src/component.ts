@@ -26,6 +26,9 @@ export class CoreComponent implements Component {
     private readonly expressMiddlewares: ExpressRequestHandler[],
   ) {
     const middlewares = [];
+    if (this.expressMiddlewares) {
+      middlewares.push(...this.expressMiddlewares);
+    }
 
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
@@ -35,9 +38,6 @@ export class CoreComponent implements Component {
 
     // Enable OBF
     if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
-      if (this.expressMiddlewares) {
-        middlewares.push(...this.expressMiddlewares);
-      }
       const swStatsMiddleware = swstats.getMiddleware({
         uriPath: this.coreConfig?.obfPath ?? `/obf`,
         swaggerSpec: this.coreConfig?.openapiSpec,
