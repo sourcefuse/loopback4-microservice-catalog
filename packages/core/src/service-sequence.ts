@@ -82,7 +82,11 @@ export class ServiceSequence implements SequenceHandler {
       );
 
       if (this.expressMiddlewares?.length) {
-        await this.invokeMiddleware(context, this.expressMiddlewares);
+        const responseGenerated = await this.invokeMiddleware(
+          context,
+          this.expressMiddlewares,
+        );
+        if (responseGenerated) return;
       }
 
       const finished = await this.invokeMiddleware(context);
@@ -92,6 +96,7 @@ export class ServiceSequence implements SequenceHandler {
 
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
+        response,
       );
       const isAccessAllowed: boolean = await this.checkAuthorisation(
         authUser?.permissions,

@@ -100,7 +100,11 @@ export class CasbinSecureSequence implements SequenceHandler {
       );
 
       if (this.expressMiddlewares?.length) {
-        await this.invokeMiddleware(context, this.expressMiddlewares);
+        const responseGenerated = await this.invokeMiddleware(
+          context,
+          this.expressMiddlewares,
+        );
+        if (responseGenerated) return;
       }
 
       const finished = await this.invokeMiddleware(context);
@@ -119,6 +123,7 @@ export class CasbinSecureSequence implements SequenceHandler {
       await this.authenticateClientRequest(request);
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
+        response,
       );
       const resVal = await this.casbinResModifierFn(args, request);
 
