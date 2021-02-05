@@ -22,6 +22,7 @@ import {
   AuthorizationBindings,
   UserPermissionsProvider,
 } from 'loopback4-authorization';
+import morgan from 'morgan';
 import {
   CasbinEnforcerConfigProvider,
   CasbinResValModifierProvider,
@@ -62,6 +63,10 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
+    // morgan middleware should work with or without swagger-stats
+    this.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to([
+      morgan('MORGAN_LOG > :method :url :status')
+    ]);
     this.bind(SFCoreBindings.config).to({
       openapiSpec: openapi,
       enableObf: true,
