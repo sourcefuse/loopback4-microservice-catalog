@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "1.1.0-alpha.12",
+  "version": "1.1.0-alpha.13",
   "description": "A microservice for audit logging",
   "keywords": [
     "loopback-extension",
@@ -47,7 +47,7 @@
     "@loopback/repository": "^3.2.0",
     "@loopback/rest": "^9.0.0",
     "@sourceloop/audit-log": "^1.0.1",
-    "@sourceloop/core": "^1.0.0-alpha.25",
+    "@sourceloop/core": "^1.0.0-alpha.26",
     "loopback4-authentication": "^4.1.0",
     "loopback4-authorization": "^3.2.0",
     "tslib": "^2.0.0"
