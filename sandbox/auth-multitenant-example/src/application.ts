@@ -56,6 +56,8 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     options.rest.host = process.env.HOST;
     super(options);
 
+    const enableObf = !!+(process.env.ENABLE_OBF ?? 1);
+
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
 
@@ -65,11 +67,11 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     });
     // morgan middleware should work with or without swagger-stats
     this.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to([
-      morgan('MORGAN_LOG > :method :url :status')
+      morgan('MORGAN_LOG > :method :url :status'),
     ]);
     this.bind(SFCoreBindings.config).to({
       openapiSpec: openapi,
-      enableObf: true,
+      enableObf,
       obfPath: '/obf',
     });
 
