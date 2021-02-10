@@ -22,7 +22,6 @@ import {
   AuthorizationBindings,
   UserPermissionsProvider,
 } from 'loopback4-authorization';
-import morgan from 'morgan';
 import {
   CasbinEnforcerConfigProvider,
   CasbinResValModifierProvider,
@@ -56,6 +55,8 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     options.rest.host = process.env.HOST;
     super(options);
 
+    const enableObf = !!+(process.env.ENABLE_OBF ?? 1);
+
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
 
@@ -63,21 +64,14 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
-    // morgan middleware should work with or without swagger-stats
-    this.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to([
-      morgan('MORGAN_LOG > :method :url :status')
-    ]);
     this.bind(SFCoreBindings.config).to({
       openapiSpec: openapi,
-      enableObf: true,
+      enableObf,
       obfPath: '/obf',
     });
 
     this.component(AuthenticationServiceComponent);
 
-    this.sequence(CasbinSecureSequence);
-
-    this.bind(AuthServiceBindings.Config).to({useCustomSequence: true});
     this.bind(RateLimitSecurityBindings.CONFIG).to({
       name: 'redis',
       max: process.env.RATE_LIMITER_MAX_REQS,

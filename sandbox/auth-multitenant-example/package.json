@@ -71,7 +71,6 @@
     "loopback4-authorization": "^3.2.0",
     "loopback4-helmet": "^2.0.0",
     "loopback4-ratelimiter": "^2.0.0",
-    "morgan": "^1.10.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -79,7 +78,6 @@
     "@loopback/eslint-config": "^10.0.2",
     "@loopback/testlab": "^3.2.8",
     "@types/bcrypt": "^3.0.0",
-    "@types/morgan": "^1.9.2",
     "@types/node": "^10.17.44",
     "eslint": "^7.12.1",
     "source-map-support": "^0.5.19",
