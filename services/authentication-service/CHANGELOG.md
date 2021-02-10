@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.42](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.41...@sourceloop/authentication-service@1.0.0-alpha.42) (2021-02-10)
+
+
+### Features
+
+* **authentication-service:** added express middleware in sequence ([#120](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/120)) ([bf81cb1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf81cb12bb2b7cdd7edfb43dcf09c71abb891c1d))
+
+
+
+
+
 # [1.0.0-alpha.41](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.40...@sourceloop/authentication-service@1.0.0-alpha.41) (2021-02-06)
 
 **Note:** Version bump only for package @sourceloop/authentication-service
