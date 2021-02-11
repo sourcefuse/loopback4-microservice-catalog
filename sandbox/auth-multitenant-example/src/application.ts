@@ -7,7 +7,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {CasbinSecureSequence} from '@sourceloop/core';
+import {CasbinSecureSequence, SFCoreBindings} from '@sourceloop/core';
 import {
   AuthenticationServiceComponent,
   AuthServiceBindings,
@@ -27,6 +27,7 @@ import {
   CasbinResValModifierProvider,
   CasbinAuthorizationProvider,
 } from './providers';
+import * as openapi from './openapi.json';
 
 export {ApplicationConfig};
 
@@ -54,6 +55,8 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     options.rest.host = process.env.HOST;
     super(options);
 
+    const enableObf = !!+(process.env.ENABLE_OBF ?? 1);
+
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
 
@@ -61,12 +64,14 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
+    this.bind(SFCoreBindings.config).to({
+      openapiSpec: openapi,
+      enableObf,
+      obfPath: '/obf',
+    });
 
     this.component(AuthenticationServiceComponent);
 
-    this.sequence(CasbinSecureSequence);
-
-    this.bind(AuthServiceBindings.Config).to({useCustomSequence: true});
     this.bind(RateLimitSecurityBindings.CONFIG).to({
       name: 'redis',
       max: process.env.RATE_LIMITER_MAX_REQS,

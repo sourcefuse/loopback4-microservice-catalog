@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.42](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.41...@sourceloop/authentication-service@1.0.0-alpha.42) (2021-02-10)
+
+
+### Features
+
+* **authentication-service:** added express middleware in sequence ([#120](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/120)) ([bf81cb1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf81cb12bb2b7cdd7edfb43dcf09c71abb891c1d))
+
+
+
+
+
+# [1.0.0-alpha.41](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.40...@sourceloop/authentication-service@1.0.0-alpha.41) (2021-02-06)
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+# [1.0.0-alpha.40](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.39...@sourceloop/authentication-service@1.0.0-alpha.40) (2021-02-04)
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+# [1.0.0-alpha.39](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.38...@sourceloop/authentication-service@1.0.0-alpha.39) (2021-02-01)
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+# [1.0.0-alpha.38](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.37...@sourceloop/authentication-service@1.0.0-alpha.38) (2021-01-19)
+
+
+### Features
+
+* **core:** SFO-169: added metrics functionality in core ([#114](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/114)) ([bc8ba4d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bc8ba4d1c429ee69279c3da3d854aab25484b695))
+
+
+
+
+
 # [1.0.0-alpha.37](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.36...@sourceloop/authentication-service@1.0.0-alpha.37) (2020-12-30)
 
 

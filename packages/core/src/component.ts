@@ -5,7 +5,7 @@ import {
   inject,
   CoreBindings,
 } from '@loopback/core';
-import {RestApplication} from '@loopback/rest';
+import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 
 import {LocaleKey} from './enums';
@@ -14,6 +14,7 @@ import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
+import * as swstats from 'swagger-stats';
 
 export class CoreComponent implements Component {
   constructor(
@@ -21,15 +22,30 @@ export class CoreComponent implements Component {
     private readonly application: RestApplication,
     @inject(SFCoreBindings.config, {optional: true})
     private readonly coreConfig: CoreConfig,
+    @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
+    private readonly expressMiddlewares: ExpressRequestHandler[],
   ) {
+    const middlewares = [];
+    if (this.expressMiddlewares) {
+      middlewares.push(...this.expressMiddlewares);
+    }
+
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 
     this.application.component(Loopback4HelmetComponent);
     this.application.component(RateLimiterComponent);
 
-    // Configure locale provider
+    // Enable OBF
+    if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
+      const swStatsMiddleware = swstats.getMiddleware({
+        uriPath: this.coreConfig?.obfPath ?? `/obf`,
+        swaggerSpec: this.coreConfig?.openapiSpec,
+      });
+      middlewares.push(swStatsMiddleware);
+    }
 
+    // Configure locale provider
     if (this.coreConfig?.configObject) {
       configure({...this.coreConfig.configObject, register: this.localeObj});
     } else {
@@ -56,6 +72,8 @@ export class CoreComponent implements Component {
         // sonarignore:end
       });
     }
+
+    this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
 
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
   }

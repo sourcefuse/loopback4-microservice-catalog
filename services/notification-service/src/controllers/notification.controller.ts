@@ -7,6 +7,7 @@ import {
   Where,
 } from '@loopback/repository';
 import {
+  del,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
@@ -29,6 +30,7 @@ import {
   NotificationUserRepository,
 } from '../repositories';
 import {INotificationUserManager} from '../types';
+const basePath = '/notifications';
 
 const maxBodyLen = 1000;
 export class NotificationController {
@@ -45,7 +47,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post('/notifications', {
+  @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
@@ -82,7 +84,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post('/notifications/bulk', {
+  @post(`${basePath}/bulk`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Notifications',
@@ -132,7 +134,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get('/notifications/count', {
+  @get(`${basePath}/count`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model count',
@@ -149,7 +151,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get('/notifications', {
+  @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Notification model instances',
@@ -170,7 +172,7 @@ export class NotificationController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get('/notifications/{id}', {
+  @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
@@ -182,6 +184,22 @@ export class NotificationController {
   })
   async findById(@param.path.string('id') id: string): Promise<Notification> {
     return this.notificationRepository.findById(id);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @del(basePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Notification DELETE success',
+      },
+    },
+  })
+  async deleteAll(
+    @param.query.object('where', getWhereSchemaFor(Notification))
+    where?: Where<Notification>,
+  ): Promise<Count> {
+    return this.notificationRepository.deleteAll(where);
   }
 
   createNotifUsers(notif: Notification) {

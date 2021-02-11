@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.29](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.28...@sourceloop/video-conferencing-service@1.0.0-alpha.29) (2021-02-06)
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
+# [1.0.0-alpha.28](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.27...@sourceloop/video-conferencing-service@1.0.0-alpha.28) (2021-02-04)
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
+# [1.0.0-alpha.27](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.26...@sourceloop/video-conferencing-service@1.0.0-alpha.27) (2021-02-01)
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
+# [1.0.0-alpha.26](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.25...@sourceloop/video-conferencing-service@1.0.0-alpha.26) (2021-01-19)
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
 # [1.0.0-alpha.25](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.24...@sourceloop/video-conferencing-service@1.0.0-alpha.25) (2020-12-30)
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service

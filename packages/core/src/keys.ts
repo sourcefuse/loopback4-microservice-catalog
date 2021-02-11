@@ -1,4 +1,5 @@
 import {BindingKey} from '@loopback/core';
+import {ExpressRequestHandler} from '@loopback/rest';
 import {BINDING_PREFIX} from './constants';
 import {CoreConfig} from './types';
 
@@ -7,5 +8,9 @@ export namespace SFCoreBindings {
 
   export const config = BindingKey.create<CoreConfig>(
     'sf.packages.core.config',
+  );
+
+  export const EXPRESS_MIDDLEWARES = BindingKey.create<ExpressRequestHandler[]>(
+    `sf.packages.core.expressMiddlewares`,
   );
 }

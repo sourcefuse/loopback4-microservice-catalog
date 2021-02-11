@@ -3,5 +3,8 @@ export interface IServiceConfig {
 }
 
 export interface CoreConfig {
-  configObject: i18n.ConfigurationOptions;
+  configObject?: i18n.ConfigurationOptions;
+  enableObf?: boolean;
+  obfPath?: string;
+  openapiSpec?: Record<string, unknown>;
 }

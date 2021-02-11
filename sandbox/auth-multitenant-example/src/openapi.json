@@ -1,0 +1,2316 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Authentication Service",
+    "version": "1.0.0",
+    "description": "This is a sample application for sandbox testing of auth microservice components.",
+    "contact": {}
+  },
+  "paths": {
+    "/auth/change-password": {
+      "patch": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "resetPassword",
+        "tags": [
+          "LoginController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If User password successfully changed."
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordPartial"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.resetPassword"
+      }
+    },
+    "/auth/forget-password": {
+      "post": {
+        "x-controller-name": "ForgetPasswordController",
+        "x-operation-name": "forgetPassword",
+        "tags": [
+          "ForgetPasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgetPasswordResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgetPasswordDto"
+              }
+            }
+          }
+        },
+        "operationId": "ForgetPasswordController.forgetPassword"
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "loginViaGoogle",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Google Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.loginViaGoogle"
+      }
+    },
+    "/auth/google-auth-redirect": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "googleCallback",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Google Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.googleCallback"
+      }
+    },
+    "/auth/keycloak": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "loginViaKeycloak",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Keycloak Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.loginViaKeycloak"
+      }
+    },
+    "/auth/keycloak-auth-redirect": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "keycloakCallback",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Keycloak Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.keycloakCallback"
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "login",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Gets you the code that will be used for getting token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Auth Code",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.login"
+      }
+    },
+    "/auth/login-token": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "loginWithClientUser",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Gets you refresh token and access token in one hit. (mobile app)",
+        "responses": {
+          "200": {
+            "description": "Token Response Model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.loginWithClientUser"
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "me",
+        "tags": [
+          "LoginController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To get the user details",
+        "responses": {
+          "200": {
+            "description": "User Object",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "operationId": "LoginController.me"
+      }
+    },
+    "/auth/reset-password": {
+      "patch": {
+        "x-controller-name": "ForgetPasswordController",
+        "x-operation-name": "resetPassword",
+        "tags": [
+          "ForgetPasswordController"
+        ],
+        "responses": {
+          "204": {
+            "description": "If User password successfully changed."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordWithClient"
+              }
+            }
+          }
+        },
+        "operationId": "ForgetPasswordController.resetPassword"
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "getToken",
+        "tags": [
+          "LoginController"
+        ],
+        "description": " Send the code received from the above api and this api will send you refresh token and access token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.getToken"
+      }
+    },
+    "/auth/token-refresh": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "exchangeToken",
+        "tags": [
+          "LoginController"
+        ],
+        "description": " Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
+        "responses": {
+          "200": {
+            "description": "New Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRefreshTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.exchangeToken"
+      }
+    },
+    "/auth/verify-reset-password-link": {
+      "get": {
+        "x-controller-name": "ForgetPasswordController",
+        "x-operation-name": "verifyResetPasswordLink",
+        "tags": [
+          "ForgetPasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Check if Token Is Valid and not Expired."
+          }
+        },
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ForgetPasswordController.verifyResetPasswordLink"
+      }
+    },
+    "/auth-clients/count": {
+      "get": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "count",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuthClient model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "auth_clients.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AuthClient>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuthClientController.count"
+      }
+    },
+    "/auth-clients/{id}": {
+      "put": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "AuthClient PUT success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthClient"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "AuthClientController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "AuthClient PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthClientPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "AuthClientController.updateById"
+      },
+      "get": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "findById",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuthClient model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthClient"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "AuthClientController.findById"
+      },
+      "delete": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "AuthClient DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "AuthClientController.deleteById"
+      }
+    },
+    "/auth-clients": {
+      "post": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "create",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuthClient model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthClient"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthClientExcluding_id_"
+              }
+            }
+          }
+        },
+        "operationId": "AuthClientController.create"
+      },
+      "patch": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuthClient PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "auth_clients.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AuthClient>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthClientPartial"
+              }
+            }
+          }
+        },
+        "operationId": "AuthClientController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "find",
+        "tags": [
+          "AuthClientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of AuthClient model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuthClient"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/auth_clients.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuthClientController.find"
+      }
+    },
+    "/logout": {
+      "post": {
+        "x-controller-name": "LogoutController",
+        "x-operation-name": "logout",
+        "tags": [
+          "LogoutController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To logout",
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "This is the access token which is required to authenticate user."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "LogoutController.logout"
+      }
+    },
+    "/otp-caches/{id}": {
+      "get": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "findById",
+        "tags": [
+          "OtpController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Otp model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Otp"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OtpController.findById"
+      },
+      "delete": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "OtpController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Otp DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OtpController.deleteById"
+      }
+    },
+    "/otp-caches": {
+      "post": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "create",
+        "tags": [
+          "OtpController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Otp model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Otp"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Otp"
+              }
+            }
+          }
+        },
+        "operationId": "OtpController.create"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "greeting": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "headers": {
+                      "type": "object",
+                      "properties": {
+                        "Content-Type": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "PingController.ping"
+      }
+    },
+    "/todos/count": {
+      "get": {
+        "x-controller-name": "TodoController",
+        "x-operation-name": "count",
+        "tags": [
+          "TodoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "ToDo model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "todos.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<ToDo>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TodoController.count"
+      }
+    },
+    "/todos/{id}": {
+      "patch": {
+        "x-controller-name": "TodoController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "TodoController"
+        ],
+        "responses": {
+          "204": {
+            "description": "ToDo PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToDoPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "TodoController.updateById"
+      },
+      "get": {
+        "x-controller-name": "TodoController",
+        "x-operation-name": "findById",
+        "tags": [
+          "TodoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "ToDo model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToDoWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todos.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TodoController.findById"
+      },
+      "delete": {
+        "x-controller-name": "TodoController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "TodoController"
+        ],
+        "responses": {
+          "204": {
+            "description": "ToDo DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "TodoController.deleteById"
+      }
+    },
+    "/todos": {
+      "post": {
+        "x-controller-name": "TodoController",
+        "x-operation-name": "create",
+        "tags": [
+          "TodoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "ToDo model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToDo"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewToDo"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "TodoController.create"
+      },
+      "get": {
+        "x-controller-name": "TodoController",
+        "x-operation-name": "find",
+        "tags": [
+          "TodoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of ToDo model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ToDoWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todos.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TodoController.find"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Home Page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "LoginRequest": {
+        "title": "LoginRequest",
+        "type": "object",
+        "description": "This is the signature for login request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "TokenResponse": {
+        "title": "TokenResponse",
+        "type": "object",
+        "description": "This is signature for successful token response.",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "expires": {
+            "type": "number"
+          },
+          "pubnubToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "expires"
+        ],
+        "additionalProperties": false
+      },
+      "AuthTokenRequest": {
+        "title": "AuthTokenRequest",
+        "type": "object",
+        "description": "This is the signature for requesting the accessToken and refreshToken.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "clientId",
+          "username"
+        ],
+        "additionalProperties": false
+      },
+      "AuthRefreshTokenRequest": {
+        "title": "AuthRefreshTokenRequest",
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "additionalProperties": false
+      },
+      "ResetPasswordPartial": {
+        "title": "ResetPasswordPartial",
+        "type": "object",
+        "description": "This is a signature for reset password. (tsType: Partial<ResetPassword>, schemaOptions: { partial: true })",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPassword": {
+        "title": "ResetPassword",
+        "type": "object",
+        "description": "This is a signature for reset password.",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "refreshToken",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "SuccessResponse": {
+        "title": "SuccessResponse",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      },
+      "RefreshTokenRequestPartial": {
+        "title": "RefreshTokenRequestPartial",
+        "type": "object",
+        "description": "(tsType: Partial<RefreshTokenRequest>, schemaOptions: { partial: true })",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<RefreshTokenRequest>"
+      },
+      "RefreshTokenRequest": {
+        "title": "RefreshTokenRequest",
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "additionalProperties": false
+      },
+      "Otp": {
+        "title": "Otp",
+        "type": "object",
+        "properties": {
+          "otp": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "otp",
+          "username"
+        ],
+        "additionalProperties": false
+      },
+      "AuthClient": {
+        "title": "AuthClient",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "number"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string"
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "clientId",
+          "clientSecret",
+          "secret",
+          "accessTokenExpiration",
+          "refreshTokenExpiration",
+          "authCodeExpiration"
+        ],
+        "additionalProperties": false
+      },
+      "AuthClientExcluding_id_": {
+        "title": "AuthClientExcluding_id_",
+        "type": "object",
+        "description": "(tsType: Omit<AuthClient, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string"
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "clientId",
+          "clientSecret",
+          "secret",
+          "accessTokenExpiration",
+          "refreshTokenExpiration",
+          "authCodeExpiration"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<AuthClient, 'id'>"
+      },
+      "AuthClientPartial": {
+        "title": "AuthClientPartial",
+        "type": "object",
+        "description": "(tsType: Partial<AuthClient>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "number"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string"
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<AuthClient>"
+      },
+      "User": {
+        "title": "User",
+        "type": "object",
+        "description": "This is signature for user model.",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^\\+?[1-9]\\d{1,14}$"
+          },
+          "authClientIds": {
+            "type": "string"
+          },
+          "lastLogin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "type": "string",
+            "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
+            "enum": [
+              "M",
+              "F",
+              "O"
+            ]
+          },
+          "defaultTenantId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "firstName",
+          "username"
+        ],
+        "additionalProperties": false
+      },
+      "ForgetPasswordResponseDto": {
+        "title": "ForgetPasswordResponseDto",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "expiry": {
+            "type": "number"
+          },
+          "email": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": [
+          "code",
+          "expiry",
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "ForgetPasswordDto": {
+        "title": "ForgetPasswordDto",
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "client_id",
+          "client_secret"
+        ],
+        "additionalProperties": false
+      },
+      "ResetPasswordWithClient": {
+        "title": "ResetPasswordWithClient",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "password",
+          "client_id",
+          "client_secret"
+        ],
+        "additionalProperties": false
+      },
+      "ToDo": {
+        "title": "ToDo",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description"
+        ],
+        "additionalProperties": false
+      },
+      "NewToDo": {
+        "title": "NewToDo",
+        "type": "object",
+        "description": "(tsType: Omit<ToDo, 'id'>, schemaOptions: { title: 'NewToDo', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<ToDo, 'id'>"
+      },
+      "ToDoWithRelations": {
+        "title": "ToDoWithRelations",
+        "type": "object",
+        "description": "(tsType: ToDoWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "ToDoWithRelations"
+      },
+      "ToDoPartial": {
+        "title": "ToDoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<ToDo>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<ToDo>"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "auth_clients.Filter": {
+        "type": "object",
+        "title": "auth_clients.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "auth_clients.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "clientId": {
+                    "type": "boolean"
+                  },
+                  "clientSecret": {
+                    "type": "boolean"
+                  },
+                  "secret": {
+                    "type": "boolean"
+                  },
+                  "redirectUrl": {
+                    "type": "boolean"
+                  },
+                  "accessTokenExpiration": {
+                    "type": "boolean"
+                  },
+                  "refreshTokenExpiration": {
+                    "type": "boolean"
+                  },
+                  "authCodeExpiration": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "id",
+                    "clientId",
+                    "clientSecret",
+                    "secret",
+                    "redirectUrl",
+                    "accessTokenExpiration",
+                    "refreshTokenExpiration",
+                    "authCodeExpiration"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "auth_clients.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AuthClient>"
+      },
+      "todos.Filter": {
+        "type": "object",
+        "title": "todos.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "title": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "items": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "title",
+                    "description",
+                    "items"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "todos.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<ToDo>"
+      },
+      "todos.Filter1": {
+        "type": "object",
+        "title": "todos.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "todos.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "title": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "items": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "title",
+                    "description",
+                    "items"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "todos.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<ToDo>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/auth-multitenant-example",
-  "version": "2.0.0-alpha.12",
+  "version": "2.0.0-alpha.17",
   "description": "This is a sample application for sandbox testing of auth microservice components.",
   "private": true,
   "keywords": [
@@ -22,6 +22,7 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
+    "openapi-spec": "npm run build && node ./dist/openapi-spec",
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
@@ -56,8 +57,8 @@
     "@loopback/rest": "^9.0.0",
     "@loopback/rest-explorer": "^3.0.3",
     "@loopback/service-proxy": "^3.0.3",
-    "@sourceloop/authentication-service": "^1.0.0-alpha.37",
-    "@sourceloop/core": "^1.0.0-alpha.22",
+    "@sourceloop/authentication-service": "^1.0.0-alpha.42",
+    "@sourceloop/core": "^1.0.0-alpha.26",
     "bcrypt": "^5.0.0",
     "casbin": "^5.2.1",
     "db-migrate": "^0.11.11",
