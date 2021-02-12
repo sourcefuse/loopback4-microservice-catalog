@@ -147,7 +147,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
 
-import { InMailServiceComponent } from '@sourceloop/example-service';
+import { ExampleServiceComponent } from '@sourceloop/example-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 
@@ -180,7 +180,7 @@ export class ExampleApplicationApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
-    this.component(InMailServiceComponent)
+    this.component(ExampleServiceComponent)
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
