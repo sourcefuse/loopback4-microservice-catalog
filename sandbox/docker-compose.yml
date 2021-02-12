@@ -1,0 +1,130 @@
+version: "3.4"
+services:
+  auth-multitenant-example:
+    image: sourceloop/auth-multitenant-example
+    build:
+      context: ./auth-multitenant-example
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - sandbox
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: authentication_db
+      DB_SCHEMA: public
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_URL:
+      REDIS_PASSWORD:
+      REDIS_DATABASE:
+      USER_TEMP_PASSWORD: tempP@ssw0rd
+      GOOGLE_AUTH_URL:
+      GOOGLE_AUTH_CLIENT_ID:
+      GOOGLE_AUTH_CLIENT_SECRET:
+      GOOGLE_AUTH_TOKEN_URL:
+      GOOGLE_AUTH_CALLBACK_URL:
+      LOCALE: en
+      FORGOT_PASSWORD_LINK_EXPIRY:
+      KEYCLOAK_HOST: test
+      KEYCLOAK_REALM: test
+      KEYCLOAK_CLIENT_ID: test
+      KEYCLOAK_CLIENT_SECRET: test
+      KEYCLOAK_CALLBACK_URL: test
+      RATE_LIMITER_WINDOW_MS: 100
+      RATE_LIMITER_MAX_REQS: 100
+      X_FRAME_OPTIONS: SAMEORIGIN
+    depends_on:
+      - postgres
+      - redis
+
+  notification-socket-example:
+    image: sourceloop/notification-socket-example
+    build:
+      context: ./notification-socket-example
+      dockerfile: Dockerfile
+    ports:
+      - "3030:3000"
+    networks:
+      - sandbox
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: authentication_db
+      DB_SCHEMA: public
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+    depends_on:
+      - postgres
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - sandbox
+
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - sandbox
+    restart: unless-stopped
+
+  postgres_orchestrator:
+    container_name: postgres_orchestrator
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGDATA: /data/postgres
+      PGPASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    ports:
+      - "5433:5433"
+    networks:
+      - sandbox
+    depends_on:
+      - postgres
+    command: bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db'"
+
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - sandbox
+    restart: unless-stopped
+
+networks:
+  sandbox:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:

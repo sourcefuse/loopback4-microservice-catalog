@@ -4,8 +4,8 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
-A Loopback Microservice primarily used for in-mail implementation to compose, view in-mails for
-any client application
+A Loopback Microservice primarily used for in-mail implementation to compose and view in-mails for
+any client application.
 
 ## Installation
 
@@ -16,13 +16,11 @@ any client application
 ## Implementation
 
 ### Migration
-First of all we need to set up migration for the in-mail database.
-The query for Migration is given in the migrations folder. Please
-use migrations folder to set up your database.
+The project ships with generated migrations for PostgreSQL in the [migrations](migrations) folder. For generating migrations and implementing other data sources, please refer to refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/en/lb4/Database-migrations.html) for more information.
 
 ### Implementation
 
-Create a new Application using Loopback CLI and add the Component for InMailService in `application.ts`
+Create a new Application using Loopback CLI and add the Component for `InMailService` in `application.ts`
 
 ```typescript
 import {BootMixin} from '@loopback/boot';
@@ -135,7 +133,7 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class VideochatDbDataSource extends juggler.DataSource
+export class InMailDbDataSource extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = 'inmail';
   static readonly defaultConfig = config;

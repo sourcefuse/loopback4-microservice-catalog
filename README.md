@@ -5,7 +5,7 @@
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-The `loopback4-microservice-catalog` is a collection of pre-built microservices that aim to reduce time to market for Enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack4 Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack4 applications or use the [LoopBack 4 Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker.
+The `loopback4-microservice-catalog` is a collection of pre-built microservices that aim to reduce time to market for Enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack applications or use the [LoopBack  Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker. 
 
 The current catalog consists of the following services:
 
@@ -16,7 +16,10 @@ The current catalog consists of the following services:
 * [scheduler-service](services/scheduler-service)
 * [video-conferencing-service](services/video-conferencing-service)
 
-TODO: note roadmap for upcoming services, infrastructure modules that are available, etc.
+This repository also contains a set of example projects in the [sandbox](sandbox) directory.
+
+* [auth-multitenant-example](sandbox/auth-multitenant-example)
+* [notification-socket-example](sandbox/notification-socket-example)
 
 ## Table of Contents
 
@@ -42,8 +45,8 @@ TODO: Establish LTS policy or document here that the catalog is still in develop
 
 ### Documentation
 
-* [LoopBack 4 | LoopBack Documentation](https://loopback.io/doc/en/lb4/)
-* [Extending LoopBack 4 | LoopBack Documentation](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html)
+* [LoopBack| LoopBack Documentation](https://loopback.io/doc/en/lb4/)
+* [Extending LoopBack | LoopBack Documentation](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html)
 
 ### Getting Started
 
@@ -197,14 +200,18 @@ export class ExampleApplicationApplication extends BootMixin(
 Modify the environment variable file to have the following contents:
 
 ```
-NODE_ENV=
+NODE_ENV=dev
 ```
 
 You can now run the example service with `npm start`. 
 
-### Reference Infrastructure Architectures
+### DataSources and Migrations
 
-TODO: Provide examples of cloud deployments or k8s deployment
+The `loopback4-microservice-catalog` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s and [Database Migrations](https://loopback.io/doc/en/lb4/Database-migrations.html#overview), it is not mandatory to use them. 
+
+### Production Deployment
+
+Inside of the `sandbox` folder, you will find example applications and Dockerfiles for each application. The `loopback4-microservice-catalog` is agnostic of the Docker deployment strategy. Deploy the services into the platform of your choice.
 
 ### Related Projects
 

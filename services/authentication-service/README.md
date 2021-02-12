@@ -4,9 +4,9 @@
 
 ## Overview
 
-TODO: Overview
+A Loopback Microservice for handling authentications. Provides multi tenant support, external Identity Provider integration, and the ability the issue tokens.
 
-TODO: Link to multi-tenant example
+For an example implementation, see `/sandbox/auth-multitenant-example`.
 
 ### Installation
 
@@ -16,50 +16,161 @@ npm i @sourceloop/authentication-service
 
 ## Implementation
 
-### Migration
+Create a new Application using Loopback CLI and add the Component for `AuthenticationService` in `application.ts`
 
-### Implementation
+```typescript
+import {BootMixin} from '@loopback/boot';
+import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
+import {
+  RestExplorerBindings,
+  RestExplorerComponent,
+} from '@loopback/rest-explorer';
+import {ServiceMixin} from '@loopback/service-proxy';
+import { AuthenticationServiceComponent } from '@sourceloop/in-mail-service';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
+import path from 'path';
 
-### Setting Environment Variables
+export {ApplicationConfig};
 
-| Name                          | Required | Default Value | Description |
-| ----------------------------- | -------- | ------------- | ----------- |
-| `NODE_ENV`                    |          |               |             |
-| `DB_HOST`                     |          |               |             |
-| `DB_PORT`                     |          |               |             |
-| `DB_USER`                     |          |               |             |
-| `DB_PASSWORD`                 |          |               |             |
-| `DB_DATABASE`                 |          |               |             |
-| `DB_SCHEMA`                   |          |               |             |
-| `REDIS_HOST`                  |          |               |             |
-| `REDIS_PORT`                  |          |               |             |
-| `REDIS_URL`                   |          |               |             |
-| `REDIS_PASSWORD`              |          |               |             |
-| `REDIS_DATABASE`              |          |               |             |
-| `JWT_SECRET`                  |          |               |             |
-| `JWT_ISSUER`                  |          |               |             |
-| `USER_TEMP_PASSWORD`          |          |               |             |
-| `GOOGLE_AUTH_URL`             |          |               |             |
-| `GOOGLE_AUTH_CLIENT_ID`       |          |               |             |
-| `GOOGLE_AUTH_CLIENT_SECRET`   |          |               |             |
-| `GOOGLE_AUTH_TOKEN_URL`       |          |               |             |
-| `GOOGLE_AUTH_CALLBACK_URL`    |          |               |             |
-| `FORGOT_PASSWORD_LINK_EXPIRY` |          |               |             |
-| `KEYCLOAK_HOST`               |          |               |             |
-| `KEYCLOAK_REALM`              |          |               |             |
-| `KEYCLOAK_CLIENT_ID`          |          |               |             |
-| `KEYCLOAK_CLIENT_SECRET`      |          |               |             |
-| `KEYCLOAK_CALLBACK_URL`       |          |               |             |
+const port = 3000;
+export class Client extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    dotenv.config();
+    dotenvExt.load({
+      schema: '.env.example',
+      errorOnMissing: true,
+      includeProcessEnv: true,
+    });
+    options.rest = options.rest || {};
+    options.rest.port = +(process.env.PORT || port);
+    options.rest.host = process.env.HOST;
+    super(options);
+    // Set up default home page
+    this.static('/', path.join(__dirname, '../public'));
+
+    // Customize @loopback/rest-explorer configuration here
+    this.configure(RestExplorerBindings.COMPONENT).to({
+      path: '/explorer',
+    });
+    this.component(RestExplorerComponent);
+    // add Component for AuthenticationService
+    this.component(AuthenticationServiceComponent);
+
+    this.projectRoot = __dirname;
+    // Customize @loopback/boot Booter Conventions here
+    this.bootOptions = {
+      controllers: {
+        // Customize ControllerBooter Conventions here
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+      },
+    };
+  }
+}
+```
+
+### Environment Variables
+
+| Name                          | Required | Default Value | Description                                                  |
+| ----------------------------- | -------- | ------------- | ------------------------------------------------------------ |
+| `NODE_ENV`                    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`           |
+| `LOG_LEVEL`                   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
+| `DB_HOST`                     | Y        |               | Hostname for the database server.                            |
+| `DB_PORT`                     | Y        |               | Port for the database server.                                |
+| `DB_USER`                     | Y        |               | User for the database.                                       |
+| `DB_PASSWORD`                 | Y        |               | Password for the database user.                              |
+| `DB_DATABASE`                 | Y        |               | Database to connect to on the database server.               |
+| `DB_SCHEMA`                   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
+| `REDIS_HOST`                  | Y        |               | Hostname of the Redis server.                                |
+| `REDIS_PORT`                  | Y        |               | Port to connect to the Redis server over.                    |
+| `REDIS_URL`                   | Y        |               | Fully composed URL for Redis connection. Used instead of other settings if set. |
+| `REDIS_PASSWORD`              | Y        |               | Password for Redis if authentication is enabled.             |
+| `REDIS_DATABASE`              | Y        |               | Database within Redis to connect to.                         |
+| `JWT_SECRET`                  | Y        |               | Symmetric signing key of the JWT token.                      |
+| `JWT_ISSUER`                  | Y        |               | Issuer of the JWT token.                                     |
+| `USER_TEMP_PASSWORD`          | N        |               | Temporary password that can be used during development.      |
+| `GOOGLE_AUTH_URL`             | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google |
+| `GOOGLE_AUTH_CLIENT_ID`       | N        |               | Google client ID for the service                             |
+| `GOOGLE_AUTH_CLIENT_SECRET`   | N        |               | Google client secret for the service                         |
+| `GOOGLE_AUTH_TOKEN_URL`       | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google |
+| `GOOGLE_AUTH_CALLBACK_URL`    | N        |               | Google callback URL for the client configuration in Google   |
+| `FORGOT_PASSWORD_LINK_EXPIRY` | N        | 1800          | Expiration period of temporary password in seconds. 1800 seconds (30 minutes) is the default. |
+| `KEYCLOAK_HOST`               | N        |               | Hostname of the Keycloak instance                            |
+| `KEYCLOAK_REALM`              | N        |               | Realm (tenant) in Keycloak                                   |
+| `KEYCLOAK_CLIENT_ID`          | N        |               | Keycloak client ID for the service                           |
+| `KEYCLOAK_CLIENT_SECRET`      | N        |               | Keycloak client secret for the service                       |
+| `KEYCLOAK_CALLBACK_URL`       | N        |               | Keycloak callback URL for the client configuration in Google |
+| `RATE_LIMITER_WINDOW_MS`      | N        |               | TODO: get definition                                         |
+| `RATE_LIMITER_MAX_REQS`       | N        |               | TODO: get definition                                         |
+| `X_FRAME_OPTIONS`             | N        |               | TODO: get definition                                         |
 
 ### Setting up a `DataSource`
+
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. The `auth-multitenant-example` utilizes both Redis and PostgreSQL as data sources.
+
+```typescript
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+
+const config = {
+  name: 'authenticationDb',
+  connector: 'postgresql',
+  url: '',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
+};
+
+@lifeCycleObserver('datasource')
+export class AuthenticationDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
+  static dataSourceName = 'authentication';
+  static readonly defaultConfig = config;
+
+  constructor(
+    // You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
+    @inject('datasources.config.authentication', {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
+  }
+}
+```
+
+### Migrations
+
+Refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/en/lb4/Database-migrations.html) for instructions for handling migrations.
 
 ### API Documentation
 
 #### Common Headers
 
-#### Common Request Path Parameters
+Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.
+`Content-Type: application/json` in the response and in request if the API method is NOT GET
 
-#### Common Responses
+#### Common Request path Parameters
+
+{version}: Defines the API Version
+
+### Common Responses
+
+200: Successful Response. Response body varies w.r.t API<br/>
+401: Unauthorized: The JWT token is missing or invalid<br/>
+403: Forbidden : Not allowed to execute the concerned API<br />
+404: Entity Not Found<br />
+400: Bad Request (Error message varies w.r.t API)<br />
+201: No content: Empty Response<br />
 
 #### API Details
+
+Visit the [OpenAPI spec docs](OPEN_API_SPEC.md)
 
