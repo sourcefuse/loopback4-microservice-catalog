@@ -6,7 +6,7 @@
 
 ## Overview
 
-`@sourceloop/core` is the [application core]([The Onion Architecture : part 1 | Programming with Palermo (jeffreypalermo.com)](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/)) for the `looopback4-microservice-catalog`. It contains
+`@sourceloop/core` is the [application core](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/) for the `looopback4-microservice-catalog`. It contains
 
 * adapters
 * commands
