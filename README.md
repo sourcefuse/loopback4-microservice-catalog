@@ -124,7 +124,7 @@ $ cd example-application
 $ npm start
 ```
 
-Install `dotenv`, `dotenv-extended` and `@sourceloop/in-mail-service`.
+Install `dotenv`, `dotenv-extended` and `@sourceloop/example-service`.
 
 ```bash
 cd example-application
