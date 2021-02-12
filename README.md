@@ -28,7 +28,7 @@ This repository also contains a set of example projects in the [sandbox](sandbox
         + [Long Term Support](#long-term-support)
         + [Documentation](#documentation)
         + [Getting Started](#getting-started)
-        + [Reference Infrastructure Architectures](#reference-infrastructure-architectures)  
+        + [Production Deployment](#production-deployment)  
         + [Related Projects](#related-projects)
         + [Feedback](#feedback)
         + [Contributing](#contributing)
