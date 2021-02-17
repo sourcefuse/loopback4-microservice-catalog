@@ -14,10 +14,8 @@ import {
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
-  ConfigKey,
   CONTENT_TYPE,
   ErrorCodes,
-  getAge,
   IAuthUserWithPermissions,
   ILogger,
   LOGGER,
@@ -36,16 +34,13 @@ import {
   ClientAuthCode,
   STRATEGY,
 } from 'loopback4-authentication';
-import {
-  AuthorizationBindings,
-  authorize,
-  AuthorizeErrorKeys,
-  UserPermissionsFn,
-} from 'loopback4-authorization';
+import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {URLSearchParams} from 'url';
 
-import {AuthClient, RefreshToken, User, UserTenant} from '../../models';
+import {AuthServiceBindings} from '../../keys';
+import {AuthClient, RefreshToken, User} from '../../models';
+import {JwtPayloadFn} from '../../providers';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -87,8 +82,6 @@ export class LoginController {
     private readonly client: AuthClient | undefined,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly user: AuthUser | undefined,
-    @inject(AuthorizationBindings.USER_PERMISSIONS)
-    private readonly getUserPermissions: UserPermissionsFn<string>,
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @repository(UserRepository)
@@ -110,6 +103,8 @@ export class LoginController {
     @inject(RestBindings.Http.REQUEST)
     private readonly req: Request,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthServiceBindings.JWTPayloadProvider)
+    private readonly getJwtPayload: JwtPayloadFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -656,6 +651,8 @@ export class LoginController {
     deviceInfo: DeviceInfo,
   ): Promise<TokenResponse> {
     try {
+      const size = 32;
+      const ms = 1000;
       let user: User | undefined;
       if (payload.user) {
         user = payload.user;
@@ -675,72 +672,11 @@ export class LoginController {
           AuthenticateErrorKeys.UserDoesNotExist,
         );
       }
-      const userTenant = await this.userTenantRepo.findOne({
-        where: {
-          userId: user.id,
-          tenantId: user.defaultTenantId,
-        },
+      const data = await this.getJwtPayload(user, authClient, deviceInfo);
+      const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
+        expiresIn: authClient.accessTokenExpiration,
+        issuer: process.env.JWT_ISSUER,
       });
-
-      if (!userTenant) {
-        throw new HttpErrors.Unauthorized(
-          AuthenticateErrorKeys.UserDoesNotExist,
-        );
-      }
-
-      if (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        user.authClientIds.indexOf(authClient.id || 0) < 0
-      ) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-      }
-
-      // Create user DTO for payload to JWT
-      const authUser: AuthUser = new AuthUser(user);
-
-      // Add locale info
-      await this._setLocale(authUser, userTenant);
-
-      authUser.deviceInfo = deviceInfo;
-      authUser.authClientId = authClient.id ?? 0;
-      authUser.tenantId = userTenant.tenantId;
-      authUser.userTenantId = userTenant.id;
-      authUser.status = userTenant.status;
-      const role = await this.roleRepo.findById(userTenant.roleId);
-      if (!role) {
-        this.logger.error('Role not found for the user');
-        throw new HttpErrors.UnprocessableEntity(
-          AuthenticateErrorKeys.UnprocessableData,
-        );
-      }
-
-      const size = 32;
-      const ms = 1000;
-
-      const utPerms = await this.utPermsRepo.find({
-        where: {
-          userTenantId: userTenant.id,
-        },
-        fields: {
-          permission: true,
-          allowed: true,
-        },
-      });
-      authUser.permissions = this.getUserPermissions(utPerms, role.permissions);
-      authUser.role = role.roleType?.toString();
-      if (authUser.dob) {
-        const age = getAge(new Date(authUser.dob));
-        authUser.age = age;
-      }
-      const accessToken = jwt.sign(
-        authUser.toJSON(),
-        process.env.JWT_SECRET as string,
-        {
-          expiresIn: authClient.accessTokenExpiration,
-          issuer: process.env.JWT_ISSUER,
-        },
-      );
       const refreshToken: string = randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
       await this.refreshTokenRepo.set(
@@ -768,32 +704,6 @@ export class LoginController {
       } else {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
-    }
-  }
-
-  private async _setLocale(authUser: AuthUser, userTenant: UserTenant) {
-    if (userTenant.locale && userTenant.locale.length > 0) {
-      // Use locale from user preferences first
-      authUser.userPreferences = {locale: userTenant.locale};
-    } else {
-      // Use tenant config locale at second priority
-      const config = await this.tenantConfigRepo.findOne({
-        where: {
-          configKey: ConfigKey.Profile,
-        },
-      });
-
-      // Use locale from environment as fallback overall
-      let locale = process.env.LOCALE ?? 'en';
-      if (config?.configValue) {
-        // sonarignore:start
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        locale = (config.configValue as any).locale;
-        // sonarignore:end
-      }
-      authUser.userPreferences = {
-        locale,
-      };
     }
   }
 }

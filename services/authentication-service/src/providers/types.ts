@@ -1,4 +1,8 @@
-import {IAuthUser, KeycloakProfile} from 'loopback4-authentication';
+import {
+  IAuthClient,
+  IAuthUser,
+  KeycloakProfile,
+} from 'loopback4-authentication';
 import * as GoogleStrategy from 'passport-google-oauth20';
 
 import {User, UserRelations} from '../models';
@@ -38,4 +42,17 @@ export interface KeyCloakPreVerifyFn {
 
 export interface KeyCloakPostVerifyFn {
   (profile: KeycloakProfile, user: IAuthUser | null): Promise<IAuthUser | null>;
+}
+
+export interface IDeviceInfo {
+  userAgent?: string;
+  deviceId?: string;
+}
+
+export interface JwtPayloadFn {
+  (
+    user: IAuthUser,
+    authClient: IAuthClient,
+    deviceInfo?: IDeviceInfo,
+  ): Promise<object>;
 }

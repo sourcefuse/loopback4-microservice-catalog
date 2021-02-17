@@ -6,3 +6,4 @@ export * from './keycloak-pre-verify.provider';
 export * from './keycloak-post-verify.provider';
 export * from './google-post-verify.provider';
 export * from './google-pre-verify.provider';
+export * from './jwt-payload.provider';

@@ -33,6 +33,7 @@ import {
   GoogleOauth2SignupProvider,
   GooglePostVerifyProvider,
   GooglePreVerifyProvider,
+  JwtPayloadProvider,
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
   SignUpBindings,
@@ -155,6 +156,10 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[
       VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key
     ] = GooglePostVerifyProvider;
+
+    this.providers[
+      AuthServiceBindings.JWTPayloadProvider.key
+    ] = JwtPayloadProvider;
   }
 
   setupAuthorizationComponent() {
