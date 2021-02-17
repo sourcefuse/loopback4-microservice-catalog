@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.43](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.42...@sourceloop/authentication-service@1.0.0-alpha.43) (2021-02-17)
+
+
+### Features
+
+* **authentication-service:** add jwt payload provider ([f08c5d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f08c5d9f61138781ffdb2c5606adbfb43523da49))
+
+
+
+
+
 # [1.0.0-alpha.42](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.41...@sourceloop/authentication-service@1.0.0-alpha.42) (2021-02-10)
 
 
