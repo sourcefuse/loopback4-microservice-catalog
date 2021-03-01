@@ -9,20 +9,17 @@ import * as jwt from 'jsonwebtoken';
 import { LocalUserProfileDto } from "../models/local-user-profile";
 import { SignupWithTokenReponseDto } from "../models/signup-with-token-response-dto.model";
 import { inject } from "@loopback/core";
-import { preSignupFn, userSignupFn } from "../types";
+import { PreSignupFn, UserSignupFn } from "../types";
 import { authenticate, AuthenticationBindings, STRATEGY } from "loopback4-authentication";
 import { SignupRequest } from "../models/signup-request.model";
-import { SignUpBindings, VerifyBindings } from "../providers";
-
-// import {inject} from '@loopback/core';
-
+import { SignUpBindings, VerifyBindings } from "../providers";  
 
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
-    private readonly preSignupFn: preSignupFn<LocalUserProfileDto>,
+    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
-    private readonly userSignupFn: userSignupFn<LocalUserProfileDto>
+    private readonly userSignupFn: UserSignupFn<LocalUserProfileDto>
   ) { }
 
   @authorize({ permissions: ['*'] })
@@ -51,7 +48,7 @@ export class SignupRequestController {
 
     const codePayload = {
       email: req.email
-    }
+    };
 
     const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
       expiresIn: expiryDuration,

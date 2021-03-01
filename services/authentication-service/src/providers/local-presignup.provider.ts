@@ -1,11 +1,9 @@
 import {Provider} from '@loopback/context';
-import { LocalUserProfileDto } from '../models/local-user-profile';
-import { preSignupFn, userSignupFn } from '../types';
+import { PreSignupFn } from '../types';
 
-export class LocalPreSignupProvider implements Provider<preSignupFn> {
-  constructor() {}
+export class LocalPreSignupProvider implements Provider<PreSignupFn> {
 
-  value(): preSignupFn {
+  value(): PreSignupFn {
     return async (
       token: string,
       email: string

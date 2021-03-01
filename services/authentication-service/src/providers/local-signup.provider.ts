@@ -1,16 +1,12 @@
 import {Provider} from '@loopback/context';
-import {IAuthUser} from 'loopback4-authentication';
 import { LocalUserProfileDto } from '../models/local-user-profile';
-import { userSignupFn } from '../types';
+import { UserSignupFn } from '../types';
 
-export class LocalSignupProvider implements Provider<userSignupFn<LocalUserProfileDto>> {
-  constructor() {}
+export class LocalSignupProvider implements Provider<UserSignupFn<LocalUserProfileDto>> {
 
-  value(): userSignupFn<LocalUserProfileDto> {
+  value(): UserSignupFn<LocalUserProfileDto> {
     return async (
       model: LocalUserProfileDto
-    ) => {
-      return model;
-    };
+    ) => model;
   }
 }

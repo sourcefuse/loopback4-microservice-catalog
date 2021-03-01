@@ -1,5 +1,4 @@
 import {Model, model, property} from '@loopback/repository';
-import {User} from './user.model';
 
 @model()
 export class SignupRequestResponseDto extends Model {
