@@ -14,6 +14,11 @@ import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ResetPasswordWithClient} from './reset-password-with-client.model';
 import {UserLevelResource} from './user-level-resource.model';
+import { SignupRequestDto } from './signup-request-dto.model';
+import { SignupRequestResponseDto } from './signup-request-response-dto.model';
+import { SignupRequest } from './signup-request.model';
+import { SignupWithTokenDto } from './signup-with-token-dto.model';
+import { SignupWithTokenReponseDto } from './signup-with-token-response-dto.model';
 
 export * from './user.model';
 export * from './tenant.model';
@@ -50,4 +55,9 @@ export const models = [
   ForgetPasswordResponseDto,
   ForgetPasswordDto,
   ResetPasswordWithClient,
+  SignupRequestDto,
+  SignupRequestResponseDto,
+  SignupRequest,
+  SignupWithTokenDto,
+  SignupWithTokenReponseDto
 ];

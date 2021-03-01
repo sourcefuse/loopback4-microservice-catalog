@@ -7,3 +7,6 @@ export * from './keycloak-post-verify.provider';
 export * from './google-post-verify.provider';
 export * from './google-pre-verify.provider';
 export * from './jwt-payload.provider';
+export * from './bearer-verify.provider';
+export * from './local-presignup.provider';
+export * from './local-signup.provider';

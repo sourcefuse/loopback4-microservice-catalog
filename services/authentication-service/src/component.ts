@@ -40,6 +40,9 @@ import {
   VerifyBindings,
 } from './providers';
 import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
+import { LocalSignupProvider } from './providers/local-signup.provider';
+import { LocalPreSignupProvider } from './providers/local-presignup.provider';
+import { SignupBearerVerifyProvider } from './providers/bearer-verify.provider';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
@@ -145,6 +148,12 @@ export class AuthenticationServiceComponent implements Component {
       SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key
     ] = GoogleOauth2SignupProvider;
     this.providers[
+      SignUpBindings.LOCAL_SIGNUP_PROVIDER.key
+    ] = LocalSignupProvider;
+    this.providers[
+      SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key
+    ] = LocalPreSignupProvider;
+    this.providers[
       VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER.key
     ] = KeyCloakPreVerifyProvider;
     this.providers[
@@ -156,6 +165,9 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[
       VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key
     ] = GooglePostVerifyProvider;
+    this.providers[
+      VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key
+    ] = SignupBearerVerifyProvider;
 
     this.providers[
       AuthServiceBindings.JWTPayloadProvider.key
