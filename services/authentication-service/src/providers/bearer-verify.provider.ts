@@ -1,15 +1,13 @@
-import { inject, Provider } from '@loopback/context';
-import { HttpErrors } from '@loopback/rest';
-import { ILogger, LOGGER } from '@sourceloop/core';
-import { verify } from 'jsonwebtoken';
-import { VerifyFunction } from 'loopback4-authentication';
-import { SignupRequest } from '../models/signup-request.model';
+import {inject, Provider} from '@loopback/context';
+import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
+import {verify} from 'jsonwebtoken';
+import {VerifyFunction} from 'loopback4-authentication';
+import {SignupRequest} from '../models/signup-request.model';
 
 export class SignupBearerVerifyProvider
   implements Provider<VerifyFunction.BearerFn<SignupRequest>> {
-  constructor(
-    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
-  ) { }
+  constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
 
   value(): VerifyFunction.BearerFn<SignupRequest> {
     return async (token, req) => {

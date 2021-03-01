@@ -40,9 +40,9 @@ import {
   VerifyBindings,
 } from './providers';
 import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
-import { LocalSignupProvider } from './providers/local-signup.provider';
-import { LocalPreSignupProvider } from './providers/local-presignup.provider';
-import { SignupBearerVerifyProvider } from './providers/bearer-verify.provider';
+import {LocalSignupProvider} from './providers/local-signup.provider';
+import {LocalPreSignupProvider} from './providers/local-presignup.provider';
+import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(

@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
 
 @model()
@@ -11,8 +9,8 @@ export class SignupWithTokenReponseDto<T> extends Model {
   email: string;
 
   @property({
-      type: 'object',
-      required: true
+    type: 'object',
+    required: true,
   })
   user: T;
 

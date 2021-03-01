@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
 
 @model()
@@ -12,7 +10,7 @@ export class SignupRequest extends Model {
 
   @property({
     type: 'string',
-    require: true
+    require: true,
   })
   expiry: string;
 

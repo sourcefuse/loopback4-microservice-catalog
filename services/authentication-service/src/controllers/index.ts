@@ -3,7 +3,7 @@ import {LogoutController} from '../modules/auth/logout.controller';
 import {AuthClientController} from './auth-client.controller';
 import {ForgetPasswordController} from './forget-password.controller';
 import {OtpController} from './otp.controller';
-import { SignupRequestController } from './signup-request.controller';
+import {SignupRequestController} from './signup-request.controller';
 
 export * from '../modules/auth/login.controller';
 export * from '../modules/auth/logout.controller';
@@ -17,6 +17,6 @@ export const controllers = [
   OtpController,
   AuthClientController,
   ForgetPasswordController,
-  SignupRequestController
+  SignupRequestController,
 ];
 export * from './signup-request.controller';

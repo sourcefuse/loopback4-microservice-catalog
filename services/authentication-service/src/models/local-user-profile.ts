@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
 
 @model()
@@ -11,8 +9,8 @@ export class LocalUserProfileDto extends Model {
   email: string;
 
   @property({
-      type: 'string',
-      required: true
+    type: 'string',
+    required: true,
   })
   password: string;
 
