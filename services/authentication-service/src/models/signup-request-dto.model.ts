@@ -1,7 +1,7 @@
-import {Model, model, property} from '@loopback/repository';
+import {AnyObject, Model, model, property} from '@loopback/repository';
 
 @model()
-export class SignupRequestDto<T = Object> extends Model {
+export class SignupRequestDto<T = AnyObject> extends Model {
   @property({
     type: 'string',
     required: true,
