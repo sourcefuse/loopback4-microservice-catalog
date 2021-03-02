@@ -35,6 +35,10 @@ export * from './refresh-token-request.model';
 export * from './forget-password-response-dto.model';
 export * from './forget-password-dto.model';
 export * from './reset-password-with-client.model';
+export * from './signup-request-response-dto.model';
+export * from './signup-request.model';
+export * from './signup-with-token-response-dto.model';
+export * from './signup-request-dto.model';
 export * from './';
 
 export const models = [
