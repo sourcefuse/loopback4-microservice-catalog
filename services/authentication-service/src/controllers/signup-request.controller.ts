@@ -22,7 +22,7 @@ const basePath = 'sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
-    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto>,
+    private readonly preSignupFn: PreSignupFn<SignupRequestDto>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
     private readonly userSignupFn: UserSignupFn<LocalUserProfileDto>,
   ) {}
@@ -50,9 +50,7 @@ export class SignupRequestController {
       process.env.REQUEST_SIGNUP_LINK_EXPIRY ?? '1800',
     );
 
-    const codePayload = {
-      email: signUpRequest.email,
-    };
+    const codePayload = await this.preSignupFn(signUpRequest);
 
     const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
       expiresIn: expiryDuration,
@@ -60,7 +58,6 @@ export class SignupRequestController {
       issuer: process.env.JWT_ISSUER,
     });
 
-    await this.preSignupFn(token, signUpRequest.email);
     return new SignupRequestResponseDto({
       code: token,
       expiry: expiryDuration,
