@@ -1,6 +1,5 @@
 import {BindingKey} from '@loopback/core';
 import {VerifyFunction} from 'loopback4-authentication';
-import {LocalUserProfileDto} from '../models/local-user-profile';
 import {PreSignupFn, UserSignupFn} from '../types';
 
 import {
@@ -19,12 +18,13 @@ export namespace SignUpBindings {
   export const KEYCLOAK_SIGN_UP_PROVIDER = BindingKey.create<KeyCloakSignUpFn>(
     'sf.keycloak.signup.provider',
   );
-  export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
-    PreSignupFn<LocalUserProfileDto>
-  >(`sf.local.presignup.provider`);
-  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<
-    UserSignupFn<LocalUserProfileDto, LocalUserProfileDto>
-  >(`sf.local.signup.provider`);
+  export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<PreSignupFn>(
+    `sf.local.presignup.provider`,
+  );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<UserSignupFn<any>>(
+    `sf.local.signup.provider`,
+  );
 }
 
 export namespace VerifyBindings {
