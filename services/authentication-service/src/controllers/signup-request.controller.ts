@@ -17,6 +17,7 @@ import {
 } from 'loopback4-authentication';
 import {SignupRequest} from '../models/signup-request.model';
 import {SignUpBindings, VerifyBindings} from '../providers';
+import {AnyObject} from '@loopback/repository';
 
 const basePath = 'sign-up';
 export class SignupRequestController {
@@ -88,10 +89,10 @@ export class SignupRequestController {
   async signupWithToken(
     @requestBody()
     req: LocalUserProfileDto,
-  ): Promise<SignupWithTokenReponseDto<LocalUserProfileDto>> {
+  ): Promise<SignupWithTokenReponseDto<AnyObject>> {
     const user = await this.userSignupFn(req);
 
-    return new SignupWithTokenReponseDto({
+    return new SignupWithTokenReponseDto<AnyObject>({
       email: req.email,
       user: user,
     });

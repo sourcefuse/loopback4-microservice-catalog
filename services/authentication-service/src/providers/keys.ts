@@ -23,7 +23,7 @@ export namespace SignUpBindings {
     PreSignupFn<LocalUserProfileDto>
   >(`sf.local.presignup.provider`);
   export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<
-    UserSignupFn<LocalUserProfileDto>
+    UserSignupFn<LocalUserProfileDto, LocalUserProfileDto>
   >(`sf.local.signup.provider`);
 }
 
