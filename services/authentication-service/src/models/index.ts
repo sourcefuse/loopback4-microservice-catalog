@@ -18,6 +18,7 @@ import {SignupRequestDto} from './signup-request-dto.model';
 import {SignupRequestResponseDto} from './signup-request-response-dto.model';
 import {SignupRequest} from './signup-request.model';
 import {SignupWithTokenReponseDto} from './signup-with-token-response-dto.model';
+import { LocalUserProfileDto } from './local-user-profile';
 
 export * from './user.model';
 export * from './tenant.model';
@@ -39,6 +40,7 @@ export * from './signup-request-response-dto.model';
 export * from './signup-request.model';
 export * from './signup-with-token-response-dto.model';
 export * from './signup-request-dto.model';
+export * from './local-user-profile';
 export * from './';
 
 export const models = [
@@ -62,4 +64,5 @@ export const models = [
   SignupRequestResponseDto,
   SignupRequest,
   SignupWithTokenReponseDto,
+  LocalUserProfileDto
 ];
