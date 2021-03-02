@@ -18,7 +18,7 @@ import {SignupRequestDto} from './signup-request-dto.model';
 import {SignupRequestResponseDto} from './signup-request-response-dto.model';
 import {SignupRequest} from './signup-request.model';
 import {SignupWithTokenReponseDto} from './signup-with-token-response-dto.model';
-import { LocalUserProfileDto } from './local-user-profile';
+import {LocalUserProfileDto} from './local-user-profile';
 
 export * from './user.model';
 export * from './tenant.model';
@@ -64,5 +64,5 @@ export const models = [
   SignupRequestResponseDto,
   SignupRequest,
   SignupWithTokenReponseDto,
-  LocalUserProfileDto
+  LocalUserProfileDto,
 ];
