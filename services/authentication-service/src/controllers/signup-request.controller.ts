@@ -22,7 +22,7 @@ const basePath = 'sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
-    private readonly preSignupFn: PreSignupFn<SignupRequestDto>,
+    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
     private readonly userSignupFn: UserSignupFn<LocalUserProfileDto>,
   ) {}
@@ -43,7 +43,7 @@ export class SignupRequestController {
   })
   async requestSignup(
     @requestBody()
-    signUpRequest: SignupRequestDto,
+    signUpRequest: SignupRequestDto<LocalUserProfileDto>,
   ): Promise<SignupRequestResponseDto> {
     // Default expiry is 30 minutes
     const expiryDuration = parseInt(
