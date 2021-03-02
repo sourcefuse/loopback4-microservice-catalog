@@ -18,6 +18,7 @@ import {
 import {SignupRequest} from '../models/signup-request.model';
 import {SignUpBindings, VerifyBindings} from '../providers';
 
+const basePath = 'sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
@@ -27,7 +28,7 @@ export class SignupRequestController {
   ) {}
 
   @authorize({permissions: ['*']})
-  @post(`auth/createInviteToken`, {
+  @post(`auth/${basePath}/create-token`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
@@ -42,7 +43,7 @@ export class SignupRequestController {
   })
   async requestSignup(
     @requestBody()
-    req: SignupRequestDto,
+    signUpRequest: SignupRequestDto,
   ): Promise<SignupRequestResponseDto> {
     // Default expiry is 30 minutes
     const expiryDuration = parseInt(
@@ -50,20 +51,20 @@ export class SignupRequestController {
     );
 
     const codePayload = {
-      email: req.email,
+      email: signUpRequest.email,
     };
 
     const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
       expiresIn: expiryDuration,
-      subject: req.email,
+      subject: signUpRequest.email,
       issuer: process.env.JWT_ISSUER,
     });
 
-    await this.preSignupFn(token, req.email);
+    await this.preSignupFn(token, signUpRequest.email);
     return new SignupRequestResponseDto({
       code: token,
       expiry: expiryDuration,
-      email: req.email,
+      email: signUpRequest.email,
     });
   }
 
@@ -74,7 +75,7 @@ export class SignupRequestController {
     VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
   )
   @authorize({permissions: ['*']})
-  @post('/auth/signupWithToken', {
+  @post(`/auth/${basePath}/create-user`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
@@ -106,7 +107,7 @@ export class SignupRequestController {
     VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
   )
   @authorize({permissions: ['*']})
-  @get('/auth/verifyInviteToken', {
+  @get(`/auth/${basePath}/verify-token`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
