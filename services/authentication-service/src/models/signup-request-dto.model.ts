@@ -14,7 +14,7 @@ export class SignupRequestDto<T = AnyObject> extends Model {
   })
   data?: T;
 
-  constructor(data?: Partial<SignupRequestDto>) {
+  constructor(data?: Partial<SignupRequestDto<T>>) {
     super(data);
   }
 }
