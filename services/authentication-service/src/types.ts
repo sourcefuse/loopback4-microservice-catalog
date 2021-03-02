@@ -6,8 +6,7 @@ export interface IAuthServiceConfig extends IServiceConfig {}
 export const AuthDbSourceName = 'AuthDB';
 export const AuthCacheSourceName = 'AuthCache';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface PreSignupFn<T = any> {
+export interface PreSignupFn<T = void> {
   (request: SignupRequestDto): Promise<T>;
 }
 
