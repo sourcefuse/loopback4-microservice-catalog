@@ -42,7 +42,7 @@ export namespace VerifyBindings {
     'sf.keycloak.postverify.provider',
   );
 
-  export const BEARER_SIGNUP_VERIFY_PROVIDER = BindingKey.create<VerifyFunction.BearerFn>(
+  export const BEARER_SIGNUP_VERIFY_PROVIDER = BindingKey.create<VerifyFunction.GenericAuthFn>(
     `sf.bearer.signupverify.provider`,
   );
 }
