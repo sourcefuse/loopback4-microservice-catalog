@@ -19,7 +19,7 @@ import {SignupRequest} from '../models/signup-request.model';
 import {SignUpBindings, VerifyBindings} from '../providers';
 import {AnyObject} from '@loopback/repository';
 
-const basePath = 'sign-up';
+const basePath = '/auth/sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
@@ -29,7 +29,7 @@ export class SignupRequestController {
   ) {}
 
   @authorize({permissions: ['*']})
-  @post(`/auth/${basePath}/create-token`, {
+  @post(`${basePath}/create-token`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
@@ -73,7 +73,7 @@ export class SignupRequestController {
     VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
   )
   @authorize({permissions: ['*']})
-  @post(`/auth/${basePath}/create-user`, {
+  @post(`${basePath}/create-user`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
@@ -105,7 +105,7 @@ export class SignupRequestController {
     VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
   )
   @authorize({permissions: ['*']})
-  @get(`/auth/${basePath}/verify-token`, {
+  @get(`${basePath}/verify-token`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
