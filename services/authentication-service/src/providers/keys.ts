@@ -21,8 +21,7 @@ export namespace SignUpBindings {
   export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<PreSignupFn>(
     `sf.local.presignup.provider`,
   );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<UserSignupFn<any>>(
+  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<UserSignupFn>(
     `sf.local.signup.provider`,
   );
 }
