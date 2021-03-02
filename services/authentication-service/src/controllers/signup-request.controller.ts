@@ -28,7 +28,7 @@ export class SignupRequestController {
   ) {}
 
   @authorize({permissions: ['*']})
-  @post(`auth/${basePath}/create-token`, {
+  @post(`/auth/${basePath}/create-token`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
