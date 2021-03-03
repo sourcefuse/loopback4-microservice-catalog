@@ -1,6 +1,10 @@
 import {Model, model, property} from '@loopback/repository';
 
-@model()
+@model({
+  settings: {
+    strict: false,
+  },
+})
 export class LocalUserProfileDto extends Model {
   @property({
     type: 'string',

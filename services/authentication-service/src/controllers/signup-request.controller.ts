@@ -1,12 +1,6 @@
 // Uncomment these imports to begin using these cool features!
 
-import {
-  get,
-  getModelSchemaRef,
-  HttpErrors,
-  post,
-  requestBody,
-} from '@loopback/rest';
+import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';
 import {CONTENT_TYPE, ErrorCodes, STATUS_CODE} from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {SignupRequestDto} from '../models/signup-request-dto.model';
@@ -85,7 +79,7 @@ export class SignupRequestController {
         description: 'Success Response.',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(SignupRequestDto),
+            schema: getModelSchemaRef(LocalUserProfileDto),
           },
         },
       },
@@ -94,19 +88,14 @@ export class SignupRequestController {
   })
   async signupWithToken(
     @requestBody()
-    req: SignupRequestDto<LocalUserProfileDto>,
+    req: LocalUserProfileDto,
   ): Promise<SignupWithTokenReponseDto<AnyObject>> {
-    if (req.data) {
-      req.data.email = req.email;
-      const user = await this.userSignupFn(req.data);
+    const user = await this.userSignupFn(req);
 
-      return new SignupWithTokenReponseDto<AnyObject>({
-        email: req.email,
-        user: user,
-      });
-    } else {
-      throw new HttpErrors.BadRequest('Profile data missing.');
-    }
+    return new SignupWithTokenReponseDto<AnyObject>({
+      email: req.email,
+      user: user,
+    });
   }
 
   @authenticate(
