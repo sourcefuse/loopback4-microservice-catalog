@@ -97,6 +97,7 @@ export class SignupRequestController {
     req: SignupRequestDto<LocalUserProfileDto>,
   ): Promise<SignupWithTokenReponseDto<AnyObject>> {
     if (req.data) {
+      req.data.email = req.email;
       const user = await this.userSignupFn(req.data);
 
       return new SignupWithTokenReponseDto<AnyObject>({
