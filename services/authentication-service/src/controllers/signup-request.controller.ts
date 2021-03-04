@@ -89,8 +89,10 @@ export class SignupRequestController {
   async signupWithToken(
     @requestBody()
     req: LocalUserProfileDto,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    signupUser: SignupRequest,
   ): Promise<SignupWithTokenReponseDto<AnyObject>> {
-    const user = await this.userSignupFn(req);
+    const user = await this.userSignupFn(req, signupUser);
 
     return new SignupWithTokenReponseDto<AnyObject>({
       email: req.email,

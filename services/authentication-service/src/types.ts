@@ -13,5 +13,5 @@ export interface PreSignupFn<T = AnyObject, S = AnyObject> {
 }
 
 export interface UserSignupFn<T = AnyObject, S = AnyObject> {
-  (model: T & LocalUserProfileDto): Promise<S>;
+  (model: T & LocalUserProfileDto, tokenInfo?: AnyObject): Promise<S>;
 }
