@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.44](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.43...@sourceloop/authentication-service@1.0.0-alpha.44) (2021-03-05)
+
+
+### Bug Fixes
+
+* **authentication-service:** fix package lock ([32d93fe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/32d93fe7c072d263b85d129889f41a6257b3bcec))
+
+
+### Features
+
+* **authentication-service:** signup request controller added ([#121](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/121)) ([61dd346](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/61dd34674f0711b4436fa4747a4e8ad1f22629bd))
+
+
+
+
+
 # [1.0.0-alpha.43](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.42...@sourceloop/authentication-service@1.0.0-alpha.43) (2021-02-17)
 
 
