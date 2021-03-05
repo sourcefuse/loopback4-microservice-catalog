@@ -12,7 +12,7 @@ export class ClientPasswordVerifyProvider
   ) {}
 
   value(): VerifyFunction.OauthClientPasswordFn {
-    return async (clientId, clientSecret) => {
+    return async (clientId: string, clientSecret: string) => {
       return this.authClientRepository.findOne({
         where: {
           clientId,

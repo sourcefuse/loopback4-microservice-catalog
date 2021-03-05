@@ -1,4 +1,6 @@
 import {BindingKey} from '@loopback/core';
+import {VerifyFunction} from 'loopback4-authentication';
+import {PreSignupFn, UserSignupFn} from '../types';
 
 import {
   GooglePostVerifyFn,
@@ -16,6 +18,12 @@ export namespace SignUpBindings {
   export const KEYCLOAK_SIGN_UP_PROVIDER = BindingKey.create<KeyCloakSignUpFn>(
     'sf.keycloak.signup.provider',
   );
+  export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<PreSignupFn>(
+    `sf.local.presignup.provider`,
+  );
+  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<UserSignupFn>(
+    `sf.local.signup.provider`,
+  );
 }
 
 export namespace VerifyBindings {
@@ -31,5 +39,9 @@ export namespace VerifyBindings {
   );
   export const KEYCLOAK_POST_VERIFY_PROVIDER = BindingKey.create<KeyCloakPostVerifyFn>(
     'sf.keycloak.postverify.provider',
+  );
+
+  export const BEARER_SIGNUP_VERIFY_PROVIDER = BindingKey.create<VerifyFunction.GenericAuthFn>(
+    `sf.bearer.signupverify.provider`,
   );
 }

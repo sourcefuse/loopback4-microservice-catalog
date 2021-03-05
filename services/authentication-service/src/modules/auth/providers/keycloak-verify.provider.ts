@@ -4,6 +4,7 @@ import {HttpErrors} from '@loopback/rest';
 import {
   AuthErrorKeys,
   IAuthUser,
+  KeycloakProfile,
   VerifyFunction,
 } from 'loopback4-authentication';
 
@@ -32,7 +33,11 @@ export class KeycloakVerifyProvider
   ) {}
 
   value(): VerifyFunction.KeycloakAuthFn {
-    return async (accessToken, refreshToken, profile) => {
+    return async (
+      accessToken: string,
+      refreshToken: string,
+      profile: KeycloakProfile,
+    ) => {
       let user: IAuthUser | null = await this.userRepository.findOne({
         where: {
           email: profile.email,
