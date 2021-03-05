@@ -1,10 +1,9 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
+import {HttpErrors, Request} from '@loopback/rest';
 import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
-import {Request} from '@loopback/rest';
 import moment from 'moment-timezone';
 
 import {RevokedTokenRepository} from '../../../repositories';

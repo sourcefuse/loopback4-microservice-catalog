@@ -19,6 +19,7 @@ import {SignupRequest} from '../models/signup-request.model';
 import {SignUpBindings, VerifyBindings} from '../providers';
 import {AnyObject} from '@loopback/repository';
 
+const successResponse = 'Sucess Response.';
 const basePath = '/auth/sign-up';
 export class SignupRequestController {
   constructor(
@@ -32,7 +33,7 @@ export class SignupRequestController {
   @post(`${basePath}/create-token`, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Success Response.',
+        description: successResponse,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(SignupRequestResponseDto),
@@ -76,7 +77,7 @@ export class SignupRequestController {
   @post(`${basePath}/create-user`, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Success Response.',
+        description: successResponse,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(LocalUserProfileDto),
@@ -110,7 +111,7 @@ export class SignupRequestController {
   @get(`${basePath}/verify-token`, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Success Response.',
+        description: successResponse,
       },
       ...ErrorCodes,
     },

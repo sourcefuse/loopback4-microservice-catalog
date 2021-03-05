@@ -1,8 +1,7 @@
 import {inject, Provider} from '@loopback/context';
-import {HttpErrors} from '@loopback/rest';
+import {HttpErrors, Request} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {verify} from 'jsonwebtoken';
-import {Request} from '@loopback/rest';
 import {VerifyFunction} from 'loopback4-authentication';
 import {SignupRequest} from '../models/signup-request.model';
 
