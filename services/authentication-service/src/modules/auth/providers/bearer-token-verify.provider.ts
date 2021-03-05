@@ -4,6 +4,7 @@ import {HttpErrors} from '@loopback/rest';
 import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
+import {Request} from '@loopback/rest';
 import moment from 'moment-timezone';
 
 import {RevokedTokenRepository} from '../../../repositories';
@@ -18,7 +19,7 @@ export class BearerTokenVerifyProvider
   ) {}
 
   value(): VerifyFunction.BearerFn {
-    return async (token, req) => {
+    return async (token: string, req?: Request) => {
       const isRevoked = await this.revokedTokenRepository.get(token);
       if (isRevoked?.token) {
         throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.TokenRevoked);

@@ -1,6 +1,7 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import * as GoogleStrategy from 'passport-google-oauth20';
 import {
   AuthErrorKeys,
   IAuthUser,
@@ -33,7 +34,11 @@ export class GoogleOauth2VerifyProvider
   ) {}
 
   value(): VerifyFunction.GoogleAuthFn {
-    return async (accessToken, refreshToken, profile) => {
+    return async (
+      accessToken: string,
+      refreshToken: string,
+      profile: GoogleStrategy.Profile,
+    ) => {
       let user: IAuthUser | null = await this.userRepository.findOne({
         where: {
           email: profile._json.email,

@@ -6,7 +6,7 @@ export class BearerTokenVerifyProvider
   constructor() {}
 
   value(): VerifyFunction.BearerFn {
-    return async token => {
+    return async (token: string) => {
       return {id: 1, username: 'mayank'};
     };
   }

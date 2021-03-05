@@ -2,6 +2,7 @@ import {inject, Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {verify} from 'jsonwebtoken';
+import {Request} from '@loopback/rest';
 import {VerifyFunction} from 'loopback4-authentication';
 import {SignupRequest} from '../models/signup-request.model';
 
@@ -10,7 +11,7 @@ export class SignupBearerVerifyProvider
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
 
   value(): VerifyFunction.BearerFn<SignupRequest> {
-    return async (token, req) => {
+    return async (token: string, req?: Request) => {
       let result: SignupRequest;
       try {
         result = verify(token, process.env.JWT_SECRET as string, {
