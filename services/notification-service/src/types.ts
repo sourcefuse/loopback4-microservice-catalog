@@ -1,3 +1,4 @@
+import {Where, WhereBuilder} from '@loopback/repository';
 import {IAuthUserWithPermissions, IServiceConfig} from '@sourceloop/core';
 import {Config} from 'loopback4-notifications';
 import {Notification, NotificationUser} from './models';
@@ -11,6 +12,13 @@ export interface IChannelManager {
 
 export interface INotificationUserManager {
   getNotifUsers(notif: Notification): Promise<NotificationUser[]>;
+}
+
+export interface INotificationUserWhereBuilder {
+  (
+    currentUser: IAuthUserWithPermissions,
+    where?: Where<NotificationUser>,
+  ): WhereBuilder;
 }
 
 export interface INotifServiceConfig extends IServiceConfig {

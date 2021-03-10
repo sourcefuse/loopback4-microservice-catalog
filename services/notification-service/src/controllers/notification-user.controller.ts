@@ -4,7 +4,6 @@ import {
   Filter,
   repository,
   Where,
-  WhereBuilder,
   FilterBuilder,
 } from '@loopback/repository';
 import {
@@ -35,6 +34,8 @@ import {
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {inject} from '@loopback/core';
 import {PermissionKey} from '../enums/permission-key.enum';
+import {NotifServiceBindings} from '../keys';
+import {INotificationUserWhereBuilder} from '../types';
 
 const basePath = '/notification-users';
 
@@ -42,6 +43,8 @@ export class NotificationUserController {
   constructor(
     @repository(NotificationUserRepository)
     public notificationUserRepository: NotificationUserRepository,
+    @inject(NotifServiceBindings.NotificationUserWhereBuilder)
+    public notificationWhereBuilder: INotificationUserWhereBuilder,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -350,13 +353,7 @@ export class NotificationUserController {
     currentUser: IAuthUserWithPermissions,
     where?: Where<NotificationUser>,
   ) {
-    const whereBuilder = new WhereBuilder(where);
-    whereBuilder.and([
-      {
-        userId: currentUser.id,
-      },
-    ]);
-    return whereBuilder;
+    return this.notificationWhereBuilder(currentUser, where);
   }
 
   private _createFilterBuilder(
@@ -365,12 +362,7 @@ export class NotificationUserController {
   ) {
     const filterBuilder = new FilterBuilder(filter);
     if (filter) {
-      const whereBuilder = new WhereBuilder(filter.where);
-      whereBuilder.and([
-        {
-          userId: currentUser.id,
-        },
-      ]);
+      const whereBuilder = this._createWhereBuilder(currentUser, filter.where);
       filterBuilder.where(whereBuilder.build());
     }
     return filterBuilder;
