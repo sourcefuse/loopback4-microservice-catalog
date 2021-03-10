@@ -4,8 +4,6 @@ import {INotificationUserWhereBuilder} from '../types';
 
 export class NotificationWhereBuilderProvider
   implements Provider<INotificationUserWhereBuilder> {
-  constructor() {}
-
   value(): INotificationUserWhereBuilder {
     return (currentUser, where?) => {
       const whereBuilder = new WhereBuilder(where);
