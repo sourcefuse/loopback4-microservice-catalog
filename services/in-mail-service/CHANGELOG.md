@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.31](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.30...@sourceloop/in-mail-service@1.0.0-alpha.31) (2021-03-17)
+
+**Note:** Version bump only for package @sourceloop/in-mail-service
+
+
+
+
+
 # [1.0.0-alpha.30](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.29...@sourceloop/in-mail-service@1.0.0-alpha.30) (2021-02-06)
 
 **Note:** Version bump only for package @sourceloop/in-mail-service

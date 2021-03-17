@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.27](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.26...@sourceloop/core@1.0.0-alpha.27) (2021-03-17)
+
+**Note:** Version bump only for package @sourceloop/core
+
+
+
+
+
 # [1.0.0-alpha.26](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.25...@sourceloop/core@1.0.0-alpha.26) (2021-02-06)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.30](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.29...@sourceloop/video-conferencing-service@1.0.0-alpha.30) (2021-03-17)
+
+
+### Bug Fixes
+
+* **video-conferencing-service:** fix package lock ([ae84ca4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ae84ca4c276c495ff7eec12f05804f74b4473669))
+
+
+
+
+
 # [1.0.0-alpha.29](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/video-conferencing-service@1.0.0-alpha.28...@sourceloop/video-conferencing-service@1.0.0-alpha.29) (2021-02-06)
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service

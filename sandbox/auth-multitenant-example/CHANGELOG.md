@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.20](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.19...@sourceloop/auth-multitenant-example@2.0.0-alpha.20) (2021-03-17)
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
 # [2.0.0-alpha.19](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.18...@sourceloop/auth-multitenant-example@2.0.0-alpha.19) (2021-03-05)
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example
