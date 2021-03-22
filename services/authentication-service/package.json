@@ -26,7 +26,8 @@
     "posttest": "npm run lint",
     "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "postinstall": "node -r dotenv/config $INIT_CWD/node_modules/db-migrate/bin/db-migrate up dotenv_config_path=$INIT_CWD/.env && cp -u database.json $INIT_CWD/database.json && cp -r -u migrations $INIT_CWD/migrations"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,8 @@
     "README.md",
     "dist",
     "src",
+    "migrations",
+    "database.json",
     "!*/__tests__"
   ],
   "dependencies": {
@@ -51,6 +54,8 @@
     "@sourceloop/core": "^1.0.0-alpha.27",
     "@types/i18n": "^0.8.6",
     "bcrypt": "^5.0.0",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.8.0",
     "jsonwebtoken": "^8.5.1",
