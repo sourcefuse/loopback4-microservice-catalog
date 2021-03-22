@@ -27,7 +27,7 @@
     "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "postinstall": "node -r dotenv/config $INIT_CWD/node_modules/db-migrate/bin/db-migrate up dotenv_config_path=$INIT_CWD/.env && cp -u database.json $INIT_CWD/database.json && cp -r -u migrations $INIT_CWD/migrations"
+    "postinstall": "node -r dotenv-extended/config $INIT_CWD/node_modules/db-migrate/bin/db-migrate up dotenv_config_errorOnMissing=true dotenv_config_schema=./migrations/.env.schema dotenv_config_path=$INIT_CWD/.env && cp -u database.json $INIT_CWD/database.json && cp -r -u migrations $INIT_CWD/migrations"
   },
   "repository": {
     "type": "git",
