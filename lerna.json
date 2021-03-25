@@ -8,12 +8,12 @@
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": "migrationchanges"
     },
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master, migrationchanges",
+      "allowBranch": "migrationchanges",
       "noPrivate": true
     },
     "run": {
