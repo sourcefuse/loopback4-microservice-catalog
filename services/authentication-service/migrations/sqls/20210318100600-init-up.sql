@@ -277,7 +277,6 @@ BEGIN
 END;
 $function$
 ;
-
 CREATE VIEW main.v_users AS  SELECT u.id,
     u.first_name,
     u.middle_name,
