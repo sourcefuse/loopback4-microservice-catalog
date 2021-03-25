@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.47](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.45...@sourceloop/authentication-service@1.0.0-alpha.47) (2021-03-25)
+
+
+### Bug Fixes
+
+* **authentication-service:** added .env schema check ([129c12d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/129c12d81da79a259252856cba9da457c2e36dbf))
+
+
+### Features
+
+* **authentication-service:** automation of migration during installation POC ([ebc4e09](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebc4e092ef23c3de143489d5980d57fb896b0f88))
+* **core:** force desc for migration changes ([aa0c794](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aa0c794af324ed59a68c2adee47f9d6808be23c5)), closes [#31](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/31)
+* **core:** sub ([04808d1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/04808d1538eb8fd04bde0bd1cf632e032f840a18)), closes [#31](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/31)
+
+
+
+
+
 # [1.0.0-alpha.45](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.44...@sourceloop/authentication-service@1.0.0-alpha.45) (2021-03-17)
 
 **Note:** Version bump only for package @sourceloop/authentication-service
