@@ -11,7 +11,7 @@ module.exports = {
   },
   parserPreset: {
     parserOpts: {
-      issuePrefixes: ['SFO-', '#', 'RD-', 'RPMS-', 'RFIT-'],
+      issuePrefixes: ['SFO-', '#', 'RD-', 'RPMS-', 'RFIT-', 'GH'],
     },
   },
 };

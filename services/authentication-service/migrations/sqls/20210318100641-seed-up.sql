@@ -43,5 +43,4 @@ insert into user_credentials
 select U.id, 'keycloak', '84ad97b3-9cb9-42d7-94c6-2fdf6f3a2bf8'
 from users U
 where U.username = 'meenu.rani@sourcefuse.com';
-
 update users set auth_client_ids = array_cat(auth_client_ids, ARRAY[(select id from auth_clients where client_id = 'pms_webapp')::integer]);

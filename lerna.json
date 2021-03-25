@@ -13,7 +13,7 @@
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master",
+      "allowBranch": "master, migrationchanges",
       "noPrivate": true
     },
     "run": {
