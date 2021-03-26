@@ -439,9 +439,7 @@ export class LoginController {
           issuer: process.env.JWT_ISSUER,
         }),
       );
-      response.redirect(
-        `${client.redirectUrl}?code=${token}&username=${this.user.username}`,
-      );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -539,9 +537,7 @@ export class LoginController {
           issuer: process.env.JWT_ISSUER,
         }),
       );
-      response.redirect(
-        `${client.redirectUrl}?code=${token}&user=${this.user.username}`,
-      );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
