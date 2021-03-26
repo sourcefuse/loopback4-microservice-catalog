@@ -33,6 +33,7 @@ module.exports = {
     {name: 'in-mail-service'},
     {name: 'notification-service'},
     {name: 'scheduler-service'},
+    {name: 'bpmn-service'},
     {name: 'video-conferencing-service'},
     {name: 'audit-service'},
     {name: 'sandbox'},

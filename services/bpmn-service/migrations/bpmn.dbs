@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="BPMN Service" id="Project_995" database="PostgreSQL" >
+	<schema name="bpmn service" >
+		<table name="workflow_versions" prior="tbl" >
+			<column name="version" type="integer" jt="4" mandatory="y" />
+			<column name="workflow_id" type="uuid" jt="1111" mandatory="y" />
+			<column name="bpmn_diagram" type="xml" jt="2009" />
+			<column name="external_workflow_id" prior="version_key" type="varchar" jt="12" />
+			<column name="bpmn_file_name" prior="resource_name" type="varchar" length="100" jt="12" />
+			<column name="params" type="json" jt="2000" />
+			<index name="idx_workflow_versions" unique="PRIMARY_KEY" >
+				<column name="version" />
+				<column name="workflow_id" />
+			</index>
+			<fk name="fk_workflow_versions_workflows" to_schema="bpmn service" to_table="workflows" >
+				<fk_column name="workflow_id" pk="id" />
+			</fk>
+		</table>
+		<table name="workflows" prior="bpmn" >
+			<comment><![CDATA[To store workflows]]></comment>
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<comment><![CDATA[Auto generated uuid]]></comment>
+			</column>
+			<column name="workflow_version" type="integer" jt="4" mandatory="y" />
+			<column name="external_identifier" prior="process_id" type="varchar" jt="12" />
+			<column name="provider" type="varchar" jt="12" />
+			<column name="created_on" type="timestamptz" jt="93" >
+				<defo><![CDATA[current_timestamp]]></defo>
+			</column>
+			<column name="modified_on" type="timestamptz" jt="93" >
+				<defo><![CDATA[current_timestamp]]></defo>
+			</column>
+			<column name="created_by" type="uuid" jt="1111" />
+			<column name="modified_by" type="uuid" jt="1111" />
+			<column name="deleted" type="boolean" jt="-7" />
+			<column name="params" type="json" jt="2000" />
+			<index name="pk_workflows_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout_19b8" show_relation="columns" >
+		<entity schema="bpmn service" name="workflow_versions" color="C1D8EE" x="288" y="48" />
+		<entity schema="bpmn service" name="workflows" color="C1D8EE" x="48" y="48" />
+	</layout>
+</project>
