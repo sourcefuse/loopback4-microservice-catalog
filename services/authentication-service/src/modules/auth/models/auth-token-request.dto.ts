@@ -17,12 +17,6 @@ export class AuthTokenRequest extends Model {
   })
   clientId: string;
 
-  @property({
-    type: 'string',
-    required: true,
-  })
-  username: string;
-
   constructor(data?: Partial<AuthTokenRequest>) {
     super(data);
   }

@@ -40,7 +40,13 @@ import {URLSearchParams} from 'url';
 
 import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
-import {JwtPayloadFn} from '../../providers';
+import {
+  AuthCodeBindings,
+  CodeReaderFn,
+  GoogleCodeWriterFn,
+  JwtPayloadFn,
+  KeyCloakCodeWriterFn,
+} from '../../providers';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -105,6 +111,12 @@ export class LoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
+    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
+    private readonly codeReader: CodeReaderFn,
+    @inject(AuthCodeBindings.KEYCLOAK_CODEWRITER_PROVIDER)
+    private readonly keycloackCodeWriter: KeyCloakCodeWriterFn,
+    @inject(AuthCodeBindings.GOOGLE_CODEWRITER_PROVIDER)
+    private readonly googleCodeWriter: GoogleCodeWriterFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -154,7 +166,6 @@ export class LoginController {
       const token = jwt.sign(codePayload, this.client.secret, {
         expiresIn: this.client.authCodeExpiration,
         audience: req.client_id,
-        subject: req.username.toLowerCase(),
         issuer: process.env.JWT_ISSUER,
       });
       return {
@@ -262,9 +273,9 @@ export class LoginController {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {
-      const payload = jwt.verify(req.code, authClient.secret, {
+      const code = await this.codeReader(req.code);
+      const payload = jwt.verify(code, authClient.secret, {
         audience: req.clientId,
-        subject: req.username,
         issuer: process.env.JWT_ISSUER,
       }) as ClientAuthCode<User, typeof User.prototype.id>;
 
@@ -421,12 +432,13 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = jwt.sign(codePayload, client.secret, {
-        expiresIn: client.authCodeExpiration,
-        audience: clientId,
-        subject: this.user.username,
-        issuer: process.env.JWT_ISSUER,
-      });
+      const token = await this.googleCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+        }),
+      );
       response.redirect(
         `${client.redirectUrl}?code=${token}&username=${this.user.username}`,
       );
@@ -520,12 +532,13 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = jwt.sign(codePayload, client.secret, {
-        expiresIn: client.authCodeExpiration,
-        audience: clientId,
-        subject: this.user.username,
-        issuer: process.env.JWT_ISSUER,
-      });
+      const token = await this.keycloackCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+        }),
+      );
       response.redirect(
         `${client.redirectUrl}?code=${token}&user=${this.user.username}`,
       );
