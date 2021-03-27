@@ -5,8 +5,6 @@ export class GoogleCodeWriterProvider implements Provider<GoogleCodeWriterFn> {
   constructor() {}
 
   value(): GoogleCodeWriterFn {
-    return async token => {
-      return token;
-    };
+    return async token => token;
   }
 }

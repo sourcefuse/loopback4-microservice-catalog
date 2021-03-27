@@ -98,6 +98,7 @@ export class ForgetPasswordController {
         audience: req.client_id,
         subject: user.username.toLowerCase(),
         issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
       });
       return new ForgetPasswordResponseDto({
         code: token,
@@ -133,6 +134,7 @@ export class ForgetPasswordController {
     try {
       payload = jwt.verify(token, process.env.JWT_SECRET as string, {
         issuer: process.env.JWT_ISSUER,
+        algorithms: ['HS256'],
       }) as ClientAuthCode<User>;
     } catch (error) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
@@ -182,6 +184,7 @@ export class ForgetPasswordController {
     try {
       payload = jwt.verify(req.token, process.env.JWT_SECRET as string, {
         issuer: process.env.JWT_ISSUER,
+        algorithms: ['HS256'],
       }) as ClientAuthCode<User>;
     } catch (error) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);

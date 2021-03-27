@@ -5,8 +5,6 @@ export class KeyCloakWriterProvider implements Provider<KeyCloakCodeWriterFn> {
   constructor() {}
 
   value(): KeyCloakCodeWriterFn {
-    return async token => {
-      return token;
-    };
+    return async token => token;
   }
 }

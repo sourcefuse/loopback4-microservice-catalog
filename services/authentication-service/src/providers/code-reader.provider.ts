@@ -5,8 +5,6 @@ export class OauthCodeReaderProvider implements Provider<CodeReaderFn> {
   constructor() {}
 
   value(): CodeReaderFn {
-    return async token => {
-      return token;
-    };
+    return async token => token;
   }
 }

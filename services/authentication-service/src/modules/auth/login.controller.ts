@@ -111,12 +111,6 @@ export class LoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
-    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
-    private readonly codeReader: CodeReaderFn,
-    @inject(AuthCodeBindings.KEYCLOAK_CODEWRITER_PROVIDER)
-    private readonly keycloackCodeWriter: KeyCloakCodeWriterFn,
-    @inject(AuthCodeBindings.GOOGLE_CODEWRITER_PROVIDER)
-    private readonly googleCodeWriter: GoogleCodeWriterFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -167,6 +161,7 @@ export class LoginController {
         expiresIn: this.client.authCodeExpiration,
         audience: req.client_id,
         issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
       });
       return {
         code: token,
@@ -262,6 +257,8 @@ export class LoginController {
   })
   async getToken(
     @requestBody() req: AuthTokenRequest,
+    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
+    codeReader: CodeReaderFn,
     @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
     const authClient = await this.authClientRepository.findOne({
@@ -273,10 +270,11 @@ export class LoginController {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {
-      const code = await this.codeReader(req.code);
+      const code = await codeReader(req.code);
       const payload = jwt.verify(code, authClient.secret, {
         audience: req.clientId,
         issuer: process.env.JWT_ISSUER,
+        algorithms: ['HS256'],
       }) as ClientAuthCode<User, typeof User.prototype.id>;
 
       if (
@@ -414,6 +412,8 @@ export class LoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.GOOGLE_CODEWRITER_PROVIDER)
+    googleCodeWriter: GoogleCodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {
@@ -432,11 +432,12 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = await this.googleCodeWriter(
+      const token = await googleCodeWriter(
         jwt.sign(codePayload, client.secret, {
           expiresIn: client.authCodeExpiration,
           audience: clientId,
           issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
         }),
       );
       response.redirect(`${client.redirectUrl}?code=${token}`);
@@ -512,6 +513,8 @@ export class LoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.KEYCLOAK_CODEWRITER_PROVIDER)
+    keycloackCodeWriter: KeyCloakCodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {
@@ -530,11 +533,12 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = await this.keycloackCodeWriter(
+      const token = await keycloackCodeWriter(
         jwt.sign(codePayload, client.secret, {
           expiresIn: client.authCodeExpiration,
           audience: clientId,
           issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
         }),
       );
       response.redirect(`${client.redirectUrl}?code=${token}`);
@@ -685,6 +689,7 @@ export class LoginController {
       const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
         expiresIn: authClient.accessTokenExpiration,
         issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
       });
       const refreshToken: string = randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
