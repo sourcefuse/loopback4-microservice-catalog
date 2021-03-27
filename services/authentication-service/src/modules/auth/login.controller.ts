@@ -271,11 +271,11 @@ export class LoginController {
     }
     try {
       const code = await codeReader(req.code);
-      const payload = jwt.verify(code, authClient.secret, {
+      const payload = <ClientAuthCode<User, typeof User.prototype.id>>jwt.verify(code, authClient.secret, {
         audience: req.clientId,
         issuer: process.env.JWT_ISSUER,
         algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
+      });
 
       if (
         payload.userId &&
