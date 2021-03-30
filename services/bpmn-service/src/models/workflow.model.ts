@@ -54,8 +54,10 @@ export class Workflow extends Entity {
   }
 }
 
+// sonarignore:start
 export interface WorkflowRelations {
   // no relations yet
 }
+// sonarignore:end
 
 export type WorkflowWithRelations = Workflow & WorkflowRelations;

@@ -1,25 +1,25 @@
 import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
+import { HttpErrors } from '@loopback/rest';
 import {Workflow} from '../models';
 import {WorflowManager} from '../types';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class WorkflowProvider
   implements Provider<WorflowManager> {
-  constructor() { }
 
   value() {
     return {
       getWorkflowById: async () => {
-        return Promise.resolve(new Workflow());
+        throw new HttpErrors.BadRequest("getWorkflowId function not implemented");
       },
       startWorkflow: async () => {
-        return Promise.resolve(true);
+        throw new HttpErrors.BadRequest("startWorkflow function not implemented");
       },
       createWorkflow: async () => {
-        return Promise.resolve(new Workflow());
+        throw new HttpErrors.BadRequest("createWorkflow function not implemented");
       },
       updateWorkflow: async () => {
-        return Promise.resolve(new Workflow());
+        throw new HttpErrors.BadRequest("updateWorkflow function not implemented");
       },
     };
   }

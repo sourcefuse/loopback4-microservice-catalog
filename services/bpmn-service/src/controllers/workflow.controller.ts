@@ -1,4 +1,4 @@
-import {inject} from '@loopback/core';
+import { inject } from '@loopback/core';
 import {
   CountSchema,
   Filter,
@@ -8,28 +8,25 @@ import {
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
-
-
-
-
-
-  HttpErrors, param,
+  HttpErrors,
+  param,
   patch,
   post,
-
-  Request, requestBody
+  Request,
+  requestBody,
+  RestBindings
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {ErrorKeys} from '../enums/error-keys.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
-import {WorkflowServiceBindings} from '../keys';
-import {Workflow} from '../models';
+import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { ErrorKeys } from '../enums/error-keys.enum';
+import { PermissionKey } from '../enums/permission-key.enum';
+import { WorkflowServiceBindings } from '../keys';
+import { Workflow } from '../models';
 import {
   WorkflowRepository
 } from '../repositories';
-import {WorflowManager} from '../types';
+import { WorflowManager } from '../types';
 const basePath = '/workflow';
 
 export class WorkflowController {
@@ -41,13 +38,13 @@ export class WorkflowController {
   ) { }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateWorkflow]})
+  @authorize({ permissions: [PermissionKey.CreateWorkflow] })
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Workflow model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Workflow)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Workflow) },
         },
       },
     },
@@ -83,13 +80,13 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateWorkflow]})
+  @authorize({ permissions: [PermissionKey.UpdateWorkflow] })
   @patch(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Workflow model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Workflow)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Workflow) },
         },
       },
     },
@@ -126,31 +123,32 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateWorkflow]})
+  @authorize({ permissions: [PermissionKey.CreateWorkflow] })
   @post(`${basePath}/{id}/start`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Initiate the workflow',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Workflow)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Workflow) },
         },
       },
     },
   })
   async startWorkflow(
     @param.path.string('id') id: string,
+    @inject(RestBindings.Http.REQUEST) request: Request,
   ): Promise<boolean> {
     const workFlowInfo = await this.workflowRepository.findById(id);
-    return this.workflowManagerService.startWorkflow(workFlowInfo);
+    return this.workflowManagerService.startWorkflow(workFlowInfo, request);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewWorkflow]})
+  @authorize({ permissions: [PermissionKey.ViewWorkflow] })
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
       },
     },
   })
@@ -162,14 +160,14 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewWorkflow]})
+  @authorize({ permissions: [PermissionKey.ViewWorkflow] })
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Workflow model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Workflow)},
+            schema: { type: 'array', items: getModelSchemaRef(Workflow) },
           },
         },
       },
