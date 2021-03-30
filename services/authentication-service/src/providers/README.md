@@ -15,7 +15,7 @@ when another entity requests a value to be injected.
 
 This provides a function that is used to verify the Bearer Token for endpoints using the Bearer Token authentication. 
 
-Implementation for this can be seen [here]('.,/modules/auth/providers/bearer-token-verify.provider.ts');
+Implementation for this can be seen [here](../modules/auth/providers/bearer-token-verify.provider.ts);
 
 ### CODEREADER_PROVIDER
 
@@ -106,7 +106,7 @@ Here ```CodeRepository``` is a Redis Repository, implementation for such a key p
 
 This provides a function that creates the object stored in the JWT token for signup requests.
 
-Sample implementation for this can be seen [here]('./local-presignup.provider.ts')
+Sample implementation for this can be seen [here](./local-presignup.provider.ts)
 
 ### LOCAL_SIGNUP_PROVIDER
 
