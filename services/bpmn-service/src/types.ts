@@ -27,3 +27,4 @@ export interface WorflowManager {
 }
 
 export const WorkflowCacheSourceName = 'WorkflowCache';
+export const BpmnDbSourceName = 'BpmnDb';

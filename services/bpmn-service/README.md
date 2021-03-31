@@ -2,6 +2,11 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
+## Overview
+
+A Loopback Microservice for handling BPMN workflows using engines like (Camunda)[https://camunda.com/products/cloud/].
+
+## Installation
 
 ## Overview
 
@@ -124,6 +129,73 @@ export class NotificationDbDataSource extends juggler.DataSource
   }
 }
 ```
+and bind a provider to the `BPMNBindings.BPMNProvider` key 
+
+```ts
+    this.bind(BPMNBindings.BPMNProvider).toProvider(
+      BpmnProvider,
+    );
+```
+### Environment Variables
+
+The service comes with a default `DataSource` using PostgreSQL, if you intend to use this, you have to provide the following variables in the environment - 
+
+| Name                          | Required | Default Value | Description                                                  |
+| ----------------------------- | -------- | ------------- | ------------------------------------------------------------ |
+| `DB_HOST`                     | Y        |               | Hostname for the database server.                            |
+| `DB_PORT`                     | Y        |               | Port for the database server.                                |
+| `DB_USER`                     | Y        |               | User for the database.                                       |
+| `DB_PASSWORD`                 | Y        |               | Password for the database user.                              |
+| `DB_DATABASE`                 | Y        |               | Database to connect to on the database server.               |
+| `DB_SCHEMA`                   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service.
+
+### Setting up a `DataSource`
+
+A sample implementation of a `DataSource` using environment variables and PostgreSQL is included with the service, you can provide your own using the `BpmnDbSourceName` variable. Implementation of the sample `DataSource` can be seen [here](/src/datasources/bpmn-db.datasource.ts).
+
+### Providers
+
+#### BPMNProvider
+
+To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 4 methods - `create`, `update`, `delete` and `execute`. These methods are responsible for performing their respective tasks in the workflow engine.  Here is the default implementation of this provider - 
+
+```ts
+import {Provider} from '@loopback/core';
+import {HttpErrors} from '@loopback/rest';
+
+import {ErrorKeys} from '../../constants/error-keys';
+import {BPMN, ExecutionRequest} from '../types';
+import {Workflow, WorkflowDto} from '../../models';
+
+export class BpmnProvider implements Provider<BPMN> {
+
+  value() {
+    return {
+      create: async (workflow: WorkflowDto) => {
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.ProviderNotFound,
+        );
+      },
+      update: async (workflow: WorkflowDto) => { //NOSONAR
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.ProviderNotFound,
+        );
+      },
+      delete: async (workflow: Workflow) => { //NOSONAR
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.ProviderNotFound,
+        );
+      },
+      execute: async (executionRequest: ExecutionRequest) => { //NOSONAR
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.ProviderNotFound,
+        );
+      },
+    };
+  }
+}
+
+```
 
 ### Migrations
 
@@ -149,4 +221,25 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 400: Bad Request (Error message varies w.r.t API)<br />
 201: No content: Empty Response<br />
 
-#### API Details
+### API Details
+
+`POST /workflow`
+ Endpoint to create a new workflow, uses the `create` method from the provider.
+
+`PATCH /workflow/{id}`
+ Endpoint to update a workflow, uses the `update` method from the provider.
+
+`POST /workflows/execute/{processId}`
+ Endpoint to trigger a workflow, uses the `execute` method from the provider.
+
+`DELETE /workflow/{id}`
+ Endpoint to delete a workflow, uses the `delete` method from the provider.
+
+`GET /workflow`
+ Endpoint to get all the workflows.
+
+`GET /workflow/count`
+ Endpoint to get the workflow count.
+ 
+`GET /workflow/{id}`
+ Endpoint to get a particular workflow given it's id.
