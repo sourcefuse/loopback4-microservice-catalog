@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.46](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.45...@sourceloop/authentication-service@1.0.0-alpha.46) (2021-03-31)
+
+
+### Features
+
+* **authentication-service:** add oauth-code read and write providers ([#154](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/154)) ([90fa8e0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/90fa8e08a927c6c6371a19ab2f75d10c23307b92))
+* **authentication-service:** upgrade loopback4-authentication package to support https proxy ([#156](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/156)) ([915b85b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/915b85b12732f677f19d960da2e88199dcd7b565))
+
+
+
+
+
 # [1.0.0-alpha.45](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.44...@sourceloop/authentication-service@1.0.0-alpha.45) (2021-03-17)
 
 **Note:** Version bump only for package @sourceloop/authentication-service
