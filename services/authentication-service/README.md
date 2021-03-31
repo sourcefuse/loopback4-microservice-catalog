@@ -152,6 +152,11 @@ Refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/
 
 ### API Documentation
 
+
+### Providers
+
+You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
+
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.

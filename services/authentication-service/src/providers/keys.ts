@@ -9,6 +9,8 @@ import {
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
+  CodeReaderFn,
+  CodeWriterFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -43,5 +45,15 @@ export namespace VerifyBindings {
 
   export const BEARER_SIGNUP_VERIFY_PROVIDER = BindingKey.create<VerifyFunction.GenericAuthFn>(
     `sf.bearer.signupverify.provider`,
+  );
+}
+
+export namespace AuthCodeBindings {
+  export const CODEWRITER_PROVIDER = BindingKey.create<CodeWriterFn>(
+    'sf.keycloack.codewriter.provider',
+  );
+
+  export const CODEREADER_PROVIDER = BindingKey.create<CodeReaderFn>(
+    'sf.oauth.codereader.provider',
   );
 }

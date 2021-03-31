@@ -28,6 +28,7 @@ export class BearerTokenVerifyProvider
       try {
         user = verify(token, process.env.JWT_SECRET as string, {
           issuer: process.env.JWT_ISSUER,
+          algorithms: ['HS256'],
         }) as AuthUser;
       } catch (error) {
         this.logger.error(JSON.stringify(error));

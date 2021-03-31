@@ -58,6 +58,7 @@ export class SignupRequestController {
       expiresIn: expiryDuration,
       subject: signUpRequest.email,
       issuer: process.env.JWT_ISSUER,
+      algorithm: 'HS256',
     });
 
     return new SignupRequestResponseDto({

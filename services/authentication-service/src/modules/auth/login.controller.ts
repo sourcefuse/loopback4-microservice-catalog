@@ -40,7 +40,12 @@ import {URLSearchParams} from 'url';
 
 import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
-import {JwtPayloadFn} from '../../providers';
+import {
+  AuthCodeBindings,
+  CodeReaderFn,
+  CodeWriterFn,
+  JwtPayloadFn,
+} from '../../providers';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -154,8 +159,8 @@ export class LoginController {
       const token = jwt.sign(codePayload, this.client.secret, {
         expiresIn: this.client.authCodeExpiration,
         audience: req.client_id,
-        subject: req.username.toLowerCase(),
         issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
       });
       return {
         code: token,
@@ -251,6 +256,8 @@ export class LoginController {
   })
   async getToken(
     @requestBody() req: AuthTokenRequest,
+    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
+    codeReader: CodeReaderFn,
     @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
     const authClient = await this.authClientRepository.findOne({
@@ -262,10 +269,11 @@ export class LoginController {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {
-      const payload = jwt.verify(req.code, authClient.secret, {
+      const code = await codeReader(req.code);
+      const payload = jwt.verify(code, authClient.secret, {
         audience: req.clientId,
-        subject: req.username,
         issuer: process.env.JWT_ISSUER,
+        algorithms: ['HS256'],
       }) as ClientAuthCode<User, typeof User.prototype.id>;
 
       if (
@@ -403,6 +411,8 @@ export class LoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    googleCodeWriter: CodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {
@@ -421,15 +431,15 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = jwt.sign(codePayload, client.secret, {
-        expiresIn: client.authCodeExpiration,
-        audience: clientId,
-        subject: this.user.username,
-        issuer: process.env.JWT_ISSUER,
-      });
-      response.redirect(
-        `${client.redirectUrl}?code=${token}&username=${this.user.username}`,
+      const token = await googleCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
       );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -502,6 +512,8 @@ export class LoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    keycloackCodeWriter: CodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {
@@ -520,15 +532,15 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = jwt.sign(codePayload, client.secret, {
-        expiresIn: client.authCodeExpiration,
-        audience: clientId,
-        subject: this.user.username,
-        issuer: process.env.JWT_ISSUER,
-      });
-      response.redirect(
-        `${client.redirectUrl}?code=${token}&user=${this.user.username}`,
+      const token = await keycloackCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
       );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -676,6 +688,7 @@ export class LoginController {
       const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
         expiresIn: authClient.accessTokenExpiration,
         issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
       });
       const refreshToken: string = randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification

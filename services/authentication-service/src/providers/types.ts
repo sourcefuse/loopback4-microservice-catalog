@@ -44,6 +44,14 @@ export interface KeyCloakPostVerifyFn {
   (profile: KeycloakProfile, user: IAuthUser | null): Promise<IAuthUser | null>;
 }
 
+export interface CodeWriterFn {
+  (token: string): Promise<string>;
+}
+
+export interface CodeReaderFn {
+  (token: string): Promise<string>;
+}
+
 export interface IDeviceInfo {
   userAgent?: string;
   deviceId?: string;

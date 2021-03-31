@@ -30,6 +30,8 @@ import {MySequence} from './sequence';
 import {IAuthServiceConfig} from './types';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
 import {
+  AuthCodeBindings,
+  CodeWriterProvider,
   GoogleOauth2SignupProvider,
   GooglePostVerifyProvider,
   GooglePreVerifyProvider,
@@ -43,6 +45,7 @@ import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
+import {OauthCodeReaderProvider} from './providers/code-reader.provider';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
@@ -168,6 +171,13 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[
       VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key
     ] = SignupBearerVerifyProvider;
+
+    this.providers[
+      AuthCodeBindings.CODEREADER_PROVIDER.key
+    ] = OauthCodeReaderProvider;
+    this.providers[
+      AuthCodeBindings.CODEWRITER_PROVIDER.key
+    ] = CodeWriterProvider;
 
     this.providers[
       AuthServiceBindings.JWTPayloadProvider.key
