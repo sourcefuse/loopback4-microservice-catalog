@@ -229,7 +229,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 `PATCH /workflow/{id}`
  Endpoint to update a workflow, uses the `update` method from the provider.
 
-`POST /workflows/execute/{processId}`
+`POST /workflow/{id}/start`
  Endpoint to trigger a workflow, uses the `execute` method from the provider.
 
 `DELETE /workflow/{id}`
@@ -237,9 +237,3 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 `GET /workflow`
  Endpoint to get all the workflows.
-
-`GET /workflow/count`
- Endpoint to get the workflow count.
- 
-`GET /workflow/{id}`
- Endpoint to get a particular workflow given it's id.
