@@ -1,6 +1,6 @@
 # authentication-service
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
 ## Overview
 
@@ -28,7 +28,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import { AuthenticationServiceComponent } from '@sourceloop/in-mail-service';
+import {AuthenticationServiceComponent} from '@sourceloop/in-mail-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
@@ -77,38 +77,36 @@ export class Client extends BootMixin(
 
 ### Environment Variables
 
-| Name                          | Required | Default Value | Description                                                  |
-| ----------------------------- | -------- | ------------- | ------------------------------------------------------------ |
-| `NODE_ENV`                    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`           |
-| `LOG_LEVEL`                   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
-| `DB_HOST`                     | Y        |               | Hostname for the database server.                            |
-| `DB_PORT`                     | Y        |               | Port for the database server.                                |
-| `DB_USER`                     | Y        |               | User for the database.                                       |
-| `DB_PASSWORD`                 | Y        |               | Password for the database user.                              |
-| `DB_DATABASE`                 | Y        |               | Database to connect to on the database server.               |
+| Name                          | Required | Default Value | Description                                                                                                                        |
+| ----------------------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`                    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
+| `LOG_LEVEL`                   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
+| `DB_HOST`                     | Y        |               | Hostname for the database server.                                                                                                  |
+| `DB_PORT`                     | Y        |               | Port for the database server.                                                                                                      |
+| `DB_USER`                     | Y        |               | User for the database.                                                                                                             |
+| `DB_PASSWORD`                 | Y        |               | Password for the database user.                                                                                                    |
+| `DB_DATABASE`                 | Y        |               | Database to connect to on the database server.                                                                                     |
 | `DB_SCHEMA`                   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `REDIS_HOST`                  | Y        |               | Hostname of the Redis server.                                |
-| `REDIS_PORT`                  | Y        |               | Port to connect to the Redis server over.                    |
-| `REDIS_URL`                   | Y        |               | Fully composed URL for Redis connection. Used instead of other settings if set. |
-| `REDIS_PASSWORD`              | Y        |               | Password for Redis if authentication is enabled.             |
-| `REDIS_DATABASE`              | Y        |               | Database within Redis to connect to.                         |
-| `JWT_SECRET`                  | Y        |               | Symmetric signing key of the JWT token.                      |
-| `JWT_ISSUER`                  | Y        |               | Issuer of the JWT token.                                     |
-| `USER_TEMP_PASSWORD`          | N        |               | Temporary password that can be used during development.      |
-| `GOOGLE_AUTH_URL`             | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google |
-| `GOOGLE_AUTH_CLIENT_ID`       | N        |               | Google client ID for the service                             |
-| `GOOGLE_AUTH_CLIENT_SECRET`   | N        |               | Google client secret for the service                         |
-| `GOOGLE_AUTH_TOKEN_URL`       | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google |
-| `GOOGLE_AUTH_CALLBACK_URL`    | N        |               | Google callback URL for the client configuration in Google   |
-| `FORGOT_PASSWORD_LINK_EXPIRY` | N        | 1800          | Expiration period of temporary password in seconds. 1800 seconds (30 minutes) is the default. |
-| `KEYCLOAK_HOST`               | N        |               | Hostname of the Keycloak instance                            |
-| `KEYCLOAK_REALM`              | N        |               | Realm (tenant) in Keycloak                                   |
-| `KEYCLOAK_CLIENT_ID`          | N        |               | Keycloak client ID for the service                           |
-| `KEYCLOAK_CLIENT_SECRET`      | N        |               | Keycloak client secret for the service                       |
-| `KEYCLOAK_CALLBACK_URL`       | N        |               | Keycloak callback URL for the client configuration in Google |
-| `RATE_LIMITER_WINDOW_MS`      | N        |               | TODO: get definition                                         |
-| `RATE_LIMITER_MAX_REQS`       | N        |               | TODO: get definition                                         |
-| `X_FRAME_OPTIONS`             | N        |               | TODO: get definition                                         |
+| `REDIS_HOST`                  | Y        |               | Hostname of the Redis server.                                                                                                      |
+| `REDIS_PORT`                  | Y        |               | Port to connect to the Redis server over.                                                                                          |
+| `REDIS_URL`                   | Y        |               | Fully composed URL for Redis connection. Used instead of other settings if set.                                                    |
+| `REDIS_PASSWORD`              | Y        |               | Password for Redis if authentication is enabled.                                                                                   |
+| `REDIS_DATABASE`              | Y        |               | Database within Redis to connect to.                                                                                               |
+| `JWT_SECRET`                  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
+| `JWT_ISSUER`                  | Y        |               | Issuer of the JWT token.                                                                                                           |
+| `USER_TEMP_PASSWORD`          | N        |               | Temporary password that can be used during development.                                                                            |
+| `GOOGLE_AUTH_URL`             | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google                                                      |
+| `GOOGLE_AUTH_CLIENT_ID`       | N        |               | Google client ID for the service                                                                                                   |
+| `GOOGLE_AUTH_CLIENT_SECRET`   | N        |               | Google client secret for the service                                                                                               |
+| `GOOGLE_AUTH_TOKEN_URL`       | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google                                                      |
+| `GOOGLE_AUTH_CALLBACK_URL`    | N        |               | Google callback URL for the client configuration in Google                                                                         |
+| `FORGOT_PASSWORD_LINK_EXPIRY` | N        | 1800          | Expiration period of temporary password in seconds. 1800 seconds (30 minutes) is the default.                                      |
+| `KEYCLOAK_HOST`               | N        |               | Hostname of the Keycloak instance                                                                                                  |
+| `KEYCLOAK_REALM`              | N        |               | Realm (tenant) in Keycloak                                                                                                         |
+| `KEYCLOAK_CLIENT_ID`          | N        |               | Keycloak client ID for the service                                                                                                 |
+| `KEYCLOAK_CLIENT_SECRET`      | N        |               | Keycloak client secret for the service                                                                                             |
+| `KEYCLOAK_CALLBACK_URL`       | N        |               | Keycloak callback URL for the client configuration in Google                                                                       |
+| `HTTPS_PROXY`                 | N        |               | Https proxy url for keycloak auth                                                                                                  |
 
 ### Setting up a `DataSource`
 
@@ -131,7 +129,8 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource extends juggler.DataSource
+export class AuthenticationDbDataSource
+  extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = 'authentication';
   static readonly defaultConfig = config;
@@ -151,7 +150,6 @@ export class AuthenticationDbDataSource extends juggler.DataSource
 Refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/en/lb4/Database-migrations.html) for instructions for handling migrations.
 
 ### API Documentation
-
 
 ### Providers
 
@@ -178,4 +176,3 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 #### API Details
 
 Visit the [OpenAPI spec docs](OPEN_API_SPEC.md)
-
