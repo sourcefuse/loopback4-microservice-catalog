@@ -47,49 +47,21 @@ export class CodeReaderProvider
 Here ```CodeRepository``` is a Redis Repository, implementation for such a key pair repository can be seen [here](https://loopback.io/doc/en/lb4/Repository.html#access-keyvalue-stores).
 
 
-### GOOGLE_CODEWRITER_PROVIDER
+### CODEWRITER_PROVIDER
 
-This provides a function that can process the Google authorization code before it is passed to the client, it can be used to store the token in a cache and pass only a key, or to encrypt the token.
-
-Sample implementation - 
-
-```ts
-export class CodeWriterProvider
-    implements Provider<KeyCloakCodeWriterFn> {
-    constructor(
-        @repository(CodeRepository)
-        private readonly codeRepo: CodeRepository
-    ) { }
-
-    value(): KeyCloakCodeWriterFn {
-        return async (token) => {
-            let key = uuidv4();
-            await this.codeRepo.set(key, {code: token});
-            return key;
-        }
-    }
-}
-```
-Here ```CodeRepository``` is a Redis Repository, implementation for such a key pair repository can be seen [here](https://loopback.io/doc/en/lb4/Repository.html#access-keyvalue-stores).
-
-```uuidv4``` is function to from [this](https://www.npmjs.com/package/uuid).
-
-
-### KEYCLOAK_CODEWRITER_PROVIDER
-
-This provides a function that can process the Keycloak authorization code before it is passed to the client, it can be used to store the token in a cache and pass only a key, or to encrypt the token.
+This provides a function that can process the authorization code before it is passed to the client, it can be used to store the token in a cache and pass only a key, or to encrypt the token.
 
 Sample implementation - 
 
 ```ts
 export class CodeWriterProvider
-    implements Provider<KeyCloakCodeWriterFn> {
+    implements Provider<CodeWriterFn> {
     constructor(
         @repository(CodeRepository)
         private readonly codeRepo: CodeRepository
     ) { }
 
-    value(): KeyCloakCodeWriterFn {
+    value(): CodeWriterFn {
         return async (token) => {
             let key = uuidv4();
             await this.codeRepo.set(key, {code: token});

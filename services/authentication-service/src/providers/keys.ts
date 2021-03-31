@@ -6,12 +6,11 @@ import {
   GooglePostVerifyFn,
   GooglePreVerifyFn,
   GoogleSignUpFn,
-  KeyCloakCodeWriterFn,
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
-  GoogleCodeWriterFn,
   CodeReaderFn,
+  CodeWriterFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -50,11 +49,7 @@ export namespace VerifyBindings {
 }
 
 export namespace AuthCodeBindings {
-  export const KEYCLOAK_CODEWRITER_PROVIDER = BindingKey.create<KeyCloakCodeWriterFn>(
-    'sf.keycloack.codewriter.provider',
-  );
-
-  export const GOOGLE_CODEWRITER_PROVIDER = BindingKey.create<GoogleCodeWriterFn>(
+  export const CODEWRITER_PROVIDER = BindingKey.create<CodeWriterFn>(
     'sf.keycloack.codewriter.provider',
   );
 

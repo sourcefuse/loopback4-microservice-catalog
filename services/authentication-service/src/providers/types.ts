@@ -27,10 +27,6 @@ export interface GooglePostVerifyFn {
   ): Promise<IAuthUser | null>;
 }
 
-export interface GoogleCodeWriterFn {
-  (token: string): Promise<string>;
-}
-
 export interface KeyCloakSignUpFn {
   (profile: KeycloakProfile): Promise<IAuthUser | null>;
 }
@@ -48,7 +44,7 @@ export interface KeyCloakPostVerifyFn {
   (profile: KeycloakProfile, user: IAuthUser | null): Promise<IAuthUser | null>;
 }
 
-export interface KeyCloakCodeWriterFn {
+export interface CodeWriterFn {
   (token: string): Promise<string>;
 }
 

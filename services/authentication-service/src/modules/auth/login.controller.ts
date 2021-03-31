@@ -43,9 +43,8 @@ import {AuthClient, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
   CodeReaderFn,
-  GoogleCodeWriterFn,
+  CodeWriterFn,
   JwtPayloadFn,
-  KeyCloakCodeWriterFn,
 } from '../../providers';
 import {
   AuthClientRepository,
@@ -412,8 +411,8 @@ export class LoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
-    @inject(AuthCodeBindings.GOOGLE_CODEWRITER_PROVIDER)
-    googleCodeWriter: GoogleCodeWriterFn,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    googleCodeWriter: CodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {
@@ -513,8 +512,8 @@ export class LoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
-    @inject(AuthCodeBindings.KEYCLOAK_CODEWRITER_PROVIDER)
-    keycloackCodeWriter: KeyCloakCodeWriterFn,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    keycloackCodeWriter: CodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {

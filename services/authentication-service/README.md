@@ -155,7 +155,7 @@ Refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/
 
 ### Providers
 
-You can find documentation for some of the providers bindings this service provides [here](./src/providers/README.md)
+You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
 
 #### Common Headers
 
