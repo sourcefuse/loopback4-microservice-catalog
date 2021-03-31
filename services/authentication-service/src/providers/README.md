@@ -11,6 +11,8 @@ when another entity requests a value to be injected.
 
 ## Basic Usage
 
+These are the optional bindings that can be used to extend the functionality of this service.
+
 ### BEARER_TOKEN_VERIFIER
 
 This provides a function that is used to verify the Bearer Token for endpoints using the Bearer Token authentication. 
