@@ -22,12 +22,7 @@ exports.setup = function (options, seedLink) {
 exports.up = function (db) {
   var filePath = path.join(__dirname, 'sqls', '20210318100600-init-up.sql');
   return new Promise(function (resolve, reject) {
-    fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
-      if (err) return reject(err);
-      console.log('received data: ' + data);
-
-      resolve(data);
-    });
+    receiveData(resolve, reject, filePath);
   }).then(function (data) {
     return db.runSql(data);
   });
@@ -36,16 +31,20 @@ exports.up = function (db) {
 exports.down = function (db) {
   var filePath = path.join(__dirname, 'sqls', '20210318100600-init-down.sql');
   return new Promise(function (resolve, reject) {
-    fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
-      if (err) return reject(err);
-      console.log('received data: ' + data);
-
-      resolve(data);
-    });
+    receiveData(resolve, reject, filePath);
   }).then(function (data) {
     return db.runSql(data);
   });
 };
+
+function receiveData(resolve, reject, filePath) {
+  fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
+    if (err) return reject(err);
+    console.log('received data: ' + data);
+
+    resolve(data);
+  });
+}
 
 exports._meta = {
   version: 1,
