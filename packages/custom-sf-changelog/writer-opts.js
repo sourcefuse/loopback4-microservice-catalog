@@ -4,6 +4,19 @@ const compareFunc = require('compare-func')
 const Q = require('q')
 const readFile = Q.denodeify(require('fs').readFile)
 const resolve = require('path').resolve
+const typeMap = {
+  feat:"Features",
+  fix:"Bug Fixes",
+  perf:"Performance Improvements",
+  revert:"Reverts",
+  docs:"Documentation",
+  style:"Styles",
+  refactor:"Code Refactoring",
+  test:"Tests",
+  build:"Build System",
+  ci: "Continuous Integration"
+}
+
 
 module.exports = Q.all([
   readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
@@ -32,28 +45,13 @@ function getWriterOpts () {
         discard = false
       })
 
-      if (commit.type === 'feat') {
-        commit.type = 'Features'
-      } else if (commit.type === 'fix') {
-        commit.type = 'Bug Fixes'
-      } else if (commit.type === 'perf') {
-        commit.type = 'Performance Improvements'
-      } else if (commit.type === 'revert' || commit.revert) {
-        commit.type = 'Reverts'
-      } else if (discard) {
-        return
-      } else if (commit.type === 'docs') {
-        commit.type = 'Documentation'
-      } else if (commit.type === 'style') {
-        commit.type = 'Styles'
-      } else if (commit.type === 'refactor') {
-        commit.type = 'Code Refactoring'
-      } else if (commit.type === 'test') {
-        commit.type = 'Tests'
-      } else if (commit.type === 'build') {
-        commit.type = 'Build System'
-      } else if (commit.type === 'ci') {
-        commit.type = 'Continuous Integration'
+      if (discard) {
+        return;
+      }
+      if(commit.revert) {
+        commit.type = typeMap.revert;
+      } else {
+        commit.type = typeMap[commit.type];
       }
 
       if (commit.scope === '*') {
