@@ -30,6 +30,7 @@
       "yes": true
     }
   },
+  "changelogPreset": "custom-sf-changelog",
   "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md"],
   "version": "independent"
 }

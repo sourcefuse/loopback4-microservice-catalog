@@ -7,8 +7,9 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@commitlint/config-lerna-scopes": "^8.3.4",
     "commitizen": "^4.1.2",
+    "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.2.0",
-    "cz-customizable": "^6.2.0",
+    "cz-format-extension": "^1.4.0",
     "husky": "^4.2.5",
     "lerna": "^3.16.2"
   },
@@ -20,7 +21,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-customizable"
+      "path": "cz-format-extension"
     }
   },
   "dependencies": {}
