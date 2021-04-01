@@ -5,15 +5,15 @@ const Q = require('q')
 const readFile = Q.denodeify(require('fs').readFile)
 const resolve = require('path').resolve
 const typeMap = {
-  feat:"Features",
-  fix:"Bug Fixes",
-  perf:"Performance Improvements",
-  revert:"Reverts",
-  docs:"Documentation",
-  style:"Styles",
-  refactor:"Code Refactoring",
-  test:"Tests",
-  build:"Build System",
+  feat: "Features",
+  fix: "Bug Fixes",
+  perf: "Performance Improvements",
+  revert: "Reverts",
+  docs: "Documentation",
+  style: "Styles",
+  refactor: "Code Refactoring",
+  test: "Tests",
+  build: "Build System",
   ci: "Continuous Integration"
 }
 
@@ -35,7 +35,7 @@ module.exports = Q.all([
     return writerOpts
   })
 
-function getWriterOpts () {
+function getWriterOpts() {
   return {
     transform: (commit, context) => {
       let discard = true
@@ -48,7 +48,7 @@ function getWriterOpts () {
       if (discard) {
         return;
       }
-      if(commit.revert) {
+      if (commit.revert) {
         commit.type = typeMap.revert;
       } else {
         commit.type = typeMap[commit.type];
@@ -76,24 +76,12 @@ function getWriterOpts () {
         }
         if (context.host) {
           // User URLs.
-          commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, username) => {
-            if (username.includes('/')) {
-              return `@${username}`
-            }
-
-            return `[@${username}](${context.host}/${username})`
-          })
+          commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, username) => username.includes('/') ? `@${username}` : `[@${username}](${context.host}/${username})`)
         }
       }
 
       // remove references that already appear in the subject
-      commit.references = commit.references.filter(reference => {
-        if (issues.indexOf(reference.issue) === -1) {
-          return true
-        }
-
-        return false
-      })
+      commit.references = commit.references.filter(reference => issues.indexOf(reference.issue) === -1)
 
       return commit
     },
