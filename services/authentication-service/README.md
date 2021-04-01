@@ -149,7 +149,7 @@ export class AuthenticationDbDataSource
 
 ### Migrations
 
-Refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/en/lb4/Database-migrations.html) for instructions for handling migrations.
+The migrations required for this service are processed during the installation automatically, if you plan to use the [Loopback Database Migrations] (https://loopback.io/doc/en/lb4/Database-migrations.html) or your own migrations, you can the auto-migration by setting the `AUTH_MIGRATION_SKIP` to true before installing the package.
 
 ### API Documentation
 

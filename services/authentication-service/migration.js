@@ -11,8 +11,8 @@ try {
 } catch (err) {
   console.info('\n');
 }
-if (isLocal) {
-  console.info(`Skipping "postinstall" script on local installs`);
+if (isLocal || process.env.AUTH_MIGRATION_SKIP) {
+  console.info(`Skipping migrations`);
 } else {
   dotenv.config();
   dotenvExt.load({
