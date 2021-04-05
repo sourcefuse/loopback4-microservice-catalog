@@ -20,7 +20,7 @@ export class BPMTask<T, R> implements IBPMTask<T, R> {
         }
       },
       err => {
-        console.error(err);
+        console.error(err); //NOSONAR
       },
     );
   }

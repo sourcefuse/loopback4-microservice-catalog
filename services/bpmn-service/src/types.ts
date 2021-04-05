@@ -5,8 +5,8 @@ import {WorkflowDto} from './models/workflow-dto.model';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ICommand {
-  parameters?: any;
-  execute(): Promise<any>;
+  parameters?: any; //NOSONAR
+  execute(): Promise<any>; //NOSONAR
 }
 
 export interface IBPMTask<T, R> {

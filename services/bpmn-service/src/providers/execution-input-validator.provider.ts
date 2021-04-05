@@ -4,7 +4,6 @@ import Ajv from 'ajv';
 
 export class ExecutionInputValidationProvider
   implements Provider<ExecutionInputValidator> {
-  constructor() {}
 
   value(): ExecutionInputValidator {
     return async (schema, input) => {
