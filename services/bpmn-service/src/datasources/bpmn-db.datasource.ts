@@ -1,10 +1,9 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {BpmnDbSourceName, BpmnServiceComponentOptions} from '../types';
-import {BPMNServiceBindings} from '../keys';
+import {WorkflowCacheSourceName} from '../types';
 
 const config = {
-  name: BpmnDbSourceName,
+  name: WorkflowCacheSourceName,
   connector: 'postgresql',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -19,21 +18,16 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class BpmnDbDataSource extends juggler.DataSource
+export class BpmnDbDataSource
+  extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = BpmnDbSourceName;
+  static dataSourceName = WorkflowCacheSourceName;
   static readonly defaultConfig = config;
 
-  // @ts-ignore
   constructor(
-    @inject(BPMNServiceBindings.BPMNServiceConfig)
-    private readonly serviceConfig: BpmnServiceComponentOptions,
     @inject('datasources.config.BpmnDb', {optional: true})
-      dsConfig: object = config,
+    dsConfig: object = config,
   ) {
-    Object.assign(dsConfig, {
-      ...serviceConfig,
-    });
     super(dsConfig);
   }
 }

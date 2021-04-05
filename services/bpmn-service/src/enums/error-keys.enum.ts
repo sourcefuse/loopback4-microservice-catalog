@@ -1,4 +1,5 @@
 export const enum ErrorKeys {
   WorkflowNotFound = 'WorkflowNotFound',
-  ErrorCreatingWorkflow = 'ErrorCreatingWorkflow'
+  VersionNotFound = 'WorkflowVersionNotFound',
+  ErrorCreatingWorkflow = 'ErrorCreatingWorkflow',
 }

@@ -4,7 +4,7 @@ import {
   ControllerClass,
   CoreBindings,
   inject,
-  ProviderMap
+  ProviderMap,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -15,22 +15,19 @@ import {
   BearerVerifierType,
   CoreComponent,
   SECURITY_SCHEME_SPEC,
-  ServiceSequence
+  ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
-  AuthorizationComponent
+  AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  WorkflowController
-} from './controllers';
+import {WorkflowController} from './controllers';
 import {WorkflowServiceBindings} from './keys';
 import {Workflow} from './models';
 import {WorkflowProvider} from './providers';
-import {
-  WorkflowRepository
-} from './repositories';
+import {ExecutionInputValidationProvider} from './providers/execution-input-validator.provider';
+import {WorkflowRepository} from './repositories';
 import {IWorkflowServiceConfig} from './types';
 
 export class WorkflowServiceComponent implements Component {
@@ -64,20 +61,17 @@ export class WorkflowServiceComponent implements Component {
       this.setupSequence();
     }
 
-    this.repositories = [
-      WorkflowRepository
-    ];
+    this.repositories = [WorkflowRepository];
 
     this.models = [Workflow];
 
     this.providers = {
-      [WorkflowServiceBindings.WorkflowManager
-        .key]: WorkflowProvider,
+      [WorkflowServiceBindings.WorkflowManager.key]: WorkflowProvider,
+      [WorkflowServiceBindings.ExecutionInputValidatorFn
+        .key]: ExecutionInputValidationProvider,
     };
 
-    this.controllers = [
-      WorkflowController,
-    ];
+    this.controllers = [WorkflowController];
   }
 
   providers?: ProviderMap = {};

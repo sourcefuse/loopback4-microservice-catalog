@@ -1,10 +1,7 @@
-import { inject } from '@loopback/core';
+import {inject} from '@loopback/core';
+import {AnyObject, Filter, repository} from '@loopback/repository';
 import {
-  CountSchema,
-  Filter,
-  repository
-} from '@loopback/repository';
-import {
+  del,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
@@ -12,162 +9,201 @@ import {
   param,
   patch,
   post,
-  Request,
   requestBody,
-  RestBindings
 } from '@loopback/rest';
-import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { ErrorKeys } from '../enums/error-keys.enum';
-import { PermissionKey } from '../enums/permission-key.enum';
-import { WorkflowServiceBindings } from '../keys';
-import { Workflow } from '../models';
-import {
-  WorkflowRepository
-} from '../repositories';
-import { WorflowManager } from '../types';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {OPERATION_SECURITY_SPEC} from '../constants/security-specs';
+import {ErrorKeys} from '../enums/error-keys.enum';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {WorkflowServiceBindings} from '../keys';
+import {Workflow, WorkflowVersion} from '../models';
+import {ExecuteWorkflowDto} from '../models/execute-workflow-dto';
+import {WorkflowDto} from '../models/workflow-dto.model';
+import {WorkflowRepository} from '../repositories';
+import {WorkflowVersionRepository} from '../repositories/workflow-version.repository';
+import {ExecutionInputValidator, WorflowManager} from '../types';
 const basePath = '/workflow';
 
 export class WorkflowController {
   constructor(
     @repository(WorkflowRepository)
     public workflowRepository: WorkflowRepository,
+    @repository(WorkflowVersionRepository)
+    public workflowVersionRepository: WorkflowVersionRepository,
     @inject(WorkflowServiceBindings.WorkflowManager)
     private readonly workflowManagerService: WorflowManager,
-  ) { }
+    @inject(WorkflowServiceBindings.ExecutionInputValidatorFn)
+    private readonly execInputValidator: ExecutionInputValidator,
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKey.CreateWorkflow] })
+  @authorize({permissions: [PermissionKey.CreateWorkflow]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Workflow model instance',
         content: {
-          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Workflow) },
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Workflow)},
         },
       },
     },
   })
   async create(
     @requestBody({
-      description: 'multipart/form-data',
-      required: true,
       content: {
-        'multipart/form-data': {
-          'x-parser': 'stream',
-          schema: {
-            type: 'object'
-          },
+        'application/json': {
+          schema: getModelSchemaRef(WorkflowDto, {
+            title: 'NewWorkflow',
+          }),
         },
       },
     })
-    request: Request,
+    workflowDto: WorkflowDto,
   ): Promise<Workflow> {
-    const workFlowInfo = await this.workflowManagerService.createWorkflow(request);
-    if (!workFlowInfo) {
-      throw new HttpErrors.BadRequest(ErrorKeys.ErrorCreatingWorkflow);
-    }
+    try {
+      const workflowResponse = await this.workflowManagerService.createWorkflow(
+        workflowDto,
+      );
 
-    if (!workFlowInfo.name) {
-      workFlowInfo.name = request.body.name;
-    }
+      const entity = new Workflow({
+        workflowVersion: workflowResponse.version,
+        externalIdentifier: workflowResponse.processId,
+        provider: workflowResponse.provider,
+        inputSchema: workflowDto.inputSchema,
+      });
 
-    if (!workFlowInfo.description) {
-      workFlowInfo.description = request.body.description;
+      const newWorkflow = await this.workflowRepository.create(entity);
+
+      const version = new WorkflowVersion({
+        workflowId: newWorkflow.id,
+        version: workflowResponse.version,
+        bpmnDiagram: workflowResponse.fileRef,
+        externalWorkflowId: workflowResponse.externalId,
+        inputSchema: workflowDto.inputSchema,
+      });
+
+      await this.workflowVersionRepository.create(version);
+      return newWorkflow;
+    } catch (e) {
+      throw new HttpErrors.BadRequest(e);
     }
-    return this.workflowRepository.create(workFlowInfo);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKey.UpdateWorkflow] })
+  @authorize({permissions: [PermissionKey.UpdateWorkflow]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Workflow model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Workflow) },
-        },
+      '204': {
+        description: 'Workflow PATCH success',
       },
     },
   })
   async updateById(
     @requestBody({
-      description: 'multipart/form-data',
-      required: true,
       content: {
-        'multipart/form-data': {
-          'x-parser': 'stream',
-          schema: {
-            type: 'object'
-          },
+        'application/json': {
+          schema: getModelSchemaRef(WorkflowDto, {partial: true}),
         },
       },
     })
-    request: Request,
+    workflowDto: WorkflowDto,
     @param.path.string('id') id: string,
-  ): Promise<Workflow> {
-    const workFlowInfo = await this.workflowManagerService.createWorkflow(request);
-    if (!workFlowInfo) {
-      throw new HttpErrors.BadRequest(ErrorKeys.ErrorCreatingWorkflow);
-    }
+  ): Promise<void> {
+    try {
+      const workflowResponse = await this.workflowManagerService.createWorkflow(
+        workflowDto,
+      );
 
-    if (!workFlowInfo.name) {
-      workFlowInfo.name = request.body.name;
-    }
+      const entity = new Workflow({
+        workflowVersion: workflowResponse.version,
+        externalIdentifier: workflowResponse.processId,
+        provider: workflowResponse.provider,
+        inputSchema: workflowDto.inputSchema,
+      });
 
-    if (!workFlowInfo.description) {
-      workFlowInfo.description = request.body.description;
+      await this.workflowRepository.updateById(id, entity);
+
+      const version = new WorkflowVersion({
+        workflowId: id,
+        version: workflowResponse.version,
+        bpmnDiagram: workflowResponse.fileRef,
+        externalWorkflowId: workflowResponse.externalId,
+        inputSchema: workflowDto.inputSchema,
+      });
+
+      await this.workflowVersionRepository.create(version);
+    } catch (e) {
+      throw new HttpErrors.BadRequest(e);
     }
-    return this.workflowRepository.create(workFlowInfo);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKey.CreateWorkflow] })
+  @authorize({permissions: [PermissionKey.CreateWorkflow]})
   @post(`${basePath}/{id}/start`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Initiate the workflow',
-        content: {
-          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Workflow) },
-        },
+      '200': {
+        description: 'Workflow instance',
       },
     },
   })
   async startWorkflow(
     @param.path.string('id') id: string,
-    @inject(RestBindings.Http.REQUEST) request: Request,
-  ): Promise<boolean> {
-    const workFlowInfo = await this.workflowRepository.findById(id);
-    return this.workflowManagerService.startWorkflow(workFlowInfo, request);
-  }
-
-  @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKey.ViewWorkflow] })
-  @get(`${basePath}/{id}`, {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Notification model count',
-        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ExecuteWorkflowDto),
+        },
       },
-    },
-  })
-  async count(
-    @param.path.string('id') id: string,
-  ): Promise<Workflow> {
-    const workflow = await this.workflowRepository.findById(id);
-    return this.workflowManagerService.getWorkflowById(workflow);
+    })
+    instance: ExecuteWorkflowDto,
+  ): Promise<AnyObject> {
+    const workflow = await this.workflowRepository.findOne({
+      where: {
+        externalIdentifier: id,
+      },
+    });
+    let version;
+    if (!workflow) {
+      throw new HttpErrors.NotFound(ErrorKeys.WorkflowNotFound);
+    }
+    let inputSchema = workflow.inputSchema;
+    if (instance.workflowVersion) {
+      version = await this.workflowVersionRepository.findOne({
+        where: {
+          version: instance.workflowVersion,
+          workflowId: workflow.id,
+        },
+      });
+      if (version) {
+        inputSchema = version.inputSchema;
+      } else {
+        throw new HttpErrors.NotFound(ErrorKeys.VersionNotFound);
+      }
+    }
+
+    await this.execInputValidator(inputSchema, instance.input);
+
+    return this.workflowManagerService.startWorkflow(
+      instance.input,
+      workflow,
+      version,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKey.ViewWorkflow] })
+  @authorize({permissions: [PermissionKey.ViewWorkflow]})
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Workflow model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: { type: 'array', items: getModelSchemaRef(Workflow) },
+            schema: {type: 'array', items: getModelSchemaRef(Workflow)},
           },
         },
       },
@@ -177,6 +213,37 @@ export class WorkflowController {
     @param.query.object('filter', getFilterSchemaFor(Workflow))
     filter?: Filter<Workflow>,
   ): Promise<Workflow[]> {
-    return this.workflowRepository.find(filter);
+    return this.workflowRepository.find(filter, {
+      includes: ['workflowVersions'],
+    });
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewWorkflow]})
+  @get(`${basePath}/{id}`, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Workflow Model',
+      },
+    },
+  })
+  async count(@param.path.string('id') id: string): Promise<Workflow> {
+    const workflow = await this.workflowRepository.findById(id);
+    return this.workflowManagerService.getWorkflowById(workflow);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
+  @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      '204': {
+        description: 'Workflow DELETE success',
+      },
+    },
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    const workflow = await this.workflowRepository.findById(id);
+    await this.workflowManagerService.deleteWorkflowById(workflow);
   }
 }

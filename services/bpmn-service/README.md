@@ -101,39 +101,43 @@ Here is a sample Implementation `DataSource` implementation using environment va
 ```typescript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+import {WorkflowCacheSourceName} from '../types';
 
 const config = {
-  name: 'notificationDb',
+  name: WorkflowCacheSourceName,
   connector: 'postgresql',
-  url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_PASSWORD, //NOSONAR
   database: process.env.DB_DATABASE,
   schema: process.env.DB_SCHEMA,
 };
 
+// Observe application's life cycle to disconnect the datasource when
+// application is stopped. This allows the application to be shut down
+// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
+// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class NotificationDbDataSource extends juggler.DataSource
+export class BpmnDbDataSource extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'notification';
+  static dataSourceName = WorkflowCacheSourceName;
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.Notification' otherwise you might get Errors
-    @inject('datasources.config.Notification', {optional: true})
-    dsConfig: object = config,
+    @inject('datasources.config.BpmnDb', {optional: true})
+      dsConfig: object = config,
   ) {
     super(dsConfig);
   }
 }
+
 ```
-and bind a provider to the `BPMNBindings.BPMNProvider` key 
+and bind a provider to the `WorkflowServiceBindings.WorkflowManager` key 
 
 ```ts
-    this.bind(BPMNBindings.BPMNProvider).toProvider(
-      BpmnProvider,
+    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(
+      WorkflowProvider,
     );
 ```
 ### Environment Variables
@@ -157,43 +161,38 @@ A sample implementation of a `DataSource` using environment variables and Postgr
 
 #### BPMNProvider
 
-To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 4 methods - `create`, `update`, `delete` and `execute`. These methods are responsible for performing their respective tasks in the workflow engine.  Here is the default implementation of this provider - 
+To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 5 methods - `getWorkflowById`, `startWorkflow`, `createWorkflow`, `updateWorkflow` and `deleteWorkflowById`. These methods are responsible for performing their respective tasks in the workflow engine.  Here is the default implementation of this provider - 
 
 ```ts
-import {Provider} from '@loopback/core';
-import {HttpErrors} from '@loopback/rest';
+import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
+import { HttpErrors } from '@loopback/rest';
+import {WorflowManager} from '../types';
 
-import {ErrorKeys} from '../../constants/error-keys';
-import {BPMN, ExecutionRequest} from '../types';
-import {Workflow, WorkflowDto} from '../../models';
-
-export class BpmnProvider implements Provider<BPMN> {
+@bind({scope: BindingScope.TRANSIENT})
+export class WorkflowProvider
+  implements Provider<WorflowManager> {
 
   value() {
     return {
-      create: async (workflow: WorkflowDto) => {
-        throw new HttpErrors.UnprocessableEntity(
-          ErrorKeys.ProviderNotFound,
-        );
+      getWorkflowById: async () => {
+        throw new HttpErrors.BadRequest("getWorkflowId function not implemented");
       },
-      update: async (workflow: WorkflowDto) => { //NOSONAR
-        throw new HttpErrors.UnprocessableEntity(
-          ErrorKeys.ProviderNotFound,
-        );
+      startWorkflow: async () => {
+        throw new HttpErrors.BadRequest("startWorkflow function not implemented");
       },
-      delete: async (workflow: Workflow) => { //NOSONAR
-        throw new HttpErrors.UnprocessableEntity(
-          ErrorKeys.ProviderNotFound,
-        );
+      createWorkflow: async () => {
+        throw new HttpErrors.BadRequest("createWorkflow function not implemented");
       },
-      execute: async (executionRequest: ExecutionRequest) => { //NOSONAR
-        throw new HttpErrors.UnprocessableEntity(
-          ErrorKeys.ProviderNotFound,
-        );
+      updateWorkflow: async () => {
+        throw new HttpErrors.BadRequest("updateWorkflow function not implemented");
       },
+      deleteWorkflowById: async () => {
+        throw new HttpErrors.BadRequest("deleteWorkflowById function not implemented");
+      }
     };
   }
 }
+
 
 ```
 

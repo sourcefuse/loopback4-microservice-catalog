@@ -1,6 +1,10 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
-import {IWorkflowServiceConfig, WorflowManager} from './types';
+import {
+  ExecutionInputValidator,
+  IWorkflowServiceConfig,
+  WorflowManager,
+} from './types';
 
 export namespace WorkflowServiceBindings {
   export const WorkflowManager = BindingKey.create<WorflowManager | null>(
@@ -8,5 +12,8 @@ export namespace WorkflowServiceBindings {
   );
   export const Config = BindingKey.create<IWorkflowServiceConfig | null>(
     `${BINDING_PREFIX}.workflow.config`,
+  );
+  export const ExecutionInputValidatorFn = BindingKey.create<ExecutionInputValidator | null>(
+    `${BINDING_PREFIX}.workflow.execute.validator`,
   );
 }
