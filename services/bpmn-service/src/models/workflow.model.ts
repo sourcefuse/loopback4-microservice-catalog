@@ -9,7 +9,7 @@ export class Workflow extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,
-    generated: true,
+    defaultFn: 'uuid',
   })
   id?: string;
 
@@ -26,6 +26,12 @@ export class Workflow extends UserModifiableEntity {
     required: true,
   })
   externalIdentifier: string;
+
+  @property({
+    type: 'string',
+    name: 'name',
+  })
+  name: string;
 
   @property({
     type: 'string',

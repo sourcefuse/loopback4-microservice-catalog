@@ -27,7 +27,7 @@ import {WorkflowServiceBindings} from './keys';
 import {Workflow} from './models';
 import {WorkflowProvider} from './providers';
 import {ExecutionInputValidationProvider} from './providers/execution-input-validator.provider';
-import {WorkflowRepository} from './repositories';
+import {WorkflowRepository, WorkflowVersionRepository} from './repositories';
 import {IWorkflowServiceConfig} from './types';
 
 export class WorkflowServiceComponent implements Component {
@@ -61,7 +61,7 @@ export class WorkflowServiceComponent implements Component {
       this.setupSequence();
     }
 
-    this.repositories = [WorkflowRepository];
+    this.repositories = [WorkflowRepository, WorkflowVersionRepository];
 
     this.models = [Workflow];
 

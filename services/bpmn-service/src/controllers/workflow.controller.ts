@@ -1,4 +1,4 @@
-import {inject} from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {
   del,
@@ -23,7 +23,12 @@ import {ExecuteWorkflowDto} from '../models/execute-workflow-dto';
 import {WorkflowDto} from '../models/workflow-dto.model';
 import {WorkflowRepository} from '../repositories';
 import {WorkflowVersionRepository} from '../repositories/workflow-version.repository';
-import {ExecutionInputValidator, WorflowManager} from '../types';
+import {
+  ExecutionInputValidator,
+  WorflowManager,
+  WorkerImplementationFn,
+  WorkerMap,
+} from '../types';
 const basePath = '/workflow';
 
 export class WorkflowController {
@@ -36,6 +41,10 @@ export class WorkflowController {
     private readonly workflowManagerService: WorflowManager,
     @inject(WorkflowServiceBindings.ExecutionInputValidatorFn)
     private readonly execInputValidator: ExecutionInputValidator,
+    @inject.getter(WorkflowServiceBindings.WORKER_MAP)
+    private readonly workerMapGetter: Getter<WorkerMap>,
+    @inject(WorkflowServiceBindings.WorkerImplementationFunction)
+    private readonly workerFn: WorkerImplementationFn,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -71,6 +80,7 @@ export class WorkflowController {
       const entity = new Workflow({
         workflowVersion: workflowResponse.version,
         externalIdentifier: workflowResponse.processId,
+        name: workflowDto.name,
         provider: workflowResponse.provider,
         inputSchema: workflowDto.inputSchema,
       });
@@ -121,6 +131,7 @@ export class WorkflowController {
       const entity = new Workflow({
         workflowVersion: workflowResponse.version,
         externalIdentifier: workflowResponse.processId,
+        name: workflowDto.name,
         provider: workflowResponse.provider,
         inputSchema: workflowDto.inputSchema,
       });
@@ -164,7 +175,7 @@ export class WorkflowController {
   ): Promise<AnyObject> {
     const workflow = await this.workflowRepository.findOne({
       where: {
-        externalIdentifier: id,
+        id: id,
       },
     });
     let version;
@@ -187,7 +198,7 @@ export class WorkflowController {
     }
 
     await this.execInputValidator(inputSchema, instance.input);
-
+    await this.initWorkers(workflow.name);
     return this.workflowManagerService.startWorkflow(
       instance.input,
       workflow,
@@ -245,5 +256,18 @@ export class WorkflowController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     const workflow = await this.workflowRepository.findById(id);
     await this.workflowManagerService.deleteWorkflowById(workflow);
+  }
+
+  private async initWorkers(workflowName: string) {
+    const workerMap = await this.workerMapGetter();
+    if (workerMap?.[workflowName]) {
+      const workerList = workerMap[workflowName];
+      for (const worker of workerList) {
+        if (!worker.running) {
+          await this.workerFn(worker.topic, worker.command);
+          worker.running = true;
+        }
+      }
+    }
   }
 }

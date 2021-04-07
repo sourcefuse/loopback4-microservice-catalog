@@ -10,7 +10,7 @@ export class WorkflowDto extends Model {
     type: 'string',
     required: true,
   })
-  identifier: string;
+  name: string;
 
   @property({
     type: 'string',

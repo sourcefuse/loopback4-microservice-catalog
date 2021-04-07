@@ -32,7 +32,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import { NotificationServiceComponent } from '@sourceloop/notification-service';
+import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
@@ -63,7 +63,7 @@ export class Client extends BootMixin(
     });
     this.component(RestExplorerComponent);
     // add Component for NotificationService
-    this.component(NotificationServiceComponent);
+    this.component(WorkflowServiceComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
@@ -78,21 +78,6 @@ export class Client extends BootMixin(
   }
 }
 ```
-
-### Environment Variables
-
-| Name          | Required | Default Value | Description                                                  |
-| ------------- | -------- | ------------- | ------------------------------------------------------------ |
-| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`           |
-| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                            |
-| `DB_PORT`     | Y        |               | Port for the database server.                                |
-| `DB_USER`     | Y        |               | User for the database.                                       |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                              |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.               |
-| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                      |
-| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                     |
 
 ### Setting up `DataSource`
 
@@ -195,6 +180,10 @@ export class WorkflowProvider
 
 
 ```
+
+#### WorkerImplementationProvider
+
+Your workers are automatically initiated once a workflow is executed, to provide the implementation details of workers, you need to give implementation template of one such worker using the `WorkflowServiceBindings.WorkerImplementationFunction`, a default implementation is provided [here](/src/providers/worker-implementation.provider.ts). You also need to register individual worker commands using the `WorkflowServiceBindings.RegisterWorkerFunction` function;
 
 ### Migrations
 
