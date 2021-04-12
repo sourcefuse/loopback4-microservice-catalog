@@ -124,7 +124,7 @@ export class WorkflowController {
     @param.path.string('id') id: string,
   ): Promise<void> {
     try {
-      const workflowResponse = await this.workflowManagerService.createWorkflow(
+      const workflowResponse = await this.workflowManagerService.updateWorkflow(
         workflowDto,
       );
 
@@ -154,7 +154,7 @@ export class WorkflowController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateWorkflow]})
-  @post(`${basePath}/{id}/start`, {
+  @post(`${basePath}/{id}/execute`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {

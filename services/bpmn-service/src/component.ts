@@ -27,6 +27,8 @@ import {WorkflowServiceBindings} from './keys';
 import {Workflow} from './models';
 import {WorkflowProvider} from './providers';
 import {ExecutionInputValidationProvider} from './providers/execution-input-validator.provider';
+import {WorkerRegisterFnProvider} from './providers/register-worker.service';
+import {WorkerImplementationProvider} from './providers/worker-implementation.provider';
 import {WorkflowRepository, WorkflowVersionRepository} from './repositories';
 import {IWorkflowServiceConfig} from './types';
 
@@ -69,7 +71,17 @@ export class WorkflowServiceComponent implements Component {
       [WorkflowServiceBindings.WorkflowManager.key]: WorkflowProvider,
       [WorkflowServiceBindings.ExecutionInputValidatorFn
         .key]: ExecutionInputValidationProvider,
+      [WorkflowServiceBindings.RegisterWorkerFunction
+        .key]: WorkerRegisterFnProvider,
+      [WorkflowServiceBindings.WorkerImplementationFunction
+        .key]: WorkerImplementationProvider,
     };
+
+    this.application
+      .bind(WorkflowServiceBindings.WORKER_MAP)
+      .toDynamicValue(() => {
+        return {};
+      });
 
     this.controllers = [WorkflowController];
   }
