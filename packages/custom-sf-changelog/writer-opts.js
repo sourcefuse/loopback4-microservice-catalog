@@ -48,11 +48,7 @@ function getWriterOpts() {
       if (discard) {
         return;
       }
-      if (commit.revert) {
-        commit.type = typeMap.revert;
-      } else {
-        commit.type = typeMap[commit.type];
-      }
+      commit.type = parseType(commit);
 
       if (commit.scope === '*') {
         commit.scope = ''
@@ -90,5 +86,13 @@ function getWriterOpts() {
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
     notesSort: compareFunc
+  }
+}
+
+function parseType(commit){
+  if (commit.revert) {
+    return typeMap.revert;
+  } else {
+    return typeMap[commit.type];
   }
 }

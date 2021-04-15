@@ -1,4 +1,3 @@
-const childProcess = require('child_process');
 const dotenv = require('dotenv');
 const dotenvExt = require('dotenv-extended');
 const fs = require('fs');
