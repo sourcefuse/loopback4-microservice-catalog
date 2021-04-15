@@ -1,6 +1,6 @@
 import {inject, Provider} from '@loopback/context';
 import {IWorkflowServiceConfig, WorkerImplementationFn} from '../types';
-import {Client} from 'camunda-external-task-client-js';
+import {Client, logger} from 'camunda-external-task-client-js';
 import {WorkflowServiceBindings} from '../keys';
 import {AnyObject} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
@@ -12,11 +12,12 @@ export class WorkerImplementationProvider
     @inject(WorkflowServiceBindings.Config)
     config: IWorkflowServiceConfig,
     @inject(LOGGER.LOGGER_INJECT)
-    private readonly logger: ILogger,
+    private readonly ilogger: ILogger,
   ) {
     if (config.workflowEngineBaseUrl) {
       this.client = new Client({
         baseUrl: config.workflowEngineBaseUrl,
+        use: logger,
       });
     } else {
       throw new Error('Invalid workflowEngine Config');
@@ -28,7 +29,7 @@ export class WorkerImplementationProvider
         this.client.subscribe(topic, ({task, taskService}) => {
           cmd.operation({task, taskService}, (result: AnyObject) => {
             if (result) {
-              this.logger.info(`Worker task completed - ${topic}`);
+              this.ilogger.info(`Worker task completed - ${topic}`);
             }
           });
         });

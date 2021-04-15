@@ -12,9 +12,14 @@ import {Workflow} from './workflow.model';
 })
 export class WorkflowVersion extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
-    generated: false,
+    defaultFn: 'uuid',
+  })
+  id?: string;
+
+  @property({
+    type: 'number',
     required: true,
   })
   version: number;
