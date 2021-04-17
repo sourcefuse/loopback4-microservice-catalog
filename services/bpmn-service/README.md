@@ -1,16 +1,10 @@
 # BPMN Microservice
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
 ## Overview
 
 A Loopback Microservice for handling BPMN workflows using engines like (Camunda)[https://camunda.com/products/cloud/].
-
-## Installation
-
-## Overview
-
-Microservice for handling bpmn flow in an application.
 
 ### Installation
 
@@ -81,7 +75,7 @@ export class Client extends BootMixin(
 
 ### Setting up `DataSource`
 
-Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. 
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
 
 ```typescript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
@@ -104,39 +98,39 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class BpmnDbDataSource extends juggler.DataSource
+export class BpmnDbDataSource
+  extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = WorkflowCacheSourceName;
   static readonly defaultConfig = config;
 
   constructor(
     @inject('datasources.config.BpmnDb', {optional: true})
-      dsConfig: object = config,
+    dsConfig: object = config,
   ) {
     super(dsConfig);
   }
 }
-
 ```
-and bind a provider to the `WorkflowServiceBindings.WorkflowManager` key 
+
+and bind a provider to the `WorkflowServiceBindings.WorkflowManager` key
 
 ```ts
-    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(
-      WorkflowProvider,
-    );
+this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(WorkflowProvider);
 ```
+
 ### Environment Variables
 
-The service comes with a default `DataSource` using PostgreSQL, if you intend to use this, you have to provide the following variables in the environment - 
+The service comes with a default `DataSource` using PostgreSQL, if you intend to use this, you have to provide the following variables in the environment -
 
-| Name                          | Required | Default Value | Description                                                  |
-| ----------------------------- | -------- | ------------- | ------------------------------------------------------------ |
-| `DB_HOST`                     | Y        |               | Hostname for the database server.                            |
-| `DB_PORT`                     | Y        |               | Port for the database server.                                |
-| `DB_USER`                     | Y        |               | User for the database.                                       |
-| `DB_PASSWORD`                 | Y        |               | Password for the database user.                              |
-| `DB_DATABASE`                 | Y        |               | Database to connect to on the database server.               |
-| `DB_SCHEMA`                   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service.
+| Name          | Required | Default Value | Description                                                                                                                        |
+| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
+| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
+| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
+| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
+| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
+| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
 
 ### Setting up a `DataSource`
 
@@ -146,39 +140,45 @@ A sample implementation of a `DataSource` using environment variables and Postgr
 
 #### BPMNProvider
 
-To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 5 methods - `getWorkflowById`, `startWorkflow`, `createWorkflow`, `updateWorkflow` and `deleteWorkflowById`. These methods are responsible for performing their respective tasks in the workflow engine.  Here is the default implementation of this provider - 
+To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 5 methods - `getWorkflowById`, `startWorkflow`, `createWorkflow`, `updateWorkflow` and `deleteWorkflowById`. These methods are responsible for performing their respective tasks in the workflow engine. Here is the default implementation of this provider -
 
 ```ts
 import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
-import { HttpErrors } from '@loopback/rest';
+import {HttpErrors} from '@loopback/rest';
 import {WorflowManager} from '../types';
 
 @bind({scope: BindingScope.TRANSIENT})
-export class WorkflowProvider
-  implements Provider<WorflowManager> {
-
+export class WorkflowProvider implements Provider<WorflowManager> {
   value() {
     return {
       getWorkflowById: async () => {
-        throw new HttpErrors.BadRequest("getWorkflowId function not implemented");
+        throw new HttpErrors.BadRequest(
+          'getWorkflowId function not implemented',
+        );
       },
       startWorkflow: async () => {
-        throw new HttpErrors.BadRequest("startWorkflow function not implemented");
+        throw new HttpErrors.BadRequest(
+          'startWorkflow function not implemented',
+        );
       },
       createWorkflow: async () => {
-        throw new HttpErrors.BadRequest("createWorkflow function not implemented");
+        throw new HttpErrors.BadRequest(
+          'createWorkflow function not implemented',
+        );
       },
       updateWorkflow: async () => {
-        throw new HttpErrors.BadRequest("updateWorkflow function not implemented");
+        throw new HttpErrors.BadRequest(
+          'updateWorkflow function not implemented',
+        );
       },
       deleteWorkflowById: async () => {
-        throw new HttpErrors.BadRequest("deleteWorkflowById function not implemented");
-      }
+        throw new HttpErrors.BadRequest(
+          'deleteWorkflowById function not implemented',
+        );
+      },
     };
   }
 }
-
-
 ```
 
 #### WorkerImplementationProvider
@@ -212,16 +212,16 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 ### API Details
 
 `POST /workflow`
- Endpoint to create a new workflow, uses the `create` method from the provider.
+Endpoint to create a new workflow, uses the `create` method from the provider.
 
 `PATCH /workflow/{id}`
- Endpoint to update a workflow, uses the `update` method from the provider.
+Endpoint to update a workflow, uses the `update` method from the provider.
 
 `POST /workflow/{id}/execute`
- Endpoint to trigger a workflow, uses the `execute` method from the provider.
+Endpoint to trigger a workflow, uses the `execute` method from the provider.
 
 `DELETE /workflow/{id}`
- Endpoint to delete a workflow, uses the `delete` method from the provider.
+Endpoint to delete a workflow, uses the `delete` method from the provider.
 
 `GET /workflow`
- Endpoint to get all the workflows.
+Endpoint to get all the workflows.
