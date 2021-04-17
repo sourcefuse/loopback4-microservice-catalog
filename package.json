@@ -25,5 +25,10 @@
       "path": "cz-format-extension"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@google-cloud/translate": "^6.2.0",
+    "axios": "^0.21.1",
+    "jsdom": "^16.5.3",
+    "unirest": "^0.6.0"
+  }
 }
