@@ -30,6 +30,7 @@ module.exports = {
   scopes: [
     {name: 'core'},
     {name: 'authentication-service'},
+    {name: 'bpmn-service'},
     {name: 'in-mail-service'},
     {name: 'notification-service'},
     {name: 'scheduler-service'},
