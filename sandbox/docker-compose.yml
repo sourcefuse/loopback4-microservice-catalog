@@ -68,12 +68,67 @@ services:
     depends_on:
       - postgres
 
+  workflow-helloworld:
+    image: sourceloop/workflow-helloworld
+    build:
+      context: ./workflow-helloworld
+      dockerfile: Dockerfile
+      args:
+          - WORKFLOW_MIGRATION_SKIP=true
+          - WORKFLOW_MIGRATION_COPY=true
+    ports:
+      - "3031:3000"
+    networks:
+      - sandbox
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: workflow_db
+      DB_SCHEMA: main
+      CAMUNDA_URL: http://camunda:8080/engine-rest
+    depends_on:
+      - postgres
+      - camunda
+      - postgres_orchestrator
+
+  workflow-migration:
+    image: sourceloop/workflow-helloworld:latest
+    command: ["npm", "run", "migrate"]
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: workflow_db
+      DB_SCHEMA: main
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
+
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
     networks:
       - sandbox
+
+  camunda:
+    container_name: camunda_engine
+    image: camunda/camunda-bpm-platform:run-latest
+    ports:
+      - "8080:8080"
+    networks:
+      - sandbox
+    restart: unless-stopped
 
   postgres:
     container_name: postgres_container
@@ -104,7 +159,7 @@ services:
       - sandbox
     depends_on:
       - postgres
-    command: bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db'"
+    command: bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db'"
 
 
   pgadmin:

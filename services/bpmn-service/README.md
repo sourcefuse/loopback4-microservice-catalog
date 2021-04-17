@@ -187,7 +187,7 @@ Your workers are automatically initiated once a workflow is executed, to provide
 
 ### Migrations
 
-Refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/en/lb4/Database-migrations.html) for instructions for handling migrations.
+The migrations required for this service are processed during the installation automatically, if you plan to use the [Loopback Database Migrations] (https://loopback.io/doc/en/lb4/Database-migrations.html) or your own custom migrations, you can disable the auto-migration script by setting the `WORKFLOW_MIGRATION_SKIP` env variable to true before installing the package. If you need the migration files in your project root, use the `WORKFLOW_MIGRATION_COPY` env variable.
 
 ### API Documentation
 
