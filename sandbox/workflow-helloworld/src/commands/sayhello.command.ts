@@ -1,16 +1,16 @@
 import {AnyObject} from '@loopback/repository';
 import {ICommand} from '@sourceloop/bpmn-service';
+import { Variables } from '../types';
 
 export class SayHelloCommand implements ICommand {
   parameters: AnyObject;
 
-  topic: string = 'hello-task'
+  topic = 'hello-task';
   async execute() {
-    const variables = this.parameters.task.variables.getAll() as AnyObject;
+    const variables = this.parameters.task.variables.getAll() as Variables;
     const job = this.parameters.taskService;
-    console.log(`Hello, ${variables.name}`);
+    console.log(`Hello, ${variables.name}`); //NOSONAR
 
     await job.complete(this.parameters.task);
   }
-
 }

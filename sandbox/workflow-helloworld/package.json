@@ -56,8 +56,10 @@
     "@loopback/rest-explorer": "^3.0.6",
     "@loopback/service-proxy": "^3.0.6",
     "@sourceloop/bpmn-service": "^1.0.0-alpha.1",
+    "@sourceloop/core": "^1.0.0-alpha.27",
     "@types/node-fetch": "^2.5.10",
     "dotenv": "^8.2.0",
+    "form-data": "^4.0.0",
     "node-fetch": "^2.6.1",
     "prom-client": "^13.1.0",
     "tslib": "^2.0.0"

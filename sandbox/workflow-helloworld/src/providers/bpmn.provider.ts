@@ -51,8 +51,8 @@ export class BpmnProvider implements Provider<WorflowManager> {
         let version = 1;
         let id = response.id;
         if (response.deployedProcessDefinitions) {
-          const processDefinition = Object.values(
-            response.deployedProcessDefinitions,
+          const processDefinition = Object.values(//NOSONAR
+            response.deployedProcessDefinitions,//NOSONAR
           )[0] as AnyObject; //NOSONAR
           version = processDefinition.version;
           id = processDefinition.id;
@@ -71,10 +71,10 @@ export class BpmnProvider implements Provider<WorflowManager> {
           Buffer.from(workflowDto.bpmnFile, 'utf-8'),
         );
         let version;
-        let id = response.id;
+        let id;
         if (response.deployedProcessDefinitions) {
-          const processDefinition = Object.values(
-            response.deployedProcessDefinitions,
+          const processDefinition = Object.values(//NOSONAR
+            response.deployedProcessDefinitions,//NOSONAR
           )[0] as AnyObject; //NOSONAR
           version = processDefinition.version;
           id = processDefinition.id;
