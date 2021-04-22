@@ -11,7 +11,12 @@ values
 insert into roles
   (name, permissions, role_type)
 values
-  ('Admin', '{}', 0);
+  ('Admin', '{CreateTodo,UpdateTodo,DeleteTodo}', 0);
+
+insert into roles
+  (name, permissions, role_type)
+values
+  ('Others', '{}', 1);
 
 -- Inserting tenants
 insert into tenants

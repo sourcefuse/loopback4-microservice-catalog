@@ -11,7 +11,7 @@ const config = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  schema: 'main'
+  schema: 'main',
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -19,7 +19,8 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class AuthDbDataSource extends juggler.DataSource
+export class AuthDbDataSource
+  extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = AuthDbSourceName;
   static readonly defaultConfig = config;

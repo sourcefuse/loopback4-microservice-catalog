@@ -9,7 +9,7 @@ const config = {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   password: process.env.REDIS_PASSWORD,
-  db: process.env.REDIS_DB
+  db: process.env.REDIS_DB,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -17,7 +17,8 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class AuthCacheDataSource extends juggler.DataSource
+export class AuthCacheDataSource
+  extends juggler.DataSource
   implements LifeCycleObserver {
   static dataSourceName = AuthCacheSourceName;
   static readonly defaultConfig = config;
