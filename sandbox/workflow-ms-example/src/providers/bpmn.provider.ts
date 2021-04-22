@@ -1,9 +1,4 @@
-import {
-  bind,
-  BindingScope,
-  Provider,
-  service
-} from '@loopback/core';
+import {bind, BindingScope, Provider, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {WorflowManager, Workflow, WorkflowDto} from '@sourceloop/bpmn-service';
 import {CamundaService} from '../services/camunda.service';
@@ -13,7 +8,7 @@ export class BpmnProvider implements Provider<WorflowManager> {
   constructor(
     @service(CamundaService)
     private readonly camunda: CamundaService,
-  ) { }
+  ) {}
   value(): WorflowManager {
     return {
       getWorkflowById: async workflow => {
@@ -51,8 +46,9 @@ export class BpmnProvider implements Provider<WorflowManager> {
         let version = 1;
         let id = response.id;
         if (response.deployedProcessDefinitions) {
-          const processDefinition = Object.values(//NOSONAR
-            response.deployedProcessDefinitions,//NOSONAR
+          const processDefinition = Object.values(
+            //NOSONAR
+            response.deployedProcessDefinitions, //NOSONAR
           )[0] as AnyObject; //NOSONAR
           version = processDefinition.version;
           id = processDefinition.id;
@@ -73,8 +69,9 @@ export class BpmnProvider implements Provider<WorflowManager> {
         let version;
         let id;
         if (response.deployedProcessDefinitions) {
-          const processDefinition = Object.values(//NOSONAR
-            response.deployedProcessDefinitions,//NOSONAR
+          const processDefinition = Object.values(
+            //NOSONAR
+            response.deployedProcessDefinitions, //NOSONAR
           )[0] as AnyObject; //NOSONAR
           version = processDefinition.version;
           id = processDefinition.id;

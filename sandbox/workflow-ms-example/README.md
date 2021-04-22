@@ -20,8 +20,7 @@ npm ci
 
 ## Run Camunda Engine
 
-Follow the instructions give [here](https://camunda.com/download/?__hstc=12929896.dc8bf3f8cc10f596867d5bff567aa2ef.1617175361415.1618399229457.1618557454920.22&__hssc=12929896.11.1618557454920&__hsfp=1822594318) to install a local and run a local Camunda Engine.
-
+Follow the instructions given [here](https://camunda.com/download/?__hstc=12929896.dc8bf3f8cc10f596867d5bff567aa2ef.1617175361415.1618399229457.1618557454920.22&__hssc=12929896.11.1618557454920&__hsfp=1822594318) to install a local and run a local Camunda Engine.
 
 ## Run the application
 
@@ -35,7 +34,7 @@ Open http://127.0.0.1:3000 in your browser.
 
 ## Deploying first process
 
-Use the POST /workflow/ API to create a new workflow. You can find the sample bpmn file [here](/src/bpmn/hello.bpmn). Use an escape tool like [this](https://www.freeformatter.com/json-escape.html#ad-output) to escape the contents of the xml file and send them in the POST call body. The BPMN create call for this sample project would have the following body - 
+Use the POST /workflow/ API to create a new workflow. You can find the sample bpmn file [here](/src/bpmn/hello.bpmn). Use an escape tool like [this](https://www.freeformatter.com/json-escape.html#ad-output) to escape the contents of the xml file and send them in the POST call body. The BPMN create call for this sample project would have the following body -
 
 ```
 {
@@ -47,7 +46,7 @@ Use the POST /workflow/ API to create a new workflow. You can find the sample bp
 
 ## Executing a workflow
 
-Hit the POST /workflow/{id}/execute API using the ID returned in the above API with the following payload - 
+Hit the POST /workflow/{id}/execute API using the ID returned in the above API with the following payload -
 
 ```
 {
@@ -99,4 +98,4 @@ npm test
 Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
 understand how you can continue to add features to this application.
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)

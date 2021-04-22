@@ -1,6 +1,6 @@
 import {AnyObject} from '@loopback/repository';
 import {ICommand} from '@sourceloop/bpmn-service';
-import { Variables } from '../types';
+import {Variables} from '../types';
 
 export class SayHelloCommand implements ICommand {
   parameters: AnyObject;

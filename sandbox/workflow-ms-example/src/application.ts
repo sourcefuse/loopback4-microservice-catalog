@@ -4,10 +4,13 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
-  RestExplorerComponent
+  RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {WorkflowServiceBindings, WorkflowServiceComponent} from '@sourceloop/bpmn-service';
+import {
+  WorkflowServiceBindings,
+  WorkflowServiceComponent,
+} from '@sourceloop/bpmn-service';
 import {BPMTask} from '@sourceloop/bpmn-service/dist/bpm-task';
 import path from 'path';
 import {SayHelloCommand} from './commands/sayhello.command';
@@ -66,8 +69,7 @@ export class WorkflowHelloworldApplication extends BootMixin(
     if (registerFn) {
       const cmd = new SayHelloCommand();
       await registerFn('hello_world', cmd.topic, new BPMTask(cmd));
-    }
-    else {
+    } else {
       throw new Error('No worker register function in the context');
     }
   }

@@ -1,14 +1,8 @@
-import {
-  BindingScope,
-
-  inject, injectable,
-
-  service
-} from '@loopback/core';
+import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {
   IWorkflowServiceConfig,
-  WorkflowServiceBindings
+  WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
 import FormData from 'form-data';
 import {HttpClientService} from './http.service';
