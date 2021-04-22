@@ -1,14 +1,22 @@
 import {BindingScope, injectable} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {User, UserCredentials, UserTenant} from '@sourceloop/authentication-service/dist/models';
-import {AuthClientRepository, RoleRepository, UserRepository, UserTenantRepository} from '@sourceloop/authentication-service/dist/repositories';
+import {
+  User,
+  UserCredentials,
+  UserTenant,
+} from '@sourceloop/authentication-service/dist/models';
+import {
+  AuthClientRepository,
+  RoleRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '@sourceloop/authentication-service/dist/repositories';
 import {UserStatus} from '@sourceloop/core';
 import {AuthenticateErrorKeys} from '@sourceloop/core/src/enums';
 import bcrypt from 'bcrypt';
 import {UserDto} from '../models/user.dto';
 const saltRounds = 10;
-
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserOpsService {
@@ -20,8 +28,8 @@ export class UserOpsService {
     @repository(UserTenantRepository)
     private readonly utRepository: UserTenantRepository,
     @repository(AuthClientRepository)
-    private readonly authClientsRepository: AuthClientRepository
-  ) { }
+    private readonly authClientsRepository: AuthClientRepository,
+  ) {}
 
   async createUser(user: UserDto, options: AnyObject) {
     this.validateUserCreation(user, options);
@@ -72,15 +80,18 @@ export class UserOpsService {
     const username = user.username;
     user.username = username.toLowerCase();
     //Override default tenant id
-    const userSaved = await this.userRepository.createWithoutPassword(new User({
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      defaultTenantId: user.tenantId,
-      authClientIds: `{${authClient?.id}}`
-    }), options);
+    const userSaved = await this.userRepository.createWithoutPassword(
+      new User({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phone,
+        defaultTenantId: user.tenantId,
+        authClientIds: `{${authClient?.id}}`,
+      }),
+      options,
+    );
 
     const userTenantData = await this.createUserTenantData(
       user,
@@ -95,14 +106,11 @@ export class UserOpsService {
       roleId: userTenantData.roleId,
       status: userTenantData.status,
       tenantId: userTenantData.tenantId,
-      userTenantId: userTenantData.id
+      userTenantId: userTenantData.id,
     });
   }
 
-  validateUserCreation(
-    userData: UserDto,
-    options?: AnyObject,
-  ) {
+  validateUserCreation(userData: UserDto, options?: AnyObject) {
     // Check for valid email
     const emailRegex = new RegExp(
       "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
@@ -137,12 +145,13 @@ export class UserOpsService {
     userId?: string,
     options?: AnyObject,
   ) {
-    return this.utRepository.create({
-      roleId: userData.roleId,
-      status: userStatus,
-      tenantId: userData.tenantId,
-      userId,
-    },
+    return this.utRepository.create(
+      {
+        roleId: userData.roleId,
+        status: userStatus,
+        tenantId: userData.tenantId,
+        userId,
+      },
       options,
     );
   }

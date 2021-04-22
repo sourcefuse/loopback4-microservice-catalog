@@ -97,6 +97,13 @@ CREATE TABLE main.users (
 	CONSTRAINT pk_users_id PRIMARY KEY ( id )
  );
 
+CREATE TABLE main.todo (
+	id					 uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL ,
+	title                varchar(50)  NOT NULL ,
+	description          varchar(150)  NOT NULL ,
+	items				 _text
+ );
+
 CREATE TABLE main.tenant_configs (
 	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL ,
 	config_key           varchar(100)  NOT NULL ,

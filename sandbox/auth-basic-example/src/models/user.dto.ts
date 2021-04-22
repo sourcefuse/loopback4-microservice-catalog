@@ -4,7 +4,6 @@ import {UserStatus} from '@sourceloop/core';
 
 @model()
 export class UserDto extends Model {
-
   @property({
     type: 'string',
     required: true,
@@ -19,57 +18,57 @@ export class UserDto extends Model {
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   userTenantId: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   username: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   email: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   phone: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   password: string;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   status?: UserStatus;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   firstName: string;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   lastName: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   clientId: string;
 
   constructor(data?: Partial<UserDto>) {
-    super(data)
+    super(data);
   }
 }

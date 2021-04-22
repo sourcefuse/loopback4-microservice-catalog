@@ -4,10 +4,13 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
-  RestExplorerComponent
+  RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {AuthenticationServiceComponent, SignUpBindings} from '@sourceloop/authentication-service';
+import {
+  AuthenticationServiceComponent,
+  SignUpBindings,
+} from '@sourceloop/authentication-service';
 import path from 'path';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MySequence} from './sequence';
@@ -32,7 +35,9 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
     this.component(AuthenticationServiceComponent);
-    this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(LocalSignupProvider);
+    this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
+      LocalSignupProvider,
+    );
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
