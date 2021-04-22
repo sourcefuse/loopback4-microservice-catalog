@@ -85,6 +85,7 @@ Sample implementation for this can be seen [here](./local-presignup.provider.ts)
 ### LOCAL_SIGNUP_PROVIDER
 
 This provides a function that gets the data from the signup token and is responsible for performing all tasks required to signup a user.
+You can also find an implementation of this provider in [auth-basic-example](../../../../sandbox/auth-basic-example/).
 
 Sample implementation - 
 

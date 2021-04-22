@@ -20,6 +20,7 @@ The current catalog consists of the following services:
 This repository also contains a set of example projects in the [sandbox](sandbox) directory.
 
 * [auth-multitenant-example](sandbox/auth-multitenant-example)
+* [auth-basic-example](sandbox/auth-basic-example)
 * [notification-socket-example](sandbox/notification-socket-example)
 * [workflow-helloworld](sandbox/workflow-helloworld)
 
