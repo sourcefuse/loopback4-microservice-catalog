@@ -28,7 +28,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {AuthenticationServiceComponent} from '@sourceloop/in-mail-service';
+import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';

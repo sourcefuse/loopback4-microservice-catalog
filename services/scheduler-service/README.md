@@ -44,14 +44,14 @@ Add component to application.
 
 ```ts
 // application.ts
-import {SchedulerComponent} from '@sourceloop/scheduler-service'; 
+import {SchedulerServiceComponent} from '@sourceloop/scheduler-service'; 
 ....
 export class SchedulerServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     ....
-    this.component(SchedulerComponent);
+    this.component(SchedulerServiceComponent);
     ....
   }
 }

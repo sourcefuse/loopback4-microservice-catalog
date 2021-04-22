@@ -67,6 +67,77 @@ services:
       JWT_ISSUER: https://loopback4-microservice-catalog
     depends_on:
       - postgres
+    
+  in-mail-example:
+    image: sourceloop/in-mail-example
+    build:
+      context: ./in-mail-example
+      dockerfile: Dockerfile
+    ports:
+      - "3040:3000"
+    networks:
+      - sandbox
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: authentication_db
+      DB_SCHEMA: public
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+    depends_on:
+      - postgres
+
+  scheduler-example:
+    image: sourceloop/scheduler-example
+    build:
+      context: ./scheduler-example
+      dockerfile: Dockerfile
+    ports:
+      - "3050:3000"
+    networks:
+      - sandbox
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: authentication_db
+      DB_SCHEMA: public
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+    depends_on:
+      - postgres
+
+  
+  video-conferencing-example:
+    image: sourceloop/video-conferencing-example
+    build:
+      context: ./video-conferencing-example
+      dockerfile: Dockerfile
+    ports:
+      - "3060:3000"
+    networks:
+      - sandbox
+    environment:
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: authentication_db
+      DB_SCHEMA: public
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+    depends_on:
+      - postgres
+
 
   redis:
     image: "redis:alpine"
@@ -104,7 +175,7 @@ services:
       - sandbox
     depends_on:
       - postgres
-    command: bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db'"
+    command: bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_conferencing_db --force'"
 
 
   pgadmin:
