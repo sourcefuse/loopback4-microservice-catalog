@@ -1,7 +1,5 @@
 node_modules/
 dist/
 coverage/
-migrations/
-
 .eslintrc.js
-migration.js
+migrations/
