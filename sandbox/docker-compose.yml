@@ -44,6 +44,23 @@ x-workflow-variables: &workflow-variables
       DB_SCHEMA: main
       CAMUNDA_URL: http://camunda:8080/engine-rest
 
+x-audit-variables: &audit-variables
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: audit_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_URL:
+      REDIS_PASSWORD:
+      REDIS_DATABASE: 0
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+
+
 services:
   auth-multitenant-example:
     image: sourceloop/auth-multitenant-example
@@ -58,6 +75,8 @@ services:
     depends_on:
       - postgres
       - redis
+      - postgres_orchestrator
+      - auth-multitenant-migration
 
   auth-multitenant-migration:
     image: sourceloop/auth-multitenant-example:latest
@@ -86,17 +105,17 @@ services:
       DB_PORT: 5432
       DB_USER: ${POSTGRES_USER:-postgres}
       DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DB_DATABASE: authentication_db
+      DB_DATABASE: notification_db
       DB_SCHEMA: public
       JWT_SECRET: i_am_a_strong_secret
       JWT_ISSUER: https://loopback4-microservice-catalog
     depends_on:
       - postgres
 
-  workflow-helloworld:
-    image: sourceloop/workflow-helloworld
+  workflow-ms-example:
+    image: sourceloop/workflow-ms-example
     build:
-      context: ./workflow-helloworld
+      context: ./workflow-ms-example
       dockerfile: Dockerfile
       args:
           - WORKFLOW_MIGRATION_SKIP=true
@@ -109,9 +128,10 @@ services:
       - postgres
       - camunda
       - postgres_orchestrator
+      - workflow-migration
 
   workflow-migration:
-    image: sourceloop/workflow-helloworld:latest
+    image: sourceloop/workflow-ms-example:latest
     command: ["npm", "run", "db:migrate"]
     environment: *workflow-variables
     depends_on:
@@ -119,6 +139,33 @@ services:
       - postgres_orchestrator
     networks:
       - sandbox
+    restart: on-failure
+    
+  audit-ms-example:
+    image: sourceloop/audit-ms-example
+    build:
+      context: ./audit-ms-example
+      dockerfile: Dockerfile
+    ports:
+      - "3032:3000"
+    networks:
+      - sandbox
+    environment: *audit-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+      - audit-ms-migration
+    
+  audit-ms-migration:
+    image: sourceloop/audit-ms-example:latest
+    command: ["npm", "run", "db:migrate"]
+    environment: *audit-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure 
 
   redis:
     image: "redis:alpine"
@@ -165,7 +212,12 @@ services:
       - sandbox
     depends_on:
       - postgres
-    command: bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' && psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db'"
+    command: >
+      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db'"
 
 
   pgadmin:

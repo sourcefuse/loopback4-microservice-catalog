@@ -23,6 +23,7 @@ This repository also contains a set of example projects in the [sandbox](sandbox
 * [auth-ms-basic-example](sandbox/auth-ms-basic-example)
 * [notification-socket-example](sandbox/notification-socket-example)
 * [workflow-helloworld](sandbox/workflow-helloworld)
+* [audit-ms-example](sandbox/audit-ms-example)
 
 ## Table of Contents
 
