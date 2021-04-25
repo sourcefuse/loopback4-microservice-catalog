@@ -12,3 +12,7 @@ export namespace AuthServiceBindings {
     `${BINDING_PREFIX}.auth.jwt.payload`,
   );
 }
+
+export {AuthenticationBindings} from 'loopback4-authentication';
+
+export {AuthorizationBindings} from 'loopback4-authorization';

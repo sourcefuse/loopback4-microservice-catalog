@@ -24,9 +24,9 @@ const basePath = '/auth/sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
-    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto>,
+    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto, AnyObject>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
-    private readonly userSignupFn: UserSignupFn<LocalUserProfileDto>,
+    private readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
   ) {}
 
   @authorize({permissions: ['*']})

@@ -8,10 +8,10 @@ export interface IAuthServiceConfig extends IServiceConfig {}
 export const AuthDbSourceName = 'AuthDB';
 export const AuthCacheSourceName = 'AuthCache';
 
-export interface PreSignupFn<T = AnyObject, S = AnyObject> {
+export interface PreSignupFn<T, S> {
   (request: SignupRequestDto<T>): Promise<S>;
 }
 
-export interface UserSignupFn<T = AnyObject, S = AnyObject> {
+export interface UserSignupFn<T, S> {
   (model: T & LocalUserProfileDto, tokenInfo?: AnyObject): Promise<S>;
 }

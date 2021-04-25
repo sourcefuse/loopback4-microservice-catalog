@@ -111,6 +111,13 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     return user;
   }
 
+  async createWithoutPassword(
+    entity: DataObject<User>,
+    options?: Options,
+  ): Promise<User> {
+    return super.create(entity, options);
+  }
+
   async verifyPassword(username: string, password: string): Promise<User> {
     const user = await super.findOne({
       where: {username: username.toLowerCase()},

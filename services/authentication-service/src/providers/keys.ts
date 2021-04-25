@@ -20,12 +20,14 @@ export namespace SignUpBindings {
   export const KEYCLOAK_SIGN_UP_PROVIDER = BindingKey.create<KeyCloakSignUpFn>(
     'sf.keycloak.signup.provider',
   );
-  export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<PreSignupFn>(
-    `sf.local.presignup.provider`,
-  );
-  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<UserSignupFn>(
-    `sf.local.signup.provider`,
-  );
+  export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    PreSignupFn<any, any>
+  >(`sf.local.presignup.provider`);
+  export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    UserSignupFn<any, any>
+  >(`sf.local.signup.provider`);
 }
 
 export namespace VerifyBindings {

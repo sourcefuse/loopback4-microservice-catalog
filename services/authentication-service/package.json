@@ -60,6 +60,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "passport-google-oauth20": "^2.0.0",
+    "prom-client": "^13.1.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
