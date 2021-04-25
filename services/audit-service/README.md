@@ -7,7 +7,7 @@ A LoopBack microservice used for auditing user actions.
 ## Installation
 
 ```bash
-npm i @sourceloop/authentication-service
+npm i @sourceloop/audit-service
 ```
 
 ## Implementation
