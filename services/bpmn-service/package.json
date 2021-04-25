@@ -26,7 +26,8 @@
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "prepublishOnly": "npm run test"
+    "prepublishOnly": "npm run test",
+    "postinstall": "node migration.js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,9 @@
     "README.md",
     "dist",
     "src",
+    "migration.js",
+    "migrations",
+    "database.json",
     "!*/__tests__"
   ],
   "dependencies": {
@@ -50,6 +54,10 @@
     "@sourceloop/core": "^1.0.0-alpha.27",
     "ajv": "^8.0.5",
     "camunda-external-task-client-js": "^2.1.0",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
+    "dotenv": "^8.2.0",
+    "dotenv-extended": "^2.9.0",
     "loopback-connector-postgresql": "^5.3.0",
     "loopback4-authentication": "^4.1.0",
     "loopback4-authorization": "^3.2.0",

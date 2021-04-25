@@ -15,11 +15,13 @@ The current catalog consists of the following services:
 * [notification-service](services/notification-service)
 * [scheduler-service](services/scheduler-service)
 * [video-conferencing-service](services/video-conferencing-service)
+* [bpmn-service](services/bpmn-service)
 
 This repository also contains a set of example projects in the [sandbox](sandbox) directory.
 
 * [auth-multitenant-example](sandbox/auth-multitenant-example)
 * [notification-socket-example](sandbox/notification-socket-example)
+* [workflow-helloworld](sandbox/workflow-helloworld)
 
 ## Table of Contents
 
