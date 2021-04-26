@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.47](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.46...@sourceloop/authentication-service@1.0.0-alpha.47) (2021-04-26)
+
+
+### Bug Fixes
+
+* **auth-service:** fixed minor issues in package.json, exports and typings ([#168](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/168)) ([689e38b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/689e38be0ef9939a8b7369b75cd84f23159b06d5))
+* **authentication-service:** allow keycloak logout on logout ([#175](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/175)) ([51395b8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51395b83d2c4741572f84b6af199c9efe925f929))
+
+
+
+
+
 # [1.0.0-alpha.46](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.45...@sourceloop/authentication-service@1.0.0-alpha.46) (2021-03-31)
 
 
