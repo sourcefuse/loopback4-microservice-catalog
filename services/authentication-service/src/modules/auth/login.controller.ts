@@ -85,8 +85,8 @@ const keycloakBodyGen = (req: Request) => {
     state: Object.keys(req.body)
       .map(key => `${key}=${req.body[key]}`)
       .join('&'),
-  }
-}
+  };
+};
 
 const userAgentKey = 'user-agent';
 
@@ -472,6 +472,7 @@ export class LoginController {
   )
   @authorize({permissions: ['*']})
   @post('/auth/keycloak', {
+    description: 'POST Call for keycloak based login',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Keycloak Token Response',
