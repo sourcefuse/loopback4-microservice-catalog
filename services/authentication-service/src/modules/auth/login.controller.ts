@@ -59,6 +59,7 @@ import {
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {AuthRefreshTokenRequest, AuthTokenRequest, LoginRequest} from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
+import {ClientAuthRequest} from './models/client-auth-request.dto';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
 
@@ -78,6 +79,14 @@ const keycloakQueryGen = (req: Request) => {
       .join('&'),
   };
 };
+
+const keycloakBodyGen = (req: Request) => {
+  return {
+    state: Object.keys(req.body)
+      .map(key => `${key}=${req.body[key]}`)
+      .join('&'),
+  }
+}
 
 const userAgentKey = 'user-agent';
 
@@ -459,10 +468,10 @@ export class LoginController {
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
     },
-    keycloakQueryGen,
+    keycloakBodyGen,
   )
   @authorize({permissions: ['*']})
-  @get('/auth/keycloak', {
+  @post('/auth/keycloak', {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Keycloak Token Response',
@@ -474,6 +483,50 @@ export class LoginController {
       },
     },
   })
+  async postloginViaKeycloak(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: {type: 'object'},
+        },
+      },
+    })
+    clientCreds?: ClientAuthRequest,
+  ): Promise<void> {}
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.KEYCLOAK,
+    {
+      host: process.env.KEYCLOAK_HOST,
+      realm: process.env.KEYCLOAK_REALM, //'Tenant1',
+      clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
+      tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
+      userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
+    },
+    keycloakQueryGen,
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/keycloak', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+
+  /**
+   * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
+   */
   async loginViaKeycloak(
     @param.query.string('client_id')
     clientId?: string,
