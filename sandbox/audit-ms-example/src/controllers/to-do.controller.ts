@@ -25,7 +25,7 @@ import {ToDoRepository} from '../repositories';
 
 const OK = 200;
 const NOCONTENT = 204;
-const BASE = '/to-dos'
+const BASE = '/to-dos';
 export class ToDoController {
   constructor(
     @repository(ToDoRepository)
