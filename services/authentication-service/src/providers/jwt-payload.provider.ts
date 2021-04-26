@@ -1,5 +1,5 @@
 import {inject, Provider} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -17,21 +17,15 @@ import {
 import {AuthClient, User, UserTenant} from '../models';
 import {AuthUser} from '../modules/auth';
 import {
-  AuthClientRepository,
   RoleRepository,
   TenantConfigRepository,
   UserLevelPermissionRepository,
-  UserRepository,
   UserTenantRepository,
 } from '../repositories';
 import {IDeviceInfo, JwtPayloadFn} from './types';
 
 export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
   constructor(
-    @repository(AuthClientRepository)
-    private readonly authClientRepository: AuthClientRepository,
-    @repository(UserRepository)
-    private readonly userRepo: UserRepository,
     @repository(RoleRepository)
     private readonly roleRepo: RoleRepository,
     @repository(UserLevelPermissionRepository)
@@ -74,9 +68,8 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       }
 
       // Create user DTO for payload to JWT
-      const authUser: AuthUser = new AuthUser(user);
-      delete authUser.externalAuthToken;
-      delete authUser.externalRefreshToken;
+      const authUser: AuthUser = new AuthUser(Object.assign({}, user));
+      this._removeUnnecessaryData(authUser);
 
       // Add locale info
       await this._setLocale(authUser, userTenant);
@@ -111,6 +104,19 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       }
       return authUser.toJSON();
     };
+  }
+
+  private _removeUnnecessaryData(authUser: AnyObject) {
+    delete authUser.externalAuthToken;
+    delete authUser.externalRefreshToken;
+    delete authUser.createdBy;
+    delete authUser.createdOn;
+    delete authUser.deleted;
+    delete authUser.deletedBy;
+    delete authUser.deletedOn;
+    delete authUser.modifiedBy;
+    delete authUser.modifiedOn;
+    return authUser;
   }
 
   private async _setLocale(authUser: AuthUser, userTenant: UserTenant) {
