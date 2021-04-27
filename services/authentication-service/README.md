@@ -6,7 +6,9 @@
 
 A Loopback Microservice for handling authentications. Provides multi tenant support, external Identity Provider integration, and the ability the issue tokens.
 
-For an example implementation, see `/sandbox/auth-multitenant-example`.
+To get started with a basic implementation of this service, see `/sandbox/auth-basic-example`.
+
+For a more elaborate and custom implementation that overrides the default models and repositories, see `/sandbox/auth-multitenant-example`.
 
 ### Installation
 
