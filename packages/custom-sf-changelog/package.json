@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "test-windows": "mocha --timeout 30000"
   },
