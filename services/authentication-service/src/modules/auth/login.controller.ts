@@ -4,6 +4,7 @@ import {
   get,
   getModelSchemaRef,
   HttpErrors,
+  oas,
   param,
   patch,
   post,
@@ -63,28 +64,11 @@ import {ClientAuthRequest} from './models/client-auth-request.dto';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
 
-const queryGen = (req: Request) => {
-  return {
-    accessType: 'offline',
-    state: Object.keys(req.query)
-      .map(key => `${key}=${req.query[key]}`)
-      .join('&'),
-  };
-};
-
-const keycloakQueryGen = (req: Request) => {
-  return {
-    state: Object.keys(req.query)
-      .map(key => `${key}=${req.query[key]}`)
-      .join('&'),
-  };
-};
-
-const keycloakBodyGen = (req: Request) => {
-  return {
-    state: Object.keys(req.body)
-      .map(key => `${key}=${req.body[key]}`)
-      .join('&'),
+const queryGen = (from: 'body' | 'query') => {
+  return (req: Request) => {
+    return {
+      state: `client_id=${req[from].client_id}`,
+    };
   };
 };
 
@@ -368,13 +352,14 @@ export class LoginController {
       clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
       tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
     },
-    queryGen,
+    queryGen('query'),
   )
   @authorize({permissions: ['*']})
+  @oas.deprecated()
   @get('/auth/google', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Google Token Response',
+        description: 'Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {'x-ts-type': TokenResponse},
@@ -383,11 +368,52 @@ export class LoginController {
       },
     },
   })
+  /**
+  * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
+  */
   async loginViaGoogle(
     @param.query.string('client_id')
     clientId?: string,
     @param.query.string('client_secret')
     clientSecret?: string,
+  ): Promise<void> {}
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.GOOGLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['profile', 'email'],
+      authorizationURL: process.env.GOOGLE_AUTH_URL,
+      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
+      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/google', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Google based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async postLoginViaGoogle(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds?: ClientAuthRequest,
   ): Promise<void> {}
 
   @authenticate(
@@ -401,7 +427,7 @@ export class LoginController {
       clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
       tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
     },
-    queryGen,
+    queryGen('query'),
   )
   @authorize({permissions: ['*']})
   @get('/auth/google-auth-redirect', {
@@ -468,7 +494,7 @@ export class LoginController {
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
     },
-    keycloakBodyGen,
+    queryGen('body'),
   )
   @authorize({permissions: ['*']})
   @post('/auth/keycloak', {
@@ -484,11 +510,11 @@ export class LoginController {
       },
     },
   })
-  async postloginViaKeycloak(
+  async postLoginViaKeycloak(
     @requestBody({
       content: {
         'application/x-www-form-urlencoded': {
-          schema: {type: 'object'},
+          schema: getModelSchemaRef(ClientAuthRequest),
         },
       },
     })
@@ -508,9 +534,10 @@ export class LoginController {
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
     },
-    keycloakQueryGen,
+    queryGen('query'),
   )
   @authorize({permissions: ['*']})
+  @oas.deprecated()
   @get('/auth/keycloak', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -547,7 +574,7 @@ export class LoginController {
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
     },
-    keycloakQueryGen,
+    queryGen('query'),
   )
   @authorize({permissions: ['*']})
   @get('/auth/keycloak-auth-redirect', {
