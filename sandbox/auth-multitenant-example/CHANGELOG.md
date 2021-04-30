@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0-alpha.23 (2021-04-30)
+
+* feat(sandbox): added basic example, fixed auth-multitenant-example, changed readme (#169) ([0a849fe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a849fe)), closes [#169](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/169)
+
+
+
+
+
 # [2.0.0-alpha.22](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/auth-multitenant-example@2.0.0-alpha.21...@sourceloop/auth-multitenant-example@2.0.0-alpha.22) (2021-04-26)
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

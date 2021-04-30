@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0-alpha.48 (2021-04-30)
+
+* fix(authentication-service): added a post route for keycloak login due to a possible security issue  ([50a5d5f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/50a5d5f)), closes [#176](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/176)
+* fix(sandbox): fix loopback versions issue ([60db6a0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/60db6a0)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(authentication-service): automigration and commit prompt for migration changes (#158) ([ce8e541](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ce8e541)), closes [#158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/158) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124)
+* feat(sandbox): added basic example, fixed auth-multitenant-example, changed readme (#169) ([0a849fe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a849fe)), closes [#169](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/169)
+
+
+### BREAKING CHANGE
+
+* Automigration Added - will need to add SKIP env variable in existing project, read docs for help
+
+
+
+
 # [1.0.0-alpha.47](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/authentication-service@1.0.0-alpha.46...@sourceloop/authentication-service@1.0.0-alpha.47) (2021-04-26)
 
 
