@@ -359,7 +359,8 @@ export class LoginController {
   @get('/auth/google', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        description:
+          'Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {'x-ts-type': TokenResponse},
@@ -369,8 +370,8 @@ export class LoginController {
     },
   })
   /**
-  * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
-  */
+   * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
+   */
   async loginViaGoogle(
     @param.query.string('client_id')
     clientId?: string,
