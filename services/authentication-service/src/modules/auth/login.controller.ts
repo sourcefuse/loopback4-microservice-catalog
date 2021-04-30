@@ -780,6 +780,8 @@ export class LoginController {
           userId: user.id,
           username: user.username,
           accessToken,
+          externalAuthToken: (user as AuthUser).externalAuthToken,
+          externalRefreshToken: (user as AuthUser).externalRefreshToken,
         },
         {ttl: authClient.refreshTokenExpiration * ms},
       );

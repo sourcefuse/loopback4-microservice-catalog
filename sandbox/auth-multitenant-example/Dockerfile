@@ -14,10 +14,10 @@ WORKDIR /home/node/app
 # where available (npm@5+)
 COPY --chown=node package*.json ./
 
-RUN npm install
-
 # Bundle app source code
 COPY --chown=node . .
+
+RUN npm install
 
 RUN npm run build
 

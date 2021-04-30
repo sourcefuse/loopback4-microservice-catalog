@@ -1,0 +1,31 @@
+{
+  "name": "custom-sf-changelog",
+  "version": "0.0.1",
+  "description": "conventional-changelog angular preset",
+  "main": "index.js",
+  "scripts": {
+    "test-windows": "mocha --timeout 30000"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "angular",
+    "preset"
+  ],
+  "files": [
+    "conventional-changelog.js",
+    "conventional-recommended-bump.js",
+    "index.js",
+    "parser-opts.js",
+    "writer-opts.js",
+    "templates"
+  ],
+  "author": "Akshat Dubey",
+  "engines": {
+    "node": ">=10"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "compare-func": "^2.0.0",
+    "q": "^1.5.1"
+  }
+}

@@ -29,6 +29,16 @@ export class RefreshToken extends Entity {
   @property({
     type: 'string',
   })
+  externalAuthToken?: string;
+
+  @property({
+    type: 'string',
+  })
+  externalRefreshToken?: string;
+
+  @property({
+    type: 'string',
+  })
   pubnubToken?: string;
 
   constructor(data?: Partial<RefreshToken>) {

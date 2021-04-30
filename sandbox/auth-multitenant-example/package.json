@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/auth-multitenant-example",
-  "version": "2.0.0-alpha.21",
+  "version": "2.0.0-alpha.22",
   "description": "This is a sample application for sandbox testing of auth microservice components.",
   "private": true,
   "keywords": [
@@ -29,7 +29,7 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "docker:build": "docker build -t auth-multitenant-example .",
     "docker:run": "docker run -p 3000:3000 -d auth-multitenant-example",
-    "migrate": "node ./dist/migrate",
+    "migrate": "node migration.js",
     "prestart": "npm run build",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
@@ -57,7 +57,7 @@
     "@loopback/rest": "^9.0.0",
     "@loopback/rest-explorer": "^3.0.3",
     "@loopback/service-proxy": "^3.0.3",
-    "@sourceloop/authentication-service": "^1.0.0-alpha.46",
+    "@sourceloop/authentication-service": "^1.0.0-alpha.47",
     "@sourceloop/core": "^1.0.0-alpha.27",
     "bcrypt": "^5.0.0",
     "casbin": "^5.2.1",

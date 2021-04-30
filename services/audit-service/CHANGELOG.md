@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.15](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.14...@sourceloop/audit-service@1.1.0-alpha.15) (2021-04-26)
+
+
+### Bug Fixes
+
+* **audit-service:** fixed prom client issue, minor change in readme ([#171](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/171)) ([c691f9d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c691f9d2cc7ac42605b90b03b9d991a33c4dcdff))
+
+
+
+
+
 # [1.1.0-alpha.14](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.13...@sourceloop/audit-service@1.1.0-alpha.14) (2021-03-17)
 
 
