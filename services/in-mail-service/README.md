@@ -16,7 +16,8 @@ any client application.
 ## Implementation
 
 ### Migration
-The project ships with generated migrations for PostgreSQL in the [migrations](migrations) folder. For generating migrations and implementing other data sources, please refer to refer to [Database Migrations | LoopBack Documentation](https://loopback.io/doc/en/lb4/Database-migrations.html) for more information.
+
+The migrations required for this service are processed during the installation automatically, if you plan to use the [Loopback Database Migrations] (https://loopback.io/doc/en/lb4/Database-migrations.html) or your own custom migrations, you can disable the auto-migration script by setting the `INMAIL_MIGRATION_SKIP` or `SOURCELOOP_MIGRATION_SKIP` env variable to true before installing the package. If you need the migration files in your project root, use the `INMAIL_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variable.
 
 ### Implementation
 

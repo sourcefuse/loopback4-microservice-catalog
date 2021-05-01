@@ -3,19 +3,19 @@
     "master": {
         "driver": "pg",
         "host": {
-            "ENV": "INMAIL_DB_HOST"
+            "ENV": "DB_HOST"
         },
         "port": {
-            "ENV": "INMAIL_DB_PORT"
+            "ENV": "DB_PORT"
         },
         "user": {
-            "ENV": "INMAIL_DB_USER"
+            "ENV": "DB_USER"
         },
         "password": {
-            "ENV": "INMAIL_DB_PASSWORD"
+            "ENV": "DB_PASSWORD"
         },
         "database": {
-            "ENV": "INMAIL_DB_DATABASE"
+            "ENV": "DB_DATABASE"
         }
     },
     "sql-file": true

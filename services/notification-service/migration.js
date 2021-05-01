@@ -15,7 +15,7 @@ try {
 }
 if (
   isLocal ||
-  process.env.AUTH_MIGRATION_SKIP ||
+  process.env.NOTIF_MIGRATION_SKIP ||
   process.env.SOURCELOOP_MIGRATION_SKIP
 ) {
   console.info(`Skipping migrations`);
@@ -30,7 +30,7 @@ if (
   dbmigrate.up();
 }
 
-if (process.env.SOURCELOOP_MIGRATION_COPY || process.env.AUTH_MIGRATION_COPY) {
+if (process.env.SOURCELOOP_MIGRATION_COPY || process.env.NOTIF_MIGRATION_COPY) {
   copyFileSync('./database.json', process.env.INIT_CWD);
   copyFolderRecursiveSync('./migrations', process.env.INIT_CWD);
 }
