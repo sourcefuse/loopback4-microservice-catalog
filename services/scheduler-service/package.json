@@ -29,7 +29,8 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
+    "postinstall": "node migration.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,9 @@
     "README.md",
     "dist",
     "src",
+    "migration.js",
+    "migrations",
+    "database.json",
     "!*/__tests__"
   ],
   "dependencies": {
@@ -54,6 +58,8 @@
     "@sourceloop/core": "^1.0.0-alpha.27",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
+    "dotenv": "^8.2.0",
+    "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^4.1.0",
     "loopback4-authorization": "^3.2.0",
     "loopback4-soft-delete": "^3.1.0",
