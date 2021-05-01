@@ -1,4 +1,7 @@
-import {ApplicationConfig, VideoConferencingExampleApplication} from './application';
+import {
+  ApplicationConfig,
+  VideoConferencingExampleApplication,
+} from './application';
 
 export * from './application';
 

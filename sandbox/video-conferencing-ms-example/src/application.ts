@@ -7,7 +7,10 @@ import {
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import { VideoConfServiceComponent, VonageBindings } from '@sourceloop/video-conferencing-service';
+import {
+  VideoConfServiceComponent,
+  VonageBindings,
+} from '@sourceloop/video-conferencing-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import * as path from 'path';
@@ -15,6 +18,7 @@ import {MySequence} from './sequence';
 
 export {ApplicationConfig};
 
+const timeToStart = 10;
 const port = 3000;
 export class VideoConferencingExampleApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -27,7 +31,7 @@ export class VideoConferencingExampleApplication extends BootMixin(
       includeProcessEnv: true,
     });
     options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT || port);
+    options.rest.port = +(process.env.PORT ?? port);
     options.rest.host = process.env.HOST;
     super(options);
 
@@ -46,10 +50,10 @@ export class VideoConferencingExampleApplication extends BootMixin(
     this.component(VideoConfServiceComponent);
 
     this.bind(VonageBindings.config).to({
-      apiKey: process.env.VONAGE_API_KEY || '',
-      apiSecret: process.env.VONAGE_API_SECRET || '',
-      timeToStart: Number(process.env.TIME_TO_START) || 10
-  });
+      apiKey: process.env.VONAGE_API_KEY ?? '',
+      apiSecret: process.env.VONAGE_API_SECRET ?? '',
+      timeToStart: Number(process.env.TIME_TO_START) || timeToStart,
+    });
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

@@ -1,1 +1,1 @@
-export * from './video-conferencing.pg.datasource';
+export * from './pg.datasource';

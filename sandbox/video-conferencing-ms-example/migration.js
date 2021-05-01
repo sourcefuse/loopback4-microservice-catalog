@@ -3,22 +3,20 @@ const fs = require('fs');
 const DBMigrate = require('db-migrate');
 const path = require('path');
 let isLocal = false;
-dotenv.config({ path: `${process.env.INIT_CWD}/.env` });
+dotenv.config({path: `${process.env.INIT_CWD}/.env`});
 
 try {
-    if (fs.existsSync('.infolder')) {
-        isLocal = true;
-    }
+  if (fs.existsSync('.infolder')) {
+    isLocal = true;
+  }
 } catch (err) {
-    console.info('\n');
+  console.info('\n');
 }
-if (
-    isLocal
-) {
-    console.info(`Skipping migrations`);
+if (isLocal) {
+  console.info(`Skipping migrations`);
 } else {
-    const dbmigrate = DBMigrate.getInstance(true, {
-        config: './migrations/database.json'
-    });
-    dbmigrate.up();
+  const dbmigrate = DBMigrate.getInstance(true, {
+    config: './migrations/database.json',
+  });
+  dbmigrate.up();
 }
