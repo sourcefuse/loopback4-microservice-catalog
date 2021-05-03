@@ -53,8 +53,6 @@
     "@loopback/rest": "^9.0.0",
     "@sourceloop/core": "^1.0.0-alpha.27",
     "aws-sdk": "^2.694.0",
-    "db-migrate": "^0.11.12",
-    "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
     "lodash": "^4.17.20",
@@ -73,6 +71,8 @@
     "@types/node": "^10.17.44",
     "eslint": "^7.12.1",
     "source-map-support": "^0.5.19",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
     "typescript": "~4.0.5"
   },
   "publishConfig": {
