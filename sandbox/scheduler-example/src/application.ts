@@ -28,6 +28,7 @@ export class SchedulerExampleApplication extends BootMixin(
         includeProcessEnv: true,
       });
     } else {
+      console.log = function () {};
       dotenvExt.load({
         schema: '.env.example',
         errorOnMissing: false,

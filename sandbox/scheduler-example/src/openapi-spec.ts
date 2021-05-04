@@ -4,14 +4,16 @@ import {SchedulerExampleApplication} from './application';
 /**
  * Export the OpenAPI spec from the application
  */
+const port = 3000;
+const processArgKey = 2;
 async function exportOpenApiSpec(): Promise<void> {
   const config: ApplicationConfig = {
     rest: {
-      port: +(process.env.PORT ?? 3000),
+      port: +(process.env.PORT ?? port),
       host: process.env.HOST ?? 'localhost',
     },
   };
-  const outFile = process.argv[2] ?? '';
+  const outFile = process.argv[processArgKey] ?? '';
   const app = new SchedulerExampleApplication(config);
   await app.boot();
   await app.exportOpenApiSpec(outFile);
