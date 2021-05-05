@@ -149,7 +149,7 @@ export class AuthenticationDbDataSource
 
 ### Migrations
 
-The migrations required for this service are processed during the installation automatically, if you plan to use the [Loopback Database Migrations] (https://loopback.io/doc/en/lb4/Database-migrations.html) or your own custom migrations, you can disable the auto-migration script by setting the `AUTH_MIGRATION_SKIP` or `SOURCELOOP_MIGRATION_SKIP` env variable to true before installing the package. If you need the migration files in your project root, use the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variable.
+The migrations required for this service are processed during the installation automatically if you set the `AUTH_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### API Documentation
 

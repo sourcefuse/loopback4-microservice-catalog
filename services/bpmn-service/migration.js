@@ -4,7 +4,8 @@ const fs = require('fs');
 const DBMigrate = require('db-migrate');
 const path = require('path');
 let isLocal = false;
-dotenv.config({path: `${process.env.INIT_CWD}/.env`});
+dotenv.config({path: path.join(process.env.INIT_CWD, '.env')});
+const type = 'WORKFLOW';
 
 try {
   if (fs.existsSync('.infolder')) {
@@ -13,16 +14,18 @@ try {
 } catch (err) {
   console.info('\n');
 }
-if (
-  isLocal ||
-  process.env.WORKFLOW_MIGRATION_SKIP ||
-  process.env.SOURCELOOP_MIGRATION_SKIP
-) {
+if (isLocal) {
   console.info(`Skipping migrations`);
+} else if (
+  !(process.env[`${type}_MIGRATION`] || process.env.SOURCELOOP_MIGRATION)
+) {
+  console.warn(
+    `${type}_MIGRATION or SOURCELOOP_MIGRATION variables not found in the environment, skipping automigration.`,
+  );
 } else {
   dotenvExt.load({
-    schema: `./migrations/.env.schema`,
-    path: `${process.env.INIT_CWD}/.env`,
+    schema: path.join('.', 'migrations', '.env.schema'),
+    path: path.join(process.env.INIT_CWD, '.env'),
     errorOnMissing: true,
     includeProcessEnv: true,
   });
@@ -32,10 +35,9 @@ if (
 
 if (
   process.env.SOURCELOOP_MIGRATION_COPY ||
-  process.env.WORKFLOW_MIGRATION_COPY
+  process.env[`${type}_MIGRATION_COPY`]
 ) {
-  copyFileSync('./database.json', process.env.INIT_CWD);
-  copyFolderRecursiveSync('./migrations', process.env.INIT_CWD);
+  copyFolderRecursiveSync(path.join('.', 'migrations'), process.env.INIT_CWD);
 }
 
 function copyFileSync(source, target) {

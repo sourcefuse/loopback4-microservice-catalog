@@ -1,4 +1,3 @@
-DROP SCHEMA IF EXISTS main CASCADE;
 CREATE SCHEMA main;
 
 SET search_path TO main,public;
