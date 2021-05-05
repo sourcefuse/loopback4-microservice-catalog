@@ -1,0 +1,81 @@
+{
+  "name": "@sourceloop/video-conferencing-ms-example",
+  "version": "0.0.1",
+  "description": "A Video conferencing service example",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "scripts": {
+    "build": "npm run clean && lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "echo 'No Tests'",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t video-conferencing-example .",
+    "docker:run": "docker run -p 3000:3000 -d video-conferencing-example",
+    "premigrate": "npm run build",
+    "migrate": "node migration.js",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Akshat Dubey <akshat.dubey@sourcefuse.com>",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^3.1.2",
+    "@loopback/context": "^3.13.2",
+    "@loopback/core": "^2.13.1",
+    "@loopback/repository": "^3.5.1",
+    "@loopback/rest": "^9.2.1",
+    "@loopback/rest-explorer": "^3.2.1",
+    "@loopback/service-proxy": "^3.1.1",
+    "@sourceloop/video-conferencing-service": "^1.0.0-alpha.30",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
+    "dotenv": "^8.2.0",
+    "dotenv-extended": "^2.9.0",
+    "loopback-connector-postgresql": "^5.3.0",
+    "prom-client": "^13.1.0",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.3.1",
+    "source-map-support": "^0.5.19",
+    "@loopback/testlab": "^3.3.1",
+    "@types/node": "^10.17.56",
+    "@loopback/eslint-config": "^10.0.5",
+    "eslint": "^7.23.0",
+    "typescript": "~4.2.3"
+  }
+}
