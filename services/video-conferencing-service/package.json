@@ -29,9 +29,7 @@
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "prepublishOnly": "npm run test",
-    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
-    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+    "postinstall": "node migration.js"
   },
   "repository": {
     "type": "git"
@@ -44,6 +42,9 @@
     "index.d.ts",
     "dist",
     "src",
+    "migration.js",
+    "migrations",
+    "database.json",
     "!*/__tests__"
   ],
   "dependencies": {

@@ -3,5 +3,4 @@ dist/
 coverage/
 migrations/
 migration.js
-index.*
 .eslintrc.js

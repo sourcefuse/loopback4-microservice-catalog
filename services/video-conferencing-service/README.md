@@ -47,7 +47,7 @@ export class ClientComponent extends BootMixin(
 
 ## DB migrations
 
-Since database migrations run using db-migrate package, we need to supply .env file to provide database configuration parameters. All other configurations parameters will be injected to and from context.
+The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ## Using config
 
