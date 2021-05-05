@@ -4,6 +4,7 @@ import {
   KeycloakProfile,
 } from 'loopback4-authentication';
 import * as GoogleStrategy from 'passport-google-oauth20';
+import * as InstagramStrategy from 'passport-instagram';
 
 import {User, UserRelations} from '../models';
 
@@ -23,6 +24,26 @@ export interface GooglePreVerifyFn {
 export interface GooglePostVerifyFn {
   (
     profile: GoogleStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface InstagramSignUpFn {
+  (profile: InstagramStrategy.Profile): Promise<(User & UserRelations) | null>;
+}
+
+export interface InstagramPreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: InstagramStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface InstagramPostVerifyFn {
+  (
+    profile: InstagramStrategy.Profile,
     user: IAuthUser | null,
   ): Promise<IAuthUser | null>;
 }
