@@ -60,6 +60,23 @@ x-audit-variables: &audit-variables
       JWT_SECRET: i_am_a_strong_secret
       JWT_ISSUER: https://loopback4-microservice-catalog
 
+x-scheduler-variables: &scheduler-variables
+      NODE_ENV: dev
+      LOG_LEVEL: debug
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: scheduler_db
+      DB_SCHEMA: main
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_URL:
+      REDIS_PASSWORD:
+      REDIS_DATABASE: 0
+      JWT_SECRET: i_am_a_strong_secret
+      JWT_ISSUER: https://loopback4-microservice-catalog
+
 
 services:
   auth-multitenant-example:
@@ -167,6 +184,21 @@ services:
       - sandbox
     restart: on-failure 
 
+  scheduler-example:
+    image: sourceloop/scheduler-example
+    build:
+      context: ./scheduler-example
+      dockerfile: Dockerfile
+    ports:
+      - "3034:3000"
+    networks:
+      - sandbox
+    environment: *scheduler-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+  
+
   redis:
     image: "redis:alpine"
     ports:
@@ -217,7 +249,8 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db'"
 
 
   pgadmin:
