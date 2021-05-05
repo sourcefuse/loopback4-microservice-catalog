@@ -56,8 +56,6 @@
     "@types/i18n": "^0.8.6",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.0",
-    "db-migrate": "^0.11.12",
-    "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.8.0",
     "jsonwebtoken": "^8.5.1",
@@ -85,7 +83,9 @@
     "@types/passport-google-oauth20": "^2.0.3",
     "eslint": "^7.12.1",
     "source-map-support": "^0.5.19",
-    "typescript": "~4.0.5"
+    "typescript": "~4.0.5",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
