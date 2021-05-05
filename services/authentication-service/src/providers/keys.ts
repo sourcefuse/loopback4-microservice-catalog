@@ -6,6 +6,9 @@ import {
   GooglePostVerifyFn,
   GooglePreVerifyFn,
   GoogleSignUpFn,
+  InstagramPostVerifyFn,
+  InstagramPreVerifyFn,
+  InstagramSignUpFn,
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
@@ -16,6 +19,9 @@ import {
 export namespace SignUpBindings {
   export const GOOGLE_SIGN_UP_PROVIDER = BindingKey.create<GoogleSignUpFn>(
     'sf.google.signup.provider',
+  );
+  export const INSTAGRAM_SIGN_UP_PROVIDER = BindingKey.create<InstagramSignUpFn>(
+    'sf.instagram.signup.provider',
   );
   export const KEYCLOAK_SIGN_UP_PROVIDER = BindingKey.create<KeyCloakSignUpFn>(
     'sf.keycloak.signup.provider',
@@ -37,7 +43,12 @@ export namespace VerifyBindings {
   export const GOOGLE_POST_VERIFY_PROVIDER = BindingKey.create<GooglePostVerifyFn>(
     'sf.google.postverify.provider',
   );
-
+  export const INSTAGRAM_POST_VERIFY_PROVIDER = BindingKey.create<InstagramPostVerifyFn>(
+    'sf.instgram.postverify.provider',
+  );
+  export const INSTAGRAM_PRE_VERIFY_PROVIDER = BindingKey.create<InstagramPreVerifyFn>(
+    'sf.instagram.preverify.provider',
+  );
   export const KEYCLOAK_PRE_VERIFY_PROVIDER = BindingKey.create<KeyCloakPreVerifyFn>(
     'sf.keycloak.preverify.provider',
   );

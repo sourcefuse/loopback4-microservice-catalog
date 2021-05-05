@@ -484,6 +484,107 @@ export class LoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
+    STRATEGY.INSTAGRAM_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
+      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
+      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/instagram', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Instagram based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async postLoginViaInstagram(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds?: ClientAuthRequest,
+  ): Promise<void> {}
+
+  @authenticate(
+    STRATEGY.INSTAGRAM_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
+      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
+      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
+    },
+    queryGen('query'),
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/instagram-auth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Instagram Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async instagramCallback(
+    @param.query.string('code') code: string,
+    @param.query.string('state') state: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    googleCodeWriter: CodeWriterFn,
+  ): Promise<void> {
+    const clientId = new URLSearchParams(state).get('client_id');
+    if (!clientId || !this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const client = await this.authClientRepository.findOne({
+      where: {
+        clientId,
+      },
+    });
+    if (!client || !client.redirectUrl) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    try {
+      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+        clientId,
+        user: this.user,
+      };
+      const token = await googleCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
+      );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+  }
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
     STRATEGY.KEYCLOAK,
     {
       host: process.env.KEYCLOAK_HOST,
