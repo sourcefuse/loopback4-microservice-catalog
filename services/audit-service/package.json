@@ -46,6 +46,10 @@
     "database.json",
     "!*/__tests__"
   ],
+  "peerDependencies": {
+    "db-migrate": "< 1.0.0 || ^1.0.0",
+    "db-migrate-pg": "^1.0.0"
+  },
   "dependencies": {
     "@loopback/boot": "^3.1.0",
     "@loopback/core": "^2.12.0",
