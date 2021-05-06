@@ -1,10 +1,14 @@
-const dotenv = require('dotenv');
 const dotenvExt = require('dotenv-extended');
 const fs = require('fs');
 const DBMigrate = require('db-migrate');
 const path = require('path');
 let isLocal = false;
-dotenv.config({path: path.join(process.env.INIT_CWD, '.env')});
+dotenvExt.load({
+  path: path.join(process.env.INIT_CWD, '.env'),
+  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  errorOnMissing: false,
+  includeProcessEnv: true,
+});
 const type = 'NOTIF';
 
 try {
