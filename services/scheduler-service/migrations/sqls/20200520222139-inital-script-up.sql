@@ -1,6 +1,4 @@
 /* Replace with your SQL commands */
-DROP SCHEMA IF EXISTS scheduler CASCADE;
-
 CREATE SCHEMA scheduler;
 
 GRANT ALL ON SCHEMA scheduler TO public;
