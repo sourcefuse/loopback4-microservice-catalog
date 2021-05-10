@@ -24,7 +24,7 @@ export interface IUserPrefs {
 export interface IAuthUserWithPermissions<
   ID = string,
   TID = string,
-  UTID = string
+  UTID = string,
 > extends IAuthUser {
   id?: string;
   identifier?: ID;

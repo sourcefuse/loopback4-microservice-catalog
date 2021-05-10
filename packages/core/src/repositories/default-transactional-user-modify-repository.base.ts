@@ -10,6 +10,7 @@ import {
   Condition,
   AnyObject,
   DefaultTransactionalRepository,
+  Entity,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';
@@ -20,10 +21,10 @@ import {UserModifiableEntity} from '../models';
 export abstract class DefaultTransactionalUserModifyRepository<
   T extends UserModifiableEntity,
   ID,
-  Relations extends object = {}
+  Relations extends object = {},
 > extends DefaultTransactionalRepository<T, ID, Relations> {
   constructor(
-    entityClass: typeof UserModifiableEntity & {
+    entityClass: typeof Entity & {
       prototype: T;
     },
     dataSource: juggler.DataSource,

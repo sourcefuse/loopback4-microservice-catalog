@@ -9,11 +9,12 @@ import {AuthenticateErrorKeys} from '../../../enums';
 import {ILogger, LOGGER} from '../../logger-extension';
 
 export class ServicesBearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn> {
+  implements Provider<VerifyFunction.BearerFn>
+{
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
 
   value(): VerifyFunction.BearerFn {
-    return async token => {
+    return async (token: string) => {
       let user: IAuthUserWithPermissions;
 
       try {
