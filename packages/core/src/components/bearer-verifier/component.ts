@@ -24,13 +24,11 @@ export class BearerVerifierComponent implements Component {
     };
 
     if (this.config && this.config.type === BearerVerifierType.service) {
-      this.providers[
-        Strategies.Passport.BEARER_TOKEN_VERIFIER.key
-      ] = ServicesBearerTokenVerifyProvider;
+      this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+        ServicesBearerTokenVerifyProvider;
     } else if (this.config && this.config.type === BearerVerifierType.facade) {
-      this.providers[
-        Strategies.Passport.BEARER_TOKEN_VERIFIER.key
-      ] = FacadesBearerTokenVerifyProvider;
+      this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+        FacadesBearerTokenVerifyProvider;
     } else {
       console.error('Invalid BearerVerifierType specified !');
     }
