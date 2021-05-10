@@ -1,18 +1,19 @@
 import {Provider, inject} from '@loopback/context';
-import {HttpErrors} from '@loopback/rest';
+import {HttpErrors, Request} from '@loopback/rest';
 import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
 
 import {AuthenticationService} from '../services';
 
 export class FacadesBearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn> {
+  implements Provider<VerifyFunction.BearerFn>
+{
   constructor(
     @inject('services.AuthenticationService')
     protected authService: AuthenticationService,
   ) {}
 
   value(): VerifyFunction.BearerFn {
-    return async (token, req) => {
+    return async (token: string, req?: Request) => {
       try {
         if (!req || !req.headers) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);

@@ -1,4 +1,11 @@
-import {Count, DataObject, Getter, juggler, Where} from '@loopback/repository';
+import {
+  Count,
+  DataObject,
+  Entity,
+  Getter,
+  juggler,
+  Where,
+} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';
 import {AuthErrorKeys} from 'loopback4-authentication';
@@ -10,10 +17,10 @@ import {UserModifiableEntity} from '../models';
 export class DefaultUserModifyCrudRepository<
   T extends UserModifiableEntity,
   ID,
-  Relations extends object = {}
+  Relations extends object = {},
 > extends SoftCrudRepository<T, ID, Relations> {
   constructor(
-    entityClass: typeof UserModifiableEntity & {
+    entityClass: typeof Entity & {
       prototype: T;
     },
     dataSource: juggler.DataSource,

@@ -10,7 +10,8 @@ export interface AuthenticationService {
 }
 
 export class AuthenticationServiceProvider
-  implements Provider<AuthenticationService> {
+  implements Provider<AuthenticationService>
+{
   constructor(
     @inject(BearerVerifierBindings.Config)
     conf: BearerVerifierConfig,
