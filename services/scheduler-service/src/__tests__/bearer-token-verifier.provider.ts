@@ -8,7 +8,7 @@ export class BearerTokenVerifyProvider
   constructor() {}
 
   value(): VerifyFunction.BearerFn {
-    return async token => {
+    return async (token: string) => {
       /*
         Implementing a basic JWT token decryption here
         Leaving the additional security to the consumer of this application
