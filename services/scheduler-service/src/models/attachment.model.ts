@@ -10,7 +10,8 @@ import {Event} from './event.model';
 })
 export class Attachment
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

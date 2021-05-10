@@ -129,71 +129,50 @@ export class AuthenticationServiceComponent implements Component {
     // Add authentication component
     this.application.component(AuthenticationComponent);
     // Customize authentication verify handlers
-    this.providers[
-      Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER.key
-    ] = ClientPasswordVerifyProvider;
-    this.providers[
-      Strategies.Passport.LOCAL_PASSWORD_VERIFIER.key
-    ] = LocalPasswordVerifyProvider;
-    this.providers[
-      Strategies.Passport.BEARER_TOKEN_VERIFIER.key
-    ] = BearerTokenVerifyProvider;
-    this.providers[
-      Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key
-    ] = ResourceOwnerVerifyProvider;
-    this.providers[
-      Strategies.Passport.GOOGLE_OAUTH2_VERIFIER.key
-    ] = GoogleOauth2VerifyProvider;
-    this.providers[
-      Strategies.Passport.KEYCLOAK_VERIFIER.key
-    ] = KeycloakVerifyProvider;
-    this.providers[
-      SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key
-    ] = KeyCloakSignupProvider;
-    this.providers[
-      SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key
-    ] = GoogleOauth2SignupProvider;
-    this.providers[
-      SignUpBindings.INSTAGRAM_SIGN_UP_PROVIDER.key
-    ] = InstagramOauth2SignupProvider;
-    this.providers[
-      SignUpBindings.LOCAL_SIGNUP_PROVIDER.key
-    ] = LocalSignupProvider;
-    this.providers[
-      SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key
-    ] = LocalPreSignupProvider;
-    this.providers[
-      VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER.key
-    ] = KeyCloakPreVerifyProvider;
-    this.providers[
-      VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER.key
-    ] = KeyCloakPostVerifyProvider;
-    this.providers[
-      VerifyBindings.GOOGLE_PRE_VERIFY_PROVIDER.key
-    ] = GooglePreVerifyProvider;
-    this.providers[
-      VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key
-    ] = GooglePostVerifyProvider;
-    this.providers[
-      VerifyBindings.INSTAGRAM_PRE_VERIFY_PROVIDER.key
-    ] = InstagramPreVerifyProvider;
-    this.providers[
-      VerifyBindings.INSTAGRAM_POST_VERIFY_PROVIDER.key
-    ] = InstagramPostVerifyProvider;
-    this.providers[
-      VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key
-    ] = SignupBearerVerifyProvider;
+    this.providers[Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER.key] =
+      ClientPasswordVerifyProvider;
+    this.providers[Strategies.Passport.LOCAL_PASSWORD_VERIFIER.key] =
+      LocalPasswordVerifyProvider;
+    this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+      BearerTokenVerifyProvider;
+    this.providers[Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key] =
+      ResourceOwnerVerifyProvider;
+    this.providers[Strategies.Passport.GOOGLE_OAUTH2_VERIFIER.key] =
+      GoogleOauth2VerifyProvider;
+    this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
+      KeycloakVerifyProvider;
+    this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
+      KeyCloakSignupProvider;
+    this.providers[SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key] =
+      GoogleOauth2SignupProvider;
+    this.providers[SignUpBindings.INSTAGRAM_SIGN_UP_PROVIDER.key] =
+      InstagramOauth2SignupProvider;
+    this.providers[SignUpBindings.LOCAL_SIGNUP_PROVIDER.key] =
+      LocalSignupProvider;
+    this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
+      LocalPreSignupProvider;
+    this.providers[VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER.key] =
+      KeyCloakPreVerifyProvider;
+    this.providers[VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER.key] =
+      KeyCloakPostVerifyProvider;
+    this.providers[VerifyBindings.GOOGLE_PRE_VERIFY_PROVIDER.key] =
+      GooglePreVerifyProvider;
+    this.providers[VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key] =
+      GooglePostVerifyProvider;
+    this.providers[VerifyBindings.INSTAGRAM_PRE_VERIFY_PROVIDER.key] =
+      InstagramPreVerifyProvider;
+    this.providers[VerifyBindings.INSTAGRAM_POST_VERIFY_PROVIDER.key] =
+      InstagramPostVerifyProvider;
+    this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
+      SignupBearerVerifyProvider;
 
-    this.providers[
-      AuthCodeBindings.CODEREADER_PROVIDER.key
-    ] = OauthCodeReaderProvider;
-    this.providers[
-      AuthCodeBindings.CODEWRITER_PROVIDER.key
-    ] = CodeWriterProvider;
+    this.providers[AuthCodeBindings.CODEREADER_PROVIDER.key] =
+      OauthCodeReaderProvider;
+    this.providers[AuthCodeBindings.CODEWRITER_PROVIDER.key] =
+      CodeWriterProvider;
 
-    this.providers[
-      AuthServiceBindings.JWTPayloadProvider.key
-    ] = JwtPayloadProvider;
+    this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
+      JwtPayloadProvider;
   }
 
   setupAuthorizationComponent() {

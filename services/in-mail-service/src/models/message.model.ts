@@ -24,7 +24,8 @@ export enum StatusMarker {
 })
 export class Message
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

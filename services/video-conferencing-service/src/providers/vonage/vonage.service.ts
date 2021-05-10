@@ -153,18 +153,10 @@ export class VonageService implements VonageVideoChat {
     const token = sign(jwtPayload, apiSecret);
     let type = '';
     const credentials = {};
-    const {
-      accessKey,
-      secretKey,
-      bucket,
-      endpoint,
-    } = storageConfig as VonageS3TargetOptions;
-    const {
-      accountName,
-      accountKey,
-      container,
-      domain,
-    } = storageConfig as VonageAzureTargetOptions;
+    const {accessKey, secretKey, bucket, endpoint} =
+      storageConfig as VonageS3TargetOptions;
+    const {accountName, accountKey, container, domain} =
+      storageConfig as VonageAzureTargetOptions;
     if (accessKey && secretKey && bucket) {
       type = 'S3';
       Object.assign(credentials, {

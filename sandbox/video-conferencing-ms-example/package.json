@@ -53,13 +53,13 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^3.1.2",
-    "@loopback/context": "^3.13.2",
-    "@loopback/core": "^2.13.1",
-    "@loopback/repository": "^3.5.1",
-    "@loopback/rest": "^9.2.1",
-    "@loopback/rest-explorer": "^3.2.1",
-    "@loopback/service-proxy": "^3.1.1",
+    "@loopback/boot": "^3.4.0",
+    "@loopback/context": "^3.16.0",
+    "@loopback/core": "^2.16.0",
+    "@loopback/repository": "^3.6.0",
+    "@loopback/rest": "^9.3.0",
+    "@loopback/rest-explorer": "^3.3.0",
+    "@loopback/service-proxy": "^3.2.0",
     "@sourceloop/video-conferencing-service": "^1.0.0-alpha.30",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
@@ -70,12 +70,12 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^6.3.1",
+    "@loopback/build": "^6.4.0",
     "source-map-support": "^0.5.19",
-    "@loopback/testlab": "^3.3.1",
-    "@types/node": "^10.17.56",
-    "@loopback/eslint-config": "^10.0.5",
-    "eslint": "^7.23.0",
-    "typescript": "~4.2.3"
+    "@loopback/testlab": "^3.4.0",
+    "@types/node": "^10.17.59",
+    "@loopback/eslint-config": "^10.2.0",
+    "eslint": "^7.25.0",
+    "typescript": "~4.2.4"
   }
 }

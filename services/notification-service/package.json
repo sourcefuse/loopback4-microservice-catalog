@@ -55,7 +55,7 @@
     "@loopback/core": "^2.16.0",
     "@loopback/repository": "^3.6.0",
     "@loopback/rest": "^9.3.0",
-    "@sourceloop/core": "file:sourceloop-core-1.0.0-alpha.27.tgz",
+    "@sourceloop/core": "^1.0.0-alpha.27",
     "aws-sdk": "^2.694.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",

@@ -61,7 +61,7 @@
     "@loopback/repository": "^3.6.0",
     "@loopback/repository-tests": "^0.18.0",
     "@loopback/rest": "^9.3.0",
-    "@sourceloop/core": "file:sourceloop-core-1.0.0-alpha.27.tgz",
+    "@sourceloop/core": "^1.0.0-alpha.27",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^4.1.0",

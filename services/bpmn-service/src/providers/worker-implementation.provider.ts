@@ -6,7 +6,8 @@ import {AnyObject} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
 
 export class WorkerImplementationProvider
-  implements Provider<WorkerImplementationFn> {
+  implements Provider<WorkerImplementationFn>
+{
   client: Client;
   constructor(
     @inject(WorkflowServiceBindings.Config)

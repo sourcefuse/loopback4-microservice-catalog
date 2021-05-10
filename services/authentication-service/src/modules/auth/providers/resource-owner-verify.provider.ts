@@ -13,7 +13,8 @@ import {
 } from '../../../repositories';
 
 export class ResourceOwnerVerifyProvider
-  implements Provider<VerifyFunction.ResourceOwnerPasswordFn> {
+  implements Provider<VerifyFunction.ResourceOwnerPasswordFn>
+{
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

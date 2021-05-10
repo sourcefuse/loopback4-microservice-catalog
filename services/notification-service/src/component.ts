@@ -110,8 +110,8 @@ export class NotificationServiceComponent implements Component {
 
     this.providers = {
       [NotifServiceBindings.ChannelManager.key]: ChannelManagerProvider,
-      [NotifServiceBindings.NotificationUserManager
-        .key]: NotificationUserProvider,
+      [NotifServiceBindings.NotificationUserManager.key]:
+        NotificationUserProvider,
     };
 
     this.controllers = [
