@@ -1,0 +1,6 @@
+{
+  "name": "inmail",
+  "connector": "memory",
+  "localStorage": "",
+  "file": ""
+}

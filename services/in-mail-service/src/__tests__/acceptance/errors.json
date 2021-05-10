@@ -1,0 +1,20 @@
+[
+    2021-05-10T10: 14: 42.779Z
+] error : : App_Log -> Request POST /mails errored out. Error : : {
+    "generatedMessage": false,
+    "code": "ERR_ASSERTION",
+    "actual": false,
+    "expected": true,
+    "operator": "=="
+} AssertionError [ERR_ASSERTION
+]: beginTransaction must be function implemented by the connector
+Request POST /mails failed with status code 500. AssertionError [ERR_ASSERTION
+]: beginTransaction must be function implemented by the connector
+    at Function.Transaction.begin (/home/tushar/Desktop/SF/sourceloop_devs/loopback4-microservice-catalog/services/in-mail-service/node_modules/loopback-connector/lib/transaction.js: 96: 3)
+    at InMailDbDataSource.DataSource.beginTransaction (/home/tushar/Desktop/SF/sourceloop_devs/loopback4-microservice-catalog/services/in-mail-service/node_modules/loopback-datasource-juggler/lib/datasource.js: 2736: 22)
+    at MessageRepository.beginTransaction (/home/tushar/Desktop/SF/sourceloop_devs/loopback4-microservice-catalog/services/in-mail-service/node_modules/@loopback/repository/src/repositories/legacy-juggler-bridge.ts: 784: 35)
+    at OriginatorController.composeMail (/home/tushar/Desktop/SF/sourceloop_devs/loopback4-microservice-catalog/services/in-mail-service/src/controllers/originator.controller.ts: 169: 54)
+    at processTicksAndRejections (node:internal/process/task_queues: 94: 5)
+    at ServiceSequence.handle (/home/tushar/Desktop/SF/sourceloop_devs/loopback4-microservice-catalog/services/in-mail-service/node_modules/@sourceloop/core/src/service-sequence.ts: 109: 22)
+    at HttpHandler._handleRequest (/home/tushar/Desktop/SF/sourceloop_devs/loopback4-microservice-catalog/services/in-mail-service/node_modules/@loopback/rest/src/http-handler.ts: 115: 5)
+    2) gives status 422 when workingHour details are not correct

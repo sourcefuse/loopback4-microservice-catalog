@@ -1,0 +1,33 @@
+[
+  2021-05-07T08: 00: 27.586Z
+] error : : App_Log -> Request POST /mails errored out. Error : : {
+  "message": "The request body is invalid. See error object `details` property for more info.",
+  "code": "VALIDATION_FAILED",
+  "details": [
+    {
+      "path": "",
+      "code": "required",
+      "message": "should have required property 'groups'",
+      "info": {
+        "missingProperty": "groups"
+      }
+    },
+    {
+      "path": "",
+      "code": "required",
+      "message": "should have required property 'body'",
+      "info": {
+        "missingProperty": "body"
+      }
+    },
+    {
+      "path": "",
+      "code": "required",
+      "message": "should have required property 'status'",
+      "info": {
+        "missingProperty": "status"
+      }
+    }
+  ]
+} UnprocessableEntityError: The request body is invalid. See error object `details` property for more info.
+    ✓ gives status 422 when data sent is incorrect (133ms)
