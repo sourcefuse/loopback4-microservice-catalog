@@ -24,6 +24,7 @@ This repository also contains a set of example projects in the [sandbox](sandbox
 * [notification-socket-example](sandbox/notification-socket-example)
 * [workflow-ms-example](sandbox/workflow-ms-example)
 * [audit-ms-example](sandbox/audit-ms-example)
+* [in-mail-example](sandbox/in-mail-example)
 
 ## Table of Contents
 
