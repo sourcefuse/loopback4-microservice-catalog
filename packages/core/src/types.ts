@@ -7,4 +7,7 @@ export interface CoreConfig {
   enableObf?: boolean;
   obfPath?: string;
   openapiSpec?: Record<string, unknown>;
+  authentication?: boolean;
+  swaggerUsername?: string,
+  swaggerPassword?: string,
 }
