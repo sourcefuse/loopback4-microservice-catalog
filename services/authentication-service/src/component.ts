@@ -35,6 +35,9 @@ import {
   GoogleOauth2SignupProvider,
   GooglePostVerifyProvider,
   GooglePreVerifyProvider,
+  InstagramOauth2SignupProvider,
+  InstagramPostVerifyProvider,
+  InstagramPreVerifyProvider,
   JwtPayloadProvider,
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
@@ -151,6 +154,9 @@ export class AuthenticationServiceComponent implements Component {
       SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key
     ] = GoogleOauth2SignupProvider;
     this.providers[
+      SignUpBindings.INSTAGRAM_SIGN_UP_PROVIDER.key
+    ] = InstagramOauth2SignupProvider;
+    this.providers[
       SignUpBindings.LOCAL_SIGNUP_PROVIDER.key
     ] = LocalSignupProvider;
     this.providers[
@@ -168,6 +174,12 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[
       VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key
     ] = GooglePostVerifyProvider;
+    this.providers[
+      VerifyBindings.INSTAGRAM_PRE_VERIFY_PROVIDER.key
+    ] = InstagramPreVerifyProvider;
+    this.providers[
+      VerifyBindings.INSTAGRAM_POST_VERIFY_PROVIDER.key
+    ] = InstagramPostVerifyProvider;
     this.providers[
       VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key
     ] = SignupBearerVerifyProvider;
