@@ -46,8 +46,8 @@ export class CoreComponent implements Component {
           : false,
         onAuthenticate: (req, username, password) => {
           return (
-            username == this.coreConfig.swaggerUsername &&
-            password == this.coreConfig.swaggerPassword
+            username === this.coreConfig.swaggerUsername &&
+            password === this.coreConfig.swaggerPassword
           );
         },
       });
