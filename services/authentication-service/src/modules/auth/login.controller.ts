@@ -549,7 +549,7 @@ export class LoginController {
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    googleCodeWriter: CodeWriterFn,
+    instgaramCodeWriter: CodeWriterFn,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !this.user) {
@@ -568,7 +568,7 @@ export class LoginController {
         clientId,
         user: this.user,
       };
-      const token = await googleCodeWriter(
+      const token = await instgaramCodeWriter(
         jwt.sign(codePayload, client.secret, {
           expiresIn: client.authCodeExpiration,
           audience: clientId,
