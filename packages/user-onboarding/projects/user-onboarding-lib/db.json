@@ -1,0 +1,15 @@
+{
+  "tours": [
+    {
+      "tourId": 1,
+      "tourSteps": "json-server",
+      "styleSheet": "typicode"
+    }
+  ],
+  "tourStates": [
+    {
+      "route": 1,
+      "step": "some comment"
+    }
+  ]
+}
