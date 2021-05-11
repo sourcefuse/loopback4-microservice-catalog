@@ -5,8 +5,6 @@ import {AuthErrorKeys} from 'loopback4-authentication/index';
 
 export class InstagramOauth2SignupProvider
   implements Provider<InstagramSignUpFn> {
-  constructor() {}
-
   value(): InstagramSignUpFn {
     return async profile => {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

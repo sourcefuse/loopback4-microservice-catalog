@@ -6,16 +6,12 @@ import {InstagramPreVerifyFn} from './types';
 
 export class InstagramPreVerifyProvider
   implements Provider<InstagramPreVerifyFn> {
-  constructor() {}
-
   value(): InstagramPreVerifyFn {
     return async (
       accessToken: string,
       refreshToken: string,
       profile: InstagramStrategy.Profile,
       user: IAuthUser | null,
-    ) => {
-      return user;
-    };
+    ) => user;
   }
 }

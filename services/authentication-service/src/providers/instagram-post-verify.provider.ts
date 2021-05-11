@@ -6,14 +6,8 @@ import {InstagramPostVerifyFn} from './types';
 
 export class InstagramPostVerifyProvider
   implements Provider<InstagramPostVerifyFn> {
-  constructor() {}
-
   value(): InstagramPostVerifyFn {
-    return async (
-      profile: InstagramStrategy.Profile,
-      user: IAuthUser | null,
-    ) => {
-      return user;
-    };
+    return async (profile: InstagramStrategy.Profile, user: IAuthUser | null) =>
+      user;
   }
 }
