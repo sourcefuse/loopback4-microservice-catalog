@@ -41,6 +41,15 @@ export class CoreComponent implements Component {
       const swStatsMiddleware = swstats.getMiddleware({
         uriPath: this.coreConfig?.obfPath ?? `/obf`,
         swaggerSpec: this.coreConfig?.openapiSpec,
+        authentication: this.coreConfig.authentication
+          ? this.coreConfig.authentication
+          : false,
+        onAuthenticate: (req, username, password) => {
+          return (
+            username == this.coreConfig.swaggerUsername &&
+            password == this.coreConfig.swaggerPassword
+          );
+        },
       });
       middlewares.push(swStatsMiddleware);
     }
