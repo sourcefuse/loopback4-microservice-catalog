@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { LoadStateParameters, parameterModel, SaveStateParameters, Tour, TourState } from "../models";
+import { LoadStateParameters, SaveStateParameters, TourState } from "../models";
 import { LoadStateCommand, SaveStateCommand } from "./types";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 import { Inject } from "@angular/core";
