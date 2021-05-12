@@ -1,11 +1,11 @@
-import { Observable,  of,  throwError } from "rxjs";
-import { Inject, Injectable } from '@angular/core';
-import { LoadTourParameters, parameterModel, SaveTourParameters, Tour } from "../models";
+import { Observable,  of } from "rxjs";
+import { Inject } from '@angular/core';
+import { LoadTourParameters,  SaveTourParameters, Tour } from "../models";
 import { LoadTourCommand, SaveTourCommand } from "./types";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 
 export class SaveTCommand implements SaveTourCommand{
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) { }
     public parameters: SaveTourParameters;
     execute(): Observable<Tour> {
             const newTour: Tour = {
@@ -19,7 +19,7 @@ export class SaveTCommand implements SaveTourCommand{
 }
 
 export class LoadTCommand implements LoadTourCommand{
-  constructor(private storage: StorageService) { }
+  constructor(private readonly storage: StorageService) { }
     public parameters: LoadTourParameters;
     execute(): Observable<Tour> {
         const existingTour = this.storage.get(this.parameters.tourId);

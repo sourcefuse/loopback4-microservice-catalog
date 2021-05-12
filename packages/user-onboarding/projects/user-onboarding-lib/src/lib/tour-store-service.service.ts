@@ -6,16 +6,13 @@ import { BaseCommand, LoadStateCommand, LoadTourCommand, SaveStateCommand, SaveT
 import { Command } from 'protractor';
 import { partitionArray } from '@angular/compiler/src/util';
 
-var stateSTORAGE_KEY = 'local_tourState';
-var tourSTORAGE_KEY = 'local_tour'
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class TourStoreServiceService {
-  private commandMap = new Map<string, BaseCommand>();
-  private functionMap = new Map();
+  private readonly commandMap = new Map<string, BaseCommand>();
+  private readonly functionMap = new Map();
   constructor() { }
   registerSaveTourCommand(cmd:SaveTCommand){
       this.commandMap.set("SaveTourCommand",cmd)
