@@ -5,7 +5,7 @@ import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 import { Inject } from "@angular/core";
 
 export class SaveSCommand implements SaveStateCommand{
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) { }
     public parameters: SaveStateParameters;
     execute(): Observable<TourState> {
         const newTourState = this.parameters.state;
@@ -15,7 +15,7 @@ export class SaveSCommand implements SaveStateCommand{
 }
 
 export class LoadSCommand implements LoadStateCommand{
-  constructor(private storage: StorageService) { }
+  constructor(private readonly storage: StorageService) { }
     public parameters: LoadStateParameters;
     execute(): Observable<TourState> {
         const currentState = this.storage.get(this.parameters.state.sessionId); 
