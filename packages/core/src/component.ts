@@ -44,12 +44,14 @@ export class CoreComponent implements Component {
         authentication: this.coreConfig.authentication
           ? this.coreConfig.authentication
           : false,
-        onAuthenticate: (req, username, password) => {
-          return (
-            username == this.coreConfig.swaggerUsername &&
-            password == this.coreConfig.swaggerPassword
-          );
-        },
+        onAuthenticate: this.coreConfig.swaggerAuthenticate
+          ? this.coreConfig.swaggerAuthenticate
+          : (req, username, password) => {
+              return (
+                username === this.coreConfig.swaggerUsername &&
+                password === this.coreConfig.swaggerPassword
+              );
+            },
       });
       middlewares.push(swStatsMiddleware);
     }
