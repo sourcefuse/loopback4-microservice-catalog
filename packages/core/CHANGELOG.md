@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0 (2021-05-12)
+
+**Note:** Version bump only for package @sourceloop/core
+
+
+
+
+
 ## 1.0.0-alpha.28 (2021-05-12)
 
 * fix(core): Swagger stats authentication (#204) ([ed7d59f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ed7d59f)), closes [#204](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/204)
