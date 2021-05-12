@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0-alpha.0 (2021-05-12)
+
+* fix(authentication-service): fixed auto-migration issue in all services (#184) ([dd7bea2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dd7bea2)), closes [#184](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/184)
+* fix(authentication-service): fixed env defaults issues in migrations (#185) ([6f1ef17](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6f1ef17)), closes [#185](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/185)
+* fix(authentication-service): fixed version of loopback packages in all services (#191) ([7eb9a60](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7eb9a60)), closes [#191](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/191)
+* fix(authentication-service): moved db-migrate to dev dependencies (#180) ([7b11068](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7b11068)), closes [#180](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/180)
+* feat(in-mail-service): added migration in all services (#179) ([10aa077](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10aa077)), closes [#179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/179) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124)
+* feat(sandbox): added audit example (#172) ([42458b5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/42458b5)), closes [#172](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/172)
+
+
+### BREAKING CHANGE
+
+* need to add env in existing projects to skip auto-migrations
+
+
+
+
 # [1.1.0-alpha.15](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/audit-service@1.1.0-alpha.14...@sourceloop/audit-service@1.1.0-alpha.15) (2021-04-26)
 
 

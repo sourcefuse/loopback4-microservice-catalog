@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0-alpha.49 (2021-05-12)
+
+* fix(authentication-service): fix package lock ([eb6b9eb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eb6b9eb)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(authentication-service): fixed auto-migration issue in all services (#184) ([dd7bea2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dd7bea2)), closes [#184](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/184)
+* fix(authentication-service): fixed env defaults issues in migrations (#185) ([6f1ef17](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6f1ef17)), closes [#185](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/185)
+* fix(authentication-service): fixed version of loopback packages in all services (#191) ([7eb9a60](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7eb9a60)), closes [#191](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/191)
+* fix(authentication-service): moved db-migrate to dev dependencies (#180) ([7b11068](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7b11068)), closes [#180](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/180)
+* feat(authentication-service): Added Instagram oauth2 (#197) ([5567fe9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5567fe9)), closes [#197](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/197)
+* feat(in-mail-service): added migration in all services (#179) ([10aa077](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10aa077)), closes [#179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/179) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124)
+
+
+### BREAKING CHANGE
+
+* need to add env in existing projects to skip auto-migrations
+
+
+
+
 ## 1.0.0-alpha.48 (2021-04-30)
 
 * fix(authentication-service): added a post route for keycloak login due to a possible security issue  ([50a5d5f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/50a5d5f)), closes [#176](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/176)

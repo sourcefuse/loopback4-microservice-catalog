@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0-alpha.32 (2021-05-12)
+
+* fix(authentication-service): fixed auto-migration issue in all services (#184) ([dd7bea2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dd7bea2)), closes [#184](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/184)
+* fix(authentication-service): fixed env defaults issues in migrations (#185) ([6f1ef17](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6f1ef17)), closes [#185](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/185)
+* fix(authentication-service): fixed version of loopback packages in all services (#191) ([7eb9a60](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7eb9a60)), closes [#191](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/191)
+* fix(authentication-service): moved db-migrate to dev dependencies (#180) ([7b11068](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7b11068)), closes [#180](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/180)
+* feat(in-mail-service): added migration in all services (#179) ([10aa077](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10aa077)), closes [#179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/179) [#124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/124)
+
+
+### BREAKING CHANGE
+
+* need to add env in existing projects to skip auto-migrations
+
+
+
+
 # [1.0.0-alpha.31](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/in-mail-service@1.0.0-alpha.30...@sourceloop/in-mail-service@1.0.0-alpha.31) (2021-03-17)
 
 **Note:** Version bump only for package @sourceloop/in-mail-service

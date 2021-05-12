@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0-alpha.28 (2021-05-12)
+
+* fix(core): Swagger stats authentication (#204) ([ed7d59f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ed7d59f)), closes [#204](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/204)
+* fix(core): updated versions of all loopback packages (#190) ([a02b792](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a02b792)), closes [#190](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/190) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 # [1.0.0-alpha.27](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/core@1.0.0-alpha.26...@sourceloop/core@1.0.0-alpha.27) (2021-03-17)
 
 **Note:** Version bump only for package @sourceloop/core
