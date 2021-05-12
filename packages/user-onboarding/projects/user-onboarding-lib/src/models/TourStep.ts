@@ -1,5 +1,5 @@
- import { TourButton } from "./TourButton"
- 
+ import { TourButton } from "./TourButton";
+
  export interface TourStep {
     id: number;
     title: string;
@@ -16,6 +16,5 @@
          elementType: 'string' | 'function' | 'element';
     }
     when: Object;
-  
     buttons:TourButton[]
 }

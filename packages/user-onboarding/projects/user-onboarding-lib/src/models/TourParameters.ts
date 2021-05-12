@@ -3,7 +3,7 @@ import { TourStep } from './TourStep';
 export interface SaveTourParameters {
     tourId: string;
     tourSteps: TourStep[];
-    styleSheet: string; 
+    styleSheet: string;
 }
 
 export interface LoadTourParameters {

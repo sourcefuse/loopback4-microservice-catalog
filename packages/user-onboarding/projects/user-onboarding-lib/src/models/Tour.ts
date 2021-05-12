@@ -1,12 +1,12 @@
-import { TourStep } from "./TourStep"; 
+import { TourStep } from "./TourStep";
 export interface TourState {
     sessionId: string;
-    step: number;  
+    step: number; 
     route: string;
 }
 
  export interface Tour {
     tourId: string;
     tourSteps: TourStep[];
-    styleSheet: string; 
+    styleSheet: string;
 }
