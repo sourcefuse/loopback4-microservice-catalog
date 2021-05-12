@@ -12,7 +12,8 @@ import {WorkingHour} from './working-hour.model';
 })
 export class Calendar
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

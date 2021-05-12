@@ -5,7 +5,8 @@ import * as InstagramStrategy from 'passport-instagram';
 import {InstagramPreVerifyFn} from './types';
 
 export class InstagramPreVerifyProvider
-  implements Provider<InstagramPreVerifyFn> {
+  implements Provider<InstagramPreVerifyFn>
+{
   value(): InstagramPreVerifyFn {
     return async (
       accessToken: string,

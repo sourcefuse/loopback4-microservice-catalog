@@ -6,7 +6,8 @@ import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 })
 export class AuditLog
   extends Entity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

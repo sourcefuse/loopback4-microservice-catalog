@@ -11,7 +11,8 @@ import {Group} from './group.model';
 })
 export class ThreadView
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

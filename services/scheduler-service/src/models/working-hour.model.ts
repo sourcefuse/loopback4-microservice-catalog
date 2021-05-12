@@ -11,7 +11,8 @@ import {DayOfWeekType} from './enums/day-of-week.enum';
 })
 export class WorkingHour
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

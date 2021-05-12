@@ -10,7 +10,8 @@ import * as config from './scheduler-db.datasource.config.json';
 @lifeCycleObserver('datasource')
 export class SchedulerDbDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = 'schedulerDb';
 
   constructor(

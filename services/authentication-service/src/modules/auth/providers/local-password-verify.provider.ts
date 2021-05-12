@@ -13,7 +13,8 @@ import {
 import {AuthUser} from '../models/auth-user.model';
 
 export class LocalPasswordVerifyProvider
-  implements Provider<VerifyFunction.LocalPasswordFn> {
+  implements Provider<VerifyFunction.LocalPasswordFn>
+{
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

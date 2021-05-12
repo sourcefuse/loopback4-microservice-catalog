@@ -20,7 +20,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class PgdbDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = WorkflowCacheSourceName;
   static readonly defaultConfig = config;
 

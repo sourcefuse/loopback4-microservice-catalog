@@ -4,7 +4,8 @@ import Ajv from 'ajv';
 import {HttpErrors} from '@loopback/rest';
 
 export class ExecutionInputValidationProvider
-  implements Provider<ExecutionInputValidator> {
+  implements Provider<ExecutionInputValidator>
+{
   value(): ExecutionInputValidator {
     return async (schema, input) => {
       const ajv = new Ajv();

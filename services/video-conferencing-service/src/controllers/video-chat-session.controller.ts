@@ -375,14 +375,13 @@ export class VideoChatSessionController {
         sessionId,
       } = webhookPayload;
 
-      const sessionAttendeeDetail = await this.sessionAttendeesRepository.findOne(
-        {
+      const sessionAttendeeDetail =
+        await this.sessionAttendeesRepository.findOne({
           where: {
             sessionId: sessionId,
             attendee: data,
           },
-        },
-      );
+        });
       if (!sessionAttendeeDetail) {
         if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           await this.sessionAttendeesRepository.create({

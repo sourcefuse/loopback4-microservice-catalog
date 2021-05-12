@@ -13,7 +13,8 @@ export namespace NotifServiceBindings {
   export const ChannelManager = BindingKey.create<IChannelManager | null>(
     `${BINDING_PREFIX}.notification.channnelMgr`,
   );
-  export const NotificationUserManager = BindingKey.create<INotificationUserManager | null>(
-    `${BINDING_PREFIX}.notification.notifUserMgr`,
-  );
+  export const NotificationUserManager =
+    BindingKey.create<INotificationUserManager | null>(
+      `${BINDING_PREFIX}.notification.notifUserMgr`,
+    );
 }

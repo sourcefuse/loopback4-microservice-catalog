@@ -31,7 +31,7 @@ export const getSampleMailData = {
   status: 'draft',
 } as ComposeMailBody;
 
-export const getSampleDataWithOutGroup = ({
+export const getSampleDataWithOutGroup = {
   groups: [],
   body: 'Sample Message Body',
   subject: 'Sample Subject',
@@ -40,4 +40,4 @@ export const getSampleDataWithOutGroup = ({
     x: 'y',
     y: 'z',
   },
-} as unknown) as ComposeMailBody;
+} as unknown as ComposeMailBody;

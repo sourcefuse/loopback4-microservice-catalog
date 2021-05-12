@@ -69,12 +69,12 @@ export class WorkflowServiceComponent implements Component {
 
     this.providers = {
       [WorkflowServiceBindings.WorkflowManager.key]: WorkflowProvider,
-      [WorkflowServiceBindings.ExecutionInputValidatorFn
-        .key]: ExecutionInputValidationProvider,
-      [WorkflowServiceBindings.RegisterWorkerFunction
-        .key]: WorkerRegisterFnProvider,
-      [WorkflowServiceBindings.WorkerImplementationFunction
-        .key]: WorkerImplementationProvider,
+      [WorkflowServiceBindings.ExecutionInputValidatorFn.key]:
+        ExecutionInputValidationProvider,
+      [WorkflowServiceBindings.RegisterWorkerFunction.key]:
+        WorkerRegisterFnProvider,
+      [WorkflowServiceBindings.WorkerImplementationFunction.key]:
+        WorkerImplementationProvider,
     };
 
     this.application

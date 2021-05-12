@@ -9,7 +9,8 @@ import {UserTenant} from './user-tenant.model';
 })
 export class UserLevelResource
   extends UserModifiableEntity
-  implements IUserResource<string> {
+  implements IUserResource<string>
+{
   @property({
     type: 'string',
     id: true,

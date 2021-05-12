@@ -12,7 +12,8 @@ import {Thread} from './thread.model';
 })
 export class Group
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

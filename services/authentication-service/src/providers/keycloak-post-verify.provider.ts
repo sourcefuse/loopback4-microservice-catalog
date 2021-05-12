@@ -4,7 +4,8 @@ import {IAuthUser, KeycloakProfile} from 'loopback4-authentication';
 import {KeyCloakPostVerifyFn} from './types';
 
 export class KeyCloakPostVerifyProvider
-  implements Provider<KeyCloakPostVerifyFn> {
+  implements Provider<KeyCloakPostVerifyFn>
+{
   constructor() {}
 
   value(): KeyCloakPostVerifyFn {

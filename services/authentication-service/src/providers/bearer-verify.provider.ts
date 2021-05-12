@@ -6,7 +6,8 @@ import {VerifyFunction} from 'loopback4-authentication';
 import {SignupRequest} from '../models/signup-request.model';
 
 export class SignupBearerVerifyProvider
-  implements Provider<VerifyFunction.BearerFn<SignupRequest>> {
+  implements Provider<VerifyFunction.BearerFn<SignupRequest>>
+{
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
 
   value(): VerifyFunction.BearerFn<SignupRequest> {
