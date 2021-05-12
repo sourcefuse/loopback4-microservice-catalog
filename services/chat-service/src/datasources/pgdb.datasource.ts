@@ -2,19 +2,29 @@ import {
   inject,
   lifeCycleObserver,
   LifeCycleObserver,
-  ValueOrPromise,
+  ValueOrPromise
 } from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import config from './pgdb.datasource.config.json';
+
+const config = {
+  name: "chatDb",
+  connector: "postgresql",
+  url: "",
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
+}
 
 @lifeCycleObserver('datasource')
 export class PgdbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'pgdb';
+  static dataSourceName = 'chatDb';
 
   constructor(
-    @inject('datasources.config.pgdb', {optional: true})
+    @inject('datasources.config.Chat', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);
