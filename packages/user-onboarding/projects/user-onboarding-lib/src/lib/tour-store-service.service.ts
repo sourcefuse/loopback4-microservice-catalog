@@ -1,10 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { LoadStateParameters, LoadTourParameters, SaveStateParameters, SaveTourParameters, Tour, TourState, TourStep } from '../models';
 import { LoadSCommand, LoadTCommand, SaveSCommand, SaveTCommand } from "../commands"
-import { Observable } from 'rxjs';
 import { BaseCommand, LoadStateCommand, LoadTourCommand, SaveStateCommand, SaveTourCommand } from '../commands/types';
-import { Command } from 'protractor';
-import { partitionArray } from '@angular/compiler/src/util';
 
 
 @Injectable({

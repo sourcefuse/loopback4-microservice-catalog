@@ -1,6 +1,5 @@
 import { Observable } from "rxjs";
-import { LoadTourParameters, SaveTourParameters, Tour } from "../models";
-import { LoadStateParameters, SaveStateParameters, TourState } from "../models";
+import { LoadTourParameters, SaveTourParameters, Tour, LoadStateParameters, SaveStateParameters, TourState } from "../models";
 
 export  interface SaveTourCommand{
     parameters: SaveTourParameters;
