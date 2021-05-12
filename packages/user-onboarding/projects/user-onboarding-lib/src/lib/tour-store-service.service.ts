@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadStateParameters, LoadTourParameters, SaveStateParameters, SaveTourParameters, Tour, TourState, TourStep } from '../models';
+import { LoadStateParameters, LoadTourParameters, SaveStateParameters, SaveTourParameters } from '../models';
 import { LoadSCommand, LoadTCommand, SaveSCommand, SaveTCommand } from "../commands";
 import { BaseCommand, LoadStateCommand, LoadTourCommand, SaveStateCommand, SaveTourCommand } from '../commands/types';
 
