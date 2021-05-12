@@ -12,10 +12,10 @@ export class SaveTCommand implements SaveTourCommand{
                 tourId : this.parameters.tourId,
                 tourSteps: this.parameters.tourSteps,
                 styleSheet: this.parameters.styleSheet
-            }   
+            };
         this.storage.set(this.parameters.tourId,newTour);
         return of(newTour)
-      }
+      };
 }
 
 export class LoadTCommand implements LoadTourCommand{

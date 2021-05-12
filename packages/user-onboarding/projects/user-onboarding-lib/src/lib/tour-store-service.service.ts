@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoadStateParameters, LoadTourParameters, SaveStateParameters, SaveTourParameters, Tour, TourState, TourStep } from '../models';
-import { LoadSCommand, LoadTCommand, SaveSCommand, SaveTCommand } from "../commands"
+import { LoadSCommand, LoadTCommand, SaveSCommand, SaveTCommand } from "../commands";
 import { BaseCommand, LoadStateCommand, LoadTourCommand, SaveStateCommand, SaveTourCommand } from '../commands/types';
 
 
@@ -13,16 +13,16 @@ export class TourStoreServiceService {
   constructor() { }
   registerSaveTourCommand(cmd:SaveTCommand){
       this.commandMap.set("SaveTourCommand",cmd)
-  }
+  };
   registerLoadTourCommand(cmd:LoadTCommand){
     this.commandMap.set("LoadTourCommand",cmd)
-  }
+  };
   registerSaveStateCommand(cmd:SaveSCommand){
     this.commandMap.set("SaveStateCommand",cmd)
-  }
+  };
   registerLoadStateCommand(cmd:LoadSCommand){
     this.commandMap.set("LoadStateCommand",cmd)
-  }
+  };
 
   public saveTour(parameters: SaveTourParameters){
       const command = this.commandMap.get("SaveTourCommand") as SaveTourCommand;
@@ -53,9 +53,6 @@ export class TourStoreServiceService {
   }
 
   public getFnByKey(key){
-    const func = this.functionMap.get(key)
-    return func;
+    return this.functionMap.get(key);
   }
-
-
 }
