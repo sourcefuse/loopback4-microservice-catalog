@@ -25,7 +25,8 @@
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git"
@@ -67,6 +68,7 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-eslint-plugin": "^2.2.1",
     "eslint-plugin-mocha": "^6.3.0",
+    "nyc": "^15.1.0",
     "source-map-support": "^0.5.16",
     "typescript": "~3.8.3"
   }
