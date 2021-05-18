@@ -64,7 +64,7 @@ describe('Message Controller', () => {
     const reqToAddMessage = await addMessage();
 
     const messageToUpdate = {
-      body: 'updated_body'
+      body: 'updated_body',
     };
 
     await client
@@ -92,7 +92,7 @@ describe('Message Controller', () => {
       body: 'updated_body',
       channelId: 'updated_channel',
       channelType: 'updated_channel_type',
-      subject: 'updated_subject'
+      subject: 'updated_subject',
     };
 
     await client
@@ -133,7 +133,7 @@ describe('Message Controller', () => {
       body: 'test_body',
       channelId: 'test_channel',
       channelType: 'test_channel_type',
-      subject: 'test_subject'
+      subject: 'test_subject',
     };
 
     return client
@@ -149,5 +149,4 @@ describe('Message Controller', () => {
   async function givenRepositories() {
     messageRepo = await app.getRepository(MessageRepository);
   }
-
-})
+});

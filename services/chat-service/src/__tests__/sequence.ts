@@ -8,13 +8,13 @@ import {
   RequestContext,
   RestBindings,
   Send,
-  SequenceHandler
+  SequenceHandler,
 } from '@loopback/rest';
 import {AuthenticateFn, AuthenticationBindings} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizeErrorKeys,
-  AuthorizeFn
+  AuthorizeFn,
 } from 'loopback4-authorization';
 import {IAuthUserWithPermissions} from './keys';
 

@@ -36,9 +36,7 @@ describe('Message-Recipient Message Controller', () => {
   afterEach(deleteMockData);
 
   it('gives status 401 when no token is passed', async () => {
-    const response = await client
-      .get(basePath)
-      .expect(401);
+    const response = await client.get(basePath).expect(401);
 
     expect(response).to.have.property('error');
   });
@@ -57,5 +55,4 @@ describe('Message-Recipient Message Controller', () => {
   async function givenRepositories() {
     messageRecipientRepo = await app.getRepository(MessageRecipientRepository);
   }
-
-})
+});

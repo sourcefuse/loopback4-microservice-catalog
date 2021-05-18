@@ -64,7 +64,7 @@ describe('Message Recipient Controller', () => {
     const reqToAddMessageRecipient = await addMessageRecipient();
 
     const messageRecipientToUpdate = {
-      channelId: 'updated_channel'
+      channelId: 'updated_channel',
     };
 
     await client
@@ -92,7 +92,7 @@ describe('Message Recipient Controller', () => {
       channelId: 'updated_channel',
       forwardedBy: 'updated_forward',
       recipientId: 'updated_recipient',
-      messageId: 'updated_messageId'
+      messageId: 'updated_messageId',
     };
 
     await client
@@ -133,7 +133,7 @@ describe('Message Recipient Controller', () => {
       channelId: 'test_channel',
       forwardedBy: 'test_forward',
       recipientId: 'test_recipient',
-      messageId: 'test_messageId'
+      messageId: 'test_messageId',
     };
 
     return client
@@ -149,5 +149,4 @@ describe('Message Recipient Controller', () => {
   async function givenRepositories() {
     messageRecipientRepo = await app.getRepository(MessageRecipientRepository);
   }
-
-})
+});

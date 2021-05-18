@@ -36,9 +36,7 @@ describe('Message-Message Recipient Controller', () => {
   afterEach(deleteMockData);
 
   it('gives status 401 when no token is passed', async () => {
-    const response = await client
-      .get(basePath)
-      .expect(401);
+    const response = await client.get(basePath).expect(401);
 
     expect(response).to.have.property('error');
   });
@@ -66,7 +64,7 @@ describe('Message-Message Recipient Controller', () => {
     const messageToUpdate = {
       deletedBy: 'update_delete',
       createdBy: 'update_create',
-      modifiedBy: 'update_modify'
+      modifiedBy: 'update_modify',
     };
 
     await client
@@ -98,7 +96,7 @@ describe('Message-Message Recipient Controller', () => {
       modifiedBy: 'test_modify',
       channelId: 'test_channel',
       forwardedBy: 'test_forward',
-      recipientId: 'test_recipient'
+      recipientId: 'test_recipient',
     };
 
     return client
@@ -114,5 +112,4 @@ describe('Message-Message Recipient Controller', () => {
   async function givenRepositories() {
     messageRepo = await app.getRepository(MessageRepository);
   }
-
-})
+});

@@ -1,7 +1,7 @@
 import {
   Client,
   createRestAppClient,
-  givenHttpServerConfig
+  givenHttpServerConfig,
 } from '@loopback/testlab';
 import {ChatApplication} from '../application';
 
