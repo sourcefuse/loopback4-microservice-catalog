@@ -1,5 +1,5 @@
  export interface TourButton {
     action: string,
-    classes: string,
+    classes?: string,
     text: string
 }

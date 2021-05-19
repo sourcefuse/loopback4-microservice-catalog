@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { LoadStateParameters, LoadTourParameters, SaveStateParameters, SaveTourParameters } from '../models';
 import { LoadSCommand, LoadTCommand, SaveSCommand, SaveTCommand } from "../commands";
 import { BaseCommand, LoadStateCommand, LoadTourCommand, SaveStateCommand, SaveTourCommand } from '../commands/types';
-
+import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +10,33 @@ import { BaseCommand, LoadStateCommand, LoadTourCommand, SaveStateCommand, SaveT
 export class TourStoreServiceService {
   private readonly commandMap = new Map<string, BaseCommand>();
   private readonly functionMap = new Map();
-  constructor() { }
-  registerSaveTourCommand(cmd:SaveTCommand){
-      this.commandMap.set("SaveTourCommand",cmd)
+  private sessionId: string;
+  private readonly defaultSSCommand = new SaveSCommand(this.storage);
+  private readonly defaultSTCommand = new SaveTCommand(this.storage);
+  private readonly defaultLSCommand = new LoadSCommand(this.storage);
+  private readonly defaultLTCommand = new LoadTCommand(this.storage);
+
+  constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) {
+      this.commandMap.set("SaveTourCommand",this.defaultSTCommand);
+      this.commandMap.set("LoadTourCommand",this.defaultLTCommand);
+      this.commandMap.set("SaveStateCommand",this.defaultSSCommand);
+      this.commandMap.set("LoadStateCommand",this.defaultLSCommand);
+   }
+  registerSaveTourCommand(cmd){
+    this.commandMap.delete("SaveTourCommand");
+    this.commandMap.set("SaveTourCommand",cmd);
   };
-  registerLoadTourCommand(cmd:LoadTCommand){
-    this.commandMap.set("LoadTourCommand",cmd)
+  registerLoadTourCommand(cmd){
+    this.commandMap.delete("LoadTourCommand");
+    this.commandMap.set("LoadTourCommand",cmd);
   };
-  registerSaveStateCommand(cmd:SaveSCommand){
-    this.commandMap.set("SaveStateCommand",cmd)
+  registerSaveStateCommand(cmd){
+    this.commandMap.delete("SaveStateCommand");
+    this.commandMap.set("SaveStateCommand",cmd);
   };
-  registerLoadStateCommand(cmd:LoadSCommand){
-    this.commandMap.set("LoadStateCommand",cmd)
+  registerLoadStateCommand(cmd){
+    this.commandMap.delete("LoadStateCommand");
+    this.commandMap.set("LoadStateCommand",cmd);
   };
 
   public saveTour(parameters: SaveTourParameters){
@@ -70,9 +85,12 @@ export class TourStoreServiceService {
     return uuid;
   }
 
-  public loadID(){
-      const UUID = this.create_UUID();
-      return UUID;
+  public generateSessionId(){
+      this.sessionId = this.create_UUID();
+      this.storage.set("TOUR_SESSION_ID",this.sessionId);
   }
 
+  public getSessionId(){
+    return this.storage.get("TOUR_SESSION_ID");
+  }
 }
