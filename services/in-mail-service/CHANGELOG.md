@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.1 (2021-05-19)</small>
+
+* fix(inmail-service): added-in-mail-service-migration-update-for-soft-delete-req-fields-and-thread-vi ([948cef3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/948cef3)), closes [#209](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/209)
+
+
+
+
+
 ## 1.0.0 (2021-05-12)
 
 **Note:** Version bump only for package @sourceloop/in-mail-service
