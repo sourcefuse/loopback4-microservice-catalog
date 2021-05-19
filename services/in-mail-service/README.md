@@ -15,12 +15,6 @@ any client application.
 
 ## Implementation
 
-### Migration
-
-The migrations required for this service are processed during the installation automatically if you set the `INMAIL_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `INMAIL_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
-
-### Implementation
-
 Create a new Application using Loopback CLI and add the Component for `InMailService` in `application.ts`
 
 ```typescript
@@ -79,6 +73,15 @@ export class Client extends BootMixin(
   }
 }
 ```
+
+### Migration
+
+The migrations required for this service are processed during the installation automatically if you set the `INMAIL_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `INMAIL_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+#### Database Model
+
+![db-schema](./migrations/in_mail_db.png)
+
 ### Setting Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
@@ -432,3 +435,7 @@ threadFilter: Object which contains attribute(s) key value pairs of thread model
 
 groupFilter: Object which contains attribute(s) key value pairs of group model which is used to filter items.
 threadFilter: Object which contains attribute(s) key value pairs of thread model which is used to filter items.
+
+## API's Details
+
+Visit the [OpenAPI spec docs](../../sandbox/in-mail-example/openapi.md)

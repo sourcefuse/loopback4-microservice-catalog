@@ -149,4 +149,6 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 400: Bad Request (Error message varies w.r.t API)<br />
 201: No content: Empty Response<br />
 
-#### API Details
+## API's Details
+
+Visit the [OpenAPI spec docs](../../sandbox/notification-socket-example/openapi.md)
