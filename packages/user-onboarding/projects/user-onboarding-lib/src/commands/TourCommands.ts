@@ -5,7 +5,7 @@ import { LoadTourCommand, SaveTourCommand } from "./types";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 
 export class SaveTCommand implements SaveTourCommand{
-  constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) { }
+  constructor(private readonly storage: StorageService) { }
     public parameters: SaveTourParameters;
     execute(): Observable<Tour> {
             const newTour: Tour = {

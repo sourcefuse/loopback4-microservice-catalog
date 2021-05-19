@@ -7,5 +7,5 @@ export interface SaveStateParameters {
 
 export interface LoadStateParameters {
     tourId: string;
-    state: TourState;
+    sessionId: string;
 }
