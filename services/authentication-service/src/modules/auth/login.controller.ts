@@ -653,10 +653,6 @@ export class LoginController {
       },
     },
   })
-
-  /**
-   * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
-   */
   async loginViaKeycloak(
     @param.query.string('client_id')
     clientId?: string,
