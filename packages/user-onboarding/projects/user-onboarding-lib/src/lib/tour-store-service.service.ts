@@ -77,10 +77,13 @@ export class TourStoreServiceService {
 
   public create_UUID(){
     var dt = new Date().getTime();
+    var num1 = 16;
+    var num2 = 0x3;
+    var num3 = 0x8;
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (dt + Math.random()*16)%16 | 0;
-        dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        var r = (dt + Math.random()*num1)%num1 | 0;
+        dt = Math.floor(dt/num1);
+        return (c==='x' ? r :(r&num2|num3)).toString(num1);
     });
     return uuid;
   }
