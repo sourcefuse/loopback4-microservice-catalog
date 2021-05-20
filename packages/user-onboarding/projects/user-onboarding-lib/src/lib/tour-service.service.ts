@@ -9,7 +9,7 @@ import { Tour } from '../models';
 
 export class TourServiceService {
   currentStep; 
-  constructor(private tourStoreService: TourStoreServiceService) {}
+  constructor(private readonly tourStoreService: TourStoreServiceService) {}
 
   private triggerTour(tourInstance: Tour){
     const tour = new Shepherd.Tour({
