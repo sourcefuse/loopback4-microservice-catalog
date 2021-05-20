@@ -1,8 +1,7 @@
 import { Observable,  of } from "rxjs";
-import { Inject } from '@angular/core';
 import { LoadTourParameters,  SaveTourParameters, Tour } from "../models";
 import { LoadTourCommand, SaveTourCommand } from "./types";
-import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
+import { StorageService } from "ngx-webstorage-service";
 
 export class SaveTCommand implements SaveTourCommand{
   constructor(private readonly storage: StorageService) { }

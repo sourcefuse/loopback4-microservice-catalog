@@ -1,8 +1,7 @@
 import { Observable, of } from "rxjs";
 import { LoadStateParameters, SaveStateParameters, TourState } from "../models";
 import { LoadStateCommand, SaveStateCommand } from "./types";
-import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
-import { Inject } from "@angular/core";
+import { StorageService } from "ngx-webstorage-service";
 
 export class SaveSCommand implements SaveStateCommand{
   constructor(private readonly storage: StorageService) { }
