@@ -8,7 +8,7 @@ import { Tour } from '../models';
 })
 
 export class TourServiceService {
-  currentStep; 
+  currentStep;
   constructor(private readonly tourStoreService: TourStoreServiceService) {}
 
   private triggerTour(tourInstance: Tour){
@@ -22,7 +22,7 @@ export class TourServiceService {
       }
     });
 
-    const sessionId = this.tourStoreService.getSessionId(); 
+    const sessionId = this.tourStoreService.getSessionId();
     this.tourStoreService.loadState({tourId: tourInstance.tourId,sessionId}).subscribe((currentStep)=>{
       if(currentStep)
       {
@@ -43,7 +43,7 @@ export class TourServiceService {
           e.buttons.forEach((b)=>{
               const key = b.action;
               b.action = this.tourStoreService.getFnByKey(key);
-          })  
+          })
       })
       tour.addSteps(tourInstance.tourSteps);
       tour.start();
@@ -58,7 +58,7 @@ export class TourServiceService {
           this.triggerTour(tourInstance);
       }
       else
-      { 
+      {
           throw new Error("Tour does not exist");
       }
     })
