@@ -55,8 +55,8 @@ x-audit-variables: &audit-variables
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_URL:
-      REDIS_PASSWORD:
-      REDIS_DATABASE: 0
+      REDIS_PASSWORD: tempP@ssw0rd
+      REDIS_DB: 0
       JWT_SECRET: i_am_a_strong_secret
       JWT_ISSUER: https://loopback4-microservice-catalog
 
@@ -80,8 +80,8 @@ x-scheduler-variables: &scheduler-variables
 x-video-variables: &video-variables
     VONAGE_API_KEY: 0
     VONAGE_API_SECRET: abc
-    TIME_TO_START: 
-    DB_HOST: localhpostgresost
+    TIME_TO_START: 0
+    DB_HOST: postgres
     DB_PORT: 5432
     DB_USER: ${POSTGRES_USER:-postgres}
     DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
@@ -240,10 +240,12 @@ services:
     environment: *video-variables
     depends_on:
       - postgres
-      - postgres_orchestrator  
+      - postgres_orchestrator 
+      - video-conferencing-ms-migration
+      
   
   video-conferencing-ms-migration:
-    image: sourceloop/workflow-helloworld:latest
+    image: sourceloop/video-conferencing-ms-example:latest
     command: ["npm", "run", "db:migrate"]
     environment: *video-variables
     depends_on:
@@ -315,10 +317,11 @@ services:
     command: >
       bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'"
 
 
