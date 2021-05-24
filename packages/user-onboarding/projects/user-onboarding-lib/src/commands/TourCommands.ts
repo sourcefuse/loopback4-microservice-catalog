@@ -13,8 +13,8 @@ export class SaveTCommand implements SaveTourCommand{
                 styleSheet: this.parameters.styleSheet
             };
         this.storage.set(this.parameters.tourId,newTour);
-        return of(newTour)
-      };
+        return of(newTour);
+      }
 }
 
 export class LoadTCommand implements LoadTourCommand{

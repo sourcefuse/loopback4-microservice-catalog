@@ -23,36 +23,36 @@ export class TourServiceService {
   });
 
     const sessionId = this.tourStoreService.getSessionId();
-    this.tourStoreService.loadState({tourId: tourInstance.tourId,sessionId}).subscribe((currentStep)=>{
+    this.tourStoreService.loadState({tourId: tourInstance.tourId,sessionId}).subscribe(currentStep =>{
       if(currentStep)
       {
       //state exists
         let flag = false;
-        tourInstance.tourSteps = tourInstance.tourSteps.filter((e)=>{
+        tourInstance.tourSteps = tourInstance.tourSteps.filter(e =>{
           if(e.id === currentStep.step || flag)
           {
             flag = true;
           }
           return flag;
-        })
+        });
       }
       else{
         this.tourStoreService.generateSessionId();
       }
-      tourInstance.tourSteps.forEach((e)=>{
-          e.buttons.forEach((b)=>{
+      tourInstance.tourSteps.forEach(e =>{
+          e.buttons.forEach(b =>{
               const key = b.action;
               b.action = this.tourStoreService.getFnByKey(key);
-          })
-      })
+          });
+      });
       tour.addSteps(tourInstance.tourSteps);
       tour.start();
-    })
+    });
   }
 
   public run(tourId: string)
   {
-    this.tourStoreService.loadTour({tourId}).subscribe((tourInstance)=>{
+    this.tourStoreService.loadTour({tourId}).subscribe( tourInstance =>{
       if(tourInstance)
       {
           this.triggerTour(tourInstance);
@@ -61,6 +61,6 @@ export class TourServiceService {
       {
           throw new Error("Tour does not exist");
       }
-    })
+    });
   }
 }
