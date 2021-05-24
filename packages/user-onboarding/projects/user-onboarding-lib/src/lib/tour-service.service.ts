@@ -20,24 +20,26 @@ export class TourServiceService {
         classes: 'class-1 class-2',
         scrollTo: { behavior: 'smooth', block: 'center' }
       }
-    });
+  });
 
     const sessionId = this.tourStoreService.getSessionId();
     this.tourStoreService.loadState({tourId: tourInstance.tourId,sessionId}).subscribe((currentStep)=>{
       if(currentStep)
       {
       //state exists
-        let flag = true;
+        let flag = false;
         tourInstance.tourSteps = tourInstance.tourSteps.filter((e)=>{
-          if(e.id === currentStep.step || !flag)
+          if(e.id === currentStep.step || flag)
           {
-            flag = false;
+            flag = true;
           }
           return flag;
         })
       }
       else{
         this.tourStoreService.generateSessionId();
+        var newsessionId = this.tourStoreService.getSessionId();
+        this.tourStoreService.saveState({tourId: tourInstance.tourId, state:{sessionId: newsessionId,step:tourInstance.tourSteps[2].id}})
       }
       tourInstance.tourSteps.forEach((e)=>{
           e.buttons.forEach((b)=>{
