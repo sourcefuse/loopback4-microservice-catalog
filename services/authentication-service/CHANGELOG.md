@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.1 (2021-05-19)</small>
+
+* fix(authentication-service): allow https proxy for keycloak logout ([a97bb4d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a97bb4d)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(authentication-service): fix deprecated comment ([cda97b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cda97b6)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 1.0.0 (2021-05-12)
 
 **Note:** Version bump only for package @sourceloop/authentication-service

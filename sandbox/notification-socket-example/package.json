@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-socket-example",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "sandbox",
   "keywords": [
     "loopback-application",
@@ -56,7 +56,9 @@
     "@loopback/service-proxy": "^3.2.0",
     "@sourceloop/core": "^1.0.0",
     "@sourceloop/notification-service": "^1.0.1",
+
     "db-migrate": "^0.11.12",
+
     "loopback4-authorization": "^3.3.0",
     "tslib": "^2.0.0"
   },

@@ -14,6 +14,7 @@ import {
   getWhereSchemaFor,
   HttpErrors,
   param,
+  patch,
   post,
   requestBody,
 } from '@loopback/rest';
@@ -184,6 +185,58 @@ export class NotificationController {
   })
   async findById(@param.path.string('id') id: string): Promise<Notification> {
     return this.notificationRepository.findById(id);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @patch(basePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Notification PATCH success count',
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+      },
+    },
+  })
+  async updateAll(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(Notification, {partial: true}),
+        },
+      },
+    })
+    notification: Notification,
+    @param.query.object('where', getWhereSchemaFor(Notification))
+    where?: Where<Notification>,
+  ): Promise<Count> {
+    return this.notificationRepository.updateAll(notification, where);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @patch(`${basePath}/{id}`, {
+    responses: {
+      '204': {
+        description: 'Notification PATCH success',
+      },
+    },
+  })
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(Notification, {partial: true}),
+        },
+      },
+    })
+    notification: Notification,
+  ): Promise<void> {
+    await this.notificationRepository.updateById(id, notification);
   }
 
   @authenticate(STRATEGY.BEARER)
