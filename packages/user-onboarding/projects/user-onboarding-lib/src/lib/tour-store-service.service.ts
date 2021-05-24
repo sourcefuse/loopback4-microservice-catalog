@@ -25,19 +25,19 @@ export class TourStoreServiceService {
   registerSaveTourCommand(cmd){
     this.commandMap.delete("SaveTourCommand");
     this.commandMap.set("SaveTourCommand",cmd);
-  };
+  }
   registerLoadTourCommand(cmd){
     this.commandMap.delete("LoadTourCommand");
     this.commandMap.set("LoadTourCommand",cmd);
-  };
+  }
   registerSaveStateCommand(cmd){
     this.commandMap.delete("SaveStateCommand");
     this.commandMap.set("SaveStateCommand",cmd);
-  };
+  }
   registerLoadStateCommand(cmd){
     this.commandMap.delete("LoadStateCommand");
     this.commandMap.set("LoadStateCommand",cmd);
-  };
+  }
 
   public saveTour(parameters: SaveTourParameters){
       const command = this.commandMap.get("SaveTourCommand") as SaveTourCommand;
@@ -75,7 +75,7 @@ export class TourStoreServiceService {
   //   this.functionMap.set(key,this.create_UUID);
   // }
 
-  public create_UUID(){
+  public createUUID(){
     var dt = new Date().getTime();
     var num1 = 16;
     var num2 = 0x3;
@@ -84,16 +84,15 @@ export class TourStoreServiceService {
     var array = new Uint32Array(1);
     crypto.getRandomValues(array); // Compliant for security-sensitive use cases
     const FileId = array[0];
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = (dt + FileId*num1)%num1 | 0;
         dt = Math.floor(dt/num1);
         return (c==='x' ? r :(r&num2|num3)).toString(num1);
     });
-    return uuid;
   }
 
   public generateSessionId(){
-      this.sessionId = this.create_UUID();
+      this.sessionId = this.createUUID();
       this.storage.set("TOUR_SESSION_ID",this.sessionId);
   }
 

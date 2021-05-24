@@ -38,8 +38,6 @@ export class TourServiceService {
       }
       else{
         this.tourStoreService.generateSessionId();
-        var newsessionId = this.tourStoreService.getSessionId();
-        this.tourStoreService.saveState({tourId: tourInstance.tourId, state:{sessionId: newsessionId,step:tourInstance.tourSteps[2].id}})
       }
       tourInstance.tourSteps.forEach((e)=>{
           e.buttons.forEach((b)=>{
