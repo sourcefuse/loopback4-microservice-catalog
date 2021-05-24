@@ -37,6 +37,7 @@ const scopes = [
     { name: 'audit-service' },
     { name: 'bpmn-service' },
     { name: 'sandbox' },
+    {name: 'chat-service'},
 ]
 
 /**
