@@ -43,6 +43,9 @@
     "README.md",
     "index.js",
     "index.d.ts",
+    "migration.js",
+    "migrations",
+    "database.json",
     "dist",
     "src",
     "!*/__tests__"
