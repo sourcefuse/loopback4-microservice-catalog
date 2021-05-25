@@ -46,11 +46,10 @@ export class TourServiceService {
           });
       });
       tour.addSteps(tourInstance.tourSteps);
-      console.log("the tour is working");
       tour.start();
       tour.on("show",()=>{
-        this.tourStoreService.saveState({tourId: tourInstance.tourId,state:{sessionId: this.tourStoreService.getSessionId(),step: tour.getCurrentStep().id}})
-      })
+        this.tourStoreService.saveState({tourId: tourInstance.tourId,state:{sessionId: this.tourStoreService.getSessionId(),step: tour.getCurrentStep().id}});
+      });
     });
   }
 
