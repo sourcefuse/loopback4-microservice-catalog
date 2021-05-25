@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserOnboardingLibService {
 
-  constructor() { 
+  constructor() {
     //do nothing
   }
 }
