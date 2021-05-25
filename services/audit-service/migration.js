@@ -1,6 +1,5 @@
 const dotenvExt = require('dotenv-extended');
 const fs = require('fs');
-const DBMigrate = require('db-migrate');
 const path = require('path');
 let isLocal = false;
 dotenvExt.load({
@@ -27,6 +26,7 @@ if (isLocal) {
     `${type}_MIGRATION or SOURCELOOP_MIGRATION variables not found in the environment, skipping automigration.`,
   );
 } else {
+  const DBMigrate = require('db-migrate');
   dotenvExt.load({
     schema: path.join('.', 'migrations', '.env.schema'),
     path: path.join(process.env.INIT_CWD, '.env'),
