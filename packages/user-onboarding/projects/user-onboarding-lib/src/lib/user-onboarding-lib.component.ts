@@ -12,8 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserOnboardingLibComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+      //do nothing
+   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+      //do nothing
+  }
 
 }
