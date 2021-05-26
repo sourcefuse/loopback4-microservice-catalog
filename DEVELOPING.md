@@ -234,19 +234,7 @@ this.component(CoreComponent);
 this.sequence(ServiceSequence);
 ```
 
-10. **Add Rakuten core** - Add rakuten-core as dependency to the module
-
-    ```sh
-    lerna add rakuten-core --scope={service name}
-    ```
-
-In application.ts,
-
-    ```ts
-    this.component(RakutenCoreComponent);
-    ```
-
-11. **Bearer Verifier** - Add bearer verifier to your service
+10. **Bearer Verifier** - Add bearer verifier to your service
 
 ```sh
 lerna add loopback4-authentication --scope={service name}
@@ -288,7 +276,7 @@ Add below to application.ts
 
 Use BearerVerifierType.facade for facades.
 
-12. **Setup project for test coverage** -
+11. **Setup project for test coverage** -
 
     Create a file named .nycrc and copy this data in it
 
@@ -313,8 +301,8 @@ Use BearerVerifierType.facade for facades.
     "coverage": "nyc npm run test",
     ```
 
-13. **Setup sequence** - Remove auto-generated sequence.ts and change to ServiceSequence in application.ts.
-14. **Fix api explorer** - Update base path in index.html for facades.
+12. **Setup sequence** - Remove auto-generated sequence.ts and change to ServiceSequence in application.ts.
+13. **Fix api explorer** - Update base path in index.html for facades.
 
 ```html
 <body>
