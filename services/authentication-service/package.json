@@ -83,7 +83,7 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.157",
     "@types/moment-timezone": "^0.5.13",
-    "@types/node": "^10.17.59",
+    "@types/node": "^10.17.60",
     "@types/node-fetch": "^2.5.10",
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/passport-instagram": "^1.0.0",
