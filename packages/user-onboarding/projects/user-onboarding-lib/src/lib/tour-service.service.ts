@@ -20,13 +20,21 @@ export class TourServiceService {
         classes: 'class-1 class-2',
         scrollTo: { behavior: 'smooth', block: 'center' }
       }
-  });
-
-    const sessionId = this.tourStoreService.getSessionId();
-    this.tourStoreService.loadState({tourId: tourInstance.tourId,sessionId}).subscribe(currentStep =>{
+    });
+      const sessionId = this.tourStoreService.getSessionId();
+      this.tourStoreService.loadState({tourId: tourInstance.tourId,sessionId}).subscribe(currentStep =>{
       if(currentStep)
       {
-      //state exists
+        //state exists
+        let f = true;
+        var removedSteps = tourInstance.tourSteps.filter(e =>{
+          if(e.id === currentStep.step || !f)
+          {
+            f = false;
+          }
+          return f;
+        });  
+
         let flag = false;
         tourInstance.tourSteps = tourInstance.tourSteps.filter(e =>{
           if(e.id === currentStep.step || flag)
@@ -47,6 +55,20 @@ export class TourServiceService {
       });
       tour.addSteps(tourInstance.tourSteps);
       tour.start();
+      if(removedSteps!=undefined)
+      {
+        removedSteps.forEach(e =>{
+          e.buttons.forEach(b =>{
+              const k = b.action;
+              b.action = this.tourStoreService.getFnByKey(k);
+          });
+        });
+        tour.addSteps(removedSteps);
+        for(let step of removedSteps)
+        {
+            tour.steps.splice(0,0,tour.steps.pop());
+        }
+      }
       tour.on("show",()=>{
         this.tourStoreService.saveState({tourId: tourInstance.tourId,state:{sessionId: this.tourStoreService.getSessionId(),step: tour.getCurrentStep().id}});
       });
