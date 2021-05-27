@@ -13,7 +13,6 @@ export class TourServiceService {
 
   private triggerTour(tourInstance: Tour){
     var removedSteps;
-    var useless;
     const tour = new Shepherd.Tour({
       defaultStepOptions: {
         cancelIcon: {
@@ -67,7 +66,6 @@ export class TourServiceService {
         tour.addSteps(removedSteps);
         for(const step of removedSteps)
         {
-            useless = step;
             tour.steps.splice(0,0,tour.steps.pop());
         }
       }
