@@ -129,6 +129,41 @@ export class NotificationDbDataSource extends juggler.DataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `NOTIF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `NOTIF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+### Permissions
+
+Most applications need to control who (or what) can access data or call services. Typically, this involves requiring users to login to access protected data, or requiring authorization tokens for other applications to access protected data. So, permission keys are required for accessing those routes.
+To set permission keys use npm package [`loopback4-authorization`](https://www.npmjs.com/package/loopback4-authorization). Below are the attached permissions required specific routes.
+
+
+| Route                                          | Method | Permission Keys              |
+| ---------------------------------------------- | ------ | ---------------------------- |
+| `/notifications/{id}/notification-users`       | GET    | [`ViewNotification`]         |
+| `/notifications/{id}/notification-users`       | POST   | [`CreateNotification`]       |
+| `/notifications/{id}/notification-users`       | PATCH  | [`UpdateNotification`]       |
+| `/notifications/{id}/notification-users`       | DELETE | [`DeleteNotification`]       |
+| `/notification-users/{id}/notification`        | GET    | [`ViewNotification`]         |
+| `/notification-users`                          | POST   | [`ViewNotification`]         |
+| `/notification-users/bulk`                     | POST   | [`ViewNotification`]         |
+| `/notification-users/count`                    | GET    | [`ViewNotification`]         |
+| `/notification-users`                          | GET    | [`ViewNotification`]         |
+| `/notification-users`                          | PATCH  | [`ViewNotification`]         |
+| `/notification-users/{id}`                     | GET    | [`ViewNotification`]         |
+| `/notification-users/{id}`                     | PATCH  | [`ViewNotification`]         |
+| `/notification-users/{id}`                     | PUT    | [`ViewNotification`]         |
+| `/notification-users/{id}`                     | DELETE | [`DeleteNotification`]       |
+| `/notification-users`                          | DELETE | [`DeleteNotification`]       |
+| `/notification-users/hard`                     | DELETE | [`DeleteNotification`]       |
+| `/notifications`                               | POST   | [`CreateNotification`]       |
+| `/notifications/bulk`                          | POST   | [`CreateNotification`]       |
+| `/notifications/count`                         | GET    | [`ViewNotification`]         |
+| `/notifications`                               | GET    |                              |
+| `/notifications/{id}`                          | GET    | [`ViewNotification`]         |
+| `/notifications`                               | PATCH  | [`UpdateNotification`]       |
+| `/notifications/{id}`                          | PATCH  | [`UpdateNotification`]       |
+| `/notifications`                               | DELETE | [`DeleteNotification`]       |
+| `/notifications/access/{id}`                   | PATCH  | [`CanGetNotificationAccess`] |
+| `/notifications/access/{id}`                   | DELETE |                              |
+
 ### API Documentation
 
 #### Common Headers

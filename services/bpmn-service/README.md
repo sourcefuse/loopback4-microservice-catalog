@@ -191,6 +191,21 @@ The migrations required for this service are processed during the installation a
 
 This project includes no migrations to seed your BPMN engine. If you are using Camunda BPM Run, you can use either the `resources` folder to seed a model, or you can config it to use a custom DB where you can seed your data. The steps to config Platform Run are given [here](https://camunda.com/blog/2020/03/introducing-camunda-bpm-run/).
 
+### Permissions
+
+Most applications need to control who (or what) can access data or call services. Typically, this involves requiring users to login to access protected data, or requiring authorization tokens for other applications to access protected data. So, permission keys are required for accessing those routes.
+To set permission keys use npm package [`loopback4-authorization`](https://www.npmjs.com/package/loopback4-authorization). Below are the attached permissions required specific routes.
+
+
+| Route                                  | Method | Permission Keys         |
+| -------------------------------------- | ------ | ----------------------- |
+| `/workflow`                            | POST   | [`CreateWorkflow`]      |
+| `/workflow/{id}`                       | PATCH  | [`UpdateWorkflow`]      |
+| `/workflow/{id}/execute`               | POST   | [`CreateWorkflow`]      |
+| `/workflow`                            | GET    | [`ViewWorkflow`]        |
+| `/workflow/{id}`                       | GET    | [`ViewWorkflow`]        |
+| `/workflow/{id}`                       | DELETE | [`DeleteWorkflow`]      |
+
 ### API Documentation
 
 #### Common Headers

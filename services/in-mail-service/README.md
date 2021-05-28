@@ -149,6 +149,29 @@ export class InMailDbDataSource extends juggler.DataSource
 }
 ```
 
+### Permissions
+
+Most applications need to control who (or what) can access data or call services. Typically, this involves requiring users to login to access protected data, or requiring authorization tokens for other applications to access protected data. So, permission keys are required for accessing those routes.
+To set permission keys use npm package [`loopback4-authorization`](https://www.npmjs.com/package/loopback4-authorization). Below are the attached permissions required specific routes.
+
+
+| Route                                          | Method | Permission Keys         |
+| ---------------------------------------------- | ------ | ----------------------- |
+| `threads/{threadId}`                           | GET    | [`GetThread`]           |
+| `mails/{messageId}`                            | GET    | [`GetInMail`]           |
+| `threads`                                      | GET    | [`GetThread`]           |
+| `mails`                                        | GET    | [`GetInMail`]           |
+| `mails`                                        | POST   | [`ComposeMail`]         |
+| `mails/{messageId}`                            | PUT    | [`UpdateMail`]          |
+| `mails/{messageId}/attachments`                | POST   | [`AddAttachments`]      |
+| `mails/{messageId}/attachments/{attachmentId}` | DELETE | [`DeleteAttachment`]    |
+| `mails/bulk/{storage}/{action}`                | DELETE | [`TrashMail`]           |
+| `mails/bulk/restore`                           | PATCH  | [`RestoreMail`]         |
+| `mails/{messageId}/send`                       | PATCH  | [`ComposeMail`]         |
+| `mails/marking/{markType}`                     | PATCH  | [`UpdateMail`]          |
+| `threads/{threadId}/mails/{messageId}/replies` | PATCH  | [`ReplyMail`]           |
+| `threads/{threadId}/forward`                   | PATCH  | [`ComposeMail`]         |
+
 ### API Documentation
 
 #### Common Headers

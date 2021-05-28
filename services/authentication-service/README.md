@@ -151,6 +151,49 @@ export class AuthenticationDbDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `AUTH_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+### Permissions
+
+Most applications need to control who (or what) can access data or call services. Typically, this involves requiring users to login to access protected data, or requiring authorization tokens for other applications to access protected data. So, permission keys are required for accessing those routes.
+To set permission keys use npm package [`loopback4-authorization`](https://www.npmjs.com/package/loopback4-authorization). Below are the attached permissions required specific routes.
+
+
+| Route                                  | Method | Permission Keys         |
+| -------------------------------------- | ------ | ----------------------- |
+| `/auth-clients`                        | POST   | [`NotAllowed`]          |
+| `/auth-clients/count`                  | GET    | [`NotAllowed`]          |
+| `/auth-clients`                        | GET    | [`NotAllowed`]          |
+| `/auth-clients`                        | PATCH  | [`NotAllowed`]          |
+| `/auth-clients/{id}`                   | GET    | [`NotAllowed`]          |
+| `/auth-clients/{id}`                   | PATCH  | [`NotAllowed`]          |
+| `/auth-clients/{id}`                   | PUT    | [`NotAllowed`]          |
+| `/auth-clients/{id}`                   | DELETE | [`NotAllowed`]          |
+| `/auth/forget-password`                | POST   |                         |
+| `auth/verify-reset-password-link`      | GET    |                         |
+| `auth/verify-reset-password-link`      | GET    |                         |
+| `auth/reset-password`                  | PATCH  |                         |
+| `/otp-caches`                          | POST   |                         |
+| `/otp-caches/{id}`                     | GET    |                         |
+| `/otp-caches/{id}`                     | DELETE |                         |
+| `/auth/sign-up/create-token`           | POST   |                         |
+| `/auth/sign-up/create-user`            | POST   |                         |
+| `/auth/sign-up/verify-token`           | GET    |                         |
+| `/auth/login`                          | POST   |                         |
+| `/auth/login-token`                    | POST   |                         |
+| `/auth/token`                          | POST   |                         |
+| `/auth/token-refresh`                  | POST   |                         |
+| `/auth/google`                         | GET    |                         |
+| `/auth/google`                         | POST   |                         |
+| `/auth/google-auth-redirect`           | GET    |                         |
+| `/auth/instagram`                      | POST   |                         |
+| `/auth/instagram-auth-redirect`        | GET    |                         |
+| `/auth/keycloak`                       | POST   |                         |
+| `/auth/keycloak`                       | GET    |                         |
+| `/auth/keycloak-auth-redirect`         | GET    |                         |
+| `auth/change-password`                 | PATCH  |                         |
+| `/auth/me`                             | GET    |                         |
+| `/logout`                              | POST   |                         |
+| `/keycloak/logout`                     | POST   |                         |
+
 ### API Documentation
 
 ### Providers

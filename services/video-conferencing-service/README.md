@@ -49,6 +49,25 @@ export class ClientComponent extends BootMixin(
 
 The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+## Permissions
+
+Most applications need to control who (or what) can access data or call services. Typically, this involves requiring users to login to access protected data, or requiring authorization tokens for other applications to access protected data. So, permission keys are required for accessing those routes.
+To set permission keys use npm package [`loopback4-authorization`](https://www.npmjs.com/package/loopback4-authorization). Below are the attached permissions required specific routes.
+
+
+| Route                                  | Method | Permission Keys         |
+| -------------------------------------- | ------ | ----------------------- |
+| `/archives/{archiveId}`                | GET    | [`GetArchives`]         |
+| `/archives`                            | GET    | [`GetArchives`]         |
+| `/archives/{archiveId}`                | DELETE | [`DeleteArchive`]       |
+| `/archives/storage-target`             | PUT    | [`SetUploadTarget`]     |
+| `/session`                             | POST   | [`CreateSession`]       |
+| `/session/{meetingLinkId}/token`       | POST   | [`GenerateToken`]       |
+| `/session/{meetingLinkId}`             | PATCH  | [`EditMeeting`]         |
+| `/session/{meetingLinkId}/end`         | PATCH  | [`StopMeeting`]         |
+| `/webhooks/session`                    | POST   |                         |
+| `/session/{meetingLinkId}/attendees`   | GET    | [`GetAttendees`]        |
+
 ## Using config
 
 ```ts

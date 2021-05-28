@@ -85,6 +85,102 @@ export class SchedulerServiceApplication extends BootMixin(
 }
 ```
 
+### Permissions
+
+Most applications need to control who (or what) can access data or call services. Typically, this involves requiring users to login to access protected data, or requiring authorization tokens for other applications to access protected data. So, permission keys are required for accessing those routes.
+To set permission keys use npm package [`loopback4-authorization`](https://www.npmjs.com/package/loopback4-authorization). Below are the attached permissions required specific routes.
+
+
+| Route                                          | Method | Permission Keys              |
+| ---------------------------------------------- | ------ | ---------------------------- |
+| `/attachments`                                 | POST   | [`CreateAttachment`]         |
+| `/attachments/count`                           | GET    | [`ViewAttachment`]           |
+| `/attachments`                                 | GET    | [`ViewAttachment`]           |
+| `/attachments`                                 | PATCH  | [`UpdateAttachment`]         |
+| `/attachments/{id}`                            | GET    | [`ViewAttachment`]           |
+| `/attachments/{id}`                            | PATCH  | [`UpdateAttachment`]         |
+| `/attachments/{id}`                            | PUT    | [`UpdateAttachment`]         |
+| `/attachments/{id}`                            | DELETE | [`DeleteAttachment`]         |
+| `/attendees`                                   | POST   | [`CreateAttendee`]           |
+| `/attendees/count`                             | GET    | [`ViewAttendee`]             |
+| `/attendees`                                   | GET    | [`ViewAttendee`]             |
+| `/attendees`                                   | PATCH  | [`UpdateAttendee`]           |
+| `/attendees/{id}`                              | GET    | [`ViewAttendee`]             |
+| `/attendees/{id}`                              | PATCH  | [`UpdateAttendee`]           |
+| `/attendees/{id}`                              | PUT    | [`UpdateAttendee`]           |
+| `/attendees/{id}`                              | DELETE | [`DeleteAttendee`]           |
+| `/calendars/{id}/events`                       | GET    | [`ViewEvent`]                |
+| `/calendars/{id}/events`                       | POST   | [`CreateEvent`]              |
+| `/calendars/{id}/events`                       | PATCH  | [`UpdateEvent`]              |
+| `/calendars/{id}/events`                       | DELETE | [`DeleteEvent`]              |
+| `/calendars/{id}/subscriptions`                | GET    | [`ViewSubscription`]         |
+| `/calendars/{id}/subscriptions`                | POST   | [`CreateSubscription`]       |
+| `/calendars/{id}/subscriptions`                | PATCH  | [`UpdateSubscription`]       |
+| `/calendars/{id}/subscriptions`                | DELETE | [`DeleteSubscription`]       |
+| `/calendars/{id}/working-hours`                | GET    | [`ViewWorkingHour`]          |
+| `/calendars/{id}/working-hours`                | POST   | [`CreateWorkingHour`]        |
+| `/calendars/{id}/working-hours`                | PATCH  | [`UpdateWorkingHour`]        |
+| `/calendars/{id}/working-hours`                | DELETE | [`DeleteWorkingHour`]        |
+| `/calendars`                                   | POST   | [`CreateCalendar`]           |
+| `/calendars/calendarSubscription`              | POST   | [`CreateCalendar`]           |
+| `/calendars/count`                             | GET    | [`ViewCalendar`]             |
+| `/calendars`                                   | GET    | [`ViewCalendar`]             |
+| `/calendars`                                   | PATCH  | [`UpdateCalendar`]           |
+| `/calendars/{id}`                              | GET    | [`ViewCalendar`]             |
+| `/calendars/{id}`                              | PATCH  | [`UpdateCalendar`]           |
+| `/calendars/{id}`                              | PUT    | [`UpdateCalendar`]           |
+| `/calendars/{id}`                              | DELETE | [`DeleteCalendar`]           |
+| `/events/{id}/attachments`                     | GET    | [`ViewAttachment`]           |
+| `/events/{id}/attachments`                     | POST   | [`CreateAttachment`]         |
+| `/events/{id}/attachments`                     | PATCH  | [`UpdateAttachment`]         |
+| `/events/{id}/attachments`                     | DELETE | [`DeleteAttachment`]         |
+| `/events/{id}/attendees`                       | GET    | [`ViewAttendee`]             |
+| `/events/{id}/attendees`                       | POST   | [`CreateAttendee`]           |
+| `/events/{id}/attendees`                       | PATCH  | [`UpdateAttendee`]           |
+| `/events/{id}/attendees`                       | DELETE | [`DeleteAttendee`]           |
+| `/events`                                      | POST   | [`CreateEvent`]              |
+| `/events/events/freeBusy`                      | GET    | [`ViewEvent`, `ViewAttendee`]|
+| `/events/count`                                | GET    | [`ViewEvent`]                |
+| `/events`                                      | GET    | [`ViewEvent`]                |
+| `/events`                                      | PATCH  | [`UpdateEvent`]              |
+| `/events/{id}`                                 | GET    | [`ViewEvent`]                |
+| `/events/{id}`                                 | PATCH  | [`UpdateEvent`]              |
+| `/events/{id}`                                 | PUT    | [`UpdateEvent`]              |
+| `/events/{id}`                                 | DELETE | [`DeleteEvent`]              |
+| `/settings`                                    | POST   | [`CreateSettings`]           |
+| `/settings/count`                              | GET    | [`ViewSettings`]             |
+| `/settings`                                    | GET    | [`ViewSettings`]             |
+| `/settings`                                    | PATCH  | [`UpdateSettings`]           |
+| `/settings/{id}`                               | GET    | [`ViewSettings`]             |
+| `/settings/{id}`                               | PATCH  | [`UpdateSettings`]           |
+| `/settings/{id}`                               | PUT    | [`UpdateSettings`]           |
+| `/settings/{id}`                               | DELETE | [`DeleteSettings`]           |
+| `/subscriptions`                               | POST   | [`CreateSubscription`]       |
+| `/subscriptions/count`                         | GET    | [`ViewSubscription`]         |
+| `calendars/subscriptions/me`                   | GET    | [`ViewSubscription`]         |
+| `/subscriptions`                               | GET    | [`ViewSubscription`]         |
+| `/subscriptions`                               | PATCH  | [`UpdateSubscription`]       |
+| `/subscriptions/{id}`                          | GET    | [`ViewSubscription`]         |
+| `/subscriptions/{id}`                          | PATCH  | [`UpdateSubscription`]       |
+| `/subscriptions/{id}`                          | PUT    | [`UpdateSubscription`]       |
+| `/subscriptions/{id}`                          | DELETE | [`DeleteSubscription`]       |
+| `/themes`                                      | POST   | [`CreateTheme`]              |
+| `/themes/count`                                | GET    | [`ViewTheme`]                |
+| `/themes`                                      | GET    | [`ViewTheme`]                |
+| `/themes`                                      | PATCH  | [`UpdateTheme`]              |
+| `/themes/{id}`                                 | GET    | [`ViewTheme`]                |
+| `/themes/{id}`                                 | PATCH  | [`UpdateTheme`]              |
+| `/themes/{id}`                                 | PUT    | [`UpdateTheme`]              |
+| `/themes/{id}`                                 | DELETE | [`DeleteTheme`]              |
+| `/working-hours`                               | POST   | [`CreateWorkingHour`]        |
+| `/working-hours/count`                         | GET    | [`ViewWorkingHour`]          |
+| `/working-hours`                               | GET    | [`ViewWorkingHour`]          |
+| `/working-hours`                               | PATCH  | [`UpdateWorkingHour`]        |
+| `/working-hours/{id}`                          | GET    | [`ViewWorkingHour`]          |
+| `/working-hours/{id}`                          | PATCH  | [`UpdateWorkingHour`]        |
+| `/working-hours/{id}`                          | PUT    | [`UpdateWorkingHour`]        |
+| `/working-hours/{id}`                          | DELETE | [`DeleteWorkingHour`]        |
+
 ## APIs available
 
 ### Calendar
