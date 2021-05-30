@@ -1,4 +1,28 @@
-@mixin shepherdElement($bgclr : '',$brdrRdus :'',$mxWdth:''){
+@mixin sourceloopTheme($theme)
+{
+  @if($theme == 'light')
+  {
+    .shepherd-button{background:rgb(3, 129, 3) !important};
+    .shepherd-element{background:lightcyan !important};
+    .shepherd-cancel-icon{background:lightpink !important};
+  }
+  @if($theme == 'dark')
+  {
+    .shepherd-element{background:darkslategrey !important};
+    .shepherd-cancel-icon{background:black !important};
+    .shepherd-button{background:darkslateblue !important};
+  }
+}
+@mixin sourceloopbtnclr1($clr)
+{
+  .sourceloop-btn-class1{background:$clr !important};
+}
+@mixin sourceloopbtnclr2($clr)
+{
+  .sourceloop-btn-class2{background:$clr !important};
+}
+
+@mixin sourceloopElement($bgclr : '',$brdrRdus :'',$mxWdth:''){
 
   //$bgclr : $bgclrPassed !important !global  ;
   @if($bgclr)
@@ -28,7 +52,7 @@
 
 }
 
-@mixin shepherdButton($bgclr : '',$brdrRdus :'',$clr:''){
+@mixin sourceloopButton($bgclr : '',$brdrRdus :'',$clr:''){
 
   //$bgclr : $bgclrPassed !important !global  ;
   @if($bgclr)
@@ -59,7 +83,7 @@
 }
 
 
-@mixin shepherdTitle($clr : '',$fntSz :'',$fntWt:''){
+@mixin sourceloopTitle($clr : '',$fntSz :'',$fntWt:''){
 
   //$bgclr : $bgclrPassed !important !global  ;
   @if($clr)
@@ -89,7 +113,7 @@
 
 }
 
-@mixin shepherdCancelIcon($bgclr : '',$brdr :'',$clr:''){
+@mixin sourceloopCancelIcon($bgclr : '',$brdr :'',$clr:''){
 
   //$bgclr : $bgclrPassed !important !global  ;
   @if($bgclr)
