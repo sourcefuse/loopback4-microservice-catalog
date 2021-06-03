@@ -151,4 +151,4 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 ## API's Details
 
-Visit the [OpenAPI spec docs](../../sandbox/notification-socket-example/openapi.md)
+Visit the [OpenAPI spec docs](./openapi.md)

@@ -230,4 +230,4 @@ Endpoint to get all the workflows.
 
 ## API's Details
 
-Visit the [OpenAPI spec docs](../../sandbox/workflow-ms-example/openapi.md)
+Visit the [OpenAPI spec docs](./openapi.md)

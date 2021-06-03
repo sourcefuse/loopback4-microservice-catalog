@@ -177,4 +177,4 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 #### API Details
 
-Visit the [OpenAPI spec docs](OPEN_API_SPEC.md)
+Visit the [OpenAPI spec docs](./openapi.md)

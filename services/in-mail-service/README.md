@@ -438,4 +438,4 @@ threadFilter: Object which contains attribute(s) key value pairs of thread model
 
 ## API's Details
 
-Visit the [OpenAPI spec docs](../../sandbox/in-mail-example/openapi.md)
+Visit the [OpenAPI spec docs](./openapi.md)

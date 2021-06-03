@@ -166,5 +166,5 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 #### API Details
 
-Visit the [OpenAPI spec docs](../../sandbox/audit-ms-example/openapi.md)
+Visit the [OpenAPI spec docs](./openapi.md)
 

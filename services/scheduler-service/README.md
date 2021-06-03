@@ -261,7 +261,7 @@ They can be retrieved via list and get methods. Note that if a setting has its d
 
 ## API's Details
 
-Visit the [OpenAPI spec docs](../../sandbox/scheduler-example/openapi.md)
+Visit the [OpenAPI spec docs](./openapi.md)
 
 ## Feedback
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/loopback4-notifications/issues) to see if someone else in the community has already created a ticket.

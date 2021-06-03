@@ -115,7 +115,7 @@ Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure
 
 ## API's Details
 
-Visit the [OpenAPI spec docs](../../sandbox/video-conferencing-ms-example/openapi.md)
+Visit the [OpenAPI spec docs](./openapi.md)
 
 
 ## Feedback
