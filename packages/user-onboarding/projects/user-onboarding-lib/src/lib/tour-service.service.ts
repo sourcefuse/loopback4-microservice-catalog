@@ -24,18 +24,18 @@ export class TourServiceService {
     const sessionId = this.tourStoreService.getSessionId();
     this.tourStoreService
       .loadState({ tourId: tourInstance.tourId, sessionId })
-      .subscribe((currentStep) => {
+      .subscribe(currentStep => {
         if (currentStep) {
           //state exists
           let f = true;
-          removedSteps = tourInstance.tourSteps.filter((e) => {
+          removedSteps = tourInstance.tourSteps.filter(e => {
             if (e.id === currentStep.step || !f) {
               f = false;
             }
             return f;
           });
           let flag = false;
-          tourInstance.tourSteps = tourInstance.tourSteps.filter((e) => {
+          tourInstance.tourSteps = tourInstance.tourSteps.filter(e => {
             if (e.id === currentStep.step || flag) {
               flag = true;
             }
@@ -44,17 +44,17 @@ export class TourServiceService {
         } else {
           this.tourStoreService.generateSessionId();
         }
-        tourInstance.tourSteps.forEach((e) => {
-          e.buttons.forEach((b) => {
+        tourInstance.tourSteps.forEach(e => {
+          e.buttons.forEach(b => {
             const key = b.action;
             b.action = this.tourStoreService.getFnByKey(key);
           });
         });
         tour.addSteps(tourInstance.tourSteps);
         tour.start();
-        if (removedSteps != undefined) {
-          removedSteps.forEach((e) => {
-            e.buttons.forEach((b) => {
+        if (removedSteps !== undefined) {
+          removedSteps.forEach(e => {
+            e.buttons.forEach(b => {
               const k = b.action;
               b.action = this.tourStoreService.getFnByKey(k);
             });
@@ -77,7 +77,7 @@ export class TourServiceService {
   }
 
   public run(tourId: string) {
-    this.tourStoreService.loadTour({ tourId }).subscribe((tourInstance) => {
+    this.tourStoreService.loadTour({ tourId }).subscribe(tourInstance => {
       if (tourInstance) {
         this.triggerTour(tourInstance);
       } else {
