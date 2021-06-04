@@ -9,7 +9,7 @@ import {
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {AuthenticationServiceComponent} from '../../component';
-import '../../load-env'; 
+import '../../load-env';
 
 export {ApplicationConfig};
 
