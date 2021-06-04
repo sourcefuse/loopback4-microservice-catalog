@@ -1,27 +1,34 @@
-import { Observable } from "rxjs";
-import { LoadTourParameters, SaveTourParameters, Tour, LoadStateParameters, SaveStateParameters, TourState } from "../models";
+import { Observable } from 'rxjs';
+import {
+  LoadTourParameters,
+  SaveTourParameters,
+  Tour,
+  LoadStateParameters,
+  SaveStateParameters,
+  TourState,
+} from '../models';
 
-export  interface SaveTourCommand{
-    parameters: SaveTourParameters;
-    execute(): Observable<Tour>;
+export interface SaveTourCommand {
+  parameters: SaveTourParameters;
+  execute(): Observable<Tour>;
 }
 
-export  interface LoadTourCommand{
-    parameters: LoadTourParameters;
-    execute(): Observable<Tour>;
+export interface LoadTourCommand {
+  parameters: LoadTourParameters;
+  execute(): Observable<Tour>;
 }
 
-export interface SaveStateCommand{
-    parameters: SaveStateParameters;
-    execute(): Observable<TourState>;
+export interface SaveStateCommand {
+  parameters: SaveStateParameters;
+  execute(): Observable<TourState>;
 }
 
-export interface LoadStateCommand{
-    parameters: LoadStateParameters;
-    execute(): Observable<TourState>;
+export interface LoadStateCommand {
+  parameters: LoadStateParameters;
+  execute(): Observable<TourState>;
 }
 
-export interface BaseCommand<T=unknown,S=unknown>{
-    execute(): Observable<T>;
-    parameters: S;
+export interface BaseCommand<T = unknown, S = unknown> {
+  execute(): Observable<T>;
+  parameters: S;
 }
