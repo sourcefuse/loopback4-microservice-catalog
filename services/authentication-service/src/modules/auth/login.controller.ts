@@ -327,7 +327,7 @@ export class LoginController {
     if (!authClient) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
-    const accessToken = token?.split(" ")[1];
+    const accessToken = token?.split(' ')[1];
     if (!accessToken || refreshPayload.accessToken !== accessToken) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
