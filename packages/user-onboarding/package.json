@@ -1,5 +1,5 @@
 {
-  "name": "user-onboarding",
+  "name": "@sourceloop/user-onboarding-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,6 +22,7 @@
     "@angular/router": "~11.2.3",
     "json-server": "^0.16.3",
     "ngx-webstorage-service": "^4.1.0",
+    "prettier": "^2.3.0",
     "rxjs": "~6.6.0",
     "shepherd.js": "^8.3.1",
     "tslib": "^2.0.0",

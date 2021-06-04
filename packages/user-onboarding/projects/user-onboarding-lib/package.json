@@ -1,5 +1,5 @@
 {
-  "name": "user-onboarding-lib",
+  "name": "@sourceloop/user-onboarding-client",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^11.2.12",
