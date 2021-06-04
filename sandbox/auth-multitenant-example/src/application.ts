@@ -7,11 +7,8 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {CasbinSecureSequence, SFCoreBindings} from '@sourceloop/core';
-import {
-  AuthenticationServiceComponent,
-  AuthServiceBindings,
-} from '@sourceloop/authentication-service';
+import {SFCoreBindings} from '@sourceloop/core';
+import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
 import {HelmetSecurityBindings} from 'loopback4-helmet';
 import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
 import * as dotenv from 'dotenv';

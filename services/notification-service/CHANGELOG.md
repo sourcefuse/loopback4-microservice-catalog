@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.1 (2021-05-19)</small>
+
+* fix(notification-service): adds PATCH notification APIs (#213) ([2c20508](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c20508)), closes [#213](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/213)
+
+
+
+
+
 ## 1.0.0 (2021-05-12)
 
 **Note:** Version bump only for package @sourceloop/notification-service

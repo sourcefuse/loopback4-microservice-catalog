@@ -75,7 +75,7 @@
     "@loopback/eslint-config": "^10.2.0",
     "@loopback/testlab": "^3.4.0",
     "@types/jsonwebtoken": "^8.5.0",
-    "@types/node": "^10.17.59",
+    "@types/node": "^10.17.60",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^7.25.0",
