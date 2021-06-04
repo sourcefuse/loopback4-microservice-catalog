@@ -227,3 +227,7 @@ Endpoint to delete a workflow, uses the `delete` method from the provider.
 
 `GET /workflow`
 Endpoint to get all the workflows.
+
+## API's Details
+
+Visit the [OpenAPI spec docs](./openapi.md)
