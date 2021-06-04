@@ -1,0 +1,1914 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "In-mail Service",
+    "version": "1.0.0",
+    "description": "services",
+    "contact": {
+      "name": "Sourcefuse"
+    }
+  },
+  "paths": {
+    "/mails/bulk/restore": {
+      "patch": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "restore",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "API provides an interface for restore message from trash.",
+        "responses": {
+          "200": {
+            "description": "Restore Message Successful!"
+          },
+          "400": {
+            "description": "Message identity does not exist."
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdArraysPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "OriginatorController.restore"
+      }
+    },
+    "/mails/bulk/{storage}/{action}": {
+      "delete": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "trashBulk",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "API for moving mails to trash and then delete",
+        "responses": {
+          "200": {
+            "description": "Trash/Deletion of Mail(s) sucessful!"
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          },
+          "404": {
+            "description": "Message identity does not exist."
+          }
+        },
+        "parameters": [
+          {
+            "name": "storage",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdArraysPartial"
+              }
+            }
+          },
+          "x-parameter-index": 3
+        },
+        "operationId": "OriginatorController.trashBulk"
+      }
+    },
+    "/mails/marking/{markType}": {
+      "patch": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "markMail",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "API provides interface to mark read, unread and important",
+        "responses": {
+          "200": {
+            "description": "Message is marked read/unread/important"
+          }
+        },
+        "parameters": [
+          {
+            "name": "markType",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdArraysPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "OriginatorController.markMail"
+      }
+    },
+    "/mails/{messageId}/attachments/{attachmentId}": {
+      "delete": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "removeAttachment",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "API provides an interface for removing attachment before message is sent",
+        "responses": {
+          "200": {
+            "description": "Deletetion of Attachment Successful!"
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          },
+          "404": {
+            "description": "Message identity does not exist."
+          }
+        },
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "OriginatorController.removeAttachment"
+      }
+    },
+    "/mails/{messageId}/attachments": {
+      "post": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "addAttachment",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "API provides an interface for adding attachment before message is sent.",
+        "responses": {
+          "200": {
+            "description": "collect single attachment for user by message identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment add response schema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Message identity does not exist."
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          }
+        },
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AttachmentPartial"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "OriginatorController.addAttachment"
+      }
+    },
+    "/mails/{messageId}/send": {
+      "patch": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "sendDraft",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "API for sending a drafted message.",
+        "responses": {
+          "200": {
+            "description": "Mail is Successfully sent!"
+          },
+          "400": {
+            "description": "Message identity does not exist."
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          }
+        },
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "OriginatorController.sendDraft"
+      }
+    },
+    "/mails/{messageId}": {
+      "put": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "updateDraft",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "Update API. Update draft messages.",
+        "responses": {
+          "400": {
+            "description": "Message identity does not exist."
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          },
+          "application/json": {
+            "description": "collect single message for user by message identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/idResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/composeMailBody"
+              }
+            }
+          }
+        },
+        "operationId": "OriginatorController.updateDraft"
+      },
+      "get": {
+        "x-controller-name": "CollectorController",
+        "x-operation-name": "fetchById",
+        "tags": [
+          "CollectorController"
+        ],
+        "summary": "GET Message API. Collect a single message based on message identity.",
+        "responses": {
+          "200": {
+            "description": "Gets mail details based on unique message id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "item": {
+                      "type": "string",
+                      "item": {
+                        "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations",
+                        "definitions": {
+                          "AttachmentExcluding_deleted_WithRelations": {
+                            "$ref": "#/components/schemas/AttachmentExcluding_deleted_WithRelations"
+                          },
+                          "ThreadExcluding_deleted_WithRelations": {
+                            "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
+                          },
+                          "GroupExcluding_deleted_WithRelations": {
+                            "$ref": "#/components/schemas/GroupExcluding_deleted_WithRelations"
+                          },
+                          "MetaExcluding_deleted_WithRelations": {
+                            "$ref": "#/components/schemas/MetaExcluding_deleted_WithRelations"
+                          },
+                          "MessageExcluding_deleted_WithRelations": {
+                            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden request due to unauthrized token in header."
+          },
+          "404": {
+            "description": "Message identity does not exist"
+          }
+        },
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CollectorController.fetchById"
+      }
+    },
+    "/mails": {
+      "post": {
+        "x-controller-name": "OriginatorController",
+        "x-operation-name": "composeMail",
+        "tags": [
+          "OriginatorController"
+        ],
+        "summary": "ComposeAPI. For drafting, reply on and create new message",
+        "responses": {
+          "201": {
+            "description": "collect single message for user by message identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/idResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          },
+          "404": {
+            "description": "Message identity does not exist."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/composeMailBody"
+              }
+            }
+          }
+        },
+        "operationId": "OriginatorController.composeMail"
+      },
+      "get": {
+        "x-controller-name": "CollectorController",
+        "x-operation-name": "fetchMailList",
+        "tags": [
+          "CollectorController"
+        ],
+        "summary": "Collect a list of all messages.",
+        "responses": {
+          "200": {
+            "description": "fetch mails",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "schema": {
+                      "$ref": "#/components/schemas/Message",
+                      "definitions": {
+                        "Message": {
+                          "$ref": "#/components/schemas/Message"
+                        }
+                      }
+                    }
+                  }
+                },
+                "nullable": true
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden request due to unauthrized token in header."
+          }
+        },
+        "parameters": [
+          {
+            "name": "messageFilter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          {
+            "name": "groupFilter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CollectorController.fetchMailList"
+      }
+    },
+    "/threads/{threadId}/forward": {
+      "patch": {
+        "x-controller-name": "ReplyAndForwardController",
+        "x-operation-name": "forward",
+        "tags": [
+          "ReplyAndForwardController"
+        ],
+        "summary": "API provides interface to forward single message.",
+        "responses": {
+          "204": {
+            "description": "Message is forwarded to another recipient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/idResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Message identity does not exist."
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          }
+        },
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "groups": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GroupPartial"
+                    }
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AttachmentPartial"
+                    }
+                  },
+                  "meta": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MetaPartial"
+                    }
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "groups"
+                ]
+              }
+            }
+          }
+        },
+        "operationId": "ReplyAndForwardController.forward"
+      }
+    },
+    "/threads/{threadId}/mails/{messageId}/replies": {
+      "patch": {
+        "x-controller-name": "ReplyAndForwardController",
+        "x-operation-name": "replyMail",
+        "tags": [
+          "ReplyAndForwardController"
+        ],
+        "summary": "API provides interface to reply to a single message",
+        "responses": {
+          "200": {
+            "description": "Message is replied back to the sender"
+          }
+        },
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "replyAll",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AttachmentPartial"
+                    }
+                  },
+                  "meta": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MetaPartial"
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "extId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "body",
+                  "group",
+                  "status"
+                ]
+              }
+            }
+          },
+          "x-parameter-index": 3
+        },
+        "operationId": "ReplyAndForwardController.replyMail"
+      }
+    },
+    "/threads/{threadId}": {
+      "get": {
+        "x-controller-name": "CollectorController",
+        "x-operation-name": "fetchThreadById",
+        "tags": [
+          "CollectorController"
+        ],
+        "summary": "GET Thread Message API. Collect complete single message thread based on thread identity.",
+        "responses": {
+          "200": {
+            "description": "Fetches a thread along with message, group, attachment(s) etc based on unique thread Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "item": {
+                      "$ref": "#/components/schemas/Thread",
+                      "definitions": {
+                        "Thread": {
+                          "$ref": "#/components/schemas/Thread"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Message identity does not exist"
+          },
+          "403": {
+            "description": "Forbidden request due to unauthorized token in header."
+          }
+        },
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CollectorController.fetchThreadById"
+      }
+    },
+    "/threads": {
+      "get": {
+        "403": {
+          "description": "Forbidden request due to unauthrized token in header."
+        },
+        "x-controller-name": "CollectorController",
+        "x-operation-name": "fetchThreadList",
+        "tags": [
+          "CollectorController"
+        ],
+        "summary": "Thread List API. Collect a list of all threads.",
+        "responses": {
+          "200": {
+            "description": "fetch threads",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "version": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Thread",
+                        "definitions": {
+                          "Thread": {
+                            "$ref": "#/components/schemas/Thread"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "threadFilter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          {
+            "name": "groupFilter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CollectorController.fetchThreadList"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "idResponse": {
+        "$ref": "#/components/schemas/IdResponse",
+        "definitions": {
+          "IdResponse": {
+            "title": "IdResponse",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "composeMailBody": {
+        "type": "object",
+        "properties": {
+          "threadId": {
+            "type": "string"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupPartial",
+              "definitions": {
+                "GroupPartial": {
+                  "title": "GroupPartial",
+                  "type": "object",
+                  "description": "(tsType: Partial<Group>, schemaOptions: { partial: true })",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "deletedOn": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "deletedBy": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdOn": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "modifiedOn": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "type": "string"
+                    },
+                    "modifiedBy": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "party": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "from",
+                        "to",
+                        "cc",
+                        "bcc"
+                      ]
+                    },
+                    "isImportant": {
+                      "type": "boolean"
+                    },
+                    "storage": {
+                      "type": "string",
+                      "default": "inbox",
+                      "enum": [
+                        "draft",
+                        "send",
+                        "inbox",
+                        "trash"
+                      ]
+                    },
+                    "visibility": {
+                      "type": "string",
+                      "default": "new",
+                      "enum": [
+                        "read",
+                        "new",
+                        "unread",
+                        "important",
+                        "not-important"
+                      ]
+                    },
+                    "extId": {
+                      "type": "string"
+                    },
+                    "extMetadata": {
+                      "type": "object"
+                    },
+                    "messageId": {
+                      "type": "string"
+                    },
+                    "threadId": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "x-typescript-type": "Partial<Group>"
+                }
+              }
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttachmentPartial",
+              "definitions": {
+                "AttachmentPartial": {
+                  "title": "AttachmentPartial",
+                  "type": "object",
+                  "description": "(tsType: Partial<Attachment>, schemaOptions: { partial: true })",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "deletedOn": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "deletedBy": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdOn": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "modifiedOn": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "type": "string"
+                    },
+                    "modifiedBy": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "thumbnail": {
+                      "type": "string"
+                    },
+                    "mime": {
+                      "type": "string"
+                    },
+                    "extId": {
+                      "type": "string"
+                    },
+                    "extMetadata": {
+                      "type": "object"
+                    },
+                    "messageId": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "x-typescript-type": "Partial<Attachment>"
+                }
+              }
+            }
+          },
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetaPartial",
+              "definitions": {
+                "MetaPartial": {
+                  "title": "MetaPartial",
+                  "type": "object",
+                  "description": "(tsType: Partial<Meta>, schemaOptions: { partial: true })",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "deletedOn": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "deletedBy": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdOn": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "modifiedOn": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "type": "string"
+                    },
+                    "modifiedBy": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "extId": {
+                      "type": "string"
+                    },
+                    "extMetadata": {
+                      "type": "object"
+                    },
+                    "messageId": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "x-typescript-type": "Partial<Meta>"
+                }
+              }
+            }
+          },
+          "body": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "body",
+          "groups",
+          "status"
+        ]
+      },
+      "Attachment": {
+        "title": "Attachment",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "mime": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "path",
+          "thumbnail",
+          "mime"
+        ],
+        "additionalProperties": false
+      },
+      "AttachmentPartial": {
+        "title": "AttachmentPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Attachment>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "mime": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Attachment>"
+      },
+      "IdArraysPartial": {
+        "title": "IdArraysPartial",
+        "type": "object",
+        "description": "(tsType: Partial<IdArrays>, schemaOptions: { partial: true })",
+        "properties": {
+          "messageIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threadIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<IdArrays>"
+      },
+      "IdArrays": {
+        "title": "IdArrays",
+        "type": "object",
+        "properties": {
+          "messageIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threadIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "MetaPartial": {
+        "title": "MetaPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Meta>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Meta>"
+      },
+      "GroupPartial": {
+        "title": "GroupPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Group>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "party": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "from",
+              "to",
+              "cc",
+              "bcc"
+            ]
+          },
+          "isImportant": {
+            "type": "boolean"
+          },
+          "storage": {
+            "type": "string",
+            "default": "inbox",
+            "enum": [
+              "draft",
+              "send",
+              "inbox",
+              "trash"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "default": "new",
+            "enum": [
+              "read",
+              "new",
+              "unread",
+              "important",
+              "not-important"
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "threadId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Group>"
+      },
+      "Attachment add response schema": {
+        "type": "object",
+        "title": "Attachment add response schema",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attachment"
+            }
+          }
+        }
+      },
+      "AttachmentExcluding_deleted_WithRelations": {
+        "title": "AttachmentExcluding_deleted_WithRelations",
+        "type": "object",
+        "description": "(tsType: Omit<AttachmentWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "properties": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "mime": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
+          }
+        },
+        "required": [
+          "name",
+          "path",
+          "thumbnail",
+          "mime"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<AttachmentWithRelations, 'deleted'>"
+      },
+      "ThreadExcluding_deleted_WithRelations": {
+        "title": "ThreadExcluding_deleted_WithRelations",
+        "type": "object",
+        "description": "(tsType: Omit<ThreadWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "properties": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "messageCounts": {
+            "type": "number"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "message": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
+            }
+          },
+          "group": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupExcluding_deleted_WithRelations"
+            }
+          }
+        },
+        "required": [
+          "subject"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<ThreadWithRelations, 'deleted'>"
+      },
+      "GroupExcluding_deleted_WithRelations": {
+        "title": "GroupExcluding_deleted_WithRelations",
+        "type": "object",
+        "description": "(tsType: Omit<GroupWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "properties": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "party": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "from",
+              "to",
+              "cc",
+              "bcc"
+            ]
+          },
+          "isImportant": {
+            "type": "boolean"
+          },
+          "storage": {
+            "type": "string",
+            "default": "inbox",
+            "enum": [
+              "draft",
+              "send",
+              "inbox",
+              "trash"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "default": "new",
+            "enum": [
+              "read",
+              "new",
+              "unread",
+              "important",
+              "not-important"
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "threadId": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
+          },
+          "thread": {
+            "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
+          }
+        },
+        "required": [
+          "party",
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<GroupWithRelations, 'deleted'>"
+      },
+      "MetaExcluding_deleted_WithRelations": {
+        "title": "MetaExcluding_deleted_WithRelations",
+        "type": "object",
+        "description": "(tsType: Omit<MetaWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "properties": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<MetaWithRelations, 'deleted'>"
+      },
+      "MessageExcluding_deleted_WithRelations": {
+        "title": "MessageExcluding_deleted_WithRelations",
+        "type": "object",
+        "description": "(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "properties": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "sender": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "send"
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "threadId": {
+            "type": "string"
+          },
+          "attachment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttachmentExcluding_deleted_WithRelations"
+            }
+          },
+          "group": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupExcluding_deleted_WithRelations"
+            }
+          },
+          "meta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetaExcluding_deleted_WithRelations"
+            }
+          },
+          "thread": {
+            "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
+          }
+        },
+        "required": [
+          "sender",
+          "subject",
+          "body",
+          "status"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<MessageWithRelations, 'deleted'>"
+      },
+      "Message": {
+        "title": "Message",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "sender": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "send"
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "threadId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sender",
+          "subject",
+          "body",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "Thread": {
+        "title": "Thread",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "messageCounts": {
+            "type": "number"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "subject"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
