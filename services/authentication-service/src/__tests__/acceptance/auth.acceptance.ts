@@ -111,7 +111,6 @@ describe('Authentication microservice', () => {
       .expect(200);
     const response = await client.post(`/auth/token`).send({
       clientId: 'web',
-      username: 'test_user',
       code: reqForCode.body.code,
     });
     expect(response.body).to.have.properties([
@@ -170,7 +169,6 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client.post(`/auth/token`).send({
       clientId: 'web',
-      username: 'test_user',
       code: reqForCode.body.code,
     });
     await client
@@ -198,7 +196,6 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client.post(`/auth/token`).send({
       clientId: 'web',
-      username: 'test_user',
       code: reqForCode.body.code,
     });
     const response = await client
@@ -325,7 +322,6 @@ describe('Authentication microservice', () => {
       .post(`/auth/token`)
       .send({
         clientId: 'web',
-        username: 'test_user',
         code: reqForCode.body.code,
       })
       .expect(200);
