@@ -12,13 +12,11 @@ try {
 } catch (err) {
   console.info('\n');
 }
-if (
-  isLocal
-) {
+if (isLocal) {
   console.info(`Skipping migrations`);
 } else {
   const dbmigrate = DBMigrate.getInstance(true, {
-    config: './migrations/database.json'
+    config: './migrations/database.json',
   });
   dbmigrate.up();
 }

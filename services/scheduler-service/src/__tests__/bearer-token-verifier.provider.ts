@@ -4,11 +4,12 @@ import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from './keys';
 
 export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn> {
+  implements Provider<VerifyFunction.BearerFn>
+{
   constructor() {}
 
   value(): VerifyFunction.BearerFn {
-    return async token => {
+    return async (token: string) => {
       /*
         Implementing a basic JWT token decryption here
         Leaving the additional security to the consumer of this application

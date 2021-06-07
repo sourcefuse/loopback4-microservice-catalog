@@ -11,7 +11,8 @@ import {Event} from './event.model';
 })
 export class Attendee
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

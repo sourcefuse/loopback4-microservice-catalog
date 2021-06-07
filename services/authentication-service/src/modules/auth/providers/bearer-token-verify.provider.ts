@@ -10,7 +10,8 @@ import {RevokedTokenRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 
 export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn> {
+  implements Provider<VerifyFunction.BearerFn>
+{
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,

@@ -210,7 +210,9 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       throw new HttpErrors.NotFound(AuthenticateErrorKeys.UserDoesNotExist);
     }
 
-    const userTenant = await (await this.userTenantRepositoryGetter()).findOne({
+    const userTenant = await (
+      await this.userTenantRepositoryGetter()
+    ).findOne({
       where: {
         userId,
         tenantId: user.defaultTenantId,

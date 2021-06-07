@@ -26,7 +26,7 @@ export class EventService {
     where.push({
       or: [
         {responseStatus: {neq: ResponseStatusType.Declined}},
-        {responseStatus: (null as unknown) as ResponseStatusType},
+        {responseStatus: null as unknown as ResponseStatusType},
       ],
     });
     where.push({
@@ -37,7 +37,7 @@ export class EventService {
         {
           and: [
             {identifier: item.id},
-            {attendeeIdentifier: (null as unknown) as string},
+            {attendeeIdentifier: null as unknown as string},
           ],
         },
         {attendeeIdentifier: item.id},

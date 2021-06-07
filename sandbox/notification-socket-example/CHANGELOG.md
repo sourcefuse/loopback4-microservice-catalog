@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.1 (2021-05-19)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## 2.0.0 (2021-05-12)
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## 2.0.0-alpha.17 (2021-05-12)
+
+* fix(authentication-service): fixed version of loopback packages in all services (#191) ([7eb9a60](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7eb9a60)), closes [#191](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/191)
+* feat(sandbox): scheduler-example (#183) ([7f6df63](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7f6df63)), closes [#183](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/183)
+
+
+
+
+
 # [2.0.0-alpha.16](https://github.com/sourcefuse/loopback4-microservice-catalog/compare/@sourceloop/notification-socket-example@2.0.0-alpha.15...@sourceloop/notification-socket-example@2.0.0-alpha.16) (2021-04-26)
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

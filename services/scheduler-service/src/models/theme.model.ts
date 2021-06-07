@@ -9,7 +9,8 @@ import {
 })
 export class Theme
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

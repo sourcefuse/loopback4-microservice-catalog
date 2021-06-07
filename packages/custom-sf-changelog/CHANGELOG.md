@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0 (2021-05-12)
+
+**Note:** Version bump only for package custom-sf-changelog
+
+
+
+
+
 ## 1.0.0-alpha.0 (2021-04-30)
 
 * fix(core): make custom changelog package private ([59e4578](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/59e4578))

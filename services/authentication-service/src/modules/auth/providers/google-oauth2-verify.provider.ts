@@ -19,7 +19,8 @@ import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 
 export class GoogleOauth2VerifyProvider
-  implements Provider<VerifyFunction.GoogleAuthFn> {
+  implements Provider<VerifyFunction.GoogleAuthFn>
+{
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

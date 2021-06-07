@@ -22,6 +22,7 @@ import {
 import {encode} from 'base-64';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {HttpsProxyAgent} from 'https-proxy-agent';
 import * as fetch from 'node-fetch';
 import {URLSearchParams} from 'url';
 
@@ -30,6 +31,14 @@ import {
   RefreshTokenRepository,
   RevokedTokenRepository,
 } from '../../repositories';
+
+const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
+
+const getProxyAgent = () => {
+  if (proxyUrl) {
+    return new HttpsProxyAgent(proxyUrl);
+  }
+};
 
 export class LogoutController {
   constructor(
@@ -160,6 +169,7 @@ export class LogoutController {
       const strToEncode = `${process.env.KEYCLOAK_CLIENT_ID}:${process.env.KEYCLOAK_CLIENT_SECRET}`;
       fetch
         .default(logoutUrl, {
+          agent: getProxyAgent(),
           method: 'post',
           body: params,
           headers: {

@@ -9,7 +9,8 @@ import {
 })
 export class VideoChatSession
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'number',
     id: true,

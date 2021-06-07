@@ -59,7 +59,7 @@ export class SchedulerServiceApplication extends BootMixin(
 
 ## DB migrations
 
-The migrations required for this service are processed during the installation automatically if you set the `SCHEDULER_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use (`db-migrate`)[https://www.npmjs.com/package/db-migrate] with (`db-migrate-pg`)[https://www.npmjs.com/package/db-migrate-pg] driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SCHEDULER_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `SCHEDULER_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SCHEDULER_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 #### Database Model
 
@@ -258,6 +258,10 @@ They can be retrieved via list and get methods. Note that if a setting has its d
  Delete setting.
 
 * Event settings from the past could not be created or updated.   
+
+## API's Details
+
+Visit the [OpenAPI spec docs](./openapi.md)
 
 ## Feedback
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/loopback4-notifications/issues) to see if someone else in the community has already created a ticket.

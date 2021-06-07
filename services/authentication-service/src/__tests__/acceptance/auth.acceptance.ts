@@ -111,7 +111,6 @@ describe('Authentication microservice', () => {
       .expect(200);
     const response = await client.post(`/auth/token`).send({
       clientId: 'web',
-      username: 'test_user',
       code: reqForCode.body.code,
     });
     expect(response.body).to.have.properties([
@@ -170,7 +169,6 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client.post(`/auth/token`).send({
       clientId: 'web',
-      username: 'test_user',
       code: reqForCode.body.code,
     });
     await client
@@ -198,13 +196,56 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client.post(`/auth/token`).send({
       clientId: 'web',
-      username: 'test_user',
       code: reqForCode.body.code,
     });
     const response = await client
       .post(`/auth/token-refresh`)
-      .send({refreshToken: reqForToken.body.refreshToken});
+      .send({refreshToken: reqForToken.body.refreshToken})
+      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`);
     expect(response.body).to.have.properties(['accessToken', 'refreshToken']);
+  });
+  it('should return 401 for token refresh request when Authentication token invalid', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+      password: 'temp123!@',
+    };
+    const reqForCode = await client
+      .post(`/auth/login`)
+      .send(reqData)
+      .expect(200);
+    const reqForToken = await client.post(`/auth/token`).send({
+      clientId: 'web',
+      code: reqForCode.body.code,
+    });
+    await client
+      .post(`/auth/token-refresh`)
+      .send({refreshToken: reqForToken.body.refreshToken})
+      .set('Authorization', 'Bearer abc')
+      .expect(401);
+  });
+  it('should return 401 for token refresh request when Authentication token missing', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+      password: 'temp123!@',
+    };
+    const reqForCode = await client
+      .post(`/auth/login`)
+      .send(reqData)
+      .expect(200);
+    const reqForToken = await client.post(`/auth/token`).send({
+      clientId: 'web',
+      code: reqForCode.body.code,
+    });
+    await client
+      .post(`/auth/token-refresh`)
+      .send({refreshToken: reqForToken.body.refreshToken})
+      .expect(401);
   });
   it('should send forgot password request successfully', async () => {
     const reqData = {
@@ -325,7 +366,6 @@ describe('Authentication microservice', () => {
       .post(`/auth/token`)
       .send({
         clientId: 'web',
-        username: 'test_user',
         code: reqForCode.body.code,
       })
       .expect(200);

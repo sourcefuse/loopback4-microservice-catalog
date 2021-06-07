@@ -16,7 +16,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class VideoConferecingDbDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = 'videochatDb';
   static readonly defaultConfig = config;
 

@@ -11,7 +11,8 @@ import {AccessRoleType} from './enums/access-role.enum';
 })
 export class Subscription
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

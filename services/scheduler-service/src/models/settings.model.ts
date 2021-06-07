@@ -10,7 +10,8 @@ import {OwnerType} from './enums/owner-type.enum';
 })
 export class Settings
   extends UserModifiableEntity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'string',
     id: true,

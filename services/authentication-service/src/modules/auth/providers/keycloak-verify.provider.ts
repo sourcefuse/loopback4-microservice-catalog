@@ -18,7 +18,8 @@ import {
 import {SignUpBindings, VerifyBindings} from '../../../providers';
 
 export class KeycloakVerifyProvider
-  implements Provider<VerifyFunction.KeycloakAuthFn> {
+  implements Provider<VerifyFunction.KeycloakAuthFn>
+{
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

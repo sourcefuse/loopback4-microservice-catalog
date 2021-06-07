@@ -5,7 +5,8 @@ import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 })
 export class SessionAttendees
   extends Entity
-  implements ExternalIdentifierEnabledEntity {
+  implements ExternalIdentifierEnabledEntity
+{
   @property({
     type: 'number',
     id: true,
