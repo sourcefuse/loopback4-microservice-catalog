@@ -10,8 +10,8 @@ export class TourServiceService {
   currentStep;
   constructor(private readonly tourStoreService: TourStoreServiceService) {}
 
-  private triggerTour(tourInstance: Tour) {
-    var removedSteps;
+  private triggerTour(tourInstance: Tour): void {
+    let removedSteps;
     const tour = new Shepherd.Tour({
       defaultStepOptions: {
         cancelIcon: {
@@ -26,7 +26,6 @@ export class TourServiceService {
       .loadState({ tourId: tourInstance.tourId, sessionId })
       .subscribe(currentStep => {
         if (currentStep) {
-          //state exists
           let f = true;
           removedSteps = tourInstance.tourSteps.filter(e => {
             if (e.id === currentStep.step || !f) {
@@ -76,7 +75,7 @@ export class TourServiceService {
       });
   }
 
-  public run(tourId: string) {
+  public run(tourId: string): void {
     this.tourStoreService.loadTour({ tourId }).subscribe(tourInstance => {
       if (tourInstance) {
         this.triggerTour(tourInstance);

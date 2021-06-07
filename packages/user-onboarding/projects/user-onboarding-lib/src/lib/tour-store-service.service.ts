@@ -34,80 +34,76 @@ export class TourStoreServiceService {
     this.commandMap.set('SaveStateCommand', this.defaultSSCommand);
     this.commandMap.set('LoadStateCommand', this.defaultLSCommand);
   }
-  registerSaveTourCommand(cmd) {
+  registerSaveTourCommand(cmd): void {
     this.commandMap.set('SaveTourCommand', cmd);
   }
-  registerLoadTourCommand(cmd) {
+  registerLoadTourCommand(cmd): void {
     this.commandMap.set('LoadTourCommand', cmd);
   }
-  registerSaveStateCommand(cmd) {
+  registerSaveStateCommand(cmd): void {
     this.commandMap.set('SaveStateCommand', cmd);
   }
-  registerLoadStateCommand(cmd) {
+  registerLoadStateCommand(cmd): void {
     this.commandMap.set('LoadStateCommand', cmd);
   }
 
-  public saveTour(parameters: SaveTourParameters) {
+  public saveTour(parameters: SaveTourParameters): any {
     const command = this.commandMap.get('SaveTourCommand') as SaveTourCommand;
     command.parameters = parameters;
     return command.execute();
   }
 
-  public loadTour(parameters: LoadTourParameters) {
+  public loadTour(parameters: LoadTourParameters): any {
     const command = this.commandMap.get('LoadTourCommand') as LoadTourCommand;
     command.parameters = parameters;
     return command.execute();
   }
 
-  public saveState(parameters: SaveStateParameters) {
+  public saveState(parameters: SaveStateParameters): any {
     const command = this.commandMap.get('SaveStateCommand') as SaveStateCommand;
     command.parameters = parameters;
     return command.execute();
   }
 
-  public loadState(parameters: LoadStateParameters) {
+  public loadState(parameters: LoadStateParameters): any {
     const command = this.commandMap.get('LoadStateCommand') as LoadStateCommand;
     command.parameters = parameters;
     return command.execute();
   }
 
-  public registerFnRef(key, fn) {
+  public registerFnRef(key, fn): void {
     this.functionMap.set(key, fn);
   }
 
-  public getFnByKey(key) {
+  public getFnByKey(key): any {
     return this.functionMap.get(key);
   }
 
-  // public registerIDGenerator(key){
-  //   this.functionMap.set(key,this.create_UUID);
-  // }
-
-  public createUUID() {
-    var dt = new Date().getTime();
-    var num1 = 16;
-    var num2 = 0x3;
-    var num3 = 0x8;
+  public createUUID(): any {
+    let dt = new Date().getTime();
+    const num1 = 16;
+    const num2 = 0x3;
+    const num3 = 0x8;
     const crypto = window.crypto || window.Crypto.prototype;
-    var array = new Uint32Array(1);
+    let array = new Uint32Array(1);
     crypto.getRandomValues(array); // Compliant for security-sensitive use cases
     const FileId = array[0];
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
       /[xy]/g,
-      function (c) {
-        var r = (dt + FileId * num1) % num1 | 0;
+      function (c): any {
+        let r = (dt + FileId * num1) % num1 | 0;
         dt = Math.floor(dt / num1);
         return (c === 'x' ? r : (r & num2) | num3).toString(num1);
       }
     );
   }
 
-  public generateSessionId() {
+  public generateSessionId(): void {
     this.sessionId = this.createUUID();
     this.storage.set('TOUR_SESSION_ID', this.sessionId);
   }
 
-  public getSessionId() {
+  public getSessionId(): any {
     return this.storage.get('TOUR_SESSION_ID');
   }
 }
