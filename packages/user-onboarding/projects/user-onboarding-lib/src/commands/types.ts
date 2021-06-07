@@ -29,6 +29,6 @@ export interface LoadStateCommand {
 }
 
 export interface BaseCommand<T = unknown, S = unknown> {
-  execute(): Observable<T>;
   parameters: S;
+  execute(): Observable<T>;
 }
