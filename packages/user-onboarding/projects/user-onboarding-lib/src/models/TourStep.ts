@@ -16,6 +16,5 @@ export interface TourStep {
     event: string;
     elementType: 'string' | 'function' | 'element';
   };
-  when?: any;
   buttons?: TourButton[];
 }
