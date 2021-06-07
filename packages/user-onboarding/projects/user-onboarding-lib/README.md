@@ -32,62 +32,74 @@ Create a new Application using Angular Cli and import the @sourceloop/user-onboa
 ```
 
 
-Two Services are provided.
-TourStoreServiceService provides with the functions - :
- a function to a session ID used to log the user session with the tour created
+Two Services are provided (TourService and TourStoreService)
+
+TourStoreService provides with the functions - :
+
+ A function to a session ID used to log the user session with the tour created.
  ```typescript
     sessionID = this.tourStoreService.getSessionId();
  ```
- functions to register the created custom commands and different interfaces for the implementation.
+ Functions to register the created custom commands and different interfaces for the implementation.
  ```typescript
-    this.tourStoreService.registerSaveTourCommand(this.customSTCommand);
-    this.tourStoreService.registerSaveStateCommand(this.customSSCommand);
-    this.tourStoreService.registerLoadTourCommand(this.customLTCommand);
-    this.tourStoreService.registerLoadStateCommand(this.customLSCommand);
+import { Observable, of } from 'rxjs';
+import {
+  LoadStateCommand,
+  SaveStateCommand,
+  LoadStateParameters,
+  SaveStateParameters,
+  TourState,
+  SaveTourCommand,
+  LoadTourCommand,
+  SaveTourParameters,
+  LoadTourParameters,
+  Tour,
+} from '@sourceloop/user-onboarding-client';
+import { StorageService } from 'ngx-webstorage-service';
 
-    export class SaveTCommandCustom implements SaveTourCommand{
-    constructor(private readonly storage: StorageService) { }
-      public parameters: SaveTourParameters;
-      execute(): Observable<Tour> {
-              const newTour: Tour = {
-                  tourId : this.parameters.tourId,
-                  tourSteps: this.parameters.tourSteps,
-                  styleSheet: this.parameters.styleSheet
-              };
-          this.storage.set(this.parameters.tourId,newTour);
-          return of(newTour)
-        };
+export class SaveTCommandCustom implements SaveTourCommand {
+  constructor(private readonly storage: StorageService) {}
+  public parameters: SaveTourParameters;
+  execute(): Observable<Tour> {
+    const newTour: Tour = {
+      tourId: this.parameters.tourId,
+      tourSteps: this.parameters.tourSteps,
+      styleSheet: this.parameters.styleSheet,
+    };
+    this.storage.set(this.parameters.tourId, newTour);
+    return of(newTour);
   }
-  
- export class LoadTCommandCustom implements LoadTourCommand{
-    constructor(private readonly storage: StorageService) { }
-      public parameters: LoadTourParameters;
-      execute(): Observable<Tour> {
-          const existingTour = this.storage.get(this.parameters.tourId);
-          return of(existingTour);
-        }
+}
+
+export class LoadTCommandCustom implements LoadTourCommand {
+  constructor(private readonly storage: StorageService) {}
+  public parameters: LoadTourParameters;
+  execute(): Observable<Tour> {
+    const existingTour = this.storage.get(this.parameters.tourId);
+    return of(existingTour);
   }
-  
-  export class SaveSCommandCustom implements SaveStateCommand{
-    constructor(private readonly storage: StorageService) { }
-      public parameters: SaveStateParameters;
-      execute(): Observable<TourState> {
-          const newTourState = this.parameters.state;
-          this.storage.set(newTourState.sessionId,newTourState);
-          return of(newTourState);
-        }
+}
+
+export class SaveSCommandCustom implements SaveStateCommand {
+  constructor(private readonly storage: StorageService) {}
+  public parameters: SaveStateParameters;
+  execute(): Observable<TourState> {
+    const newTourState = this.parameters.state;
+    this.storage.set(newTourState.sessionId, newTourState);
+    return of(newTourState);
   }
-  export class LoadSCommandCustom implements LoadStateCommand{
-    constructor(private readonly storage: StorageService) { }
-      public parameters: LoadStateParameters;
-      execute(): Observable<TourState> {
-          const currentState = this.storage.get(this.parameters.sessionId);
-          return of(currentState);
-        }
+}
+export class LoadSCommandCustom implements LoadStateCommand {
+  constructor(private readonly storage: StorageService) {}
+  public parameters: LoadStateParameters;
+  execute(): Observable<TourState> {
+    const currentState = this.storage.get(this.parameters.sessionId);
+    return of(currentState);
   }
+}
  ```
 
- next step is to create an array of TourSteps using the TourStep interface provided.
+ Next step is to create an array of TourSteps using the TourStep interface provided.
  These Steps will be added in the tour.
 
  ```typescript
@@ -173,43 +185,45 @@ TourStoreServiceService provides with the functions - :
   }
 ];
 ```
- byDefault commands are also provided incase a user doesn't specify the commands to be used.
+ By default commands are also provided incase a user doesn't specify the custom commands to be used.
 
- after the commands have been registered register the functions as well that will be used for the tour actions eg. next, prev etc using .
+ After the commands have been registered, register the functions as well, that will be used for the tour actions eg. next, prev etc.
 
- use of ReplaySubjet is recommended
+ Use of ReplaySubject is recommended.
 
 
 
  ```typescript
     let tourSubject = new ReplaySubject<Tour>();
-    this.tourStoreService.loadTour({tourId:this.tourID}).subscribe((existingTour)=>{
-      if(!existingTour){
-        this.tourStoreService.saveTour({tourId:this.tourID,tourSteps:this.sampleTour,styleSheet:""}).subscribe((newTour)=>{
-          tourSubject.next(newTour);
-        })
-      }
-      else{
-        tourSubject.next(existingTour);
-      }
-    });
-    
-    tourSubject.subscribe((tour)=>{
-      this.tourStoreService.registerFnRef('nextAction',function(){
+    this.tourStoreService
+      .loadTour({ tourId: this.tourID })
+      .subscribe((existingTour) => {
+        if (!existingTour) {
+          this.tourStoreService
+            .saveTour({
+              tourId: this.tourID,
+              tourSteps: this.sampleTour,
+              styleSheet: '',
+            })
+            .subscribe((newTour) => {
+              tourSubject.next(newTour);
+            });
+        } else {
+          tourSubject.next(existingTour);
+        }
+      });
+
+    tourSubject.subscribe((tour) => {
+      this.tourStoreService.registerFnRef('nextAction', function () {
         this.next();
-      }
-      
-      );
-      
-  });
-    tourSubject.subscribe((tour)=>{
-      this.tourStoreService.registerFnRef('prevAction',function(){
+      });
+    });
+    tourSubject.subscribe((tour) => {
+      this.tourStoreService.registerFnRef('prevAction', function () {
         this.back();
       });
-      
+
       this.tourService.run(tour.tourId);
-    });
-  }
-  
+    }); 
  ```
- in the above code the TourServiceService provides with the run function which starts the tour.
+ in the above code the TourService provides with the run function which starts the tour.
