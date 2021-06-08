@@ -5,7 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+<<<<<<< HEAD
     "test": "echo \"No TESTS !\"",
+=======
+    "test": "echo \"No tests available !\"",
+>>>>>>> 54433315e38cd25b554eb0908cd8f05965226705
     "lint": "ng lint",
     "e2e": "ng e2e",
     "userOnboardingbuild": "ng build userOnboardingLib"
