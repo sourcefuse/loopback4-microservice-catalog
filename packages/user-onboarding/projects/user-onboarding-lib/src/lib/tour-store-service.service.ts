@@ -93,10 +93,10 @@ export class TourStoreServiceService {
     const FileId = array[0];
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
       /[xy]/g,
-      c => {
+       x => {
         const r = (dt + FileId * num1) % num1 || 0;
         dt = Math.floor(dt / num1);
-        return (c === 'x' ? r : (r && num2) || num3).toString(num1);
+        return (x === 'x' ? r : (r && num2) || num3).toString(num1);
       }
     );
   }
