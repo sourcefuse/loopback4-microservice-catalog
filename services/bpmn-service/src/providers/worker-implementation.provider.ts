@@ -25,14 +25,25 @@ export class WorkerImplementationProvider
     }
   }
   value(): WorkerImplementationFn {
-    return async (topic, cmd) => {
+    return async worker => {
       if (this.client) {
-        this.client.subscribe(topic, ({task, taskService}) => {
-          cmd.operation({task, taskService}, (result: AnyObject) => {
-            if (result) {
-              this.ilogger.info(`Worker task completed - ${topic}`);
-            }
-          });
+        worker.running = true;
+        const subscription = this.client.subscribe(
+          worker.topic,
+          ({task, taskService}) => {
+            worker.command.operation(
+              {task, taskService},
+              (result: AnyObject) => {
+                if (result) {
+                  this.ilogger.info(`Worker task completed - ${worker.topic}`);
+                }
+              },
+            );
+          },
+        );
+        this.client.on('poll:error', () => {
+          worker.running = false;
+          subscription.unsubscribe();
         });
       } else {
         throw new Error('Workflow client not connected');
