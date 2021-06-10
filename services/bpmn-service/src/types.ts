@@ -55,7 +55,7 @@ export type WorkerNameCmdPair<T = AnyObject, R = AnyObject> = {
 };
 
 export interface WorkerImplementationFn<T = AnyObject, R = AnyObject> {
-  (topicName: string, commandCtor: BPMTask<T, R>): Promise<void>;
+  (worker: WorkerNameCmdPair<T, R>): Promise<void>;
 }
 
 export type SuccessResponse = {
