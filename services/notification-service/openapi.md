@@ -1,11 +1,11 @@
 ---
 title: Notification Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,40 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "notificationId": "string",
+    "userId": "string",
+    "isRead": true,
+    "actionMeta": {}
+  }
+]';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notification-users/bulk',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = [
   {
@@ -133,7 +166,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notification-users/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -188,7 +241,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/notification-users/hard',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/notification-users/hard',
@@ -228,7 +296,38 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -302,7 +401,38 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -376,7 +506,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -440,7 +590,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/notification-users/{id}',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/notification-users/{id}',
@@ -480,7 +645,38 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notification-users',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -571,7 +767,39 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notification-users',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -656,7 +884,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notification-users',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -741,7 +989,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/notification-users',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/notification-users',
@@ -783,7 +1046,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notification-users/{id}/notification',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -864,7 +1147,34 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "receiver": {},
+  "type": 0,
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string',
+  'pubnubToken':'string'
+};
+
+fetch('/notifications/access/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "receiver": {},
@@ -940,7 +1250,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/notifications/access/{id}',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/notifications/access/{id}',
@@ -982,7 +1307,37 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '[
+  {
+    "subject": "string",
+    "body": "string",
+    "receiver": {},
+    "type": 0,
+    "sentDate": "2019-08-24T14:15:22Z",
+    "options": {}
+  }
+]';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notifications/bulk',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = [
   {
@@ -1056,7 +1411,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notifications/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1105,13 +1480,129 @@ fetch('/notifications/count',
 This operation does not require authentication
 </aside>
 
+## NotificationController.updateById
+
+<a id="opIdNotificationController.updateById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/notifications/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/notifications/{id}',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /notifications/{id}`
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}
+```
+
+<h3 id="notificationcontroller.updatebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NotificationPartial](#schemanotificationpartial)|false|none|
+
+<h3 id="notificationcontroller.updatebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Notification PATCH success|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 ## NotificationController.findById
 
 <a id="opIdNotificationController.findById"></a>
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notifications/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1172,7 +1663,35 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notifications',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "subject": "string",
@@ -1248,13 +1767,141 @@ fetch('/notifications',
 This operation does not require authentication
 </aside>
 
+## NotificationController.updateAll
+
+<a id="opIdNotificationController.updateAll"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notifications',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notifications',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /notifications`
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}
+```
+
+<h3 id="notificationcontroller.updateall-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[NotificationPartial](#schemanotificationpartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="notificationcontroller.updateall-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 ## NotificationController.find
 
 <a id="opIdNotificationController.find"></a>
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notifications',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1333,7 +1980,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/notifications',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/notifications',
@@ -1375,7 +2037,38 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1467,7 +2160,39 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1553,7 +2278,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1639,7 +2384,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1754,6 +2519,40 @@ NotificationExcluding_id_
 |body|string|true|none|none|
 |receiver|object|true|none|none|
 |type|number|true|none|none|
+|sentDate|string(date-time)|false|none|none|
+|options|object|false|none|none|
+
+<h2 id="tocS_NotificationPartial">NotificationPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationpartial"></a>
+<a id="schema_NotificationPartial"></a>
+<a id="tocSnotificationpartial"></a>
+<a id="tocsnotificationpartial"></a>
+
+```json
+{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}
+
+```
+
+NotificationPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|type|number|false|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
 

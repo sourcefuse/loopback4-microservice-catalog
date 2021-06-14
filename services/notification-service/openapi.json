@@ -752,6 +752,39 @@
       }
     },
     "/notifications/{id}": {
+      "patch": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "NotificationController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "NotificationController.updateById"
+      },
       "get": {
         "x-controller-name": "NotificationController",
         "x-operation-name": "findById",
@@ -812,6 +845,51 @@
           }
         },
         "operationId": "NotificationController.create"
+      },
+      "patch": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "NotificationController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notifications.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Notification>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationPartial"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.updateAll"
       },
       "get": {
         "x-controller-name": "NotificationController",
@@ -957,6 +1035,38 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Notification, 'id'>"
+      },
+      "NotificationPartial": {
+        "title": "NotificationPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Notification>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Notification>"
       },
       "NotificationUser": {
         "title": "NotificationUser",

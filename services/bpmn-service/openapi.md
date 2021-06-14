@@ -1,11 +1,11 @@
 ---
 title: Bpmn Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,30 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "workflowVersion": 0,
+  "input": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/workflow/{id}/execute',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "workflowVersion": 0,
@@ -97,7 +120,31 @@ None
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/workflow/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
@@ -158,7 +205,22 @@ None
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/workflow/{id}',
+{
+  method: 'GET'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/workflow/{id}',
@@ -198,7 +260,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/workflow/{id}',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/workflow/{id}',
@@ -239,7 +316,32 @@ None
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/workflow',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
@@ -323,7 +425,27 @@ None
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/workflow',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
