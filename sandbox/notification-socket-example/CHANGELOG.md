@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.2 (2021-06-14)</small>
+
+* docs: add openapi spec docs in examples and improve the docs in services (#215) ([baec0f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/baec0f1)), closes [#215](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/215)
+* fix(core): update nodejs version in docker file to latest (#227) ([b12ce80](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b12ce80)), closes [#227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/227)
+
+
+
+
+
 ## <small>2.0.1 (2021-05-19)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example
