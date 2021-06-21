@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,14 +26,12 @@
     "rxjs": "~6.6.0",
     "shepherd.js": "^8.3.1",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.3",
-    "@videogular/ngx-videogular": "^3.0.1"
+    "zone.js": "~0.11.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.11",
     "@angular/cli": "~11.2.2",
     "@angular/compiler-cli": "~11.2.3",
-    "@types/core-js": "^2.5.4",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
