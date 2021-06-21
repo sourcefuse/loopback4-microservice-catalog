@@ -14,7 +14,8 @@
       "architect": {
         "build": {
           "styles": [
-            "./node_modules/shepherd.js/dist/css/shepherd.css"
+            "./node_modules/shepherd.js/dist/css/shepherd.css",
+            "./node_modules/@videogular/ngx-videogular/fonts/videogular.css"
           ],
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
