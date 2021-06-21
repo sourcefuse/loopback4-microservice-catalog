@@ -2,13 +2,40 @@ import { TourStoreServiceService } from './tour-store-service.service';
 import { Injectable } from '@angular/core';
 import Shepherd from 'shepherd.js';
 import { Tour } from '../models';
+import {
+  Router,
+  NavigationEnd,
+  Event as NavigationEvent,
+} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TourServiceService {
   currentStep;
-  constructor(private readonly tourStoreService: TourStoreServiceService) {}
+  public readonly nextRouteMap = new Map<string, string>();
+  public readonly prevRouteMap = new Map<string, string>();
+  constructor(
+    private readonly tourStoreService: TourStoreServiceService,
+    private readonly router: Router
+  ) {}
+
+  private waitForElement(querySelector, timeout = 0) {
+    const startTime = new Date().getTime();
+    return new Promise<void>((resolve, reject) => {
+      const timer = setInterval(() => {
+        const now = new Date().getTime();
+        if (document.querySelector(querySelector)) {
+          console.log(document.querySelector(querySelector));
+          clearInterval(timer);
+          resolve();
+        } else if (timeout && now - startTime >= timeout) {
+          clearInterval(timer);
+          reject();
+        }
+      }, 100);
+    });
+  }
 
   private triggerTour(tourInstance: Tour): void {
     let removedSteps;
@@ -45,17 +72,115 @@ export class TourServiceService {
         }
         tourInstance.tourSteps.forEach(e => {
           e.buttons.forEach(b => {
-            const key = b.action;
-            b.action = this.tourStoreService.getFnByKey(key);
+            const key = b.key;
+            const func = this.tourStoreService.getFnByKey(key);
+            const wrapperNext = () => {
+              this.router.navigate([e.nextRoute]);
+              this.router.events.subscribe((event: NavigationEvent) => {
+                if (event instanceof NavigationEnd) {
+                  this.waitForElement(e.attachTo.element, 0)
+                    .then(function () {
+                      tour.cancel();
+                      tour.next();
+                    })
+                    .catch(e => {
+                      console.log(e);
+                    });
+                }
+              });
+            };
+            const wrapperPrev = () => {
+              this.router.navigate([e.prevRoute]);
+              this.router.events.subscribe((event: NavigationEvent) => {
+                if (event instanceof NavigationEnd) {
+                  this.waitForElement(e.attachTo.element, 0)
+                    .then(function () {
+                      tour.cancel();
+                      tour.back();
+                    })
+                    .catch(e => {
+                      console.log(e);
+                    });
+                }
+              });
+            };
+            if (b.key === 'prevAction') {
+              if (e.prevRoute === e.currentRoute) {
+                b.action = func;
+              } else {
+                b.action = wrapperPrev;
+              }
+            } else if (b.key === 'nextAction') {
+              if (e.currentRoute === e.nextRoute) {
+                b.action = func;
+              } else {
+                b.action = wrapperNext;
+              }
+            } else {
+              b.action = func;
+            }
           });
         });
+        for (const s of tourInstance.tourSteps) {
+          this.nextRouteMap.set(s.id, s.nextRoute);
+        }
+        for (const s of tourInstance.tourSteps) {
+          this.prevRouteMap.set(s.id, s.prevRoute);
+        }
         tour.addSteps(tourInstance.tourSteps);
         tour.start();
         if (removedSteps !== undefined) {
+          console.log(removedSteps);
+
           removedSteps.forEach(e => {
             e.buttons.forEach(b => {
-              const k = b.action;
-              b.action = this.tourStoreService.getFnByKey(k);
+              const k = b.key;
+              const func = this.tourStoreService.getFnByKey(k);
+              const wrapperNext = () => {
+                this.router.navigate([e.nextRoute]);
+                this.router.events.subscribe((event: NavigationEvent) => {
+                  if (event instanceof NavigationEnd) {
+                    this.waitForElement(e.attachTo.element, 0)
+                      .then(function () {
+                        tour.cancel();
+                        tour.next();
+                      })
+                      .catch(e => {
+                        console.log(e);
+                      });
+                  }
+                });
+              };
+              const wrapperPrev = () => {
+                this.router.navigate([e.prevRoute]);
+                this.router.events.subscribe((event: NavigationEvent) => {
+                  if (event instanceof NavigationEnd) {
+                    this.waitForElement(e.attachTo.element, 0)
+                      .then(function () {
+                        tour.cancel();
+                        tour.back();
+                      })
+                      .catch(e => {
+                        console.log(e);
+                      });
+                  }
+                });
+              };
+              if (b.key === 'prevAction') {
+                if (e.prevRoute === e.currentRoute) {
+                  b.action = func;
+                } else {
+                  b.action = wrapperPrev;
+                }
+              } else if (b.key === 'nextAction') {
+                if (e.currentRoute === e.nextRoute) {
+                  b.action = func;
+                } else {
+                  b.action = wrapperNext;
+                }
+              } else {
+                b.action = func;
+              }
             });
           });
           tour.addSteps(removedSteps);

@@ -74,11 +74,11 @@ export class TourStoreServiceService {
     return command.execute();
   }
 
-  public registerFnRef(key, fn): void {
+  public registerFnRef(key, fn: Function): void {
     this.functionMap.set(key, fn);
   }
 
-  public getFnByKey(key): string {
+  public getFnByKey(key): Function {
     return this.functionMap.get(key);
   }
 
@@ -91,14 +91,11 @@ export class TourStoreServiceService {
     const array = new Uint32Array(1);
     crypto.getRandomValues(array); // Compliant for security-sensitive use cases
     const FileId = array[0];
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-      /[xy]/g,
-      x => {
-        const r = (dt + FileId * num1) % num1 || 0;
-        dt = Math.floor(dt / num1);
-        return (x === 'x' ? r : (r && num2) || num3).toString(num1);
-      }
-    );
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, x => {
+      const r = (dt + FileId * num1) % num1 || 0;
+      dt = Math.floor(dt / num1);
+      return (x === 'x' ? r : (r && num2) || num3).toString(num1);
+    });
   }
 
   public generateSessionId(): void {

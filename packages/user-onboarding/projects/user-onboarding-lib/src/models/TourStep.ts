@@ -17,4 +17,7 @@ export interface TourStep {
     elementType: 'string' | 'function' | 'element';
   };
   buttons?: TourButton[];
+  currentRoute?: string;
+  nextRoute?: string;
+  prevRoute?: string;
 }
