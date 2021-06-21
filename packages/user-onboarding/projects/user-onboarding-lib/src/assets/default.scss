@@ -2,25 +2,22 @@
 {
   @if($theme == 'light')
   {
-    .shepherd-button{background:rgb(3, 129, 3) !important};
-    .shepherd-element{background:lightcyan !important};
+    .shepherd-button{background:rgb(3, 129, 3) !important}
+    .shepherd-element{background:lightcyan !important}
     .shepherd-cancel-icon{background:white !important}
   }
   @if($theme == 'dark')
   {
-    .shepherd-element{background:darkslategrey !important};
-    .shepherd-cancel-icon{background:black !important};
-    .shepherd-button{background:darkslateblue !important};
+    .shepherd-element{background:darkslategrey !important}
+    .shepherd-cancel-icon{background:black !important}
+    .shepherd-button{background:darkslateblue !important}
     .shepherd-text{color : white !important}
   }
 }
+
 @mixin sourceloopBtnClr1($bgclr : '', $rdus : '',$clr : '')
 {
   .sourceloop-btn-class1{background:$bgclr !important; border-radius : $rdus !important; color : $clr !important;}
-}
-@mixin sourceloopBtnClr2($clr)
-{
-  .sourceloop-btn-class2{background:$clr !important}
 }
 
 @mixin sourceloopElement($bgclr : '',$brdrRdus :'',$mxWdth:''){
