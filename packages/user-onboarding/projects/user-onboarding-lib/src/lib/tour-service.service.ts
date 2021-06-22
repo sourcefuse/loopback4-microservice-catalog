@@ -81,7 +81,7 @@ export class TourServiceService {
                       tour.cancel();
                       tour.next();
                     })
-                    .catch(() =>{
+                    .catch(() => {
                       throw new Error('Error detected in loading');
                     });
                 }
