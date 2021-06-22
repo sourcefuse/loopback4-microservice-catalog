@@ -19,7 +19,7 @@ export class TourServiceService {
     private readonly router: Router
   ) {}
 
-  private waitForElement(querySelector, timeout = 0) {
+  private waitForElement(querySelector, timeout = 0): Promise<void> {
     const startTime = new Date().getTime();
     return new Promise<void>((resolve, reject) => {
       const timer = setInterval(() => {
@@ -77,12 +77,12 @@ export class TourServiceService {
               this.router.events.subscribe((event: NavigationEvent) => {
                 if (event instanceof NavigationEnd) {
                   this.waitForElement(e.attachTo.element, 0)
-                    .then(function () {
+                    .then(() => {
                       tour.cancel();
                       tour.next();
                     })
-                    .catch(() => {
-                      throw new Error("Error detected in loading");
+                    .catch(() =>{
+                      throw new Error('Error detected in loading');
                     });
                 }
               });
@@ -92,12 +92,12 @@ export class TourServiceService {
               this.router.events.subscribe((event: NavigationEvent) => {
                 if (event instanceof NavigationEnd) {
                   this.waitForElement(e.attachTo.element, 0)
-                    .then(function () {
+                    .then(() => {
                       tour.cancel();
                       tour.back();
                     })
                     .catch(() => {
-                      throw new Error("Error detected in loading");
+                      throw new Error('Error detected in loading');
                     });
                 }
               });
@@ -122,54 +122,54 @@ export class TourServiceService {
         tour.addSteps(tourInstance.tourSteps);
         tour.start();
         if (removedSteps !== undefined) {
-          removedSteps.forEach(e => {
-            e.buttons.forEach(b => {
-              const k = b.key;
+          removedSteps.forEach(er => {
+            er.buttons.forEach(br => {
+              const k = br.key;
               const func = this.tourStoreService.getFnByKey(k);
-              const wrapperNext = () => {
-                this.router.navigate([e.nextRoute]);
+              const wrapperNextRemoved = () => {
+                this.router.navigate([er.nextRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
                   if (event instanceof NavigationEnd) {
-                    this.waitForElement(e.attachTo.element, 0)
-                      .then(function () {
+                    this.waitForElement(er.attachTo.element, 0)
+                      .then(() => {
                         tour.cancel();
                         tour.next();
                       })
-                      .catch(()=> {
-                          throw new Error("Error in loading");
+                      .catch(() => {
+                          throw new Error('Error in loading');
                       });
                   }
                 });
               };
-              const wrapperPrev = () => {
-                this.router.navigate([e.prevRoute]);
+              const wrapperPrevRemoved = () => {
+                this.router.navigate([er.prevRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
                   if (event instanceof NavigationEnd) {
-                    this.waitForElement(e.attachTo.element, 0)
-                      .then(function () {
+                    this.waitForElement(er.attachTo.element, 0)
+                      .then(() => {
                         tour.cancel();
                         tour.back();
                       })
-                      .catch(()=> {
-                          throw new Error("Error in loading");
+                      .catch(() => {
+                          throw new Error('Error in loading');
                       });
                   }
                 });
               };
-              if (b.key === 'prevAction') {
-                if (e.prevRoute === e.currentRoute) {
-                  b.action = func;
+              if (br.key === 'prevAction') {
+                if (er.prevRoute === er.currentRoute) {
+                  br.action = func;
                 } else {
-                  b.action = wrapperPrev;
+                  br.action = wrapperPrevRemoved;
                 }
-              } else if (b.key === 'nextAction') {
-                if (e.currentRoute === e.nextRoute) {
-                  b.action = func;
+              } else if (br.key === 'nextAction') {
+                if (er.currentRoute === er.nextRoute) {
+                  br.action = func;
                 } else {
-                  b.action = wrapperNext;
+                  br.action = wrapperNextRemoved;
                 }
               } else {
-                b.action = func;
+                br.action = func;
               }
             });
           });
