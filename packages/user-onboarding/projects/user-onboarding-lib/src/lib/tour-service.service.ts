@@ -12,9 +12,8 @@ import {
   providedIn: 'root',
 })
 export class TourServiceService {
+  private readonly interval = 100;
   currentStep;
-  public readonly nextRouteMap = new Map<string, string>();
-  public readonly prevRouteMap = new Map<string, string>();
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
     private readonly router: Router
@@ -26,14 +25,13 @@ export class TourServiceService {
       const timer = setInterval(() => {
         const now = new Date().getTime();
         if (document.querySelector(querySelector)) {
-          console.log(document.querySelector(querySelector));
           clearInterval(timer);
           resolve();
         } else if (timeout && now - startTime >= timeout) {
           clearInterval(timer);
           reject();
         }
-      }, 100);
+      }, this.interval);
     });
   }
 
@@ -83,8 +81,8 @@ export class TourServiceService {
                       tour.cancel();
                       tour.next();
                     })
-                    .catch(e => {
-                      console.log(e);
+                    .catch(() => {
+                      console.log("Error detected");
                     });
                 }
               });
@@ -98,8 +96,8 @@ export class TourServiceService {
                       tour.cancel();
                       tour.back();
                     })
-                    .catch(e => {
-                      console.log(e);
+                    .catch(() => {
+                      console.log("Error detected");
                     });
                 }
               });
@@ -121,17 +119,9 @@ export class TourServiceService {
             }
           });
         });
-        for (const s of tourInstance.tourSteps) {
-          this.nextRouteMap.set(s.id, s.nextRoute);
-        }
-        for (const s of tourInstance.tourSteps) {
-          this.prevRouteMap.set(s.id, s.prevRoute);
-        }
         tour.addSteps(tourInstance.tourSteps);
         tour.start();
         if (removedSteps !== undefined) {
-          console.log(removedSteps);
-
           removedSteps.forEach(e => {
             e.buttons.forEach(b => {
               const k = b.key;
@@ -145,8 +135,8 @@ export class TourServiceService {
                         tour.cancel();
                         tour.next();
                       })
-                      .catch(e => {
-                        console.log(e);
+                      .catch(()=> {
+                          throw new Error("Error in loading");
                       });
                   }
                 });
@@ -160,8 +150,8 @@ export class TourServiceService {
                         tour.cancel();
                         tour.back();
                       })
-                      .catch(e => {
-                        console.log(e);
+                      .catch(()=> {
+                          throw new Error("Error in loading");
                       });
                   }
                 });
@@ -189,6 +179,7 @@ export class TourServiceService {
           }
         }
         tour.on('show', () => {
+          tour.cancel();
           this.tourStoreService.saveState({
             tourId: tourInstance.tourId,
             state: {
