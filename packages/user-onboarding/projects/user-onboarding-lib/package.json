@@ -4,15 +4,12 @@
   "peerDependencies": {
     "@angular/common": "^11.2.12",
     "@angular/core": "^11.2.12",
-    "rxjs": "~6.6.0"
-  },
-  "dependencies": {
-    "tslib": "^2.0.0"
-    
-  },
-  "allowedNonPeerDependencies": {
+    "rxjs": "~6.6.0",
     "@angular/router": "~11.2.3",
     "shepherd.js": "^8.3.1",
     "ngx-webstorage-service": "^4.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"   
   }
 }

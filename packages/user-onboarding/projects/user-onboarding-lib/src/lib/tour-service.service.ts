@@ -82,7 +82,7 @@ export class TourServiceService {
                       tour.next();
                     })
                     .catch(() => {
-                      console.log("Error detected");
+                      throw new Error("Error detected in loading");
                     });
                 }
               });
@@ -97,7 +97,7 @@ export class TourServiceService {
                       tour.back();
                     })
                     .catch(() => {
-                      console.log("Error detected");
+                      throw new Error("Error detected in loading");
                     });
                 }
               });
