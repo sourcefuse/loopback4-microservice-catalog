@@ -52,6 +52,11 @@
         "tags": [
           "ForgetPasswordController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success Response.",
@@ -502,6 +507,11 @@
         "tags": [
           "ForgetPasswordController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "If User password successfully changed."
@@ -569,6 +579,11 @@
         "tags": [
           "SignupRequestController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Sucess Response.",
@@ -611,6 +626,11 @@
         "x-operation-name": "verifyInviteToken",
         "tags": [
           "SignupRequestController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {

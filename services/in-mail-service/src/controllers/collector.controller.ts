@@ -17,7 +17,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   STATUS_CODE,
-  OPERATION_SECURITY_SPEC
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
   authenticate,

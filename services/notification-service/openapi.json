@@ -16,6 +16,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Notification User model instance",
@@ -49,6 +54,11 @@
         "x-operation-name": "count",
         "tags": [
           "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -88,6 +98,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Notification DELETE success"
@@ -118,6 +133,11 @@
         "x-operation-name": "getNotification",
         "tags": [
           "NotificationUserNotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -154,6 +174,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "NotificationUser PUT success"
@@ -186,6 +211,11 @@
         "x-operation-name": "updateById",
         "tags": [
           "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {
@@ -220,6 +250,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "NotificationUser instance",
@@ -250,6 +285,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "NotificationUser DELETE success"
@@ -274,6 +314,11 @@
         "x-operation-name": "create",
         "tags": [
           "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -303,6 +348,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -349,6 +399,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of NotificationUser model instances",
@@ -385,6 +440,11 @@
         "tags": [
           "NotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Notification DELETE success"
@@ -415,6 +475,11 @@
         "x-operation-name": "grantAccess",
         "tags": [
           "PubnubNotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -495,6 +560,11 @@
         "tags": [
           "NotificationController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Notifications",
@@ -535,6 +605,11 @@
         "tags": [
           "NotificationController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Notification model count",
@@ -572,6 +647,11 @@
         "x-operation-name": "create",
         "tags": [
           "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -612,6 +692,11 @@
         "x-operation-name": "patch",
         "tags": [
           "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -667,6 +752,11 @@
         "tags": [
           "NotificationNotificationUserController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Notification has many NotificationUser",
@@ -711,6 +801,11 @@
         "x-operation-name": "delete",
         "tags": [
           "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -757,6 +852,11 @@
         "x-operation-name": "updateById",
         "tags": [
           "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {
@@ -823,6 +923,11 @@
         "tags": [
           "NotificationController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Notification model instance",
@@ -851,6 +956,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -897,6 +1007,11 @@
         "tags": [
           "NotificationController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Notification model instances",
@@ -932,6 +1047,11 @@
         "x-operation-name": "deleteAll",
         "tags": [
           "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {

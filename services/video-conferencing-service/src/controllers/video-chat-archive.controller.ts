@@ -9,7 +9,11 @@ import {
   AzureTargetOptions,
 } from '../types';
 import {VideoChatBindings} from '../keys';
-import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import {repository} from '@loopback/repository';
 import {VideoChatSessionRepository, AuditLogsRepository} from '../repositories';
 import moment from 'moment';

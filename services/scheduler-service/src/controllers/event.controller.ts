@@ -31,7 +31,11 @@ import {
 } from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
-import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import {FreeBusyDTO} from '../models/free-busy.dto';
 import {EventService} from '../services';
 

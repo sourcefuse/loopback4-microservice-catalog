@@ -18,7 +18,11 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  STATUS_CODE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {INotification, NotificationBindings} from 'loopback4-notifications';

@@ -264,7 +264,7 @@ export class OriginatorController {
       } as ResponseObject,
       [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
-    }
+    },
   })
   async updateDraft(
     @requestBody({

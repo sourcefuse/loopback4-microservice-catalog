@@ -16,6 +16,11 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -46,6 +51,11 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -74,6 +84,11 @@
         "x-operation-name": "deleteArchive",
         "tags": [
           "VideoChatArchiveController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -106,6 +121,11 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -126,6 +146,11 @@
         "x-operation-name": "getAttendeesList",
         "tags": [
           "VideoChatSessionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "parameters": [
           {
@@ -165,6 +190,11 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "MessageRecipient PATCH success"
@@ -189,6 +219,11 @@
         "x-operation-name": "getMeetingToken",
         "tags": [
           "VideoChatSessionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -231,6 +266,11 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Session details PATCH success"
@@ -265,6 +305,11 @@
         "x-operation-name": "getMeetingLink",
         "tags": [
           "VideoChatSessionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {

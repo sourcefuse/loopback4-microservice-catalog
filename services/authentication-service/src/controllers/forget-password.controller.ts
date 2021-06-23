@@ -15,7 +15,7 @@ import {
   ErrorCodes,
   STATUS_CODE,
   SuccessResponse,
-  OPERATION_SECURITY_SPEC
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {

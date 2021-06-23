@@ -19,7 +19,11 @@ import {
 import {VideoChatBindings} from '../keys';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
 import {VideoChatSession, SessionAttendees} from '../models';
