@@ -20,7 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/working-hours';
 
@@ -35,6 +35,7 @@ export class CalendarWorkingHourController {
   })
   @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Calendar has many WorkingHour',
@@ -58,6 +59,7 @@ export class CalendarWorkingHourController {
   })
   @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
@@ -90,6 +92,7 @@ export class CalendarWorkingHourController {
   })
   @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar.WorkingHour PATCH success count',
@@ -118,6 +121,7 @@ export class CalendarWorkingHourController {
   })
   @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar.WorkingHour DELETE success count',

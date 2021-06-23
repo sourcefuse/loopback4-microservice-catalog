@@ -21,7 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attendee} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttendeeRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 
 const basePath = '/attendees';
 
@@ -36,6 +36,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.CreateAttendee]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attendee model instance',
@@ -64,6 +65,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attendee model count',
@@ -80,6 +82,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Attendee model instances',
@@ -105,6 +108,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attendee PATCH success count',
@@ -131,6 +135,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attendee model instance',
@@ -154,6 +159,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Attendee PATCH success',
@@ -179,6 +185,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Attendee PUT success',
@@ -197,6 +204,7 @@ export class AttendeeController {
   })
   @authorize({permissions: [PermissionKey.DeleteAttendee]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Attendee DELETE success',

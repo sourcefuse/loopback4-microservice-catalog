@@ -6,7 +6,7 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Notification, NotificationUser} from '../models';
 import {NotificationUserRepository} from '../repositories';
-
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 export class NotificationUserNotificationController {
   constructor(
     @repository(NotificationUserRepository)
@@ -16,6 +16,7 @@ export class NotificationUserNotificationController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @get('/notification-users/{id}/notification', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
         description: 'Notification belonging to NotificationUser',

@@ -17,7 +17,7 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, Event, EventAttendeeView} from '../models';
@@ -54,6 +54,7 @@ export class CalendarEventController {
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Calendar has many Event',
@@ -120,6 +121,7 @@ export class CalendarEventController {
   })
   @authorize({permissions: [PermissionKey.CreateEvent]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
@@ -150,6 +152,7 @@ export class CalendarEventController {
   })
   @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar.Event PATCH success count',
@@ -177,6 +180,7 @@ export class CalendarEventController {
   })
   @authorize({permissions: [PermissionKey.DeleteEvent]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar.Event DELETE success count',

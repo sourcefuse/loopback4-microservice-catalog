@@ -21,7 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 
 const basePath = '/working-hours';
 
@@ -36,6 +36,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'WorkingHour model instance',
@@ -66,6 +67,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'WorkingHour model count',
@@ -84,6 +86,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of WorkingHour model instances',
@@ -109,6 +112,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'WorkingHour PATCH success count',
@@ -135,6 +139,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'WorkingHour model instance',
@@ -159,6 +164,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'WorkingHour PATCH success',
@@ -184,6 +190,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'WorkingHour PUT success',
@@ -202,6 +209,7 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'WorkingHour DELETE success',

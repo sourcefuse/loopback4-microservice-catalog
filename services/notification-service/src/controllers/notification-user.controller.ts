@@ -31,6 +31,7 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   IAuthUserWithPermissions,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {inject} from '@loopback/core';
@@ -47,6 +48,7 @@ export class NotificationUserController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'NotificationUser model instance',
@@ -82,6 +84,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @post(`${basePath}/bulk`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification User model instance',
@@ -123,6 +126,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'NotificationUser model count',
@@ -146,6 +150,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of NotificationUser model instances',
@@ -173,6 +178,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'NotificationUser PATCH success count',
@@ -205,6 +211,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'NotificationUser instance',
@@ -227,6 +234,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'NotificationUser PATCH success',
@@ -255,6 +263,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'NotificationUser PUT success',
@@ -276,6 +285,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.DeleteNotification]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'NotificationUser DELETE success',
@@ -296,6 +306,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.DeleteNotification]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Notification DELETE success',
@@ -318,6 +329,7 @@ export class NotificationUserController {
   })
   @authorize({permissions: [PermissionKey.DeleteNotification]})
   @del(`${basePath}/hard`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Notification DELETE success',

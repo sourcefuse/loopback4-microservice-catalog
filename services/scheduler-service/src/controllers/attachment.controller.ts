@@ -21,7 +21,7 @@ import {authorize} from 'loopback4-authorization';
 import {Attachment} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 
 const basePath = '/attachments';
 
@@ -36,6 +36,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.CreateAttachment]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
@@ -64,6 +65,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attachment model count',
@@ -82,6 +84,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Attachment model instances',
@@ -107,6 +110,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attachment PATCH success count',
@@ -133,6 +137,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
@@ -157,6 +162,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Attachment PATCH success',
@@ -182,6 +188,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Attachment PUT success',
@@ -200,6 +207,7 @@ export class AttachmentController {
   })
   @authorize({permissions: [PermissionKey.DeleteAttachment]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Attachment DELETE success',

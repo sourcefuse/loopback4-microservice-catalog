@@ -17,6 +17,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   STATUS_CODE,
+  OPERATION_SECURITY_SPEC
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -60,6 +61,7 @@ export class CollectorController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionsEnums.GetThread]})
   @get('threads/{threadId}', {
+    security: OPERATION_SECURITY_SPEC,
     summary:
       'GET Thread Message API. Collect complete single message thread based on thread identity.',
     responses: {
@@ -123,6 +125,7 @@ export class CollectorController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionsEnums.GetInMail]})
   @get('mails/{messageId}', {
+    security: OPERATION_SECURITY_SPEC,
     summary:
       'GET Message API. Collect a single message based on message identity.',
     responses: {
@@ -210,6 +213,7 @@ export class CollectorController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionsEnums.GetThread]})
   @get('threads', {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Thread List API. Collect a list of all threads.',
     responses: {
       [STATUS_CODE.OK]: {
@@ -274,6 +278,7 @@ export class CollectorController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionsEnums.GetInMails]})
   @get('mails', {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'Collect a list of all messages.',
     responses: {
       [STATUS_CODE.OK]: {

@@ -18,7 +18,7 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {INotification, NotificationBindings} from 'loopback4-notifications';
@@ -49,6 +49,7 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
@@ -86,6 +87,7 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
   @post(`${basePath}/bulk`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Notifications',
@@ -136,6 +138,7 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model count',
@@ -153,6 +156,7 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Notification model instances',
@@ -192,6 +196,7 @@ export class NotificationController {
   })
   @authorize({permissions: [PermissionKey.UpdateNotification]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification PATCH success count',
@@ -219,6 +224,7 @@ export class NotificationController {
   })
   @authorize({permissions: [PermissionKey.UpdateNotification]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
         description: 'Notification PATCH success',
@@ -242,6 +248,7 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteNotification]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Notification DELETE success',

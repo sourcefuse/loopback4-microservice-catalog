@@ -9,7 +9,7 @@ import {
   AzureTargetOptions,
 } from '../types';
 import {VideoChatBindings} from '../keys';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE,OPERATION_SECURITY_SPEC,} from '@sourceloop/core';
 import {repository} from '@loopback/repository';
 import {VideoChatSessionRepository, AuditLogsRepository} from '../repositories';
 import moment from 'moment';
@@ -27,6 +27,7 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives/{archiveId}', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -62,6 +63,7 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -81,6 +83,7 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.DeleteArchive]})
   @del('/archives/{archiveId}', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -118,6 +121,7 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.SetUploadTarget]})
   @put('/archives/storage-target', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         content: {

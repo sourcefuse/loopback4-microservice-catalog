@@ -1,7 +1,7 @@
 // Uncomment these imports to begin using these cool features!
 
 import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';
-import {CONTENT_TYPE, ErrorCodes, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, ErrorCodes, STATUS_CODE,OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {SignupRequestDto} from '../models/signup-request-dto.model';
 import {SignupRequestResponseDto} from '../models/signup-request-response-dto.model';
@@ -76,6 +76,7 @@ export class SignupRequestController {
   )
   @authorize({permissions: ['*']})
   @post(`${basePath}/create-user`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: successResponse,
@@ -110,6 +111,7 @@ export class SignupRequestController {
   )
   @authorize({permissions: ['*']})
   @get(`${basePath}/verify-token`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: successResponse,
