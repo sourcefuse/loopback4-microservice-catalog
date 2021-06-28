@@ -31,8 +31,7 @@ export class TourServiceService {
         } else if (timeout && now - startTime >= timeout) {
           clearInterval(timer);
           reject();
-        } else{
-          // do nothing
+        } else{// do nothing
         }
       }, this.interval);
     });
