@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2021-06-14)
+
+* fix(bpmn-service): fix worker execution issue in bpmn service (#234) ([3773892](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3773892)), closes [#234](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/234) [#233](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/233)
+* fix(core): all packages updated (#214) ([8f15aaa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f15aaa)), closes [#214](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/214)
+* fix(core): open api docs update ([9b7cb69](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b7cb69)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(video-conferencing-service): fixed missing exports (#220) ([5baf4af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5baf4af)), closes [#220](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/220) [#219](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/219)
+* feat(user-onboarding): base code for user-onboarding lib (#203) ([8d4d19b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8d4d19b)), closes [#203](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/203)
+* docs: add openapi spec docs in examples and improve the docs in services (#215) ([baec0f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/baec0f1)), closes [#215](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/215)
+
+
+### BREAKING CHANGE
+
+* Type of WorkerImplementationFn
+
+
+
+
 ## 1.0.0 (2021-05-12)
 
 **Note:** Version bump only for package @sourceloop/bpmn-service

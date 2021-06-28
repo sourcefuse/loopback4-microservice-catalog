@@ -1,11 +1,11 @@
 ---
 title: Video Conferencing Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,28 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'text/plain'
+};
+
+fetch('/archives/storage-target',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
@@ -98,7 +119,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/archives/{archiveId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -153,7 +194,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'text/plain'
+};
+
+fetch('/archives/{archiveId}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -206,7 +267,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/archives',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -257,7 +338,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'text/plain'
+};
+
+fetch('/session/{meetingLinkId}/attendees',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -313,7 +414,22 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/session/{meetingLinkId}/end',
+{
+  method: 'PATCH'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/session/{meetingLinkId}/end',
@@ -353,7 +469,28 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/session/{meetingLinkId}/token',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
@@ -416,7 +553,47 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": 0,
+  "sessionId": "string",
+  "meetingLink": "string",
+  "isScheduled": true,
+  "scheduleTime": "2019-08-24T14:15:22Z",
+  "isArchived": true,
+  "archiveId": "string",
+  "uploadTarget": "string",
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/session/{meetingLinkId}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -508,7 +685,28 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'text/plain'
+};
+
+fetch('/session',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
@@ -568,7 +766,27 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/webhooks/session',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
