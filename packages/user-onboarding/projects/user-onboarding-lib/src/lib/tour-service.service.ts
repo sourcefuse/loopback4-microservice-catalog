@@ -142,17 +142,9 @@ export class TourServiceService {
               tour.back();
             };
             if (b.key === 'prevAction') {
-              if (e.prevRoute === e.currentRoute) {
-                b.action = wrapperNormalPrev;
-              } else {
-                b.action = wrapperPrev;
-              }
+              b.action = e.prevRoute === e.currentRoute ? wrapperNormalPrev : wrapperPrev;
             } else if (b.key === 'nextAction') {
-              if (e.currentRoute === e.nextRoute) {
-                b.action = wrapperNormalNext;
-              } else {
-                b.action = wrapperNext;
-              }
+              b.action = e.nextRoute === e.currentRoute ? wrapperNormalNext : wrapperNext;
             } else {
               b.action = func;
             }
@@ -232,17 +224,9 @@ export class TourServiceService {
                 tour.back();
               };
               if (br.key === 'prevAction') {
-                if (er.prevRoute === er.currentRoute) {
-                  br.action = wrapperNormalPrevRemoved;
-                } else {
-                  br.action = wrapperPrevRemoved;
-                }
+                br.action = er.prevRoute === er.currentRoute ? wrapperNormalPrevRemoved : wrapperPrevRemoved;
               } else if (br.key === 'nextAction') {
-                if (er.currentRoute === er.nextRoute) {
-                  br.action = wrapperNormalNextRemoved;
-                } else {
-                  br.action = wrapperNextRemoved;
-                }
+                br.action = er.nextRoute === er.currentRoute ? wrapperNormalNextRemoved : wrapperNextRemoved;
               } else {
                 br.action = func;
               }
