@@ -10,6 +10,6 @@
     "ngx-webstorage-service": "^4.1.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"   
+    "tslib": "^2.0.0"
   }
 }

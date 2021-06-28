@@ -12,8 +12,9 @@ import {
   providedIn: 'root',
 })
 export class TourServiceService {
-  private readonly interval = 100;
   currentStep;
+  private readonly interval = 100;
+
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
     private readonly router: Router
@@ -73,6 +74,13 @@ export class TourServiceService {
             const key = b.key;
             const func = this.tourStoreService.getFnByKey(key);
             const wrapperNext = () => {
+              this.tourStoreService.saveState({
+                tourId: tourInstance.tourId,
+                state: {
+                  sessionId: this.tourStoreService.getSessionId(),
+                  step: e.nextStepId,
+                },
+              });
               this.router.navigate([e.nextRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
                 if (event instanceof NavigationEnd) {
@@ -88,6 +96,13 @@ export class TourServiceService {
               });
             };
             const wrapperPrev = () => {
+              this.tourStoreService.saveState({
+                tourId: tourInstance.tourId,
+                state: {
+                  sessionId: this.tourStoreService.getSessionId(),
+                  step: e.prevStepId,
+                },
+              });
               this.router.navigate([e.prevRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
                 if (event instanceof NavigationEnd) {
@@ -102,15 +117,37 @@ export class TourServiceService {
                 }
               });
             };
+            const wrapperNormalNext = () => {
+              this.tourStoreService.saveState({
+                tourId: tourInstance.tourId,
+                state: {
+                  sessionId: this.tourStoreService.getSessionId(),
+                  step: e.nextStepId,
+                },
+              });
+              tour.cancel();
+              tour.next();
+            };
+            const wrapperNormalPrev = () => {
+              this.tourStoreService.saveState({
+                tourId: tourInstance.tourId,
+                state: {
+                  sessionId: this.tourStoreService.getSessionId(),
+                  step: e.prevStepId,
+                },
+              });
+              tour.cancel();
+              tour.back();
+            };
             if (b.key === 'prevAction') {
               if (e.prevRoute === e.currentRoute) {
-                b.action = func;
+                b.action = wrapperNormalPrev;
               } else {
                 b.action = wrapperPrev;
               }
             } else if (b.key === 'nextAction') {
               if (e.currentRoute === e.nextRoute) {
-                b.action = func;
+                b.action = wrapperNormalNext;
               } else {
                 b.action = wrapperNext;
               }
@@ -127,6 +164,13 @@ export class TourServiceService {
               const k = br.key;
               const func = this.tourStoreService.getFnByKey(k);
               const wrapperNextRemoved = () => {
+                this.tourStoreService.saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: er.nextStepId,
+                  },
+                });
                 this.router.navigate([er.nextRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
                   if (event instanceof NavigationEnd) {
@@ -136,12 +180,19 @@ export class TourServiceService {
                         tour.next();
                       })
                       .catch(() => {
-                          throw new Error('Error in loading');
+                        throw new Error('Error in loading');
                       });
                   }
                 });
               };
               const wrapperPrevRemoved = () => {
+                this.tourStoreService.saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: er.prevStepId,
+                  },
+                });
                 this.router.navigate([er.prevRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
                   if (event instanceof NavigationEnd) {
@@ -151,20 +202,42 @@ export class TourServiceService {
                         tour.back();
                       })
                       .catch(() => {
-                          throw new Error('Error in loading');
+                        throw new Error('Error in loading');
                       });
                   }
                 });
               };
+              const wrapperNormalNextRemoved = () => {
+                this.tourStoreService.saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: er.nextStepId,
+                  },
+                });
+                tour.cancel();
+                tour.next();
+              };
+              const wrapperNormalPrevRemoved = () => {
+                this.tourStoreService.saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: er.prevStepId,
+                  },
+                });
+                tour.cancel();
+                tour.back();
+              };
               if (br.key === 'prevAction') {
                 if (er.prevRoute === er.currentRoute) {
-                  br.action = func;
+                  br.action = wrapperNormalPrevRemoved;
                 } else {
                   br.action = wrapperPrevRemoved;
                 }
               } else if (br.key === 'nextAction') {
                 if (er.currentRoute === er.nextRoute) {
-                  br.action = func;
+                  br.action = wrapperNormalNextRemoved;
                 } else {
                   br.action = wrapperNextRemoved;
                 }
@@ -178,16 +251,6 @@ export class TourServiceService {
             tour.steps.splice(0, 0, tour.steps.pop());
           }
         }
-        tour.on('show', () => {
-          tour.cancel();
-          this.tourStoreService.saveState({
-            tourId: tourInstance.tourId,
-            state: {
-              sessionId: this.tourStoreService.getSessionId(),
-              step: tour.getCurrentStep().id,
-            },
-          });
-        });
       });
   }
 
