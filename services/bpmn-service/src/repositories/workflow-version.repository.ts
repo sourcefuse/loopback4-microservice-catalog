@@ -11,12 +11,12 @@ import {WorkflowRepository} from './workflow.repository';
 
 export class WorkflowVersionRepository extends DefaultCrudRepository<
   WorkflowVersion,
-  typeof WorkflowVersion.prototype.version,
+  typeof WorkflowVersion.prototype.id,
   WorkflowVersionRelations
 > {
   public readonly workflow: BelongsToAccessor<
     Workflow,
-    typeof WorkflowVersion.prototype.version
+    typeof WorkflowVersion.prototype.id
   >;
   constructor(
     @inject(`datasources.${WorkflowCacheSourceName}`)
