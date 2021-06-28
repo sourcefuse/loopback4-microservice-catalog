@@ -271,7 +271,7 @@ export class WorkflowController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteWorkflow]})
-  @del(`${basePath}/{id}/{version}`, {
+  @del(`${basePath}/{id}/version/{version}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {

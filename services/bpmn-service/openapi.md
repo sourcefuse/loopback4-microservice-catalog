@@ -128,7 +128,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/{version}',
+fetch('/workflow/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -149,7 +149,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/{version}',
+fetch('/workflow/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -163,7 +163,7 @@ fetch('/workflow/{id}/{version}',
 
 ```
 
-`DELETE /workflow/{id}/{version}`
+`DELETE /workflow/{id}/version/{version}`
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -278,10 +278,15 @@ HTTPBearer
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/workflow/{id}',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -294,10 +299,15 @@ fetch('/workflow/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/workflow/{id}',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -323,7 +333,7 @@ fetch('/workflow/{id}',
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
 </aside>
 
 ## WorkflowController.deleteById
@@ -512,7 +522,8 @@ HTTPBearer
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow',
@@ -533,7 +544,8 @@ fetch('/workflow',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow',
@@ -614,7 +626,7 @@ Status Code **200**
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
 </aside>
 
 # Schemas
