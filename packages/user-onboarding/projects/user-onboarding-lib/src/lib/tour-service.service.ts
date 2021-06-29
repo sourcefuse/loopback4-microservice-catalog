@@ -1,7 +1,7 @@
 import { TourStoreServiceService } from './tour-store-service.service';
 import { Injectable } from '@angular/core';
 import Shepherd from 'shepherd.js';
-import { Tour } from '../models';
+import { Tour, TourButton, TourStep } from '../models';
 import {
   Router,
   NavigationEnd,
@@ -28,6 +28,45 @@ export class TourServiceService {
     private readonly router: Router
   ) {}
 
+  private addRemovedSteps(removedSteps): void {
+    for (const step of removedSteps) {
+      this.tour.steps.splice(0, 0, this.tour.steps.pop());
+    }
+  }
+
+  private actionAssignment(
+    e: TourStep,
+    b: TourButton,
+    wrapperNormalNext,
+    wrapperNormalPrev,
+    wrapperNext,
+    wrapperPrev,
+    func
+  ): void {
+    if (b.key === 'prevAction') {
+      b.action =
+        e.prevRoute === e.currentRoute ? wrapperNormalPrev : wrapperPrev;
+    } else if (b.key === 'nextAction') {
+      b.action =
+        e.nextRoute === e.currentRoute ? wrapperNormalNext : wrapperNext;
+    } else {
+      b.action = func;
+    }
+  }
+
+  private navigationCheck(event: NavigationEvent, e: TourStep): void {
+    if (event instanceof NavigationEnd) {
+      this.waitForElement(e.attachTo.element, 0)
+        .then(() => {
+          this.tour.cancel();
+          this.tour.next();
+        })
+        .catch(() => {
+          throw new Error('Error detected in loading');
+        });
+    }
+  }
+
   private waitForElement(querySelector, timeout = 0): Promise<void> {
     const startTime = new Date().getTime();
     return new Promise<void>((resolve, reject) => {
@@ -39,7 +78,7 @@ export class TourServiceService {
         } else if (timeout && now - startTime >= timeout) {
           clearInterval(timer);
           reject();
-        } else{
+        } else {
           // do nothing
         }
       }, this.interval);
@@ -84,16 +123,7 @@ export class TourServiceService {
               });
               this.router.navigate([e.nextRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
-                if (event instanceof NavigationEnd) {
-                  this.waitForElement(e.attachTo.element, 0)
-                    .then(() => {
-                      this.tour.cancel();
-                      this.tour.next();
-                    })
-                    .catch(() => {
-                      throw new Error('Error detected in loading');
-                    });
-                }
+                this.navigationCheck(event, e);
               });
             };
             const wrapperPrev = () => {
@@ -106,16 +136,7 @@ export class TourServiceService {
               });
               this.router.navigate([e.prevRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
-                if (event instanceof NavigationEnd) {
-                  this.waitForElement(e.attachTo.element, 0)
-                    .then(() => {
-                      this.tour.cancel();
-                      this.tour.back();
-                    })
-                    .catch(() => {
-                      throw new Error('Error detected in loading');
-                    });
-                }
+                this.navigationCheck(event, e);
               });
             };
             const wrapperNormalNext = () => {
@@ -140,13 +161,15 @@ export class TourServiceService {
               this.tour.cancel();
               this.tour.back();
             };
-            if (b.key === 'prevAction') {
-              b.action = e.prevRoute === e.currentRoute ? wrapperNormalPrev : wrapperPrev;
-            } else if (b.key === 'nextAction') {
-              b.action = e.nextRoute === e.currentRoute ? wrapperNormalNext : wrapperNext;
-            } else {
-              b.action = func;
-            }
+            this.actionAssignment(
+              e,
+              b,
+              wrapperNormalNext,
+              wrapperNormalPrev,
+              wrapperNext,
+              wrapperPrev,
+              func
+            );
           });
         });
         this.tour.addSteps(tourInstance.tourSteps);
@@ -155,7 +178,7 @@ export class TourServiceService {
           removedSteps.forEach(er => {
             er.buttons.forEach(br => {
               const k = br.key;
-              const func = this.tourStoreService.getFnByKey(k);
+              const funcRemoved = this.tourStoreService.getFnByKey(k);
               const wrapperNextRemoved = () => {
                 this.tourStoreService.saveState({
                   tourId: tourInstance.tourId,
@@ -166,16 +189,7 @@ export class TourServiceService {
                 });
                 this.router.navigate([er.nextRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
-                  if (event instanceof NavigationEnd) {
-                    this.waitForElement(er.attachTo.element, 0)
-                      .then(() => {
-                        this.tour.cancel();
-                        this.tour.next();
-                      })
-                      .catch(() => {
-                        throw new Error('Error in loading');
-                      });
-                  }
+                  this.navigationCheck(event, er);
                 });
               };
               const wrapperPrevRemoved = () => {
@@ -188,16 +202,7 @@ export class TourServiceService {
                 });
                 this.router.navigate([er.prevRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
-                  if (event instanceof NavigationEnd) {
-                    this.waitForElement(er.attachTo.element, 0)
-                      .then(() => {
-                        this.tour.cancel();
-                        this.tour.back();
-                      })
-                      .catch(() => {
-                        throw new Error('Error in loading');
-                      });
-                  }
+                  this.navigationCheck(event, er);
                 });
               };
               const wrapperNormalNextRemoved = () => {
@@ -222,19 +227,19 @@ export class TourServiceService {
                 this.tour.cancel();
                 this.tour.back();
               };
-              if (br.key === 'prevAction') {
-                br.action = er.prevRoute === er.currentRoute ? wrapperNormalPrevRemoved : wrapperPrevRemoved;
-              } else if (br.key === 'nextAction') {
-                br.action = er.nextRoute === er.currentRoute ? wrapperNormalNextRemoved : wrapperNextRemoved;
-              } else {
-                br.action = func;
-              }
+              this.actionAssignment(
+                er,
+                br,
+                wrapperNormalNextRemoved,
+                wrapperNormalPrevRemoved,
+                wrapperNextRemoved,
+                wrapperPrevRemoved,
+                funcRemoved
+              );
             });
           });
           this.tour.addSteps(removedSteps);
-          for (const step of removedSteps) {
-            this.tour.steps.splice(0, 0, this.tour.steps.pop());
-          }
+          this.addRemovedSteps(removedSteps);
         }
       });
   }

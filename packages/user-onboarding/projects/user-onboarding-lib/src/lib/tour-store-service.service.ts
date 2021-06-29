@@ -74,11 +74,11 @@ export class TourStoreServiceService {
     return command.execute();
   }
 
-  public registerFnRef(key, fn: Function): void {
+  public registerFnRef(key, fn: () => void): void {
     this.functionMap.set(key, fn);
   }
 
-  public getFnByKey(key): Function {
+  public getFnByKey(key): () => void {
     return this.functionMap.get(key);
   }
 
