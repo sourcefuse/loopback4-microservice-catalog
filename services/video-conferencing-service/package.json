@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/video-conferencing-service",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Microservice providing Video-Conferencing service",
   "keywords": [
     "loopback-extension",
@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "lb-tsc",
+    "build": "lb-tsc && npm run openapi-spec && npm run apidocs",
     "build:watch": "lb-tsc --watch",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "lint": "npm run prettier:check && npm run eslint",
@@ -22,6 +22,8 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
@@ -84,9 +86,9 @@
     "@loopback/build": "^6.4.0",
     "@loopback/eslint-config": "^10.2.0",
     "@loopback/testlab": "^3.4.0",
-    "@types/node": "^10.17.59",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@types/node": "^10.17.60",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
     "axios-mock-adapter": "^1.18.1",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
@@ -95,7 +97,8 @@
     "eslint-plugin-eslint-plugin": "^3.0.2",
     "eslint-plugin-mocha": "^8.1.0",
     "source-map-support": "^0.5.19",
-    "typescript": "~4.2.4"
+    "typescript": "~4.2.4",
+    "widdershins": "^4.0.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

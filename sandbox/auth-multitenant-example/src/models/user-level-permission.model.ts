@@ -8,7 +8,8 @@ import {UserTenant} from './index';
 })
 export class UserLevelPermission
   extends UserModifiableEntity
-  implements UserPermission<string> {
+  implements UserPermission<string>
+{
   @property({
     type: 'string',
     id: true,

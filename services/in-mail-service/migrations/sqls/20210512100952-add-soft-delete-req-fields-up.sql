@@ -1,0 +1,10 @@
+ALTER TABLE IF EXISTS main.thread ADD COLUMN IF NOT EXISTS deleted_on timestamptz;
+ALTER TABLE IF EXISTS main.thread ADD COLUMN IF NOT EXISTS deleted_by uuid;
+ALTER TABLE IF EXISTS main.message ADD COLUMN IF NOT EXISTS deleted_on timestamptz;
+ALTER TABLE IF EXISTS main.message ADD COLUMN IF NOT EXISTS deleted_by uuid;
+ALTER TABLE IF EXISTS main.attachment ADD COLUMN IF NOT EXISTS deleted_on timestamptz;
+ALTER TABLE IF EXISTS main.attachment ADD COLUMN IF NOT EXISTS deleted_by uuid;
+ALTER TABLE IF EXISTS main.group ADD COLUMN IF NOT EXISTS deleted_on timestamptz;
+ALTER TABLE IF EXISTS main.group ADD COLUMN IF NOT EXISTS deleted_by uuid;
+ALTER TABLE IF EXISTS main.meta ADD COLUMN IF NOT EXISTS deleted_on timestamptz;
+ALTER TABLE IF EXISTS main.meta ADD COLUMN IF NOT EXISTS deleted_by uuid;

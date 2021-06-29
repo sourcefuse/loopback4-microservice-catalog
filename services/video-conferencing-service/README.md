@@ -113,6 +113,10 @@ For configuration in vonage, see [Session Monitoring](https://tokbox.com/develop
 ### PUT /archives/storage-target
 Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
 
+## API's Details
+
+Visit the [OpenAPI spec docs](./openapi.md)
+
 
 ## Feedback
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/loopback4-microservice-catalog/issues) to see if someone else in the community has already created a ticket.

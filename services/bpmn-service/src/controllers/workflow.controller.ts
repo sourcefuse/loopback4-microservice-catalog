@@ -264,7 +264,7 @@ export class WorkflowController {
       const workerList = workerMap[workflowName];
       for (const worker of workerList) {
         if (!worker.running) {
-          await this.workerFn(worker.topic, worker.command);
+          await this.workerFn(worker);
           worker.running = true;
         }
       }

@@ -1,0 +1,407 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Video Conferencing Service",
+    "version": "1.0.0",
+    "description": "Microservice providing Video-Conferencing service",
+    "contact": {
+      "name": "Sourcefuse"
+    }
+  },
+  "paths": {
+    "/archives/storage-target": {
+      "put": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "setUploadTarget",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "text"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatArchiveController.setUploadTarget"
+      }
+    },
+    "/archives/{archiveId}": {
+      "get": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "getArchive",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "archiveId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "VideoChatArchiveController.getArchive"
+      },
+      "delete": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "deleteArchive",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "text"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "archiveId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "VideoChatArchiveController.deleteArchive"
+      }
+    },
+    "/archives": {
+      "get": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "getArchives",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatArchiveController.getArchives"
+      }
+    },
+    "/session/{meetingLinkId}/attendees": {
+      "get": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "getAttendeesList",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.getAttendeesList"
+      }
+    },
+    "/session/{meetingLinkId}/end": {
+      "patch": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "endSession",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "responses": {
+          "204": {
+            "description": "MessageRecipient PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "VideoChatSessionController.endSession"
+      }
+    },
+    "/session/{meetingLinkId}/token": {
+      "post": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "getMeetingToken",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "sessionId": "string",
+                  "token": "string"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.getMeetingToken"
+      }
+    },
+    "/session/{meetingLinkId}": {
+      "patch": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "editMeeting",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Session details PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoChatSessionPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "VideoChatSessionController.editMeeting"
+      }
+    },
+    "/session": {
+      "post": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "getMeetingLink",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.getMeetingLink"
+      }
+    },
+    "/webhooks/session": {
+      "post": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "checkWebhookPayload",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "responses": {
+          "204": {
+            "description": "POST /webhooks/session Success"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.checkWebhookPayload"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "VideoChatSessionPartial": {
+        "title": "VideoChatSessionPartial",
+        "type": "object",
+        "description": "(tsType: Partial<VideoChatSession>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "meetingLink": {
+            "type": "string"
+          },
+          "isScheduled": {
+            "type": "boolean"
+          },
+          "scheduleTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "archiveId": {
+            "type": "string"
+          },
+          "uploadTarget": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<VideoChatSession>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

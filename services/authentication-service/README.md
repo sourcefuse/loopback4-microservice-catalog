@@ -30,7 +30,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {AuthenticationServiceComponent} from '@sourceloop/in-mail-service';
+import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
@@ -177,4 +177,4 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 #### API Details
 
-Visit the [OpenAPI spec docs](OPEN_API_SPEC.md)
+Visit the [OpenAPI spec docs](./openapi.md)

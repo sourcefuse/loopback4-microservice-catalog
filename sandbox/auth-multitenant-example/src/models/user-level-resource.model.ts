@@ -7,7 +7,8 @@ import {IUserResource} from 'loopback4-authorization';
 })
 export class UserLevelResource
   extends UserModifiableEntity
-  implements IUserResource<string> {
+  implements IUserResource<string>
+{
   @property({
     type: 'string',
     id: true,

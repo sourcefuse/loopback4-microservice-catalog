@@ -1,0 +1,55 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "userOnboardingLib": {
+      "projectType": "library",
+      "root": "projects/user-onboarding-lib",
+      "sourceRoot": "projects/user-onboarding-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "styles": [
+            "./node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+            "./node_modules/shepherd.js/dist/css/shepherd.css"
+          ],
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/user-onboarding-lib/tsconfig.lib.json",
+            "project": "projects/user-onboarding-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/user-onboarding-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/user-onboarding-lib/src/test.ts",
+            "tsConfig": "projects/user-onboarding-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/user-onboarding-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/user-onboarding-lib/tsconfig.lib.json",
+              "projects/user-onboarding-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "userOnboardingLib"
+}

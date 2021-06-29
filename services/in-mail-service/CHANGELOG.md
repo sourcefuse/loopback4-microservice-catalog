@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.1.0 (2021-06-14)
+
+* fix(core): all packages updated (#214) ([8f15aaa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f15aaa)), closes [#214](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/214)
+* fix(core): open api docs update ([9b7cb69](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b7cb69)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(video-conferencing-service): fixed missing exports (#220) ([5baf4af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5baf4af)), closes [#220](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/220) [#219](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/219)
+* feat(user-onboarding): base code for user-onboarding lib (#203) ([8d4d19b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8d4d19b)), closes [#203](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/203)
+* docs: add openapi spec docs in examples and improve the docs in services (#215) ([baec0f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/baec0f1)), closes [#215](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/215)
+
+
+
+
+
+## <small>1.0.1 (2021-05-19)</small>
+
+* fix(inmail-service): added-in-mail-service-migration-update-for-soft-delete-req-fields-and-thread-vi ([948cef3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/948cef3)), closes [#209](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/209)
+
+
+
+
+
 ## 1.0.0 (2021-05-12)
 
 **Note:** Version bump only for package @sourceloop/in-mail-service

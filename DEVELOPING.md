@@ -35,10 +35,11 @@ Our monorepo comes with few preconfigured
 1. Open root folder of this repo in VS Code.
 2. Install lerna globally `npm i -g lerna`
 3. Run `lerna bootstrap`
-4. Create .env files for all the micro service packages.
-5. Run DB migrations using `lerna run db:migrate`.
-6. Build all microservices in one go - `lerna run build`.
-7. Run `lerna run start` to start all the micro services in one go.
+4. Run `npm i`
+5. Create .env files for all the micro service packages.
+6. Run DB migrations using `lerna run db:migrate`.
+7. Build all microservices in one go - `lerna run build`.
+8. Run `lerna run start` to start all the micro services in one go.
 
 ## Building the project
 
@@ -234,19 +235,7 @@ this.component(CoreComponent);
 this.sequence(ServiceSequence);
 ```
 
-10. **Add Rakuten core** - Add rakuten-core as dependency to the module
-
-    ```sh
-    lerna add rakuten-core --scope={service name}
-    ```
-
-In application.ts,
-
-    ```ts
-    this.component(RakutenCoreComponent);
-    ```
-
-11. **Bearer Verifier** - Add bearer verifier to your service
+10. **Bearer Verifier** - Add bearer verifier to your service
 
 ```sh
 lerna add loopback4-authentication --scope={service name}
@@ -288,7 +277,7 @@ Add below to application.ts
 
 Use BearerVerifierType.facade for facades.
 
-12. **Setup project for test coverage** -
+11. **Setup project for test coverage** -
 
     Create a file named .nycrc and copy this data in it
 
@@ -313,8 +302,8 @@ Use BearerVerifierType.facade for facades.
     "coverage": "nyc npm run test",
     ```
 
-13. **Setup sequence** - Remove auto-generated sequence.ts and change to ServiceSequence in application.ts.
-14. **Fix api explorer** - Update base path in index.html for facades.
+12. **Setup sequence** - Remove auto-generated sequence.ts and change to ServiceSequence in application.ts.
+13. **Fix api explorer** - Update base path in index.html for facades.
 
 ```html
 <body>

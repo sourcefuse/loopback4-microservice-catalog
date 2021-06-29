@@ -24,7 +24,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import { AuditServiceComponent } from '@sourceloop/in-mail-service';
+import { AuditServiceComponent } from '@sourceloop/audit-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
@@ -165,4 +165,6 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 201: No content: Empty Response<br />
 
 #### API Details
+
+Visit the [OpenAPI spec docs](./openapi.md)
 

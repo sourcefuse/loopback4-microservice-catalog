@@ -19,7 +19,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class RedisDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = AuthCacheSourceName;
   static readonly defaultConfig = config;
 
