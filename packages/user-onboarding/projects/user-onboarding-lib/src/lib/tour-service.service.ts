@@ -54,12 +54,25 @@ export class TourServiceService {
     }
   }
 
-  private navigationCheck(event: NavigationEvent, e: TourStep): void {
+  private navigationCheckNext(event: NavigationEvent, e: TourStep): void {
     if (event instanceof NavigationEnd) {
       this.waitForElement(e.attachTo.element, 0)
         .then(() => {
           this.tour.cancel();
           this.tour.next();
+        })
+        .catch(() => {
+          throw new Error('Error detected in loading');
+        });
+    }
+  }
+
+  private navigationCheckBack(event: NavigationEvent, e: TourStep): void {
+    if (event instanceof NavigationEnd) {
+      this.waitForElement(e.attachTo.element, 0)
+        .then(() => {
+          this.tour.cancel();
+          this.tour.back();
         })
         .catch(() => {
           throw new Error('Error detected in loading');
@@ -123,7 +136,7 @@ export class TourServiceService {
               });
               this.router.navigate([e.nextRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
-                this.navigationCheck(event, e);
+                this.navigationCheckNext(event, e);
               });
             };
             const wrapperPrev = () => {
@@ -136,7 +149,7 @@ export class TourServiceService {
               });
               this.router.navigate([e.prevRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
-                this.navigationCheck(event, e);
+                this.navigationCheckBack(event, e);
               });
             };
             const wrapperNormalNext = () => {
@@ -189,7 +202,7 @@ export class TourServiceService {
                 });
                 this.router.navigate([er.nextRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
-                  this.navigationCheck(event, er);
+                  this.navigationCheckNext(event, er);
                 });
               };
               const wrapperPrevRemoved = () => {
@@ -202,7 +215,7 @@ export class TourServiceService {
                 });
                 this.router.navigate([er.prevRoute]);
                 this.router.events.subscribe((event: NavigationEvent) => {
-                  this.navigationCheck(event, er);
+                  this.navigationCheckBack(event, er);
                 });
               };
               const wrapperNormalNextRemoved = () => {
