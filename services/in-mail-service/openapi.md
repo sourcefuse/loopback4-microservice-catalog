@@ -48,7 +48,8 @@ const inputBody = '{
   ]
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/bulk/restore',
@@ -76,7 +77,8 @@ const inputBody = {
   ]
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/bulk/restore',
@@ -123,8 +125,9 @@ fetch('/mails/bulk/restore',
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Message identity does not exist.|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden request due to unauthorized token in header.|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## API for moving mails to trash and then delete
@@ -143,7 +146,8 @@ const inputBody = '{
   ]
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/bulk/{storage}/{action}',
@@ -171,7 +175,8 @@ const inputBody = {
   ]
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/bulk/{storage}/{action}',
@@ -220,8 +225,9 @@ fetch('/mails/bulk/{storage}/{action}',
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden request due to unauthorized token in header.|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Message identity does not exist.|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## API provides interface to mark read, unread and important
@@ -240,7 +246,8 @@ const inputBody = '{
   ]
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/marking/{markType}',
@@ -268,7 +275,8 @@ const inputBody = {
   ]
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/marking/{markType}',
@@ -313,8 +321,9 @@ fetch('/mails/marking/{markType}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Message is marked read/unread/important|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## API provides an interface for removing attachment before message is sent
@@ -325,10 +334,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/mails/{messageId}/attachments/{attachmentId}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -341,10 +355,15 @@ fetch('/mails/{messageId}/attachments/{attachmentId}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/mails/{messageId}/attachments/{attachmentId}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -372,8 +391,9 @@ fetch('/mails/{messageId}/attachments/{attachmentId}',
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden request due to unauthorized token in header.|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Message identity does not exist.|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## API provides an interface for adding attachment before message is sent.
@@ -406,7 +426,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/{messageId}/attachments',
@@ -448,7 +469,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/{messageId}/attachments',
@@ -554,8 +576,9 @@ fetch('/mails/{messageId}/attachments',
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Message identity does not exist.|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden request due to unauthorized token in header.|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## API for sending a drafted message.
@@ -566,10 +589,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/mails/{messageId}/send',
 {
-  method: 'PATCH'
+  method: 'PATCH',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -582,10 +610,15 @@ fetch('/mails/{messageId}/send',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/mails/{messageId}/send',
 {
-  method: 'PATCH'
+  method: 'PATCH',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -612,8 +645,9 @@ fetch('/mails/{messageId}/send',
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Message identity does not exist.|None|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Forbidden request due to unauthorized token in header.|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## Update API. Update draft messages.
@@ -690,7 +724,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/{messageId}',
@@ -776,7 +811,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/{messageId}',
@@ -886,7 +922,7 @@ fetch('/mails/{messageId}',
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
 </aside>
 
 ## ComposeAPI. For drafting, reply on and create new message
@@ -963,7 +999,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails',
@@ -1049,7 +1086,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails',
@@ -1156,8 +1194,9 @@ fetch('/mails',
 
 <h3 id="composeapi.-for-drafting,-reply-on-and-create-new-message-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="in-mail-service-collectorcontroller">CollectorController</h1>
@@ -1171,7 +1210,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/{messageId}',
@@ -1192,7 +1232,8 @@ fetch('/mails/{messageId}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails/{messageId}',
@@ -1244,8 +1285,9 @@ Status Code **200**
 |---|---|---|---|---|
 |» item|string|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## Collect a list of all messages.
@@ -1257,7 +1299,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails',
@@ -1278,7 +1321,8 @@ fetch('/mails',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/mails',
@@ -1315,8 +1359,9 @@ fetch('/mails',
 
 <h3 id="collect-a-list-of-all-messages.-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## GET Thread Message API. Collect complete single message thread based on thread identity.
@@ -1328,7 +1373,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads/{threadId}',
@@ -1349,7 +1395,8 @@ fetch('/threads/{threadId}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads/{threadId}',
@@ -1426,8 +1473,9 @@ Status Code **200**
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## Thread List API. Collect a list of all threads.
@@ -1439,7 +1487,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads',
@@ -1460,7 +1509,8 @@ fetch('/threads',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads',
@@ -1540,8 +1590,9 @@ Status Code **200**
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="in-mail-service-replyandforwardcontroller">ReplyAndForwardController</h1>
@@ -1617,7 +1668,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads/{threadId}/forward',
@@ -1700,7 +1752,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads/{threadId}/forward',
@@ -1877,8 +1930,9 @@ fetch('/threads/{threadId}/forward',
 
 <h3 id="api-provides-interface-to-forward-single-message.-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## API provides interface to reply to a single message
@@ -1931,7 +1985,8 @@ const inputBody = '{
   "extId": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads/{threadId}/mails/{messageId}/replies',
@@ -1993,7 +2048,8 @@ const inputBody = {
   "extId": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/threads/{threadId}/mails/{messageId}/replies',
@@ -2110,8 +2166,9 @@ fetch('/threads/{threadId}/mails/{messageId}/replies',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Message is replied back to the sender|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 # Schemas

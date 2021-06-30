@@ -250,8 +250,9 @@ fetch('/workflow/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Workflow Model|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## WorkflowController.deleteById
@@ -528,8 +529,9 @@ Status Code **200**
 |»» inputSchema|object|true|none|none|
 |»» description|string|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 # Schemas

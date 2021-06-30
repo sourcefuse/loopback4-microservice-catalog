@@ -20,7 +20,11 @@ import {authorize} from 'loopback4-authorization';
 import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/subscriptions';
 
@@ -35,6 +39,7 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Calendar has many Subscriptions',
@@ -61,6 +66,7 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
@@ -93,6 +99,7 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar.Subscription PATCH success count',
@@ -121,6 +128,7 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.DeleteSubscription]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar.Subscription DELETE success count',
