@@ -68,7 +68,7 @@ Generate an application
 ```bash
 lb4 app
 ? Project name: example-application
-? Project description: Example Application For SourceLoop LoopBack4 Microservice Catalog
+? Project description: Example Application For SourceLoop
 ? Project root directory: example-application
 ? Application class name: ExampleApplicationApplication
 ? Select features to enable in the project Enable eslint, Enable prettier, Enable mocha, Enable loopbackBuild, Enable vs
@@ -238,7 +238,7 @@ If you've noticed a bug or have a question or have a feature request, [search th
 
 ### Contributing
 
-* [Development Guidelines](DEVELOPING.md)
+* [Development Guidelines](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/DEVELOPING.md)
 
 ### Code of Conduct
 
