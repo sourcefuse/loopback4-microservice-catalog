@@ -209,6 +209,7 @@ export class WorkflowController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewWorkflow]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Workflow model instances',
@@ -232,6 +233,7 @@ export class WorkflowController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewWorkflow]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Workflow Model',

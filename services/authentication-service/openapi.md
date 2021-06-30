@@ -1301,7 +1301,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/auth/forget-password',
@@ -1327,7 +1328,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/auth/forget-password',
@@ -1405,8 +1407,9 @@ fetch('/auth/forget-password',
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ForgetPasswordController.resetPassword
@@ -1423,7 +1426,8 @@ const inputBody = '{
   "client_secret": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/auth/reset-password',
@@ -1449,7 +1453,8 @@ const inputBody = {
   "client_secret": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/auth/reset-password',
@@ -1491,8 +1496,9 @@ fetch('/auth/reset-password',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|If User password successfully changed.|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ForgetPasswordController.verifyResetPasswordLink
@@ -1663,7 +1669,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/auth/sign-up/create-user',
@@ -1688,7 +1695,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/auth/sign-up/create-user',
@@ -1743,8 +1751,9 @@ fetch('/auth/sign-up/create-user',
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SignupRequestController.verifyInviteToken
@@ -1755,10 +1764,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/auth/sign-up/verify-token',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1771,10 +1785,15 @@ fetch('/auth/sign-up/verify-token',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/auth/sign-up/verify-token',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1796,8 +1815,9 @@ fetch('/auth/sign-up/verify-token',
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="authentication-service-authclientcontroller">AuthClientController</h1>

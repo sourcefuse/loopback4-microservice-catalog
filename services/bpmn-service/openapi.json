@@ -93,6 +93,11 @@
         "tags": [
           "WorkflowController"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Workflow Model"
@@ -179,6 +184,11 @@
         "x-operation-name": "find",
         "tags": [
           "WorkflowController"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
