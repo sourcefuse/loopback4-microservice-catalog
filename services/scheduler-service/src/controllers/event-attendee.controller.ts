@@ -20,7 +20,11 @@ import {authorize} from 'loopback4-authorization';
 import {Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 
 const basePath = '/events/{id}/attendees';
 
@@ -34,6 +38,7 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Event has many Attendee',
@@ -57,6 +62,7 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.CreateAttendee]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
@@ -89,6 +95,7 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event.Attendee PATCH success count',
@@ -117,6 +124,7 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.DeleteAttendee]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event.Attendee DELETE success count',

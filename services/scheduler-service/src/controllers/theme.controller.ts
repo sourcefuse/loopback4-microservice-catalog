@@ -21,7 +21,11 @@ import {authorize} from 'loopback4-authorization';
 import {Theme} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {ThemeRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 
 const basePath = '/themes';
 
@@ -36,6 +40,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.CreateTheme]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Theme model instance',
@@ -64,6 +69,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.ViewTheme]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Theme model count',
@@ -80,6 +86,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.ViewTheme]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Theme model instances',
@@ -103,6 +110,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.UpdateTheme]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Theme PATCH success count',
@@ -129,6 +137,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.ViewTheme]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Theme model instance',
@@ -153,6 +162,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.UpdateTheme]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Theme PATCH success',
@@ -178,6 +188,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.UpdateTheme]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Theme PUT success',
@@ -196,6 +207,7 @@ export class ThemeController {
   })
   @authorize({permissions: [PermissionKey.DeleteTheme]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Theme DELETE success',

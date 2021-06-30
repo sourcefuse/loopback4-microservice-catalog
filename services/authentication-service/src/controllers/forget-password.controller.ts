@@ -15,6 +15,7 @@ import {
   ErrorCodes,
   STATUS_CODE,
   SuccessResponse,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
@@ -46,6 +47,7 @@ export class ForgetPasswordController {
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authorize({permissions: ['*']})
   @post(`auth/forget-password`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Success Response.',
@@ -152,6 +154,7 @@ export class ForgetPasswordController {
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authorize({permissions: ['*']})
   @patch(`auth/reset-password`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'If User password successfully changed.',
