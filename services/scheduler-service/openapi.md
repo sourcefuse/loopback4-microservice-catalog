@@ -41,7 +41,8 @@ Base URLs:
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/count',
@@ -62,7 +63,8 @@ fetch('/attachments/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/count',
@@ -103,8 +105,9 @@ fetch('/attachments/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attachment model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.replaceById
@@ -132,7 +135,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/{id}',
@@ -169,7 +173,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/{id}',
@@ -223,8 +228,9 @@ fetch('/attachments/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attachment PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.updateById
@@ -252,7 +258,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/{id}',
@@ -289,7 +296,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/{id}',
@@ -343,8 +351,9 @@ fetch('/attachments/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attachment PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.findById
@@ -356,7 +365,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/{id}',
@@ -377,7 +387,8 @@ fetch('/attachments/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments/{id}',
@@ -568,8 +579,9 @@ fetch('/attachments/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attachment model instance|[AttachmentWithRelations](#schemaattachmentwithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.deleteById
@@ -580,10 +592,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/attachments/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -596,10 +613,15 @@ fetch('/attachments/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/attachments/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -623,8 +645,9 @@ fetch('/attachments/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attachment DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.create
@@ -652,7 +675,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments',
@@ -689,7 +713,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments',
@@ -765,8 +790,9 @@ fetch('/attachments',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attachment model instance|[Attachment](#schemaattachment)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.updateAll
@@ -795,7 +821,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments',
@@ -833,7 +860,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments',
@@ -897,8 +925,9 @@ fetch('/attachments',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attachment PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttachmentController.find
@@ -910,7 +939,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments',
@@ -931,7 +961,8 @@ fetch('/attachments',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attachments',
@@ -1262,8 +1293,9 @@ Status Code **200**
 |responseStatus|accepted|
 |responseStatus|declined|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-attendeecontroller">AttendeeController</h1>
@@ -1277,7 +1309,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/count',
@@ -1298,7 +1331,8 @@ fetch('/attendees/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/count',
@@ -1339,8 +1373,9 @@ fetch('/attendees/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attendee model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.replaceById
@@ -1369,7 +1404,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/{id}',
@@ -1407,7 +1443,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/{id}',
@@ -1462,8 +1499,9 @@ fetch('/attendees/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attendee PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.updateById
@@ -1492,7 +1530,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/{id}',
@@ -1530,7 +1569,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/{id}',
@@ -1585,8 +1625,9 @@ fetch('/attendees/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attendee PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.findById
@@ -1598,7 +1639,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/{id}',
@@ -1619,7 +1661,8 @@ fetch('/attendees/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees/{id}',
@@ -1811,8 +1854,9 @@ fetch('/attendees/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attendee model instance|[AttendeeWithRelations](#schemaattendeewithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.deleteById
@@ -1823,10 +1867,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/attendees/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1839,10 +1888,15 @@ fetch('/attendees/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/attendees/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1866,8 +1920,9 @@ fetch('/attendees/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attendee DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.create
@@ -1896,7 +1951,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees',
@@ -1934,7 +1990,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees',
@@ -2012,8 +2069,9 @@ fetch('/attendees',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attendee model instance|[Attendee](#schemaattendee)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.updateAll
@@ -2043,7 +2101,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees',
@@ -2082,7 +2141,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees',
@@ -2147,8 +2207,9 @@ fetch('/attendees',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attendee PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## AttendeeController.find
@@ -2160,7 +2221,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees',
@@ -2181,7 +2243,8 @@ fetch('/attendees',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/attendees',
@@ -2512,8 +2575,9 @@ Status Code **200**
 |accessRole|writer|
 |accessRole|owner|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-calendarcontroller">CalendarController</h1>
@@ -2555,7 +2619,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/calendarSubscription',
@@ -2604,7 +2669,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/calendarSubscription',
@@ -2705,8 +2771,9 @@ fetch('/calendars/calendarSubscription',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model instance|[CalendarDTO](#schemacalendardto)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.count
@@ -2718,7 +2785,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/count',
@@ -2739,7 +2807,8 @@ fetch('/calendars/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/count',
@@ -2780,8 +2849,9 @@ fetch('/calendars/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.replaceById
@@ -2822,7 +2892,8 @@ const inputBody = '{
   "subscription": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}',
@@ -2872,7 +2943,8 @@ const inputBody = {
   "subscription": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}',
@@ -2939,8 +3011,9 @@ fetch('/calendars/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Calendar PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.updateById
@@ -2969,7 +3042,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}',
@@ -3007,7 +3081,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}',
@@ -3062,8 +3137,9 @@ fetch('/calendars/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Calendar PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.findById
@@ -3075,7 +3151,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}',
@@ -3096,7 +3173,8 @@ fetch('/calendars/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}',
@@ -3558,8 +3636,9 @@ fetch('/calendars/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model instance|[CalendarWithRelations](#schemacalendarwithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.deleteById
@@ -3570,10 +3649,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/calendars/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -3586,10 +3670,15 @@ fetch('/calendars/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/calendars/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -3613,8 +3702,9 @@ fetch('/calendars/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Calendar DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.create
@@ -3654,7 +3744,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars',
@@ -3703,7 +3794,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars',
@@ -3792,8 +3884,9 @@ fetch('/calendars',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model instance|[Calendar](#schemacalendar)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.updateAll
@@ -3823,7 +3916,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars',
@@ -3862,7 +3956,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars',
@@ -3927,8 +4022,9 @@ fetch('/calendars',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarController.find
@@ -3940,7 +4036,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars',
@@ -3961,7 +4058,8 @@ fetch('/calendars',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars',
@@ -4292,8 +4390,9 @@ Status Code **200**
 |accessRole|writer|
 |accessRole|owner|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-subscriptioncontroller">SubscriptionController</h1>
@@ -4307,7 +4406,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/subscriptions/me',
@@ -4328,7 +4428,8 @@ fetch('/calendars/subscriptions/me',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/subscriptions/me',
@@ -4659,8 +4760,9 @@ Status Code **200**
 |dayOfWeek|5|
 |dayOfWeek|6|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.count
@@ -4672,7 +4774,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/count',
@@ -4693,7 +4796,8 @@ fetch('/subscriptions/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/count',
@@ -4734,8 +4838,9 @@ fetch('/subscriptions/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.replaceById
@@ -4767,7 +4872,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/{id}',
@@ -4808,7 +4914,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/{id}',
@@ -4866,8 +4973,9 @@ fetch('/subscriptions/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Subscription PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.updateById
@@ -4899,7 +5007,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/{id}',
@@ -4940,7 +5049,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/{id}',
@@ -4998,8 +5108,9 @@ fetch('/subscriptions/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Subscription PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.findById
@@ -5011,7 +5122,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/{id}',
@@ -5032,7 +5144,8 @@ fetch('/subscriptions/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions/{id}',
@@ -5227,8 +5340,9 @@ fetch('/subscriptions/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription model instance|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.deleteById
@@ -5239,10 +5353,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/subscriptions/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -5255,10 +5374,15 @@ fetch('/subscriptions/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/subscriptions/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -5282,8 +5406,9 @@ fetch('/subscriptions/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Subscription DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.create
@@ -5315,7 +5440,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions',
@@ -5356,7 +5482,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions',
@@ -5440,8 +5567,9 @@ fetch('/subscriptions',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription model instance|[Subscription](#schemasubscription)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.updateAll
@@ -5474,7 +5602,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions',
@@ -5516,7 +5645,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions',
@@ -5584,8 +5714,9 @@ fetch('/subscriptions',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SubscriptionController.find
@@ -5597,7 +5728,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions',
@@ -5618,7 +5750,8 @@ fetch('/subscriptions',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/subscriptions',
@@ -5949,8 +6082,9 @@ Status Code **200**
 |dayOfWeek|5|
 |dayOfWeek|6|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-calendareventcontroller">CalendarEventController</h1>
@@ -5992,7 +6126,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6041,7 +6176,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6142,8 +6278,9 @@ fetch('/calendars/{id}/events',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model instance|[Event](#schemaevent)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarEventController.patch
@@ -6184,7 +6321,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6234,7 +6372,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6311,8 +6450,9 @@ fetch('/calendars/{id}/events',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar.Event PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarEventController.find
@@ -6324,7 +6464,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6345,7 +6486,8 @@ fetch('/calendars/{id}/events',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6462,8 +6604,9 @@ Status Code **200**
 |status|cancelled|
 |status|completed|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarEventController.delete
@@ -6475,7 +6618,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6496,7 +6640,8 @@ fetch('/calendars/{id}/events',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/events',
@@ -6538,8 +6683,9 @@ fetch('/calendars/{id}/events',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar.Event DELETE success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-calendarsubscriptioncontroller">CalendarSubscriptionController</h1>
@@ -6573,7 +6719,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -6614,7 +6761,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -6699,8 +6847,9 @@ fetch('/calendars/{id}/subscriptions',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model instance|[Subscription](#schemasubscription)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarSubscriptionController.patch
@@ -6733,7 +6882,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -6775,7 +6925,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -6844,8 +6995,9 @@ fetch('/calendars/{id}/subscriptions',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar.Subscription PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarSubscriptionController.find
@@ -6857,7 +7009,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -6878,7 +7031,8 @@ fetch('/calendars/{id}/subscriptions',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -6977,8 +7131,9 @@ Status Code **200**
 |accessRole|writer|
 |accessRole|owner|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarSubscriptionController.delete
@@ -6990,7 +7145,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -7011,7 +7167,8 @@ fetch('/calendars/{id}/subscriptions',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/subscriptions',
@@ -7053,8 +7210,9 @@ fetch('/calendars/{id}/subscriptions',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar.Subscription DELETE success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-calendarworkinghourcontroller">CalendarWorkingHourController</h1>
@@ -7083,7 +7241,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7119,7 +7278,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7194,8 +7354,9 @@ fetch('/calendars/{id}/working-hours',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar model instance|[WorkingHour](#schemaworkinghour)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarWorkingHourController.patch
@@ -7223,7 +7384,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7260,7 +7422,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7324,8 +7487,9 @@ fetch('/calendars/{id}/working-hours',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar.WorkingHour PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarWorkingHourController.find
@@ -7337,7 +7501,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7358,7 +7523,8 @@ fetch('/calendars/{id}/working-hours',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7450,8 +7616,9 @@ Status Code **200**
 |dayOfWeek|5|
 |dayOfWeek|6|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## CalendarWorkingHourController.delete
@@ -7463,7 +7630,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7484,7 +7652,8 @@ fetch('/calendars/{id}/working-hours',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/calendars/{id}/working-hours',
@@ -7526,8 +7695,9 @@ fetch('/calendars/{id}/working-hours',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Calendar.WorkingHour DELETE success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-eventcontroller">EventController</h1>
@@ -7541,7 +7711,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/count',
@@ -7562,7 +7733,8 @@ fetch('/events/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/count',
@@ -7603,8 +7775,9 @@ fetch('/events/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.getFeeBusyStatus
@@ -7647,7 +7820,9 @@ const inputBody = '{
   ]
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/freeBusy',
@@ -7699,7 +7874,9 @@ const inputBody = {
   ]
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/freeBusy',
@@ -7761,14 +7938,51 @@ fetch('/events/freeBusy',
 |---|---|---|---|---|
 |body|body|[FreeBusyRequest](#schemafreebusyrequest)|false|none|
 
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+```
+
 <h3 id="eventcontroller.getfeebusystatus-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of EventController.getFeeBusyStatus|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model freeBusy|[Event](#schemaevent)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.replaceById
@@ -7808,7 +8022,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}',
@@ -7857,7 +8072,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}',
@@ -7923,8 +8139,9 @@ fetch('/events/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Event PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.updateById
@@ -7964,7 +8181,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}',
@@ -8013,7 +8231,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}',
@@ -8079,8 +8298,9 @@ fetch('/events/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Event PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.findById
@@ -8092,7 +8312,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}',
@@ -8113,7 +8334,8 @@ fetch('/events/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}',
@@ -8721,8 +8943,9 @@ fetch('/events/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model instance|[EventWithRelations](#schemaeventwithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.deleteById
@@ -8733,10 +8956,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/events/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -8749,10 +8977,15 @@ fetch('/events/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/events/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -8776,8 +9009,9 @@ fetch('/events/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Event DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.create
@@ -8847,7 +9081,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events',
@@ -8926,7 +9161,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events',
@@ -9056,8 +9292,9 @@ fetch('/events',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model instance|[Event](#schemaevent)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.updateAll
@@ -9098,7 +9335,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events',
@@ -9148,7 +9386,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events',
@@ -9224,8 +9463,9 @@ fetch('/events',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventController.find
@@ -9237,7 +9477,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events',
@@ -9258,7 +9499,8 @@ fetch('/events',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events',
@@ -9589,8 +9831,9 @@ Status Code **200**
 |responseStatus|accepted|
 |responseStatus|declined|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-eventattachmentcontroller">EventAttachmentController</h1>
@@ -9620,7 +9863,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -9657,7 +9901,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -9734,8 +9979,9 @@ fetch('/events/{id}/attachments',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model instance|[Attachment](#schemaattachment)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventAttachmentController.patch
@@ -9764,7 +10010,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -9802,7 +10049,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -9867,8 +10115,9 @@ fetch('/events/{id}/attachments',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event.Attachment PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventAttachmentController.find
@@ -9880,7 +10129,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -9901,7 +10151,8 @@ fetch('/events/{id}/attachments',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -9983,8 +10234,9 @@ Status Code **200**
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventAttachmentController.delete
@@ -9996,7 +10248,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -10017,7 +10270,8 @@ fetch('/events/{id}/attachments',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attachments',
@@ -10059,8 +10313,9 @@ fetch('/events/{id}/attachments',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event.Attachment DELETE success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-eventattendeecontroller">EventAttendeeController</h1>
@@ -10091,7 +10346,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10129,7 +10385,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10208,8 +10465,9 @@ fetch('/events/{id}/attendees',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model instance|[Attendee](#schemaattendee)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventAttendeeController.patch
@@ -10239,7 +10497,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10278,7 +10537,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10344,8 +10604,9 @@ fetch('/events/{id}/attendees',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event.Attendee PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventAttendeeController.find
@@ -10357,7 +10618,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10378,7 +10640,8 @@ fetch('/events/{id}/attendees',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10471,8 +10734,9 @@ Status Code **200**
 |responseStatus|accepted|
 |responseStatus|declined|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## EventAttendeeController.delete
@@ -10484,7 +10748,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10505,7 +10770,8 @@ fetch('/events/{id}/attendees',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/{id}/attendees',
@@ -10547,8 +10813,9 @@ fetch('/events/{id}/attendees',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event.Attendee DELETE success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-settingscontroller">SettingsController</h1>
@@ -10562,7 +10829,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/count',
@@ -10583,7 +10851,8 @@ fetch('/settings/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/count',
@@ -10624,8 +10893,9 @@ fetch('/settings/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Settings model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.replaceById
@@ -10652,7 +10922,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/{id}',
@@ -10688,7 +10959,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/{id}',
@@ -10741,8 +11013,9 @@ fetch('/settings/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Settings PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.updateById
@@ -10769,7 +11042,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/{id}',
@@ -10805,7 +11079,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/{id}',
@@ -10858,8 +11133,9 @@ fetch('/settings/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Settings PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.findById
@@ -10871,7 +11147,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/{id}',
@@ -10892,7 +11169,8 @@ fetch('/settings/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings/{id}',
@@ -10947,8 +11225,9 @@ fetch('/settings/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Settings model instance|[SettingsWithRelations](#schemasettingswithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.deleteById
@@ -10959,10 +11238,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/settings/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -10975,10 +11259,15 @@ fetch('/settings/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/settings/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -11002,8 +11291,9 @@ fetch('/settings/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Settings DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.create
@@ -11030,7 +11320,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings',
@@ -11066,7 +11357,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings',
@@ -11140,8 +11432,9 @@ fetch('/settings',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Settings model instance|[Settings](#schemasettings)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.updateAll
@@ -11169,7 +11462,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings',
@@ -11206,7 +11500,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings',
@@ -11269,8 +11564,9 @@ fetch('/settings',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Settings PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## SettingsController.find
@@ -11282,7 +11578,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings',
@@ -11303,7 +11600,8 @@ fetch('/settings',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/settings',
@@ -11391,8 +11689,9 @@ Status Code **200**
 |ownerType|calendar|
 |ownerType|event|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-themecontroller">ThemeController</h1>
@@ -11406,7 +11705,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/count',
@@ -11427,7 +11727,8 @@ fetch('/themes/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/count',
@@ -11468,8 +11769,9 @@ fetch('/themes/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Theme model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.replaceById
@@ -11496,7 +11798,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/{id}',
@@ -11532,7 +11835,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/{id}',
@@ -11585,8 +11889,9 @@ fetch('/themes/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Theme PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.updateById
@@ -11613,7 +11918,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/{id}',
@@ -11649,7 +11955,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/{id}',
@@ -11702,8 +12009,9 @@ fetch('/themes/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Theme PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.findById
@@ -11715,7 +12023,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/{id}',
@@ -11736,7 +12045,8 @@ fetch('/themes/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes/{id}',
@@ -11791,8 +12101,9 @@ fetch('/themes/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Theme model instance|[ThemeWithRelations](#schemathemewithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.deleteById
@@ -11803,10 +12114,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/themes/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -11819,10 +12135,15 @@ fetch('/themes/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/themes/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -11846,8 +12167,9 @@ fetch('/themes/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Theme DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.create
@@ -11874,7 +12196,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes',
@@ -11910,7 +12233,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes',
@@ -11984,8 +12308,9 @@ fetch('/themes',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Theme model instance|[Theme](#schematheme)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.updateAll
@@ -12013,7 +12338,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes',
@@ -12050,7 +12376,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes',
@@ -12113,8 +12440,9 @@ fetch('/themes',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Theme PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## ThemeController.find
@@ -12126,7 +12454,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes',
@@ -12147,7 +12476,8 @@ fetch('/themes',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/themes',
@@ -12226,8 +12556,9 @@ Status Code **200**
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="scheduler-service-workinghourcontroller">WorkingHourController</h1>
@@ -12241,7 +12572,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/count',
@@ -12262,7 +12594,8 @@ fetch('/working-hours/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/count',
@@ -12303,8 +12636,9 @@ fetch('/working-hours/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|WorkingHour model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.replaceById
@@ -12331,7 +12665,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/{id}',
@@ -12367,7 +12702,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/{id}',
@@ -12420,8 +12756,9 @@ fetch('/working-hours/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|WorkingHour PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.updateById
@@ -12448,7 +12785,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/{id}',
@@ -12484,7 +12822,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/{id}',
@@ -12537,8 +12876,9 @@ fetch('/working-hours/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|WorkingHour PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.findById
@@ -12550,7 +12890,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/{id}',
@@ -12571,7 +12912,8 @@ fetch('/working-hours/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours/{id}',
@@ -12761,8 +13103,9 @@ fetch('/working-hours/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|WorkingHour model instance|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.deleteById
@@ -12773,10 +13116,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/working-hours/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -12789,10 +13137,15 @@ fetch('/working-hours/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/working-hours/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -12816,8 +13169,9 @@ fetch('/working-hours/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|WorkingHour DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.create
@@ -12844,7 +13198,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours',
@@ -12880,7 +13235,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours',
@@ -12954,8 +13310,9 @@ fetch('/working-hours',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|WorkingHour model instance|[WorkingHour](#schemaworkinghour)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.updateAll
@@ -12983,7 +13340,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours',
@@ -13020,7 +13378,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours',
@@ -13083,8 +13442,9 @@ fetch('/working-hours',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|WorkingHour PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkingHourController.find
@@ -13096,7 +13456,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours',
@@ -13117,7 +13478,8 @@ fetch('/working-hours',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/working-hours',
@@ -13448,8 +13810,9 @@ Status Code **200**
 |accessRole|writer|
 |accessRole|owner|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 # Schemas

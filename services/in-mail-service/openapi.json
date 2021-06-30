@@ -16,6 +16,11 @@
         "tags": [
           "OriginatorController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "summary": "API provides an interface for restore message from trash.",
         "responses": {
           "200": {
@@ -61,6 +66,11 @@
         "x-operation-name": "trashBulk",
         "tags": [
           "OriginatorController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "API for moving mails to trash and then delete",
         "responses": {
@@ -124,6 +134,11 @@
         "tags": [
           "OriginatorController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "summary": "API provides interface to mark read, unread and important",
         "responses": {
           "200": {
@@ -159,6 +174,11 @@
         "x-operation-name": "removeAttachment",
         "tags": [
           "OriginatorController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "API provides an interface for removing attachment before message is sent",
         "responses": {
@@ -211,6 +231,11 @@
         "x-operation-name": "addAttachment",
         "tags": [
           "OriginatorController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "API provides an interface for adding attachment before message is sent.",
         "responses": {
@@ -280,6 +305,11 @@
         "tags": [
           "OriginatorController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "summary": "API for sending a drafted message.",
         "responses": {
           "200": {
@@ -324,6 +354,11 @@
         "tags": [
           "OriginatorController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "summary": "Update API. Update draft messages.",
         "responses": {
           "400": {
@@ -343,11 +378,6 @@
             }
           }
         },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "messageId",
@@ -374,6 +404,11 @@
         "x-operation-name": "fetchById",
         "tags": [
           "CollectorController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "GET Message API. Collect a single message based on message identity.",
         "responses": {
@@ -450,6 +485,11 @@
         "tags": [
           "OriginatorController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "summary": "ComposeAPI. For drafting, reply on and create new message",
         "responses": {
           "201": {
@@ -485,6 +525,11 @@
         "x-operation-name": "fetchMailList",
         "tags": [
           "CollectorController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "Collect a list of all messages.",
         "responses": {
@@ -552,6 +597,11 @@
         "x-operation-name": "forward",
         "tags": [
           "ReplyAndForwardController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "API provides interface to forward single message.",
         "responses": {
@@ -632,6 +682,11 @@
         "x-operation-name": "replyMail",
         "tags": [
           "ReplyAndForwardController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "API provides interface to reply to a single message",
         "responses": {
@@ -715,6 +770,11 @@
         "tags": [
           "CollectorController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "summary": "GET Thread Message API. Collect complete single message thread based on thread identity.",
         "responses": {
           "200": {
@@ -777,6 +837,11 @@
         "x-operation-name": "fetchThreadList",
         "tags": [
           "CollectorController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "summary": "Thread List API. Collect a list of all threads.",
         "responses": {

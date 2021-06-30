@@ -27,6 +27,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   SuccessResponse,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {AccessResponseDto, NotificationAccess} from '../models';
 import {IChannelManager} from '../types';
@@ -47,6 +48,7 @@ export class PubnubNotificationController {
   })
   @authorize({permissions: [PermissionKey.CanGetNotificationAccess]})
   @patch('/notifications/access/{id}', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Access response',
