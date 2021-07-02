@@ -9,3 +9,4 @@ export * from './providers/resource-owner-verify.provider';
 export * from './providers/google-oauth2-verify.provider';
 export * from './providers/instagram-oauth2-verify.provider';
 export * from './models/auth-user.model';
+export * from './providers/apple-oauth2-verify.provider';

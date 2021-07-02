@@ -5,6 +5,7 @@ import {
 } from 'loopback4-authentication';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
+import * as AppleStrategy from 'passport-apple';
 
 import {User, UserRelations} from '../models';
 
@@ -47,6 +48,27 @@ export interface InstagramPostVerifyFn {
     user: IAuthUser | null,
   ): Promise<IAuthUser | null>;
 }
+
+export interface AppleSignUpFn {
+  (profile: AppleStrategy.Profile): Promise<(User & UserRelations) | null>;
+}
+
+export interface ApplePreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: AppleStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface ApplePostVerifyFn {
+  (
+    profile: AppleStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
 
 export interface KeyCloakSignUpFn {
   (profile: KeycloakProfile): Promise<IAuthUser | null>;
