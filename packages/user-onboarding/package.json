@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
+    "@videogular/ngx-videogular": "^3.0.1",
     "json-server": "^0.16.3",
     "ngx-webstorage-service": "^4.1.0",
     "prettier": "^2.3.0",

@@ -18,7 +18,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -49,6 +49,44 @@
         "operationId": "WorkflowController.startWorkflow"
       }
     },
+    "/workflow/{id}/version/{version}": {
+      "delete": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "deleteVersionById",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workflow DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WorkflowController.deleteVersionById"
+      }
+    },
     "/workflow/{id}": {
       "patch": {
         "x-controller-name": "WorkflowController",
@@ -58,7 +96,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -95,7 +133,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -123,7 +161,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -153,7 +191,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -187,7 +225,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {

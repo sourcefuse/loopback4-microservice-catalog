@@ -1,6 +1,8 @@
 import {bind, BindingScope, Provider, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {WorflowManager, Workflow, WorkflowDto} from '@sourceloop/bpmn-service';
+import {WorkflowVersion} from '../../../../services/bpmn-service/dist';
 import {CamundaService} from '../services/camunda.service';
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -44,7 +46,7 @@ export class BpmnProvider implements Provider<WorflowManager> {
           Buffer.from(workflowDto.bpmnFile, 'utf-8'),
         );
         let version = 1;
-        let id = response.id;
+        let id;
         if (response.deployedProcessDefinitions) {
           const processDefinition = Object.values(
             //NOSONAR
@@ -52,6 +54,10 @@ export class BpmnProvider implements Provider<WorflowManager> {
           )[0] as AnyObject; //NOSONAR
           version = processDefinition.version;
           id = processDefinition.id;
+        } else {
+          throw new HttpErrors.BadRequest(
+            'Workflow with same name and definition already exists',
+          );
         }
         return {
           version: version,
@@ -86,9 +92,18 @@ export class BpmnProvider implements Provider<WorflowManager> {
           fileRef: workflowDto.bpmnFile,
         };
       },
-      deleteWorkflowById: async workflow => {
-        await this.camunda.delete(workflow.externalIdentifier);
+      deleteWorkflowById: async (workflow: Workflow) => {
+        await this.camunda.delete(
+          workflow.workflowVersions.map(
+            (version: WorkflowVersion) => version.externalWorkflowId as string,
+          ),
+        );
         return workflow;
+      },
+
+      deleteWorkflowVersionById: async (version: WorkflowVersion) => {
+        await this.camunda.deleteVersion(version.externalWorkflowId);
+        return version;
       },
     };
   }
