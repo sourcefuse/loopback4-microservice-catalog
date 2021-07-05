@@ -617,12 +617,12 @@ Status Code **200**
 |»» createdBy|string|false|none|none|
 |»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
-|»» workflowVersion|number|true|none|none|
-|»» externalIdentifier|string|true|none|none|
-|»» name|string|false|none|none|
-|»» provider|string|true|none|none|
-|»» inputSchema|object|true|none|none|
-|»» description|string|false|none|none|
+|»» workflowVersion|number|true|none|Last deployed workflow version|
+|»» externalIdentifier|string|true|none|The key that is used to identify the workflow in the respective workflow engine.|
+|»» name|string|false|none|Name of the workflow|
+|»» provider|string|true|none|Provider could be the engine that will handle the workflow - camunda, zeebe, etc|
+|»» inputSchema|object|true|none|Schema used for validation during workflow execution|
+|»» description|string|false|none|Description of the workflow|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -672,12 +672,12 @@ Workflow
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|workflowVersion|number|true|none|none|
-|externalIdentifier|string|true|none|none|
-|name|string|false|none|none|
-|provider|string|true|none|none|
-|inputSchema|object|true|none|none|
-|description|string|false|none|none|
+|workflowVersion|number|true|none|Last deployed workflow version|
+|externalIdentifier|string|true|none|The key that is used to identify the workflow in the respective workflow engine.|
+|name|string|false|none|Name of the workflow|
+|provider|string|true|none|Provider could be the engine that will handle the workflow - camunda, zeebe, etc|
+|inputSchema|object|true|none|Schema used for validation during workflow execution|
+|description|string|false|none|Description of the workflow|
 
 <h2 id="tocS_NewWorkflow">NewWorkflow</h2>
 <!-- backwards compatibility -->

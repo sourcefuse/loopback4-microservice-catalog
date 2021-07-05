@@ -6,6 +6,7 @@ import {
   IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
 } from '@sourceloop/core';
+import {InMailDatasourceName} from '../keys';
 
 export class MetaRepository extends DefaultUserModifyCrudRepository<
   Meta,
@@ -14,7 +15,8 @@ export class MetaRepository extends DefaultUserModifyCrudRepository<
   public readonly message: BelongsToAccessor<Message, typeof Meta.prototype.id>;
 
   constructor(
-    @inject('datasources.inmail') dataSource: juggler.DataSource,
+    @inject(`datasources.${InMailDatasourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

@@ -24,23 +24,67 @@ Various features of Video Conferncing Services:
 npm i @sourceloop/video-conferencing-service
 ```
 
-## Usage - integrating with main app
+## Usage
 
-In order to use this component into your LoopBack application, please follow below steps.
+ - Create a new Loopback4 Application (If you don't have one already)
+  `lb4 testapp`
+- Install the video conferencing service
+`npm i @sourceloop/video-conferencing-service`
+- Set the [environment variables](#environment-variables).
+- Run the [migrations](#migrations).
+- Bind Vonage config to the `VonageBindings.Config` key -
+  ``` typescript
+      this.bind(VonageBindings.Config).to({
+        apiKey: process.env.VONAGE_API_KEY,
+        apiSecret: process.env.VONAGE_API_SECRET,
+        timeToStart: 0 // time in minutes, meeting can not be started 'timeToStart' minutes before the scheduled time
+      });
+  ```
+- Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`).
+	``` typescript
+  // import the component for VideoConfService
+  import { VideoConfServiceComponent } from '@sourceloop/video-conferencing-service';
+  ...
+	// add VideoConfServiceComponent inside the application class
+	this.component(VideoConfServiceComponent);
+  ...
+	```
+- Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `VideoConfDatasource`. You can see an example datasource [here](#setting-up-a-datasource).
+- Start the application
+  `npm start`
 
-Add component to application.
+### Setting up a `DataSource`
 
-```ts
-....
-import { VideoConfServiceComponent } from '@sourceloop/video-conferencing-service';
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. 
 
-export class ClientComponent extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    ....
-    this.component(VideoConfServiceComponent);
-    ....
+```typescript
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {VideoConfDatasource} from '@sourceloop/video-conferencing-service';
+
+const config = {
+  name: VideoConfDatasource,
+  connector: 'postgresql',
+  url: '',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
+};
+
+@lifeCycleObserver('datasource')
+export class VideoDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
+  static dataSourceName = VideoConfDatasource;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject(`datasources.config.${VideoConfDatasource}`, {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
   }
 }
 ```
@@ -48,26 +92,6 @@ export class ClientComponent extends BootMixin(
 ## DB migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
-
-## Using config
-
-```ts
-....
-export class VideoConfServiceComponent extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    ....
-    this.component(SchedulerComponent);
-    // example showing Vonage Binding
-    this.bind(VonageBindings.Config).to({
-        apiKey: process.env.VONAGE_API_KEY;
-        apiSecret: process.env.VONAGE_API_SECRET;
-    });
-    ....
-  }
-}
-```
 
 ## APIs available (Currently Vonage is Supported) 
 

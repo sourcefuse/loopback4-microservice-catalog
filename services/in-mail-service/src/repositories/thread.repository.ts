@@ -15,6 +15,7 @@ import {
   IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
 } from '@sourceloop/core';
+import {InMailDatasourceName} from '../keys';
 
 export class ThreadRepository extends DefaultUserModifyCrudRepository<
   Thread,
@@ -36,7 +37,8 @@ export class ThreadRepository extends DefaultUserModifyCrudRepository<
   >;
 
   constructor(
-    @inject('datasources.inmail') dataSource: juggler.DataSource,
+    @inject(`datasources.${InMailDatasourceName}`)
+    dataSource: juggler.DataSource,
     @repository.getter('MessageRepository')
     protected messageRepositoryGetter: Getter<MessageRepository>,
     @repository.getter('GroupRepository')

@@ -6,6 +6,7 @@ import {
   IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
 } from '@sourceloop/core';
+import {InMailDatasourceName} from '../keys';
 
 export class AttachmentRepository extends DefaultUserModifyCrudRepository<
   Attachment,
@@ -17,7 +18,8 @@ export class AttachmentRepository extends DefaultUserModifyCrudRepository<
   >;
 
   constructor(
-    @inject('datasources.inmail') dataSource: juggler.DataSource,
+    @inject(`datasources.${InMailDatasourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

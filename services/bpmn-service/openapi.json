@@ -303,22 +303,28 @@
             "type": "string"
           },
           "workflowVersion": {
-            "type": "number"
+            "type": "number",
+            "description": "Last deployed workflow version"
           },
           "externalIdentifier": {
-            "type": "string"
+            "type": "string",
+            "description": "The key that is used to identify the workflow in the respective workflow engine."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the workflow"
           },
           "provider": {
-            "type": "string"
+            "type": "string",
+            "description": "Provider could be the engine that will handle the workflow - camunda, zeebe, etc"
           },
           "inputSchema": {
-            "type": "object"
+            "type": "object",
+            "description": "Schema used for validation during workflow execution"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description of the workflow"
           }
         },
         "required": [

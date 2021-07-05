@@ -6,13 +6,15 @@ import {
   IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
 } from '@sourceloop/core';
+import {VideoConfDatasource} from '../keys';
 
 export class VideoChatSessionRepository extends DefaultUserModifyCrudRepository<
   VideoChatSession,
   typeof VideoChatSession.prototype.id
 > {
   constructor(
-    @inject('datasources.videochatDb') dataSource: juggler.DataSource,
+    @inject(`datasources.${VideoConfDatasource}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

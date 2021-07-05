@@ -21,12 +21,14 @@ export class WorkflowVersion extends Entity {
   @property({
     type: 'number',
     required: true,
+    description: 'Version number assigned to this workflow definition',
   })
   version: number;
 
   @property({
     type: 'string',
     name: 'bpmn_diagram',
+    description: 'Raw XML of the BPMN Diagram',
   })
   bpmnDiagram?: string;
 
@@ -34,12 +36,15 @@ export class WorkflowVersion extends Entity {
     type: 'string',
     name: 'external_workflow_id',
     required: true,
+    description:
+      'The key that is used to identify the workflow in the respective workflow engine.',
   })
   externalWorkflowId: string;
 
   @property({
     type: 'object',
     required: true,
+    description: 'Schema used for validation during workflow execution',
   })
   inputSchema: AnyObject;
 

@@ -2,7 +2,7 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
-This is a loopback4 component for scheduling events in calender (scheduler/calendar server).
+This is a loopback4 component for scheduling events in calendar (scheduler/calendar server).
 
 Various features of Scheduler Service: 
 
@@ -36,23 +36,67 @@ Main feature set:
 npm install @sourceloop/scheduler-service
 ```
 
-## Usage - integrating with main app
+### Usage
 
-In order to use this component into your LoopBack application, please follow below steps.
+ - Create a new Loopback4 Application (If you don't have one already)
+	`lb4 testapp` 
+ - Install the scheduler service
+	 `npm i @sourceloop/scheduler-service`
+ - Set the [environment variables](#environment-variables).
+ - Run the [migrations](#migrations).
+ - Bind the Scheduler Config to `SchedulerBindings.Config` key-
+    ``` typescript
+    this.bind(SchedulerBindings.Config).to({
+        jwtIssuer: process.env.JWT_ISSUER;
+        jwtSecret: process.env.JWT_SECRET;
+    });
+    ```
+ - Add the `SchedulerComponent` to your Loopback4 Application (in `application.ts`).
+	  ``` typescript
+    // import the SchedulerComponent
+    import {SchedulerComponent} from '@sourceloop/scheduler-service'; 
+    ...
+	  // add Component for SchedulerComponent
+	  this.component(SchedulerComponent);
+    ...
+	```
+  - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to 
+	`SchedulerDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+ - Start the application
+	`npm start`
 
-Add component to application.
+### Setting up a `DataSource`
 
-```ts
-// application.ts
-import {SchedulerComponent} from '@sourceloop/scheduler-service'; 
-....
-export class SchedulerServiceApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    ....
-    this.component(SchedulerComponent);
-    ....
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
+
+```typescript
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {SchedulerDatasourceName} from '@sourceloop/scheduler-service';
+
+const config = {
+  name: SchedulerDatasourceName,
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
+};
+
+@lifeCycleObserver('datasource')
+export class SchedulerDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver {
+  static dataSourceName = SchedulerDatasourceName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject(`datasources.config.${SchedulerDatasourceName}`, {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
   }
 }
 ```
@@ -64,26 +108,6 @@ The migrations required for this service are processed during the installation a
 #### Database Model
 
 ![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/migrations/scheduler_db_schema.png?raw=true)
-
-## Using config
-
-```ts
-import {SchedulerComponent, SchedulerBindings} from '@sourceloop/scheduler-service'; 
-....
-export class SchedulerServiceApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    ....
-    this.component(SchedulerComponent);
-    this.bind(SchedulerBindings.Config).to({
-        jwtIssuer: process.env.JWT_ISSUER;
-        jwtSecret: process.env.JWT_SECRET;
-    });
-    ....
-  }
-}
-```
 
 ## APIs available
 
