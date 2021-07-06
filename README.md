@@ -17,7 +17,7 @@ The current catalog consists of the following services:
 * [video-conferencing-service](services/video-conferencing-service)
 * [bpmn-service](services/bpmn-service)
 
-This repository also contains a set of example projects in the [sandbox](sandbox) directory.
+This repository also contains a set of example projects in the [sandbox](sandbox) directory that can be run from `docker-compose`.
 
 * [auth-multitenant-example](sandbox/auth-multitenant-example)
 * [auth-ms-basic-example](sandbox/auth-ms-basic-example)
