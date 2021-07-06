@@ -1,5 +1,6 @@
 export interface TourButton {
-  action: string;
+  action: () => void;
   classes?: string;
   text: string;
+  key: string;
 }

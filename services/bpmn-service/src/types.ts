@@ -30,6 +30,9 @@ export interface WorflowManager<T = AnyObject, S = AnyObject> {
   createWorkflow(workflowDto: WorkflowDto): Promise<SuccessResponse>;
   updateWorkflow(workflowDto: WorkflowDto): Promise<SuccessResponse>;
   deleteWorkflowById(workflow: Workflow): Promise<Workflow>;
+  deleteWorkflowVersionById?(
+    version: WorkflowVersion,
+  ): Promise<WorkflowVersion>;
 }
 
 export interface ExecutionInputValidator<T = AnyObject> {

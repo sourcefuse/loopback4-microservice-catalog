@@ -20,7 +20,7 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Notification, NotificationUser} from '../models';
 import {NotificationRepository} from '../repositories';
-
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 const basePath = '/notifications/{id}/notification-users';
 
 export class NotificationNotificationUserController {
@@ -32,6 +32,7 @@ export class NotificationNotificationUserController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewNotification]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
         description: 'Array of Notification has many NotificationUser',
@@ -56,6 +57,7 @@ export class NotificationNotificationUserController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateNotification]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
         description: 'Notification model instance',
@@ -90,6 +92,7 @@ export class NotificationNotificationUserController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateNotification]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
         description: 'Notification.NotificationUser PATCH success count',
@@ -118,6 +121,7 @@ export class NotificationNotificationUserController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteNotification]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
         description: 'Notification.NotificationUser DELETE success count',

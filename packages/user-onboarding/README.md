@@ -102,11 +102,141 @@ export class LoadSCommandCustom implements LoadStateCommand {
  Next step is to create an array of TourSteps using the TourStep interface provided.
  These Steps will be added in the tour.
 
+ to enable multipage tour functionality provide the previous step url in prevRoute and next step url in nextRoute.
+
+ If the nextStep is on the same page then make currentRoute = nextRoute
+ similarily for the if the previous step was on the same page as the current step make prevRoute = currentRoute
+
+Note: this also works for the case if the whole tour is on the same page
+
+ Also in the attachTo object the 'on' property defines where the step will be attached on the element (top,bottom,right,left) if the field is set to empty '' then the step will appear at the center of the page where the element is present. 
+
  ```typescript
+ sampleTour: TourStep[] = [
+    {
+      title: 'Step 1',
+      id: 'example-step-1',
+      prevStepId: 'example-step-1',
+      nextStepId: 'example-step-2',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: 'bottom',
+        type: 'string',
+      },
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/home",
+      nextRoute: 'main/home',
+      prevRoute: "main/home",
+    },
+    {
+      title: 'Step 2',
+      id: 'example-step-2',
+      prevStepId: 'example-step-1',
+      nextStepId: 'example-step-3',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: 'right',
+        type: 'string',
+      },
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/home",
+      nextRoute: 'main/nextPage',
+      prevRoute: "main/home",
+    },
+    {
+      title: 'Step 3',
+      id: 'example-step-3',
+      prevStepId: 'example-step-2',
+      nextStepId: 'example-step-4',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: '',
+        type: 'string',
+      },
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/nextPage",
+      nextRoute: 'main/nextPage',
+      prevRoute: "main/home",
+    },
+    {
+      title: 'Step 4',
+      id: 'example-step-4',
+      prevStepId: 'example-step-3',
+      nextStepId: 'example-step-5',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: 'bottom',
+        type: 'string',
+      },
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/nextPage",
+      nextRoute: 'main/nextPage/nextPage-1',
+      prevRoute: "main/nextPage",
+    },
+];
+
+
+```
+We can also add videos to our tour by importing prefix and suffix variables from the library and providing the URL of the video on the file server. An example is shown below
+
+ ```typescript
+ import { prefix,suffix} from '@sourceloop/user-onboarding-client';
+ URL = "http://192.168.69.191:8887/video.webm";
+ URL2 = "http://192.168.69.191:8887/file.mp4";
  sampleTour : TourStep[] = [{
-    title: 'sampleStep 1',
+    title: 'Step 1',
     id: 'example-step-1',
-    text: 'This step is attached to the bottom of THE BAND element.',
+    prevStepId: 'example-step-1',
+    nextStepId: 'example-step-2',
+    text: `${prefix} ${this.URL} ${suffix}`,
     attachTo: {
       element: '.elem1',
       on: 'bottom',
@@ -122,11 +252,16 @@ export class LoadSCommandCustom implements LoadStateCommand {
         action: 'nextAction',
       }
     ]
+    currentRoute:"main/home",
+    nextRoute: 'main/home',
+    prevRoute: "main/home",
   },
   {
-    title: 'sampleStep 2',
+    title: 'Step 2',
     id: 'example-step-2',
-    text: 'This step is attached to the bottom of contact element.',
+    prevStepId: 'example-step-1',
+    nextStepId: 'example-step-3',
+    text: `${prefix} ${this.URL2} ${suffix}`,
     attachTo: {
       element: '.elem2',
       on: 'bottom',
@@ -142,48 +277,13 @@ export class LoadSCommandCustom implements LoadStateCommand {
         action: 'nextAction',
       }
     ]
-  },
-  {
-    title: 'sampleStep 3',
-    id: 'example-step-3',
-    text: 'This step is attached to the bottom of TOUR DATES element.',
-    attachTo: {
-      element: '.elem3',
-      on: 'bottom',
-      type: 'string'
-    },
-    buttons: [
-      {
-        text: 'Back',
-        action: 'prevAction',
-      },
-      {
-        text: 'Next',
-        action: 'nextAction',
-      }
-    ]
-  },
-  {
-    title: 'sampleStep 4',
-    id: 'example-step-4',
-    text: 'This step is attached to the bottom of TICKET MODAL element.',
-    attachTo: {
-      element: '.elem4',
-      on: 'bottom',
-      type: 'string'
-    },
-    buttons: [
-      {
-        text: 'Back',
-        action: 'prevAction',
-      },
-      {
-        text: 'Next',
-        action: 'nextAction',
-      }
-    ]
+    currentRoute:"main/home",
+    nextRoute: 'main/home',
+    prevRoute: "main/home",
   }
 ];
+
+
 ```
  By default commands are also provided incase a user doesn't specify the custom commands to be used.
 
@@ -215,11 +315,13 @@ export class LoadSCommandCustom implements LoadStateCommand {
 
     tourSubject.subscribe((tour) => {
       this.tourStoreService.registerFnRef('nextAction', function () {
+        this.cancel();
         this.next();
       });
     });
     tourSubject.subscribe((tour) => {
       this.tourStoreService.registerFnRef('prevAction', function () {
+        this.cancel();
         this.back();
       });
 
@@ -227,3 +329,100 @@ export class LoadSCommandCustom implements LoadStateCommand {
     }); 
  ```
  in the above code the TourService provides with the run function which starts the tour.
+
+We can also alter the styles of the tour. For this we have provided the mixins to the user. We can use any of the mixins shown below.
+Here sourceloopElement mixin exposes background color, border radius and maximum width style of the tour.
+Here sourceloopButton mixin exposes background color, border radius of button and color of the text of the button style of the button.
+Here sourceloopTitle mixin exposes title text color, font size and font weight style of the title text.
+Here sourceloopCancelIcon mixin exposes background color of the cancel icon, border radius of the cancel icon and color of cancel icon style of the cancel icon.
+Here sourceloopText mixin exposes text color and font size of the tour text
+```css
+@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+.shepherd-element
+{
+   @include sourceloopElement(black,5px,500px);
+}
+
+.shepherd-button
+{
+  @include sourceloopButton(blue,5px, white);
+}
+
+.shepherd-title
+{
+  @include sourceloopTitle(blue,2rem,500);
+}
+
+.shepherd-cancel-icon
+{
+  @include sourceloopCancelIcon(black,solid,white);
+}
+.shepherd-text
+{
+  @include sourceloopText(black,1rem);
+}
+
+```
+
+Now if you want to have both the buttons of different attributes you can overwrite the attributes of one button using the mixin shown below. You have to also include the class selector shown below while defining the steps.
+```css
+@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@include sourceloopBtnClr1(white,5px,black);
+```
+
+```typescript
+sampleTour : TourStep[] = [{
+    title: 'sampleStep 1',
+    id: 'example-step-1',
+    text: `${prefix} ${this.URL} ${suffix}`,
+    attachTo: {
+      element: '.elem1',
+      on: 'bottom',
+      type: 'string'
+    },
+    buttons: [
+      {
+        text: 'Back',
+        action: 'prevAction',
+        classes: 'sourceloop-btn-class1',
+      },
+      {
+        text: 'Next',
+        action: 'nextAction',
+      }
+    ]
+  },
+  {
+    title: 'sampleStep 2',
+    id: 'example-step-2',
+    text: `${prefix} ${this.URL2} ${suffix}`,
+    attachTo: {
+      element: '.elem2',
+      on: 'bottom',
+      type: 'string'
+    },
+    buttons: [
+      {
+        text: 'Back',
+        action: 'prevAction',
+        classes: 'sourceloop-btn-class1',
+      },
+      {
+        text: 'Next',
+        action: 'nextAction',
+      }
+    ]
+  }
+];
+
+```
+
+There are also two themes available for use i.e. the light theme and the dark theme which can be used for some default theming. You can use these themes like shown below.
+```typescript
+@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@include sourceloopTheme('light');
+```
+```typescript
+@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@include sourceloopTheme('dark');
+```

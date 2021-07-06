@@ -69,7 +69,9 @@ export class HttpClientService {
 
   private async handleRes(res: Response) {
     if (res.status === STATUS_CODE.OK) {
-      return res.json();
+      return res.json().catch(e => ({}));
+    } else if (res.status === STATUS_CODE.NO_CONTENT) {
+      return {};
     } else {
       throw new HttpErrors.BadRequest(await res.text());
     }

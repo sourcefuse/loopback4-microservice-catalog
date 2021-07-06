@@ -21,6 +21,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -56,6 +57,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
@@ -86,6 +88,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscription model count',
@@ -104,6 +107,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get('calendars/subscriptions/me', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Subscription model instances',
@@ -145,6 +149,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Subscription model instances',
@@ -170,6 +175,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscription PATCH success count',
@@ -196,6 +202,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
@@ -220,6 +227,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription PATCH success',
@@ -245,6 +253,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription PUT success',
@@ -263,6 +272,7 @@ export class SubscriptionController {
   })
   @authorize({permissions: [PermissionKey.DeleteSubscription]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscription DELETE success',

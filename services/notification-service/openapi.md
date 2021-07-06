@@ -54,7 +54,8 @@ const inputBody = '[
 ]';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/bulk',
@@ -88,7 +89,8 @@ const inputBody = [
 ];
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/bulk',
@@ -156,8 +158,9 @@ fetch('/notification-users/bulk',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification User model instance|[NotificationUser](#schemanotificationuser)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.count
@@ -169,7 +172,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/count',
@@ -190,7 +194,8 @@ fetch('/notification-users/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/count',
@@ -231,8 +236,9 @@ fetch('/notification-users/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|NotificationUser model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.deleteAllHard
@@ -243,10 +249,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notification-users/hard',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -259,10 +270,15 @@ fetch('/notification-users/hard',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notification-users/hard',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -286,8 +302,9 @@ fetch('/notification-users/hard',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Notification DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.replaceById
@@ -310,7 +327,8 @@ const inputBody = '{
   "actionMeta": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}',
@@ -342,7 +360,8 @@ const inputBody = {
   "actionMeta": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}',
@@ -391,8 +410,9 @@ fetch('/notification-users/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|NotificationUser PUT success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.updateById
@@ -415,7 +435,8 @@ const inputBody = '{
   "actionMeta": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}',
@@ -447,7 +468,8 @@ const inputBody = {
   "actionMeta": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}',
@@ -496,8 +518,9 @@ fetch('/notification-users/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|NotificationUser PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.findById
@@ -509,7 +532,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}',
@@ -530,7 +554,8 @@ fetch('/notification-users/{id}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}',
@@ -580,8 +605,9 @@ fetch('/notification-users/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|NotificationUser instance|[NotificationUser](#schemanotificationuser)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.deleteById
@@ -592,10 +618,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notification-users/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -608,10 +639,15 @@ fetch('/notification-users/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notification-users/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -635,8 +671,9 @@ fetch('/notification-users/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|NotificationUser DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.create
@@ -659,7 +696,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users',
@@ -691,7 +729,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users',
@@ -757,8 +796,9 @@ fetch('/notification-users',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|NotificationUser model instance|[NotificationUser](#schemanotificationuser)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.updateAll
@@ -782,7 +822,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users',
@@ -815,7 +856,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users',
@@ -874,8 +916,9 @@ fetch('/notification-users',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|NotificationUser PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.find
@@ -887,7 +930,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users',
@@ -908,7 +952,8 @@ fetch('/notification-users',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users',
@@ -979,8 +1024,9 @@ Status Code **200**
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationUserController.deleteAll
@@ -991,10 +1037,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notification-users',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1007,10 +1058,15 @@ fetch('/notification-users',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notification-users',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1034,8 +1090,9 @@ fetch('/notification-users',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Notification DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="notification-service-notificationusernotificationcontroller">NotificationUserNotificationController</h1>
@@ -1049,7 +1106,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}/notification',
@@ -1070,7 +1128,8 @@ fetch('/notification-users/{id}/notification',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notification-users/{id}/notification',
@@ -1135,8 +1194,9 @@ Status Code **200**
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="notification-service-pubnubnotificationcontroller">PubnubNotificationController</h1>
@@ -1240,8 +1300,9 @@ fetch('/notifications/access/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Access response|[AccessResponseDto](#schemaaccessresponsedto)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## PubnubNotificationController.revokeAccess
@@ -1320,7 +1381,8 @@ const inputBody = '[
 ]';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/bulk',
@@ -1351,7 +1413,8 @@ const inputBody = [
 ];
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/bulk',
@@ -1401,8 +1464,9 @@ fetch('/notifications/bulk',
 
 <h3 id="notificationcontroller.createbulknotificaitions-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationController.count
@@ -1414,7 +1478,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/count',
@@ -1435,7 +1500,8 @@ fetch('/notifications/count',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/count',
@@ -1476,8 +1542,9 @@ fetch('/notifications/count',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationController.updateById
@@ -1497,7 +1564,8 @@ const inputBody = '{
   "options": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}',
@@ -1526,7 +1594,8 @@ const inputBody = {
   "options": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}',
@@ -1572,8 +1641,9 @@ fetch('/notifications/{id}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Notification PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationController.findById
@@ -1674,7 +1744,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications',
@@ -1703,7 +1774,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications',
@@ -1763,8 +1835,9 @@ fetch('/notifications',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance|[Notification](#schemanotification)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationController.updateAll
@@ -1785,7 +1858,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications',
@@ -1815,7 +1889,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications',
@@ -1871,8 +1946,9 @@ fetch('/notifications',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationController.find
@@ -1884,7 +1960,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications',
@@ -1905,7 +1982,8 @@ fetch('/notifications',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications',
@@ -1970,8 +2048,9 @@ Status Code **200**
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationController.deleteAll
@@ -1982,10 +2061,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notifications',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1998,10 +2082,15 @@ fetch('/notifications',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/notifications',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -2025,8 +2114,9 @@ fetch('/notifications',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Notification DELETE success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="notification-service-notificationnotificationusercontroller">NotificationNotificationUserController</h1>
@@ -2051,7 +2141,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2083,7 +2174,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2150,8 +2242,9 @@ fetch('/notifications/{id}/notification-users',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance|[NotificationUser](#schemanotificationuser)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationNotificationUserController.patch
@@ -2175,7 +2268,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2208,7 +2302,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2268,8 +2363,9 @@ fetch('/notifications/{id}/notification-users',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification.NotificationUser PATCH success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationNotificationUserController.find
@@ -2281,7 +2377,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2302,7 +2399,8 @@ fetch('/notifications/{id}/notification-users',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2374,8 +2472,9 @@ Status Code **200**
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|object|false|none|none|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## NotificationNotificationUserController.delete
@@ -2387,7 +2486,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2408,7 +2508,8 @@ fetch('/notifications/{id}/notification-users',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/notifications/{id}/notification-users',
@@ -2450,8 +2551,9 @@ fetch('/notifications/{id}/notification-users',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification.NotificationUser DELETE success count|[loopback.Count](#schemaloopback.count)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 # Schemas

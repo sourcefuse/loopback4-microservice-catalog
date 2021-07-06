@@ -1,17 +1,19 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
   HasManyRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {Workflow, WorkflowRelations, WorkflowVersion} from '../models';
 import {WorkflowCacheSourceName} from '../types';
 import {WorkflowVersionRepository} from './workflow-version.repository';
 
-export class WorkflowRepository extends DefaultCrudRepository<
+export class WorkflowRepository extends DefaultUserModifyCrudRepository<
   Workflow,
   typeof Workflow.prototype.id,
   WorkflowRelations
@@ -31,7 +33,7 @@ export class WorkflowRepository extends DefaultCrudRepository<
       IAuthUserWithPermissions | undefined
     >,
   ) {
-    super(Workflow, dataSource);
+    super(Workflow, dataSource, getCurrentUser);
     this.workflowVersions = this.createHasManyRepositoryFactoryFor(
       'workflowVersions',
       workflowVersionRepositoryGetter,

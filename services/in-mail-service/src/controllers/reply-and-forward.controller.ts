@@ -11,6 +11,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   STATUS_CODE,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -105,6 +106,7 @@ export class ReplyAndForwardController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionsEnums.ReplyMail]})
   @patch('threads/{threadId}/mails/{messageId}/replies', {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to reply to a single message',
     responses: {
       [STATUS_CODE.OK]: {
@@ -264,6 +266,7 @@ export class ReplyAndForwardController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionsEnums.ComposeMail]})
   @patch('threads/{threadId}/forward', {
+    security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to forward single message.',
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

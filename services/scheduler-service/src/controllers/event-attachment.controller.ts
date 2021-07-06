@@ -20,7 +20,11 @@ import {authorize} from 'loopback4-authorization';
 import {Attachment, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 
 const basePath = '/events/{id}/attachments';
 
@@ -34,6 +38,7 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Event has many Attachment',
@@ -57,6 +62,7 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.CreateAttachment]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
@@ -89,6 +95,7 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event.Attachment PATCH success count',
@@ -117,6 +124,7 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.DeleteAttachment]})
   @del(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event.Attachment DELETE success count',

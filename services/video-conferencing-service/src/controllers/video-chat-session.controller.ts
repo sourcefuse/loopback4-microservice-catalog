@@ -19,7 +19,11 @@ import {
 import {VideoChatBindings} from '../keys';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
 import {VideoChatSession, SessionAttendees} from '../models';
@@ -49,6 +53,7 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.CreateSession]})
   @post('/session', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -114,6 +119,7 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GenerateToken]})
   @post('/session/{meetingLinkId}/token', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         content: {
@@ -213,6 +219,7 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.EditMeeting]})
   @patch('/session/{meetingLinkId}', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Session details PATCH success',
@@ -305,6 +312,7 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.StopMeeting]})
   @patch('/session/{meetingLinkId}/end', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'MessageRecipient PATCH success',
@@ -480,6 +488,7 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GetAttendees]})
   @get('/session/{meetingLinkId}/attendees', {
+    security: OPERATION_SECURITY_SPEC,
     parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],
     responses: {
       [STATUS_CODE.OK]: {

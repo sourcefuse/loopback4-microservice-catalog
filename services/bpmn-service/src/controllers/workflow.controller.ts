@@ -11,10 +11,13 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {OPERATION_SECURITY_SPEC} from '../constants/security-specs';
 import {ErrorKeys} from '../enums/error-keys.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {WorkflowServiceBindings} from '../keys';
@@ -209,6 +212,7 @@ export class WorkflowController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewWorkflow]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Workflow model instances',
@@ -225,13 +229,14 @@ export class WorkflowController {
     filter?: Filter<Workflow>,
   ): Promise<Workflow[]> {
     return this.workflowRepository.find(filter, {
-      includes: ['workflowVersions'],
+      include: ['workflowVersions'],
     });
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.ViewWorkflow]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Workflow Model',
@@ -254,8 +259,54 @@ export class WorkflowController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    const workflow = await this.workflowRepository.findById(id);
+    const workflow = await this.workflowRepository.findById(id, {
+      include: ['workflowVersions'],
+    });
     await this.workflowManagerService.deleteWorkflowById(workflow);
+    await this.workflowVersionRepository.deleteAll({
+      workflowId: workflow.id,
+    });
+    await this.workflowRepository.deleteById(workflow.id);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
+  @del(`${basePath}/{id}/version/{version}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      '204': {
+        description: 'Workflow DELETE success',
+      },
+    },
+  })
+  async deleteVersionById(
+    @param.path.string('id') id: string,
+    @param.path.number('version') versionNumber: number,
+  ): Promise<void> {
+    const workflow = await this.workflowRepository.findById(id);
+    if (workflow.workflowVersion === versionNumber) {
+      throw new HttpErrors.BadRequest(
+        'Can not delete latest version of a workflow',
+      );
+    }
+    const version = await this.workflowVersionRepository.findOne({
+      where: {
+        workflowId: id,
+        version: versionNumber,
+      },
+    });
+    if (!this.workflowManagerService.deleteWorkflowVersionById) {
+      throw new HttpErrors.InternalServerError(
+        'Version Delete Provider Missing',
+      );
+    }
+
+    if (version) {
+      await this.workflowManagerService.deleteWorkflowVersionById(version);
+      await this.workflowVersionRepository.deleteById(version.id);
+    } else {
+      throw new HttpErrors.NotFound(ErrorKeys.VersionNotFound);
+    }
   }
 
   private async initWorkers(workflowName: string) {
