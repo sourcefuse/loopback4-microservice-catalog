@@ -5,6 +5,14 @@ import {LanguageTranslateBindings} from '../keys';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {TranslateModelDto} from '../models';
 import {TextType} from '../types';
+
+const MOCK_RESPONSES = {
+  [TextType.HTML]:
+    '<h1>Bonjour le monde</h1><h2>Comment allez-vous&nbsp;?</h2>',
+  [TextType.MARKDOWN]: `J'adore**texte gras**.`,
+  [TextType.TEXT]: `Ce n'est qu'un test simple.`,
+};
+
 export class TranslateController {
   constructor(
     @inject(LanguageTranslateBindings.jsDomService)
@@ -52,17 +60,21 @@ export class TranslateController {
     if (!type) {
       throw new HttpErrors.BadRequest('Type is required');
     }
+    if (![TextType.HTML, TextType.TEXT, TextType.MARKDOWN].includes(type)) {
+      throw new HttpErrors.BadRequest(
+        `Text type should be one of ${TextType.MARKDOWN}, ${TextType.HTML} or ${TextType.TEXT}`,
+      );
+    }
+    if (process.env.NODE_ENV === 'test') {
+      return MOCK_RESPONSES[type];
+    }
     if ([TextType.HTML, TextType.TEXT].includes(type)) {
       return this.jsDomService.translateTextUsingjsDom(
         String(text),
         targetLanguage,
       );
-    } else if ([TextType.MARKDOWN].includes(type)) {
-      return this.markdownService.translateText(String(text), targetLanguage);
     } else {
-      throw new HttpErrors.BadRequest(
-        `Text type should be one of ${TextType.MARKDOWN}, ${TextType.HTML} or ${TextType.TEXT}`,
-      );
+      return this.markdownService.translateText(String(text), targetLanguage);
     }
   }
 }

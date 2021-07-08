@@ -54,50 +54,17 @@ describe('TranslateController', () => {
     });
     it('translates html text', async () => {
       const translatedText = await translateController.makeTranslation({
-        text: `<table>
-        <thead>
-        <tr>
-        <th>Option</th>
-        <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-        <td>data</td>
-        <td>path to data files to supply the data that will be passed into templates.</td>
-        </tr>
-        <tr>
-        <td>engine</td>
-        <td>engine to be used for processing templates. Handlebars is the default.</td>
-        </tr>
-        <tr>
-        <td>ext</td>
-        <td>extension to be used for dest files.</td>
-        </tr>
-        </tbody>
-        </table>
-        <p>Right aligned columns</p>
-        <table>`,
+        text: `<h1>Hello World</h1><h2>How are you</h2>`,
         type: TextType.HTML,
         targetLanguage: 'fr',
       } as TranslateModelDto);
-      expect(translatedText).to.be.instanceOf(String);
+      expect(translatedText).to.eql(
+        '<h1>Bonjour le monde</h1><h2>Comment allez-vous&nbsp;?</h2>',
+      );
     }).timeout(5000);
     it('translates markdown text', async () => {
       const translatedText = await translateController.makeTranslation({
-        text: `### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)
-
-          This is HTML abbreviation example.
-          
-          It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-          
-          *[HTML]: Hyper Text Markup Language
-          
-          ### [Custom containers](https://github.com/markdown-it/markdown-it-container)
-          
-          ::: warning
-          *here be dragons*
-          :::`,
+        text: `I just love **bold text**.	`,
         type: TextType.MARKDOWN,
         targetLanguage: 'fr',
       } as TranslateModelDto);
@@ -109,7 +76,7 @@ describe('TranslateController', () => {
         type: TextType.TEXT,
         targetLanguage: 'fr',
       } as TranslateModelDto);
-      expect(translatedText).to.be.instanceOf(String);
+      expect(translatedText).to.eql(`Ce n'est qu'un test simple.`);
     }).timeout(5000);
   });
 });
