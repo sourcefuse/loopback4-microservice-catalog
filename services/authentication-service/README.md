@@ -107,6 +107,16 @@ export class Client extends BootMixin(
 | `APPLE_AUTH_TEAM_ID`          | N        |               | Apple team id for the service                                                                                                      |
 | `APPLE_AUTH_KEY_ID`           | N        |               | Apple key id for the service                                                                                        |
 | `APPLE_AUTH_CALLBACK_URL`     | N        |               | Apple callback URL for the client configuration in Apple                                                                          |
+| `INSTAGRAM_AUTH_URL`          | N        |               | Instagram OAuth2.0 authorization URL if authentication strategy is set to Instagram                                                |
+| `INSTAGRAM_AUTH_CLIENT_ID`    | N        |               | Instagram client ID for the service                                                                                                |
+| `INSTAGRAM_AUTH_CLIENT_SECRET`| N        |               | Instagram client secret for the service                                                                                            |
+| `INSTAGRAM_AUTH_TOKEN_URL`    | N        |               | Instagram OAuth2.0 authorization URL if authentication strategy is set to Instagram                                                |
+| `INSTAGRAM_AUTH_CALLBACK_URL` | N        |               | Instagram callback URL for the client configuration in Instagram                                                                   |
+| `FACEBOOK_AUTH_URL`           | N        |               | Facebook OAuth2.0 authorization URL if authentication strategy is set to Facebook                                                  |
+| `FACEBOOK_AUTH_CLIENT_ID`     | N        |               | Facebook client ID for the service                                                                                                 |
+| `FACEBOOK_AUTH_CLIENT_SECRET` | N        |               | Facebook client secret for the service                                                                                             |
+| `FACEBOOK_AUTH_TOKEN_URL`     | N        |               | Facebook OAuth2.0 authorization URL if authentication strategy is set to Facebook                                                  |
+| `FACEBOOK_AUTH_CALLBACK_URL`  | N        |               | Facebook callback URL for the client configuration in Facebook                                                                     |
 | `FORGOT_PASSWORD_LINK_EXPIRY` | N        | 1800          | Expiration period of temporary password in seconds. 1800 seconds (30 minutes) is the default.                                      |
 | `KEYCLOAK_HOST`               | N        |               | Hostname of the Keycloak instance                                                                                                  |
 | `KEYCLOAK_REALM`              | N        |               | Realm (tenant) in Keycloak                                                                                                         |
