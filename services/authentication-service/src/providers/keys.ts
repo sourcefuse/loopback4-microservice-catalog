@@ -12,6 +12,9 @@ import {
   ApplePostVerifyFn,
   ApplePreVerifyFn,
   AppleSignUpFn,
+  FacebookSignUpFn,
+  FacebookPreVerifyFn,
+  FacebookPostVerifyFn,
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
@@ -27,6 +30,9 @@ export namespace SignUpBindings {
     BindingKey.create<InstagramSignUpFn>('sf.instagram.signup.provider');
   export const APPLE_SIGN_UP_PROVIDER = BindingKey.create<AppleSignUpFn>(
     'sf.apple.signup.provider',
+  );
+  export const FACEBOOK_SIGN_UP_PROVIDER = BindingKey.create<FacebookSignUpFn>(
+    'sf.facebook.signup.provider',
   );
   export const KEYCLOAK_SIGN_UP_PROVIDER = BindingKey.create<KeyCloakSignUpFn>(
     'sf.keycloak.signup.provider',
@@ -55,6 +61,10 @@ export namespace VerifyBindings {
   );
   export const APPLE_POST_VERIFY_PROVIDER =
     BindingKey.create<ApplePostVerifyFn>('sf.apple.postverify.provider');
+  export const FACEBOOK_POST_VERIFY_PROVIDER =
+    BindingKey.create<FacebookPostVerifyFn>('sf.facebook.postverify.provider');
+  export const FACEBOOK_PRE_VERIFY_PROVIDER =
+    BindingKey.create<FacebookPreVerifyFn>('sf.facebook.preverify.provider');
   export const KEYCLOAK_PRE_VERIFY_PROVIDER =
     BindingKey.create<KeyCloakPreVerifyFn>('sf.keycloak.preverify.provider');
   export const KEYCLOAK_POST_VERIFY_PROVIDER =

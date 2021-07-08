@@ -25,6 +25,7 @@ import {
   LocalPasswordVerifyProvider,
   ResourceOwnerVerifyProvider,
   AppleOauth2VerifyProvider,
+  FacebookOauth2VerifyProvider,
 } from './modules/auth';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
@@ -42,6 +43,9 @@ import {
   AppleOauth2SignupProvider,
   ApplePostVerifyProvider,
   ApplePreVerifyProvider,
+  FacebookOauth2SignupProvider,
+  FacebookPostVerifyProvider,
+  FacebookPreVerifyProvider,
   JwtPayloadProvider,
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
@@ -145,6 +149,8 @@ export class AuthenticationServiceComponent implements Component {
       GoogleOauth2VerifyProvider;
     this.providers[Strategies.Passport.APPLE_OAUTH2_VERIFIER.key] =
       AppleOauth2VerifyProvider;
+    this.providers[Strategies.Passport.FACEBOOK_OAUTH2_VERIFIER.key] =
+      FacebookOauth2VerifyProvider;
     this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
       KeycloakVerifyProvider;
     this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
@@ -155,6 +161,8 @@ export class AuthenticationServiceComponent implements Component {
       InstagramOauth2SignupProvider;
     this.providers[SignUpBindings.APPLE_SIGN_UP_PROVIDER.key] =
       AppleOauth2SignupProvider;
+    this.providers[SignUpBindings.FACEBOOK_SIGN_UP_PROVIDER.key] =
+      FacebookOauth2SignupProvider;
     this.providers[SignUpBindings.LOCAL_SIGNUP_PROVIDER.key] =
       LocalSignupProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
@@ -175,6 +183,10 @@ export class AuthenticationServiceComponent implements Component {
       ApplePreVerifyProvider;
     this.providers[VerifyBindings.APPLE_POST_VERIFY_PROVIDER.key] =
       ApplePostVerifyProvider;
+    this.providers[VerifyBindings.FACEBOOK_PRE_VERIFY_PROVIDER.key] =
+      FacebookPreVerifyProvider;
+    this.providers[VerifyBindings.FACEBOOK_POST_VERIFY_PROVIDER.key] =
+      FacebookPostVerifyProvider;
     this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
       SignupBearerVerifyProvider;
 
