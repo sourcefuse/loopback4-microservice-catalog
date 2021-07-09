@@ -5,8 +5,11 @@ import * as AppleStrategy from 'passport-apple';
 import {ApplePostVerifyFn} from './types';
 
 export class ApplePostVerifyProvider implements Provider<ApplePostVerifyFn> {
+  constructor() {}
+
   value(): ApplePostVerifyFn {
-    return async (profile: AppleStrategy.Profile, user: IAuthUser | null) =>
-      user;
+    return async (profile: AppleStrategy.Profile, user: IAuthUser | null) => {
+      return user;
+    };
   }
 }

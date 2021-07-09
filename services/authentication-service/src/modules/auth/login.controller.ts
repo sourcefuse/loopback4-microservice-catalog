@@ -611,7 +611,7 @@ export class LoginController {
       },
     },
   })
-  async postLoginViaApple(
+  postLoginViaApple(
     @requestBody({
       content: {
         'application/x-www-form-urlencoded': {
@@ -619,8 +619,8 @@ export class LoginController {
         },
       },
     })
-    clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+    clientCreds: ClientAuthRequest,
+  ): void {}
 
   @authenticate(
     STRATEGY.APPLE_OAUTH2,
