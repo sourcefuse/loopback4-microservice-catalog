@@ -11,8 +11,6 @@ export class ApplePreVerifyProvider implements Provider<ApplePreVerifyFn> {
       refreshToken: string,
       profile: AppleStrategy.Profile,
       user: IAuthUser | null,
-    ) => {
-      return user;
-    };
+    ) => user;
   }
 }
