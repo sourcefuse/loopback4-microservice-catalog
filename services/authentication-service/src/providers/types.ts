@@ -69,7 +69,6 @@ export interface ApplePostVerifyFn {
   ): Promise<IAuthUser | null>;
 }
 
-
 export interface KeyCloakSignUpFn {
   (profile: KeycloakProfile): Promise<IAuthUser | null>;
 }

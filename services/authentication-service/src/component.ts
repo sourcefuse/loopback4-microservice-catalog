@@ -24,6 +24,7 @@ import {
   GoogleOauth2VerifyProvider,
   LocalPasswordVerifyProvider,
   ResourceOwnerVerifyProvider,
+  AppleOauth2VerifyProvider,
 } from './modules/auth';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
@@ -142,6 +143,8 @@ export class AuthenticationServiceComponent implements Component {
       ResourceOwnerVerifyProvider;
     this.providers[Strategies.Passport.GOOGLE_OAUTH2_VERIFIER.key] =
       GoogleOauth2VerifyProvider;
+    this.providers[Strategies.Passport.APPLE_OAUTH2_VERIFIER.key] =
+      AppleOauth2VerifyProvider;
     this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
       KeycloakVerifyProvider;
     this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
