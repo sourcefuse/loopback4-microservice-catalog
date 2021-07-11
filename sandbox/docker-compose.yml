@@ -15,7 +15,7 @@ x-auth-variables: &auth-variables
       REDIS_PORT: 6379
       REDIS_URL:
       REDIS_PASSWORD:
-      REDIS_DATABASE: 0
+      REDIS_DB: 0
       USER_TEMP_PASSWORD: tempP@ssw0rd
       GOOGLE_AUTH_URL:
       GOOGLE_AUTH_CLIENT_ID:
@@ -55,8 +55,8 @@ x-audit-variables: &audit-variables
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_URL:
-      REDIS_PASSWORD:
-      REDIS_DATABASE: 0
+      REDIS_PASSWORD: test
+      REDIS_DB: 0
       JWT_SECRET: i_am_a_strong_secret
       JWT_ISSUER: https://loopback4-microservice-catalog
 
@@ -80,7 +80,7 @@ x-scheduler-variables: &scheduler-variables
 x-video-variables: &video-variables
     VONAGE_API_KEY: 0
     VONAGE_API_SECRET: abc
-    TIME_TO_START: 
+    TIME_TO_START: 10
     DB_HOST: localhpostgresost
     DB_PORT: 5432
     DB_USER: ${POSTGRES_USER:-postgres}
@@ -123,10 +123,14 @@ services:
       - redis
       - postgres_orchestrator
       - auth-multitenant-migration
+    restart: on-failure
 
   auth-multitenant-migration:
     image: sourceloop/auth-multitenant-example:latest
-    command: ["npm", "run", "db:migrate"]
+    build:
+      context: ./auth-multitenant-example
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
     environment: *auth-variables
     depends_on:
       - postgres
@@ -157,6 +161,7 @@ services:
       JWT_ISSUER: https://loopback4-microservice-catalog
     depends_on:
       - postgres
+    restart: on-failure
 
   workflow-ms-example:
     image: sourceloop/workflow-ms-example
@@ -175,10 +180,14 @@ services:
       - camunda
       - postgres_orchestrator
       - workflow-migration
+    restart: on-failure
 
   workflow-migration:
     image: sourceloop/workflow-ms-example:latest
-    command: ["npm", "run", "db:migrate"]
+    build:
+      context: ./workflow-ms-example
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
     environment: *workflow-variables
     depends_on:
       - postgres
@@ -186,7 +195,7 @@ services:
     networks:
       - sandbox
     restart: on-failure
-    
+
   audit-ms-example:
     image: sourceloop/audit-ms-example
     build:
@@ -201,17 +210,21 @@ services:
       - postgres
       - postgres_orchestrator
       - audit-ms-migration
-    
+    restart: on-failure
+
   audit-ms-migration:
     image: sourceloop/audit-ms-example:latest
-    command: ["npm", "run", "db:migrate"]
+    command: sh -c "sleep 60 && npm run db:migrate"
+    build:
+      context: ./audit-ms-example
+      dockerfile: Dockerfile
     environment: *audit-variables
     depends_on:
       - postgres
       - postgres_orchestrator
     networks:
       - sandbox
-    restart: on-failure 
+    restart: on-failure
 
   scheduler-example:
     image: sourceloop/scheduler-example
@@ -226,8 +239,8 @@ services:
     depends_on:
       - postgres
       - postgres_orchestrator
-  
-  
+    restart: on-failure
+
   video-conferencing-ms-example:
     image: sourceloop/video-conferencing-ms-example
     build:
@@ -240,11 +253,15 @@ services:
     environment: *video-variables
     depends_on:
       - postgres
-      - postgres_orchestrator  
+      - postgres_orchestrator
+    restart: on-failure
   
   video-conferencing-ms-migration:
-    image: sourceloop/workflow-helloworld:latest
-    command: ["npm", "run", "db:migrate"]
+    image: sourceloop/video-conferencing-ms-example
+    build:
+      context: ./video-conferencing-ms-example
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
     environment: *video-variables
     depends_on:
       - postgres
@@ -266,6 +283,7 @@ services:
     depends_on:
       - postgres
       - postgres_orchestrator
+    restart: on-failure
 
   redis:
     image: "redis:alpine"
@@ -313,13 +331,17 @@ services:
     depends_on:
       - postgres
     command: >
-      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} &&
+      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && sleep 30 &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db'
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'"
+
+
+
+
 
 
   pgadmin:
