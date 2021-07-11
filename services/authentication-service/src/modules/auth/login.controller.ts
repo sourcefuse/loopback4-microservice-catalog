@@ -590,6 +590,112 @@ export class LoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
+    STRATEGY.APPLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['name', 'email'],
+      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
+      clientID: process.env.APPLE_AUTH_CLIENT_ID,
+      teamID: process.env.APPLE_AUTH_TEAM_ID,
+      keyID: process.env.APPLE_AUTH_KEY_ID,
+      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/oauth-apple', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Apple based login',
+        content: {},
+      },
+    },
+  })
+  postLoginViaApple(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds: ClientAuthRequest,
+  ): void {}
+
+  @authenticate(
+    STRATEGY.APPLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['name', 'email'],
+      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
+      clientID: process.env.APPLE_AUTH_CLIENT_ID,
+      teamID: process.env.APPLE_AUTH_TEAM_ID,
+      keyID: process.env.APPLE_AUTH_KEY_ID,
+      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
+    },
+    queryGen('query'),
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/apple-oauth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Apple Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async appleCallback(
+    @param.query.string('code') code: string,
+    @param.query.string('state') state: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    appleCodeWriter: CodeWriterFn,
+  ): Promise<void> {
+    const clientId = new URLSearchParams(state).get('client_id');
+
+    if (!clientId || !this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const client = await this.authClientRepository.findOne({
+      where: {
+        clientId,
+      },
+    });
+
+    if (!client || !client.redirectUrl) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    try {
+      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+        clientId,
+        user: this.user,
+      };
+      const token = await appleCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
+      );
+      const role = this.user.role;
+      response.redirect(
+        `${process.env.WEBAPP_URL ?? ''}${
+          client.redirectUrl
+        }?code=${token}&role=${role}`,
+      );
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+  }
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
     STRATEGY.KEYCLOAK,
     {
       host: process.env.KEYCLOAK_HOST,

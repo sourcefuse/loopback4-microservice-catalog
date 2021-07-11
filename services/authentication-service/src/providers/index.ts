@@ -15,3 +15,6 @@ export * from './local-presignup.provider';
 export * from './local-signup.provider';
 export * from './code-reader.provider';
 export * from './code-writer.provider';
+export * from './apple-oauth2-signup.provider';
+export * from './apple-post-verify.provider';
+export * from './apple-pre-verify.provider';

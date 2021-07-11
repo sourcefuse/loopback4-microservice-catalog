@@ -70,7 +70,7 @@
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^3.0.3",
     "loopback-connector-postgresql": "^5.3.0",
-    "loopback4-authentication": "^4.5.0",
+    "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.3.0",
     "prom-client": "^13.1.0",
     "tslib": "^2.0.0"

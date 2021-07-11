@@ -102,6 +102,11 @@ export class Client extends BootMixin(
 | `GOOGLE_AUTH_CLIENT_SECRET`   | N        |               | Google client secret for the service                                                                                               |
 | `GOOGLE_AUTH_TOKEN_URL`       | N        |               | Google OAuth2.0 authorization URL if authentication strategy is set to Google                                                      |
 | `GOOGLE_AUTH_CALLBACK_URL`    | N        |               | Google callback URL for the client configuration in Google                                                                         |
+| `APPLE_AUTH_URL`              | N        |               | Apple OAuth2.0 authorization URL if authentication strategy is set to Apple                                                        |
+| `APPLE_AUTH_CLIENT_ID`        | N        |               | Apple client ID for the service                                                                                                    |
+| `APPLE_AUTH_TEAM_ID`          | N        |               | Apple team id for the service                                                                                                      |
+| `APPLE_AUTH_KEY_ID`           | N        |               | Apple key id for the service                                                                                        |
+| `APPLE_AUTH_CALLBACK_URL`     | N        |               | Apple callback URL for the client configuration in Apple                                                                          |
 | `FORGOT_PASSWORD_LINK_EXPIRY` | N        | 1800          | Expiration period of temporary password in seconds. 1800 seconds (30 minutes) is the default.                                      |
 | `KEYCLOAK_HOST`               | N        |               | Hostname of the Keycloak instance                                                                                                  |
 | `KEYCLOAK_REALM`              | N        |               | Realm (tenant) in Keycloak                                                                                                         |
