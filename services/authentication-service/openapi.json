@@ -7,6 +7,44 @@
     "contact": {}
   },
   "paths": {
+    "/auth/apple-oauth-redirect": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "appleCallback",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Apple Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.appleCallback"
+      }
+    },
     "/auth/change-password": {
       "patch": {
         "x-controller-name": "LoginController",
@@ -498,6 +536,31 @@
           }
         },
         "operationId": "LoginController.me"
+      }
+    },
+    "/auth/oauth-apple": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "postLoginViaApple",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Apple based login",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.postLoginViaApple"
       }
     },
     "/auth/reset-password": {
