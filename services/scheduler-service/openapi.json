@@ -2174,6 +2174,36 @@
         "operationId": "EventAttendeeController.delete"
       }
     },
+    "/events/{id}/hard": {
+      "delete": {
+        "x-controller-name": "EventController",
+        "x-operation-name": "hardDeleteById",
+        "tags": [
+          "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event HARD DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "EventController.hardDeleteById"
+      }
+    },
     "/events/{id}": {
       "put": {
         "x-controller-name": "EventController",

@@ -354,4 +354,24 @@ export class EventController {
     await this.attendeeRepository.deleteAll({eventId: id});
     await this.eventRepository.deleteById(id);
   }
+
+  // api for hard delete event
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.HardDeleteEvent]})
+  @del(`${basePath}/{id}/hard`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Event HARD DELETE success',
+      },
+    },
+  })
+  async hardDeleteById(@param.path.string('id') id: string): Promise<void> {
+    //hard Delete
+    await this.attachmentRepository.deleteAllHard({eventId: id});
+    await this.attendeeRepository.deleteAllHard({eventId: id});
+    await this.eventRepository.deleteByIdHard(id);
+  }
 }

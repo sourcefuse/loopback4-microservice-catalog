@@ -10,6 +10,7 @@ export const enum PermissionKey {
   CreateEvent = 'CreateEvent',
   UpdateEvent = 'UpdateEvent',
   DeleteEvent = 'DeleteEvent',
+  HardDeleteEvent = 'HardDeleteEvent',
 
   ViewCalendar = 'ViewCalendar',
   CreateCalendar = 'CreateCalendar',
