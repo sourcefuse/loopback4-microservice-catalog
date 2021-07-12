@@ -665,7 +665,6 @@ export class LoginController {
         clientId,
       },
     });
-
     if (!client || !client.redirectUrl) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
@@ -688,6 +687,107 @@ export class LoginController {
           client.redirectUrl
         }?code=${token}&role=${role}`,
       );
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+  }
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.FACEBOOK_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.FACEBOOK_AUTH_URL,
+      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
+      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/facebook', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Facebook based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async postLoginViaFacebook(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds?: ClientAuthRequest,
+  ): Promise<void> {}
+
+  @authenticate(
+    STRATEGY.FACEBOOK_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.FACEBOOK_AUTH_URL,
+      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
+      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
+    },
+    queryGen('query'),
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/facebook-auth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Facebook Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async facebookCallback(
+    @param.query.string('code') code: string,
+    @param.query.string('state') state: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    facebookCodeWriter: CodeWriterFn,
+  ): Promise<void> {
+    const clientId = new URLSearchParams(state).get('client_id');
+    if (!clientId || !this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const client = await this.authClientRepository.findOne({
+      where: {
+        clientId,
+      },
+    });
+    if (!client || !client.redirectUrl) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    try {
+      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+        clientId,
+        user: this.user,
+      };
+      const token = await facebookCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
+      );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

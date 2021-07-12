@@ -201,6 +201,179 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## LoginController.postLoginViaFacebook
+
+<a id="opIdLoginController.postLoginViaFacebook"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/facebook`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="logincontroller.postloginviafacebook-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="logincontroller.postloginviafacebook-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Facebook based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## LoginController.facebookCallback
+
+<a id="opIdLoginController.facebookCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/facebook-auth-redirect`
+
+<h3 id="logincontroller.facebookcallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="logincontroller.facebookcallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Facebook Redirect Token Response|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 ## LoginController.postLoginViaGoogle
 
 <a id="opIdLoginController.postLoginViaGoogle"></a>

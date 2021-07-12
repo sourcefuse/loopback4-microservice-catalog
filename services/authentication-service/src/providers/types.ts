@@ -6,6 +6,7 @@ import {
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
 import * as AppleStrategy from 'passport-apple';
+import * as FacebookStrategy from 'passport-facebook';
 
 import {User, UserRelations} from '../models';
 
@@ -65,6 +66,26 @@ export interface ApplePreVerifyFn {
 export interface ApplePostVerifyFn {
   (
     profile: AppleStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface FacebookSignUpFn {
+  (profile: FacebookStrategy.Profile): Promise<(User & UserRelations) | null>;
+}
+
+export interface FacebookPreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: FacebookStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface FacebookPostVerifyFn {
+  (
+    profile: FacebookStrategy.Profile,
     user: IAuthUser | null,
   ): Promise<IAuthUser | null>;
 }
