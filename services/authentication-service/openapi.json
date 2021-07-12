@@ -492,7 +492,7 @@
         "description": "Gets you the code that will be used for getting token (webapps)",
         "responses": {
           "200": {
-            "description": "Auth Code",
+            "description": "Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API",
             "content": {}
           },
           "400": {
@@ -791,7 +791,7 @@
         "tags": [
           "LoginController"
         ],
-        "description": " Send the code received from the above api and this api will send you refresh token and access token (webapps)",
+        "description": "Send the code received from the POST /auth/login api and get refresh token and access token (webapps)",
         "responses": {
           "200": {
             "description": "Token Response",
@@ -844,7 +844,7 @@
         "tags": [
           "LoginController"
         ],
-        "description": " Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
+        "description": "Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
         "responses": {
           "200": {
             "description": "New Token Response",

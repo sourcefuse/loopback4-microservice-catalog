@@ -13,63 +13,58 @@ any client application.
    npm i @sourceloop/in-mail-service
 ```
 
-## Implementation
+## Usage
 
-Create a new Application using Loopback CLI and add the Component for `InMailService` in `application.ts`
+ - Create a new Loopback4 Application (If you don't have one already)
+  `lb4 testapp`
+- Install the in mail service
+`npm i @sourceloop/in-mail-service`
+- Set the [environment variables](#environment-variables).
+- Run the [migrations](#migrations).
+- Add the `InMailServiceComponent` to your Loopback4 Application (in `application.ts`).
+	``` typescript
+  // import the InMailServiceComponent
+  import { InMailServiceComponent } from '@sourceloop/in-mail-service';
+	// add Component for InMailServiceComponent
+	this.component(InMailServiceComponent);
+	```
+- Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `InMailDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+- Start the application
+  `npm start`
+
+
+### Setting up a `DataSource`
+
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
 
 ```typescript
-import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {
-  RestExplorerBindings,
-  RestExplorerComponent,
-} from '@loopback/rest-explorer';
-import {ServiceMixin} from '@loopback/service-proxy';
-import { InMailServiceComponent } from '@sourceloop/in-mail-service';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
-import path from 'path';
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {InMailDatasourceName} from '@sourceloop/in-mail-service';
 
-export {ApplicationConfig};
+const config = {
+  name: InMailDatasourceName,
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
+};
 
-const port = 3000;
-export class Client extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    dotenv.config();
-    dotenvExt.load({
-      schema: '.env.example',
-      errorOnMissing: true,
-      includeProcessEnv: true,
-    });
-    options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT || port);
-    options.rest.host = process.env.HOST;
-    super(options);
-    // Set up default home page
-    this.static('/', path.join(__dirname, '../public'));
+@lifeCycleObserver('datasource')
+export class InmailDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver {
+  static dataSourceName = InMailDatasourceName;
+  static readonly defaultConfig = config;
 
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
-    });
-    this.component(RestExplorerComponent);
-    // add Component for InMailService
-    this.component(InMailServiceComponent);
-
-    this.projectRoot = __dirname;
-    // Customize @loopback/boot Booter Conventions here
-    this.bootOptions = {
-      controllers: {
-        // Customize ControllerBooter Conventions here
-        dirs: ['controllers'],
-        extensions: ['.controller.js'],
-        nested: true,
-      },
-    };
+  constructor(
+    @inject(`datasources.config.${SchedulerDatasourceName}`, {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
   }
 }
 ```
@@ -117,40 +112,6 @@ JWT_ISSUER=https://authentication.service
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                      |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                     |
 
-### Setting up a `DataSource`
-
-Here is a Sample Implementation `DataSource` implementation using environment variables.
-```TypeScript
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-
-const config = {
-  name: 'inmailDb',
-  connector: 'postgresql',
-  url: '',
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  schema: process.env.DB_SCHEMA,
-};
-
-@lifeCycleObserver('datasource')
-export class InMailDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
-  static dataSourceName = 'inmail';
-  static readonly defaultConfig = config;
-
-  constructor(
-    // You need to set datasource configuration name as 'datasources.config.inmail' otherwise you might get Errors
-    @inject('datasources.config.inmail', {optional: true})
-    dsConfig: object = config,
-  ) {
-    super(dsConfig);
-  }
-}
-```
 
 ### API Documentation
 

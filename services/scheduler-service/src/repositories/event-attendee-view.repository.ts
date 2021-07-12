@@ -7,6 +7,7 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {juggler} from '@loopback/repository';
+import {SchedulerDatasourceName} from '../keys';
 
 export class EventAttendeeViewRepository extends DefaultUserModifyCrudRepository<
   EventAttendeeView,
@@ -14,7 +15,8 @@ export class EventAttendeeViewRepository extends DefaultUserModifyCrudRepository
   EventAttendeeView
 > {
   constructor(
-    @inject('datasources.schedulerDb') dataSource: juggler.DataSource,
+    @inject(`datasources.${SchedulerDatasourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

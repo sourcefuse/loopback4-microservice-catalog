@@ -7,3 +7,5 @@ export namespace InMailBindings {
     `${BINDING_PREFIX}.inmail.config`,
   );
 }
+
+export const InMailDatasourceName = 'inmail';

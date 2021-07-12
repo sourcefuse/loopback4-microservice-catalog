@@ -4,7 +4,7 @@
 
 ## Overview
 
-A Loopback Microservice for handling BPMN workflows using engines like (Camunda)[https://camunda.com/products/cloud/].
+A Loopback Microservice for handling BPMN workflows using engines like (Camunda)[https://camunda.com/products/cloud/]. NOTE: The microservice currently works with only one workflow definition for a single diagram.
 
 ### Installation
 
@@ -12,68 +12,38 @@ A Loopback Microservice for handling BPMN workflows using engines like (Camunda)
 npm i @sourceloop/bpmn-service
 ```
 
-## Implementation
+### Usage
 
-Create a new Application using Loopback CLI and add the Component for `BpmnService` in `application.ts`
-
-```typescript
-import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {
-  RestExplorerBindings,
-  RestExplorerComponent,
-} from '@loopback/rest-explorer';
-import {ServiceMixin} from '@loopback/service-proxy';
-import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
-import path from 'path';
-
-export {ApplicationConfig};
-
-const port = 3000;
-export class Client extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    dotenv.config();
-    dotenvExt.load({
-      schema: '.env.example',
-      errorOnMissing: true,
-      includeProcessEnv: true,
+ - Create a new Loopback4 Application (If you don't have one already)
+	`lb4 testapp` 
+ - Install the bpmn service
+	 `npm i @sourceloop/bpmn-service`
+ - Set the [environment variables](#environment-variables).
+ - Run the [migrations](#migrations).
+ - Bind the BPMN Config to `WorkflowServiceBindings.Config` key-
+    ``` typescript
+    this.bind(WorkflowServiceBindings.Config).to({
+        useCustomSequence: true,
+        workflowEngineBaseUrl: process.env.CAMUNDA_URL, // url for the rest engine in case of Camunda
     });
-    options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT || port);
-    options.rest.host = process.env.HOST;
-    super(options);
-    // Set up default home page
-    this.static('/', path.join(__dirname, '../public'));
+    ```
+ - Implement `WorkflowProvider` (refer [this](#bpmnprovider)) and bind it to `WorkflowServiceBindings.WorkflowManager` key -
+    ``` typescript
+    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(WorkflowProvider);
+    ```
+ - Add the `WorkflowServiceComponent` to your Loopback4 Application (in `application.ts`).
+	  ``` typescript
+    // import WorkflowServiceComponent
+    import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
+	  // add Component for WorkflowService
+	  this.component(WorkflowServiceComponent);
+	  ```
+  - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to 
+	`WorkflowCacheSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+ - Start the application
+	`npm start`
 
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
-    });
-    this.component(RestExplorerComponent);
-    // add Component for NotificationService
-    this.component(WorkflowServiceComponent);
-
-    this.projectRoot = __dirname;
-    // Customize @loopback/boot Booter Conventions here
-    this.bootOptions = {
-      controllers: {
-        // Customize ControllerBooter Conventions here
-        dirs: ['controllers'],
-        extensions: ['.controller.js'],
-        nested: true,
-      },
-    };
-  }
-}
-```
-
-### Setting up `DataSource`
+### Setting up a `DataSource`
 
 Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
 
@@ -88,15 +58,11 @@ const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD, //NOSONAR
+  password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   schema: process.env.DB_SCHEMA,
 };
 
-// Observe application's life cycle to disconnect the datasource when
-// application is stopped. This allows the application to be shut down
-// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
-// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
 export class BpmnDbDataSource
   extends juggler.DataSource
@@ -111,12 +77,6 @@ export class BpmnDbDataSource
     super(dsConfig);
   }
 }
-```
-
-and bind a provider to the `WorkflowServiceBindings.WorkflowManager` key
-
-```ts
-this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(WorkflowProvider);
 ```
 
 ### Environment Variables
@@ -184,6 +144,10 @@ export class WorkflowProvider implements Provider<WorflowManager> {
 #### WorkerImplementationProvider
 
 Your workers are automatically initiated once a workflow is executed, to provide the implementation details of workers, you need to give implementation template of one such worker using the `WorkflowServiceBindings.WorkerImplementationFunction`, a default implementation is provided [here](/src/providers/worker-implementation.provider.ts). You also need to register individual worker commands using the `WorkflowServiceBindings.RegisterWorkerFunction` function;
+
+#### ExecutionInputValidationProvider
+
+If you need to validate the inputs of a workflow execution, you can bind a custom validation provider using `WorkflowServiceBindings.ExecutionInputValidatorFn` key. The microservice comes with a default implementation using [AJV](https://www.npmjs.com/package/ajv).
 
 ### Migrations
 

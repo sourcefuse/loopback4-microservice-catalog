@@ -113,7 +113,8 @@ export class LoginController {
       'Gets you the code that will be used for getting token (webapps)',
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Auth Code',
+        description:
+          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
         content: {
           [CONTENT_TYPE.JSON]: Object,
         },
@@ -234,7 +235,7 @@ export class LoginController {
   @authorize({permissions: ['*']})
   @post('/auth/token', {
     description:
-      ' Send the code received from the above api and this api will send you refresh token and access token (webapps)',
+      'Send the code received from the POST /auth/login api and get refresh token and access token (webapps)',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Token Response',
@@ -295,7 +296,7 @@ export class LoginController {
   @authorize({permissions: ['*']})
   @post('/auth/token-refresh', {
     description:
-      ' Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
+      'Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'New Token Response',

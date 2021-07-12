@@ -12,13 +12,15 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import {AuditLogs} from '../models';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {VideoConfDatasource} from '../keys';
 
 export class AuditLogsRepository extends DefaultCrudRepository<
   AuditLogs,
   typeof AuditLogs.prototype.id
 > {
   constructor(
-    @inject('datasources.videochatDb') dataSource: juggler.DataSource,
+    @inject(`datasources.${VideoConfDatasource}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     private readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

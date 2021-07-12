@@ -1137,7 +1137,7 @@ Gets you the code that will be used for getting token (webapps)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Auth Code|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API|None|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
@@ -1471,7 +1471,7 @@ fetch('/auth/token',
 
 `POST /auth/token`
 
- Send the code received from the above api and this api will send you refresh token and access token (webapps)
+Send the code received from the POST /auth/login api and get refresh token and access token (webapps)
 
 > Body parameter
 
@@ -1575,7 +1575,7 @@ fetch('/auth/token-refresh',
 
 `POST /auth/token-refresh`
 
- Gets you a new access and refresh token once your access token is expired. (both mobile and web)
+Gets you a new access and refresh token once your access token is expired. (both mobile and web)
 
 > Body parameter
 
