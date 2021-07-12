@@ -14,7 +14,6 @@ export enum BearerVerifierType {
 }
 export interface BearerVerifierConfig {
   type: BearerVerifierType;
-  authServiceUrl: string;
 }
 
 export interface IUserPrefs {

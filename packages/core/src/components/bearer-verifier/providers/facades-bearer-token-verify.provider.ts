@@ -1,27 +1,48 @@
-import {Provider, inject} from '@loopback/context';
+import {inject, Provider} from '@loopback/context';
+import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
-import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {verify} from 'jsonwebtoken';
+import {VerifyFunction} from 'loopback4-authentication';
+import moment from 'moment';
 
-import {AuthenticationService} from '../services';
+import {ILogger, LOGGER} from '../../logger-extension';
+import {IAuthUserWithPermissions} from '../keys';
+import {RevokedTokenRepository} from '../repositories';
 
 export class FacadesBearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
 {
   constructor(
-    @inject('services.AuthenticationService')
-    protected authService: AuthenticationService,
+    @repository(RevokedTokenRepository)
+    public revokedTokenRepository: RevokedTokenRepository,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   value(): VerifyFunction.BearerFn {
     return async (token: string, req?: Request) => {
+      const isRevoked = await this.revokedTokenRepository.get(token);
+      if (isRevoked?.token) {
+        throw new HttpErrors.Unauthorized('TokenRevoked');
+      }
+
+      let user: IAuthUserWithPermissions;
       try {
-        if (!req || !req.headers) {
-          throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-        }
-        return await this.authService.getme(req.headers.authorization);
+        user = verify(token, process.env.JWT_SECRET as string, {
+          issuer: process.env.JWT_ISSUER,
+          algorithms: ['HS256'],
+        }) as IAuthUserWithPermissions;
       } catch (error) {
+        this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
+
+      if (
+        user.passwordExpiryTime &&
+        moment().isSameOrAfter(moment(user.passwordExpiryTime))
+      ) {
+        throw new HttpErrors.Unauthorized('PasswordExpiryError');
+      }
+      return user;
     };
   }
 }
