@@ -27,8 +27,9 @@ export const getDOBFromAge = (age: number): Date => {
 };
 
 export const rateLimitKeyGen = (req: Request) => {
-  return req.headers?.authorization?.replace(/bearer /i, '') ?? req.ip;
+  const key = req.headers?.authorization?.replace(/bearer /i, '') ?? req.ip;
+  return `${process.env.RATE_LIMIT_KEY_PREFIX}_${key}`;
 };
 
 export const rateLimitKeyGenPublic = (req: Request) =>
-  `${req.ip}_${req.method}_${req.url}`;
+  `${process.env.RATE_LIMIT_KEY_PREFIX}_${req.ip}_${req.method}_${req.url}`;
