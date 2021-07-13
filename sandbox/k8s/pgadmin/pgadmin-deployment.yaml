@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.sourceloop.service: pgadmin
+  name: pgadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: pgadmin
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+#        network/sourceloop-sanbox: "true"
+        io.sourceloop.service: pgadmin
+    spec:
+      containers:
+        - env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: pgadmin4@pgadmin.org
+            - name: PGADMIN_DEFAULT_PASSWORD
+              value: admin
+          image: dpage/pgadmin4
+          name: pgadmin-container
+          ports:
+            - containerPort: 80
+          resources: {}
+          volumeMounts:
+            - mountPath: /root/.pgadmin
+              name: pgadmin
+      restartPolicy: Always
+      volumes:
+        - name: pgadmin
+          persistentVolumeClaim:
+            claimName: pgadmin
+status: {}

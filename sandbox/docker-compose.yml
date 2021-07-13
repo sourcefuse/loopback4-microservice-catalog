@@ -109,7 +109,7 @@ x-in-mail-variables: &in-mail-variables
 
 services:
   auth-multitenant-example:
-    image: sourceloop/auth-multitenant-example
+    image: ${REGISTRY:-localhost:32000}/auth-multitenant-example
     build:
       context: ./auth-multitenant-example
       dockerfile: Dockerfile
@@ -126,7 +126,7 @@ services:
     restart: on-failure
 
   auth-multitenant-migration:
-    image: sourceloop/auth-multitenant-example:latest
+    image: ${REGISTRY:-localhost:32000}/auth-multitenant-example:latest
     build:
       context: ./auth-multitenant-example
       dockerfile: Dockerfile
@@ -140,7 +140,7 @@ services:
     restart: on-failure
 
   notification-socket-example:
-    image: sourceloop/notification-socket-example
+    image: ${REGISTRY:-localhost:32000}/notification-socket-example
     build:
       context: ./notification-socket-example
       dockerfile: Dockerfile
@@ -164,7 +164,7 @@ services:
     restart: on-failure
 
   workflow-ms-example:
-    image: sourceloop/workflow-ms-example
+    image: ${REGISTRY:-localhost:32000}/workflow-ms-example
     build:
       context: ./workflow-ms-example
       dockerfile: Dockerfile
@@ -183,7 +183,7 @@ services:
     restart: on-failure
 
   workflow-migration:
-    image: sourceloop/workflow-ms-example:latest
+    image: ${REGISTRY:-localhost:32000}/workflow-ms-example:latest
     build:
       context: ./workflow-ms-example
       dockerfile: Dockerfile
@@ -197,7 +197,7 @@ services:
     restart: on-failure
 
   audit-ms-example:
-    image: sourceloop/audit-ms-example
+    image: ${REGISTRY:-localhost:32000}/audit-ms-example
     build:
       context: ./audit-ms-example
       dockerfile: Dockerfile
@@ -213,7 +213,7 @@ services:
     restart: on-failure
 
   audit-ms-migration:
-    image: sourceloop/audit-ms-example:latest
+    image: ${REGISTRY:-localhost:32000}/audit-ms-example:latest
     command: sh -c "sleep 60 && npm run db:migrate"
     build:
       context: ./audit-ms-example
@@ -227,7 +227,7 @@ services:
     restart: on-failure
 
   scheduler-example:
-    image: sourceloop/scheduler-example
+    image: ${REGISTRY:-localhost:32000}/scheduler-example
     build:
       context: ./scheduler-example
       dockerfile: Dockerfile
@@ -242,7 +242,7 @@ services:
     restart: on-failure
 
   video-conferencing-ms-example:
-    image: sourceloop/video-conferencing-ms-example
+    image: ${REGISTRY:-localhost:32000}/video-conferencing-ms-example
     build:
       context: ./video-conferencing-ms-example
       dockerfile: Dockerfile
@@ -257,7 +257,7 @@ services:
     restart: on-failure
   
   video-conferencing-ms-migration:
-    image: sourceloop/video-conferencing-ms-example
+    image: ${REGISTRY:-localhost:32000}/video-conferencing-ms-example
     build:
       context: ./video-conferencing-ms-example
       dockerfile: Dockerfile
@@ -271,7 +271,7 @@ services:
     restart: on-failure
 
   in-mail-example:
-    image: sourceloop/in-mail-example
+    image: ${REGISTRY:-localhost:32000}/in-mail-example
     build:
       context: ./in-mail-example
       dockerfile: Dockerfile
@@ -299,7 +299,7 @@ services:
       - "8080:8080"
     networks:
       - sandbox
-    restart: unless-stopped
+    restart: always
 
   postgres:
     container_name: postgres_container
@@ -314,7 +314,7 @@ services:
       - "5432:5432"
     networks:
       - sandbox
-    restart: unless-stopped
+    restart: always
 
   postgres_orchestrator:
     container_name: postgres_orchestrator
@@ -339,11 +339,6 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db'
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'"
 
-
-
-
-
-
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
@@ -356,7 +351,7 @@ services:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
       - sandbox
-    restart: unless-stopped
+    restart: always
 
 networks:
   sandbox:

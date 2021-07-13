@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.sourceloop.service: camunda
+  name: camunda
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: camunda
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+#        network/sourceloop-sanbox: "true"
+        io.sourceloop.service: camunda
+    spec:
+      containers:
+        - image: camunda/camunda-bpm-platform:run-latest
+          name: camunda-engine
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
