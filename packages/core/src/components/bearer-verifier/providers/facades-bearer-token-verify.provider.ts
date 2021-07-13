@@ -15,14 +15,21 @@ export class FacadesBearerTokenVerifyProvider
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,
-    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
   value(): VerifyFunction.BearerFn {
     return async (token: string, req?: Request) => {
-      const isRevoked = await this.revokedTokenRepository.get(token);
-      if (isRevoked?.token) {
-        throw new HttpErrors.Unauthorized('TokenRevoked');
+      try {
+        const isRevoked = await this.revokedTokenRepository.get(token);
+        if (isRevoked?.token) {
+          throw new HttpErrors.Unauthorized('TokenRevoked');
+        }
+      } catch (error) {
+        if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
+          throw error;
+        }
+        this.logger.error('Revoked token repository not available !');
       }
 
       let user: IAuthUserWithPermissions;
