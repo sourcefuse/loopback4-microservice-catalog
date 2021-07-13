@@ -102,87 +102,125 @@ export class LoadSCommandCustom implements LoadStateCommand {
  Next step is to create an array of TourSteps using the TourStep interface provided.
  These Steps will be added in the tour.
 
+ to enable multipage tour functionality provide the previous step url in prevRoute and next step url in nextRoute.
+
+ If the nextStep is on the same page then make currentRoute = nextRoute
+ similarily for the if the previous step was on the same page as the current step make prevRoute = currentRoute
+
+Note: this also works for the case if the whole tour is on the same page
+
+ Also in the attachTo object the 'on' property defines where the step will be attached on the element (top,bottom,right,left) if the field is set to empty '' then the step will appear at the center of the page where the element is present. 
+
  ```typescript
- sampleTour : TourStep[] = [{
-    title: 'sampleStep 1',
-    id: 'example-step-1',
-    text: 'This step is attached to the bottom of THE BAND element.',
-    attachTo: {
-      element: '.elem1',
-      on: 'bottom',
-      type: 'string'
-    },
-    buttons: [
-      {
-        text: 'Back',
-        action: 'prevAction',
+ sampleTour: TourStep[] = [
+    {
+      title: 'Step 1',
+      id: 'example-step-1',
+      prevStepId: 'example-step-1',
+      nextStepId: 'example-step-2',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: 'bottom',
+        type: 'string',
       },
-      {
-        text: 'Next',
-        action: 'nextAction',
-      }
-    ]
-  },
-  {
-    title: 'sampleStep 2',
-    id: 'example-step-2',
-    text: 'This step is attached to the bottom of contact element.',
-    attachTo: {
-      element: '.elem2',
-      on: 'bottom',
-      type: 'string'
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/home",
+      nextRoute: 'main/home',
+      prevRoute: "main/home",
     },
-    buttons: [
-      {
-        text: 'Back',
-        action: 'prevAction',
+    {
+      title: 'Step 2',
+      id: 'example-step-2',
+      prevStepId: 'example-step-1',
+      nextStepId: 'example-step-3',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: 'right',
+        type: 'string',
       },
-      {
-        text: 'Next',
-        action: 'nextAction',
-      }
-    ]
-  },
-  {
-    title: 'sampleStep 3',
-    id: 'example-step-3',
-    text: 'This step is attached to the bottom of TOUR DATES element.',
-    attachTo: {
-      element: '.elem3',
-      on: 'bottom',
-      type: 'string'
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/home",
+      nextRoute: 'main/nextPage',
+      prevRoute: "main/home",
     },
-    buttons: [
-      {
-        text: 'Back',
-        action: 'prevAction',
+    {
+      title: 'Step 3',
+      id: 'example-step-3',
+      prevStepId: 'example-step-2',
+      nextStepId: 'example-step-4',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: '',
+        type: 'string',
       },
-      {
-        text: 'Next',
-        action: 'nextAction',
-      }
-    ]
-  },
-  {
-    title: 'sampleStep 4',
-    id: 'example-step-4',
-    text: 'This step is attached to the bottom of TICKET MODAL element.',
-    attachTo: {
-      element: '.elem4',
-      on: 'bottom',
-      type: 'string'
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/nextPage",
+      nextRoute: 'main/nextPage',
+      prevRoute: "main/home",
     },
-    buttons: [
-      {
-        text: 'Back',
-        action: 'prevAction',
+    {
+      title: 'Step 4',
+      id: 'example-step-4',
+      prevStepId: 'example-step-3',
+      nextStepId: 'example-step-5',
+      text: 'Text to display on the step',
+      attachTo: {
+        element: 'selector of the element to be attached to',
+        on: 'bottom',
+        type: 'string',
       },
-      {
-        text: 'Next',
-        action: 'nextAction',
-      }
-    ]
-  }
+      buttons: [
+        {
+          text: 'Back',
+          key: 'prevAction',
+          action: ()=>{},
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          action: ()=>{},
+        },
+      ],
+      currentRoute:"main/nextPage",
+      nextRoute: 'main/nextPage/nextPage-1',
+      prevRoute: "main/nextPage",
+    },
 ];
 
 
@@ -194,8 +232,10 @@ We can also add videos to our tour by importing prefix and suffix variables from
  URL = "http://192.168.69.191:8887/video.webm";
  URL2 = "http://192.168.69.191:8887/file.mp4";
  sampleTour : TourStep[] = [{
-    title: 'sampleStep 1',
+    title: 'Step 1',
     id: 'example-step-1',
+    prevStepId: 'example-step-1',
+    nextStepId: 'example-step-2',
     text: `${prefix} ${this.URL} ${suffix}`,
     attachTo: {
       element: '.elem1',
@@ -212,10 +252,15 @@ We can also add videos to our tour by importing prefix and suffix variables from
         action: 'nextAction',
       }
     ]
+    currentRoute:"main/home",
+    nextRoute: 'main/home',
+    prevRoute: "main/home",
   },
   {
-    title: 'sampleStep 2',
+    title: 'Step 2',
     id: 'example-step-2',
+    prevStepId: 'example-step-1',
+    nextStepId: 'example-step-3',
     text: `${prefix} ${this.URL2} ${suffix}`,
     attachTo: {
       element: '.elem2',
@@ -232,6 +277,9 @@ We can also add videos to our tour by importing prefix and suffix variables from
         action: 'nextAction',
       }
     ]
+    currentRoute:"main/home",
+    nextRoute: 'main/home',
+    prevRoute: "main/home",
   }
 ];
 

@@ -35,6 +35,7 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   IAuthUserWithPermissions,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {AccessRoleType} from '../models/enums/access-role.enum';
 import {inject, service} from '@loopback/core';
@@ -68,6 +69,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.CreateCalendar]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
@@ -96,6 +98,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.CreateCalendar]})
   @post('/calendars/calendarSubscription', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
@@ -169,6 +172,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar model count',
@@ -185,6 +189,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Calendar model instances',
@@ -210,6 +215,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar PATCH success count',
@@ -236,6 +242,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
@@ -260,6 +267,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Calendar PATCH success',
@@ -285,6 +293,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Calendar PUT success',
@@ -327,6 +336,7 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.DeleteCalendar]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Calendar DELETE success',

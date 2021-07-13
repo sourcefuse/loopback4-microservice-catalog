@@ -44,7 +44,8 @@ const inputBody = '{
   "input": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow/{id}/execute',
@@ -68,7 +69,8 @@ const inputBody = {
   "input": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow/{id}/execute',
@@ -111,7 +113,74 @@ fetch('/workflow/{id}/execute',
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
+</aside>
+
+## WorkflowController.deleteVersionById
+
+<a id="opIdWorkflowController.deleteVersionById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflow/{id}/version/{version}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflow/{id}/version/{version}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /workflow/{id}/version/{version}`
+
+<h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|version|path|number|true|none|
+
+<h3 id="workflowcontroller.deleteversionbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Workflow DELETE success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkflowController.updateById
@@ -127,7 +196,8 @@ const inputBody = '{
   "inputSchema": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow/{id}',
@@ -152,7 +222,8 @@ const inputBody = {
   "inputSchema": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow/{id}',
@@ -196,7 +267,7 @@ fetch('/workflow/{id}',
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
 </aside>
 
 ## WorkflowController.count
@@ -207,10 +278,15 @@ None
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/workflow/{id}',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -223,10 +299,15 @@ fetch('/workflow/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/workflow/{id}',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -250,8 +331,9 @@ fetch('/workflow/{id}',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Workflow Model|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## WorkflowController.deleteById
@@ -262,10 +344,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/workflow/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -278,10 +365,15 @@ fetch('/workflow/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/workflow/{id}',
 {
-  method: 'DELETE'
+  method: 'DELETE',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -307,7 +399,7 @@ fetch('/workflow/{id}',
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
 </aside>
 
 ## WorkflowController.create
@@ -324,7 +416,8 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow',
@@ -350,7 +443,8 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow',
@@ -416,7 +510,7 @@ fetch('/workflow',
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
-None
+HTTPBearer
 </aside>
 
 ## WorkflowController.find
@@ -428,7 +522,8 @@ None
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow',
@@ -449,7 +544,8 @@ fetch('/workflow',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/workflow',
@@ -521,15 +617,16 @@ Status Code **200**
 |»» createdBy|string|false|none|none|
 |»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
-|»» workflowVersion|number|true|none|none|
-|»» externalIdentifier|string|true|none|none|
-|»» name|string|false|none|none|
-|»» provider|string|true|none|none|
-|»» inputSchema|object|true|none|none|
-|»» description|string|false|none|none|
+|»» workflowVersion|number|true|none|Last deployed workflow version|
+|»» externalIdentifier|string|true|none|The key that is used to identify the workflow in the respective workflow engine.|
+|»» name|string|false|none|Name of the workflow|
+|»» provider|string|true|none|Provider could be the engine that will handle the workflow - camunda, zeebe, etc|
+|»» inputSchema|object|true|none|Schema used for validation during workflow execution|
+|»» description|string|false|none|Description of the workflow|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 # Schemas
@@ -575,12 +672,12 @@ Workflow
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|workflowVersion|number|true|none|none|
-|externalIdentifier|string|true|none|none|
-|name|string|false|none|none|
-|provider|string|true|none|none|
-|inputSchema|object|true|none|none|
-|description|string|false|none|none|
+|workflowVersion|number|true|none|Last deployed workflow version|
+|externalIdentifier|string|true|none|The key that is used to identify the workflow in the respective workflow engine.|
+|name|string|false|none|Name of the workflow|
+|provider|string|true|none|Provider could be the engine that will handle the workflow - camunda, zeebe, etc|
+|inputSchema|object|true|none|Schema used for validation during workflow execution|
+|description|string|false|none|Description of the workflow|
 
 <h2 id="tocS_NewWorkflow">NewWorkflow</h2>
 <!-- backwards compatibility -->

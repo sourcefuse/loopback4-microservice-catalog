@@ -42,7 +42,8 @@ Base URLs:
 const inputBody = '{}';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives/storage-target',
@@ -64,7 +65,8 @@ const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives/storage-target',
@@ -109,8 +111,9 @@ null
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|text|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatArchiveController.getArchive
@@ -122,7 +125,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives/{archiveId}',
@@ -143,7 +147,8 @@ fetch('/archives/{archiveId}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives/{archiveId}',
@@ -184,8 +189,9 @@ fetch('/archives/{archiveId}',
 
 <h3 id="videochatarchivecontroller.getarchive-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatArchiveController.deleteArchive
@@ -197,7 +203,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives/{archiveId}',
@@ -218,7 +225,8 @@ fetch('/archives/{archiveId}',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives/{archiveId}',
@@ -257,8 +265,9 @@ null
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|text|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatArchiveController.getArchives
@@ -270,7 +279,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives',
@@ -291,7 +301,8 @@ fetch('/archives',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/archives',
@@ -326,8 +337,9 @@ fetch('/archives',
 
 <h3 id="videochatarchivecontroller.getarchives-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="video-conferencing-service-videochatsessioncontroller">VideoChatSessionController</h1>
@@ -341,7 +353,8 @@ This operation does not require authentication
 ```javascript
 
 const headers = {
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session/{meetingLinkId}/attendees',
@@ -362,7 +375,8 @@ fetch('/session/{meetingLinkId}/attendees',
 const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session/{meetingLinkId}/attendees',
@@ -404,8 +418,9 @@ fetch('/session/{meetingLinkId}/attendees',
 
 <h3 id="videochatsessioncontroller.getattendeeslist-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatSessionController.endSession
@@ -416,10 +431,15 @@ This operation does not require authentication
 
 ```javascript
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/session/{meetingLinkId}/end',
 {
-  method: 'PATCH'
+  method: 'PATCH',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -432,10 +452,15 @@ fetch('/session/{meetingLinkId}/end',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
 fetch('/session/{meetingLinkId}/end',
 {
-  method: 'PATCH'
+  method: 'PATCH',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -459,8 +484,9 @@ fetch('/session/{meetingLinkId}/end',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|MessageRecipient PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatSessionController.getMeetingToken
@@ -473,7 +499,8 @@ This operation does not require authentication
 const inputBody = '{}';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session/{meetingLinkId}/token',
@@ -495,7 +522,8 @@ const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session/{meetingLinkId}/token',
@@ -543,8 +571,9 @@ null
 
 <h3 id="videochatsessioncontroller.getmeetingtoken-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatSessionController.editMeeting
@@ -576,7 +605,8 @@ const inputBody = '{
   "extMetadata": {}
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session/{meetingLinkId}',
@@ -617,7 +647,8 @@ const inputBody = {
   "extMetadata": {}
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session/{meetingLinkId}',
@@ -675,8 +706,9 @@ fetch('/session/{meetingLinkId}',
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Session details PATCH success|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatSessionController.getMeetingLink
@@ -689,7 +721,8 @@ This operation does not require authentication
 const inputBody = '{}';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session',
@@ -711,7 +744,8 @@ const fetch = require('node-fetch');
 const inputBody = {};
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'text/plain'
+  'Accept':'text/plain',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/session',
@@ -756,8 +790,9 @@ fetch('/session',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|string|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## VideoChatSessionController.checkWebhookPayload

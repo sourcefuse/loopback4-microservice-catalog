@@ -5,7 +5,7 @@
 
 ## Overview
 
-Microservice for handling notifications to users through real time notifications, email, or SMS.
+Microservice for handling notifications to users through real time notifications, email, or SMS. This microservice uses the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module to publish/send the notifications.
 
 ### Installation
 
@@ -13,65 +13,237 @@ Microservice for handling notifications to users through real time notifications
 npm i @sourceloop/notification-service
 ```
 
-## Implementation
+### Usage
 
-Create a new Application using Loopback CLI and add the Component for `NotificationService` in `application.ts`
-
-```typescript
-import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {
-  RestExplorerBindings,
-  RestExplorerComponent,
-} from '@loopback/rest-explorer';
-import {ServiceMixin} from '@loopback/service-proxy';
-import { NotificationServiceComponent } from '@sourceloop/notification-service';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
-import path from 'path';
-
-export {ApplicationConfig};
-
-const port = 3000;
-export class Client extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    dotenv.config();
-    dotenvExt.load({
-      schema: '.env.example',
-      errorOnMissing: true,
-      includeProcessEnv: true,
+ - Create a new Loopback4 Application (If you don't have one already)
+	`lb4 testapp` 
+ - Install the notification service
+	 `npm i @sourceloop/notification-service`
+ - Install the loopback4-notifications module -
+   `npm i loopback4-notifications`
+ - Set the [environment variables](#environment-variables).
+ - Run the [migrations](#migrations).
+ - Add the `NotificationServiceComponent` to your Loopback4 Application (in `application.ts`).
+	  ``` typescript
+	  // add Component for AuthenticationService
+	  this.component(NotificationServiceComponent);
+	```
+  - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to 
+	`NotifDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+ - **Email Notifications with Amazon SES** - 
+    - Bind the SES Config to the `SESBindings.Config` key - 
+    ``` typescript
+    this.bind(SESBindings.Config).to({
+      accessKeyId: process.env.SES_ACCESS_KEY_ID,
+      secretAccessKey: process.env.SES_SECRET_ACCESS_KEY,
+      region: process.env.SES_REGION,
     });
-    options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT || port);
-    options.rest.host = process.env.HOST;
-    super(options);
-    // Set up default home page
-    this.static('/', path.join(__dirname, '../public'));
+    ```
+    - Implement an SES Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/email/ses)) or you can import the default SES provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.EmailProvider` key as described [here](https://github.com/sourcefuse/loopback4-notifications#email-notifications).
 
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
-    });
-    this.component(RestExplorerComponent);
-    // add Component for NotificationService
-    this.component(NotificationServiceComponent);
-
-    this.projectRoot = __dirname;
-    // Customize @loopback/boot Booter Conventions here
-    this.bootOptions = {
-      controllers: {
-        // Customize ControllerBooter Conventions here
-        dirs: ['controllers'],
-        extensions: ['.controller.js'],
-        nested: true,
+ - **Email Notifications with Nodemailer** -
+    - Bind the Nodemailer Config to the `NodemailerBindings.Config` key - 
+    ``` typescript
+    this.bind(NodemailerBindings.Config).to({
+      pool: true,
+      maxConnections: 100,
+      url:"",
+      host: "smtp.example.com",
+      port: 80,
+      secure: false,
+      auth: {
+       user: "username",
+       pass: "password"
       },
+      tls: {
+        rejectUnauthorized: true
+       }
+    });
+    ```
+    - Implement a Nodemailer Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/email/nodemailer)) or import the default Nodemailer provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.EmailProvider` key as described [here](https://github.com/sourcefuse/loopback4-notifications#email-notifications), 
+
+ - **SMS Notification with Amazon SNS** - 
+    - Bind the SNS Config to the `SNSBindings.Config` key - 
+    ``` typescript
+    this.bind(SNSBindings.Config).to({
+      accessKeyId: process.env.SNS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.SNS_SECRET_ACCESS_KEY,
+      region: process.env.SNS_REGION,
+    });
+    ```
+    - Implement an SnsProvider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/sms/sns)) or import the default SNS provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.SMSProvider` key -
+    ``` typescript
+    import {
+      NotificationBindings,
+      SnsProvider // or your own provider
+    } from 'loopback4-notifications';
+    ...
+    this.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider);
+    ...
+    ```
+    
+ - **Push Notifications with Pubnub** - 
+    - Bind the Pubnub Config to the `PubNubProvider.Config` key - 
+    ``` typescript
+    this.bind(PubNubProvider.Config).to({
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      publishKey: process.env.PUBNUB_PUBLISH_KEY,
+      secretKey: process.env.PUBNUB_SECRET_KEY,
+      ssl: true,
+      logVerbosity: true,
+      uuid: 'my-app',
+      cipherKey: process.env.PUBNUB_CIPHER_KEY,
+      apns2Env: 'production',
+      apns2BundleId: 'com.app.myapp'
+    });
+    ```
+    - Implement a Pubnub Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/pubnuba)) or import the default Pubnub provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
+    ``` typescript
+    import {
+      NotificationBindings,
+      PubNubProvider //or your own provider
+    } from 'loopback4-notifications';
+    ...
+    this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
+    ...
+    ```
+ - **Push Notifications with Socket.io** -
+    - Bind the Socket.io Config to the `SocketBindings.Config` key - 
+    ``` typescript
+    this.bind(SocketBindings.Config).to({
+      url: process.env.SOCKETIO_SERVER_URL
+    });
+    ```
+    - Implement a SocketIO Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/socketio)) or import the default Socket.io provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
+    ``` typescript
+    import {
+      NotificationBindings,
+      SocketIOProvider // or your own provider
+    } from 'loopback4-notifications';
+    ...
+    this.bind(NotificationBindings.PushProvider).toProvider(SocketIOProvider);
+    ...
+    ```
+ - Start the application
+	`npm start`
+
+### Create Notification Payload Structures
+
+#### Email Notification with SES
+
+``` typescript
+  interface SESMessage {
+    receiver: {
+      to: {
+          id: string; //Email address
+          name?: string;
+      }[];
+    },
+    subject: string;
+    body: string;
+    sentDate: Date;
+    type: 1; //Email
+    options?: {
+      fromEmail: string, // We do not support attachments with SES Provider yet.
     };
   }
-}
+```
+#### Email Notification with Nodemailer
+
+``` typescript
+  interface NodemailerMessage {
+      receiver: {
+          to: {
+              id: string; //Email address
+              name?: string;
+          }[];
+      },
+      subject: string;
+      body: string;
+      sentDate: Date;
+      type: 1; //Email
+      options?: {
+          from: string,
+          subject?: string,
+          text?: string,
+          html?: string,
+          attachments?: {
+              filename?: string | false;
+              cid?: string;
+              encoding?: string;
+              contentType?: string;
+              contentTransferEncoding?: '7bit' | 'base64' | 'quoted-printable' | false;
+              contentDisposition?: 'attachment' | 'inline';
+              headers?: Headers;
+              raw?: string | Buffer | Readable | {
+                                                    content?: string | Buffer | Readable;
+                                                    path?: string | Url;
+                                                 };
+          }[]
+      };
+  }
+```
+
+#### SMS Notification with SNS
+
+``` typescript
+  interface SMSMessage {
+    receiver: {
+      to: {
+        id: string; // TopicArn or PhoneNumber
+        name?: string;
+      }[]
+    };
+    subject: undefined;
+    body: string;
+    sentDate: Date;
+    type: 2; //SMS
+    options?: {
+      messageType: any,
+    };
+  }
+```
+
+#### Push Notification with Pubunb
+
+``` typescript
+  interface PubNubMessage {
+    receiver: {
+        to: {
+              type: 0; //Channel Type
+              id: string; //Channel identifier
+              name?: string;
+        }[];
+    };
+    subject: string;
+    body: string;
+    sentDate: Date;
+    type: 0; //Push Notification
+    options?: {
+        sound: string,
+    };
+  }
+```
+
+#### Push Notification with Socket.io
+
+``` typescript
+  interface SocketMessage {
+    receiver: {
+        to: {
+              type: 0; //Channel Type
+              id: string; //Channel identifier
+              name?: string;
+        }[];
+    };
+    subject: string;
+    body: string;
+    sentDate: Date;
+    type: 0; //Push Notification
+    options?: {
+        path?: string,
+    };
+  }
 ```
 
 ### Environment Variables
@@ -89,16 +261,17 @@ export class Client extends BootMixin(
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                      |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                     |
 
-### Setting up `DataSource`
+### Setting up a `DataSource`
 
 Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. 
 
 ```typescript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+import {NotifDbSourceName} from '@sourceloop/notification-service';
 
 const config = {
-  name: 'notificationDb',
+  name: NotifDbSourceName,
   connector: 'postgresql',
   url: '',
   host: process.env.DB_HOST,
@@ -112,7 +285,7 @@ const config = {
 @lifeCycleObserver('datasource')
 export class NotificationDbDataSource extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'notification';
+  static dataSourceName = NotifDbSourceName;
   static readonly defaultConfig = config;
 
   constructor(

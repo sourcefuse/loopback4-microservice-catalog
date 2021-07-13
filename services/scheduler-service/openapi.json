@@ -16,6 +16,11 @@
         "tags": [
           "AttachmentController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Attachment model count",
@@ -54,6 +59,11 @@
         "tags": [
           "AttachmentController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Attachment PUT success"
@@ -87,6 +97,11 @@
         "tags": [
           "AttachmentController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Attachment PATCH success"
@@ -119,6 +134,11 @@
         "x-operation-name": "findById",
         "tags": [
           "AttachmentController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -161,6 +181,11 @@
         "tags": [
           "AttachmentController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Attachment DELETE success"
@@ -185,6 +210,11 @@
         "x-operation-name": "create",
         "tags": [
           "AttachmentController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -214,6 +244,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "AttachmentController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -260,6 +295,11 @@
         "tags": [
           "AttachmentController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Attachment model instances",
@@ -297,6 +337,11 @@
         "x-operation-name": "count",
         "tags": [
           "AttendeeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -336,6 +381,11 @@
         "tags": [
           "AttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Attendee PUT success"
@@ -369,6 +419,11 @@
         "tags": [
           "AttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Attendee PATCH success"
@@ -401,6 +456,11 @@
         "x-operation-name": "findById",
         "tags": [
           "AttendeeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -443,6 +503,11 @@
         "tags": [
           "AttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Attendee DELETE success"
@@ -467,6 +532,11 @@
         "x-operation-name": "create",
         "tags": [
           "AttendeeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -496,6 +566,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "AttendeeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -542,6 +617,11 @@
         "tags": [
           "AttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Attendee model instances",
@@ -580,6 +660,11 @@
         "tags": [
           "CalendarController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Calendar model instance",
@@ -610,6 +695,11 @@
         "x-operation-name": "count",
         "tags": [
           "CalendarController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -649,6 +739,11 @@
         "tags": [
           "SubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Subscription model instances",
@@ -686,6 +781,11 @@
         "x-operation-name": "create",
         "tags": [
           "CalendarEventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -726,6 +826,11 @@
         "x-operation-name": "patch",
         "tags": [
           "CalendarEventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -780,6 +885,11 @@
         "x-operation-name": "find",
         "tags": [
           "CalendarEventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -842,6 +952,11 @@
         "tags": [
           "CalendarEventController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Calendar.Event DELETE success count",
@@ -888,6 +1003,11 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Calendar model instance",
@@ -927,6 +1047,11 @@
         "x-operation-name": "patch",
         "tags": [
           "CalendarSubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -982,6 +1107,11 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Calendar has many Subscriptions",
@@ -1026,6 +1156,11 @@
         "x-operation-name": "delete",
         "tags": [
           "CalendarSubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1073,6 +1208,11 @@
         "tags": [
           "CalendarWorkingHourController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Calendar model instance",
@@ -1112,6 +1252,11 @@
         "x-operation-name": "patch",
         "tags": [
           "CalendarWorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1167,6 +1312,11 @@
         "tags": [
           "CalendarWorkingHourController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Calendar has many WorkingHour",
@@ -1211,6 +1361,11 @@
         "x-operation-name": "delete",
         "tags": [
           "CalendarWorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1258,6 +1413,11 @@
         "tags": [
           "CalendarController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Calendar PUT success"
@@ -1291,6 +1451,11 @@
         "tags": [
           "CalendarController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Calendar PATCH success"
@@ -1323,6 +1488,11 @@
         "x-operation-name": "findById",
         "tags": [
           "CalendarController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1365,6 +1535,11 @@
         "tags": [
           "CalendarController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Calendar DELETE success"
@@ -1389,6 +1564,11 @@
         "x-operation-name": "create",
         "tags": [
           "CalendarController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1418,6 +1598,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "CalendarController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1464,6 +1649,11 @@
         "tags": [
           "CalendarController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Calendar model instances",
@@ -1501,6 +1691,11 @@
         "x-operation-name": "count",
         "tags": [
           "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1540,9 +1735,21 @@
         "tags": [
           "EventController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Return value of EventController.getFeeBusyStatus"
+            "description": "Event model freeBusy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -1563,6 +1770,11 @@
         "x-operation-name": "create",
         "tags": [
           "EventAttachmentController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1603,6 +1815,11 @@
         "x-operation-name": "patch",
         "tags": [
           "EventAttachmentController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1658,6 +1875,11 @@
         "tags": [
           "EventAttachmentController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Event has many Attachment",
@@ -1702,6 +1924,11 @@
         "x-operation-name": "delete",
         "tags": [
           "EventAttachmentController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1749,6 +1976,11 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Event model instance",
@@ -1788,6 +2020,11 @@
         "x-operation-name": "patch",
         "tags": [
           "EventAttendeeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1843,6 +2080,11 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Event has many Attendee",
@@ -1888,6 +2130,11 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Event.Attendee DELETE success count",
@@ -1927,12 +2174,47 @@
         "operationId": "EventAttendeeController.delete"
       }
     },
+    "/events/{id}/hard": {
+      "delete": {
+        "x-controller-name": "EventController",
+        "x-operation-name": "hardDeleteById",
+        "tags": [
+          "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event HARD DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "EventController.hardDeleteById"
+      }
+    },
     "/events/{id}": {
       "put": {
         "x-controller-name": "EventController",
         "x-operation-name": "replaceById",
         "tags": [
           "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {
@@ -1967,6 +2249,11 @@
         "tags": [
           "EventController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Event PATCH success"
@@ -1999,6 +2286,11 @@
         "x-operation-name": "findById",
         "tags": [
           "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2041,6 +2333,11 @@
         "tags": [
           "EventController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Event DELETE success"
@@ -2065,6 +2362,11 @@
         "x-operation-name": "create",
         "tags": [
           "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2094,6 +2396,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "EventController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2140,6 +2447,11 @@
         "tags": [
           "EventController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Event model instances",
@@ -2177,6 +2489,11 @@
         "x-operation-name": "count",
         "tags": [
           "SettingsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2216,6 +2533,11 @@
         "tags": [
           "SettingsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Settings PUT success"
@@ -2249,6 +2571,11 @@
         "tags": [
           "SettingsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Settings PATCH success"
@@ -2281,6 +2608,11 @@
         "x-operation-name": "findById",
         "tags": [
           "SettingsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2323,6 +2655,11 @@
         "tags": [
           "SettingsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Settings DELETE success"
@@ -2347,6 +2684,11 @@
         "x-operation-name": "create",
         "tags": [
           "SettingsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2376,6 +2718,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "SettingsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2422,6 +2769,11 @@
         "tags": [
           "SettingsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Settings model instances",
@@ -2459,6 +2811,11 @@
         "x-operation-name": "count",
         "tags": [
           "SubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2498,6 +2855,11 @@
         "tags": [
           "SubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Subscription PUT success"
@@ -2531,6 +2893,11 @@
         "tags": [
           "SubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Subscription PATCH success"
@@ -2563,6 +2930,11 @@
         "x-operation-name": "findById",
         "tags": [
           "SubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2605,6 +2977,11 @@
         "tags": [
           "SubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Subscription DELETE success"
@@ -2629,6 +3006,11 @@
         "x-operation-name": "create",
         "tags": [
           "SubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2658,6 +3040,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "SubscriptionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2704,6 +3091,11 @@
         "tags": [
           "SubscriptionController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Subscription model instances",
@@ -2741,6 +3133,11 @@
         "x-operation-name": "count",
         "tags": [
           "ThemeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2780,6 +3177,11 @@
         "tags": [
           "ThemeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Theme PUT success"
@@ -2813,6 +3215,11 @@
         "tags": [
           "ThemeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Theme PATCH success"
@@ -2845,6 +3252,11 @@
         "x-operation-name": "findById",
         "tags": [
           "ThemeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2887,6 +3299,11 @@
         "tags": [
           "ThemeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Theme DELETE success"
@@ -2911,6 +3328,11 @@
         "x-operation-name": "create",
         "tags": [
           "ThemeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2940,6 +3362,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "ThemeController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -2986,6 +3413,11 @@
         "tags": [
           "ThemeController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Theme model instances",
@@ -3023,6 +3455,11 @@
         "x-operation-name": "count",
         "tags": [
           "WorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -3062,6 +3499,11 @@
         "tags": [
           "WorkingHourController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "WorkingHour PUT success"
@@ -3095,6 +3537,11 @@
         "tags": [
           "WorkingHourController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "WorkingHour PATCH success"
@@ -3127,6 +3574,11 @@
         "x-operation-name": "findById",
         "tags": [
           "WorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -3169,6 +3621,11 @@
         "tags": [
           "WorkingHourController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "WorkingHour DELETE success"
@@ -3193,6 +3650,11 @@
         "x-operation-name": "create",
         "tags": [
           "WorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -3222,6 +3684,11 @@
         "x-operation-name": "updateAll",
         "tags": [
           "WorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -3267,6 +3734,11 @@
         "x-operation-name": "find",
         "tags": [
           "WorkingHourController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {

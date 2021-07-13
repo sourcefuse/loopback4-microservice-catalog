@@ -6,3 +6,5 @@ export namespace SchedulerBindings {
     'sf.scheduler.config',
   );
 }
+
+export const SchedulerDatasourceName = 'schedulerDb';

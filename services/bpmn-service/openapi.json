@@ -18,7 +18,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -49,6 +49,44 @@
         "operationId": "WorkflowController.startWorkflow"
       }
     },
+    "/workflow/{id}/version/{version}": {
+      "delete": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "deleteVersionById",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workflow DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WorkflowController.deleteVersionById"
+      }
+    },
     "/workflow/{id}": {
       "patch": {
         "x-controller-name": "WorkflowController",
@@ -58,7 +96,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -93,6 +131,11 @@
         "tags": [
           "WorkflowController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Workflow Model"
@@ -118,7 +161,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -148,7 +191,7 @@
         ],
         "security": [
           {
-            "bearerAuth": []
+            "HTTPBearer": []
           }
         ],
         "responses": {
@@ -179,6 +222,11 @@
         "x-operation-name": "find",
         "tags": [
           "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -255,22 +303,28 @@
             "type": "string"
           },
           "workflowVersion": {
-            "type": "number"
+            "type": "number",
+            "description": "Last deployed workflow version"
           },
           "externalIdentifier": {
-            "type": "string"
+            "type": "string",
+            "description": "The key that is used to identify the workflow in the respective workflow engine."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the workflow"
           },
           "provider": {
-            "type": "string"
+            "type": "string",
+            "description": "Provider could be the engine that will handle the workflow - camunda, zeebe, etc"
           },
           "inputSchema": {
-            "type": "object"
+            "type": "object",
+            "description": "Schema used for validation during workflow execution"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description of the workflow"
           }
         },
         "required": [

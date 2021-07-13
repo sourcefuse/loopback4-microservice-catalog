@@ -15,7 +15,6 @@ import {BPMTask} from '@sourceloop/bpmn-service/dist/bpm-task';
 import path from 'path';
 import {SayHelloCommand} from './commands/sayhello.command';
 import {BpmnProvider} from './providers/bpmn.provider';
-import {MySequence} from './sequence';
 
 export {ApplicationConfig};
 
@@ -26,7 +25,6 @@ export class WorkflowHelloworldApplication extends BootMixin(
     super(options);
 
     // Set up the custom sequence
-    this.sequence(MySequence);
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
@@ -39,7 +37,7 @@ export class WorkflowHelloworldApplication extends BootMixin(
 
     this.bind(WorkflowServiceBindings.Config).toDynamicValue(() => {
       return {
-        useCustomSequence: true,
+        useCustomSequence: false,
         workflowEngineBaseUrl: process.env.CAMUNDA_URL,
       };
     });

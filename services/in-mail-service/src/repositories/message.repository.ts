@@ -9,6 +9,7 @@ import {DataObject, Options} from '@loopback/repository/src/common-types';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
+import {InMailDatasourceName} from '../keys';
 import {
   Attachment,
   Group,
@@ -48,7 +49,8 @@ export class MessageRepository extends DefaultTransactionSoftCrudRepository<
   >;
 
   constructor(
-    @inject('datasources.inmail') dataSource: juggler.DataSource,
+    @inject(`datasources.${InMailDatasourceName}`)
+    dataSource: juggler.DataSource,
     @repository.getter('AttachmentRepository')
     protected attachmentRepositoryGetter: Getter<AttachmentRepository>,
     @repository.getter('GroupRepository')

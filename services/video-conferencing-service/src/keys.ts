@@ -15,3 +15,5 @@ export namespace VideoChatBindings {
     `${BINDING_PREFIX}.videochat.config`,
   );
 }
+
+export const VideoConfDatasource = 'videochatDb';

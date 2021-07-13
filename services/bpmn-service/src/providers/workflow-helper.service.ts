@@ -31,6 +31,11 @@ export class WorkflowProvider implements Provider<WorflowManager> {
           'deleteWorkflowById function not implemented',
         );
       },
+      deleteWorkflowVersionById: async () => {
+        throw new HttpErrors.BadRequest(
+          'deleteWorkflowVersionById function not implemented',
+        );
+      },
     };
   }
 }

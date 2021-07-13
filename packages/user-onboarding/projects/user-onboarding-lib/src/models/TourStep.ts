@@ -2,6 +2,8 @@ import { TourButton } from './TourButton';
 
 export interface TourStep {
   id: string;
+  nextStepId: string;
+  prevStepId: string;
   title?: string;
   text: string;
   arrow?: boolean;
@@ -17,4 +19,7 @@ export interface TourStep {
     elementType: 'string' | 'function' | 'element';
   };
   buttons?: TourButton[];
+  currentRoute?: string;
+  nextRoute?: string;
+  prevRoute?: string;
 }

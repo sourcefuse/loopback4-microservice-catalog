@@ -19,9 +19,6 @@ export class CamundaService {
     this.baseUrl = config?.workflowEngineBaseUrl;
   }
 
-  /*
-   * Add service methods here
-   */
   async create(name: string, file: Buffer) {
     const form = new FormData();
     form.append(`${name}.bpmn`, file.toString('utf-8'), {
@@ -32,16 +29,24 @@ export class CamundaService {
     return this.http.postFormData(`${this.baseUrl}/deployment/create`, form);
   }
 
-  async delete(id: string, cascade = true) {
-    return this.http.delete(`${this.baseUrl}/deployment/${id}`, {
-      query: {
-        cascade: cascade,
-      },
-    });
+  async delete(ids: string[]) {
+    return Promise.all(
+      ids.map(id =>
+        this.http.delete(`${this.baseUrl}/process-definition/${id}`, {
+          query: {
+            cascade: true,
+          },
+        }),
+      ),
+    );
+  }
+
+  async deleteVersion(id: string) {
+    return this.http.delete(`${this.baseUrl}/process-definition/${id}`);
   }
 
   async get(id: string) {
-    return this.http.get(`${this.baseUrl}/deployment/${id}`);
+    return this.http.get(`${this.baseUrl}/process-definition/${id}`);
   }
 
   async execute(id: string, input: AnyObject) {

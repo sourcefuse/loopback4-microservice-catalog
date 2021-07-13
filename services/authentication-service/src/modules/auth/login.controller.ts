@@ -113,7 +113,8 @@ export class LoginController {
       'Gets you the code that will be used for getting token (webapps)',
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Auth Code',
+        description:
+          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
         content: {
           [CONTENT_TYPE.JSON]: Object,
         },
@@ -234,7 +235,7 @@ export class LoginController {
   @authorize({permissions: ['*']})
   @post('/auth/token', {
     description:
-      ' Send the code received from the above api and this api will send you refresh token and access token (webapps)',
+      'Send the code received from the POST /auth/login api and get refresh token and access token (webapps)',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Token Response',
@@ -295,7 +296,7 @@ export class LoginController {
   @authorize({permissions: ['*']})
   @post('/auth/token-refresh', {
     description:
-      ' Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
+      'Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'New Token Response',
@@ -574,6 +575,212 @@ export class LoginController {
         user: this.user,
       };
       const token = await instgaramCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
+      );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+  }
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.APPLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['name', 'email'],
+      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
+      clientID: process.env.APPLE_AUTH_CLIENT_ID,
+      teamID: process.env.APPLE_AUTH_TEAM_ID,
+      keyID: process.env.APPLE_AUTH_KEY_ID,
+      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/oauth-apple', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Apple based login',
+        content: {},
+      },
+    },
+  })
+  postLoginViaApple(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds: ClientAuthRequest,
+  ): void {}
+
+  @authenticate(
+    STRATEGY.APPLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['name', 'email'],
+      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
+      clientID: process.env.APPLE_AUTH_CLIENT_ID,
+      teamID: process.env.APPLE_AUTH_TEAM_ID,
+      keyID: process.env.APPLE_AUTH_KEY_ID,
+      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
+    },
+    queryGen('query'),
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/apple-oauth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Apple Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async appleCallback(
+    @param.query.string('code') code: string,
+    @param.query.string('state') state: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    appleCodeWriter: CodeWriterFn,
+  ): Promise<void> {
+    const clientId = new URLSearchParams(state).get('client_id');
+
+    if (!clientId || !this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const client = await this.authClientRepository.findOne({
+      where: {
+        clientId,
+      },
+    });
+    if (!client || !client.redirectUrl) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    try {
+      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+        clientId,
+        user: this.user,
+      };
+      const token = await appleCodeWriter(
+        jwt.sign(codePayload, client.secret, {
+          expiresIn: client.authCodeExpiration,
+          audience: clientId,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        }),
+      );
+      const role = this.user.role;
+      response.redirect(
+        `${process.env.WEBAPP_URL ?? ''}${
+          client.redirectUrl
+        }?code=${token}&role=${role}`,
+      );
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+  }
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.FACEBOOK_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.FACEBOOK_AUTH_URL,
+      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
+      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/facebook', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Facebook based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async postLoginViaFacebook(
+    @requestBody({
+      content: {
+        'application/x-www-form-urlencoded': {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds?: ClientAuthRequest,
+  ): Promise<void> {}
+
+  @authenticate(
+    STRATEGY.FACEBOOK_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.FACEBOOK_AUTH_URL,
+      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
+      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
+    },
+    queryGen('query'),
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/facebook-auth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Facebook Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async facebookCallback(
+    @param.query.string('code') code: string,
+    @param.query.string('state') state: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    facebookCodeWriter: CodeWriterFn,
+  ): Promise<void> {
+    const clientId = new URLSearchParams(state).get('client_id');
+    if (!clientId || !this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const client = await this.authClientRepository.findOne({
+      where: {
+        clientId,
+      },
+    });
+    if (!client || !client.redirectUrl) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    try {
+      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+        clientId,
+        user: this.user,
+      };
+      const token = await facebookCodeWriter(
         jwt.sign(codePayload, client.secret, {
           expiresIn: client.authCodeExpiration,
           audience: clientId,

@@ -5,6 +5,7 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
+import {InMailDatasourceName} from '../keys';
 import {ThreadView} from '../models';
 
 export class ThreadViewRepository extends DefaultUserModifyCrudRepository<
@@ -12,7 +13,8 @@ export class ThreadViewRepository extends DefaultUserModifyCrudRepository<
   typeof ThreadView.prototype.id
 > {
   constructor(
-    @inject('datasources.inmail') dataSource: juggler.DataSource,
+    @inject(`datasources.${InMailDatasourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

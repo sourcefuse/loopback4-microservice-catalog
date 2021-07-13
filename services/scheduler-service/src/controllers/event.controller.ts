@@ -31,7 +31,11 @@ import {
 } from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ErrorKeys} from '../models/enums/error-keys';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {
+  STATUS_CODE,
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
 import {FreeBusyDTO} from '../models/free-busy.dto';
 import {EventService} from '../services';
 
@@ -56,6 +60,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.CreateEvent]})
   @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
@@ -120,7 +125,15 @@ export class EventController {
   @authorize({
     permissions: [PermissionKey.ViewEvent, PermissionKey.ViewAttendee],
   })
-  @get('/events/freeBusy')
+  @get('/events/freeBusy', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Event model freeBusy',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
+      },
+    },
+  })
   async getFeeBusyStatus(
     @requestBody({
       content: {
@@ -175,6 +188,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model count',
@@ -191,6 +205,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Event model instances',
@@ -229,6 +244,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event PATCH success count',
@@ -255,6 +271,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
@@ -279,6 +296,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Event PATCH success',
@@ -304,6 +322,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.UpdateEvent]})
   @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Event PUT success',
@@ -322,6 +341,7 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.DeleteEvent]})
   @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Event DELETE success',
@@ -333,5 +353,25 @@ export class EventController {
     await this.attachmentRepository.deleteAll({eventId: id});
     await this.attendeeRepository.deleteAll({eventId: id});
     await this.eventRepository.deleteById(id);
+  }
+
+  // api for hard delete event
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.HardDeleteEvent]})
+  @del(`${basePath}/{id}/hard`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Event HARD DELETE success',
+      },
+    },
+  })
+  async hardDeleteById(@param.path.string('id') id: string): Promise<void> {
+    //hard Delete
+    await this.attachmentRepository.deleteAllHard({eventId: id});
+    await this.attendeeRepository.deleteAllHard({eventId: id});
+    await this.eventRepository.deleteByIdHard(id);
   }
 }

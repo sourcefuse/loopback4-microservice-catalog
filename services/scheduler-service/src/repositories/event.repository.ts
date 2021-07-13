@@ -10,6 +10,7 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
+import {SchedulerDatasourceName} from '../keys';
 import {Attachment, Attendee, Calendar, Event, EventRelations} from '../models';
 import {AttachmentRepository} from './attachment.repository';
 import {AttendeeRepository} from './attendee.repository';
@@ -41,7 +42,8 @@ export class EventRepository extends DefaultUserModifyCrudRepository<
   >;
 
   constructor(
-    @inject('datasources.schedulerDb') dataSource: juggler.DataSource,
+    @inject(`datasources.${SchedulerDatasourceName}`)
+    dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

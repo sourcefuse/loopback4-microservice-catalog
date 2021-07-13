@@ -161,7 +161,6 @@ services:
       JWT_ISSUER: https://loopback4-microservice-catalog
     depends_on:
       - postgres
-    restart: on-failure
 
   workflow-ms-example:
     image: ${REGISTRY:-localhost:32000}/workflow-ms-example

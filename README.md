@@ -63,12 +63,12 @@ Install the Loopback4 CLI
 npm install -g @loopback/cli
 ```
 
-Generate an application
+Generate an application (If you don't have one already).
 
 ```bash
 lb4 app
 ? Project name: example-application
-? Project description: Example Application For SourceLoop LoopBack4 Microservice Catalog
+? Project description: Example Application For SourceLoop
 ? Project root directory: example-application
 ? Application class name: ExampleApplicationApplication
 ? Select features to enable in the project Enable eslint, Enable prettier, Enable mocha, Enable loopbackBuild, Enable vs
@@ -137,7 +137,7 @@ npm i --save dotenv dotenv-extended @sourceloop/example-service
 touch .env.example
 ```
 
-Update `src/application.ts` to use the new service and the environment variables.
+Update `src/application.ts` to use the new service component and the environment variables. You may also need to bind configurations depending on the service component you are using. You find these configurations in the individual README of the service.
 
 ```typescript
 import {BootMixin} from '@loopback/boot';
@@ -185,7 +185,7 @@ export class ExampleApplicationApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
-    this.component(ExampleServiceComponent)
+    this.component(ExampleServiceComponent); // OUR EXAMPLE SERVICE COMPONENT
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
@@ -212,11 +212,17 @@ You can now run the example service with `npm start`.
 
 ### DataSources and Migrations
 
-The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s and [Database Migrations](https://loopback.io/doc/en/lb4/Database-migrations.html#overview), it is not mandatory to use them. 
+The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s, it is not mandatory to use them. 
+
+The migrations required for this service are processed during the installation automatically if you set the `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### Production Deployment
 
 Inside of the `sandbox` folder, you will find example applications and Dockerfiles for each application. The `Sourceloop` is agnostic of the Docker deployment strategy. Deploy the services into the platform of your choice.
+
+## Sandbox
+
+`sandbox` folder contains example applications and docker files that can be run independently to see the services in action. You can use [Docker Compose](https://docs.docker.com/compose/) to run the sandbox applications.
 
 ### Related Projects
 
@@ -238,7 +244,7 @@ If you've noticed a bug or have a question or have a feature request, [search th
 
 ### Contributing
 
-* [Development Guidelines](DEVELOPING.md)
+* [Development Guidelines](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/DEVELOPING.md)
 
 ### Code of Conduct
 

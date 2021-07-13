@@ -7,6 +7,44 @@
     "contact": {}
   },
   "paths": {
+    "/auth/apple-oauth-redirect": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "appleCallback",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Apple Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.appleCallback"
+      }
+    },
     "/auth/change-password": {
       "patch": {
         "x-controller-name": "LoginController",
@@ -45,12 +83,86 @@
         "operationId": "LoginController.resetPassword"
       }
     },
+    "/auth/facebook": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "postLoginViaFacebook",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Facebook based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.postLoginViaFacebook"
+      }
+    },
+    "/auth/facebook-auth-redirect": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "facebookCallback",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Facebook Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "LoginController.facebookCallback"
+      }
+    },
     "/auth/forget-password": {
       "post": {
         "x-controller-name": "ForgetPasswordController",
         "x-operation-name": "forgetPassword",
         "tags": [
           "ForgetPasswordController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -380,7 +492,7 @@
         "description": "Gets you the code that will be used for getting token (webapps)",
         "responses": {
           "200": {
-            "description": "Auth Code",
+            "description": "Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API",
             "content": {}
           },
           "400": {
@@ -495,12 +607,42 @@
         "operationId": "LoginController.me"
       }
     },
+    "/auth/oauth-apple": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "postLoginViaApple",
+        "tags": [
+          "LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Apple based login",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.postLoginViaApple"
+      }
+    },
     "/auth/reset-password": {
       "patch": {
         "x-controller-name": "ForgetPasswordController",
         "x-operation-name": "resetPassword",
         "tags": [
           "ForgetPasswordController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {
@@ -569,6 +711,11 @@
         "tags": [
           "SignupRequestController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Sucess Response.",
@@ -612,6 +759,11 @@
         "tags": [
           "SignupRequestController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Sucess Response."
@@ -639,7 +791,7 @@
         "tags": [
           "LoginController"
         ],
-        "description": " Send the code received from the above api and this api will send you refresh token and access token (webapps)",
+        "description": "Send the code received from the POST /auth/login api and get refresh token and access token (webapps)",
         "responses": {
           "200": {
             "description": "Token Response",
@@ -692,7 +844,7 @@
         "tags": [
           "LoginController"
         ],
-        "description": " Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
+        "description": "Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
         "responses": {
           "200": {
             "description": "New Token Response",
