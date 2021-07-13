@@ -7,7 +7,6 @@ import {
   WhereBuilder,
 } from '@loopback/repository';
 import {
-  get,
   getModelSchemaRef,
   HttpErrors,
   param,
@@ -18,6 +17,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -58,9 +58,7 @@ export class CollectorController {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetThread]})
-  @get('threads/{threadId}', {
+  @sourceloopGet('threads/{threadId}', {
     security: OPERATION_SECURITY_SPEC,
     summary:
       'GET Thread Message API. Collect complete single message thread based on thread identity.',
@@ -84,6 +82,8 @@ export class CollectorController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.GetThread]})
   async fetchThreadById(
     @param.path.string('threadId') threadId: string,
     @param.query.object('filter') filter: Partial<Thread>,
@@ -122,9 +122,7 @@ export class CollectorController {
     return {items: threadView, messageCount: threadView.length};
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetInMail]})
-  @get('mails/{messageId}', {
+  @sourceloopGet('mails/{messageId}', {
     security: OPERATION_SECURITY_SPEC,
     summary:
       'GET Message API. Collect a single message based on message identity.',
@@ -151,6 +149,8 @@ export class CollectorController {
       [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.GetInMail]})
   async fetchById(
     @param.path.string('messageId') messageId: string,
     @param.query.object('filter') filter: Partial<Message>,
@@ -210,9 +210,7 @@ export class CollectorController {
     };
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetThread]})
-  @get('threads', {
+  @sourceloopGet('threads', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'Thread List API. Collect a list of all threads.',
     responses: {
@@ -237,6 +235,8 @@ export class CollectorController {
     },
     [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.GetThread]})
   async fetchThreadList(
     @param.query.object('threadFilter') filterThread: Filter<Thread>,
     @param.query.object('groupFilter') filterGroup: Filter<Group>,
@@ -275,9 +275,7 @@ export class CollectorController {
     };
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetInMails]})
-  @get('mails', {
+  @sourceloopGet('mails', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'Collect a list of all messages.',
     responses: {
@@ -302,6 +300,8 @@ export class CollectorController {
       [STATUS_CODE.FORBIDDEN]: {description: FORBIDDEN_ERROR_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.GetInMails]})
   async fetchMailList(
     @param.query.object('messageFilter') filterMessage: Filter<Message>,
     @param.query.object('groupFilter') filterGroup: Filter<Group>,

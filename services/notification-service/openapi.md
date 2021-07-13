@@ -109,6 +109,11 @@ fetch('/notification-users/bulk',
 
 `POST /notification-users/bulk`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 > Body parameter
 
 ```json
@@ -214,6 +219,11 @@ fetch('/notification-users/count',
 
 `GET /notification-users/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 <h3 id="notificationusercontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -289,6 +299,11 @@ fetch('/notification-users/hard',
 ```
 
 `DELETE /notification-users/hard`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteNotification   |
 
 <h3 id="notificationusercontroller.deleteallhard-parameters">Parameters</h3>
 
@@ -379,6 +394,11 @@ fetch('/notification-users/{id}',
 ```
 
 `PUT /notification-users/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 > Body parameter
 
@@ -488,6 +508,11 @@ fetch('/notification-users/{id}',
 
 `PATCH /notification-users/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 > Body parameter
 
 ```json
@@ -574,6 +599,11 @@ fetch('/notification-users/{id}',
 
 `GET /notification-users/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 <h3 id="notificationusercontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -658,6 +688,11 @@ fetch('/notification-users/{id}',
 ```
 
 `DELETE /notification-users/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteNotification   |
 
 <h3 id="notificationusercontroller.deletebyid-parameters">Parameters</h3>
 
@@ -748,6 +783,11 @@ fetch('/notification-users',
 ```
 
 `POST /notification-users`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 > Body parameter
 
@@ -876,6 +916,11 @@ fetch('/notification-users',
 
 `PATCH /notification-users`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 > Body parameter
 
 ```json
@@ -971,6 +1016,11 @@ fetch('/notification-users',
 ```
 
 `GET /notification-users`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationusercontroller.find-parameters">Parameters</h3>
 
@@ -1078,6 +1128,11 @@ fetch('/notification-users',
 
 `DELETE /notification-users`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteNotification   |
+
 <h3 id="notificationusercontroller.deleteall-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1147,6 +1202,11 @@ fetch('/notification-users/{id}/notification',
 ```
 
 `GET /notification-users/{id}/notification`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationusernotificationcontroller.getnotification-parameters">Parameters</h3>
 
@@ -1263,6 +1323,11 @@ fetch('/notifications/access/{id}',
 ```
 
 `PATCH /notifications/access/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CanGetNotificationAccess   |
 
 > Body parameter
 
@@ -1433,6 +1498,11 @@ fetch('/notifications/bulk',
 
 `POST /notifications/bulk`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateNotification   |
+
 > Body parameter
 
 ```json
@@ -1519,6 +1589,11 @@ fetch('/notifications/count',
 ```
 
 `GET /notifications/count`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationcontroller.count-parameters">Parameters</h3>
 
@@ -1614,6 +1689,11 @@ fetch('/notifications/{id}',
 
 `PATCH /notifications/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateNotification   |
+
 > Body parameter
 
 ```json
@@ -1694,6 +1774,11 @@ fetch('/notifications/{id}',
 ```
 
 `GET /notifications/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationcontroller.findbyid-parameters">Parameters</h3>
 
@@ -1793,6 +1878,11 @@ fetch('/notifications',
 ```
 
 `POST /notifications`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateNotification   |
 
 > Body parameter
 
@@ -1908,6 +1998,11 @@ fetch('/notifications',
 ```
 
 `PATCH /notifications`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateNotification   |
 
 > Body parameter
 
@@ -2102,6 +2197,11 @@ fetch('/notifications',
 
 `DELETE /notifications`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteNotification   |
+
 <h3 id="notificationcontroller.deleteall-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2193,6 +2293,11 @@ fetch('/notifications/{id}/notification-users',
 ```
 
 `POST /notifications/{id}/notification-users`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateNotification   |
 
 > Body parameter
 
@@ -2322,6 +2427,11 @@ fetch('/notifications/{id}/notification-users',
 
 `PATCH /notifications/{id}/notification-users`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateNotification   |
+
 > Body parameter
 
 ```json
@@ -2418,6 +2528,11 @@ fetch('/notifications/{id}/notification-users',
 ```
 
 `GET /notifications/{id}/notification-users`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationnotificationusercontroller.find-parameters">Parameters</h3>
 
@@ -2527,6 +2642,11 @@ fetch('/notifications/{id}/notification-users',
 ```
 
 `DELETE /notifications/{id}/notification-users`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteNotification   |
 
 <h3 id="notificationnotificationusercontroller.delete-parameters">Parameters</h3>
 

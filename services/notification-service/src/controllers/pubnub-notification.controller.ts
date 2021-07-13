@@ -1,11 +1,9 @@
 import {inject} from '@loopback/core';
 import {
-  patch,
   getModelSchemaRef,
   requestBody,
   param,
   HttpErrors,
-  del,
 } from '@loopback/rest';
 import {repository} from '@loopback/repository';
 import {
@@ -28,6 +26,8 @@ import {
   IAuthUserWithPermissions,
   SuccessResponse,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopPatch,
 } from '@sourceloop/core';
 import {AccessResponseDto, NotificationAccess} from '../models';
 import {IChannelManager} from '../types';
@@ -43,11 +43,7 @@ export class PubnubNotificationController {
     public notificationAccessRepository: NotificationAccessRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CanGetNotificationAccess]})
-  @patch('/notifications/access/{id}', {
+  @sourceloopPatch('/notifications/access/{id}', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -58,6 +54,10 @@ export class PubnubNotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CanGetNotificationAccess]})
   async grantAccess(
     @requestBody({
       content: {
@@ -94,14 +94,14 @@ export class PubnubNotificationController {
     });
   }
 
-  @authorize({permissions: ['*']})
-  @del('/notifications/access/{id}', {
+  @sourceloopDelete('/notifications/access/{id}', {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Object with success',
       },
     },
   })
+  @authorize({permissions: ['*']})
   async revokeAccess(
     @param.path.string('id') userId: string,
   ): Promise<SuccessResponse> {

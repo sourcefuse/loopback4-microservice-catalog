@@ -6,13 +6,9 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   getWhereSchemaFor,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -24,6 +20,10 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopGet,
 } from '@sourceloop/core';
 
 const basePath = '/events/{id}/attachments';
@@ -33,11 +33,7 @@ export class EventAttachmentController {
     @repository(EventRepository) protected eventRepository: EventRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewAttachment]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -50,6 +46,10 @@ export class EventAttachmentController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewAttachment]})
   async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<Attachment>,
@@ -57,11 +57,7 @@ export class EventAttachmentController {
     return this.eventRepository.attachments(id).find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateAttachment]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -72,6 +68,10 @@ export class EventAttachmentController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateAttachment]})
   async create(
     @param.path.string('id') id: typeof Event.prototype.id,
     @requestBody({
@@ -90,11 +90,7 @@ export class EventAttachmentController {
     return this.eventRepository.attachments(id).create(attachment);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateAttachment]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -103,6 +99,10 @@ export class EventAttachmentController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateAttachment]})
   async patch(
     @param.path.string('id') id: string,
     @requestBody({
@@ -119,11 +119,7 @@ export class EventAttachmentController {
     return this.eventRepository.attachments(id).patch(attachment, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteAttachment]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -132,6 +128,10 @@ export class EventAttachmentController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteAttachment]})
   async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(Attachment))

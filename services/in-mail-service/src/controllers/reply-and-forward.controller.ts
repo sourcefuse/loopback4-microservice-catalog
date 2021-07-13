@@ -1,10 +1,5 @@
 import {inject} from '@loopback/context';
-import {
-  getModelSchemaRef,
-  param,
-  patch,
-  requestBody,
-} from '@loopback/openapi-v3';
+import {getModelSchemaRef, param, requestBody} from '@loopback/openapi-v3';
 import {Filter, repository} from '@loopback/repository';
 import {api, HttpErrors, ResponseObject} from '@loopback/rest';
 import {
@@ -12,6 +7,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPatch,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -103,9 +99,8 @@ export class ReplyAndForwardController {
   getInMailIdentifierType(type: string | undefined): string {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ReplyMail]})
-  @patch('threads/{threadId}/mails/{messageId}/replies', {
+
+  @sourceloopPatch('threads/{threadId}/mails/{messageId}/replies', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to reply to a single message',
     responses: {
@@ -114,6 +109,8 @@ export class ReplyAndForwardController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.ReplyMail]})
   async replyMail(
     @param.path.string('threadId') threadId: string,
     @param.path.string('messageId') messageId: string,
@@ -263,9 +260,8 @@ export class ReplyAndForwardController {
       throw new HttpErrors.UnprocessableEntity('Error replying email');
     }
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ComposeMail]})
-  @patch('threads/{threadId}/forward', {
+
+  @sourceloopPatch('threads/{threadId}/forward', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to forward single message.',
     responses: {
@@ -281,6 +277,8 @@ export class ReplyAndForwardController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.ComposeMail]})
   async forward(
     @requestBody({
       content: {

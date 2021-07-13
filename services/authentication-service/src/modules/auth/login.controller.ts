@@ -1,13 +1,10 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
-  get,
   getModelSchemaRef,
   HttpErrors,
   oas,
   param,
-  patch,
-  post,
   Request,
   requestBody,
   Response,
@@ -21,6 +18,9 @@ import {
   ILogger,
   LOGGER,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
   STATUS_CODE,
   SuccessResponse,
   UserStatus,
@@ -105,10 +105,7 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
   ) {}
 
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.LOCAL)
-  @authorize({permissions: ['*']})
-  @post('/auth/login', {
+  @sourceloopPost('/auth/login', {
     description:
       'Gets you the code that will be used for getting token (webapps)',
     responses: {
@@ -122,6 +119,9 @@ export class LoginController {
       ...ErrorCodes,
     },
   })
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(STRATEGY.LOCAL)
+  @authorize({permissions: ['*']})
   async login(
     @requestBody()
     req: LoginRequest,
@@ -165,10 +165,7 @@ export class LoginController {
     }
   }
 
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.OAUTH2_RESOURCE_OWNER_GRANT)
-  @authorize({permissions: ['*']})
-  @post('/auth/login-token', {
+  @sourceloopPost('/auth/login-token', {
     description:
       'Gets you refresh token and access token in one hit. (mobile app)',
     responses: {
@@ -183,6 +180,9 @@ export class LoginController {
       ...ErrorCodes,
     },
   })
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(STRATEGY.OAUTH2_RESOURCE_OWNER_GRANT)
+  @authorize({permissions: ['*']})
   async loginWithClientUser(
     @requestBody() req: LoginRequest,
     @param.header.string('device_id') deviceId?: string,
@@ -232,8 +232,7 @@ export class LoginController {
     }
   }
 
-  @authorize({permissions: ['*']})
-  @post('/auth/token', {
+  @sourceloopPost('/auth/token', {
     description:
       'Send the code received from the POST /auth/login api and get refresh token and access token (webapps)',
     responses: {
@@ -248,6 +247,7 @@ export class LoginController {
       ...ErrorCodes,
     },
   })
+  @authorize({permissions: ['*']})
   async getToken(
     @requestBody() req: AuthTokenRequest,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
@@ -293,8 +293,7 @@ export class LoginController {
     }
   }
 
-  @authorize({permissions: ['*']})
-  @post('/auth/token-refresh', {
+  @sourceloopPost('/auth/token-refresh', {
     description:
       'Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
     responses: {
@@ -309,6 +308,7 @@ export class LoginController {
       ...ErrorCodes,
     },
   })
+  @authorize({permissions: ['*']})
   async exchangeToken(
     @requestBody() req: AuthRefreshTokenRequest,
     @param.header.string('device_id') deviceId?: string,
@@ -346,6 +346,20 @@ export class LoginController {
     );
   }
 
+  @oas.deprecated()
+  @sourceloopGet('/auth/google', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
     STRATEGY.GOOGLE_OAUTH2,
@@ -361,20 +375,6 @@ export class LoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @oas.deprecated()
-  @get('/auth/google', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description:
-          'Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   /**
    * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
    */
@@ -385,6 +385,18 @@ export class LoginController {
     clientSecret?: string,
   ): Promise<void> {}
 
+  @sourceloopPost('/auth/google', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Google based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
     STRATEGY.GOOGLE_OAUTH2,
@@ -400,18 +412,6 @@ export class LoginController {
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
-  @post('/auth/google', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'POST Call for Google based login',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   async postLoginViaGoogle(
     @requestBody({
       content: {
@@ -423,6 +423,18 @@ export class LoginController {
     clientCreds?: ClientAuthRequest,
   ): Promise<void> {}
 
+  @sourceloopGet('/auth/google-auth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Google Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticate(
     STRATEGY.GOOGLE_OAUTH2,
     {
@@ -437,18 +449,6 @@ export class LoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/google-auth-redirect', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Google Redirect Token Response',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   async googleCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
@@ -488,6 +488,18 @@ export class LoginController {
     }
   }
 
+  @sourceloopPost('/auth/instagram', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Instagram based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
     STRATEGY.INSTAGRAM_OAUTH2,
@@ -502,18 +514,6 @@ export class LoginController {
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
-  @post('/auth/instagram', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'POST Call for Instagram based login',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   async postLoginViaInstagram(
     @requestBody({
       content: {
@@ -525,6 +525,18 @@ export class LoginController {
     clientCreds?: ClientAuthRequest,
   ): Promise<void> {}
 
+  @sourceloopGet('/auth/instagram-auth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Instagram Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticate(
     STRATEGY.INSTAGRAM_OAUTH2,
     {
@@ -538,18 +550,6 @@ export class LoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/instagram-auth-redirect', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Instagram Redirect Token Response',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   async instagramCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
@@ -589,6 +589,19 @@ export class LoginController {
     }
   }
 
+  @sourceloopPost('/auth/keycloak', {
+    description: 'POST Call for keycloak based login',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Keycloak Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
     STRATEGY.APPLE_OAUTH2,
@@ -811,19 +824,6 @@ export class LoginController {
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
-  @post('/auth/keycloak', {
-    description: 'POST Call for keycloak based login',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Keycloak Token Response',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   async postLoginViaKeycloak(
     @requestBody({
       content: {
@@ -835,6 +835,20 @@ export class LoginController {
     clientCreds?: ClientAuthRequest,
   ): Promise<void> {}
 
+  @oas.deprecated()
+  @sourceloopGet('/auth/keycloak', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {'x-ts-type': TokenResponse},
+          },
+        },
+      },
+    },
+  })
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
     STRATEGY.KEYCLOAK,
@@ -851,12 +865,17 @@ export class LoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @oas.deprecated()
-  @get('/auth/keycloak', {
+  async loginViaKeycloak(
+    @param.query.string('client_id')
+    clientId?: string,
+    @param.query.string('client_secret')
+    clientSecret?: string,
+  ): Promise<void> {}
+
+  @sourceloopGet('/auth/keycloak-auth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
-        description:
-          'Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        description: 'Keycloak Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {'x-ts-type': TokenResponse},
@@ -865,13 +884,6 @@ export class LoginController {
       },
     },
   })
-  async loginViaKeycloak(
-    @param.query.string('client_id')
-    clientId?: string,
-    @param.query.string('client_secret')
-    clientSecret?: string,
-  ): Promise<void> {}
-
   @authenticate(
     STRATEGY.KEYCLOAK,
     {
@@ -887,18 +899,6 @@ export class LoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/keycloak-auth-redirect', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Keycloak Redirect Token Response',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
-          },
-        },
-      },
-    },
-  })
   async keycloakCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
@@ -938,9 +938,7 @@ export class LoginController {
     }
   }
 
-  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
-  @authorize({permissions: ['*']})
-  @patch(`auth/change-password`, {
+  @sourceloopPatch(`auth/change-password`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -948,6 +946,8 @@ export class LoginController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
+  @authorize({permissions: ['*']})
   async resetPassword(
     @requestBody({
       content: {
@@ -1023,11 +1023,7 @@ export class LoginController {
     });
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: ['*']})
-  @get('/auth/me', {
+  @sourceloopGet('/auth/me', {
     security: OPERATION_SECURITY_SPEC,
     description: 'To get the user details',
     responses: {
@@ -1040,6 +1036,10 @@ export class LoginController {
       ...ErrorCodes,
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
   async me(): Promise<AuthUser | undefined> {
     if (!this.user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);

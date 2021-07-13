@@ -6,19 +6,15 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {param, getModelSchemaRef, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopPut,
   STATUS_CODE,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -35,9 +31,7 @@ export class MessageController {
     public messageRepository: MessageRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateMessage]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -46,6 +40,8 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateMessage]})
   async create(
     @requestBody({
       content: {
@@ -62,9 +58,7 @@ export class MessageController {
     return this.messageRepository.create(message);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -73,13 +67,13 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewMessage]})
   async count(@param.where(Message) where?: Where<Message>): Promise<Count> {
     return this.messageRepository.count(where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
-  @get('/messages', {
+  @sourceloopGet('/messages', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -95,15 +89,15 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewMessage]})
   async find(
     @param.filter(Message) filter?: Filter<Message>,
   ): Promise<Message[]> {
     return this.messageRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -112,6 +106,8 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateMessage]})
   async updateAll(
     @requestBody({
       content: {
@@ -126,9 +122,7 @@ export class MessageController {
     return this.messageRepository.updateAll(message, where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -141,6 +135,8 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewMessage]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Message, {exclude: 'where'})
@@ -149,9 +145,7 @@ export class MessageController {
     return this.messageRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -159,6 +153,8 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateMessage]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -173,9 +169,7 @@ export class MessageController {
     await this.messageRepository.updateById(id, message);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -183,6 +177,8 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateMessage]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() message: Message,
@@ -190,9 +186,7 @@ export class MessageController {
     await this.messageRepository.replaceById(id, message);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteMessage]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -200,6 +194,8 @@ export class MessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteMessage]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.messageRepository.deleteById(id);
   }

@@ -31,6 +31,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
         "parameters": [
           {
             "name": "where",
@@ -74,6 +75,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
         "parameters": [
           {
             "name": "id",
@@ -122,6 +124,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateAudit   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -159,6 +162,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
         "parameters": [
           {
             "name": "filter",

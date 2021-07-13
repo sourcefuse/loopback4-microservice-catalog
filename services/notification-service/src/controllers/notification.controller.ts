@@ -7,21 +7,21 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getFilterSchemaFor,
   getModelSchemaRef,
   getWhereSchemaFor,
   HttpErrors,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopDelete,
 } from '@sourceloop/core';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -50,9 +50,7 @@ export class NotificationController {
     private readonly notifUserService: INotificationUserManager,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -63,6 +61,8 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateNotification]})
   async create(
     @requestBody({
       content: {
@@ -88,9 +88,7 @@ export class NotificationController {
     return notif;
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post(`${basePath}/bulk`, {
+  @sourceloopPost(`${basePath}/bulk`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -104,6 +102,8 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateNotification]})
   async createBulkNotificaitions(
     @requestBody({
       content: {
@@ -139,9 +139,7 @@ export class NotificationController {
     return notifs;
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -150,6 +148,8 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async count(
     @param.query.object('where', getWhereSchemaFor(Notification))
     where?: Where<Notification>,
@@ -157,9 +157,7 @@ export class NotificationController {
     return this.notificationRepository.count(where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -172,6 +170,8 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
   async find(
     @param.query.object('filter', getFilterSchemaFor(Notification))
     filter?: Filter<Notification>,
@@ -179,9 +179,7 @@ export class NotificationController {
     return this.notificationRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
@@ -191,15 +189,13 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async findById(@param.path.string('id') id: string): Promise<Notification> {
     return this.notificationRepository.findById(id);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -208,6 +204,10 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateNotification]})
   async updateAll(
     @requestBody({
       content: {
@@ -223,11 +223,7 @@ export class NotificationController {
     return this.notificationRepository.updateAll(notification, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -235,6 +231,10 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateNotification]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -249,9 +249,7 @@ export class NotificationController {
     await this.notificationRepository.updateById(id, notification);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -259,6 +257,8 @@ export class NotificationController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
   async deleteAll(
     @param.query.object('where', getWhereSchemaFor(Notification))
     where?: Where<Notification>,

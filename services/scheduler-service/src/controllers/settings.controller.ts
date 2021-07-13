@@ -6,16 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {getModelSchemaRef, param, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Settings} from '../models';
@@ -25,6 +16,11 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 
 const basePath = '/settings';
@@ -35,11 +31,7 @@ export class SettingsController {
     public settingsRepository: SettingsRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateSettings]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -48,6 +40,10 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateSettings]})
   async create(
     @requestBody({
       content: {
@@ -64,11 +60,7 @@ export class SettingsController {
     return this.settingsRepository.create(settings);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSettings]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -77,15 +69,15 @@ export class SettingsController {
       },
     },
   })
-  async count(@param.where(Settings) where?: Where<Settings>): Promise<Count> {
-    return this.settingsRepository.count(where);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.ViewSettings]})
-  @get(basePath, {
+  async count(@param.where(Settings) where?: Where<Settings>): Promise<Count> {
+    return this.settingsRepository.count(where);
+  }
+
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -101,17 +93,17 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSettings]})
   async find(
     @param.filter(Settings) filter?: Filter<Settings>,
   ): Promise<Settings[]> {
     return this.settingsRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSettings]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -120,6 +112,10 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSettings]})
   async updateAll(
     @requestBody({
       content: {
@@ -134,11 +130,7 @@ export class SettingsController {
     return this.settingsRepository.updateAll(settings, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSettings]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -151,6 +143,10 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSettings]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Settings, {exclude: 'where'})
@@ -159,11 +155,7 @@ export class SettingsController {
     return this.settingsRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSettings]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -171,6 +163,10 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSettings]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -185,11 +181,7 @@ export class SettingsController {
     await this.settingsRepository.updateById(id, settings);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSettings]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -197,6 +189,10 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSettings]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() settings: Settings,
@@ -204,11 +200,7 @@ export class SettingsController {
     await this.settingsRepository.replaceById(id, settings);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteSettings]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -216,6 +208,10 @@ export class SettingsController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteSettings]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.settingsRepository.deleteById(id);
   }

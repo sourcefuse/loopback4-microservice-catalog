@@ -8,14 +8,9 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   HttpErrors,
   param,
-  patch,
-  post,
-  put,
   requestBody,
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -35,6 +30,11 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 import {FreeBusyDTO} from '../models/free-busy.dto';
 import {EventService} from '../services';
@@ -55,11 +55,7 @@ export class EventController {
     @service(EventService) public eventService: EventService,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateEvent]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -68,6 +64,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateEvent]})
   async create(
     @requestBody({
       content: {
@@ -119,13 +119,7 @@ export class EventController {
     return event;
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewAttendee],
-  })
-  @get('/events/freeBusy', {
+  @sourceloopGet('/events/freeBusy', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -133,6 +127,12 @@ export class EventController {
         content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
       },
     },
+  })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewAttendee],
   })
   async getFeeBusyStatus(
     @requestBody({
@@ -183,11 +183,7 @@ export class EventController {
     return response;
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -196,15 +192,15 @@ export class EventController {
       },
     },
   })
-  async count(@param.where(Event) where?: Where<Event>): Promise<Count> {
-    return this.eventRepository.count(where);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
-  @get(basePath, {
+  async count(@param.where(Event) where?: Where<Event>): Promise<Count> {
+    return this.eventRepository.count(where);
+  }
+
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -220,6 +216,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   async find(
     @param.filter(EventAttendeeView) filter?: Filter<EventAttendeeView>,
   ): Promise<Event[]> {
@@ -239,11 +239,7 @@ export class EventController {
     return this.eventRepository.find(eventFilter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -252,6 +248,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   async updateAll(
     @requestBody({
       content: {
@@ -266,11 +266,7 @@ export class EventController {
     return this.eventRepository.updateAll(event, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -283,6 +279,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Event, {exclude: 'where'})
@@ -291,11 +291,7 @@ export class EventController {
     return this.eventRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -303,6 +299,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -317,11 +317,7 @@ export class EventController {
     await this.eventRepository.updateById(id, event);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -329,6 +325,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() event: Event,
@@ -336,11 +336,7 @@ export class EventController {
     return this.eventRepository.replaceById(id, event);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteEvent]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -348,6 +344,10 @@ export class EventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteEvent]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     //Soft Delete
     await this.attachmentRepository.deleteAll({eventId: id});

@@ -85,6 +85,11 @@ fetch('/archives/storage-target',
 
 `PUT /archives/storage-target`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| SetMeetingUploadTarget   |
+
 > Body parameter
 
 ```json
@@ -167,6 +172,11 @@ fetch('/archives/{archiveId}',
 
 `GET /archives/{archiveId}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetMeetingArchives   |
+
 <h3 id="videochatarchivecontroller.getarchive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -245,6 +255,11 @@ fetch('/archives/{archiveId}',
 
 `DELETE /archives/{archiveId}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteMeetingArchive   |
+
 <h3 id="videochatarchivecontroller.deletearchive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -321,6 +336,11 @@ fetch('/archives',
 
 `GET /archives`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetMeetingArchives   |
+
 > Example responses
 
 > 200 Response
@@ -394,6 +414,11 @@ fetch('/session/{meetingLinkId}/attendees',
 ```
 
 `GET /session/{meetingLinkId}/attendees`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetMeetingAttendees   |
 
 <h3 id="videochatsessioncontroller.getattendeeslist-parameters">Parameters</h3>
 
@@ -472,6 +497,11 @@ fetch('/session/{meetingLinkId}/end',
 
 `PATCH /session/{meetingLinkId}/end`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| StopMeeting   |
+
 <h3 id="videochatsessioncontroller.endsession-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -541,6 +571,11 @@ fetch('/session/{meetingLinkId}/token',
 ```
 
 `POST /session/{meetingLinkId}/token`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GenerateMeetingToken   |
 
 > Body parameter
 
@@ -667,6 +702,11 @@ fetch('/session/{meetingLinkId}',
 
 `PATCH /session/{meetingLinkId}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| EditMeeting   |
+
 > Body parameter
 
 ```json
@@ -763,6 +803,11 @@ fetch('/session',
 ```
 
 `POST /session`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateMeetingSession   |
 
 > Body parameter
 

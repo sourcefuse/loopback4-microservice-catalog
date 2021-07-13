@@ -7,21 +7,17 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {getModelSchemaRef, param, requestBody} from '@loopback/rest';
 import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopPut,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -52,11 +48,7 @@ export class SubscriptionController {
     private readonly schdulerConfig?: ISchedulerConfig,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -67,6 +59,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
   async create(
     @requestBody({
       content: {
@@ -83,11 +79,7 @@ export class SubscriptionController {
     return this.subscriptionRepository.create(subscription);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -96,17 +88,17 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   async count(
     @param.where(Subscription) where?: Where<Subscription>,
   ): Promise<Count> {
     return this.subscriptionRepository.count(where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
-  @get('calendars/subscriptions/me', {
+  @sourceloopGet('calendars/subscriptions/me', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -122,6 +114,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   async findMe(
     @param.filter(Subscription) filter?: Filter<Subscription>,
   ): Promise<Subscription[]> {
@@ -144,11 +140,7 @@ export class SubscriptionController {
     return this.subscriptionRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -164,17 +156,17 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   async find(
     @param.filter(Subscription) filter?: Filter<Subscription>,
   ): Promise<Subscription[]> {
     return this.subscriptionRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -183,6 +175,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   async updateAll(
     @requestBody({
       content: {
@@ -197,11 +193,7 @@ export class SubscriptionController {
     return this.subscriptionRepository.updateAll(subscription, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -214,6 +206,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Subscription, {exclude: 'where'})
@@ -222,11 +218,7 @@ export class SubscriptionController {
     return this.subscriptionRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -234,6 +226,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -248,11 +244,7 @@ export class SubscriptionController {
     await this.subscriptionRepository.updateById(id, subscription);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -260,6 +252,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() subscription: Subscription,
@@ -267,11 +263,7 @@ export class SubscriptionController {
     await this.subscriptionRepository.replaceById(id, subscription);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteSubscription]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -279,6 +271,10 @@ export class SubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteSubscription]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.subscriptionRepository.deleteById(id);
   }

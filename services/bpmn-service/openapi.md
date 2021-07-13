@@ -89,6 +89,11 @@ fetch('/workflow/{id}/execute',
 
 `POST /workflow/{id}/execute`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateWorkflow   |
+
 > Body parameter
 
 ```json
@@ -164,6 +169,11 @@ fetch('/workflow/{id}/version/{version}',
 ```
 
 `DELETE /workflow/{id}/version/{version}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteWorkflow   |
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -242,6 +252,11 @@ fetch('/workflow/{id}',
 
 `PATCH /workflow/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateWorkflow   |
+
 > Body parameter
 
 ```json
@@ -319,6 +334,11 @@ fetch('/workflow/{id}',
 
 `GET /workflow/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewWorkflow   |
+
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -384,6 +404,11 @@ fetch('/workflow/{id}',
 ```
 
 `DELETE /workflow/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteWorkflow   |
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -462,6 +487,11 @@ fetch('/workflow',
 ```
 
 `POST /workflow`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateWorkflow   |
 
 > Body parameter
 
@@ -563,6 +593,11 @@ fetch('/workflow',
 ```
 
 `GET /workflow`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewWorkflow   |
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 

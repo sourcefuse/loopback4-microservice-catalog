@@ -1,19 +1,19 @@
 import {Getter, inject} from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {
-  del,
-  get,
   getFilterSchemaFor,
   getModelSchemaRef,
   HttpErrors,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
   STATUS_CODE,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -50,9 +50,7 @@ export class WorkflowController {
     private readonly workerFn: WorkerImplementationFn,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateWorkflow]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -63,6 +61,8 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateWorkflow]})
   async create(
     @requestBody({
       content: {
@@ -105,9 +105,7 @@ export class WorkflowController {
     }
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateWorkflow]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -115,6 +113,8 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateWorkflow]})
   async updateById(
     @requestBody({
       content: {
@@ -155,9 +155,7 @@ export class WorkflowController {
     }
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateWorkflow]})
-  @post(`${basePath}/{id}/execute`, {
+  @sourceloopPost(`${basePath}/{id}/execute`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
@@ -165,6 +163,8 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateWorkflow]})
   async startWorkflow(
     @param.path.string('id') id: string,
     @requestBody({
@@ -209,9 +209,7 @@ export class WorkflowController {
     );
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewWorkflow]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -224,6 +222,8 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewWorkflow]})
   async find(
     @param.query.object('filter', getFilterSchemaFor(Workflow))
     filter?: Filter<Workflow>,
@@ -233,9 +233,7 @@ export class WorkflowController {
     });
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewWorkflow]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -243,14 +241,14 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewWorkflow]})
   async count(@param.path.string('id') id: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findById(id);
     return this.workflowManagerService.getWorkflowById(workflow);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -258,6 +256,8 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     const workflow = await this.workflowRepository.findById(id, {
       include: ['workflowVersions'],
@@ -269,9 +269,7 @@ export class WorkflowController {
     await this.workflowRepository.deleteById(workflow.id);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
-  @del(`${basePath}/{id}/version/{version}`, {
+  @sourceloopDelete(`${basePath}/{id}/version/{version}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -279,6 +277,8 @@ export class WorkflowController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
   async deleteVersionById(
     @param.path.string('id') id: string,
     @param.path.number('version') versionNumber: number,

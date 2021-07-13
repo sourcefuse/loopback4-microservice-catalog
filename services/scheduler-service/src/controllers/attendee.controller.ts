@@ -6,16 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {getModelSchemaRef, param, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attendee} from '../models';
@@ -25,6 +16,11 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 
 const basePath = '/attendees';
@@ -35,11 +31,7 @@ export class AttendeeController {
     public attendeeRepository: AttendeeRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateAttendee]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -48,6 +40,10 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateAttendee]})
   async create(
     @requestBody({
       content: {
@@ -64,11 +60,7 @@ export class AttendeeController {
     return this.attendeeRepository.create(attendee);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -77,15 +69,15 @@ export class AttendeeController {
       },
     },
   })
-  async count(@param.where(Attendee) where?: Where<Attendee>): Promise<Count> {
-    return this.attendeeRepository.count(where);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.ViewAttendee]})
-  @get(basePath, {
+  async count(@param.where(Attendee) where?: Where<Attendee>): Promise<Count> {
+    return this.attendeeRepository.count(where);
+  }
+
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -101,17 +93,17 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewAttendee]})
   async find(
     @param.filter(Attendee) filter?: Filter<Attendee>,
   ): Promise<Attendee[]> {
     return this.attendeeRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -120,6 +112,10 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   async updateAll(
     @requestBody({
       content: {
@@ -134,11 +130,7 @@ export class AttendeeController {
     return this.attendeeRepository.updateAll(attendee, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -151,6 +143,10 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewAttendee]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Attendee, {exclude: 'where'})
@@ -158,11 +154,8 @@ export class AttendeeController {
   ): Promise<Attendee> {
     return this.attendeeRepository.findById(id, filter);
   }
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
-  @patch(`${basePath}/{id}`, {
+
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -170,6 +163,10 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -184,11 +181,7 @@ export class AttendeeController {
     await this.attendeeRepository.updateById(id, attendee);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -196,6 +189,10 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() attendee: Attendee,
@@ -203,11 +200,7 @@ export class AttendeeController {
     await this.attendeeRepository.replaceById(id, attendee);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteAttendee]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -215,6 +208,10 @@ export class AttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteAttendee]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.attendeeRepository.deleteById(id);
   }

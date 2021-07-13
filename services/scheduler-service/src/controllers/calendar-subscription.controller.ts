@@ -6,13 +6,9 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   getWhereSchemaFor,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -24,6 +20,10 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopDelete,
 } from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/subscriptions';
@@ -34,11 +34,7 @@ export class CalendarSubscriptionController {
     protected calendarRepository: CalendarRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -54,6 +50,10 @@ export class CalendarSubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewSubscription]})
   async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<Subscription>,
@@ -61,11 +61,7 @@ export class CalendarSubscriptionController {
     return this.calendarRepository.subscriptions(id).find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -76,6 +72,10 @@ export class CalendarSubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
   async create(
     @param.path.string('id') id: typeof Calendar.prototype.id,
     @requestBody({
@@ -94,11 +94,7 @@ export class CalendarSubscriptionController {
     return this.calendarRepository.subscriptions(id).create(subscription);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -107,6 +103,10 @@ export class CalendarSubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateSubscription]})
   async patch(
     @param.path.string('id') id: string,
     @requestBody({
@@ -123,11 +123,7 @@ export class CalendarSubscriptionController {
     return this.calendarRepository.subscriptions(id).patch(subscription, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteSubscription]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -136,6 +132,10 @@ export class CalendarSubscriptionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteSubscription]})
   async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(Subscription))

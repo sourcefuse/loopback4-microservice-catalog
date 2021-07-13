@@ -2,11 +2,8 @@ import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
   param,
-  patch,
-  post,
   requestBody,
   HttpErrors,
-  get,
   getModelSchemaRef,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
@@ -23,6 +20,9 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopPatch,
+  sourceloopGet,
 } from '@sourceloop/core';
 import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
@@ -50,9 +50,7 @@ export class VideoChatSessionController {
     private readonly config: VonageConfig,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.CreateSession]})
-  @post('/session', {
+  @sourceloopPost('/session', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,6 +60,8 @@ export class VideoChatSessionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.CreateSession]})
   async getMeetingLink(
     @requestBody()
     meetingOptions: MeetingOptions,
@@ -116,9 +116,7 @@ export class VideoChatSessionController {
     return meetingLinkId;
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GenerateToken]})
-  @post('/session/{meetingLinkId}/token', {
+  @sourceloopPost('/session/{meetingLinkId}/token', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -133,6 +131,8 @@ export class VideoChatSessionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.GenerateToken]})
   async getMeetingToken(
     @requestBody()
     sessionOptions: SessionOptions,
@@ -216,9 +216,7 @@ export class VideoChatSessionController {
     return this.videoChatProvider.getToken(session.sessionId, sessionOptions);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.EditMeeting]})
-  @patch('/session/{meetingLinkId}', {
+  @sourceloopPatch('/session/{meetingLinkId}', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -226,6 +224,8 @@ export class VideoChatSessionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.EditMeeting]})
   async editMeeting(
     @param.path.string('meetingLinkId') meetingLinkId: string,
     @requestBody({
@@ -309,9 +309,7 @@ export class VideoChatSessionController {
     this.auditLogRepository.create(auditLogPayload);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.StopMeeting]})
-  @patch('/session/{meetingLinkId}/end', {
+  @sourceloopPatch('/session/{meetingLinkId}/end', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -319,6 +317,8 @@ export class VideoChatSessionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.StopMeeting]})
   async endSession(
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<void> {
@@ -365,14 +365,14 @@ export class VideoChatSessionController {
     await this.auditLogRepository.create(auditLogPayload);
   }
 
-  @authorize({permissions: ['*']})
-  @post('/webhooks/session', {
+  @sourceloopPost('/webhooks/session', {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'POST /webhooks/session Success',
       },
     },
   })
+  @authorize({permissions: ['*']})
   async checkWebhookPayload(
     @requestBody() webhookPayload: VonageSessionWebhookPayload,
   ) {
@@ -485,9 +485,7 @@ export class VideoChatSessionController {
     }
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GetAttendees]})
-  @get('/session/{meetingLinkId}/attendees', {
+  @sourceloopGet('/session/{meetingLinkId}/attendees', {
     security: OPERATION_SECURITY_SPEC,
     parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],
     responses: {
@@ -498,6 +496,8 @@ export class VideoChatSessionController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.GetAttendees]})
   async getAttendeesList(
     @param.path.string('meetingLinkId') meetingLinkId: string,
     @param.query.string('active') active: string,

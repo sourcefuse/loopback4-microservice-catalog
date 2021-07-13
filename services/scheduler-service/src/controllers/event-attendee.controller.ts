@@ -6,13 +6,9 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   getWhereSchemaFor,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -24,6 +20,10 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopPost,
+  sourceloopPatch,
+  sourceloopDelete,
 } from '@sourceloop/core';
 
 const basePath = '/events/{id}/attendees';
@@ -33,11 +33,7 @@ export class EventAttendeeController {
     @repository(EventRepository) protected eventRepository: EventRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -50,6 +46,10 @@ export class EventAttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewAttendee]})
   async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<Attendee>,
@@ -57,11 +57,7 @@ export class EventAttendeeController {
     return this.eventRepository.attendees(id).find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateAttendee]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -72,6 +68,10 @@ export class EventAttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateAttendee]})
   async create(
     @param.path.string('id') id: typeof Event.prototype.id,
     @requestBody({
@@ -90,11 +90,7 @@ export class EventAttendeeController {
     return this.eventRepository.attendees(id).create(attendee);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -103,6 +99,10 @@ export class EventAttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateAttendee]})
   async patch(
     @param.path.string('id') id: string,
     @requestBody({
@@ -119,11 +119,7 @@ export class EventAttendeeController {
     return this.eventRepository.attendees(id).patch(attendee, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteAttendee]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -132,6 +128,10 @@ export class EventAttendeeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteAttendee]})
   async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(Attendee))

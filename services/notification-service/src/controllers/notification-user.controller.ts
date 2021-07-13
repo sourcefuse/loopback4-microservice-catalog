@@ -8,15 +8,10 @@ import {
   FilterBuilder,
 } from '@loopback/repository';
 import {
-  post,
   param,
-  get,
   getFilterSchemaFor,
   getModelSchemaRef,
   getWhereSchemaFor,
-  patch,
-  put,
-  del,
   requestBody,
   HttpErrors,
 } from '@loopback/rest';
@@ -32,6 +27,11 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {inject} from '@loopback/core';
@@ -45,9 +45,7 @@ export class NotificationUserController {
     public notificationUserRepository: NotificationUserRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -58,6 +56,8 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async create(
     @requestBody({
       content: {
@@ -79,11 +79,7 @@ export class NotificationUserController {
     return this.notificationUserRepository.create(notificationUser);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @post(`${basePath}/bulk`, {
+  @sourceloopPost(`${basePath}/bulk`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -94,6 +90,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async createAll(
     @requestBody({
       content: {
@@ -121,11 +121,7 @@ export class NotificationUserController {
     return this.notificationUserRepository.createAll(notificationUsers);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -134,6 +130,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async count(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
@@ -145,11 +145,7 @@ export class NotificationUserController {
     );
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -162,6 +158,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async find(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
@@ -173,11 +173,7 @@ export class NotificationUserController {
     );
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -186,6 +182,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async updateAll(
     @requestBody({
       content: {
@@ -206,11 +206,7 @@ export class NotificationUserController {
     );
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -221,6 +217,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async findById(
     @param.path.string('id') id: string,
     @inject(AuthenticationBindings.CURRENT_USER)
@@ -229,11 +229,7 @@ export class NotificationUserController {
     return this._verifyOwned(id, currentUser);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -241,6 +237,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -258,11 +258,7 @@ export class NotificationUserController {
     await this.notificationUserRepository.updateById(id, notificationUser);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -270,6 +266,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() notificationUser: NotificationUser,
@@ -280,11 +280,7 @@ export class NotificationUserController {
     await this.notificationUserRepository.replaceById(id, notificationUser);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -292,6 +288,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
   async deleteById(
     @param.path.string('id') id: string,
     @inject(AuthenticationBindings.CURRENT_USER)
@@ -301,11 +301,7 @@ export class NotificationUserController {
     await this.notificationUserRepository.deleteById(id);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -313,6 +309,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
   async deleteAll(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
@@ -324,11 +324,7 @@ export class NotificationUserController {
     );
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
-  @del(`${basePath}/hard`, {
+  @sourceloopDelete(`${basePath}/hard`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -336,6 +332,10 @@ export class NotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
   async deleteAllHard(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,

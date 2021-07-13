@@ -97,6 +97,11 @@ fetch('/mails/bulk/restore',
 
 `PATCH /mails/bulk/restore`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| RestoreMail   |
+
 > Body parameter
 
 ```json
@@ -194,6 +199,11 @@ fetch('/mails/bulk/{storage}/{action}',
 ```
 
 `DELETE /mails/bulk/{storage}/{action}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| TrashMail   |
 
 > Body parameter
 
@@ -295,6 +305,11 @@ fetch('/mails/marking/{markType}',
 
 `PATCH /mails/marking/{markType}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateMail   |
+
 > Body parameter
 
 ```json
@@ -374,6 +389,11 @@ fetch('/mails/{messageId}/attachments/{attachmentId}',
 ```
 
 `DELETE /mails/{messageId}/attachments/{attachmentId}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteAttachment   |
 
 <h3 id="api-provides-an-interface-for-removing-attachment-before-message-is-sent-parameters">Parameters</h3>
 
@@ -488,6 +508,11 @@ fetch('/mails/{messageId}/attachments',
 ```
 
 `POST /mails/{messageId}/attachments`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| AddAttachments   |
 
 > Body parameter
 
@@ -629,6 +654,11 @@ fetch('/mails/{messageId}/send',
 ```
 
 `PATCH /mails/{messageId}/send`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ComposeMail   |
 
 <h3 id="api-for-sending-a-drafted-message.-parameters">Parameters</h3>
 
@@ -830,6 +860,11 @@ fetch('/mails/{messageId}',
 ```
 
 `PUT /mails/{messageId}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateMail   |
 
 > Body parameter
 
@@ -1106,6 +1141,11 @@ fetch('/mails',
 
 `POST /mails`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ComposeMail   |
+
 > Body parameter
 
 ```json
@@ -1252,6 +1292,11 @@ fetch('/mails/{messageId}',
 
 `GET /mails/{messageId}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetInMail   |
+
 <h3 id="get-message-api.-collect-a-single-message-based-on-message-identity.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1341,6 +1386,11 @@ fetch('/mails',
 
 `GET /mails`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetInMails   |
+
 <h3 id="collect-a-list-of-all-messages.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1414,6 +1464,11 @@ fetch('/threads/{threadId}',
 ```
 
 `GET /threads/{threadId}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetThread   |
 
 <h3 id="get-thread-message-api.-collect-complete-single-message-thread-based-on-thread-identity.-parameters">Parameters</h3>
 
@@ -1528,6 +1583,11 @@ fetch('/threads',
 ```
 
 `GET /threads`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| GetThread   |
 
 <h3 id="thread-list-api.-collect-a-list-of-all-threads.-parameters">Parameters</h3>
 
@@ -1771,6 +1831,11 @@ fetch('/threads/{threadId}/forward',
 ```
 
 `PATCH /threads/{threadId}/forward`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ComposeMail   |
 
 > Body parameter
 
@@ -2067,6 +2132,11 @@ fetch('/threads/{threadId}/mails/{messageId}/replies',
 ```
 
 `PATCH /threads/{threadId}/mails/{messageId}/replies`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ReplyMail   |
 
 > Body parameter
 

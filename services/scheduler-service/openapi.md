@@ -83,6 +83,11 @@ fetch('/attachments/count',
 
 `GET /attachments/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttachment   |
+
 <h3 id="attachmentcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -192,6 +197,11 @@ fetch('/attachments/{id}',
 ```
 
 `PUT /attachments/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttachment   |
 
 > Body parameter
 
@@ -316,6 +326,11 @@ fetch('/attachments/{id}',
 
 `PATCH /attachments/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttachment   |
+
 > Body parameter
 
 ```json
@@ -406,6 +421,11 @@ fetch('/attachments/{id}',
 ```
 
 `GET /attachments/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttachment   |
 
 <h3 id="attachmentcontroller.findbyid-parameters">Parameters</h3>
 
@@ -633,6 +653,11 @@ fetch('/attachments/{id}',
 
 `DELETE /attachments/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteAttachment   |
+
 <h3 id="attachmentcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -732,6 +757,11 @@ fetch('/attachments',
 ```
 
 `POST /attachments`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateAttachment   |
 
 > Body parameter
 
@@ -880,6 +910,11 @@ fetch('/attachments',
 
 `PATCH /attachments`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttachment   |
+
 > Body parameter
 
 ```json
@@ -980,6 +1015,11 @@ fetch('/attachments',
 ```
 
 `GET /attachments`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttachment   |
 
 <h3 id="attachmentcontroller.find-parameters">Parameters</h3>
 
@@ -1351,6 +1391,11 @@ fetch('/attendees/count',
 
 `GET /attendees/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttendee   |
+
 <h3 id="attendeecontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1462,6 +1507,11 @@ fetch('/attendees/{id}',
 ```
 
 `PUT /attendees/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttendee   |
 
 > Body parameter
 
@@ -1589,6 +1639,11 @@ fetch('/attendees/{id}',
 
 `PATCH /attendees/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttendee   |
+
 > Body parameter
 
 ```json
@@ -1680,6 +1735,11 @@ fetch('/attendees/{id}',
 ```
 
 `GET /attendees/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttendee   |
 
 <h3 id="attendeecontroller.findbyid-parameters">Parameters</h3>
 
@@ -1908,6 +1968,11 @@ fetch('/attendees/{id}',
 
 `DELETE /attendees/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteAttendee   |
+
 <h3 id="attendeecontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2009,6 +2074,11 @@ fetch('/attendees',
 ```
 
 `POST /attendees`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateAttendee   |
 
 > Body parameter
 
@@ -2161,6 +2231,11 @@ fetch('/attendees',
 
 `PATCH /attendees`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttendee   |
+
 > Body parameter
 
 ```json
@@ -2262,6 +2337,11 @@ fetch('/attendees',
 ```
 
 `GET /attendees`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttendee   |
 
 <h3 id="attendeecontroller.find-parameters">Parameters</h3>
 
@@ -2689,6 +2769,11 @@ fetch('/calendars/calendarSubscription',
 
 `POST /calendars/calendarSubscription`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateCalendar   |
+
 > Body parameter
 
 ```json
@@ -2827,6 +2912,11 @@ fetch('/calendars/count',
 
 `GET /calendars/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewCalendar   |
+
 <h3 id="calendarcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2962,6 +3052,11 @@ fetch('/calendars/{id}',
 ```
 
 `PUT /calendars/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateCalendar   |
 
 > Body parameter
 
@@ -3101,6 +3196,11 @@ fetch('/calendars/{id}',
 
 `PATCH /calendars/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateCalendar   |
+
 > Body parameter
 
 ```json
@@ -3192,6 +3292,11 @@ fetch('/calendars/{id}',
 ```
 
 `GET /calendars/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewCalendar   |
 
 <h3 id="calendarcontroller.findbyid-parameters">Parameters</h3>
 
@@ -3690,6 +3795,11 @@ fetch('/calendars/{id}',
 
 `DELETE /calendars/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteCalendar   |
+
 <h3 id="calendarcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -3813,6 +3923,11 @@ fetch('/calendars',
 ```
 
 `POST /calendars`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateCalendar   |
 
 > Body parameter
 
@@ -3976,6 +4091,11 @@ fetch('/calendars',
 
 `PATCH /calendars`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateCalendar   |
+
 > Body parameter
 
 ```json
@@ -4077,6 +4197,11 @@ fetch('/calendars',
 ```
 
 `GET /calendars`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewCalendar   |
 
 <h3 id="calendarcontroller.find-parameters">Parameters</h3>
 
@@ -4448,6 +4573,11 @@ fetch('/calendars/subscriptions/me',
 
 `GET /calendars/subscriptions/me`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSubscription   |
+
 <h3 id="subscriptioncontroller.findme-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -4816,6 +4946,11 @@ fetch('/subscriptions/count',
 
 `GET /subscriptions/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSubscription   |
+
 <h3 id="subscriptioncontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -4933,6 +5068,11 @@ fetch('/subscriptions/{id}',
 ```
 
 `PUT /subscriptions/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSubscription   |
 
 > Body parameter
 
@@ -5069,6 +5209,11 @@ fetch('/subscriptions/{id}',
 
 `PATCH /subscriptions/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSubscription   |
+
 > Body parameter
 
 ```json
@@ -5163,6 +5308,11 @@ fetch('/subscriptions/{id}',
 ```
 
 `GET /subscriptions/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSubscription   |
 
 <h3 id="subscriptioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -5394,6 +5544,11 @@ fetch('/subscriptions/{id}',
 
 `DELETE /subscriptions/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteSubscription   |
+
 <h3 id="subscriptioncontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -5501,6 +5656,11 @@ fetch('/subscriptions',
 ```
 
 `POST /subscriptions`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateSubscription   |
 
 > Body parameter
 
@@ -5665,6 +5825,11 @@ fetch('/subscriptions',
 
 `PATCH /subscriptions`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSubscription   |
+
 > Body parameter
 
 ```json
@@ -5769,6 +5934,11 @@ fetch('/subscriptions',
 ```
 
 `GET /subscriptions`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSubscription   |
 
 <h3 id="subscriptioncontroller.find-parameters">Parameters</h3>
 
@@ -6196,6 +6366,11 @@ fetch('/calendars/{id}/events',
 
 `POST /calendars/{id}/events`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateEvent   |
+
 > Body parameter
 
 ```json
@@ -6392,6 +6567,11 @@ fetch('/calendars/{id}/events',
 
 `PATCH /calendars/{id}/events`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -6505,6 +6685,11 @@ fetch('/calendars/{id}/events',
 ```
 
 `GET /calendars/{id}/events`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="calendareventcontroller.find-parameters">Parameters</h3>
 
@@ -6660,6 +6845,11 @@ fetch('/calendars/{id}/events',
 
 `DELETE /calendars/{id}/events`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteEvent   |
+
 <h3 id="calendareventcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -6780,6 +6970,11 @@ fetch('/calendars/{id}/subscriptions',
 ```
 
 `POST /calendars/{id}/subscriptions`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateSubscription   |
 
 > Body parameter
 
@@ -6945,6 +7140,11 @@ fetch('/calendars/{id}/subscriptions',
 
 `PATCH /calendars/{id}/subscriptions`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSubscription   |
+
 > Body parameter
 
 ```json
@@ -7050,6 +7250,11 @@ fetch('/calendars/{id}/subscriptions',
 ```
 
 `GET /calendars/{id}/subscriptions`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSubscription   |
 
 <h3 id="calendarsubscriptioncontroller.find-parameters">Parameters</h3>
 
@@ -7187,6 +7392,11 @@ fetch('/calendars/{id}/subscriptions',
 
 `DELETE /calendars/{id}/subscriptions`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteSubscription   |
+
 <h3 id="calendarsubscriptioncontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -7297,6 +7507,11 @@ fetch('/calendars/{id}/working-hours',
 ```
 
 `POST /calendars/{id}/working-hours`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateWorkingHour   |
 
 > Body parameter
 
@@ -7442,6 +7657,11 @@ fetch('/calendars/{id}/working-hours',
 
 `PATCH /calendars/{id}/working-hours`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
+
 > Body parameter
 
 ```json
@@ -7542,6 +7762,11 @@ fetch('/calendars/{id}/working-hours',
 ```
 
 `GET /calendars/{id}/working-hours`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
 
 <h3 id="calendarworkinghourcontroller.find-parameters">Parameters</h3>
 
@@ -7672,6 +7897,11 @@ fetch('/calendars/{id}/working-hours',
 
 `DELETE /calendars/{id}/working-hours`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteWorkingHour   |
+
 <h3 id="calendarworkinghourcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -7752,6 +7982,11 @@ fetch('/events/count',
 ```
 
 `GET /events/count`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="eventcontroller.count-parameters">Parameters</h3>
 
@@ -7894,6 +8129,12 @@ fetch('/events/freeBusy',
 ```
 
 `GET /events/freeBusy`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewEvent   |
+| ViewAttendee   |
 
 > Body parameter
 
@@ -8158,6 +8399,11 @@ fetch('/events/{id}',
 
 `PUT /events/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -8317,6 +8563,11 @@ fetch('/events/{id}',
 
 `PATCH /events/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -8419,6 +8670,11 @@ fetch('/events/{id}',
 ```
 
 `GET /events/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="eventcontroller.findbyid-parameters">Parameters</h3>
 
@@ -9063,6 +9319,11 @@ fetch('/events/{id}',
 
 `DELETE /events/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteEvent   |
+
 <h3 id="eventcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -9246,6 +9507,11 @@ fetch('/events',
 ```
 
 `POST /events`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateEvent   |
 
 > Body parameter
 
@@ -9472,6 +9738,11 @@ fetch('/events',
 
 `PATCH /events`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -9584,6 +9855,11 @@ fetch('/events',
 ```
 
 `GET /events`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="eventcontroller.find-parameters">Parameters</h3>
 
@@ -9987,6 +10263,11 @@ fetch('/events/{id}/attachments',
 
 `POST /events/{id}/attachments`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateAttachment   |
+
 > Body parameter
 
 ```json
@@ -10135,6 +10416,11 @@ fetch('/events/{id}/attachments',
 
 `PATCH /events/{id}/attachments`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttachment   |
+
 > Body parameter
 
 ```json
@@ -10236,6 +10522,11 @@ fetch('/events/{id}/attachments',
 ```
 
 `GET /events/{id}/attachments`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttachment   |
 
 <h3 id="eventattachmentcontroller.find-parameters">Parameters</h3>
 
@@ -10356,6 +10647,11 @@ fetch('/events/{id}/attachments',
 
 `DELETE /events/{id}/attachments`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteAttachment   |
+
 <h3 id="eventattachmentcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -10470,6 +10766,11 @@ fetch('/events/{id}/attendees',
 ```
 
 `POST /events/{id}/attendees`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateAttendee   |
 
 > Body parameter
 
@@ -10623,6 +10924,11 @@ fetch('/events/{id}/attendees',
 
 `PATCH /events/{id}/attendees`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateAttendee   |
+
 > Body parameter
 
 ```json
@@ -10725,6 +11031,11 @@ fetch('/events/{id}/attendees',
 ```
 
 `GET /events/{id}/attendees`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewAttendee   |
 
 <h3 id="eventattendeecontroller.find-parameters">Parameters</h3>
 
@@ -10856,6 +11167,11 @@ fetch('/events/{id}/attendees',
 
 `DELETE /events/{id}/attendees`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteAttendee   |
+
 <h3 id="eventattendeecontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -10936,6 +11252,11 @@ fetch('/settings/count',
 ```
 
 `GET /settings/count`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSettings   |
 
 <h3 id="settingscontroller.count-parameters">Parameters</h3>
 
@@ -11044,6 +11365,11 @@ fetch('/settings/{id}',
 ```
 
 `PUT /settings/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSettings   |
 
 > Body parameter
 
@@ -11165,6 +11491,11 @@ fetch('/settings/{id}',
 
 `PATCH /settings/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSettings   |
+
 > Body parameter
 
 ```json
@@ -11255,6 +11586,11 @@ fetch('/settings/{id}',
 
 `GET /settings/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSettings   |
+
 <h3 id="settingscontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -11344,6 +11680,11 @@ fetch('/settings/{id}',
 ```
 
 `DELETE /settings/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteSettings   |
 
 <h3 id="settingscontroller.deletebyid-parameters">Parameters</h3>
 
@@ -11442,6 +11783,11 @@ fetch('/settings',
 ```
 
 `POST /settings`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateSettings   |
 
 > Body parameter
 
@@ -11586,6 +11932,11 @@ fetch('/settings',
 
 `PATCH /settings`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateSettings   |
+
 > Body parameter
 
 ```json
@@ -11685,6 +12036,11 @@ fetch('/settings',
 ```
 
 `GET /settings`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewSettings   |
 
 <h3 id="settingscontroller.find-parameters">Parameters</h3>
 
@@ -11813,6 +12169,11 @@ fetch('/themes/count',
 
 `GET /themes/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewTheme   |
+
 <h3 id="themecontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -11920,6 +12281,11 @@ fetch('/themes/{id}',
 ```
 
 `PUT /themes/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateTheme   |
 
 > Body parameter
 
@@ -12041,6 +12407,11 @@ fetch('/themes/{id}',
 
 `PATCH /themes/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateTheme   |
+
 > Body parameter
 
 ```json
@@ -12131,6 +12502,11 @@ fetch('/themes/{id}',
 
 `GET /themes/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewTheme   |
+
 <h3 id="themecontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -12220,6 +12596,11 @@ fetch('/themes/{id}',
 ```
 
 `DELETE /themes/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteTheme   |
 
 <h3 id="themecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -12318,6 +12699,11 @@ fetch('/themes',
 ```
 
 `POST /themes`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateTheme   |
 
 > Body parameter
 
@@ -12462,6 +12848,11 @@ fetch('/themes',
 
 `PATCH /themes`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateTheme   |
+
 > Body parameter
 
 ```json
@@ -12561,6 +12952,11 @@ fetch('/themes',
 ```
 
 `GET /themes`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewTheme   |
 
 <h3 id="themecontroller.find-parameters">Parameters</h3>
 
@@ -12680,6 +13076,11 @@ fetch('/working-hours/count',
 
 `GET /working-hours/count`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
+
 <h3 id="workinghourcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -12787,6 +13188,11 @@ fetch('/working-hours/{id}',
 ```
 
 `PUT /working-hours/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
 
 > Body parameter
 
@@ -12908,6 +13314,11 @@ fetch('/working-hours/{id}',
 
 `PATCH /working-hours/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
+
 > Body parameter
 
 ```json
@@ -12997,6 +13408,11 @@ fetch('/working-hours/{id}',
 ```
 
 `GET /working-hours/{id}`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
 
 <h3 id="workinghourcontroller.findbyid-parameters">Parameters</h3>
 
@@ -13223,6 +13639,11 @@ fetch('/working-hours/{id}',
 
 `DELETE /working-hours/{id}`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| DeleteWorkingHour   |
+
 <h3 id="workinghourcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -13320,6 +13741,11 @@ fetch('/working-hours',
 ```
 
 `POST /working-hours`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| CreateWorkingHour   |
 
 > Body parameter
 
@@ -13464,6 +13890,11 @@ fetch('/working-hours',
 
 `PATCH /working-hours`
 
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
+
 > Body parameter
 
 ```json
@@ -13563,6 +13994,11 @@ fetch('/working-hours',
 ```
 
 `GET /working-hours`
+
+Roles authorized to use this endpoint -
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
 
 <h3 id="workinghourcontroller.find-parameters">Parameters</h3>
 

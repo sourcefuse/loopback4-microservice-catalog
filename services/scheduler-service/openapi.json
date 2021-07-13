@@ -33,6 +33,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "where",
@@ -69,6 +70,7 @@
             "description": "Attachment PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -107,6 +109,7 @@
             "description": "Attachment PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -152,6 +155,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -191,6 +195,7 @@
             "description": "Attachment DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -228,6 +233,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateAttachment   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -262,6 +268,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "where",
@@ -315,6 +322,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -355,6 +363,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "where",
@@ -391,6 +400,7 @@
             "description": "Attendee PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -429,6 +439,7 @@
             "description": "Attendee PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -474,6 +485,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -513,6 +525,7 @@
             "description": "Attendee DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -550,6 +563,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateAttendee   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -584,6 +598,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "where",
@@ -637,6 +652,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -677,6 +693,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateCalendar   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -713,6 +730,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewCalendar   |\n",
         "parameters": [
           {
             "name": "where",
@@ -759,6 +777,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -799,6 +818,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -844,6 +864,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -906,6 +927,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -969,6 +991,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1020,6 +1043,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1065,6 +1089,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1127,6 +1152,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1174,6 +1200,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1225,6 +1252,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1270,6 +1298,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1332,6 +1361,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1379,6 +1409,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1423,6 +1454,7 @@
             "description": "Calendar PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateCalendar   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1461,6 +1493,7 @@
             "description": "Calendar PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateCalendar   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1506,6 +1539,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewCalendar   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1545,6 +1579,7 @@
             "description": "Calendar DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteCalendar   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1582,6 +1617,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateCalendar   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1616,6 +1652,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateCalendar   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1669,6 +1706,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewCalendar   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -1709,6 +1747,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1752,6 +1791,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewEvent   |\n| ViewAttendee   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1788,6 +1828,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1833,6 +1874,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1895,6 +1937,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1942,6 +1985,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1993,6 +2037,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2038,6 +2083,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2100,6 +2146,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2147,6 +2194,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2221,6 +2269,7 @@
             "description": "Event PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2259,6 +2308,7 @@
             "description": "Event PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2304,6 +2354,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2343,6 +2394,7 @@
             "description": "Event DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2380,6 +2432,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateEvent   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2414,6 +2467,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2467,6 +2521,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -2507,6 +2562,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSettings   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2543,6 +2599,7 @@
             "description": "Settings PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSettings   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2581,6 +2638,7 @@
             "description": "Settings PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSettings   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2626,6 +2684,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSettings   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2665,6 +2724,7 @@
             "description": "Settings DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteSettings   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2702,6 +2762,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateSettings   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2736,6 +2797,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSettings   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2789,6 +2851,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSettings   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -2829,6 +2892,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2865,6 +2929,7 @@
             "description": "Subscription PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2903,6 +2968,7 @@
             "description": "Subscription PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2948,6 +3014,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2987,6 +3054,7 @@
             "description": "Subscription DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3024,6 +3092,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateSubscription   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3058,6 +3127,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3111,6 +3181,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -3151,6 +3222,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewTheme   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3187,6 +3259,7 @@
             "description": "Theme PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3225,6 +3298,7 @@
             "description": "Theme PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3270,6 +3344,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3309,6 +3384,7 @@
             "description": "Theme DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3346,6 +3422,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateTheme   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3380,6 +3457,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateTheme   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3433,6 +3511,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewTheme   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -3473,6 +3552,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3509,6 +3589,7 @@
             "description": "WorkingHour PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3547,6 +3628,7 @@
             "description": "WorkingHour PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3592,6 +3674,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3631,6 +3714,7 @@
             "description": "WorkingHour DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3668,6 +3752,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateWorkingHour   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3702,6 +3787,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3755,6 +3841,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "filter",

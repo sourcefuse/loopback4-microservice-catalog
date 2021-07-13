@@ -1,18 +1,16 @@
 import {inject} from '@loopback/context';
-import {
-  getModelSchemaRef,
-  param,
-  patch,
-  put,
-  requestBody,
-} from '@loopback/openapi-v3';
+import {getModelSchemaRef, param, requestBody} from '@loopback/openapi-v3';
 import {DataObject, Filter, repository} from '@loopback/repository';
-import {api, del, HttpErrors, post, ResponseObject} from '@loopback/rest';
+import {api, HttpErrors, ResponseObject} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopPost,
+  sourceloopPut,
+  sourceloopPatch,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -115,9 +113,8 @@ export class OriginatorController {
   getInMailIdentifierType(type: string | undefined): string {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ComposeMail]})
-  @post('mails', {
+
+  @sourceloopPost('mails', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'ComposeAPI. For drafting, reply on and create new message',
     responses: {
@@ -133,6 +130,8 @@ export class OriginatorController {
       [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.ComposeMail]})
   async composeMail(
     @requestBody({
       content: {
@@ -248,9 +247,8 @@ export class OriginatorController {
       throw e;
     }
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.UpdateMail]})
-  @put('mails/{messageId}', {
+
+  @sourceloopPut('mails/{messageId}', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'Update API. Update draft messages.',
     responses: {
@@ -266,6 +264,8 @@ export class OriginatorController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.UpdateMail]})
   async updateDraft(
     @requestBody({
       content: {
@@ -388,9 +388,7 @@ export class OriginatorController {
     };
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.AddAttachments]})
-  @post('mails/{messageId}/attachments', {
+  @sourceloopPost('mails/{messageId}/attachments', {
     security: OPERATION_SECURITY_SPEC,
     summary:
       'API provides an interface for adding attachment before message is sent.',
@@ -416,6 +414,8 @@ export class OriginatorController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.AddAttachments]})
   async addAttachment(
     @requestBody({
       content: {
@@ -474,9 +474,7 @@ export class OriginatorController {
     };
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.DeleteAttachment]})
-  @del('mails/{messageId}/attachments/{attachmentId}', {
+  @sourceloopDelete('mails/{messageId}/attachments/{attachmentId}', {
     security: OPERATION_SECURITY_SPEC,
     summary:
       'API provides an interface for removing attachment before message is sent',
@@ -488,6 +486,8 @@ export class OriginatorController {
       [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.DeleteAttachment]})
   async removeAttachment(
     @param.path.string('messageId') messageId: string,
     @param.path.string('attachmentId') attachmentId: string,
@@ -517,9 +517,8 @@ export class OriginatorController {
     });
     return {item: attachmentId};
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.TrashMail]})
-  @del('mails/bulk/{storage}/{action}', {
+
+  @sourceloopDelete('mails/bulk/{storage}/{action}', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API for moving mails to trash and then delete',
     responses: {
@@ -530,6 +529,8 @@ export class OriginatorController {
       [STATUS_CODE.NOT_FOUND]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.TrashMail]})
   async trashBulk(
     @param.path.string('storage') storage: StorageMarker,
     @param.path.string('action') action: 'delete' | 'trash',
@@ -597,9 +598,8 @@ export class OriginatorController {
     await Promise.all(groupUpdatePromise);
     return {items: groups};
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.RestoreMail]})
-  @patch('mails/bulk/restore', {
+
+  @sourceloopPatch('mails/bulk/restore', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides an interface for restore message from trash.',
     responses: {
@@ -610,6 +610,8 @@ export class OriginatorController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.RestoreMail]})
   async restore(
     @param.query.object('filter') filter: Partial<Group>,
     @requestBody({
@@ -661,9 +663,8 @@ export class OriginatorController {
       item: groups,
     };
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ComposeMail]})
-  @patch('mails/{messageId}/send', {
+
+  @sourceloopPatch('mails/{messageId}/send', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API for sending a drafted message.',
     responses: {
@@ -674,6 +675,8 @@ export class OriginatorController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.ComposeMail]})
   async sendDraft(
     @param.path.string('messageId') messageId: string,
     @param.query.object('filter') filter: Partial<Message>,
@@ -730,9 +733,7 @@ export class OriginatorController {
     };
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.UpdateMail]})
-  @patch('mails/marking/{markType}', {
+  @sourceloopPatch('mails/marking/{markType}', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to mark read, unread and important',
     responses: {
@@ -741,6 +742,8 @@ export class OriginatorController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionsEnums.UpdateMail]})
   async markMail(
     @param.path.string('markType') markType: string,
     @requestBody({

@@ -1,10 +1,10 @@
-import {get} from '@loopback/openapi-v3';
 import * as fs from 'fs';
 import * as path from 'path';
 import {inject} from '@loopback/context';
 import {RestBindings, Response} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
+import { sourceloopGet } from '@sourceloop/core/src';
 
 export class HomePageController {
   private readonly html: string;
@@ -18,8 +18,7 @@ export class HomePageController {
     );
   }
 
-  @authorize({permissions: ['*']})
-  @get('/', {
+  @sourceloopGet('/', {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Home Page',
@@ -27,6 +26,7 @@ export class HomePageController {
       },
     },
   })
+  @authorize({permissions: ['*']})
   homePage(): Response {
     this.response.status(STATUS_CODE.OK).contentType('html').send(this.html);
     return this.response;

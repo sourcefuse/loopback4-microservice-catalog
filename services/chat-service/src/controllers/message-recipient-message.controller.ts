@@ -1,8 +1,9 @@
 import {repository} from '@loopback/repository';
-import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {getModelSchemaRef, param} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
   STATUS_CODE,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -19,9 +20,7 @@ export class MessageRecipientMessageController {
     public messageRecipientRepository: MessageRecipientRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -34,6 +33,8 @@ export class MessageRecipientMessageController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewMessage]})
   async getMessage(
     @param.path.string('id') id: typeof MessageRecipient.prototype.id,
   ): Promise<Message> {

@@ -32,6 +32,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| SetMeetingUploadTarget   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -67,6 +68,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
         "parameters": [
           {
             "name": "archiveId",
@@ -101,6 +103,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteMeetingArchive   |\n",
         "parameters": [
           {
             "name": "archiveId",
@@ -137,6 +140,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
         "operationId": "VideoChatArchiveController.getArchives"
       }
     },
@@ -180,6 +184,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetMeetingAttendees   |\n",
         "operationId": "VideoChatSessionController.getAttendeesList"
       }
     },
@@ -200,6 +205,7 @@
             "description": "MessageRecipient PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| StopMeeting   |\n",
         "parameters": [
           {
             "name": "meetingLinkId",
@@ -237,6 +243,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GenerateMeetingToken   |\n",
         "parameters": [
           {
             "name": "meetingLinkId",
@@ -276,6 +283,7 @@
             "description": "Session details PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| EditMeeting   |\n",
         "parameters": [
           {
             "name": "meetingLinkId",
@@ -322,6 +330,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -346,6 +355,7 @@
             "description": "POST /webhooks/session Success"
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {

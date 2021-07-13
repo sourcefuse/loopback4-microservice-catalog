@@ -7,20 +7,20 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   getWhereSchemaFor,
   HttpErrors,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopGet,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -53,11 +53,7 @@ export class CalendarEventController {
     protected calendarEventService: CalendarEventService,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -70,6 +66,10 @@ export class CalendarEventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewEvent]})
   async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<EventAttendeeView>,
@@ -120,11 +120,7 @@ export class CalendarEventController {
     return this.eventRepository.find(eventFilter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateEvent]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -133,6 +129,10 @@ export class CalendarEventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateEvent]})
   async create(
     @param.path.string('id') id: typeof Calendar.prototype.id,
     @requestBody({
@@ -151,11 +151,7 @@ export class CalendarEventController {
     return this.calendarRepository.events(id).create(event);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -164,6 +160,10 @@ export class CalendarEventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateEvent]})
   async patch(
     @param.path.string('id') id: string,
     @requestBody({
@@ -179,11 +179,7 @@ export class CalendarEventController {
     return this.calendarRepository.events(id).patch(event, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteEvent]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -192,6 +188,10 @@ export class CalendarEventController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteEvent]})
   async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(Event)) where?: Where<Event>,

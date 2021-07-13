@@ -8,12 +8,8 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
   param,
-  get,
   getModelSchemaRef,
-  patch,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {
@@ -27,6 +23,7 @@ import {ToDoRepository, UserLevelResourceRepository} from '../repositories';
 import {PermissionKey} from '../enums';
 import {bind, BindingScope, inject} from '@loopback/core';
 import {UserLevelResource} from '../models';
+import { sourceloopDelete, sourceloopGet, sourceloopPatch, sourceloopPost } from '@sourceloop/core';
 
 const BASE_PATH = '/todos';
 
@@ -39,11 +36,8 @@ export class TodoController {
     public userLevelResourceRepo: UserLevelResourceRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.TodoCreator]})
-  @post(BASE_PATH, {
+
+  @sourceloopPost(BASE_PATH, {
     responses: {
       '200': {
         description: 'ToDo model instance',
@@ -51,6 +45,10 @@ export class TodoController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.TodoCreator]})
   async create(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
@@ -77,11 +75,8 @@ export class TodoController {
     return todoCreated;
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
-  @get(`${BASE_PATH}/count`, {
+
+  @sourceloopGet(`${BASE_PATH}/count`, {
     responses: {
       '200': {
         description: 'ToDo model count',
@@ -89,15 +84,15 @@ export class TodoController {
       },
     },
   })
-  async count(@param.where(ToDo) where?: Where<ToDo>): Promise<Count> {
-    return this.toDoRepository.count(where);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.TodoOwner]})
-  @get(BASE_PATH, {
+  async count(@param.where(ToDo) where?: Where<ToDo>): Promise<Count> {
+    return this.toDoRepository.count(where);
+  }
+
+  @sourceloopGet(BASE_PATH, {
     responses: {
       '200': {
         description: 'Array of ToDo model instances',
@@ -112,15 +107,15 @@ export class TodoController {
       },
     },
   })
-  async find(@param.filter(ToDo) filter?: Filter<ToDo>): Promise<ToDo[]> {
-    return this.toDoRepository.find(filter);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.TodoOwner]})
-  @get(`${BASE_PATH}/{id}`, {
+  async find(@param.filter(ToDo) filter?: Filter<ToDo>): Promise<ToDo[]> {
+    return this.toDoRepository.find(filter);
+  }
+
+  @sourceloopGet(`${BASE_PATH}/{id}`, {
     responses: {
       '200': {
         description: 'ToDo model instance',
@@ -132,6 +127,10 @@ export class TodoController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.TodoOwner]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(ToDo, {exclude: 'where'}) filter?: FilterExcludingWhere<ToDo>,
@@ -139,17 +138,17 @@ export class TodoController {
     return this.toDoRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
-  @patch(`${BASE_PATH}/{id}`, {
+  @sourceloopPatch(`${BASE_PATH}/{id}`, {
     responses: {
       '204': {
         description: 'ToDo PATCH success',
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.TodoOwner]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -164,17 +163,17 @@ export class TodoController {
     await this.toDoRepository.updateById(id, toDo);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
-  @del(`${BASE_PATH}/{id}`, {
+  @sourceloopDelete(`${BASE_PATH}/{id}`, {
     responses: {
       '204': {
         description: 'ToDo DELETE success',
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.TodoOwner]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.toDoRepository.deleteById(id);
   }

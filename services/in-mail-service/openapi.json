@@ -33,6 +33,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| RestoreMail   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -84,6 +85,7 @@
             "description": "Message identity does not exist."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| TrashMail   |\n",
         "parameters": [
           {
             "name": "storage",
@@ -145,6 +147,7 @@
             "description": "Message is marked read/unread/important"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateMail   |\n",
         "parameters": [
           {
             "name": "markType",
@@ -192,6 +195,7 @@
             "description": "Message identity does not exist."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -256,6 +260,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| AddAttachments   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -322,6 +327,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ComposeMail   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -378,6 +384,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| UpdateMail   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -453,6 +460,7 @@
             "description": "Message identity does not exist"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetInMail   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -509,6 +517,7 @@
             "description": "Message identity does not exist."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ComposeMail   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -562,6 +571,7 @@
             "description": "Forbidden request due to unauthrized token in header."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetInMails   |\n",
         "parameters": [
           {
             "name": "messageFilter",
@@ -622,6 +632,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ComposeMail   |\n",
         "parameters": [
           {
             "name": "threadId",
@@ -694,6 +705,7 @@
             "description": "Message is replied back to the sender"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| ReplyMail   |\n",
         "parameters": [
           {
             "name": "threadId",
@@ -803,6 +815,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetThread   |\n",
         "parameters": [
           {
             "name": "threadId",
@@ -871,6 +884,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| GetThread   |\n",
         "parameters": [
           {
             "name": "threadFilter",

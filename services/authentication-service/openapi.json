@@ -62,6 +62,7 @@
             "description": "If User password successfully changed."
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "Authorization",
@@ -188,6 +189,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -219,6 +221,7 @@
             }
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -248,6 +251,7 @@
             }
           }
         },
+        "description": "",
         "deprecated": true,
         "parameters": [
           {
@@ -287,6 +291,7 @@
             }
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "code",
@@ -325,6 +330,7 @@
             }
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -356,6 +362,7 @@
             }
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "code",
@@ -424,6 +431,7 @@
             }
           }
         },
+        "description": "",
         "deprecated": true,
         "parameters": [
           {
@@ -463,6 +471,7 @@
             }
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "code",
@@ -649,6 +658,7 @@
             "description": "If User password successfully changed."
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -692,6 +702,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -740,6 +751,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -781,6 +793,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "description": "",
         "operationId": "SignupRequestController.verifyInviteToken"
       }
     },
@@ -909,6 +922,7 @@
             "description": "Check if Token Is Valid and not Expired."
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "token",
@@ -946,6 +960,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "where",
@@ -982,6 +997,7 @@
             "description": "AuthClient PUT success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1020,6 +1036,7 @@
             "description": "AuthClient PATCH success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1065,6 +1082,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1093,6 +1111,7 @@
             "description": "AuthClient DELETE success"
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1130,6 +1149,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1164,6 +1184,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1217,6 +1238,7 @@
             }
           }
         },
+        "description": "Roles authorized to use this endpoint -\n| Permissions |\n| ------- |\n| NotAllowed   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -1372,6 +1394,7 @@
             }
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -1395,6 +1418,7 @@
             "description": "Otp DELETE success"
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -1427,6 +1451,7 @@
             }
           }
         },
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {

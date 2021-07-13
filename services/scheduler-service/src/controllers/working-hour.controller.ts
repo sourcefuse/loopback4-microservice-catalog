@@ -6,16 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {getModelSchemaRef, param, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {WorkingHour} from '../models';
@@ -25,6 +16,11 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopPut,
+  sourceloopPatch,
+  sourceloopGet,
+  sourceloopPost,
 } from '@sourceloop/core';
 
 const basePath = '/working-hours';
@@ -35,11 +31,7 @@ export class WorkingHourController {
     public workingHourRepository: WorkingHourRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -50,6 +42,10 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   async create(
     @requestBody({
       content: {
@@ -66,11 +62,7 @@ export class WorkingHourController {
     return this.workingHourRepository.create(workingHour);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -79,17 +71,17 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   async count(
     @param.where(WorkingHour) where?: Where<WorkingHour>,
   ): Promise<Count> {
     return this.workingHourRepository.count(where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -105,17 +97,17 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   async find(
     @param.filter(WorkingHour) filter?: Filter<WorkingHour>,
   ): Promise<WorkingHour[]> {
     return this.workingHourRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -124,6 +116,10 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   async updateAll(
     @requestBody({
       content: {
@@ -138,11 +134,7 @@ export class WorkingHourController {
     return this.workingHourRepository.updateAll(workingHour, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -155,6 +147,10 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(WorkingHour, {exclude: 'where'})
@@ -163,11 +159,7 @@ export class WorkingHourController {
     return this.workingHourRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -175,6 +167,10 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -189,11 +185,7 @@ export class WorkingHourController {
     await this.workingHourRepository.updateById(id, workingHour);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -201,6 +193,10 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() workingHour: WorkingHour,
@@ -208,11 +204,7 @@ export class WorkingHourController {
     await this.workingHourRepository.replaceById(id, workingHour);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -220,6 +212,10 @@ export class WorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.workingHourRepository.deleteById(id);
   }

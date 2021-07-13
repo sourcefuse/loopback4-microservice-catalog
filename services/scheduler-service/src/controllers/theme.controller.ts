@@ -6,16 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {getModelSchemaRef, param, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Theme} from '../models';
@@ -25,6 +16,11 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 
 const basePath = '/themes';
@@ -35,11 +31,7 @@ export class ThemeController {
     public themeRepository: ThemeRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateTheme]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -48,6 +40,10 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateTheme]})
   async create(
     @requestBody({
       content: {
@@ -64,11 +60,7 @@ export class ThemeController {
     return this.themeRepository.create(theme);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewTheme]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -77,15 +69,15 @@ export class ThemeController {
       },
     },
   })
-  async count(@param.where(Theme) where?: Where<Theme>): Promise<Count> {
-    return this.themeRepository.count(where);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.ViewTheme]})
-  @get(basePath, {
+  async count(@param.where(Theme) where?: Where<Theme>): Promise<Count> {
+    return this.themeRepository.count(where);
+  }
+
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -101,15 +93,15 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewTheme]})
   async find(@param.filter(Theme) filter?: Filter<Theme>): Promise<Theme[]> {
     return this.themeRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateTheme]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -118,6 +110,10 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateTheme]})
   async updateAll(
     @requestBody({
       content: {
@@ -132,11 +128,7 @@ export class ThemeController {
     return this.themeRepository.updateAll(theme, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewTheme]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -149,6 +141,10 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewTheme]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Theme, {exclude: 'where'})
@@ -157,11 +153,7 @@ export class ThemeController {
     return this.themeRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateTheme]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -169,6 +161,10 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateTheme]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -183,11 +179,7 @@ export class ThemeController {
     await this.themeRepository.updateById(id, theme);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateTheme]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -195,6 +187,10 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateTheme]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() theme: Theme,
@@ -202,11 +198,7 @@ export class ThemeController {
     await this.themeRepository.replaceById(id, theme);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteTheme]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -214,6 +206,10 @@ export class ThemeController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteTheme]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.themeRepository.deleteById(id);
   }

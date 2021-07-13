@@ -18,7 +18,7 @@ decorator will annotate the method argument with the value of the header
 
 ```ts
 class MyController {
-  @get('/')
+  @sourceloopGet('/')
   getHandler(@txIdFromHeader() txId: string) {
     return `Your transaction id is: ${txId}`;
   }

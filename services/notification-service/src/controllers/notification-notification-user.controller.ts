@@ -6,13 +6,9 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   getWhereSchemaFor,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -20,7 +16,13 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Notification, NotificationUser} from '../models';
 import {NotificationRepository} from '../repositories';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {
+  OPERATION_SECURITY_SPEC,
+  sourceloopDelete,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
+} from '@sourceloop/core';
 const basePath = '/notifications/{id}/notification-users';
 
 export class NotificationNotificationUserController {
@@ -29,9 +31,7 @@ export class NotificationNotificationUserController {
     protected notificationRepository: NotificationRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
@@ -47,6 +47,8 @@ export class NotificationNotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewNotification]})
   async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<NotificationUser>,
@@ -54,9 +56,7 @@ export class NotificationNotificationUserController {
     return this.notificationRepository.notificationUsers(id).find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
@@ -69,6 +69,8 @@ export class NotificationNotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateNotification]})
   async create(
     @param.path.string('id') id: typeof Notification.prototype.id,
     @requestBody({
@@ -89,9 +91,7 @@ export class NotificationNotificationUserController {
       .create(notificationUser);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
@@ -100,6 +100,8 @@ export class NotificationNotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateNotification]})
   async patch(
     @param.path.string('id') id: string,
     @requestBody({
@@ -118,9 +120,7 @@ export class NotificationNotificationUserController {
       .patch(notificationUser, where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '200': {
@@ -129,6 +129,8 @@ export class NotificationNotificationUserController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteNotification]})
   async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(NotificationUser))

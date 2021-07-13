@@ -1,12 +1,9 @@
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {
-  get,
   getModelSchemaRef,
   HttpErrors,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {
@@ -16,6 +13,9 @@ import {
   STATUS_CODE,
   SuccessResponse,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
@@ -44,9 +44,7 @@ export class ForgetPasswordController {
     public revokedTokensRepo: RevokedTokenRepository,
   ) {}
 
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authorize({permissions: ['*']})
-  @post(`auth/forget-password`, {
+  @sourceloopPost(`auth/forget-password`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -60,6 +58,8 @@ export class ForgetPasswordController {
       ...ErrorCodes,
     },
   })
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authorize({permissions: ['*']})
   async forgetPassword(
     @requestBody()
     req: ForgetPasswordDto,
@@ -115,14 +115,14 @@ export class ForgetPasswordController {
     }
   }
 
-  @authorize({permissions: ['*']})
-  @get(`auth/verify-reset-password-link`, {
+  @sourceloopGet(`auth/verify-reset-password-link`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Check if Token Is Valid and not Expired.',
       },
     },
   })
+  @authorize({permissions: ['*']})
   async verifyResetPasswordLink(
     @param.query.string('token', {required: true})
     token: string,
@@ -151,9 +151,7 @@ export class ForgetPasswordController {
     });
   }
 
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authorize({permissions: ['*']})
-  @patch(`auth/reset-password`, {
+  @sourceloopPatch(`auth/reset-password`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -161,6 +159,8 @@ export class ForgetPasswordController {
       },
     },
   })
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authorize({permissions: ['*']})
   async resetPassword(
     @requestBody()
     req: ResetPasswordWithClient,

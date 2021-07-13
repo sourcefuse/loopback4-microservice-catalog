@@ -1,11 +1,13 @@
 // Uncomment these imports to begin using these cool features!
 
-import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';
+import {getModelSchemaRef, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   ErrorCodes,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {SignupRequestDto} from '../models/signup-request-dto.model';
@@ -34,8 +36,7 @@ export class SignupRequestController {
     private readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
   ) {}
 
-  @authorize({permissions: ['*']})
-  @post(`${basePath}/create-token`, {
+  @sourceloopPost(`${basePath}/create-token`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: successResponse,
@@ -48,6 +49,7 @@ export class SignupRequestController {
       ...ErrorCodes,
     },
   })
+  @authorize({permissions: ['*']})
   async requestSignup(
     @requestBody()
     signUpRequest: SignupRequestDto<LocalUserProfileDto>,
@@ -73,14 +75,7 @@ export class SignupRequestController {
     });
   }
 
-  @authenticate(
-    STRATEGY.BEARER,
-    {},
-    undefined,
-    VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
-  )
-  @authorize({permissions: ['*']})
-  @post(`${basePath}/create-user`, {
+  @sourceloopPost(`${basePath}/create-user`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -94,6 +89,13 @@ export class SignupRequestController {
       ...ErrorCodes,
     },
   })
+  @authenticate(
+    STRATEGY.BEARER,
+    {},
+    undefined,
+    VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
+  )
+  @authorize({permissions: ['*']})
   async signupWithToken(
     @requestBody()
     req: LocalUserProfileDto,
@@ -108,14 +110,7 @@ export class SignupRequestController {
     });
   }
 
-  @authenticate(
-    STRATEGY.BEARER,
-    {},
-    undefined,
-    VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
-  )
-  @authorize({permissions: ['*']})
-  @get(`${basePath}/verify-token`, {
+  @sourceloopGet(`${basePath}/verify-token`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -124,6 +119,13 @@ export class SignupRequestController {
       ...ErrorCodes,
     },
   })
+  @authenticate(
+    STRATEGY.BEARER,
+    {},
+    undefined,
+    VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER,
+  )
+  @authorize({permissions: ['*']})
   async verifyInviteToken(
     @inject(AuthenticationBindings.CURRENT_USER)
     signupUser: SignupRequest,

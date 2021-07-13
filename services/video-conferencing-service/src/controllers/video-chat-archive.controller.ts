@@ -1,5 +1,5 @@
 import {inject} from '@loopback/core';
-import {del, get, param, HttpErrors, put, requestBody} from '@loopback/rest';
+import {param, HttpErrors, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
@@ -13,6 +13,9 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopDelete,
+  sourceloopPut,
 } from '@sourceloop/core';
 import {repository} from '@loopback/repository';
 import {VideoChatSessionRepository, AuditLogsRepository} from '../repositories';
@@ -28,9 +31,7 @@ export class VideoChatArchiveController {
     private readonly auditLogRepository: AuditLogsRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GetArchives]})
-  @get('/archives/{archiveId}', {
+  @sourceloopGet('/archives/{archiveId}', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -44,6 +45,8 @@ export class VideoChatArchiveController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.GetArchives]})
   async getArchive(@param.path.string('archiveId') archiveId: string) {
     const archiveExists = await this.videoChatSessionRepository.findOne({
       where: {
@@ -64,9 +67,7 @@ export class VideoChatArchiveController {
     return this.videoChatProvider.getArchives(archiveId);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GetArchives]})
-  @get('/archives', {
+  @sourceloopGet('/archives', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -80,13 +81,13 @@ export class VideoChatArchiveController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.GetArchives]})
   async getArchives() {
     return this.videoChatProvider.getArchives(null);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.DeleteArchive]})
-  @del('/archives/{archiveId}', {
+  @sourceloopDelete('/archives/{archiveId}', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -100,6 +101,8 @@ export class VideoChatArchiveController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.DeleteArchive]})
   async deleteArchive(
     @param.path.string('archiveId') archiveId: string,
   ): Promise<void> {
@@ -122,9 +125,7 @@ export class VideoChatArchiveController {
     return this.videoChatProvider.deleteArchive(archiveId);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.SetUploadTarget]})
-  @put('/archives/storage-target', {
+  @sourceloopPut('/archives/storage-target', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -138,6 +139,8 @@ export class VideoChatArchiveController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKeys.SetUploadTarget]})
   async setUploadTarget(
     @requestBody() body: S3TargetOptions | AzureTargetOptions,
   ): Promise<void> {
@@ -156,7 +159,7 @@ export class VideoChatArchiveController {
   // TO-DO: will do modifications later
   // @authenticate(STRATEGY.BEARER)
   // @authorize({permissions:[PermissionKeys.SetUploadTarget]})
-  // @del('/archives/storage-target', {
+  // @sourceloopDelete('/archives/storage-target', {
   //   responses: {
   //     [STATUS_CODE.OK]: {
   //       content: {

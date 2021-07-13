@@ -6,15 +6,10 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
   param,
-  get,
   getFilterSchemaFor,
   getModelSchemaRef,
   getWhereSchemaFor,
-  patch,
-  put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {AuthClient} from '../models';
@@ -25,6 +20,11 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 import {PermissionKey} from '../permission-key.enum';
 
@@ -35,9 +35,7 @@ export class AuthClientController {
     public authClientRepository: AuthClientRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @post(baseUrl, {
+  @sourceloopPost(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -46,6 +44,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async create(
     @requestBody({
       content: {
@@ -59,9 +59,7 @@ export class AuthClientController {
     return this.authClientRepository.create(authClient);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @get(`${baseUrl}/count`, {
+  @sourceloopGet(`${baseUrl}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -70,6 +68,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async count(
     @param.query.object('where', getWhereSchemaFor(AuthClient))
     where?: Where<AuthClient>,
@@ -77,9 +77,7 @@ export class AuthClientController {
     return this.authClientRepository.count(where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @get(baseUrl, {
+  @sourceloopGet(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -92,6 +90,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async find(
     @param.query.object('filter', getFilterSchemaFor(AuthClient))
     filter?: Filter<AuthClient>,
@@ -99,9 +99,7 @@ export class AuthClientController {
     return this.authClientRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @patch(baseUrl, {
+  @sourceloopPatch(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -110,6 +108,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async updateAll(
     @requestBody({
       content: {
@@ -125,9 +125,7 @@ export class AuthClientController {
     return this.authClientRepository.updateAll(authClient, where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @get(`${baseUrl}/{id}`, {
+  @sourceloopGet(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -136,13 +134,13 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async findById(@param.path.number('id') id: number): Promise<AuthClient> {
     return this.authClientRepository.findById(id);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @patch(`${baseUrl}/{id}`, {
+  @sourceloopPatch(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -150,6 +148,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({
@@ -164,9 +164,7 @@ export class AuthClientController {
     await this.authClientRepository.updateById(id, authClient);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @put(`${baseUrl}/{id}`, {
+  @sourceloopPut(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -174,6 +172,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async replaceById(
     @param.path.number('id') id: number,
     @requestBody() authClient: AuthClient,
@@ -181,9 +181,7 @@ export class AuthClientController {
     await this.authClientRepository.replaceById(id, authClient);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.NotAllowed]})
-  @del(`${baseUrl}/{id}`, {
+  @sourceloopDelete(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       '204': {
@@ -191,6 +189,8 @@ export class AuthClientController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.NotAllowed]})
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.authClientRepository.deleteById(id);
   }

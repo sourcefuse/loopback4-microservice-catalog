@@ -6,17 +6,14 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {param, getModelSchemaRef, requestBody, response} from '@loopback/rest';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
-} from '@loopback/rest';
+  sourceloopDelete,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPost,
+  sourceloopPut,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission.enum';
@@ -32,9 +29,9 @@ export class ToDoController {
     public toDoRepository: ToDoRepository,
   ) {}
 
+  @sourceloopPost(base)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateTodo]})
-  @post(base)
   @response(OK, {
     description: 'ToDo model instance',
     content: {'application/json': {schema: getModelSchemaRef(ToDo)}},
@@ -55,9 +52,9 @@ export class ToDoController {
     return this.toDoRepository.create(toDo);
   }
 
+  @sourceloopGet('/to-dos/count')
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get('/to-dos/count')
   @response(OK, {
     description: 'ToDo model count',
     content: {'application/json': {schema: CountSchema}},
@@ -66,9 +63,9 @@ export class ToDoController {
     return this.toDoRepository.count(where);
   }
 
+  @sourceloopGet(base)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(base)
   @response(OK, {
     description: 'Array of ToDo model instances',
     content: {
@@ -84,9 +81,9 @@ export class ToDoController {
     return this.toDoRepository.find(filter);
   }
 
+  @sourceloopPatch(base)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateTodo]})
-  @patch(base)
   @response(OK, {
     description: 'ToDo PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -105,9 +102,9 @@ export class ToDoController {
     return this.toDoRepository.updateAll(toDo, where);
   }
 
+  @sourceloopGet(`${base}/{id}`)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${base}/{id}`)
   @response(OK, {
     description: 'ToDo model instance',
     content: {
@@ -123,9 +120,9 @@ export class ToDoController {
     return this.toDoRepository.findById(id, filter);
   }
 
+  @sourceloopPatch(`${base}/{id}`)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateTodo]})
-  @patch(`${base}/{id}`)
   @response(NOCONTENT, {
     description: 'ToDo PATCH success',
   })
@@ -143,9 +140,9 @@ export class ToDoController {
     await this.toDoRepository.updateById(id, toDo);
   }
 
+  @sourceloopPut(`${base}/{id}`)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateTodo]})
-  @put(`${base}/{id}`)
   @response(NOCONTENT, {
     description: 'ToDo PUT success',
   })
@@ -156,9 +153,9 @@ export class ToDoController {
     await this.toDoRepository.replaceById(id, toDo);
   }
 
+  @sourceloopDelete(`${base}/{id}`)
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteTodo]})
-  @del(`${base}/{id}`)
   @response(NOCONTENT, {
     description: 'ToDo DELETE success',
   })

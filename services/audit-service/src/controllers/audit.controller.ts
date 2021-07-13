@@ -6,10 +6,12 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {get, getModelSchemaRef, param, post, requestBody} from '@loopback/rest';
+import {getModelSchemaRef, param, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopPost,
   STATUS_CODE,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -27,9 +29,7 @@ export class AuditController {
     public auditLogRepository: AuditLogRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateAudit]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -38,6 +38,8 @@ export class AuditController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateAudit]})
   async create(
     @requestBody({
       content: {
@@ -54,9 +56,7 @@ export class AuditController {
     return this.auditLogRepository.create(auditLog);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewAudit]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -65,13 +65,13 @@ export class AuditController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewAudit]})
   async count(@param.where(AuditLog) where?: Where<AuditLog>): Promise<Count> {
     return this.auditLogRepository.count(where);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewAudit]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -87,15 +87,15 @@ export class AuditController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewAudit]})
   async find(
     @param.filter(AuditLog) filter?: Filter<AuditLog>,
   ): Promise<AuditLog[]> {
     return this.auditLogRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewAudit]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -108,6 +108,8 @@ export class AuditController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.ViewAudit]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(AuditLog, {exclude: 'where'})

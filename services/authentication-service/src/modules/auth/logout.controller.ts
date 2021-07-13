@@ -4,7 +4,6 @@ import {
   getModelSchemaRef,
   HttpErrors,
   param,
-  post,
   Request,
   requestBody,
   RestBindings,
@@ -16,6 +15,7 @@ import {
   ILogger,
   LOGGER,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
   STATUS_CODE,
   SuccessResponse,
 } from '@sourceloop/core';
@@ -50,11 +50,7 @@ export class LogoutController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: ['*']})
-  @post('/logout', {
+  @sourceloopPost('/logout', {
     security: OPERATION_SECURITY_SPEC,
     description: 'To logout',
     responses: {
@@ -69,6 +65,10 @@ export class LogoutController {
       ...ErrorCodes,
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
   async logout(
     @param.header.string('Authorization', {
       description:
@@ -113,11 +113,7 @@ export class LogoutController {
     });
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: ['*']})
-  @post('/keycloak/logout', {
+  @sourceloopPost('/keycloak/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
       'This API will log out the user from application as well as keycloak',
@@ -133,6 +129,10 @@ export class LogoutController {
       ...ErrorCodes,
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
   async keycloakLogout(
     @param.header.string('Authorization', {
       description:

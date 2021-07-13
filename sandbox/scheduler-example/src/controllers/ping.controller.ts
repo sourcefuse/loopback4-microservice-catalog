@@ -1,5 +1,6 @@
 import {inject} from '@loopback/core';
-import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
+import {Request, RestBindings, ResponseObject} from '@loopback/rest';
+import {sourceloopGet} from '../../../../services/scheduler-service/node_modules/@sourceloop/core/dist';
 
 /**
  * OpenAPI response for ping()
@@ -37,7 +38,7 @@ export class PingController {
   ) {}
 
   // Map to `GET /ping`
-  @get('/ping', {
+  @sourceloopGet('/ping', {
     responses: {
       '200': PING_RESPONSE,
     },

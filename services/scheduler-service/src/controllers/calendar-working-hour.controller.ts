@@ -6,13 +6,9 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   getWhereSchemaFor,
   param,
-  patch,
-  post,
   requestBody,
 } from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -24,6 +20,10 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  sourceloopGet,
+  sourceloopPost,
+  sourceloopPatch,
+  sourceloopDelete,
 } from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/working-hours';
@@ -34,11 +34,7 @@ export class CalendarWorkingHourController {
     protected calendarRepository: CalendarRepository,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
-  @get(basePath, {
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -51,6 +47,10 @@ export class CalendarWorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
   async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<WorkingHour>,
@@ -58,11 +58,7 @@ export class CalendarWorkingHourController {
     return this.calendarRepository.workingHours(id).find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -73,6 +69,10 @@ export class CalendarWorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   async create(
     @param.path.string('id') id: typeof Calendar.prototype.id,
     @requestBody({
@@ -91,11 +91,7 @@ export class CalendarWorkingHourController {
     return this.calendarRepository.workingHours(id).create(workingHour);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -104,6 +100,10 @@ export class CalendarWorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   async patch(
     @param.path.string('id') id: string,
     @requestBody({
@@ -120,11 +120,7 @@ export class CalendarWorkingHourController {
     return this.calendarRepository.workingHours(id).patch(workingHour, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
-  @del(basePath, {
+  @sourceloopDelete(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -133,6 +129,10 @@ export class CalendarWorkingHourController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(WorkingHour))

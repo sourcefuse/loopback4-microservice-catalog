@@ -7,13 +7,8 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
-  get,
   getModelSchemaRef,
   param,
-  patch,
-  post,
-  put,
   requestBody,
   HttpErrors,
 } from '@loopback/rest';
@@ -36,6 +31,11 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  sourceloopPost,
+  sourceloopGet,
+  sourceloopPatch,
+  sourceloopPut,
+  sourceloopDelete,
 } from '@sourceloop/core';
 import {AccessRoleType} from '../models/enums/access-role.enum';
 import {inject, service} from '@loopback/core';
@@ -64,11 +64,7 @@ export class CalendarController {
     private readonly schdulerConfig?: ISchedulerConfig,
   ) {}
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateCalendar]})
-  @post(basePath, {
+  @sourceloopPost(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -77,6 +73,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateCalendar]})
   async create(
     @requestBody({
       content: {
@@ -93,11 +93,7 @@ export class CalendarController {
     return this.calendarService.createCalendar(calendarDTO);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.CreateCalendar]})
-  @post('/calendars/calendarSubscription', {
+  @sourceloopPost('/calendars/calendarSubscription', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -106,6 +102,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.CreateCalendar]})
   async createWithSubscription(
     @requestBody({
       content: {
@@ -167,11 +167,7 @@ export class CalendarController {
     return response;
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewCalendar]})
-  @get(`${basePath}/count`, {
+  @sourceloopGet(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -180,15 +176,15 @@ export class CalendarController {
       },
     },
   })
-  async count(@param.where(Calendar) where?: Where<Calendar>): Promise<Count> {
-    return this.calendarRepository.count(where);
-  }
-
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.ViewCalendar]})
-  @get(basePath, {
+  async count(@param.where(Calendar) where?: Where<Calendar>): Promise<Count> {
+    return this.calendarRepository.count(where);
+  }
+
+  @sourceloopGet(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -204,17 +200,17 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewCalendar]})
   async find(
     @param.filter(Calendar) filter?: Filter<Calendar>,
   ): Promise<Calendar[]> {
     return this.calendarRepository.find(filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateCalendar]})
-  @patch(basePath, {
+  @sourceloopPatch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -223,6 +219,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateCalendar]})
   async updateAll(
     @requestBody({
       content: {
@@ -237,11 +237,7 @@ export class CalendarController {
     return this.calendarRepository.updateAll(calendar, where);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.ViewCalendar]})
-  @get(`${basePath}/{id}`, {
+  @sourceloopGet(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -254,6 +250,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.ViewCalendar]})
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Calendar, {exclude: 'where'})
@@ -262,11 +262,7 @@ export class CalendarController {
     return this.calendarRepository.findById(id, filter);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateCalendar]})
-  @patch(`${basePath}/{id}`, {
+  @sourceloopPatch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -274,6 +270,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateCalendar]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -288,11 +288,7 @@ export class CalendarController {
     await this.calendarRepository.updateById(id, calendar);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.UpdateCalendar]})
-  @put(`${basePath}/{id}`, {
+  @sourceloopPut(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -300,6 +296,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.UpdateCalendar]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() calendarDTO: CalendarDTO,
@@ -331,11 +331,7 @@ export class CalendarController {
     await this.calendarRepository.updateById(id, calendarDTO);
   }
 
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({permissions: [PermissionKey.DeleteCalendar]})
-  @del(`${basePath}/{id}`, {
+  @sourceloopDelete(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -343,6 +339,10 @@ export class CalendarController {
       },
     },
   })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: [PermissionKey.DeleteCalendar]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.calendarRepository.deleteById(id);
   }
