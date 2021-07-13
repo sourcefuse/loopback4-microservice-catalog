@@ -1,0 +1,105 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sourceloop-sandbox-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: sourceloop-sandbox
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: health-check-svc
+                port:
+                  number: 80
+          - path: /test-fan-out
+            pathType: Prefix
+            backend:
+              service:
+                name: health-check-svc
+                port:
+                  number: 80
+    - host: pgadmin.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80
+    - host: workflow.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: workflow-ms-example
+                port:
+                  number: 3000
+    - host: video.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: video-conferencing-ms-example
+                port:
+                  number: 3000
+    - host: scheduler.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: scheduler-example
+                port:
+                  number: 3000
+    - host: notification.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: notification-socket-example
+                port:
+                  number: 3000
+    - host: in-mail.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: in-mail-example
+                port:
+                  number: 3000
+    - host: auth.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: auth-multitenant-example
+                port:
+                  number: 3000
+    - host: audit.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: audit-ms-example
+                port:
+                  number: 3000
