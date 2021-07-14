@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.0.0 (2021-07-14)
+## 1.0.0 (2021-07-14)
 
 * fix(core): fix facades bearer verifier to decouple from auth service (#253) ([cb30528](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb30528)), closes [#253](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/253)
 * docs(all-services): fix readme of all services (#245) ([b8937fa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b8937fa)), closes [#245](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/245) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
