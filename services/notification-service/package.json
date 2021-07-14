@@ -24,10 +24,11 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run clean && npm run build",
-    "test": "echo \"No tests !\"",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "coverage": "nyc npm run test",
     "prepublishOnly": "npm run test",
     "postinstall": "node migration.js"
   },
@@ -67,6 +68,7 @@
     "loopback4-notifications": "^1.5.0",
     "loopback4-soft-delete": "^3.2.2",
     "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "prom-client": "^13.1.0",
     "pubnub": "^4.28.0",
     "tslib": "^2.0.0"
