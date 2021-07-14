@@ -76,7 +76,7 @@
     "loopback-connector-postgresql": "^3.9.1",
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.2.0",
-    "loopback4-soft-delete": "^3.1.0",
+    "loopback4-soft-delete": "^3.2.1",
     "moment": "^2.26.0",
     "opentok": "^2.10.0",
     "prom-client": "^13.1.0",
