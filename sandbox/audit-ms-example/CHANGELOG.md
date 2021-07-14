@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.2.0 (2021-07-14)
+
+* feat(authentication-service): apple-oauth2 (#243) ([98fdb0f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/98fdb0f)), closes [#243](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/243)
+* feat(authentication-service): facebook oauth added (#247) ([3c3cae8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c3cae8)), closes [#247](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/247)
+* perf(all services): added security property in all the controllers an… (#232) ([e37a5a1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e37a5a1)), closes [#232](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/232)
+
+
+
+
+
 ## <small>0.1.1 (2021-06-14)</small>
 
 * docs: add openapi spec docs in examples and improve the docs in services (#215) ([baec0f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/baec0f1)), closes [#215](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/215)

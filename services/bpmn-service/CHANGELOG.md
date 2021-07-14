@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.0 (2021-07-14)
+
+* docs(all-services): fix readme of all services (#245) ([b8937fa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b8937fa)), closes [#245](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/245) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
+* feat(authentication-service): apple-oauth2 (#243) ([98fdb0f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/98fdb0f)), closes [#243](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/243)
+* feat(authentication-service): facebook oauth added (#247) ([3c3cae8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c3cae8)), closes [#247](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/247)
+* fix(bpmn-service): fix workflow model audit fields (#240) ([8558870](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8558870)), closes [#240](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/240)
+* perf(all services): added security property in all the controllers an… (#232) ([e37a5a1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e37a5a1)), closes [#232](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/232)
+
+
+
+
+
 ## 2.0.0 (2021-06-14)
 
 * fix(bpmn-service): fix worker execution issue in bpmn service (#234) ([3773892](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3773892)), closes [#234](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/234) [#233](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/233)
