@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.sourceloop.service: postgres-orchestrator
+  name: postgres-orchestrator
+  namespace: sourceloop-sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: postgres-orchestrator
+  strategy: {}
+  template:
+    metadata:
+      labels:
+#        network/sourceloop-sanbox: "true"
+        io.sourceloop.service: postgres-orchestrator
+    spec:
+      containers:
+        - args:
+            - bash
+            - -c
+            - |-
+              export PGPASSWORD=changeme && sleep 30 &&
+                       psql -U postgres -d postgres -h postgres.sourceloop-sandbox.svc.cluster.local -c 'create database authentication_db' &&
+                       psql -U postgres -d postgres -h postgres.sourceloop-sandbox.svc.cluster.local -c 'create database notification_db' &&
+                       psql -U postgres -d postgres -h postgres.sourceloop-sandbox.svc.cluster.local -c 'create database workflow_db' &&
+                       psql -U postgres -d postgres -h postgres.sourceloop-sandbox.svc.cluster.local -c 'create database audit_db' &&
+                       psql -U postgres -d postgres -h postgres.sourceloop-sandbox.svc.cluster.local -c 'create database scheduler_db'
+                       psql -U postgres -d postgres -h postgres.sourceloop-sandbox.svc.cluster.local -c 'create database in_mail_db'
+          env:
+            - name: PGDATA
+              value: /data/postgres
+            - name: PGPASSWORD
+              value: changeme
+            - name: POSTGRES_PASSWORD
+              value: changeme
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres
+          name: postgres-orchestrator
+          ports:
+            - containerPort: 5433
+          resources: {}
+      restartPolicy: Always
+status: {}
