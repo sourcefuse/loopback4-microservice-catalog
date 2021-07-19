@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
@@ -12,14 +10,14 @@ export class LoginRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_id: string;
+  clientId: string;
 
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_secret: string;
+  clientSecret: string;
 
   @property({
     type: 'string',

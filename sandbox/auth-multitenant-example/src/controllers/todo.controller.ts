@@ -21,33 +21,32 @@ import {
   AuthenticationBindings,
   STRATEGY,
 } from 'loopback4-authentication';
-import {authorize, IAuthUserWithPermissions} from 'loopback4-authorization';
-import {ToDo} from '../models';
-import {ToDoRepository, UserLevelResourceRepository} from '../repositories';
-import {PermissionKey} from '../enums';
-import {bind, BindingScope, inject} from '@loopback/core';
-import {UserLevelResource} from '../models';
+import { authorize, IAuthUserWithPermissions } from 'loopback4-authorization';
+import { ToDo, UserLevelResource } from '../models';
+import { ToDoRepository, UserLevelResourceRepository } from '../repositories';
+import { PermissionKey } from '../enums';
+import { bind, BindingScope, inject } from '@loopback/core';
 
 const BASE_PATH = '/todos';
 
-@bind({scope: BindingScope.TRANSIENT})
+@bind({ scope: BindingScope.TRANSIENT })
 export class TodoController {
   constructor(
     @repository(ToDoRepository)
     public toDoRepository: ToDoRepository,
     @repository(UserLevelResourceRepository)
     public userLevelResourceRepo: UserLevelResourceRepository,
-  ) {}
+  ) { }
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.TodoCreator]})
+  @authorize({ permissions: [PermissionKey.TodoCreator] })
   @post(BASE_PATH, {
     responses: {
       '200': {
         description: 'ToDo model instance',
-        content: {'application/json': {schema: getModelSchemaRef(ToDo)}},
+        content: { 'application/json': { schema: getModelSchemaRef(ToDo) } },
       },
     },
   })
@@ -80,12 +79,12 @@ export class TodoController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
+  @authorize({ permissions: [PermissionKey.TodoOwner] })
   @get(`${BASE_PATH}/count`, {
     responses: {
       '200': {
         description: 'ToDo model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -96,7 +95,7 @@ export class TodoController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
+  @authorize({ permissions: [PermissionKey.TodoOwner] })
   @get(BASE_PATH, {
     responses: {
       '200': {
@@ -105,7 +104,7 @@ export class TodoController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(ToDo, {includeRelations: true}),
+              items: getModelSchemaRef(ToDo, { includeRelations: true }),
             },
           },
         },
@@ -119,14 +118,14 @@ export class TodoController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
+  @authorize({ permissions: [PermissionKey.TodoOwner] })
   @get(`${BASE_PATH}/{id}`, {
     responses: {
       '200': {
         description: 'ToDo model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(ToDo, {includeRelations: true}),
+            schema: getModelSchemaRef(ToDo, { includeRelations: true }),
           },
         },
       },
@@ -134,7 +133,7 @@ export class TodoController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(ToDo, {exclude: 'where'}) filter?: FilterExcludingWhere<ToDo>,
+    @param.filter(ToDo, { exclude: 'where' }) filter?: FilterExcludingWhere<ToDo>,
   ): Promise<ToDo> {
     return this.toDoRepository.findById(id, filter);
   }
@@ -142,7 +141,7 @@ export class TodoController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
+  @authorize({ permissions: [PermissionKey.TodoOwner] })
   @patch(`${BASE_PATH}/{id}`, {
     responses: {
       '204': {
@@ -155,7 +154,7 @@ export class TodoController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(ToDo, {partial: true}),
+          schema: getModelSchemaRef(ToDo, { partial: true }),
         },
       },
     })
@@ -167,7 +166,7 @@ export class TodoController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.TodoOwner]})
+  @authorize({ permissions: [PermissionKey.TodoOwner] })
   @del(`${BASE_PATH}/{id}`, {
     responses: {
       '204': {
