@@ -85,7 +85,7 @@ npm i @sourceloop/notification-service
  - **Push Notifications with Pubnub** - 
     - Bind the Pubnub Config to the `PubNubProvider.Config` key - 
     ``` typescript
-    this.bind(PubNubBindings.Config).to({
+    this.bind(PubnubBindings.Config).to({
       subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
       secretKey: process.env.PUBNUB_SECRET_KEY,
