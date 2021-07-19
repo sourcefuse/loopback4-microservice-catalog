@@ -17,6 +17,7 @@ export class WorkerRegisterFnProvider implements Provider<WorkerRegisterFn> {
         workerMap[workflowName].push({topic, command, running: false});
       } else {
         workerMap = {
+          ...(workerMap ?? {}),
           [workflowName]: [{topic, command, running: false}],
         };
         this.workerMapSetter(workerMap);
