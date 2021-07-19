@@ -13,13 +13,13 @@ export class WorkerRegisterFnProvider implements Provider<WorkerRegisterFn> {
   value(): WorkerRegisterFn {
     return async (workflowName, topic, command) => {
       let workerMap = await this.workerMapGetter();
+      if (!workerMap) {
+        workerMap = {};
+      }
       if (workerMap?.[workflowName]) {
         workerMap[workflowName].push({topic, command, running: false});
       } else {
-        workerMap = {
-          ...(workerMap ?? {}),
-          [workflowName]: [{topic, command, running: false}],
-        };
+        workerMap[workflowName] = [{topic, command, running: false}];
         this.workerMapSetter(workerMap);
       }
     };

@@ -85,7 +85,7 @@ npm i @sourceloop/notification-service
  - **Push Notifications with Pubnub** - 
     - Bind the Pubnub Config to the `PubNubProvider.Config` key - 
     ``` typescript
-    this.bind(PubNubProvider.Config).to({
+    this.bind(PubNubBindings.Config).to({
       subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
       secretKey: process.env.PUBNUB_SECRET_KEY,
@@ -248,18 +248,18 @@ npm i @sourceloop/notification-service
 
 ### Environment Variables
 
-| Name          | Required | Default Value | Description                                                  |
-| ------------- | -------- | ------------- | ------------------------------------------------------------ |
-| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`           |
-| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                            |
-| `DB_PORT`     | Y        |               | Port for the database server.                                |
-| `DB_USER`     | Y        |               | User for the database.                                       |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                              |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.               |
+| Name          | Required | Default Value | Description                                                                                                                        |
+| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
+| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
+| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
+| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
+| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
+| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
+| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
 | `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                      |
-| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                     |
+| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
+| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
 
 ### Setting up a `DataSource`
 
