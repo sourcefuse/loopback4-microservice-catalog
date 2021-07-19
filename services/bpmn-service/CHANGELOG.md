@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.1 (2021-07-19)</small>
+
+* fix(bpmn-service): fix multiple workflow worker registration issue (#268) ([a29493c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a29493c)), closes [#268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/268) [#267](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/267)
+* fix(core): update readme ([4ec31ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ec31ca)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 2.1.0 (2021-07-14)
 
 * docs(all-services): fix readme of all services (#245) ([b8937fa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b8937fa)), closes [#245](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/245) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
