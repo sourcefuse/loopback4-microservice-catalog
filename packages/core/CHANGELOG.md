@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2021-07-14)
+
+* fix(core): fix facades bearer verifier to decouple from auth service (#253) ([cb30528](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb30528)), closes [#253](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/253)
+* fix(core): fix rate limit key prefix issue (#250) ([980ac9a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/980ac9a)), closes [#250](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/250) [#249](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/249)
+* fix(core): update loopback4-soft-delete ([8c35fef](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8c35fef)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(authentication-service): apple-oauth2 (#243) ([98fdb0f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/98fdb0f)), closes [#243](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/243)
+* docs(all readme): fixed lerna (#238) ([7451b12](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7451b12)), closes [#238](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/238)
+* perf(all services): added security property in all the controllers an… (#232) ([e37a5a1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e37a5a1)), closes [#232](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/232)
+
+
+### BREAKING CHANGE
+
+* authService url removed from BearerVerifierConfig and now there is a need for a data source with AuthCacheSourceName
+
+
+
+
 ## 1.0.0 (2021-05-12)
 
 **Note:** Version bump only for package @sourceloop/core

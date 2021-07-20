@@ -1,4 +1,5 @@
 import {Binding, Component, inject, ProviderMap} from '@loopback/core';
+import {Class, Model, Repository} from '@loopback/repository';
 import {Strategies} from 'loopback4-authentication';
 
 import {
@@ -6,22 +7,20 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
 } from './keys';
+import {RevokedToken} from './models';
 import {FacadesBearerTokenVerifyProvider} from './providers/facades-bearer-token-verify.provider';
 import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-token-verify.provider';
-import {AuthenticationServiceProvider} from './services';
-import {AuthServiceDataSource} from './datasources';
+import {RevokedTokenRepository} from './repositories';
 
 export class BearerVerifierComponent implements Component {
   constructor(
     @inject(BearerVerifierBindings.Config)
     private readonly config: BearerVerifierConfig,
   ) {
-    this.bindings.push(
-      Binding.bind('datasources.AuthService').toClass(AuthServiceDataSource),
-    );
-    this.providers = {
-      'services.AuthenticationService': AuthenticationServiceProvider,
-    };
+    this.providers = {};
+    this.repositories = [RevokedTokenRepository];
+
+    this.models = [RevokedToken];
 
     if (this.config && this.config.type === BearerVerifierType.service) {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
@@ -35,4 +34,16 @@ export class BearerVerifierComponent implements Component {
   }
   providers?: ProviderMap;
   bindings: Binding[] = [];
+
+  /**
+   * An optional list of Repository classes to bind for dependency injection
+   * via `app.repository()` API.
+   */
+  repositories?: Class<Repository<Model>>[];
+
+  /**
+   * An optional list of Model classes to bind for dependency injection
+   * via `app.model()` API.
+   */
+  models?: Class<Model>[];
 }
