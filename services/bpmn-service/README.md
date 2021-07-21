@@ -168,12 +168,12 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 ### Common Responses
 
-200: Successful Response. Response body varies w.r.t API<br/>
-401: Unauthorized: The JWT token is missing or invalid<br/>
-403: Forbidden : Not allowed to execute the concerned API<br />
-404: Entity Not Found<br />
-400: Bad Request (Error message varies w.r.t API)<br />
-201: No content: Empty Response<br />
+200: Successful Response. Response body varies w.r.t API
+401: Unauthorized: The JWT token is missing or invalid
+403: Forbidden : Not allowed to execute the concerned API
+404: Entity Not Found
+400: Bad Request (Error message varies w.r.t API)
+201: No content: Empty Response
 
 ### API Details
 

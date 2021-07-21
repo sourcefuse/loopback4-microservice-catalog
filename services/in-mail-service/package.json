@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -63,12 +63,12 @@
     "@loopback/repository": "^3.6.0",
     "@loopback/repository-tests": "^0.18.0",
     "@loopback/rest": "^9.3.0",
-    "@sourceloop/core": "^1.0.0",
+    "@sourceloop/core": "^2.0.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.2.0",
-    "loopback4-soft-delete": "^3.1.0",
+    "loopback4-soft-delete": "^3.2.1",
     "prom-client": "^13.1.0",
     "tslib": "^2.0.0"
   },

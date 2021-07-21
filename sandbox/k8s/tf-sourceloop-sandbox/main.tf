@@ -25,7 +25,7 @@ locals {
   k8s_apps = {
     audit_ms_application = {
       app_label       = "audit-ms-example"
-      container_image = "localhost:32000/audit-ms-example"
+      container_image = var.audit_ms_microservice_image
       container_name  = "audit-ms-example"
       container_port  = 3000
       deployment_name = "audit-ms-example"
@@ -93,7 +93,7 @@ locals {
     }
     auth_multitenant_application = {
       app_label       = "auth-multitenant-example"
-      container_image = "localhost:32000/auth-multitenant-example"
+      container_image = var.auth_multitenant_ms_microservice_image
       container_name  = "auth-multitenant-example"
       container_port  = 3000
       deployment_name = "auth-multitenant-example"
@@ -213,7 +213,7 @@ locals {
     }
     in_mail_ms_application = {
       app_label       = "in-mail-example"
-      container_image = "localhost:32000/in-mail-example"
+      container_image = var.in_mail_ms_microservice_image
       container_name  = "in-mail-example"
       container_port  = 3000
       deployment_name = "in-mail-example"
@@ -285,7 +285,7 @@ locals {
     }
     notification_ms_application = {
       app_label       = "notification-socket-example"
-      container_image = "localhost:32000/notification-socket-example"
+      container_image = var.notification_ms_microservice_image
       container_name  = "notification-socket-example"
       container_port  = 3000
       deployment_name = "notification-socket-example"
@@ -357,7 +357,7 @@ locals {
     }
     scheduler_ms_application = {
       app_label       = "scheduler-example"
-      container_image = "localhost:32000/scheduler-example"
+      container_image = var.scheduler_ms_microservice_image
       container_name  = "scheduler-example"
       container_port  = 3000
       deployment_name = "scheduler-example"
@@ -429,7 +429,7 @@ locals {
     }
     video_conferencing_ms_application = {
       app_label       = "video-conferencing-ms-example"
-      container_image = "localhost:32000/video-conferencing-ms-example"
+      container_image = var.video_ms_microservice_image
       container_name  = "video-conferencing-ms-example"
       container_port  = 3000
       deployment_name = "video-conferencing-ms-example"
@@ -509,7 +509,7 @@ locals {
     }
     workflow_ms_application = {
       app_label       = "workflow-ms-example"
-      container_image = "localhost:32000/workflow-ms-example"
+      container_image = var.workflow_ms_microservice_image
       container_name  = "workflow-ms-example"
       container_port  = 3000
       deployment_name = "workflow-ms-example"
@@ -581,7 +581,7 @@ locals {
     }
     redis_application = {
       app_label             = "redis"
-      container_image       = "redis:alpine"
+      container_image       = var.redis_image
       container_name        = "redis"
       container_port        = 6379
       deployment_name       = "redis"
@@ -597,7 +597,7 @@ locals {
     health_check_application = {
       source                = "./tf-k8s-application"
       app_label             = "nginx"
-      container_image       = "nginx:alpine"
+      container_image       = var.nginx_image
       container_name        = "nginx"
       container_port        = 80
       deployment_name       = "nginx"
@@ -613,7 +613,7 @@ locals {
     //TODO: hook up to DB
     camunda_application = {
       app_label             = "camunda"
-      container_image       = "camunda/camunda-bpm-platform:run-latest"
+      container_image       = var.camunda_image
       container_name        = "camunda"
       container_port        = 8080
       deployment_name       = "camunda"

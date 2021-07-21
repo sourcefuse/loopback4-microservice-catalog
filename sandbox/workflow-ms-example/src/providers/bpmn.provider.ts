@@ -1,9 +1,8 @@
 import {bind, BindingScope, Provider, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {WorflowManager, Workflow, WorkflowDto} from '@sourceloop/bpmn-service';
-import {WorkflowVersion} from '../../../../services/bpmn-service/dist';
-import {CamundaService} from '../services/camunda.service';
+import {WorflowManager, Workflow, WorkflowDto, WorkflowVersion} from '@sourceloop/bpmn-service';
+import {CamundaService} from '../services';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class BpmnProvider implements Provider<WorflowManager> {
