@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import {Model, model, property} from '@loopback/repository';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
@@ -10,14 +12,14 @@ export class ClientAuthRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  clientId: string;
+  client_id: string;
 
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  clientSecret: string;
+  client_secret: string;
 
   constructor(data?: Partial<ClientAuthRequest>) {
     super(data);

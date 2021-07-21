@@ -130,8 +130,8 @@ HTTPBearer
 
 ```javascript
 const inputBody = '{
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 }';
@@ -156,8 +156,8 @@ fetch('/auth/login',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 };
@@ -187,8 +187,8 @@ Gets you the code that will be used for getting token (webapps)
 
 ```json
 {
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 }
@@ -226,8 +226,8 @@ This operation does not require authentication
 
 ```javascript
 const inputBody = '{
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 }';
@@ -254,8 +254,8 @@ fetch('/auth/login-token',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 };
@@ -287,8 +287,8 @@ Gets you refresh token and access token in one hit. (mobile app)
 
 ```json
 {
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 }
@@ -2428,8 +2428,8 @@ This operation does not require authentication
 
 ```json
 {
-  "clientId": "string",
-  "clientSecret": "string",
+  "client_id": "string",
+  "client_secret": "string",
   "username": "string",
   "password": "string"
 }
@@ -2442,8 +2442,8 @@ LoginRequest
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|clientId|string|true|none|This property is supposed to be a string and is a required field|
-|clientSecret|string|true|none|This property is supposed to be a string and is a required field|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|true|none|This property is supposed to be a string and is a required field|
 |username|string|true|none|This property is supposed to be a string and is a required field|
 |password|string|true|none|This property is supposed to be a string and is a required field|
 

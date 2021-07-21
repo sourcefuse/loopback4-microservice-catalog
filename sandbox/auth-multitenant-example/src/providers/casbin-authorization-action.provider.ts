@@ -1,6 +1,6 @@
-import { Provider, inject, Getter } from '@loopback/core';
-import { HttpErrors, Request } from '@loopback/rest';
-import { IAuthUserWithPermissions, ILogger, LOGGER } from '@sourceloop/core';
+import {Provider, inject, Getter} from '@loopback/core';
+import {HttpErrors, Request} from '@loopback/rest';
+import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
 import {
   CasbinAuthorizeFn,
   AuthorizationBindings,
@@ -24,7 +24,7 @@ export class CasbinAuthorizationProvider
     @inject(AuthorizationBindings.PATHS_TO_ALLOW_ALWAYS)
     private readonly allowAlwaysPath: string[],
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
-  ) { }
+  ) {}
 
   value(): CasbinAuthorizeFn {
     return (response, resource, request) =>
@@ -70,7 +70,7 @@ export class CasbinAuthorizationProvider
         desiredPermissions,
         enforcer,
         subject,
-        authDecision
+        authDecision,
       );
     } catch (err) {
       this.logger.error(`Error while doing casbin action. Error :: ${err}`);
@@ -92,16 +92,12 @@ export class CasbinAuthorizationProvider
     desiredPermissions: string[],
     enforcer: casbin.Enforcer,
     subject: string,
-    authDecision?: boolean
+    authDecision: boolean,
   ) {
     let decision = authDecision ?? false;
     for (const resourceId of resourceIds) {
       for (const permission of desiredPermissions) {
-        decision = await enforcer.enforce(
-          subject,
-          permission,
-          resourceId,
-        );
+        decision = await enforcer.enforce(subject, permission, resourceId);
         if (decision) {
           break;
         }

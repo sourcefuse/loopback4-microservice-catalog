@@ -1040,11 +1040,11 @@
         "type": "object",
         "description": "This is the signature for login request.",
         "properties": {
-          "clientId": {
+          "client_id": {
             "type": "string",
             "description": "This property is supposed to be a string and is a required field"
           },
-          "clientSecret": {
+          "client_secret": {
             "type": "string",
             "description": "This property is supposed to be a string and is a required field"
           },
@@ -1058,8 +1058,8 @@
           }
         },
         "required": [
-          "clientId",
-          "clientSecret",
+          "client_id",
+          "client_secret",
           "username",
           "password"
         ],

@@ -29,7 +29,8 @@ export class TourServiceService {
   ) { }
 
   private addRemovedSteps(removedSteps): void {
-    for (let i = 0; i < removedSteps.length; i++) {
+    const count = removedSteps.length;
+    for (let i = 0; i < count; i++) {
       this.tour.steps.splice(0, 0, this.tour.steps.pop());
     }
   }

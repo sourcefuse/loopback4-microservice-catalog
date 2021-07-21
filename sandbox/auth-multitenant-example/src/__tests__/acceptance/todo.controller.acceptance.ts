@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Client, expect } from '@loopback/testlab';
-import { AuthMultitenantExampleApplication } from '../..';
-import { setupApplication } from './test-helper';
+import {Client, expect} from '@loopback/testlab';
+import {AuthMultitenantExampleApplication} from '../..';
+import {setupApplication} from './test-helper';
 
 describe('PingController', () => {
   let app: AuthMultitenantExampleApplication;
@@ -12,8 +12,8 @@ describe('PingController', () => {
     sarah: null,
   };
 
-  const clientId = 'temp_client';
-  const clientSecret = 'temp_secret';
+  const client_id = 'temp_client';
+  const client_secret = 'temp_secret';
   const todo = {
     title: 'Testing',
     description: 'Test description',
@@ -21,19 +21,19 @@ describe('PingController', () => {
   let todoId: string;
 
   before('setupApplication', async () => {
-    ({ app, client } = await setupApplication());
+    ({app, client} = await setupApplication());
   });
 
   before('get auth tokens', async () => {
     const johnAuthRes = await client.post('/auth/login-token').send({
-      clientId,
-      clientSecret,
+      client_id,
+      client_secret,
       username: 'john.doe@example.com',
       password: 'test123!@#',
     });
     const sarahAuthRes = await client.post('/auth/login-token').send({
-      clientId,
-      clientSecret,
+      client_id,
+      client_secret,
       username: 'sarah.rafferty@example.com',
       password: 'test123!@#',
     });

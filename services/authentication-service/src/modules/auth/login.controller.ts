@@ -121,7 +121,7 @@ export class LoginController {
     });
     if (!this.client || !this.user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    } else if (!req.clientSecret) {
+    } else if (!req.client_secret) {
       throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
     } else if (userStatus?.status === UserStatus.REGISTERED) {
       throw new HttpErrors.BadRequest('User not active yet');
@@ -130,12 +130,12 @@ export class LoginController {
     }
     try {
       const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId: req.clientId,
+        clientId: req.client_id,
         userId: this.user.id,
       };
       const token = jwt.sign(codePayload, this.client.secret, {
         expiresIn: this.client.authCodeExpiration,
-        audience: req.clientId,
+        audience: req.client_id,
         issuer: process.env.JWT_ISSUER,
         algorithm: 'HS256',
       });
@@ -185,7 +185,7 @@ export class LoginController {
       this.user.authClientIds.length === 0
     ) {
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.ClientUserMissing);
-    } else if (!req.clientSecret) {
+    } else if (!req.client_secret) {
       throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
     } else if (userStatus?.status === UserStatus.REGISTERED) {
       throw new HttpErrors.BadRequest('Your Sign-Up request is in process');

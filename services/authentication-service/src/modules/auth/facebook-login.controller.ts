@@ -39,7 +39,7 @@ const queryGen = (from: 'body' | 'query') => {
   };
 };
 
-export class LoginController {
+export class FacebookLoginController {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly user: AuthUser | undefined,
