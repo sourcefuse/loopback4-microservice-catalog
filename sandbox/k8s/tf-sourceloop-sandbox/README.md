@@ -52,7 +52,19 @@ module "tf-sourceloop-sandbox" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_audit_ms_microservice_image"></a> [audit\_ms\_microservice\_image](#input\_audit\_ms\_microservice\_image) | Image version for the audit-ms | `string` | `"sourcefuse/audit-ms-example"` | no |
+| <a name="input_auth_multitenant_ms_microservice_image"></a> [auth\_multitenant\_ms\_microservice\_image](#input\_auth\_multitenant\_ms\_microservice\_image) | Image version for the auth-multitenant-ms | `string` | `"sourcefuse/auth-multitenant-example"` | no |
+| <a name="input_camunda_image"></a> [camunda\_image](#input\_camunda\_image) | Image version for Camunda | `string` | `"camunda/camunda-bpm-platform:run-latest"` | no |
+| <a name="input_in_mail_ms_microservice_image"></a> [in\_mail\_ms\_microservice\_image](#input\_in\_mail\_ms\_microservice\_image) | Image version for the in-mail-ms | `string` | `"sourcefuse/in-mail-example"` | no |
 | <a name="input_namespace_name"></a> [namespace\_name](#input\_namespace\_name) | Namespace name | `string` | `"sourceloop-sandbox"` | no |
+| <a name="input_nginx_image"></a> [nginx\_image](#input\_nginx\_image) | Image version for Nginx | `string` | `"nginx:alpine"` | no |
+| <a name="input_notification_ms_microservice_image"></a> [notification\_ms\_microservice\_image](#input\_notification\_ms\_microservice\_image) | Image version for the notification-ms | `string` | `"sourcefuse/notification-socket-example"` | no |
+| <a name="input_pgadmin_image"></a> [pgadmin\_image](#input\_pgadmin\_image) | Image version for pgAdmin | `string` | `"dpage/pgadmin4"` | no |
+| <a name="input_postgres_image"></a> [postgres\_image](#input\_postgres\_image) | Image version for PostgreSQL | `string` | `"postgres"` | no |
+| <a name="input_redis_image"></a> [redis\_image](#input\_redis\_image) | Image version for Redis | `string` | `"redis"` | no |
+| <a name="input_scheduler_ms_microservice_image"></a> [scheduler\_ms\_microservice\_image](#input\_scheduler\_ms\_microservice\_image) | Image version for the scheduler-ms | `string` | `"sourcefuse/scheduler-example"` | no |
+| <a name="input_video_ms_microservice_image"></a> [video\_ms\_microservice\_image](#input\_video\_ms\_microservice\_image) | Image version for the video-ms | `string` | `"sourcefuse/video-conferencing-ms-example"` | no |
+| <a name="input_workflow_ms_microservice_image"></a> [workflow\_ms\_microservice\_image](#input\_workflow\_ms\_microservice\_image) | Image version for the workflow-ms | `string` | `"sourcefuse/workflow-ms-example"` | no |
 
 ## Outputs
 

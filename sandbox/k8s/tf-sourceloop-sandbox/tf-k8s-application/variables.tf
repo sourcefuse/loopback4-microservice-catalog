@@ -60,6 +60,6 @@ variable "replica_count" {
 
 variable "environment_variables" {
   description = "List of maps for environment variables"
-  type = list(object({ name=string, value=string }))
-  default = []
+  type        = list(object({ name = string, value = string }))
+  default     = []
 }
