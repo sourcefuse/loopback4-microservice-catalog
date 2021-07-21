@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    #    network/sourceloop-sanbox: "true"
+    io.sourceloop.service: workflow-ms-example
+  name: workflow-ms-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: workflow-ms-example
+  template:
+    metadata:
+      labels:
+        io.sourceloop.service: workflow-ms-example
+    spec:
+      containers:
+        - env:
+            - name: CAMUNDA_URL
+              value: http://camunda:8080/engine-rest
+            - name: DB_DATABASE
+              value: workflow_db
+            - name: DB_HOST
+              value: postgres.sourceloop-sandbox.svc.cluster.local
+            - name: DB_PASSWORD
+              value: changeme
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_SCHEMA
+              value: main
+            - name: DB_USER
+              value: postgres
+            - name: LOG_LEVEL
+              value: debug
+            - name: NODE_ENV
+              value: dev
+          image: localhost:32000/workflow-ms-example
+          name: workflow-ms-example
+          ports:
+            - containerPort: 3000
+          resources: { }
+      restartPolicy: Always
+status: { }

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    #    network/sourceloop-sanbox: "true"
+    io.sourceloop.service: video-conferencing-ms-example
+  name: video-conferencing-ms-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: video-conferencing-ms-example
+  template:
+    metadata:
+      labels:
+        io.sourceloop.service: video-conferencing-ms-example
+    spec:
+      containers:
+        - env:
+            - name: DB_DATABASE
+              value: video_db
+            - name: DB_HOST
+              value: postgres.sourceloop-sandbox.svc.cluster.local
+            - name: DB_PASSWORD
+              value: changeme
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_SCHEMA
+              value: main
+            - name: DB_USER
+              value: postgres
+            - name: JWT_ISSUER
+              value: https://loopback4-microservice-catalog
+            - name: JWT_SECRET
+              value: i_am_a_strong_secret
+            - name: TIME_TO_START
+              value: "10"
+            - name: VONAGE_API_KEY
+              value: "0"
+            - name: VONAGE_API_SECRET
+              value: abc
+          image: localhost:32000/video-conferencing-ms-example
+          name: video-conferencing-ms-example
+          ports:
+            - containerPort: 3000
+          resources: { }
+      restartPolicy: Always
+status: { }
