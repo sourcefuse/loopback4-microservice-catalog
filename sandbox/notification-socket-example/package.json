@@ -49,6 +49,7 @@
     "@loopback/boot": "^3.4.0",
     "@loopback/context": "^3.16.0",
     "@loopback/core": "^2.16.0",
+    "@loopback/openapi-v3": "^6.0.0",
     "@loopback/repository": "^3.6.0",
     "@loopback/repository-json-schema": "^3.4.0",
     "@loopback/rest": "^9.3.0",

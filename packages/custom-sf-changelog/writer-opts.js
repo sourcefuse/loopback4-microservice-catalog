@@ -46,7 +46,7 @@ function getWriterOpts() {
       })
 
       if (discard) {
-        return;
+        return null;
       }
       commit.type = parseType(commit);
 
@@ -72,7 +72,10 @@ function getWriterOpts() {
         }
         if (context.host) {
           // User URLs.
-          commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, username) => username.includes('/') ? `@${username}` : `[@${username}](${context.host}/${username})`)
+          commit.subject = commit.subject.replace(
+            /\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g,
+            (_, username) => username.includes('/') ? `@${username}` : `[@${username}](${context.host}/${username})`
+          )
         }
       }
 
@@ -89,7 +92,7 @@ function getWriterOpts() {
   }
 }
 
-function parseType(commit){
+function parseType(commit) {
   if (commit.revert) {
     return typeMap.revert;
   } else {
