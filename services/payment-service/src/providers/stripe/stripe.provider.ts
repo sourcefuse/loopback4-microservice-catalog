@@ -14,7 +14,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
     private readonly config?: IStripeConfig,
   ) {
     if (this.config) {
-      this.stripe = Stripe('stripe-key');
+      this.stripe = Stripe(this.config.dataKey);
     } else {
       throw new HttpErrors.PreconditionFailed('Stripe Config missing !');
     }
@@ -31,7 +31,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           '<body>' +
           '<h3>Welcome to Payment Gateway</h3>' +
           '<form action="/transactions/charge?method=stripe" method="POST">' +
-          '<script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="Stripe-key" data-amount="' +
+          '<script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="'+this.config?.publishKey+'" data-amount="' +
           payorder.totalAmount +
           '" data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>' +
           '</form>' +

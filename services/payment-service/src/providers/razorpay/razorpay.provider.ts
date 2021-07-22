@@ -5,13 +5,6 @@ import {Orders} from '../../models';
 import {OrdersRepository, TransactionsRepository} from '../../repositories';
 import {RazorpayPaymentGateway} from './types';
 const Razorpay = require('razorpay');
-const instance = new Razorpay({
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  key_id: 'razorpay_key',
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  key_secret: 'razorpay_secret',
-});
-const razorpayKey = 'razorpaykey';
 
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
   constructor(
@@ -19,9 +12,17 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     private readonly transactionsRepository: TransactionsRepository,
     @repository(OrdersRepository)
     private readonly ordersRepository: OrdersRepository,
+    private readonly config?: IRazorpayConfig,
   ) {}
 
   value() {
+    const instance = new Razorpay({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      key_id: this.config?.dataKey,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      key_secret: this.config?.publishKey,
+    });
+    const razorpayKey = this.config?.dataKey;
     return {
       create: async (payorder: Orders) => {
         // eslint-disable-next-line  @typescript-eslint/no-explicit-any
