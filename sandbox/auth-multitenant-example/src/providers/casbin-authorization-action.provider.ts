@@ -65,18 +65,13 @@ export class CasbinAuthorizationProvider
       const enforcer = await this.getEnforcer(metadata, casbinConfig, subject);
       // If casbin config policy format is being used, create enforcer
       const resourceIds = resource.split(',');
-      for (const resourceId of resourceIds) {
-        for (const permission of desiredPermissions) {
-          authDecision = await enforcer.enforce(
-            subject,
-            permission,
-            resourceId,
-          );
-          if (authDecision) {
-            break;
-          }
-        }
-      }
+      authDecision = await this.makeDecision(
+        resourceIds,
+        desiredPermissions,
+        enforcer,
+        subject,
+        authDecision,
+      );
     } catch (err) {
       this.logger.error(`Error while doing casbin action. Error :: ${err}`);
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
@@ -92,6 +87,24 @@ export class CasbinAuthorizationProvider
     return `u${id}`;
   }
 
+  async makeDecision(
+    resourceIds: string[],
+    desiredPermissions: string[],
+    enforcer: casbin.Enforcer,
+    subject: string,
+    authDecision: boolean,
+  ) {
+    let decision = authDecision ?? false;
+    for (const resourceId of resourceIds) {
+      for (const permission of desiredPermissions) {
+        decision = await enforcer.enforce(subject, permission, resourceId);
+        if (decision) {
+          break;
+        }
+      }
+    }
+    return decision;
+  }
   createCasbinPolicy(
     resPermObj: ResourcePermissionObject[],
     subject: string,

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+#    network/sourceloop-sanbox: "true"
+    io.sourceloop.service: audit-ms-example
+  name: audit-ms-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: audit-ms-example
+  template:
+    metadata:
+      labels:
+        io.sourceloop.service: audit-ms-example
+    spec:
+      containers:
+        - env:
+            - name: DB_DATABASE
+              value: audit_db
+            - name: DB_HOST
+              value: postgres.sourceloop-sandbox.svc.cluster.local
+            - name: DB_PASSWORD
+              value: changeme
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: postgres
+            - name: JWT_ISSUER
+              value: https://loopback4-microservice-catalog
+            - name: JWT_SECRET
+              value: i_am_a_strong_secret
+            - name: LOG_LEVEL
+              value: debug
+            - name: NODE_ENV
+              value: dev
+            - name: REDIS_DB
+              value: "0"
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PASSWORD
+              value: test
+            - name: REDIS_PORT
+              value: "6379"
+          image: localhost:32000/audit-ms-example
+          name: audit-ms-example
+          ports:
+            - containerPort: 3000
+          resources: { }
+      restartPolicy: Always
+status: {}

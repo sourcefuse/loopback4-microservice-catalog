@@ -13,8 +13,6 @@ export class GooglePreVerifyProvider implements Provider<GooglePreVerifyFn> {
       refreshToken: string,
       profile: GoogleStrategy.Profile,
       user: IAuthUser | null,
-    ) => {
-      return user;
-    };
+    ) => user;
   }
 }

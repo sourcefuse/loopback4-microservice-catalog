@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.sourceloop.service: pgadmin
+  name: pgadmin
+spec:
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 80
+  selector:
+    io.sourceloop.service: pgadmin
+status:
+  loadBalancer: {}

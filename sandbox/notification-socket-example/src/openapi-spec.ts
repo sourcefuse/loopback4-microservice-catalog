@@ -11,7 +11,6 @@ async function exportOpenApiSpec(): Promise<void> {
       host: process.env.HOST ?? 'localhost',
     },
   };
-  // const outFile = process.argv[2] ?? '';
   const app = new NotificationSocketExampleApplication(config);
   await app.boot();
   // await app.exportOpenApiSpec(outFile);
