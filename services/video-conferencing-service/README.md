@@ -1,24 +1,28 @@
 # video-conferencing-service
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
-Various features of Video Conferncing Services: 
+Various features of Video Conferencing Services:
 
 1. Schedule Meetings and Generate Token
-    Book on demand meetings or schedule meetings and generate token which is required for connection to a session/room on the client side.
+   Book on demand meetings or schedule meetings and generate token which is required for connection to a session/room on the client side.
 
-2. List Archives 
-    Get a specific archive or list a set of archives for the recorded meetings.
+2. List Archives
+   Get a specific archive or list a set of archives for the recorded meetings.
 
 3. Configure storage target
-    Set Storage settings to store archives to custom s3 bucket or Microsoft Azure Storage.
+   Set Storage settings to store archives to custom s3 bucket or Microsoft Azure Storage.
 
 4. Webhook Events
-    Webhook Events (such as session or webhook) when configured receive events from third party. These events are used to store session attendees or store archive information.
-    For Vonage, you need to add this microserivce server url in your current vonage project 
-    so it will receive webhook events. See Vonage Documentation for more information.
+   Webhook Events (such as session or webhook) when configured receive events from third party. These events are used to store session attendees or store archive information.
+   For Vonage, you need to add this microserivce server url in your current vonage project
+   so it will receive webhook events. See [Vonage Documentation](https://developer.nexmo.com/documentation) for more information.
 
-## Install 
+You can see the database schema [here](#database-schema).
+
+To get started with a basic implementation of this service, see [/sandbox/video-conferencing-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/sandbox/video-conferencing-ms-example).
+
+## Install
 
 ```sh
 npm i @sourceloop/video-conferencing-service
@@ -26,36 +30,70 @@ npm i @sourceloop/video-conferencing-service
 
 ## Usage
 
- - Create a new Loopback4 Application (If you don't have one already)
+- Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
 - Install the video conferencing service
-`npm i @sourceloop/video-conferencing-service`
+  `npm i @sourceloop/video-conferencing-service`
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Bind Vonage config to the `VonageBindings.Config` key -
-  ``` typescript
-      this.bind(VonageBindings.Config).to({
-        apiKey: process.env.VONAGE_API_KEY,
-        apiSecret: process.env.VONAGE_API_SECRET,
-        timeToStart: 0 // time in minutes, meeting can not be started 'timeToStart' minutes before the scheduled time
-      });
+  ```typescript
+  this.bind(VonageBindings.Config).to({
+    apiKey: process.env.VONAGE_API_KEY,
+    apiSecret: process.env.VONAGE_API_SECRET,
+    timeToStart: 0, // time in minutes, meeting can not be started 'timeToStart' minutes before the scheduled time
+  });
   ```
 - Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`).
-	``` typescript
+  ```typescript
   // import the component for VideoConfService
   import { VideoConfServiceComponent } from '@sourceloop/video-conferencing-service';
   ...
-	// add VideoConfServiceComponent inside the application class
-	this.component(VideoConfServiceComponent);
+  // add VideoConfServiceComponent inside the application class
+  this.component(VideoConfServiceComponent);
   ...
-	```
+  ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `VideoConfDatasource`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
 
+### Environment Variables
+
+Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
+
+```environment
+NODE_ENV=dev
+LOG_LEVEL=DEBUG
+HOST=0.0.0.0
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=pg_service_user
+DB_PASSWORD=pg_service_user_password
+DB_DATABASE=video_conferencing_db
+DB_SCHEMA=public
+JWT_SECRET=super_secret_string
+JWT_ISSUER=https://authentication.service
+```
+
+| Name          | Required | Default Value | Description                                                                                                                        |
+| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
+| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
+| `HOST`        | Y        |               | Host for the service to run under, i.e. `0.0.0.0`                                                                                  |
+| `PORT`        | Y        | `3000`        | Port for the service to listen on.                                                                                                 |
+| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
+| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
+| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
+| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
+| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
+| `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
+| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
+| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
+
 ### Setting up a `DataSource`
 
-Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. 
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
 
 ```typescript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
@@ -75,8 +113,10 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class VideoDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class VideoDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = VideoConfDatasource;
   static readonly defaultConfig = config;
 
@@ -89,60 +129,77 @@ export class VideoDbDataSource extends juggler.DataSource
 }
 ```
 
-## DB migrations
+## Database Schema
+
+## Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
-## APIs available (Currently Vonage is Supported) 
+## APIs available (Currently Vonage is Supported)
 
-1. Session Creation and Generating Token
+### Session Creation and Generating Token
 
-### POST /session
+This module is responsible for creating session that will send a meeting link and for generating meeting token with additional feature for ending the meeting.
+
+This module has the following api endpoints :
+
+`POST /session`
 Used for Creating a session with options such as end to end encryption, archive mode.
-Note: Archving Option cannot be enabled while using end to end encryption, otherwise an Error will be thrown.
+Note: Archiving Option cannot be enabled while using end to end encryption, otherwise an Error will be thrown.
 Successful execution will send a meeting link id which can be used to amend in client url.
 
-### POST /session/{meetingLinkId}/token
+`POST /session/{meetingLinkId}/token`
 Used for Generating token, which is used for connecting to a room/session on a client side.
 In vonage, there are three different roles (Moderator, Subscriber, Publisher).
 We can use expire time for limited validity of a token.
 Successful execution will send a token.
 
-### PATCH /session/{meetingLinkId}/end
+`PATCH /session/{meetingLinkId}/end`
 Used to stop the current active meeting. Meeting cannot be stopped again if it is already stopped.
 Successful execution will add the endTime attribute to a recently ending session.
 
-2. List and deleting Archive(s) 
+### List and deleting Archive(s)
 
-### GET /archives
+This module is responsible for getting achives (i.e. recorded meetings), archives w.r.t. theirs ids and deleting particular archive.
+
+This module has the following api endpoints :
+
+`GET /archives`
 Used to fetch a list of archives (meetings that were recorded).
 
-### GET /archives/{archiveId}
+`GET /archives/{archiveId}`
 Used to fetch a specific archive w.r.t archiveId.
 If archive is not present, it will throw HTTP Not Found Error.
 
-### DELETE /archives/{archiveId}
+`DELETE /archives/{archiveId}`
 Used to delete a specific archive w.r.t archiveId.
 If archive is not present, it will throw HTTP Not Found Error.
 
-3. Session Webhook
+### Session Webhook
 
-### POST /webhooks/session
+This module is responsible for adding/updating attendees in a meeting.
+
+This module has the following api endpoint :
+
+`POST /webhooks/session`
 Webhook API hit from a third party to add/update session attendees in a meeting.
 For configuration in vonage, see [Session Monitoring](https://tokbox.com/developer/guides/session-monitoring/)
 
+### Storage Target
 
-4. Storage Target
+This module is responsible for storing archives (i.e. recorded meetings) in Amazon S3 bucket or Microsoft Azure storage.
 
-### PUT /archives/storage-target
+This module has the following api endpoint :
+
+`PUT /archives/storage-target`
 Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
 
 ## API's Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
 
-
 ## Feedback
+
 If you've noticed a bug or have a question or have a feature request, [search the issue tracker](https://github.com/sourcefuse/loopback4-microservice-catalog/issues) to see if someone else in the community has already created a ticket.
 If not, go ahead and [make one](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/new/choose)!
 All feature requests are welcome. Implementation time may vary. Feel free to contribute the same, if you can.
