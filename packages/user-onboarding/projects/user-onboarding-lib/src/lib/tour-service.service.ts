@@ -26,10 +26,11 @@ export class TourServiceService {
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
     private readonly router: Router
-  ) {}
+  ) { }
 
   private addRemovedSteps(removedSteps): void {
-    for (const step of removedSteps) {
+    const count = removedSteps.length;
+    for (let i = 0; i < count; i++) {
       this.tour.steps.splice(0, 0, this.tour.steps.pop());
     }
   }

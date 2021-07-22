@@ -38,6 +38,7 @@ const getProxyAgent = () => {
   if (proxyUrl) {
     return new HttpsProxyAgent(proxyUrl);
   }
+  return undefined;
 };
 
 export class LogoutController {
