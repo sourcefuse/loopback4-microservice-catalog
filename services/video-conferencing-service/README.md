@@ -130,6 +130,7 @@ export class VideoDbDataSource
 ```
 
 ## Database Schema
+![canva-photo-editor](https://user-images.githubusercontent.com/82804130/126635878-4e39ce2c-e48d-4a67-9c81-6a5f8ee9b70e.png)
 
 ## Migrations
 
