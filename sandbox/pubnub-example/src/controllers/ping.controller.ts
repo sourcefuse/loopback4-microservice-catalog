@@ -38,13 +38,17 @@ const PING_RESPONSE: ResponseObject = {
 /**
  * A simple controller to bounce back http requests
  */
+const OK = 200;
+
 export class PingController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+  ) {}
 
   // Map to `GET /ping`
   @authorize({permissions: ['*']})
   @get('/ping')
-  @response(200, PING_RESPONSE)
+  @response(OK, PING_RESPONSE)
   ping(): object {
     // Reply with a greeting, the current time, the url, and request headers
     return {

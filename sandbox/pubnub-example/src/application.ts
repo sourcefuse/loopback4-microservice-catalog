@@ -57,7 +57,7 @@ export class PubnubExampleApplication extends BootMixin(
       ssl: true,
       logVerbosity: true,
       uuid: 'my-app',
-      apns2Env: 'production',
+      apns2Env: 'dev',
       apns2BundleId: 'com.app.myapp',
     });
 
