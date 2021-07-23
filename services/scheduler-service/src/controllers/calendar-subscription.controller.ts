@@ -103,8 +103,11 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(basePath, {
-    description:
-      'This api is to update the calendar subscription by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.',
+    description: `This api is to update the calendar subscription by passing an \`id\`. 
+      This action will be allowed only to the owner of the calendar or the admin.
+      To identify the \`owner\` we will check for the email passed in the token and 
+      the corresponding access level, whereas to identify the admin we will check 
+      for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -134,8 +137,10 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.DeleteSubscription]})
   @del(basePath, {
-    description:
-      'This api is to update the calendar subscription by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.',
+    description: `This api is to update the calendar subscription by passing an id. 
+      This action will be allowed only to the owner of the calendar or the admin. 
+      To identify the ‘owner’ we will check for the email passed in the token and the 
+      corresponding access level, whereas to identify the admin we will check for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {

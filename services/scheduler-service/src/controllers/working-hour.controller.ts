@@ -196,8 +196,10 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
   @put(`${basePath}/{id}`, {
-    description:
-      'This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.',
+    description: `This api is to update the calendar by passing an \`id\`. This action will be allowed only 
+      to the owner of the calendar or the admin. To identify the \`owner\` we 
+      will check for the email passed in the token and the corresponding access level, 
+      whereas to identify the admin we will check for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -217,8 +219,10 @@ export class WorkingHourController {
   })
   @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
   @del(`${basePath}/{id}`, {
-    description:
-      'This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.',
+    description: `This api is to update the calendar by passing an \`id\`. This action will 
+      be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ 
+      we will check for the email passed in the token and the corresponding access level, 
+      whereas to identify the admin we will check for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

@@ -53,8 +53,10 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.CreateSession]})
   @post('/session', {
-    description:
-      'Used for Creating a session with options such as end to end encryption, archive mode. Note: Archiving Option cannot be enabled while using end to end encryption, otherwise an Error will be thrown. Successful execution will send a meeting link id which can be used to amend in client url.',
+    description: `Used for Creating a session with options such as end to end encryption, archive mode. 
+      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
+      an Error will be thrown. Successful execution will send a meeting link 
+      id which can be used to amend in client url.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -121,8 +123,10 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GenerateToken]})
   @post('/session/{meetingLinkId}/token', {
-    description:
-      'Used for Generating token, which is used for connecting to a room/session on a client side. In vonage, there are three different roles (Moderator, Subscriber, Publisher). We can use expire time for limited validity of a token. Successful execution will send a token.',
+    description: `Used for Generating token, which is used for connecting to a room/session on a client side. 
+      In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
+      We can use expire time for limited validity of a token. Successful 
+      execution will send a token.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -317,8 +321,9 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.StopMeeting]})
   @patch('/session/{meetingLinkId}/end', {
-    description:
-      'Used to stop the current active meeting. Meeting cannot be stopped again if it is already stopped. Successful execution will add the endTime attribute to a recently ending session.',
+    description: `Used to stop the current active meeting. Meeting cannot be stopped again if it is 
+      already stopped. Successful execution will add the endTime attribute to a recently 
+      ending session.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
