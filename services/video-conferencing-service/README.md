@@ -57,6 +57,8 @@ npm i @sourceloop/video-conferencing-service
 - Start the application
   `npm start`
 
+## Working and Flow
+
 ### Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
@@ -130,70 +132,12 @@ export class VideoDbDataSource
 ```
 
 ## Database Schema
+
 ![canva-photo-editor](https://user-images.githubusercontent.com/82804130/126635878-4e39ce2c-e48d-4a67-9c81-6a5f8ee9b70e.png)
 
 ## Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
-
-## APIs available (Currently Vonage is Supported)
-
-### Session Creation and Generating Token
-
-This module is responsible for creating session that will send a meeting link and for generating meeting token with additional feature for ending the meeting.
-
-This module has the following api endpoints :
-
-`POST /session`
-Used for Creating a session with options such as end to end encryption, archive mode.
-Note: Archiving Option cannot be enabled while using end to end encryption, otherwise an Error will be thrown.
-Successful execution will send a meeting link id which can be used to amend in client url.
-
-`POST /session/{meetingLinkId}/token`
-Used for Generating token, which is used for connecting to a room/session on a client side.
-In vonage, there are three different roles (Moderator, Subscriber, Publisher).
-We can use expire time for limited validity of a token.
-Successful execution will send a token.
-
-`PATCH /session/{meetingLinkId}/end`
-Used to stop the current active meeting. Meeting cannot be stopped again if it is already stopped.
-Successful execution will add the endTime attribute to a recently ending session.
-
-### List and deleting Archive(s)
-
-This module is responsible for getting achives (i.e. recorded meetings), archives w.r.t. theirs ids and deleting particular archive.
-
-This module has the following api endpoints :
-
-`GET /archives`
-Used to fetch a list of archives (meetings that were recorded).
-
-`GET /archives/{archiveId}`
-Used to fetch a specific archive w.r.t archiveId.
-If archive is not present, it will throw HTTP Not Found Error.
-
-`DELETE /archives/{archiveId}`
-Used to delete a specific archive w.r.t archiveId.
-If archive is not present, it will throw HTTP Not Found Error.
-
-### Session Webhook
-
-This module is responsible for adding/updating attendees in a meeting.
-
-This module has the following api endpoint :
-
-`POST /webhooks/session`
-Webhook API hit from a third party to add/update session attendees in a meeting.
-For configuration in vonage, see [Session Monitoring](https://tokbox.com/developer/guides/session-monitoring/)
-
-### Storage Target
-
-This module is responsible for storing archives (i.e. recorded meetings) in Amazon S3 bucket or Microsoft Azure storage.
-
-This module has the following api endpoint :
-
-`PUT /archives/storage-target`
-Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
 
 ## API's Details
 

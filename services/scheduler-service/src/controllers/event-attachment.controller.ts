@@ -38,6 +38,8 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.ViewAttachment]})
   @get(basePath, {
+    description:
+      'These requests will be available to everyone in the event to look at.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,6 +64,8 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.CreateAttachment]})
   @post(basePath, {
+    description:
+      'Organizer can add attachments to the event (if it was missed while creating event).',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -95,6 +99,7 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttachment]})
   @patch(basePath, {
+    description: 'Organizer can update details of the attachment.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -124,6 +129,7 @@ export class EventAttachmentController {
   })
   @authorize({permissions: [PermissionKey.DeleteAttachment]})
   @del(basePath, {
+    description: 'Organizer can delete the attachment.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
