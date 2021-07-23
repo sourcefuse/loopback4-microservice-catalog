@@ -1,9 +1,9 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {AuthDbSourceName} from '@sourceloop/authentication-service';
+import {NotifDbSourceName} from '@sourceloop/notification-service';
 
 const config = {
-  name: AuthDbSourceName,
+  name: NotifDbSourceName,
   connector: 'postgresql',
   url: '',
   host: process.env.DB_HOST,
@@ -19,15 +19,15 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class AuthDbDataSource
+export class PubnubDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = AuthDbSourceName;
+  static dataSourceName = NotifDbSourceName;
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.AuthDB', {optional: true})
+    @inject('datasources.config.pubnub', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);
