@@ -5,14 +5,29 @@
 
 ## Overview
 
-A Loopback Microservice for handling authentications. Provides multi tenant support, external Identity Provider integration, and the ability to issue tokens.
+A Loopback Microservice for handling authentications. It provides -
+
+- Multi-Tenant support, you can see the database schema [here](#database-schema).
+- External Identity Provider integration.
+- Ability to issue [JWT](https://jwt.io/) tokens using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
+- Authenticate JWT tokens using [passport-http-bearer](http://www.passportjs.org/packages/passport-http-bearer/).
+- Local Signup using a signup token.
+- Forgot/Reset/Change password.
+- Google OAuth using [passport-google-oauth](http://www.passportjs.org/docs/google/).
+- Keycloak OAuth using [passport-keycloak-bearer](https://www.npmjs.com/package/passport-keycloak-bearer).
+- Instagram OAuth using [passport-instagram](http://www.passportjs.org/packages/passport-instagram/).
+- Facebook OAuth using [passport-facebook](http://www.passportjs.org/packages/passport-facebook/).
+- Apple OAuth using [passport-apple](https://www.npmjs.com/package/passport-apple).
 
 To get started with a basic implementation of this service, see `/sandbox/auth-basic-example`.
 
 For a more elaborate and custom implementation that overrides the default models and repositories, see `/sandbox/auth-multitenant-example`.
 
-This service uses [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [loopback4-authorization](https://www.npmjs.com/package/loopback4-authorization) to authenticate and authorize users.
+### Working and Flow
 
+This module uses the decorators provided by [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [loopback4-authorization](https://www.npmjs.com/package/loopback4-authorization). For reference, below is the flow for the login code generation that uses the authenticate client, authenticate user and authorization decorators from these npm packages - 
+
+![Login Flow](https://user-images.githubusercontent.com/77672713/126627507-072a056c-de27-4764-9e5b-03d871da2438.png)
 
 ### Installation
 
@@ -153,6 +168,11 @@ implements  LifeCycleObserver {
 
 The migrations required for this service are processed during the installation automatically if you set the `AUTH_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+### Database Schema
+
+![Auth DB Schema](https://user-images.githubusercontent.com/77672713/126612271-3ce065aa-9f87-45d4-bf9a-c5cc8ad21764.jpg)
+
+
 ### Providers
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
@@ -168,12 +188,12 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 ### Common Responses
 
-200: Successful Response. Response body varies w.r.t API<br/>
-401: Unauthorized: The JWT token is missing or invalid<br/>
-403: Forbidden : Not allowed to execute the concerned API<br />
-404: Entity Not Found<br />
-400: Bad Request (Error message varies w.r.t API)<br />
-201: No content: Empty Response<br />
+200: Successful Response. Response body varies w.r.t API
+401: Unauthorized: The JWT token is missing or invalid
+403: Forbidden : Not allowed to execute the concerned API
+404: Entity Not Found
+400: Bad Request (Error message varies w.r.t API)
+201: No content: Empty Response
 
 #### API Details
 

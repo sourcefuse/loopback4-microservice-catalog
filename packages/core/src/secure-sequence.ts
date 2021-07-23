@@ -140,22 +140,7 @@ export class SecureSequence implements SequenceHandler {
       );
 
       const error = this._rejectErrors(err);
-      if (
-        // sonarignore:start
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        !(error.message && (error.message as any).message === 'TokenExpired')
-        // sonarignore:end
-      ) {
-        if (isString(error.message)) {
-          error.message = this.i18n.__({
-            phrase: error.message,
-            locale: process.env.LOCALE ?? 'en',
-          });
-        } else {
-          error.message =
-            error.message || 'Some error occured. Please try again';
-        }
-      }
+      this._handleErrorMessage(error);
       this.reject(context, error);
     } finally {
       this.logger.info(
@@ -163,6 +148,24 @@ export class SecureSequence implements SequenceHandler {
           context.request.url
         } Completed in ${Date.now() - requestTime}ms`,
       );
+    }
+  }
+
+  private _handleErrorMessage(error: Error) {
+    if (
+      // sonarignore:start
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      !(error.message && (error.message as any).message === 'TokenExpired')
+      // sonarignore:end
+    ) {
+      if (isString(error.message)) {
+        error.message = this.i18n.__({
+          phrase: error.message,
+          locale: process.env.LOCALE ?? 'en',
+        });
+      } else {
+        error.message = error.message || 'Some error occured. Please try again';
+      }
     }
   }
 

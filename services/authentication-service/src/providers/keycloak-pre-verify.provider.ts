@@ -14,8 +14,6 @@ export class KeyCloakPreVerifyProvider
       refreshToken: string,
       profile: KeycloakProfile,
       user: IAuthUser | null,
-    ) => {
-      return user;
-    };
+    ) => user;
   }
 }
