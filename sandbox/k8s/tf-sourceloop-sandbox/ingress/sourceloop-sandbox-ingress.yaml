@@ -1,10 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sourceloop-sandbox-ingress
+  name: ${namespace}-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-  namespace: sourceloop-sandbox
+  namespace: ${namespace}
 spec:
   rules:
     - http:

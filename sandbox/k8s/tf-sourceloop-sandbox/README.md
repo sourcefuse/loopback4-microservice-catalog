@@ -28,6 +28,7 @@ module "tf-sourceloop-sandbox" {
 |------|---------|
 | <a name="provider_kubectl"></a> [kubectl](#provider\_kubectl) | 1.11.2 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.3.2 |
+| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
 
 ## Modules
 
@@ -47,6 +48,7 @@ module "tf-sourceloop-sandbox" {
 | [kubectl_manifest.video_conferencing_migrations](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.workflow_migrations](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubernetes_namespace.sourceloop_sandbox](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) | resource |
+| [template_file.ingress_init](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 

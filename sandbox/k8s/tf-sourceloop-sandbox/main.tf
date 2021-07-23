@@ -18,10 +18,13 @@ module "sandbox_applications" {
 
 locals {
   postgres_host             = "postgres.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
+  pg_admin_host             = "pgadmin.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
   audit_ms_host             = "audit-ms-example.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
   redis_host                = "redis.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
   health_check_service_host = "health-check-svc.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
   camunda_host              = "camunda.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
+  workflow_ms_host          = "workflow.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
+  video_ms_host             = "workflow.${kubernetes_namespace.sourceloop_sandbox.metadata[0].name}.svc.cluster.local"
   k8s_apps = {
     audit_ms_application = {
       app_label       = "audit-ms-example"
