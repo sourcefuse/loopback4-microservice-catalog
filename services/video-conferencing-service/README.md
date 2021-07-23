@@ -58,6 +58,8 @@ npm i @sourceloop/video-conferencing-service
   `npm start`
 
 ## Working and Flow
+![workflow](https://user-images.githubusercontent.com/82804130/126748728-2fe921b4-96bc-4597-8bae-8e71346aa577.jpg)
+
 
 ### Environment Variables
 
