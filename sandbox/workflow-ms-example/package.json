@@ -68,6 +68,7 @@
     "dotenv": "^8.2.0",
     "form-data": "^4.0.0",
     "loopback-connector-postgresql": "^5.3.0",
+    "loopback4-soft-delete": "^3.2.2",
     "node-fetch": "^2.6.1",
     "prom-client": "^13.1.0",
     "tslib": "^2.0.0"

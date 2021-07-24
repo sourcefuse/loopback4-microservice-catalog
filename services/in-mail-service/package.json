@@ -68,7 +68,7 @@
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.2.0",
-    "loopback4-soft-delete": "^3.2.1",
+    "loopback4-soft-delete": "^3.2.2",
     "prom-client": "^13.1.0",
     "tslib": "^2.0.0"
   },
