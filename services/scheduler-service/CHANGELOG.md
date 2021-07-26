@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.1 (2021-07-24)</small>
+
+* fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* refactor(authentication-service): fix sonar issues (#266) ([3ea2082](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea2082)), closes [#266](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/266) [#251](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/251)
+* chore(deps): bump urijs in /services/scheduler-service (#270) ([92155a2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/92155a2)), closes [#270](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/270)
+
+
+
+
+
 ## 1.2.0 (2021-07-14)
 
 * fix(core): update loopback4-soft-delete ([8c35fef](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8c35fef)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

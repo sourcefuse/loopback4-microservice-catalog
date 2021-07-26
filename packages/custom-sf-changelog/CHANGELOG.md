@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.1.0 (2021-07-24)
+
+* refactor(authentication-service): fix sonar issues (#266) ([3ea2082](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea2082)), closes [#266](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/266) [#251](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/251)
+* feat(sandbox): local-k8s-setup (#259) ([3bc0eb5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bc0eb5)), closes [#259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/259) [#244](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/244) [#258](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/258)
+
+
+
+
+
 ## <small>1.0.1 (2021-07-14)</small>
 
 * perf(all services): added security property in all the controllers an… (#232) ([e37a5a1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e37a5a1)), closes [#232](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/232)
