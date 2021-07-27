@@ -9,8 +9,6 @@ export class KeyCloakPostVerifyProvider
   constructor() {}
 
   value(): KeyCloakPostVerifyFn {
-    return async (profile: KeycloakProfile, user: IAuthUser | null) => {
-      return user;
-    };
+    return async (profile: KeycloakProfile, user: IAuthUser | null) => user;
   }
 }

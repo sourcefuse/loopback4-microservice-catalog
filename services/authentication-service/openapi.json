@@ -9,10 +9,10 @@
   "paths": {
     "/auth/apple-oauth-redirect": {
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "AppleLoginController",
         "x-operation-name": "appleCallback",
         "tags": [
-          "LoginController"
+          "AppleLoginController"
         ],
         "responses": {
           "200": {
@@ -42,7 +42,7 @@
             }
           }
         ],
-        "operationId": "LoginController.appleCallback"
+        "operationId": "AppleLoginController.appleCallback"
       }
     },
     "/auth/change-password": {
@@ -85,10 +85,10 @@
     },
     "/auth/facebook": {
       "post": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "FacebookLoginController",
         "x-operation-name": "postLoginViaFacebook",
         "tags": [
-          "LoginController"
+          "FacebookLoginController"
         ],
         "responses": {
           "200": {
@@ -111,15 +111,15 @@
             }
           }
         },
-        "operationId": "LoginController.postLoginViaFacebook"
+        "operationId": "FacebookLoginController.postLoginViaFacebook"
       }
     },
     "/auth/facebook-auth-redirect": {
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "FacebookLoginController",
         "x-operation-name": "facebookCallback",
         "tags": [
-          "LoginController"
+          "FacebookLoginController"
         ],
         "responses": {
           "200": {
@@ -149,7 +149,7 @@
             }
           }
         ],
-        "operationId": "LoginController.facebookCallback"
+        "operationId": "FacebookLoginController.facebookCallback"
       }
     },
     "/auth/forget-password": {
@@ -202,10 +202,10 @@
     },
     "/auth/google": {
       "post": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "GoogleLoginController",
         "x-operation-name": "postLoginViaGoogle",
         "tags": [
-          "LoginController"
+          "GoogleLoginController"
         ],
         "responses": {
           "200": {
@@ -228,13 +228,13 @@
             }
           }
         },
-        "operationId": "LoginController.postLoginViaGoogle"
+        "operationId": "GoogleLoginController.postLoginViaGoogle"
       },
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "GoogleLoginController",
         "x-operation-name": "loginViaGoogle",
         "tags": [
-          "LoginController"
+          "GoogleLoginController"
         ],
         "responses": {
           "200": {
@@ -265,15 +265,15 @@
             }
           }
         ],
-        "operationId": "LoginController.loginViaGoogle"
+        "operationId": "GoogleLoginController.loginViaGoogle"
       }
     },
     "/auth/google-auth-redirect": {
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "GoogleLoginController",
         "x-operation-name": "googleCallback",
         "tags": [
-          "LoginController"
+          "GoogleLoginController"
         ],
         "responses": {
           "200": {
@@ -303,15 +303,15 @@
             }
           }
         ],
-        "operationId": "LoginController.googleCallback"
+        "operationId": "GoogleLoginController.googleCallback"
       }
     },
     "/auth/instagram": {
       "post": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "InstagramLoginController",
         "x-operation-name": "postLoginViaInstagram",
         "tags": [
-          "LoginController"
+          "InstagramLoginController"
         ],
         "responses": {
           "200": {
@@ -334,15 +334,15 @@
             }
           }
         },
-        "operationId": "LoginController.postLoginViaInstagram"
+        "operationId": "InstagramLoginController.postLoginViaInstagram"
       }
     },
     "/auth/instagram-auth-redirect": {
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "InstagramLoginController",
         "x-operation-name": "instagramCallback",
         "tags": [
-          "LoginController"
+          "InstagramLoginController"
         ],
         "responses": {
           "200": {
@@ -372,15 +372,15 @@
             }
           }
         ],
-        "operationId": "LoginController.instagramCallback"
+        "operationId": "InstagramLoginController.instagramCallback"
       }
     },
     "/auth/keycloak": {
       "post": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "KeycloakLoginController",
         "x-operation-name": "postLoginViaKeycloak",
         "tags": [
-          "LoginController"
+          "KeycloakLoginController"
         ],
         "description": "POST Call for keycloak based login",
         "responses": {
@@ -404,13 +404,13 @@
             }
           }
         },
-        "operationId": "LoginController.postLoginViaKeycloak"
+        "operationId": "KeycloakLoginController.postLoginViaKeycloak"
       },
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "KeycloakLoginController",
         "x-operation-name": "loginViaKeycloak",
         "tags": [
-          "LoginController"
+          "KeycloakLoginController"
         ],
         "responses": {
           "200": {
@@ -441,15 +441,15 @@
             }
           }
         ],
-        "operationId": "LoginController.loginViaKeycloak"
+        "operationId": "KeycloakLoginController.loginViaKeycloak"
       }
     },
     "/auth/keycloak-auth-redirect": {
       "get": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "KeycloakLoginController",
         "x-operation-name": "keycloakCallback",
         "tags": [
-          "LoginController"
+          "KeycloakLoginController"
         ],
         "responses": {
           "200": {
@@ -479,7 +479,7 @@
             }
           }
         ],
-        "operationId": "LoginController.keycloakCallback"
+        "operationId": "KeycloakLoginController.keycloakCallback"
       }
     },
     "/auth/login": {
@@ -609,10 +609,10 @@
     },
     "/auth/oauth-apple": {
       "post": {
-        "x-controller-name": "LoginController",
+        "x-controller-name": "AppleLoginController",
         "x-operation-name": "postLoginViaApple",
         "tags": [
-          "LoginController"
+          "AppleLoginController"
         ],
         "responses": {
           "200": {
@@ -629,7 +629,7 @@
             }
           }
         },
-        "operationId": "LoginController.postLoginViaApple"
+        "operationId": "AppleLoginController.postLoginViaApple"
       }
     },
     "/auth/reset-password": {
@@ -1538,26 +1538,6 @@
         ],
         "additionalProperties": false
       },
-      "ClientAuthRequest": {
-        "title": "ClientAuthRequest",
-        "type": "object",
-        "description": "This is signature for client authentication request.",
-        "properties": {
-          "client_id": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "client_secret": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          }
-        },
-        "required": [
-          "client_id",
-          "client_secret"
-        ],
-        "additionalProperties": false
-      },
       "ResetPasswordPartial": {
         "title": "ResetPasswordPartial",
         "type": "object",
@@ -1606,6 +1586,26 @@
           "refreshToken",
           "username",
           "password"
+        ],
+        "additionalProperties": false
+      },
+      "ClientAuthRequest": {
+        "title": "ClientAuthRequest",
+        "type": "object",
+        "description": "This is signature for client authentication request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret"
         ],
         "additionalProperties": false
       },

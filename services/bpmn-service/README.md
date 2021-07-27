@@ -4,7 +4,20 @@
 
 ## Overview
 
-A Loopback Microservice for handling BPMN workflows using engines like (Camunda)[https://camunda.com/products/cloud/]. NOTE: The microservice currently works with only one workflow definition for a single diagram.
+A Loopback Microservice for handling BPMN workflows using engines like [Camunda](https://camunda.com/products/cloud/). NOTE: The microservice currently works with only one workflow definition for a single diagram. It provides -
+
+ - Deployment and management of Workflows in a BPMN engine.
+ - Process Versioning.
+ - Executing Workflow using an endpoint, validate inputs before starting an execution.
+
+### Sandbox Example
+
+The [sandbox example](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/sandbox/workflow-ms-example) provides a use of this microservice with the [Camunda](https://camunda.com/products/cloud/) BPMN engine.
+
+It uses [camunda-external-task-client-js](https://github.com/camunda/camunda-external-task-client-js) to implement external task workers, that are triggered on executing a workflow. The flow of control is shown in the diagram below - 
+
+![Execute Workflow](https://user-images.githubusercontent.com/77672713/126749866-1344ff59-5a1e-47cf-bf90-d366da3e9498.png)
+
 
 ### Installation
 
@@ -96,6 +109,11 @@ The service comes with a default `DataSource` using PostgreSQL, if you intend to
 
 A sample implementation of a `DataSource` using environment variables and PostgreSQL is included with the service, you can provide your own using the `BpmnDbSourceName` variable. Implementation of the sample `DataSource` can be seen [here](/src/datasources/bpmn-db.datasource.ts).
 
+### Database Schema
+
+![bpmndb](https://user-images.githubusercontent.com/77672713/126750626-205bbd2c-4b51-4b98-ad81-1b39008f2cf5.jpg)
+
+
 ### Providers
 
 #### BPMNProvider
@@ -174,23 +192,6 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 404: Entity Not Found
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
-
-### API Details
-
-`POST /workflow`
-Endpoint to create a new workflow, uses the `create` method from the provider.
-
-`PATCH /workflow/{id}`
-Endpoint to update a workflow, uses the `update` method from the provider.
-
-`POST /workflow/{id}/execute`
-Endpoint to trigger a workflow, uses the `execute` method from the provider.
-
-`DELETE /workflow/{id}`
-Endpoint to delete a workflow, uses the `delete` method from the provider.
-
-`GET /workflow`
-Endpoint to get all the workflows.
 
 ## API's Details
 

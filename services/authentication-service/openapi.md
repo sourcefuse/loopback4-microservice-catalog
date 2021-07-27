@@ -30,11 +30,11 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
-<h1 id="authentication-service-logincontroller">LoginController</h1>
+<h1 id="authentication-service-applelogincontroller">AppleLoginController</h1>
 
-## LoginController.appleCallback
+## AppleLoginController.appleCallback
 
-<a id="opIdLoginController.appleCallback"></a>
+<a id="opIdAppleLoginController.appleCallback"></a>
 
 > Code samples
 
@@ -81,7 +81,7 @@ fetch('/auth/apple-oauth-redirect',
 
 `GET /auth/apple-oauth-redirect`
 
-<h3 id="logincontroller.applecallback-parameters">Parameters</h3>
+<h3 id="applelogincontroller.applecallback-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -101,7 +101,7 @@ fetch('/auth/apple-oauth-redirect',
 }
 ```
 
-<h3 id="logincontroller.applecallback-responses">Responses</h3>
+<h3 id="applelogincontroller.applecallback-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -110,6 +110,91 @@ fetch('/auth/apple-oauth-redirect',
 <aside class="success">
 This operation does not require authentication
 </aside>
+
+## AppleLoginController.postLoginViaApple
+
+<a id="opIdAppleLoginController.postLoginViaApple"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded'
+};
+
+fetch('/auth/oauth-apple',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded'
+};
+
+fetch('/auth/oauth-apple',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/oauth-apple`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="applelogincontroller.postloginviaapple-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+<h3 id="applelogincontroller.postloginviaapple-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Apple based login|None|
+
+<h3 id="applelogincontroller.postloginviaapple-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-logincontroller">LoginController</h1>
 
 ## LoginController.resetPassword
 
@@ -199,858 +284,6 @@ fetch('/auth/change-password',
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
-</aside>
-
-## LoginController.postLoginViaFacebook
-
-<a id="opIdLoginController.postLoginViaFacebook"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/facebook',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "client_id": "string",
-  "client_secret": "string"
-};
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/facebook',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /auth/facebook`
-
-> Body parameter
-
-```yaml
-client_id: string
-client_secret: string
-
-```
-
-<h3 id="logincontroller.postloginviafacebook-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.postloginviafacebook-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Facebook based login|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.facebookCallback
-
-<a id="opIdLoginController.facebookCallback"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/facebook-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/facebook-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/facebook-auth-redirect`
-
-<h3 id="logincontroller.facebookcallback-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|code|query|string|false|none|
-|state|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.facebookcallback-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Facebook Redirect Token Response|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.postLoginViaGoogle
-
-<a id="opIdLoginController.postLoginViaGoogle"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/google',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "client_id": "string",
-  "client_secret": "string"
-};
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/google',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /auth/google`
-
-> Body parameter
-
-```yaml
-client_id: string
-client_secret: string
-
-```
-
-<h3 id="logincontroller.postloginviagoogle-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.postloginviagoogle-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Google based login|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.loginViaGoogle
-
-<a id="opIdLoginController.loginViaGoogle"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/google',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/google',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/google`
-
-<h3 id="logincontroller.loginviagoogle-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|client_id|query|string|false|none|
-|client_secret|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.loginviagoogle-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.googleCallback
-
-<a id="opIdLoginController.googleCallback"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/google-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/google-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/google-auth-redirect`
-
-<h3 id="logincontroller.googlecallback-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|code|query|string|false|none|
-|state|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.googlecallback-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Redirect Token Response|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.postLoginViaInstagram
-
-<a id="opIdLoginController.postLoginViaInstagram"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/instagram',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "client_id": "string",
-  "client_secret": "string"
-};
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/instagram',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /auth/instagram`
-
-> Body parameter
-
-```yaml
-client_id: string
-client_secret: string
-
-```
-
-<h3 id="logincontroller.postloginviainstagram-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.postloginviainstagram-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Instagram based login|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.instagramCallback
-
-<a id="opIdLoginController.instagramCallback"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/instagram-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/instagram-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/instagram-auth-redirect`
-
-<h3 id="logincontroller.instagramcallback-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|code|query|string|false|none|
-|state|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.instagramcallback-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Instagram Redirect Token Response|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.postLoginViaKeycloak
-
-<a id="opIdLoginController.postLoginViaKeycloak"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "client_id": "string",
-  "client_secret": "string"
-};
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /auth/keycloak`
-
-POST Call for keycloak based login
-
-> Body parameter
-
-```yaml
-client_id: string
-client_secret: string
-
-```
-
-<h3 id="logincontroller.postloginviakeycloak-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.postloginviakeycloak-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Token Response|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.loginViaKeycloak
-
-<a id="opIdLoginController.loginViaKeycloak"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/keycloak`
-
-<h3 id="logincontroller.loginviakeycloak-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|client_id|query|string|false|none|
-|client_secret|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.loginviakeycloak-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## LoginController.keycloakCallback
-
-<a id="opIdLoginController.keycloakCallback"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/keycloak-auth-redirect`
-
-<h3 id="logincontroller.keycloakcallback-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|code|query|string|false|none|
-|state|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="logincontroller.keycloakcallback-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Redirect Token Response|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
 </aside>
 
 ## LoginController.login
@@ -1329,89 +562,6 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## LoginController.postLoginViaApple
-
-<a id="opIdLoginController.postLoginViaApple"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded'
-};
-
-fetch('/auth/oauth-apple',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "client_id": "string",
-  "client_secret": "string"
-};
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded'
-};
-
-fetch('/auth/oauth-apple',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /auth/oauth-apple`
-
-> Body parameter
-
-```yaml
-client_id: string
-client_secret: string
-
-```
-
-<h3 id="logincontroller.postloginviaapple-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
-
-> Example responses
-
-<h3 id="logincontroller.postloginviaapple-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Apple based login|None|
-
-<h3 id="logincontroller.postloginviaapple-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
 ## LoginController.getToken
 
 <a id="opIdLoginController.getToken"></a>
@@ -1615,6 +765,181 @@ Gets you a new access and refresh token once your access token is expired. (both
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-facebooklogincontroller">FacebookLoginController</h1>
+
+## FacebookLoginController.postLoginViaFacebook
+
+<a id="opIdFacebookLoginController.postLoginViaFacebook"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/facebook`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="facebooklogincontroller.postloginviafacebook-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="facebooklogincontroller.postloginviafacebook-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Facebook based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## FacebookLoginController.facebookCallback
+
+<a id="opIdFacebookLoginController.facebookCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/facebook-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/facebook-auth-redirect`
+
+<h3 id="facebooklogincontroller.facebookcallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="facebooklogincontroller.facebookcallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Facebook Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1886,6 +1211,691 @@ fetch('/auth/verify-reset-password-link?token=string',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Check if Token Is Valid and not Expired.|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-googlelogincontroller">GoogleLoginController</h1>
+
+## GoogleLoginController.postLoginViaGoogle
+
+<a id="opIdGoogleLoginController.postLoginViaGoogle"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/google',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/google',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/google`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="googlelogincontroller.postloginviagoogle-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="googlelogincontroller.postloginviagoogle-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Google based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## GoogleLoginController.loginViaGoogle
+
+<a id="opIdGoogleLoginController.loginViaGoogle"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/google',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/google',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/google`
+
+<h3 id="googlelogincontroller.loginviagoogle-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="googlelogincontroller.loginviagoogle-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## GoogleLoginController.googleCallback
+
+<a id="opIdGoogleLoginController.googleCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/google-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/google-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/google-auth-redirect`
+
+<h3 id="googlelogincontroller.googlecallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="googlelogincontroller.googlecallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Redirect Token Response|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-instagramlogincontroller">InstagramLoginController</h1>
+
+## InstagramLoginController.postLoginViaInstagram
+
+<a id="opIdInstagramLoginController.postLoginViaInstagram"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/instagram',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/instagram',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/instagram`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="instagramlogincontroller.postloginviainstagram-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="instagramlogincontroller.postloginviainstagram-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Instagram based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## InstagramLoginController.instagramCallback
+
+<a id="opIdInstagramLoginController.instagramCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/instagram-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/instagram-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/instagram-auth-redirect`
+
+<h3 id="instagramlogincontroller.instagramcallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="instagramlogincontroller.instagramcallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Instagram Redirect Token Response|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-keycloaklogincontroller">KeycloakLoginController</h1>
+
+## KeycloakLoginController.postLoginViaKeycloak
+
+<a id="opIdKeycloakLoginController.postLoginViaKeycloak"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/keycloak',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/keycloak',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/keycloak`
+
+POST Call for keycloak based login
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="keycloaklogincontroller.postloginviakeycloak-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="keycloaklogincontroller.postloginviakeycloak-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Token Response|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## KeycloakLoginController.loginViaKeycloak
+
+<a id="opIdKeycloakLoginController.loginViaKeycloak"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/keycloak',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/keycloak',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/keycloak`
+
+<h3 id="keycloaklogincontroller.loginviakeycloak-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="keycloaklogincontroller.loginviakeycloak-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## KeycloakLoginController.keycloakCallback
+
+<a id="opIdKeycloakLoginController.keycloakCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/keycloak-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/keycloak-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/keycloak-auth-redirect`
+
+<h3 id="keycloaklogincontroller.keycloakcallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="keycloaklogincontroller.keycloakcallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3551,30 +3561,6 @@ AuthRefreshTokenRequest
 |---|---|---|---|---|
 |refreshToken|string|true|none|none|
 
-<h2 id="tocS_ClientAuthRequest">ClientAuthRequest</h2>
-<!-- backwards compatibility -->
-<a id="schemaclientauthrequest"></a>
-<a id="schema_ClientAuthRequest"></a>
-<a id="tocSclientauthrequest"></a>
-<a id="tocsclientauthrequest"></a>
-
-```json
-{
-  "client_id": "string",
-  "client_secret": "string"
-}
-
-```
-
-ClientAuthRequest
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|client_id|string|true|none|This property is supposed to be a string and is a required field|
-|client_secret|string|true|none|This property is supposed to be a string and is a required field|
-
 <h2 id="tocS_ResetPasswordPartial">ResetPasswordPartial</h2>
 <!-- backwards compatibility -->
 <a id="schemaresetpasswordpartial"></a>
@@ -3630,6 +3616,30 @@ ResetPassword
 |username|string|true|none|This property is supposed to be a string and is a required field|
 |password|string|true|none|This property is supposed to be a string and is a required field|
 |oldPassword|string|false|none|This property is supposed to be a string and is a required field|
+
+<h2 id="tocS_ClientAuthRequest">ClientAuthRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemaclientauthrequest"></a>
+<a id="schema_ClientAuthRequest"></a>
+<a id="tocSclientauthrequest"></a>
+<a id="tocsclientauthrequest"></a>
+
+```json
+{
+  "client_id": "string",
+  "client_secret": "string"
+}
+
+```
+
+ClientAuthRequest
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|true|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_SuccessResponse">SuccessResponse</h2>
 <!-- backwards compatibility -->
