@@ -8,8 +8,7 @@ export class GooglePostVerifyProvider implements Provider<GooglePostVerifyFn> {
   constructor() {}
 
   value(): GooglePostVerifyFn {
-    return async (profile: GoogleStrategy.Profile, user: IAuthUser | null) => {
-      return user;
-    };
+    return async (profile: GoogleStrategy.Profile, user: IAuthUser | null) =>
+      user;
   }
 }

@@ -1,0 +1,14 @@
+# terraform
+*.tf text=auto eol=lf
+
+# dot files
+*.gitattributes text=auto eol=lf
+*.yaml text=auto eol=lf
+*.yml text=auto eol=lf
+*.md text=auto eol=lf
+.gitignore text=auto eol=lf
+.editorconfig text=auto eol=lf
+.terraform-version text=auto eol=lf
+
+# golang
+*.go text=auto eol=lf

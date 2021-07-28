@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.sourceloop.service: workflow-ms-example
+  name: workflow-ms-example
+  namespace: sourceloop-sandbox
+spec:
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+  selector:
+    io.sourceloop.service: workflow-ms-example
+status:
+  loadBalancer: {}

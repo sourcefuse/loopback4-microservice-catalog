@@ -22,11 +22,10 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize, IAuthUserWithPermissions} from 'loopback4-authorization';
-import {ToDo} from '../models';
+import {ToDo, UserLevelResource} from '../models';
 import {ToDoRepository, UserLevelResourceRepository} from '../repositories';
 import {PermissionKey} from '../enums';
 import {bind, BindingScope, inject} from '@loopback/core';
-import {UserLevelResource} from '../models';
 
 const BASE_PATH = '/todos';
 
