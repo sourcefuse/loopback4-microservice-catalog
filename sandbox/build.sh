@@ -20,6 +20,7 @@ if [ -z "$CURRENT_DIR" ]; then
   CURRENT_DIR=$(echo $PWD)
 fi
 
+echo "CURRENT_DIR=$CURRENT_DIR"
 
 export REGISTRY=$REGISTRY; docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
 docker push ${REGISTRY}/auth-multitenant-example

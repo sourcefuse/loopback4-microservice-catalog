@@ -11,7 +11,7 @@ pipeline {
                         sh "echo ${env.WORKSPACE}"
                         sh "ls"
                         sh "pwd"
-                        sh "./ci_build.sh ${env.WORKSPACE}"
+                        sh "./ci_build.sh"
                     }
                 }
             }
