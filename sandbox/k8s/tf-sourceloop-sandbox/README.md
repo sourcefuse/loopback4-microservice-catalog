@@ -12,8 +12,6 @@ module "tf-sourceloop-sandbox" {
 }
 ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 ## Requirements
 
 | Name                                                                        | Version  |
@@ -73,8 +71,6 @@ module "tf-sourceloop-sandbox" {
 
 No outputs.
 
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 ## Development
 
 ### Prerequisites
@@ -112,4 +108,5 @@ go test
 
 ## Authors
 
+- # SourceFuse
 - SourceFuse
