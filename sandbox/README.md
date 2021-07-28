@@ -159,7 +159,7 @@ chmod +x ./build.sh
 Now create the `sourceloop-sandbox` namespace.
 
 ```sh
-$ microk8s kubectl apply -f namespaces/
+$ microk8s kubectl apply -f k8s/manifests/namespaces/
 namespace/sourceloop-sandbox created
 ```
 
@@ -178,7 +178,7 @@ Switched to context "sourceloop-sandbox".
 Now create the rest of the resources
 
 ```sh
-microk8s kubectl apply -f . --recursive
+microk8s kubectl apply -f k8s/manifests/ --recursive
 ```
 
 To avoid adding a host header to every request, add the following entries to your host file
@@ -191,7 +191,31 @@ To avoid adding a host header to every request, add the following entries to you
 127.0.0.1	scheduler.sourceloop.local
 127.0.0.1	video.sourceloop.local
 127.0.0.1	workflow.sourceloop.local
+127.0.0.1	camunda.sourceloop.local
 ```
 
 You're local setup is now up and running. 
 
+To view the dashboard, run
+
+```sh
+$ microk8s dashboard-proxy
+```
+
+### Terraform Setup
+
+If you prefer to use the Terraform module, follow the steps below. Terraform 0.14 + is required.
+
+Perform the same steps above to:
+
+* Enable `microk8s` services
+* Adding host header entries
+* Running the container build script
+
+```sh
+cd k8s/tf-sourceloop-sandbox
+terraform init
+terraform apply
+```
+
+See the [readme](./k8s/tf-sourceloop-sandbox/README.md) for more information on the Terraform module.

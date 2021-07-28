@@ -1,10 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ${namespace}-ingress
+  name: sourceloop-sandbox-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-  namespace: ${namespace}
+  namespace: sourceloop-sandbox
 spec:
   rules:
     - http:
@@ -103,13 +103,3 @@ spec:
                 name: audit-ms-example
                 port:
                   number: 3000
-    - host: camunda.sourceloop.local
-      http:
-        paths:
-          - pathType: Prefix
-            path: /
-            backend:
-              service:
-                name: camunda
-                port:
-                  number: 8080
