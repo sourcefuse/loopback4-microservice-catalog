@@ -1,3 +1,7 @@
+import {CaseDefinition} from './case-definition';
+import {DecisionDefinition} from './decision-definition';
+import {DecisionRequirementDefinition} from './decision-requirements-definition';
+import {ProcessDefinition} from './process-definition';
 import {Link} from './types';
 
 export interface DeploymentWithDefinitions {
@@ -7,8 +11,24 @@ export interface DeploymentWithDefinitions {
   source: string;
   tenantId: string;
   deploymentTime: string;
-  deployedProcessDefinitions: string;
-  deployedCaseDefinitions: string;
-  deployedDecisionDefinitions: string;
-  deployedDecisionRequirementsDefinitions: string;
+  deployedProcessDefinitions: DeployedProcessDefinitions;
+  deployedCaseDefinitions: DeployedCaseDefinitions;
+  deployedDecisionDefinitions: DeployedDecisionDefinitions;
+  deployedDecisionRequirementsDefinitions: DeployedDecisionRequirementDefinitions;
 }
+
+export type DeployedProcessDefinitions = {
+  [definitionId: string]: ProcessDefinition;
+};
+
+export type DeployedCaseDefinitions = {
+  [definitionId: string]: CaseDefinition;
+};
+
+export type DeployedDecisionDefinitions = {
+  [definitionId: string]: DecisionDefinition;
+};
+
+export type DeployedDecisionRequirementDefinitions = {
+  [definitionId: string]: DecisionRequirementDefinition;
+};
