@@ -19,4 +19,4 @@ sudo docker push ${DOCKER_USERNAME}/workflow-ms-example
 sudo docker push ${DOCKER_USERNAME}/audit-ms-example
 sudo docker push ${DOCKER_USERNAME}/scheduler-example
 sudo docker push ${DOCKER_USERNAME}/video-conferencing-ms-example
-sudo docker push ${$DOCKER_USERNAME}/in-mail-example
+sudo docker push ${DOCKER_USERNAME}/in-mail-example

@@ -11,6 +11,7 @@ pipeline {
                         sh "echo ${env.WORKSPACE}"
                         sh "ls"
                         sh "pwd"
+                        sh "which docker-compose"
                         sh "./ci_build.sh"
                     }
                 }
