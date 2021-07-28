@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.1 (2021-07-24)</small>
+
+* fix(core): update readme ([4ec31ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ec31ca)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* docs(authentication-service): update README.md (#276) ([88256ac](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/88256ac)), closes [#276](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/276)
+* refactor(authentication-service): fix sonar issues (#266) ([3ea2082](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea2082)), closes [#266](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/266) [#251](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/251)
+* chore(deps): bump urijs in /services/authentication-service (#274) ([d45ce21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d45ce21)), closes [#274](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/274)
+
+
+
+
+
 ## 1.2.0 (2021-07-14)
 
 * docs(all-services): fix readme of all services (#245) ([b8937fa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b8937fa)), closes [#245](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/245) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)

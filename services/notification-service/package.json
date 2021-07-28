@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-service",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -57,7 +57,7 @@
     "@loopback/core": "^2.16.0",
     "@loopback/repository": "^3.6.0",
     "@loopback/rest": "^9.3.0",
-    "@sourceloop/core": "^2.0.0",
+    "@sourceloop/core": "^2.0.1",
     "aws-sdk": "^2.907.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
@@ -65,6 +65,7 @@
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.2.0",
     "loopback4-notifications": "^1.0.0",
+    "loopback4-soft-delete": "^3.2.2",
     "mocha": "^8.3.2",
     "prom-client": "^13.1.0",
     "pubnub": "^4.28.0",

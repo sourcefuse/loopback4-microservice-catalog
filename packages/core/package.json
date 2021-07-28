@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "packages",
   "keywords": [
     "loopback-extension",
@@ -57,7 +57,7 @@
     "loopback4-authorization": "^3.3.0",
     "loopback4-helmet": "^2.1.0",
     "loopback4-ratelimiter": "^2.2.0",
-    "loopback4-soft-delete": "^3.2.1",
+    "loopback4-soft-delete": "^3.2.2",
     "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",
     "swagger-stats": "^0.95.18",
