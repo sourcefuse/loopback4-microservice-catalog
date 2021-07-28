@@ -7,7 +7,7 @@ pipeline {
             steps {
                 dir("sandbox"){
                     sh "chmod +x ./build.sh"
-                    withCredentials([usernamePassword('credentialsId': 'docker_credentials', 'usernameVariable': 'DOCKER_USERNAME', 'passwordVariable': 'DOCKER_PASSWORD')]) {
+                    withCredentials([usernamePassword('credentialsId': 'sf-dockerhub', 'usernameVariable': 'DOCKER_USERNAME', 'passwordVariable': 'DOCKER_PASSWORD')]) {
                         sh "./build.sh sourcefuse"
                     }
                 }
