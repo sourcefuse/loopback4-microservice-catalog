@@ -126,7 +126,7 @@ services:
     restart: on-failure
 
   auth-multitenant-migration:
-    image: ${REGISTRY:-localhost:32000}/auth-multitenant-example:latest
+    image: ${REGISTRY:-localhost:32000}/auth-multitenant-example
     build:
       context: ./auth-multitenant-example
       dockerfile: Dockerfile
@@ -182,7 +182,7 @@ services:
     restart: on-failure
 
   workflow-migration:
-    image: ${REGISTRY:-localhost:32000}/workflow-ms-example:latest
+    image: ${REGISTRY:-localhost:32000}/workflow-ms-example
     build:
       context: ./workflow-ms-example
       dockerfile: Dockerfile
@@ -212,7 +212,7 @@ services:
     restart: on-failure
 
   audit-ms-migration:
-    image: ${REGISTRY:-localhost:32000}/audit-ms-example:latest
+    image: ${REGISTRY:-localhost:32000}/audit-ms-example
     command: sh -c "sleep 60 && npm run db:migrate"
     build:
       context: ./audit-ms-example

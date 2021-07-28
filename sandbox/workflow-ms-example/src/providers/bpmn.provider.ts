@@ -4,6 +4,7 @@ import { HttpErrors } from '@loopback/rest';
 import { WorflowManager, Workflow, WorkflowVersion, WorkflowDto } from '@sourceloop/bpmn-service';
 import { CamundaService } from '../services/camunda.service';
 
+
 @bind({ scope: BindingScope.TRANSIENT })
 export class BpmnProvider implements Provider<WorflowManager> {
   constructor(

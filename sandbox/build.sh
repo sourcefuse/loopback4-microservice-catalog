@@ -2,11 +2,14 @@
 REGISTRY=$1
 
 if [ -z "$REGISTRY" ];
-  then REGISTRY="localhost:32000";
-  else echo "${REGISTRY}"
+  then
+    REGISTRY="localhost:32000";
+    echo "${REGISTRY}"
+  else
+    echo "${REGISTRY}"
 fi
 
-docker-compose build
+export REGISTRY=$REGISTRY; docker-compose build
 docker push ${REGISTRY}/auth-multitenant-example
 docker push ${REGISTRY}/notification-socket-example
 docker push ${REGISTRY}/workflow-ms-example
