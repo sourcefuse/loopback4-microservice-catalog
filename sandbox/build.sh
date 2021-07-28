@@ -1,12 +1,16 @@
 #!/bin/bash
 REGISTRY=$1
 
-if [ -z "$REGISTRY" ];
-  then
-    REGISTRY="localhost:32000";
-    echo "${REGISTRY}"
-  else
-    echo "${REGISTRY}"
+if [ -z "$REGISTRY" ]; then
+  REGISTRY="localhost:32000"
+  echo "${REGISTRY}"
+else
+  echo "${REGISTRY}"
+fi
+
+if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
+  echo "Logging in to Docker"
+  echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
 fi
 
 export REGISTRY=$REGISTRY; docker-compose build

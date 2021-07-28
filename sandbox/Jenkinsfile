@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    //TODO: make parameters for registry
+    //TODO: setup webooks/build triggers
+    stages {
+        stage('Build') {
+            steps {
+                dir("sandbox"){
+                    sh "chmod +x ./build.sh"
+                    withCredentials([usernamePassword('credentialsId': 'docker_credentials', 'usernameVariable': 'DOCKER_USERNAME', 'passwordVariable': 'DOCKER_PASSWORD')]) {
+                        sh "./build.sh sourcefuse"
+                    }
+                }
+            }
+        }
+    }
+}
