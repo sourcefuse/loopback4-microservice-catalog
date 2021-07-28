@@ -12,6 +12,9 @@ pipeline {
                         sh "ls"
                         sh "pwd"
                         sh "which docker-compose"
+                        sh "which docker"
+                        sh "sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o ${env.WORKSPACE}/sandbox/docker-compose"
+                        sh "sudo chmod +x ${env.WORKSPACE}/sandbox/docker-compose"
                         sh "./ci_build.sh"
                     }
                 }
