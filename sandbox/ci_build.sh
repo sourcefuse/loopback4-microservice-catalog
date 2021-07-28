@@ -1,5 +1,6 @@
 #!/bin/bash
 REGISTRY=$1
+CURRENT_DIR=$2
 
 # TODO: remove file once agent is fixed
 
@@ -15,10 +16,11 @@ if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
   echo "${DOCKER_PASSWORD}" | sudo docker login --username ${DOCKER_USERNAME} --password-stdin
 fi
 
+if [ -z "$CURRENT_DIR" ]; then
+  CURRENT_DIR=$(echo $PWD)
+fi
 
-CURRENT_DIR=$(echo $PWD)
-
-export REGISTRY=$REGISTRY; sudo docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
+export REGISTRY=$REGISTRY; sudo docker-compose -f "${CURRENT_DIR}/sandbox/docker-compose.yml" build
 sudo docker push ${REGISTRY}/auth-multitenant-example
 sudo docker push ${REGISTRY}/notification-socket-example
 sudo docker push ${REGISTRY}/workflow-ms-example

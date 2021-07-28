@@ -1,5 +1,6 @@
 #!/bin/bash
 REGISTRY=$1
+CURRENT_DIR=$2
 
 # TODO: remove sudo once build agent is fixed
 
@@ -15,7 +16,10 @@ if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
   echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
 fi
 
-CURRENT_DIR=$(echo $PWD)
+if [ -z "$CURRENT_DIR" ]; then
+  CURRENT_DIR=$(echo $PWD)
+fi
+
 
 export REGISTRY=$REGISTRY; docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
 docker push ${REGISTRY}/auth-multitenant-example
