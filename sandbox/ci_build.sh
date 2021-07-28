@@ -1,15 +1,5 @@
 #!/bin/bash
-REGISTRY=$1
-CURRENT_DIR=$2
-
-# TODO: remove file once agent is fixed
-
-if [ -z "$REGISTRY" ]; then
-  REGISTRY="localhost:32000"
-  echo "${REGISTRY}"
-else
-  echo "${REGISTRY}"
-fi
+CURRENT_DIR=$1
 
 if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
   echo "Logging in to Docker"
@@ -20,11 +10,11 @@ if [ -z "$CURRENT_DIR" ]; then
   CURRENT_DIR=$(echo $PWD)
 fi
 
-export REGISTRY=$REGISTRY; sudo docker-compose -f "${CURRENT_DIR}/sandbox/docker-compose.yml" build
-sudo docker push ${REGISTRY}/auth-multitenant-example
-sudo docker push ${REGISTRY}/notification-socket-example
-sudo docker push ${REGISTRY}/workflow-ms-example
-sudo docker push ${REGISTRY}/audit-ms-example
-sudo ocker push ${REGISTRY}/scheduler-example
-sudo docker push ${REGISTRY}/video-conferencing-ms-example
-sudo docker push ${REGISTRY}/in-mail-example
+export REGISTRY=$DOCKER_USERNAME; sudo docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
+sudo docker push ${DOCKER_USERNAME}/auth-multitenant-example
+sudo docker push ${DOCKER_USERNAME}/notification-socket-example
+sudo docker push ${$DOCKER_USERNAME}/workflow-ms-example
+sudo docker push ${$DOCKER_USERNAME}/audit-ms-example
+sudo ocker push ${$DOCKER_USERNAME}/scheduler-example
+sudo docker push ${$DOCKER_USERNAME}/video-conferencing-ms-example
+sudo docker push ${$DOCKER_USERNAME}/in-mail-example
