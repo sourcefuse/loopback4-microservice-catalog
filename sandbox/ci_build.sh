@@ -12,7 +12,7 @@ fi
 
 echo "CURRENT_DIR=$CURRENT_DIR"
 
-export REGISTRY=$DOCKER_USERNAME; sudo docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
+export REGISTRY=$DOCKER_USERNAME; docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
 sudo docker push ${DOCKER_USERNAME}/auth-multitenant-example
 sudo docker push ${DOCKER_USERNAME}/notification-socket-example
 sudo docker push ${DOCKER_USERNAME}/workflow-ms-example
