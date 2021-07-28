@@ -10,11 +10,13 @@ if [ -z "$CURRENT_DIR" ]; then
   CURRENT_DIR=$(echo $PWD)
 fi
 
+echo "CURRENT_DIR=$CURRENT_DIR"
+
 export REGISTRY=$DOCKER_USERNAME; sudo docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
 sudo docker push ${DOCKER_USERNAME}/auth-multitenant-example
 sudo docker push ${DOCKER_USERNAME}/notification-socket-example
-sudo docker push ${$DOCKER_USERNAME}/workflow-ms-example
-sudo docker push ${$DOCKER_USERNAME}/audit-ms-example
-sudo ocker push ${$DOCKER_USERNAME}/scheduler-example
-sudo docker push ${$DOCKER_USERNAME}/video-conferencing-ms-example
+sudo docker push ${DOCKER_USERNAME}/workflow-ms-example
+sudo docker push ${DOCKER_USERNAME}/audit-ms-example
+sudo docker push ${DOCKER_USERNAME}/scheduler-example
+sudo docker push ${DOCKER_USERNAME}/video-conferencing-ms-example
 sudo docker push ${$DOCKER_USERNAME}/in-mail-example
