@@ -12,8 +12,8 @@ fi
 
 echo "CURRENT_DIR=$CURRENT_DIR"
 
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o ${CURRENT_DIR}/sandbox/docker-compose --insecure
-sudo chmod +x ${CURRENT_DIR}/sandbox/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o ${CURRENT_DIR}/docker-compose --insecure
+sudo chmod +x ${CURRENT_DIR}/docker-compose
 
 export REGISTRY=$DOCKER_USERNAME; ./docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
 sudo docker push ${DOCKER_USERNAME}/auth-multitenant-example
