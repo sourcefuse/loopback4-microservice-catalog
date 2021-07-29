@@ -68,6 +68,12 @@ npm install @sourceloop/scheduler-service
 - Start the application
   `npm start`
 
+### Workflow Diagrams
+
+![Schedular](https://user-images.githubusercontent.com/82804130/127480876-7dad27cf-11c6-4dbc-9988-f7af6f91c5b8.jpg)
+
+![event](https://user-images.githubusercontent.com/82804130/127480906-3c70d4e0-03b8-426f-bb63-ec726eb39353.jpg)
+
 ### Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database and Redis Database running locally.
