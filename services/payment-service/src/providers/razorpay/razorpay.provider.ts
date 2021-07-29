@@ -3,7 +3,7 @@ import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';
 import {Orders} from '../../models';
 import {OrdersRepository, TransactionsRepository} from '../../repositories';
-import {RazorpayPaymentGateway} from './types';
+import {RazorpayPaymentGateway, IRazorpayConfig} from './types';
 const Razorpay = require('razorpay');
 
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
@@ -189,6 +189,26 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           '</body>' +
           '</html>'
         );
+      },
+
+      refund: async (transactionId: string) => {
+        console.log(transactionId, 'chargeResponse');
+        const transaction = await this.transactionsRepository.findById(
+          transactionId,
+        );
+        console.log(transaction, 'tranasction');
+        console.log(transaction?.res?.chargeResponse?.id, 'paymentId');
+        const paymentId = transaction?.res?.chargeResponse?.id;
+        const refund = await instance.payments.refund(paymentId);
+        console.log(refund, 'refund');
+        transaction.res.refundDetails = refund;
+        transaction.status = 'refund';
+        if (refund) {
+          await this.transactionsRepository.updateById(transactionId, {
+            ...transaction,
+          });
+        }
+        return refund;
       },
     };
   }

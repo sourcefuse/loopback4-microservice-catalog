@@ -24,24 +24,13 @@ import {
 } from '@loopback/rest';
 import {v4 as uuidv4} from 'uuid';
 import {Orders, Transactions} from '../models';
-import {
-  GatewayBindings,
-  IGateway,
-  RazorpayBindings,
-  RazorpayPaymentGateway,
-  StripeBindings,
-  StripePaymentGateway,
-} from '../providers';
+import {GatewayBindings, IGateway} from '../providers';
 import {OrdersRepository, TransactionsRepository} from '../repositories';
 
 export class TransactionsController {
   constructor(
     @inject(RestBindings.Http.RESPONSE) private res: Response,
     @inject(RestBindings.Http.REQUEST) private req: Request,
-    @inject(StripeBindings.StripeHelper)
-    private readonly stripePaymentHelper: StripePaymentGateway,
-    @inject(RazorpayBindings.RazorpayHelper)
-    private readonly razorpayPaymentHelper: RazorpayPaymentGateway,
     @inject(GatewayBindings.GatewayHelper)
     private readonly gatewayHelper: IGateway,
     @repository(OrdersRepository)
@@ -222,7 +211,6 @@ export class TransactionsController {
     @param.path.string('id') id: string,
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   ): Promise<any> {
-    console.log(id);
     const Order = await this.ordersRepository.findById(id);
     return this.res.send(await this.gatewayHelper.create(Order));
   }
@@ -246,18 +234,25 @@ export class TransactionsController {
     })
     chargeResponse: DataObject<{}>,
   ): Promise<unknown> {
-    console.log(this.req.query, 'query');
-    console.log(chargeResponse, 'chargeresponse');
-    // if(this.req.query.method === 'razorpay'){
-    //   return this.res.send(await this.RazorpayPaymentHelper.charge(chargeResponse));
-    if (this.req.query.method === 'stripe') {
-      return this.res.send(
-        await this.stripePaymentHelper.charge(chargeResponse),
-      );
-    } else {
-      return this.res.send(
-        await this.razorpayPaymentHelper.charge(chargeResponse),
-      );
-    }
+    chargeResponse = {
+      ...chargeResponse,
+      orderId: this.req.query.orderId,
+    };
+    return this.gatewayHelper.charge(chargeResponse);
+  }
+
+  @post(`/transactions/refund/{id}`)
+  @response(200, {
+    description: 'Array of Transactions model instances',
+    content: {
+      'application/json': {},
+    },
+  })
+  async transactionsRefund(
+    @param.path.string('id') id: string,
+    // @param.filter(Transactions) filter?: Filter<Transactions>,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  ): Promise<any> {
+    return this.gatewayHelper.refund(id);
   }
 }

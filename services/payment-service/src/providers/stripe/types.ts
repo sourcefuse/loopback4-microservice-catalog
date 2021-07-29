@@ -7,6 +7,7 @@ export interface StripePaymentGateway {
   charge(
     chargeResponse: DataObject<{stripeEmail: string; stripeToken: string}>,
   ): Promise<{}>;
+  refund(transactionId: string): Promise<{}>;
 }
 
 export interface StripeOrder {

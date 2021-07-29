@@ -1,9 +1,13 @@
 import {inject, Provider} from '@loopback/core';
-import {DataObject} from '@loopback/repository';
+import {DataObject, repository} from '@loopback/repository';
 import {Request, Response, RestBindings} from '@loopback/rest';
 import {Orders} from '../models';
 import {RazorpayBindings, RazorpayPaymentGateway} from './razorpay/index';
 import {StripeBindings, StripePaymentGateway} from './stripe';
+import {
+  TransactionsRepository,
+  PaymentGatewaysRepository,
+} from '../repositories';
 import {IGateway} from './types';
 export class GatewayProvider implements Provider<IGateway> {
   constructor(
@@ -13,6 +17,10 @@ export class GatewayProvider implements Provider<IGateway> {
     private readonly razorpayPaymentHelper: RazorpayPaymentGateway,
     @inject(StripeBindings.StripeHelper)
     private readonly stripeHelper: StripePaymentGateway,
+    @repository(TransactionsRepository)
+    private readonly transactionsRepository: TransactionsRepository,
+    @repository(PaymentGatewaysRepository)
+    private readonly paymentGatewaysRepository: PaymentGatewaysRepository,
   ) {}
 
   async create(payorder: Orders) {
@@ -37,11 +45,32 @@ export class GatewayProvider implements Provider<IGateway> {
     }
   }
 
+  async refund(transactionId: string) {
+    const transaction = await this.transactionsRepository.findById(
+      transactionId,
+    );
+    const gatewayId = transaction?.payment_gateway_id;
+    if (gatewayId) {
+      const paymentGateway = await this.paymentGatewaysRepository.findById(
+        gatewayId,
+      );
+      const gatewayType = paymentGateway.gateway_type;
+      if (gatewayType === 'stripe') {
+        return this.stripeHelper.refund(transactionId);
+      } else if (gatewayType === 'razorpay') {
+        return this.razorpayPaymentHelper.refund(transactionId);
+      } else {
+        return 'Provider Missing';
+      }
+    }
+  }
+
   value() {
     return {
       create: async (payorder: Orders) => this.create(payorder),
       charge: async (chargeResponse: DataObject<{}>) =>
         this.charge(chargeResponse),
+      refund: async (transactionId: string) => this.refund(transactionId),
     };
   }
 }

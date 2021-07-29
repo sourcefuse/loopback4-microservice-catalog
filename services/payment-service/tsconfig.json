@@ -3,7 +3,8 @@
   "extends": "@loopback/build/config/tsconfig.common.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "lib": [ "es2015" ]
   },
-  "include": ["src"]
+  "include": ["src","migrations","migration.js"]
 }
