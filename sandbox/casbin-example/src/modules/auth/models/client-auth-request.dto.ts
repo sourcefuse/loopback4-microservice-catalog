@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
