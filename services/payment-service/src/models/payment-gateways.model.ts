@@ -19,9 +19,9 @@ export class PaymentGateways extends Entity {
   @property({
     type: 'string',
     required: true,
+    name:'gateway_type'
   })
-  // eslint-disable-next-line
-  gateway_type: string;
+  gatewayType: string;
 
   @property({
     type: 'boolean',
@@ -32,17 +32,10 @@ export class PaymentGateways extends Entity {
   // Define well-known properties here
 
   // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   [prop: string]: any;
 
   constructor(data?: Partial<PaymentGateways>) {
     super(data);
   }
 }
-
-export interface PaymentGatewaysRelations {
-  // describe navigational properties here
-}
-
-export type PaymentGatewaysWithRelations = PaymentGateways &
-  PaymentGatewaysRelations;

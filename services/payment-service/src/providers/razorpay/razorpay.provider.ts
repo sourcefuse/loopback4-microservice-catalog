@@ -17,18 +17,18 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
 
   value() {
     const instance = new Razorpay({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // eslint-disable-next-line
       key_id: this.config?.dataKey,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // eslint-disable-next-line
       key_secret: this.config?.publishKey,
     });
     const razorpayKey = this.config?.dataKey;
     return {
       create: async (payorder: Orders) => {
-        // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line
         let razorpayTemplate: any;
         const transactions = await this.transactionsRepository.find({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // eslint-disable-next-line
           where: {order_id: payorder.id},
         });
         const transRes = transactions[0]?.res;
@@ -49,9 +49,10 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         if (transactions.length === 0) {
           await instance.orders.create(
             razorPayOptions,
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line
             async (err: any, order: any) => {
               if (err) {
+                // eslint-disable-next-line
                 console.log(err, 'error');
               }
               if (order) {
@@ -81,7 +82,6 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
               }
             },
           );
-          console.log(razorpayTemplate, 'razorpaytemplate');
           await this.ordersRepository.updateById(payorder.id, {...payorder});
         } else {
           razorpayTemplate =
@@ -126,9 +126,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
 
       charge: async (
         chargeResponse: DataObject<{
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // eslint-disable-next-line
           razorpay_order_id: string;
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // eslint-disable-next-line
           razorpay_payment_id: string;
         }>,
       ) => {
@@ -144,7 +144,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             chargeResponse.razorpay_payment_id,
             order[0].totalamount,
             'INR',
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line
             (err: any, response: any) => {
               if (err) {
                 console.log(err, 'error');
@@ -155,7 +155,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           );
           await instance.payments.fetch(
             chargeResponse.razorpay_payment_id,
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line
             async (err: any, resdata: any) => {
               if (err) {
                 console.log(err, 'error');
@@ -166,7 +166,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                   ...order[0],
                 });
                 const transactions = await this.transactionsRepository.find({
-                  // eslint-disable-next-line @typescript-eslint/naming-convention
+                  // eslint-disable-next-line
                   where: {order_id: order[0].id},
                 });
                 transactions[0].res = {
@@ -192,15 +192,11 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
       },
 
       refund: async (transactionId: string) => {
-        console.log(transactionId, 'chargeResponse');
         const transaction = await this.transactionsRepository.findById(
           transactionId,
         );
-        console.log(transaction, 'tranasction');
-        console.log(transaction?.res?.chargeResponse?.id, 'paymentId');
         const paymentId = transaction?.res?.chargeResponse?.id;
         const refund = await instance.payments.refund(paymentId);
-        console.log(refund, 'refund');
         transaction.res.refundDetails = refund;
         transaction.status = 'refund';
         if (refund) {

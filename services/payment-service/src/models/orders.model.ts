@@ -39,16 +39,10 @@ export class Orders extends Entity {
   // Define well-known properties here
 
   // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   [prop: string]: any;
 
   constructor(data?: Partial<Orders>) {
     super(data);
   }
 }
-
-export interface OrdersRelations {
-  // describe navigational properties here
-}
-
-export type OrdersWithRelations = Orders & OrdersRelations;

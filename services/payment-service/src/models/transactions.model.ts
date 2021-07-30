@@ -14,8 +14,9 @@ export class Transactions extends Entity {
   @property({
     type: 'number',
     required: true,
+    name: 'amount_paid'
   })
-  amount_paid: number;
+  amountPaid: number;
 
   @property({
     type: 'string',
@@ -25,38 +26,35 @@ export class Transactions extends Entity {
 
   @property({
     type: 'date',
+    name: 'paid_date'
   })
-  paid_date?: string;
+  paidDate?: string;
 
   @property({
     type: 'string',
+    name: 'payment_gateway_id'
   })
-  payment_gateway_id?: string;
+  paymentGatewayId?: string;
 
   @property({
     type: 'string',
+    name:'order_id'
   })
-  order_id?: string;
+  orderId?: string;
 
   @property({
     type: 'Object',
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   res: any;
 
   // Define well-known properties here
 
   // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   [prop: string]: any;
 
   constructor(data?: Partial<Transactions>) {
     super(data);
   }
 }
-
-export interface TransactionsRelations {
-  // describe navigational properties here
-}
-
-export type TransactionsWithRelations = Transactions & TransactionsRelations;

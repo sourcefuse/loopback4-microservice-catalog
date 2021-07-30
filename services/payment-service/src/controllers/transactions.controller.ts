@@ -26,21 +26,27 @@ import {v4 as uuidv4} from 'uuid';
 import {Orders, Transactions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
 import {OrdersRepository, TransactionsRepository} from '../repositories';
+import {
+  STATUS_CODE
+} from '@sourceloop/core';
+const transactionsRoutePath = '/transactions';
+const tranasactionsIdRoutePath = '/transactions/{id}';
+const redirectStatusCode = 302;
 
 export class TransactionsController {
   constructor(
-    @inject(RestBindings.Http.RESPONSE) private res: Response,
-    @inject(RestBindings.Http.REQUEST) private req: Request,
+    @inject(RestBindings.Http.RESPONSE) private readonly res: Response,
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
     @inject(GatewayBindings.GatewayHelper)
     private readonly gatewayHelper: IGateway,
     @repository(OrdersRepository)
     private readonly ordersRepository: OrdersRepository,
     @repository(TransactionsRepository)
-    public transactionsRepository: TransactionsRepository,
+    private readonly transactionsRepository: TransactionsRepository,
   ) {}
 
-  @post('/transactions')
-  @response(200, {
+  @post(transactionsRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Transactions model instance',
     content: {'application/json': {schema: getModelSchemaRef(Transactions)}},
   })
@@ -60,7 +66,7 @@ export class TransactionsController {
   }
 
   @get('/transactions/count')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Transactions model count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -70,8 +76,8 @@ export class TransactionsController {
     return this.transactionsRepository.count(where);
   }
 
-  @get('/transactions')
-  @response(200, {
+  @get(transactionsRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of Transactions model instances',
     content: {
       'application/json': {
@@ -88,8 +94,8 @@ export class TransactionsController {
     return this.transactionsRepository.find(filter);
   }
 
-  @patch('/transactions')
-  @response(200, {
+  @patch(transactionsRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Transactions PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -107,8 +113,8 @@ export class TransactionsController {
     return this.transactionsRepository.updateAll(transactions, where);
   }
 
-  @get('/transactions/{id}')
-  @response(200, {
+  @get(tranasactionsIdRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Transactions model instance',
     content: {
       'application/json': {
@@ -124,8 +130,8 @@ export class TransactionsController {
     return this.transactionsRepository.findById(id, filter);
   }
 
-  @patch('/transactions/{id}')
-  @response(204, {
+  @patch(tranasactionsIdRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Transactions PATCH success',
   })
   async updateById(
@@ -142,8 +148,8 @@ export class TransactionsController {
     await this.transactionsRepository.updateById(id, transactions);
   }
 
-  @put('/transactions/{id}')
-  @response(204, {
+  @put(tranasactionsIdRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Transactions PUT success',
   })
   async replaceById(
@@ -153,8 +159,8 @@ export class TransactionsController {
     await this.transactionsRepository.replaceById(id, transactions);
   }
 
-  @del('/transactions/{id}')
-  @response(204, {
+  @del(tranasactionsIdRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Transactions DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
@@ -162,7 +168,7 @@ export class TransactionsController {
   }
 
   @post('/place-order-and-pay')
-  @response(302, {
+  @response(redirectStatusCode, {
     description: 'Order model instance',
     content: {
       'text/html': {},
@@ -179,7 +185,7 @@ export class TransactionsController {
       },
     })
     orders: Orders,
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line
   ): Promise<any> {
     const orderEntity = {
       id: uuidv4(),
@@ -197,8 +203,8 @@ export class TransactionsController {
   }
 
   @get(`/transactions/orderid/{id}`)
-  @response(302, {
-    description: 'Array of Transactions model instances',
+  @response(STATUS_CODE.OK, {
+    description: 'HTML response for payment gateway interface.',
     content: {
       'text/html': {
         schema: {
@@ -209,14 +215,14 @@ export class TransactionsController {
   })
   async transactionsPay(
     @param.path.string('id') id: string,
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line
   ): Promise<any> {
     const Order = await this.ordersRepository.findById(id);
     return this.res.send(await this.gatewayHelper.create(Order));
   }
 
   @post('/transactions/charge')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Order model instance',
     content: {
       'application/json': {},
@@ -242,16 +248,15 @@ export class TransactionsController {
   }
 
   @post(`/transactions/refund/{id}`)
-  @response(200, {
-    description: 'Array of Transactions model instances',
+  @response(STATUS_CODE.OK, {
+    description: 'Refund Object from payment gateway',
     content: {
       'application/json': {},
     },
   })
   async transactionsRefund(
     @param.path.string('id') id: string,
-    // @param.filter(Transactions) filter?: Filter<Transactions>,
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line
   ): Promise<any> {
     return this.gatewayHelper.refund(id);
   }

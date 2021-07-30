@@ -9,10 +9,11 @@ import {
   PaymentGatewaysRepository,
 } from '../repositories';
 import {IGateway} from './types';
+const providerMissingError = 'Provider Missing';
 export class GatewayProvider implements Provider<IGateway> {
   constructor(
-    @inject(RestBindings.Http.RESPONSE) private res: Response,
-    @inject(RestBindings.Http.REQUEST) private req: Request,
+    @inject(RestBindings.Http.RESPONSE) private readonly res: Response,
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
     @inject(RazorpayBindings.RazorpayHelper)
     private readonly razorpayPaymentHelper: RazorpayPaymentGateway,
     @inject(StripeBindings.StripeHelper)
@@ -29,7 +30,7 @@ export class GatewayProvider implements Provider<IGateway> {
     } else if (payorder.paymentmethod === 'stripe') {
       return this.res.send(await this.stripeHelper.create(payorder));
     } else {
-      return 'Provider Missing';
+      return providerMissingError;
     }
   }
 
@@ -41,7 +42,7 @@ export class GatewayProvider implements Provider<IGateway> {
     } else if (this.req.query.method === 'stripe') {
       return this.res.send(await this.stripeHelper.charge(chargeResponse));
     } else {
-      return 'Provider Missing';
+      return providerMissingError;
     }
   }
 
@@ -60,9 +61,10 @@ export class GatewayProvider implements Provider<IGateway> {
       } else if (gatewayType === 'razorpay') {
         return this.razorpayPaymentHelper.refund(transactionId);
       } else {
-        return 'Provider Missing';
+        return providerMissingError;
       }
     }
+    return 'Could Not able to Decide Gateway Provider';
   }
 
   value() {

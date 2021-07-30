@@ -43,9 +43,9 @@ export class PaymentServiceComponent implements Component {
   providers?: ProviderMap = {};
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: Application,
+    private readonly application: Application,
     @config()
-    private options: PaymentServiceComponentOptions = DEFAULT_PAYMENT_SERVICE_OPTIONS,
+    private readonly options: PaymentServiceComponentOptions = DEFAULT_PAYMENT_SERVICE_OPTIONS,
   ) {
     this.application.component(CoreComponent);
     this.models = [Orders, Transactions];
