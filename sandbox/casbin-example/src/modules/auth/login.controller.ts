@@ -114,19 +114,19 @@ export class LoginController {
   }> {
     if (!this.client || !this.user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    } else if (!req.client_secret) {
+    } else if (!req.clientSecret) {
       throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
     } else {
       // Do nothing and move ahead
     }
     try {
       const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId: req.client_id,
+        clientId: req.clientId,
         userId: this.user.id,
       };
       const token = jwt.sign(codePayload, this.client.secret, {
         expiresIn: this.client.authCodeExpiration,
-        audience: req.client_id,
+        audience: req.clientId,
         issuer: process.env.JWT_ISSUER,
         algorithm: 'HS256',
       });
@@ -168,7 +168,7 @@ export class LoginController {
       this.user.authClientIds.length === 0
     ) {
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.ClientUserMissing);
-    } else if (!req.client_secret) {
+    } else if (!req.clientSecret) {
       throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
     } else {
       // Do nothing and move ahead

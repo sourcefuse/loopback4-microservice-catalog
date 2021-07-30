@@ -12,14 +12,14 @@ export class ClientAuthRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_id: string;
+  clientId: string;
 
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_secret: string;
+  clientSecret: string;
 
   constructor(data?: Partial<ClientAuthRequest>) {
     super(data);

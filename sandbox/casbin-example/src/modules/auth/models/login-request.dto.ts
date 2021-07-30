@@ -12,14 +12,14 @@ export class LoginRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_id: string;
+  clientId: string;
 
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_secret: string;
+  clientSecret: string;
 
   @property({
     type: 'string',

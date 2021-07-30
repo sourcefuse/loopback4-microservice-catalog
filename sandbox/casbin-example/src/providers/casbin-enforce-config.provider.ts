@@ -31,11 +31,10 @@ export class CasbinEnforcerConfigProvider
       './../../fixtures/casbin/policy.csv',
     );
 
-    const result: CasbinConfig = {
+    return {
       model,
       allowedRes,
       policy,
-    };
-    return result;
+    } as CasbinConfig;
   }
 }
