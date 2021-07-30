@@ -9,8 +9,6 @@ import * as path from 'path';
 export class CasbinEnforcerConfigProvider
   implements Provider<CasbinEnforcerConfigGetterFn>
 {
-  constructor() {}
-
   value(): CasbinEnforcerConfigGetterFn {
     return (
       authUser: IAuthUserWithPermissions,

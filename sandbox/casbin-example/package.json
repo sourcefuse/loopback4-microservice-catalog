@@ -70,6 +70,8 @@
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "loopback-connector-kv-redis": "^3.0.3",
@@ -85,6 +87,7 @@
     "@loopback/testlab": "^3.4.0",
     "@types/bcrypt": "^3.0.1",
     "@types/node": "^10.17.59",
+    "@types/moment-timezone": "^0.5.13",
     "eslint": "^7.25.0",
     "source-map-support": "^0.5.19",
     "typescript": "~4.2.4"
