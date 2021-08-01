@@ -1,18 +1,11 @@
 pipeline {
     agent any
-    //TODO: make parameters for registry
-    //TODO: setup webooks/build triggers
     stages {
         stage('Build') {
             steps {
                 dir("sandbox"){
                     sh "chmod +x ./ci_build.sh"
                     withCredentials([usernamePassword('credentialsId': 'sf-reference-arch-dockerhub', 'usernameVariable': 'DOCKER_USERNAME', 'passwordVariable': 'DOCKER_PASSWORD')]) {
-                        sh "echo ${env.WORKSPACE}"
-                        sh "ls"
-                        sh "pwd"
-                        sh "which docker-compose"
-                        sh "which docker"
                         sh "./ci_build.sh"
                     }
                 }

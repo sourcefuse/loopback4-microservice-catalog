@@ -22,6 +22,16 @@ spec:
                 name: health-check-svc
                 port:
                   number: 80
+    - host: health-check.sourceloop.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: health-check-svc
+                port:
+                  number: 80
     - host: pgadmin.sourceloop.local
       http:
         paths:

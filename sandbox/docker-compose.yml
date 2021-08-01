@@ -329,14 +329,15 @@ services:
       - sandbox
     depends_on:
       - postgres
-    command: >
-      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && sleep 30 &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db'
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'"
+    command:
+      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme};
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' 2>&1;
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' 2>&1;
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' 2>&1;
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' 2>&1;
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' 2>&1;
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db' 2>&1;
+               exit 0"
 
   pgadmin:
     container_name: pgadmin_container
