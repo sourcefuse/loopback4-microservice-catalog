@@ -480,7 +480,9 @@ fetch('/session/{meetingLinkId}/end',
 
 `PATCH /session/{meetingLinkId}/end`
 
-Used to stop the current active meeting. Meeting cannot be stopped again if it is already stopped. Successful execution will add the endTime attribute to a recently ending session.
+Used to stop the current active meeting. Meeting cannot be stopped again if it is 
+      already stopped. Successful execution will add the endTime attribute to a recently 
+      ending session.
 
 <h3 id="videochatsessioncontroller.endsession-parameters">Parameters</h3>
 
@@ -552,7 +554,10 @@ fetch('/session/{meetingLinkId}/token',
 
 `POST /session/{meetingLinkId}/token`
 
-Used for Generating token, which is used for connecting to a room/session on a client side. In vonage, there are three different roles (Moderator, Subscriber, Publisher). We can use expire time for limited validity of a token. Successful execution will send a token.
+Used for Generating token, which is used for connecting to a room/session on a client side. 
+      In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
+      We can use expire time for limited validity of a token. Successful 
+      execution will send a token.
 
 > Body parameter
 
@@ -679,7 +684,7 @@ fetch('/session/{meetingLinkId}',
 
 `PATCH /session/{meetingLinkId}`
 
-Used fr editing the meeting
+Used for editing the meeting
 
 > Body parameter
 
@@ -778,7 +783,10 @@ fetch('/session',
 
 `POST /session`
 
-Used for Creating a session with options such as end to end encryption, archive mode. Note: Archiving Option cannot be enabled while using end to end encryption, otherwise an Error will be thrown. Successful execution will send a meeting link id which can be used to amend in client url.
+Used for Creating a session with options such as end to end encryption, archive mode. 
+      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
+      an Error will be thrown. Successful execution will send a meeting link 
+      id which can be used to amend in client url.
 
 > Body parameter
 

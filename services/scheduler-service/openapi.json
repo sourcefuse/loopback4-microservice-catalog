@@ -1049,7 +1049,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
-        "description": "This api is to update the calendar subscription by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar subscription by passing an `id`. \n      This action will be allowed only to the owner of the calendar or the admin.\n      To identify the `owner` we will check for the email passed in the token and \n      the corresponding access level, whereas to identify the admin we will check \n      for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1160,7 +1160,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
-        "description": "This api is to update the calendar subscription by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar subscription by passing an id. \n      This action will be allowed only to the owner of the calendar or the admin. \n      To identify the ‘owner’ we will check for the email passed in the token and the \n      corresponding access level, whereas to identify the admin we will check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1418,7 +1418,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "This api is to update the calendar by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar by passing an id. This action will be allowed only to \n      the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1542,7 +1542,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "This api is to update the calendar by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar by passing an id. This action will be allowed only to the \n      owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1573,7 +1573,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "This is an api to create a calendar for any user. Recommendation: Use this while adding a user to the main application, in order to create a primary calendar for that particular user.",
+        "description": "This is an api to create a calendar for any user. \n      Recommendation: Use this while adding a user to the main application, in order to create \n      a primary calendar for that particular user.",
         "security": [
           {
             "HTTPBearer": []
@@ -2385,7 +2385,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "While an organizer creates an event, we get participants details along with it. This api will check for slot availability of all the participants in that particular time slot. If the slot is free the event will be created. Events can be scheduled on behalf of someone else, In this case we will be saving the creator details (generally the organiser is the creator themselves, so we will be keeping the organiser and created_by the same).",
+        "description": "While an organizer creates an event, we get participants details along with it. \n      This api will check for slot availability of all the participants in that particular \n      time slot. If the slot is free the event will be created. Events can be scheduled on \n      behalf of someone else, In this case we will be saving the creator details \n      (generally the organiser is the creator themselves, so we will be keeping the organiser \n        and created_by the same).",
         "security": [
           {
             "HTTPBearer": []
@@ -3527,7 +3527,7 @@
         "tags": [
           "WorkingHourController"
         ],
-        "description": "This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar by passing an `id`. This action will be allowed only \n      to the owner of the calendar or the admin. To identify the `owner` we \n      will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -3651,7 +3651,7 @@
         "tags": [
           "WorkingHourController"
         ],
-        "description": "This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar by passing an `id`. This action will \n      be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ \n      we will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.",
         "security": [
           {
             "HTTPBearer": []

@@ -2963,7 +2963,10 @@ fetch('/calendars/{id}',
 
 `PUT /calendars/{id}`
 
-This api is to update the calendar by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+This api is to update the calendar by passing an id. This action will be allowed only to 
+      the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email 
+      passed in the token and the corresponding access level, whereas to identify the admin we will 
+      check for the permission.
 
 > Body parameter
 
@@ -3694,7 +3697,10 @@ fetch('/calendars/{id}',
 
 `DELETE /calendars/{id}`
 
-This api is to update the calendar by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+This api is to update the calendar by passing an id. This action will be allowed only to the 
+      owner of the calendar or the admin. To identify the ‘owner’ we will check for the email 
+      passed in the token and the corresponding access level, whereas to identify the admin we will 
+      check for the permission.
 
 <h3 id="calendarcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -3820,7 +3826,9 @@ fetch('/calendars',
 
 `POST /calendars`
 
-This is an api to create a calendar for any user. Recommendation: Use this while adding a user to the main application, in order to create a primary calendar for that particular user.
+This is an api to create a calendar for any user. 
+      Recommendation: Use this while adding a user to the main application, in order to create 
+      a primary calendar for that particular user.
 
 > Body parameter
 
@@ -6957,7 +6965,11 @@ fetch('/calendars/{id}/subscriptions',
 
 `PATCH /calendars/{id}/subscriptions`
 
-This api is to update the calendar subscription by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+This api is to update the calendar subscription by passing an `id`. 
+      This action will be allowed only to the owner of the calendar or the admin.
+      To identify the `owner` we will check for the email passed in the token and 
+      the corresponding access level, whereas to identify the admin we will check 
+      for the permission.
 
 > Body parameter
 
@@ -7203,7 +7215,10 @@ fetch('/calendars/{id}/subscriptions',
 
 `DELETE /calendars/{id}/subscriptions`
 
-This api is to update the calendar subscription by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+This api is to update the calendar subscription by passing an id. 
+      This action will be allowed only to the owner of the calendar or the admin. 
+      To identify the ‘owner’ we will check for the email passed in the token and the 
+      corresponding access level, whereas to identify the admin we will check for the permission.
 
 <h3 id="calendarsubscriptioncontroller.delete-parameters">Parameters</h3>
 
@@ -9275,7 +9290,12 @@ fetch('/events',
 
 `POST /events`
 
-While an organizer creates an event, we get participants details along with it. This api will check for slot availability of all the participants in that particular time slot. If the slot is free the event will be created. Events can be scheduled on behalf of someone else, In this case we will be saving the creator details (generally the organiser is the creator themselves, so we will be keeping the organiser and created_by the same).
+While an organizer creates an event, we get participants details along with it. 
+      This api will check for slot availability of all the participants in that particular 
+      time slot. If the slot is free the event will be created. Events can be scheduled on 
+      behalf of someone else, In this case we will be saving the creator details 
+      (generally the organiser is the creator themselves, so we will be keeping the organiser 
+        and created_by the same).
 
 > Body parameter
 
@@ -12844,7 +12864,10 @@ fetch('/working-hours/{id}',
 
 `PUT /working-hours/{id}`
 
-This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+This api is to update the calendar by passing an `id`. This action will be allowed only 
+      to the owner of the calendar or the admin. To identify the `owner` we 
+      will check for the email passed in the token and the corresponding access level, 
+      whereas to identify the admin we will check for the permission.
 
 > Body parameter
 
@@ -13283,7 +13306,10 @@ fetch('/working-hours/{id}',
 
 `DELETE /working-hours/{id}`
 
-This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+This api is to update the calendar by passing an `id`. This action will 
+      be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ 
+      we will check for the email passed in the token and the corresponding access level, 
+      whereas to identify the admin we will check for the permission.
 
 <h3 id="workinghourcontroller.deletebyid-parameters">Parameters</h3>
 
