@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.2.0 (2021-08-02)
+
+* feat(sandbox): k8s-yaml-to-hcl (#280) ([621f0cc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/621f0cc)), closes [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280)
+* fix(bpmn-service): fix readme for bpmn service (#278) ([299535b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/299535b)), closes [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
+
+
+
+
+
 ## <small>0.1.4 (2021-07-24)</small>
 
 * fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

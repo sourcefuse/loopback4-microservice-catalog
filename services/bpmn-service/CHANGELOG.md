@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2021-08-02)
+
+* feat(bpmn-service): add default types for camunda (#281) ([ce99a06](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ce99a06)), closes [#281](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/281)
+* fix(bpmn-service): fix readme for bpmn service (#278) ([299535b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/299535b)), closes [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
+
+
+
+
+
 ## <small>2.1.2 (2021-07-24)</small>
 
 * fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

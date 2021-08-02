@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.2 (2021-08-02)</small>
+
+* fix(bpmn-service): fix readme for bpmn service (#278) ([299535b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/299535b)), closes [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
+
+
+
+
+
 ## <small>1.2.1 (2021-07-24)</small>
 
 * fix(core): update readme ([4ec31ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ec31ca)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
