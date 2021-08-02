@@ -1,5 +1,5 @@
 import {Provider} from '@loopback/context';
-import { HttpErrors } from '@loopback/rest';
+import {HttpErrors} from '@loopback/rest';
 import {
   CasbinConfig,
   CasbinEnforcerConfigGetterFn,
@@ -16,7 +16,7 @@ export class CasbinEnforcerConfigProvider
       resource: string,
       isCasbinPolicy?: boolean,
     ) => {
-      if(isCasbinPolicy !== undefined) {
+      if (isCasbinPolicy !== undefined) {
         return this.action(authUser, resource, isCasbinPolicy);
       } else {
         return this.action(authUser, resource, false);
@@ -29,8 +29,11 @@ export class CasbinEnforcerConfigProvider
     resource: string,
     isCasbinPolicy?: boolean,
   ): Promise<CasbinConfig> {
-    if(isCasbinPolicy) {
-      const model = path.resolve(__dirname, './../../fixtures/casbin/model.conf');
+    if (isCasbinPolicy) {
+      const model = path.resolve(
+        __dirname,
+        './../../fixtures/casbin/model.conf',
+      );
       // Write business logic to find out the allowed resource-permission sets for this user. Below is a dummy value.
       const allowedRes = [{resource: 'user', permission: 'TodoCRUD'}];
 
@@ -47,5 +50,5 @@ export class CasbinEnforcerConfigProvider
     } else {
       throw new HttpErrors.Unauthorized('Casbin Policy is set as false');
     }
-  } 
+  }
 }
