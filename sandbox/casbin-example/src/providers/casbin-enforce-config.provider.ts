@@ -1,4 +1,5 @@
 import {Provider} from '@loopback/context';
+import { HttpErrors } from '@loopback/rest';
 import {
   CasbinConfig,
   CasbinEnforcerConfigGetterFn,
@@ -14,7 +15,13 @@ export class CasbinEnforcerConfigProvider
       authUser: IAuthUserWithPermissions,
       resource: string,
       isCasbinPolicy?: boolean,
-    ) => this.action(authUser, resource, isCasbinPolicy);
+    ) => {
+      if(isCasbinPolicy !== undefined) {
+        return this.action(authUser, resource, isCasbinPolicy);
+      } else {
+        return this.action(authUser, resource, false);
+      }
+    };
   }
 
   async action(
@@ -22,19 +29,23 @@ export class CasbinEnforcerConfigProvider
     resource: string,
     isCasbinPolicy?: boolean,
   ): Promise<CasbinConfig> {
-    const model = path.resolve(__dirname, './../../fixtures/casbin/model.conf');
-    // Write business logic to find out the allowed resource-permission sets for this user. Below is a dummy value.
-    const allowedRes = [{resource: 'user', permission: 'TodoCRUD'}];
+    if(isCasbinPolicy) {
+      const model = path.resolve(__dirname, './../../fixtures/casbin/model.conf');
+      // Write business logic to find out the allowed resource-permission sets for this user. Below is a dummy value.
+      const allowedRes = [{resource: 'user', permission: 'TodoCRUD'}];
 
-    const policy = path.resolve(
-      __dirname,
-      './../../fixtures/casbin/policy.csv',
-    );
+      const policy = path.resolve(
+        __dirname,
+        './../../fixtures/casbin/policy.csv',
+      );
 
-    return {
-      model,
-      allowedRes,
-      policy,
-    } as CasbinConfig;
-  }
+      return {
+        model,
+        allowedRes,
+        policy,
+      } as CasbinConfig;
+    } else {
+      throw new HttpErrors.Unauthorized('Casbin Policy is set as false');
+    }
+  } 
 }
