@@ -7,6 +7,44 @@
     "contact": {}
   },
   "paths": {
+    "/auth/apple-oauth-redirect": {
+      "get": {
+        "x-controller-name": "AppleLoginController",
+        "x-operation-name": "appleCallback",
+        "tags": [
+          "AppleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Apple Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "AppleLoginController.appleCallback"
+      }
+    },
     "/auth/change-password": {
       "patch": {
         "x-controller-name": "LoginController",
@@ -43,6 +81,75 @@
           }
         },
         "operationId": "LoginController.resetPassword"
+      }
+    },
+    "/auth/facebook": {
+      "post": {
+        "x-controller-name": "FacebookLoginController",
+        "x-operation-name": "postLoginViaFacebook",
+        "tags": [
+          "FacebookLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Facebook based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "FacebookLoginController.postLoginViaFacebook"
+      }
+    },
+    "/auth/facebook-auth-redirect": {
+      "get": {
+        "x-controller-name": "FacebookLoginController",
+        "x-operation-name": "facebookCallback",
+        "tags": [
+          "FacebookLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Facebook Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "FacebookLoginController.facebookCallback"
       }
     },
     "/auth/forget-password": {
@@ -91,6 +198,288 @@
           }
         },
         "operationId": "ForgetPasswordController.forgetPassword"
+      }
+    },
+    "/auth/google": {
+      "post": {
+        "x-controller-name": "GoogleLoginController",
+        "x-operation-name": "postLoginViaGoogle",
+        "tags": [
+          "GoogleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Google based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "GoogleLoginController.postLoginViaGoogle"
+      },
+      "get": {
+        "x-controller-name": "GoogleLoginController",
+        "x-operation-name": "loginViaGoogle",
+        "tags": [
+          "GoogleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "GoogleLoginController.loginViaGoogle"
+      }
+    },
+    "/auth/google-auth-redirect": {
+      "get": {
+        "x-controller-name": "GoogleLoginController",
+        "x-operation-name": "googleCallback",
+        "tags": [
+          "GoogleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Google Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "GoogleLoginController.googleCallback"
+      }
+    },
+    "/auth/instagram": {
+      "post": {
+        "x-controller-name": "InstagramLoginController",
+        "x-operation-name": "postLoginViaInstagram",
+        "tags": [
+          "InstagramLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Instagram based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "InstagramLoginController.postLoginViaInstagram"
+      }
+    },
+    "/auth/instagram-auth-redirect": {
+      "get": {
+        "x-controller-name": "InstagramLoginController",
+        "x-operation-name": "instagramCallback",
+        "tags": [
+          "InstagramLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Instagram Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "InstagramLoginController.instagramCallback"
+      }
+    },
+    "/auth/keycloak": {
+      "post": {
+        "x-controller-name": "KeycloakLoginController",
+        "x-operation-name": "postLoginViaKeycloak",
+        "tags": [
+          "KeycloakLoginController"
+        ],
+        "description": "POST Call for keycloak based login",
+        "responses": {
+          "200": {
+            "description": "Keycloak Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "KeycloakLoginController.postLoginViaKeycloak"
+      },
+      "get": {
+        "x-controller-name": "KeycloakLoginController",
+        "x-operation-name": "loginViaKeycloak",
+        "tags": [
+          "KeycloakLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "KeycloakLoginController.loginViaKeycloak"
+      }
+    },
+    "/auth/keycloak-auth-redirect": {
+      "get": {
+        "x-controller-name": "KeycloakLoginController",
+        "x-operation-name": "keycloakCallback",
+        "tags": [
+          "KeycloakLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Keycloak Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "KeycloakLoginController.keycloakCallback"
       }
     },
     "/auth/login": {
@@ -216,6 +605,31 @@
           }
         },
         "operationId": "LoginController.me"
+      }
+    },
+    "/auth/oauth-apple": {
+      "post": {
+        "x-controller-name": "AppleLoginController",
+        "x-operation-name": "postLoginViaApple",
+        "tags": [
+          "AppleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Apple based login",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "AppleLoginController.postLoginViaApple"
       }
     },
     "/auth/reset-password": {
@@ -1172,6 +1586,26 @@
           "refreshToken",
           "username",
           "password"
+        ],
+        "additionalProperties": false
+      },
+      "ClientAuthRequest": {
+        "title": "ClientAuthRequest",
+        "type": "object",
+        "description": "This is signature for client authentication request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret"
         ],
         "additionalProperties": false
       },

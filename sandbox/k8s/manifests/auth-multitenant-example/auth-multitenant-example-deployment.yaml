@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    #    network/sourceloop-sanbox: "true"
+    io.sourceloop.service: auth-multitenant-example
+  name: auth-multitenant-example
+  namespace: sourceloop-sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.sourceloop.service: auth-multitenant-example
+  template:
+    metadata:
+      labels:
+        io.sourceloop.service: auth-multitenant-example
+    spec:
+      containers:
+        - env:
+            - name: DB_DATABASE
+              value: authentication_db
+            - name: DB_HOST
+              value: postgres.sourceloop-sandbox.svc.cluster.local
+            - name: DB_PASSWORD
+              value: changeme
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_SCHEMA
+              value: main
+            - name: DB_USER
+              value: postgres
+            - name: JWT_ISSUER
+              value: https://loopback4-microservice-catalog
+            - name: JWT_SECRET
+              value: i_am_a_strong_secret
+            - name: KEYCLOAK_CALLBACK_URL
+              value: test
+            - name: KEYCLOAK_CLIENT_ID
+              value: test
+            - name: KEYCLOAK_CLIENT_SECRET
+              value: test
+            - name: KEYCLOAK_HOST
+              value: test
+            - name: KEYCLOAK_REALM
+              value: test
+            - name: LOCALE
+              value: en
+            - name: LOG_LEVEL
+              value: debug
+            - name: NODE_ENV
+              value: dev
+            - name: RATE_LIMITER_MAX_REQS
+              value: "100"
+            - name: RATE_LIMITER_WINDOW_MS
+              value: "100"
+            - name: REDIS_DB
+              value: "0"
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: USER_TEMP_PASSWORD
+              value: tempP@ssw0rd
+            - name: X_FRAME_OPTIONS
+              value: SAMEORIGIN
+          image: localhost:32000/auth-multitenant-example
+          name: auth-multitenant-example
+          ports:
+            - containerPort: 3000
+          resources: { }
+      restartPolicy: Always
+status: { }

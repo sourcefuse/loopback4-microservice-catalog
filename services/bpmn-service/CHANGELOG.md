@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.2 (2021-07-24)</small>
+
+* fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>2.1.1 (2021-07-19)</small>
 
 * fix(bpmn-service): fix multiple workflow worker registration issue (#268) ([a29493c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a29493c)), closes [#268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/268) [#267](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/267)

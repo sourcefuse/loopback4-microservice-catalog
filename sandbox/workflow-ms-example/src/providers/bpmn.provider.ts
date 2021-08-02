@@ -1,16 +1,16 @@
-import {bind, BindingScope, Provider, service} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
-import {WorflowManager, Workflow, WorkflowDto} from '@sourceloop/bpmn-service';
-import {WorkflowVersion} from '../../../../services/bpmn-service/dist';
-import {CamundaService} from '../services/camunda.service';
+import { bind, BindingScope, Provider, service } from '@loopback/core';
+import { AnyObject } from '@loopback/repository';
+import { HttpErrors } from '@loopback/rest';
+import { WorflowManager, Workflow, WorkflowVersion, WorkflowDto } from '@sourceloop/bpmn-service';
+import { CamundaService } from '../services/camunda.service';
 
-@bind({scope: BindingScope.TRANSIENT})
+
+@bind({ scope: BindingScope.TRANSIENT })
 export class BpmnProvider implements Provider<WorflowManager> {
   constructor(
     @service(CamundaService)
     private readonly camunda: CamundaService,
-  ) {}
+  ) { }
   value(): WorflowManager {
     return {
       getWorkflowById: async workflow => {

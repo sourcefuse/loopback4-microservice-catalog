@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sourceloop-sandbox
+  namespace: sourceloop-sandbox
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              network/sourceloop-sanbox: "true"
+  podSelector:
+    matchLabels:
+      network/sourceloop-sanbox: "true"

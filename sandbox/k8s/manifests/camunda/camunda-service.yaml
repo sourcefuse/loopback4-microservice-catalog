@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.sourceloop.service: camunda
+  name: camunda
+  namespace: sourceloop-sandbox
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.sourceloop.service: camunda
+status:
+  loadBalancer: {}

@@ -1,8 +1,7 @@
 import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
 import {BPMTask} from './bpm-task';
-import {Workflow, WorkflowVersion} from './models';
-import {WorkflowDto} from './models/workflow-dto.model';
+import {Workflow, WorkflowVersion, WorkflowDto} from '../models';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ICommand {
