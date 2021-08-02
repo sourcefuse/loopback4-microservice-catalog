@@ -2,8 +2,7 @@ import {DataObject} from '@loopback/repository';
 import {Orders} from '../../models';
 
 export interface RazorpayPaymentGateway {
-  // eslint-disable-next-line
-  create(payorder: Orders): Promise<any>;
+  create(payorder: Orders): Promise<string>;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   charge(chargeResponse: DataObject<{razorpay_order_id: string}>): Promise<{}>;
   refund(transactionId: string): Promise<{}>;

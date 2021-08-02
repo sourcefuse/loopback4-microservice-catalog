@@ -49,21 +49,21 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           await this.transactionsRepository.create(transactionData);
         }
         return (
-          '<html>' +
-          '<title>Stripe Payment Demo</title>' +
-          '<body>' +
-          '<h3>Welcome to Payment Gateway</h3>' +
-          '<form action=/transactions/charge?method=stripe&orderId=' +
+          `<html>` +
+          `<title>Stripe Payment Demo</title>` +
+          `<body>` +
+          `<h3>Welcome to Payment Gateway</h3>` +
+          `<form action=/transactions/charge?method=stripe&orderId=` +
           payorder?.id +
-          ' method="POST">' +
-          '<script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="' +
+          ` method="POST">` +
+          `<script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="` +
           this.config?.publishKey +
-          '" data-amount="' +
+          `" data-amount="` +
           payorder.totalAmount +
-          '" data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>' +
-          '</form>' +
-          '</body>' +
-          '</html>'
+          `" data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>` +
+          `</form>` +
+          `</body>` +
+          `</html>`
         );
       },
 
@@ -87,8 +87,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
             email: chargeResponse.stripeEmail,
             source: chargeResponse.stripeToken,
           })
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .then((customer: any) =>
+          .then((customer: DataObject<{id:string}>) =>
             this.stripe.charges.create({
               amount,
               description: 'Sample Charge',
@@ -96,8 +95,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
               customer: customer.id,
             }),
           )
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .then(async (charge: any) => {
+          .then(async (charge: DataObject<{}>) => {
             fetchTransaction[0].status = charge ? 'paid' : 'draft';
             fetchTransaction[0].res = {chargeResponse: charge};
             await this.transactionsRepository.updateById(
@@ -110,12 +108,12 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
             }
           });
         return (
-          '<html>' +
-          '<title>Stripe Payment Demo</title>' +
-          '<body>' +
-          '<h3> Success with Stripe</h3>' +
-          '</body>' +
-          '</html>'
+          `<html>` +
+          `<title>Stripe Payment Demo</title>` +
+          `<body>` +
+          `<h3> Success with Stripe</h3>` +
+          `</body>` +
+          `</html>`
         );
       },
 
@@ -124,7 +122,6 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           transactionId,
         );
         const paymentId = await transaction?.res?.chargeResponse?.id;
-        // const refund = await instance.payments.refund(paymentId);
         const refund = await this.stripe.refunds.create({
           charge: paymentId,
         });

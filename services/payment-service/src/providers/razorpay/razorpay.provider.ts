@@ -34,12 +34,12 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         const transRes = transactions[0]?.res;
         if (payorder?.status === 'paid') {
           return (
-            '<html>' +
-            '<title>Razorpay Payment </title>' +
-            '<body>' +
+            `<html>` +
+            `<title>Razorpay Payment </title>` +
+            `<body>` +
             `<h3> Payment already done for this order ID :- ${payorder.id} </h3>` +
-            '</body>' +
-            '</html>'
+            `</body>` +
+            `</html>`
           );
         }
         const razorPayOptions = {
@@ -49,8 +49,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         if (transactions.length === 0) {
           await instance.orders.create(
             razorPayOptions,
-            // eslint-disable-next-line
-            async (err: any, order: any) => {
+            async (err: unknown, order: DataObject<{id:string}>) => {
               if (err) {
                 // eslint-disable-next-line
                 console.log(err, 'error');
@@ -60,50 +59,50 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                   razorpayOrderID: order.id,
                 };
                 razorpayTemplate =
-                  '<html>' +
-                  '<head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>' +
-                  '<body>' +
-                  '<form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key="' +
+                  `<html>` +
+                  `<head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>` +
+                  `<body>` +
+                  `<form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key="` +
                   razorpayKey +
-                  '"  data-amount="' +
+                  `"  data-amount="` +
                   payorder.totalAmount +
-                  '" ' +
-                  ' data-buttontext="Pay with Razorpay" data-order_id="' +
+                  `" ` +
+                  ` data-buttontext="Pay with Razorpay" data-order_id="` +
                   order.id +
-                  '" ' +
-                  'data-theme.color="#57AB5A"' +
-                  '></script>' +
-                  '<input type="hidden" value="Hidden Element" name="hidden">' +
-                  '</form>' +
-                  '<script>' +
-                  'document.querySelector(".razorpay-payment-button").click()' +
-                  '</script>' +
-                  '</body></html>';
+                  `" ` +
+                  `data-theme.color="#57AB5B"` +
+                  `></script>` +
+                  `<input type="hidden" value="Hidden Element" name="hidden">` +
+                  `</form>` +
+                  `<script>` +
+                  `document.querySelector(".razorpay-payment-button").click()` +
+                  `</script>` +
+                  `</body></html>`;
               }
             },
           );
           await this.ordersRepository.updateById(payorder.id, {...payorder});
         } else {
           razorpayTemplate =
-            '<html>' +
-            '<head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>' +
-            '<body>' +
-            '<form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key="' +
+            `<html>` +
+            `<head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>` +
+            `<body>` +
+            `<form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key="` +
             razorpayKey +
-            '"  data-amount="' +
+            `"  data-amount="` +
             payorder.totalAmount +
-            '" ' +
-            ' data-buttontext="Pay with Razorpay" data-order_id="' +
+            `" ` +
+            ` data-buttontext="Pay with Razorpay" data-order_id="` +
             transRes.gatewayOrderRes.razorpayOrderID +
-            '" ' +
-            'data-theme.color="#57AB5A"' +
-            '></script>' +
-            '<input type="hidden" value="Hidden Element" name="hidden">' +
-            '</form>' +
-            '<script>' +
-            'document.querySelector(".razorpay-payment-button").click()' +
-            '</script>' +
-            '</body></html>';
+            `" ` +
+            `data-theme.color="#57AB5B"` +
+            `</script>` +
+            `<input type="hidden" value="Hidden Element" name="hidden">` +
+            `</form>` +
+            `<script>` +
+            `document.querySelector(".razorpay-payment-button").click()` +
+            `</script>` +
+            `</body></html>`;
         }
         const transactionData = {
           id: uuidv4(),
@@ -144,8 +143,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             chargeResponse.razorpay_payment_id,
             order[0].totalamount,
             'INR',
-            // eslint-disable-next-line
-            (err: any, response: any) => {
+            (err: unknown, response: unknown) => {
               if (err) {
                 console.log(err, 'error');
               } else {
@@ -156,7 +154,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           await instance.payments.fetch(
             chargeResponse.razorpay_payment_id,
             // eslint-disable-next-line
-            async (err: any, resdata: any) => {
+            async (err: unknown, resdata: DataObject<{status:string}>) => {
               if (err) {
                 console.log(err, 'error');
               }

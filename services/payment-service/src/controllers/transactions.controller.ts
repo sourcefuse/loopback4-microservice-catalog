@@ -185,8 +185,7 @@ export class TransactionsController {
       },
     })
     orders: Orders,
-    // eslint-disable-next-line
-  ): Promise<any> {
+  ): Promise<unknown> {
     const orderEntity = {
       id: uuidv4(),
       totalAmount: orders?.totalAmount,
@@ -197,7 +196,7 @@ export class TransactionsController {
     };
     const newOrder = await this.ordersRepository.create(orderEntity);
     return this.res.redirect(
-      302,
+      redirectStatusCode,
       `http://localhost:3000/transactions/orderid/${newOrder.id}`,
     );
   }
@@ -215,8 +214,7 @@ export class TransactionsController {
   })
   async transactionsPay(
     @param.path.string('id') id: string,
-    // eslint-disable-next-line
-  ): Promise<any> {
+  ): Promise<unknown> {
     const Order = await this.ordersRepository.findById(id);
     return this.res.send(await this.gatewayHelper.create(Order));
   }
@@ -256,8 +254,7 @@ export class TransactionsController {
   })
   async transactionsRefund(
     @param.path.string('id') id: string,
-    // eslint-disable-next-line
-  ): Promise<any> {
+  ): Promise<unknown>{
     return this.gatewayHelper.refund(id);
   }
 }
