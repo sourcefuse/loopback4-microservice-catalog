@@ -2963,6 +2963,8 @@ fetch('/calendars/{id}',
 
 `PUT /calendars/{id}`
 
+This api is to update the calendar by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+
 > Body parameter
 
 ```json
@@ -3192,6 +3194,8 @@ fetch('/calendars/{id}',
 ```
 
 `GET /calendars/{id}`
+
+These requests will be available to everyone in the event to look at.
 
 <h3 id="calendarcontroller.findbyid-parameters">Parameters</h3>
 
@@ -3690,6 +3694,8 @@ fetch('/calendars/{id}',
 
 `DELETE /calendars/{id}`
 
+This api is to update the calendar by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+
 <h3 id="calendarcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -3813,6 +3819,8 @@ fetch('/calendars',
 ```
 
 `POST /calendars`
+
+This is an api to create a calendar for any user. Recommendation: Use this while adding a user to the main application, in order to create a primary calendar for that particular user.
 
 > Body parameter
 
@@ -4077,6 +4085,8 @@ fetch('/calendars',
 ```
 
 `GET /calendars`
+
+These requests will be available to everyone in the event to look at.
 
 <h3 id="calendarcontroller.find-parameters">Parameters</h3>
 
@@ -6781,6 +6791,8 @@ fetch('/calendars/{id}/subscriptions',
 
 `POST /calendars/{id}/subscriptions`
 
+This is an api to create a calendar subscription for any calendar.
+
 > Body parameter
 
 ```json
@@ -6945,6 +6957,8 @@ fetch('/calendars/{id}/subscriptions',
 
 `PATCH /calendars/{id}/subscriptions`
 
+This api is to update the calendar subscription by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+
 > Body parameter
 
 ```json
@@ -7050,6 +7064,8 @@ fetch('/calendars/{id}/subscriptions',
 ```
 
 `GET /calendars/{id}/subscriptions`
+
+These requests will be available to the owner of the subscription.
 
 <h3 id="calendarsubscriptioncontroller.find-parameters">Parameters</h3>
 
@@ -7187,6 +7203,8 @@ fetch('/calendars/{id}/subscriptions',
 
 `DELETE /calendars/{id}/subscriptions`
 
+This api is to update the calendar subscription by passing an id. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+
 <h3 id="calendarsubscriptioncontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -7297,6 +7315,8 @@ fetch('/calendars/{id}/working-hours',
 ```
 
 `POST /calendars/{id}/working-hours`
+
+This is an api to create a calendar for any user.
 
 > Body parameter
 
@@ -8158,6 +8178,8 @@ fetch('/events/{id}',
 
 `PUT /events/{id}`
 
+This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).
+
 > Body parameter
 
 ```json
@@ -8317,6 +8339,8 @@ fetch('/events/{id}',
 
 `PATCH /events/{id}`
 
+This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).
+
 > Body parameter
 
 ```json
@@ -8419,6 +8443,8 @@ fetch('/events/{id}',
 ```
 
 `GET /events/{id}`
+
+This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.
 
 <h3 id="eventcontroller.findbyid-parameters">Parameters</h3>
 
@@ -9063,6 +9089,8 @@ fetch('/events/{id}',
 
 `DELETE /events/{id}`
 
+Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).
+
 <h3 id="eventcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -9246,6 +9274,8 @@ fetch('/events',
 ```
 
 `POST /events`
+
+While an organizer creates an event, we get participants details along with it. This api will check for slot availability of all the participants in that particular time slot. If the slot is free the event will be created. Events can be scheduled on behalf of someone else, In this case we will be saving the creator details (generally the organiser is the creator themselves, so we will be keeping the organiser and created_by the same).
 
 > Body parameter
 
@@ -9584,6 +9614,8 @@ fetch('/events',
 ```
 
 `GET /events`
+
+This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.
 
 <h3 id="eventcontroller.find-parameters">Parameters</h3>
 
@@ -9987,6 +10019,8 @@ fetch('/events/{id}/attachments',
 
 `POST /events/{id}/attachments`
 
+Organizer can add attachments to the event (if it was missed while creating event).
+
 > Body parameter
 
 ```json
@@ -10135,6 +10169,8 @@ fetch('/events/{id}/attachments',
 
 `PATCH /events/{id}/attachments`
 
+Organizer can update details of the attachment.
+
 > Body parameter
 
 ```json
@@ -10236,6 +10272,8 @@ fetch('/events/{id}/attachments',
 ```
 
 `GET /events/{id}/attachments`
+
+These requests will be available to everyone in the event to look at.
 
 <h3 id="eventattachmentcontroller.find-parameters">Parameters</h3>
 
@@ -10356,6 +10394,8 @@ fetch('/events/{id}/attachments',
 
 `DELETE /events/{id}/attachments`
 
+Organizer can delete the attachment.
+
 <h3 id="eventattachmentcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -10470,6 +10510,8 @@ fetch('/events/{id}/attendees',
 ```
 
 `POST /events/{id}/attendees`
+
+Attendees could be added to the event. This action could only be performed by the organizer
 
 > Body parameter
 
@@ -10623,6 +10665,8 @@ fetch('/events/{id}/attendees',
 
 `PATCH /events/{id}/attendees`
 
+Attendees can update details here. (Mainly accept or reject the invitation)
+
 > Body parameter
 
 ```json
@@ -10725,6 +10769,8 @@ fetch('/events/{id}/attendees',
 ```
 
 `GET /events/{id}/attendees`
+
+Attendees are visible to everyone according to the access permissions provided to them.
 
 <h3 id="eventattendeecontroller.find-parameters">Parameters</h3>
 
@@ -10855,6 +10901,8 @@ fetch('/events/{id}/attendees',
 ```
 
 `DELETE /events/{id}/attendees`
+
+Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.
 
 <h3 id="eventattendeecontroller.delete-parameters">Parameters</h3>
 
@@ -11044,6 +11092,8 @@ fetch('/settings/{id}',
 ```
 
 `PUT /settings/{id}`
+
+Update setting.
 
 > Body parameter
 
@@ -11255,6 +11305,8 @@ fetch('/settings/{id}',
 
 `GET /settings/{id}`
 
+These requests will be available to everyone in the setting to look at.
+
 <h3 id="settingscontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -11344,6 +11396,8 @@ fetch('/settings/{id}',
 ```
 
 `DELETE /settings/{id}`
+
+Delete setting.
 
 <h3 id="settingscontroller.deletebyid-parameters">Parameters</h3>
 
@@ -11442,6 +11496,8 @@ fetch('/settings',
 ```
 
 `POST /settings`
+
+Create any new settings
 
 > Body parameter
 
@@ -12788,6 +12844,8 @@ fetch('/working-hours/{id}',
 
 `PUT /working-hours/{id}`
 
+This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the `owner` we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
+
 > Body parameter
 
 ```json
@@ -12997,6 +13055,8 @@ fetch('/working-hours/{id}',
 ```
 
 `GET /working-hours/{id}`
+
+These requests will be available to everyone to look at. This will be represent the work timings for the owner of the calendar.
 
 <h3 id="workinghourcontroller.findbyid-parameters">Parameters</h3>
 
@@ -13222,6 +13282,8 @@ fetch('/working-hours/{id}',
 ```
 
 `DELETE /working-hours/{id}`
+
+This api is to update the calendar by passing an `id`. This action will be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email passed in the token and the corresponding access level, whereas to identify the admin we will check for the permission.
 
 <h3 id="workinghourcontroller.deletebyid-parameters">Parameters</h3>
 

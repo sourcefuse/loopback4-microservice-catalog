@@ -16,6 +16,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "description": "Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.",
         "security": [
           {
             "HTTPBearer": []
@@ -51,6 +52,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "description": "Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.",
         "security": [
           {
             "HTTPBearer": []
@@ -85,6 +87,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "description": "Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.",
         "security": [
           {
             "HTTPBearer": []
@@ -121,6 +124,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
+        "description": "Used to fetch a list of archives (meetings that were recorded).",
         "security": [
           {
             "HTTPBearer": []
@@ -190,6 +194,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "description": "Used to stop the current active meeting. Meeting cannot be stopped again if it is already stopped. Successful execution will add the endTime attribute to a recently ending session.",
         "security": [
           {
             "HTTPBearer": []
@@ -220,6 +225,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "description": "Used for Generating token, which is used for connecting to a room/session on a client side. In vonage, there are three different roles (Moderator, Subscriber, Publisher). We can use expire time for limited validity of a token. Successful execution will send a token.",
         "security": [
           {
             "HTTPBearer": []
@@ -266,6 +272,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "description": "Used fr editing the meeting",
         "security": [
           {
             "HTTPBearer": []
@@ -306,6 +313,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "description": "Used for Creating a session with options such as end to end encryption, archive mode. Note: Archiving Option cannot be enabled while using end to end encryption, otherwise an Error will be thrown. Successful execution will send a meeting link id which can be used to amend in client url.",
         "security": [
           {
             "HTTPBearer": []
@@ -341,6 +349,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
+        "description": "Webhook API hit from a third party to add/update session attendees in a meeting.",
         "responses": {
           "204": {
             "description": "POST /webhooks/session Success"

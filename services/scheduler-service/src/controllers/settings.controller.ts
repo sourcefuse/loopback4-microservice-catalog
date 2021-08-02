@@ -40,6 +40,7 @@ export class SettingsController {
   })
   @authorize({permissions: [PermissionKey.CreateSettings]})
   @post(basePath, {
+    description: 'Create any new settings',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -139,6 +140,8 @@ export class SettingsController {
   })
   @authorize({permissions: [PermissionKey.ViewSettings]})
   @get(`${basePath}/{id}`, {
+    description:
+      'These requests will be available to everyone in the setting to look at.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -190,6 +193,7 @@ export class SettingsController {
   })
   @authorize({permissions: [PermissionKey.UpdateSettings]})
   @put(`${basePath}/{id}`, {
+    description: 'Update setting.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -209,6 +213,7 @@ export class SettingsController {
   })
   @authorize({permissions: [PermissionKey.DeleteSettings]})
   @del(`${basePath}/{id}`, {
+    description: 'Delete setting.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

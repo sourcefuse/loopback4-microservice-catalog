@@ -63,6 +63,7 @@ export class CalendarWorkingHourController {
   })
   @authorize({permissions: [PermissionKey.CreateWorkingHour]})
   @post(basePath, {
+    description: 'This is an api to create a calendar for any user.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {

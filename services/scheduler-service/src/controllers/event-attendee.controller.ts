@@ -38,6 +38,8 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.ViewAttendee]})
   @get(basePath, {
+    description:
+      'Attendees are visible to everyone according to the access permissions provided to them.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -62,6 +64,8 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.CreateAttendee]})
   @post(basePath, {
+    description:
+      'Attendees could be added to the event. This action could only be performed by the organizer',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -95,6 +99,8 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.UpdateAttendee]})
   @patch(basePath, {
+    description:
+      'Attendees can update details here. (Mainly accept or reject the invitation)',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -124,6 +130,8 @@ export class EventAttendeeController {
   })
   @authorize({permissions: [PermissionKey.DeleteAttendee]})
   @del(basePath, {
+    description:
+      'Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {

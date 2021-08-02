@@ -39,6 +39,8 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
   @get(basePath, {
+    description:
+      'These requests will be available to the owner of the subscription.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -66,6 +68,8 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post(basePath, {
+    description:
+      'This is an api to create a calendar subscription for any calendar.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -99,6 +103,11 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.UpdateSubscription]})
   @patch(basePath, {
+    description: `This api is to update the calendar subscription by passing an \`id\`. 
+      This action will be allowed only to the owner of the calendar or the admin.
+      To identify the \`owner\` we will check for the email passed in the token and 
+      the corresponding access level, whereas to identify the admin we will check 
+      for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -128,6 +137,10 @@ export class CalendarSubscriptionController {
   })
   @authorize({permissions: [PermissionKey.DeleteSubscription]})
   @del(basePath, {
+    description: `This api is to update the calendar subscription by passing an id. 
+      This action will be allowed only to the owner of the calendar or the admin. 
+      To identify the ‘owner’ we will check for the email passed in the token and the 
+      corresponding access level, whereas to identify the admin we will check for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
