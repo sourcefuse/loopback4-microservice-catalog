@@ -26,3 +26,9 @@ that are used throughout the service catalog.
 ```bash
 npm install @sourcelooop/core
 ```
+
+`@sourceloop/core` is dependent on [`swagger-stats`](https://www.npmjs.com/package/swagger-stats), so if you haven't added prom-client already, you should do this now. It's a peer dependency of swagger-stats as of version 0.95.19.
+
+```bash
+npm install prom-client@12 --save
+```
