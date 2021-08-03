@@ -1,12 +1,11 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {PaymentDatasourceName} from '../keys';
-import {Transactions, TransactionsRelations} from '../models';
+import {Transactions} from '../models';
 
 export class TransactionsRepository extends DefaultCrudRepository<
   Transactions,
-  typeof Transactions.prototype.id,
-  TransactionsRelations
+  typeof Transactions.prototype.id
 > {
   constructor(
     @inject(`datasources.${PaymentDatasourceName}`)

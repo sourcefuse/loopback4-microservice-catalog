@@ -3,7 +3,7 @@ import {RazorpayPaymentGateway} from './types';
 
 export namespace RazorpayBindings {
   export const RazorpayConfig = BindingKey.create<{
-    datakey: string;
+    dataKey: string;
     publishKey: string;
   } | null>('sf.payment.config.razorpay');
   export const RazorpayHelper =

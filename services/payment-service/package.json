@@ -57,6 +57,8 @@
     "@loopback/service-proxy": "^3.1.1",
     "@sourceloop/core": "^1.0.0",
     "@types/uuid": "^8.3.1",
+    "razorpay": "^2.0.6",
+    "stripe": "^8.150.0",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2"
   },

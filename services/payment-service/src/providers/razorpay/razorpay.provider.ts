@@ -4,6 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Orders} from '../../models';
 import {OrdersRepository, TransactionsRepository} from '../../repositories';
 import {RazorpayPaymentGateway, IRazorpayConfig} from './types';
+import {RazorpayBindings} from './keys';
 const Razorpay = require('razorpay');
 
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
@@ -12,6 +13,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     private readonly transactionsRepository: TransactionsRepository,
     @repository(OrdersRepository)
     private readonly ordersRepository: OrdersRepository,
+    @inject(RazorpayBindings.RazorpayConfig)
     private readonly config?: IRazorpayConfig,
   ) {}
 
@@ -34,12 +36,12 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         const transRes = transactions[0]?.res;
         if (payorder?.status === 'paid') {
           return (
-            `<html>` +
-            `<title>Razorpay Payment </title>` +
-            `<body>` +
-            `<h3> Payment already done for this order ID :- ${payorder.id} </h3>` +
-            `</body>` +
-            `</html>`
+            `<html>
+            <title>Razorpay Payment </title>
+            <body>
+            <h3> Payment already done for this order ID :- ${payorder.id} </h3>
+            </body>
+            </html>`
           );
         }
         const razorPayOptions = {
@@ -59,50 +61,45 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                   razorpayOrderID: order.id,
                 };
                 razorpayTemplate =
-                  `<html>` +
-                  `<head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>` +
-                  `<body>` +
-                  `<form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key="` +
-                  razorpayKey +
-                  `"  data-amount="` +
-                  payorder.totalAmount +
-                  `" ` +
-                  ` data-buttontext="Pay with Razorpay" data-order_id="` +
-                  order.id +
-                  `" ` +
-                  `data-theme.color="#57AB5B"` +
-                  `></script>` +
-                  `<input type="hidden" value="Hidden Element" name="hidden">` +
-                  `</form>` +
-                  `<script>` +
-                  `document.querySelector(".razorpay-payment-button").click()` +
-                  `</script>` +
-                  `</body></html>`;
+                  `<html>
+                  <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
+                  <body>
+                  <form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
+                  ${razorpayKey}
+                  data-amount=${payorder.totalAmount}
+                  data-buttontext="Pay with Razorpay" data-order_id=
+                  ${order.id}
+                  data-theme.color="#57AB5B"
+                  ></script>
+                  <input type="hidden" value="Hidden Element" name="hidden">
+                  </form>
+                  <script>
+                  document.querySelector(".razorpay-payment-button").click()
+                  </script>
+                  </body></html>`;
               }
             },
           );
           await this.ordersRepository.updateById(payorder.id, {...payorder});
         } else {
           razorpayTemplate =
-            `<html>` +
-            `<head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>` +
-            `<body>` +
-            `<form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key="` +
-            razorpayKey +
-            `"  data-amount="` +
-            payorder.totalAmount +
-            `" ` +
-            ` data-buttontext="Pay with Razorpay" data-order_id="` +
-            transRes.gatewayOrderRes.razorpayOrderID +
-            `" ` +
-            `data-theme.color="#57AB5B"` +
-            `</script>` +
-            `<input type="hidden" value="Hidden Element" name="hidden">` +
-            `</form>` +
-            `<script>` +
-            `document.querySelector(".razorpay-payment-button").click()` +
-            `</script>` +
-            `</body></html>`;
+            `<html>
+            <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
+            <body>
+            <form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
+            ${razorpayKey}
+            data-amount=
+            ${payorder.totalAmount}
+            data-buttontext="Pay with Razorpay" data-order_id=
+            ${transRes.gatewayOrderRes.razorpayOrderID}
+            data-theme.color="#57AB5B"
+            </script>
+            <input type="hidden" value="Hidden Element" name="hidden">
+            </form>
+            <script>
+            document.querySelector(".razorpay-payment-button").click()
+            </script>
+            </body></html>`;
         }
         const transactionData = {
           id: uuidv4(),
@@ -180,12 +177,12 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           );
         }
         return (
-          '<html>' +
-          '<title>Razorpay Payment Demo</title>' +
-          '<body>' +
-          `<h3> Success with Razorpay for order ID :- ${order[0].id} </h3>` +
-          '</body>' +
-          '</html>'
+          `<html>
+          <title>Razorpay Payment Demo</title>
+          <body>
+          <h3> Success with Razorpay for order ID :- ${order[0].id} </h3>
+          </body>
+          </html>`
         );
       },
 

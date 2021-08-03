@@ -49,21 +49,21 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           await this.transactionsRepository.create(transactionData);
         }
         return (
-          `<html>` +
-          `<title>Stripe Payment Demo</title>` +
-          `<body>` +
-          `<h3>Welcome to Payment Gateway</h3>` +
-          `<form action=/transactions/charge?method=stripe&orderId=` +
-          payorder?.id +
-          ` method="POST">` +
-          `<script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="` +
-          this.config?.publishKey +
-          `" data-amount="` +
-          payorder.totalAmount +
-          `" data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>` +
-          `</form>` +
-          `</body>` +
-          `</html>`
+          `<html>
+          <title>Stripe Payment Demo</title>
+          <body>
+          <h3>Welcome to Payment Gateway</h3>
+          <form action=/transactions/charge?method=stripe&orderId=
+          ${payorder?.id}
+          method="POST">
+          <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key=
+          ${this.config?.publishKey}
+          data-amount=
+          ${payorder.totalAmount}
+          data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>
+          </form>
+          </body>
+          </html>`
         );
       },
 
@@ -108,12 +108,12 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
             }
           });
         return (
-          `<html>` +
-          `<title>Stripe Payment Demo</title>` +
-          `<body>` +
-          `<h3> Success with Stripe</h3>` +
-          `</body>` +
-          `</html>`
+          `<html>
+          <title>Stripe Payment Demo</title>
+          <body>
+          <h3> Success with Stripe</h3>
+          </body>
+          </html>`
         );
       },
 
