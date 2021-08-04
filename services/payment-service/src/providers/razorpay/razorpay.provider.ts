@@ -5,6 +5,7 @@ import {Orders} from '../../models';
 import {OrdersRepository, TransactionsRepository} from '../../repositories';
 import {RazorpayPaymentGateway, IRazorpayConfig} from './types';
 import {RazorpayBindings} from './keys';
+import {ILogger, LOGGER} from '@sourceloop/core';
 const Razorpay = require('razorpay');
 
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
@@ -15,6 +16,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     private readonly ordersRepository: OrdersRepository,
     @inject(RazorpayBindings.RazorpayConfig)
     private readonly config?: IRazorpayConfig,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   value() {
@@ -53,8 +55,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             razorPayOptions,
             async (err: unknown, order: DataObject<{id:string}>) => {
               if (err) {
-                // eslint-disable-next-line
-                console.log(err, 'error');
+                this.logger.info(`${err}, err`);
               }
               if (order) {
                 payorder.metaData = {
@@ -142,7 +143,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             'INR',
             (err: unknown, response: unknown) => {
               if (err) {
-                console.log(err, 'error');
+                this.logger.info(`${err}, err`);
               } else {
                 //do nothing
               }
@@ -153,7 +154,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             // eslint-disable-next-line
             async (err: unknown, resdata: DataObject<{status:string}>) => {
               if (err) {
-                console.log(err, 'error');
+                this.logger.info(`${err}, err`);
               }
               if (resdata.status === 'captured' || resdata.status === 'paid') {
                 order[0].status = 'paid';
