@@ -14,9 +14,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     private readonly transactionsRepository: TransactionsRepository,
     @repository(OrdersRepository)
     private readonly ordersRepository: OrdersRepository,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(RazorpayBindings.RazorpayConfig)
     private readonly config?: IRazorpayConfig,
-    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   value() {
