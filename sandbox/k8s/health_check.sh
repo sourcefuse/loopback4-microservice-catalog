@@ -6,7 +6,7 @@ ERROR_COUNT=0
 declare -a services=("workflow" "scheduler" "notification" "in-mail" "auth" "audit")
 
 for service in "${services[@]}"; do
-  curl_response=$(curl -Is -H "Host: ${service}.sourceloop.local" https://${service}.${DOMAIN}/openapi.json --insecure -f)
+  curl_response=$(curl -Is -H "Host: ${service}.${DOMAIN}" https://${service}.${DOMAIN}/openapi.json --insecure -f)
   if [ -z "$curl_response" ]; then
     echo "${service} service is unhealthy"
     ERROR_COUNT=$((ERROR_COUNT + 1))
