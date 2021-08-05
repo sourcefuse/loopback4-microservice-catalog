@@ -21,7 +21,6 @@ install_microk8s() {
   pushd $HOME
   mkdir -p .kube
   microk8s config >.kube/config
-  cat ~/.kube/config
   popd
 }
 
@@ -70,7 +69,7 @@ terraform_destroy() {
 run_tests() {
   echo "Sleeping to wait for services to come online."
   sleep 90
-  ${CURRENT_DIR}/k8s/health_check.sh sourceloop.local
+  ${CURRENT_DIR}/k8s/health_check.sh sourceloop.local true
 }
 
 if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then

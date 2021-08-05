@@ -1,12 +1,18 @@
 #!/bin/bash
 DOMAIN=$1
+IS_LOCALHOST=$2
 ERROR_COUNT=0
 
 # TODO: Add video when it works - "video"
 declare -a services=("workflow" "scheduler" "notification" "in-mail" "auth" "audit")
 
 for service in "${services[@]}"; do
-  curl_response=$(curl -Is -H "Host: ${service}.${DOMAIN}" https://${service}.${DOMAIN}/openapi.json --insecure -f)
+  if [ "$IS_LOCALHOST" = "true" ]; then
+      curl_response=$(curl -Is -H "Host: ${service}.${DOMAIN}" https://localhost/openapi.json --insecure -f)
+    else
+      curl_response=$(curl -Is -H "Host: ${service}.${DOMAIN}" https://${service}.${DOMAIN}/openapi.json --insecure -f)
+  fi
+
   if [ -z "$curl_response" ]; then
     echo "${service} service is unhealthy"
     ERROR_COUNT=$((ERROR_COUNT + 1))
