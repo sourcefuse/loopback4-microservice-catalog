@@ -68,7 +68,7 @@ terraform_destroy() {
 
 run_tests() {
   echo "Sleeping to wait for services to come online."
-  sleep 90
+  sleep 180
   ${CURRENT_DIR}/k8s/health_check.sh sourceloop.local true
 }
 
