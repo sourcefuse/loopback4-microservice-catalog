@@ -6,8 +6,13 @@ LOCAL_REGISTRY='localhost:32000'
 install_microk8s() {
   sudo snap install microk8s --classic
   microk8s status --wait-ready
-  microk8s enable dns registry istio
+  microk8s enable dns registry
   microk8s kubectl get all --all-namespaces
+  pushd $HOME
+  mkdir .kube
+  cd .kube
+  microk8s config > config
+  popd
 }
 
 local_docker_push() {
@@ -43,6 +48,7 @@ apply_terraform() {
   pushd ${CURRENT_DIR}/k8s/tf-sourceloop-sandbox
   terraform init
   terraform apply -auto-approve
+  popd
 }
 
 run_tests() {
