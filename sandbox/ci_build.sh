@@ -3,6 +3,15 @@ CURRENT_DIR=$1
 INSTALL_MICROK8S=$2
 LOCAL_REGISTRY='localhost:32000'
 
+install_kubectl() {
+  sudo apt-get update
+  sudo apt-get install -y apt-transport-https ca-certificates curl
+  sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  sudo apt-get update
+  sudo apt-get install -y kubectl
+}
+
 install_microk8s() {
   sudo snap install microk8s --classic
   microk8s status --wait-ready
@@ -10,18 +19,18 @@ install_microk8s() {
   microk8s kubectl get all --all-namespaces
   pushd $HOME
   mkdir -p .kube
-  microk8s config > .kube/config
+  microk8s config >.kube/config
   popd
 }
 
 local_docker_push() {
-    docker push ${LOCAL_REGISTRY}/auth-multitenant-example
-    docker push ${LOCAL_REGISTRY}/notification-socket-example
-    docker push ${LOCAL_REGISTRY}/workflow-ms-example
-    docker push ${LOCAL_REGISTRY}/audit-ms-example
-    docker push ${LOCAL_REGISTRY}/scheduler-example
-    docker push ${LOCAL_REGISTRY}/video-conferencing-ms-example
-    docker push ${LOCAL_REGISTRY}/in-mail-example
+  docker push ${LOCAL_REGISTRY}/auth-multitenant-example
+  docker push ${LOCAL_REGISTRY}/notification-socket-example
+  docker push ${LOCAL_REGISTRY}/workflow-ms-example
+  docker push ${LOCAL_REGISTRY}/audit-ms-example
+  docker push ${LOCAL_REGISTRY}/scheduler-example
+  docker push ${LOCAL_REGISTRY}/video-conferencing-ms-example
+  docker push ${LOCAL_REGISTRY}/in-mail-example
 }
 
 docker_push() {
@@ -40,7 +49,7 @@ docker_push() {
   docker push ${DOCKER_USERNAME}/scheduler-example
   docker push ${DOCKER_USERNAME}/video-conferencing-ms-example
   docker push ${DOCKER_USERNAME}/in-mail-example
-#  docker system prune -a -f
+  #  docker system prune -a -f
 }
 
 apply_terraform() {
@@ -74,6 +83,7 @@ sudo REGISTRY=$LOCAL_REGISTRY ./docker-compose -f "${CURRENT_DIR}/docker-compose
 
 if [ "${INSTALL_MICROK8S}" = "true" ]; then
   install_microk8s
+  install_kubectl
 fi
 
 local_docker_push
