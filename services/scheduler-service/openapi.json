@@ -1003,6 +1003,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
+        "description": "This is an api to create a calendar subscription for any calendar.",
         "security": [
           {
             "HTTPBearer": []
@@ -1048,6 +1049,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
+        "description": "This api is to update the calendar subscription by passing an `id`. \n      This action will be allowed only to the owner of the calendar or the admin.\n      To identify the `owner` we will check for the email passed in the token and \n      the corresponding access level, whereas to identify the admin we will check \n      for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1107,6 +1109,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
+        "description": "These requests will be available to the owner of the subscription.",
         "security": [
           {
             "HTTPBearer": []
@@ -1157,6 +1160,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
+        "description": "This api is to update the calendar subscription by passing an id. \n      This action will be allowed only to the owner of the calendar or the admin. \n      To identify the ‘owner’ we will check for the email passed in the token and the \n      corresponding access level, whereas to identify the admin we will check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1208,6 +1212,7 @@
         "tags": [
           "CalendarWorkingHourController"
         ],
+        "description": "This is an api to create a calendar for any user.",
         "security": [
           {
             "HTTPBearer": []
@@ -1413,6 +1418,7 @@
         "tags": [
           "CalendarController"
         ],
+        "description": "This api is to update the calendar by passing an id. This action will be allowed only to \n      the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1489,6 +1495,7 @@
         "tags": [
           "CalendarController"
         ],
+        "description": "These requests will be available to everyone in the event to look at.",
         "security": [
           {
             "HTTPBearer": []
@@ -1535,6 +1542,7 @@
         "tags": [
           "CalendarController"
         ],
+        "description": "This api is to update the calendar by passing an id. This action will be allowed only to the \n      owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -1565,6 +1573,7 @@
         "tags": [
           "CalendarController"
         ],
+        "description": "This is an api to create a calendar for any user. \n      Recommendation: Use this while adding a user to the main application, in order to create \n      a primary calendar for that particular user.",
         "security": [
           {
             "HTTPBearer": []
@@ -1649,6 +1658,7 @@
         "tags": [
           "CalendarController"
         ],
+        "description": "These requests will be available to everyone in the event to look at.",
         "security": [
           {
             "HTTPBearer": []
@@ -1771,6 +1781,7 @@
         "tags": [
           "EventAttachmentController"
         ],
+        "description": "Organizer can add attachments to the event (if it was missed while creating event).",
         "security": [
           {
             "HTTPBearer": []
@@ -1816,6 +1827,7 @@
         "tags": [
           "EventAttachmentController"
         ],
+        "description": "Organizer can update details of the attachment.",
         "security": [
           {
             "HTTPBearer": []
@@ -1875,6 +1887,7 @@
         "tags": [
           "EventAttachmentController"
         ],
+        "description": "These requests will be available to everyone in the event to look at.",
         "security": [
           {
             "HTTPBearer": []
@@ -1925,6 +1938,7 @@
         "tags": [
           "EventAttachmentController"
         ],
+        "description": "Organizer can delete the attachment.",
         "security": [
           {
             "HTTPBearer": []
@@ -1976,6 +1990,7 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "description": "Attendees could be added to the event. This action could only be performed by the organizer",
         "security": [
           {
             "HTTPBearer": []
@@ -2021,6 +2036,7 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "description": "Attendees can update details here. (Mainly accept or reject the invitation)",
         "security": [
           {
             "HTTPBearer": []
@@ -2080,6 +2096,7 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "description": "Attendees are visible to everyone according to the access permissions provided to them.",
         "security": [
           {
             "HTTPBearer": []
@@ -2130,6 +2147,7 @@
         "tags": [
           "EventAttendeeController"
         ],
+        "description": "Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.",
         "security": [
           {
             "HTTPBearer": []
@@ -2211,6 +2229,7 @@
         "tags": [
           "EventController"
         ],
+        "description": "This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).",
         "security": [
           {
             "HTTPBearer": []
@@ -2249,6 +2268,7 @@
         "tags": [
           "EventController"
         ],
+        "description": "This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).",
         "security": [
           {
             "HTTPBearer": []
@@ -2287,6 +2307,7 @@
         "tags": [
           "EventController"
         ],
+        "description": "This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.",
         "security": [
           {
             "HTTPBearer": []
@@ -2333,6 +2354,7 @@
         "tags": [
           "EventController"
         ],
+        "description": "Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).",
         "security": [
           {
             "HTTPBearer": []
@@ -2363,6 +2385,7 @@
         "tags": [
           "EventController"
         ],
+        "description": "While an organizer creates an event, we get participants details along with it. \n      This api will check for slot availability of all the participants in that particular \n      time slot. If the slot is free the event will be created. Events can be scheduled on \n      behalf of someone else, In this case we will be saving the creator details \n      (generally the organiser is the creator themselves, so we will be keeping the organiser \n        and created_by the same).",
         "security": [
           {
             "HTTPBearer": []
@@ -2447,6 +2470,7 @@
         "tags": [
           "EventController"
         ],
+        "description": "This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.",
         "security": [
           {
             "HTTPBearer": []
@@ -2533,6 +2557,7 @@
         "tags": [
           "SettingsController"
         ],
+        "description": "Update setting.",
         "security": [
           {
             "HTTPBearer": []
@@ -2609,6 +2634,7 @@
         "tags": [
           "SettingsController"
         ],
+        "description": "These requests will be available to everyone in the setting to look at.",
         "security": [
           {
             "HTTPBearer": []
@@ -2655,6 +2681,7 @@
         "tags": [
           "SettingsController"
         ],
+        "description": "Delete setting.",
         "security": [
           {
             "HTTPBearer": []
@@ -2685,6 +2712,7 @@
         "tags": [
           "SettingsController"
         ],
+        "description": "Create any new settings",
         "security": [
           {
             "HTTPBearer": []
@@ -3499,6 +3527,7 @@
         "tags": [
           "WorkingHourController"
         ],
+        "description": "This api is to update the calendar by passing an `id`. This action will be allowed only \n      to the owner of the calendar or the admin. To identify the `owner` we \n      will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.",
         "security": [
           {
             "HTTPBearer": []
@@ -3575,6 +3604,7 @@
         "tags": [
           "WorkingHourController"
         ],
+        "description": "These requests will be available to everyone to look at. This will be represent the work timings for the owner of the calendar.",
         "security": [
           {
             "HTTPBearer": []
@@ -3621,6 +3651,7 @@
         "tags": [
           "WorkingHourController"
         ],
+        "description": "This api is to update the calendar by passing an `id`. This action will \n      be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ \n      we will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.",
         "security": [
           {
             "HTTPBearer": []

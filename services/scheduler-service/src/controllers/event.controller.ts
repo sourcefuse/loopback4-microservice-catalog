@@ -60,6 +60,12 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.CreateEvent]})
   @post(basePath, {
+    description: `While an organizer creates an event, we get participants details along with it. 
+      This api will check for slot availability of all the participants in that particular 
+      time slot. If the slot is free the event will be created. Events can be scheduled on 
+      behalf of someone else, In this case we will be saving the creator details 
+      (generally the organiser is the creator themselves, so we will be keeping the organiser 
+        and created_by the same).`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -205,6 +211,8 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(basePath, {
+    description:
+      'This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -271,6 +279,8 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.ViewEvent]})
   @get(`${basePath}/{id}`, {
+    description:
+      'This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -296,6 +306,8 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.UpdateEvent]})
   @patch(`${basePath}/{id}`, {
+    description:
+      'This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -322,6 +334,8 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.UpdateEvent]})
   @put(`${basePath}/{id}`, {
+    description:
+      'This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -341,6 +355,8 @@ export class EventController {
   })
   @authorize({permissions: [PermissionKey.DeleteEvent]})
   @del(`${basePath}/{id}`, {
+    description:
+      'Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

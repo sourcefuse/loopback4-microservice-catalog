@@ -1,57 +1,61 @@
 # Sourceloop
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-The `Sourceloop` is a collection of pre-built microservices that aim to reduce time to market for Enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack applications or use the [LoopBack  Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker. 
+The `Sourceloop` is a collection of pre-built microservices that aim to reduce time to market for Enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack applications or use the [LoopBack Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker.
 
 The current catalog consists of the following services:
 
-* [audit-service](services/audit-service)
-* [authentication-service](services/authentication-service)
-* [in-mail-service](services/in-mail-service)
-* [notification-service](services/notification-service)
-* [scheduler-service](services/scheduler-service)
-* [video-conferencing-service](services/video-conferencing-service)
-* [bpmn-service](services/bpmn-service)
+- [audit-service](services/audit-service)
+- [authentication-service](services/authentication-service)
+- [in-mail-service](services/in-mail-service)
+- [notification-service](services/notification-service)
+- [scheduler-service](services/scheduler-service)
+- [video-conferencing-service](services/video-conferencing-service)
+- [bpmn-service](services/bpmn-service)
+- [chat-service](services/chat-service)
 
 This repository also contains a set of example projects in the [sandbox](sandbox) directory that can be run from `docker-compose`.
 
-* [auth-multitenant-example](sandbox/auth-multitenant-example)
-* [auth-ms-basic-example](sandbox/auth-ms-basic-example)
-* [notification-socket-example](sandbox/notification-socket-example)
-* [workflow-ms-example](sandbox/workflow-ms-example)
-* [audit-ms-example](sandbox/audit-ms-example)
-* [in-mail-example](sandbox/in-mail-example)
+- [audit-ms-example](sandbox/audit-ms-example)
+- [auth-multitenant-example](sandbox/auth-multitenant-example)
+- [auth-ms-basic-example](sandbox/auth-ms-basic-example)
+- [notification-socket-example](sandbox/notification-socket-example)
+- [workflow-ms-example](sandbox/workflow-ms-example)
+- [audit-ms-example](sandbox/audit-ms-example)
+- [in-mail-example](sandbox/in-mail-example)
+- [scheduler-example](sandbox/scheduler-example)
+- [video-conferencing-ms-example](sandbox/video-conferencing-ms-example)
 
 ## Table of Contents
 
 - [Sourceloop](#Sourceloop)
-    * [Table of Contents](#table-of-contents)
-        + [Long Term Support](#long-term-support)
-        + [Documentation](#documentation)
-        + [Getting Started](#getting-started)
-        + [Production Deployment](#production-deployment)  
-        + [Related Projects](#related-projects)
-        + [Feedback](#feedback)
-        + [Contributing](#contributing)
-        + [Code of Conduct](#code-of-conduct)
-        + [License](#license)
-    
+  - [Table of Contents](#table-of-contents)
+    - [Long Term Support](#long-term-support)
+    - [Documentation](#documentation)
+    - [Getting Started](#getting-started)
+    - [Production Deployment](#production-deployment)
+    - [Related Projects](#related-projects)
+    - [Feedback](#feedback)
+    - [Contributing](#contributing)
+    - [Code of Conduct](#code-of-conduct)
+    - [License](#license)
+
 ### Long Term Support
 
 TODO: Establish LTS policy or document here that the catalog is still in development and has not reached an LTS release yet.
 
-| Version | Status | Published | EOL  |
-| ------- | ------ | --------- | ---- |
-|         |        |           |      |
+| Version | Status | Published | EOL |
+| ------- | ------ | --------- | --- |
+|         |        |           |     |
 
 ### Documentation
 
-* [LoopBack| LoopBack Documentation](https://loopback.io/doc/en/lb4/)
-* [Extending LoopBack | LoopBack Documentation](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html)
+- [LoopBack| LoopBack Documentation](https://loopback.io/doc/en/lb4/)
+- [Extending LoopBack | LoopBack Documentation](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html)
 
 ### Getting Started
 
@@ -152,7 +156,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
 
-import { ExampleServiceComponent } from '@sourceloop/example-service';
+import {ExampleServiceComponent} from '@sourceloop/example-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 
@@ -199,7 +203,6 @@ export class ExampleApplicationApplication extends BootMixin(
     };
   }
 }
-
 ```
 
 Modify the environment variable file to have the following contents:
@@ -208,11 +211,11 @@ Modify the environment variable file to have the following contents:
 NODE_ENV=dev
 ```
 
-You can now run the example service with `npm start`. 
+You can now run the example service with `npm start`.
 
 ### DataSources and Migrations
 
-The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s, it is not mandatory to use them. 
+The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s, it is not mandatory to use them.
 
 The migrations required for this service are processed during the installation automatically if you set the `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
@@ -228,15 +231,15 @@ Inside of the `sandbox` folder, you will find example applications and Dockerfil
 
 The `Sourceloop` utilizes many extensions created by SourceFuse.
 
-* [sourcefuse/loopback4-ratelimiter: A rate limiting extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-ratelimiter)
-* [sourcefuse/loopback4-notifications: An extension for setting up various notification mechanisms in loopback4 application, vis-a-vis, Push notification, SMS notification, Email notification (github.com)](https://github.com/sourcefuse/loopback4-notifications)
-* [sourcefuse/loopback4-s3: A loopback4 extension for AWS S3 integration (github.com)](https://github.com/sourcefuse/loopback4-s3)
-* [sourcefuse/loopback4-audit-log: A loopback-next extension for implementing audit logs in loopback applications for all DB transactions. (github.com)](https://github.com/sourcefuse/loopback4-audit-log)
-* [sourcefuse/loopback4-soft-delete: A loopback4 extension for soft delete feature (github.com)](https://github.com/sourcefuse/loopback4-soft-delete)
-* [sourcefuse/loopback4-authentication: A loopback-next extension for authentication feature. Oauth strategies supported. (github.com)](https://github.com/sourcefuse/loopback4-authentication)
-* [sourcefuse/loopback4-authorization: An authorization extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-authorization)
-* [sourcefuse/loopback4-helmet: A loopback4 extension for helmetjs integration (github.com)](https://github.com/sourcefuse/loopback4-helmet)
-* [sourcefuse/loopback4-vault: A loopback-next extension for HashiCorp's Vault integration in loopback-next applications (github.com)](https://github.com/sourcefuse/loopback4-vault)
+- [sourcefuse/loopback4-ratelimiter: A rate limiting extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-ratelimiter)
+- [sourcefuse/loopback4-notifications: An extension for setting up various notification mechanisms in loopback4 application, vis-a-vis, Push notification, SMS notification, Email notification (github.com)](https://github.com/sourcefuse/loopback4-notifications)
+- [sourcefuse/loopback4-s3: A loopback4 extension for AWS S3 integration (github.com)](https://github.com/sourcefuse/loopback4-s3)
+- [sourcefuse/loopback4-audit-log: A loopback-next extension for implementing audit logs in loopback applications for all DB transactions. (github.com)](https://github.com/sourcefuse/loopback4-audit-log)
+- [sourcefuse/loopback4-soft-delete: A loopback4 extension for soft delete feature (github.com)](https://github.com/sourcefuse/loopback4-soft-delete)
+- [sourcefuse/loopback4-authentication: A loopback-next extension for authentication feature. Oauth strategies supported. (github.com)](https://github.com/sourcefuse/loopback4-authentication)
+- [sourcefuse/loopback4-authorization: An authorization extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-authorization)
+- [sourcefuse/loopback4-helmet: A loopback4 extension for helmetjs integration (github.com)](https://github.com/sourcefuse/loopback4-helmet)
+- [sourcefuse/loopback4-vault: A loopback-next extension for HashiCorp's Vault integration in loopback-next applications (github.com)](https://github.com/sourcefuse/loopback4-vault)
 
 ### Feedback
 
@@ -244,7 +247,7 @@ If you've noticed a bug or have a question or have a feature request, [search th
 
 ### Contributing
 
-* [Development Guidelines](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/DEVELOPING.md)
+- [Development Guidelines](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/DEVELOPING.md)
 
 ### Code of Conduct
 
@@ -253,4 +256,3 @@ Code of conduct guidelines [here.](CODE_OF_CONDUCT.md)
 ### License
 
 [MIT](LICENSE)
-
