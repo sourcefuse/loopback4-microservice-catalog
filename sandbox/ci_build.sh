@@ -4,12 +4,13 @@ INSTALL_MICROK8S=$2
 LOCAL_REGISTRY='localhost:32000'
 
 install_kubectl() {
-  sudo apt-get update
+  sudo apt-get update -y
   sudo apt-get install -y apt-transport-https ca-certificates curl
   sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
   echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-  sudo apt-get update
+  sudo apt-get update -y
   sudo apt-get install -y kubectl
+  kubectl cluster-info
 }
 
 install_microk8s() {
