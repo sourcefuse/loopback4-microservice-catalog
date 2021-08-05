@@ -6,7 +6,7 @@ LOCAL_REGISTRY='localhost:32000'
 install_microk8s() {
   sudo snap install microk8s --classic
   microk8s status --wait-ready
-  microk8s enable dashboard dns registry istio
+  microk8s enable dns registry istio
   microk8s kubectl get all --all-namespaces
 }
 
