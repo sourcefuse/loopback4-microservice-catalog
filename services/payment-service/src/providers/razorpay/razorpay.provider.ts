@@ -1,4 +1,4 @@
-import {Provider} from '@loopback/core';
+import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';
 import {Orders} from '../../models';
@@ -32,19 +32,16 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         // eslint-disable-next-line
         let razorpayTemplate: any;
         const transactions = await this.transactionsRepository.find({
-          // eslint-disable-next-line
-          where: {order_id: payorder.id},
+          where: {orderId: payorder.id},
         });
         const transRes = transactions[0]?.res;
         if (payorder?.status === 'paid') {
-          return (
-            `<html>
+          return `<html>
             <title>Razorpay Payment </title>
             <body>
             <h3> Payment already done for this order ID :- ${payorder.id} </h3>
             </body>
-            </html>`
-          );
+            </html>`;
         }
         const razorPayOptions = {
           amount: payorder.totalAmount, // amount in the smallest currency unit
@@ -53,7 +50,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         if (transactions.length === 0) {
           await instance.orders.create(
             razorPayOptions,
-            async (err: unknown, order: DataObject<{id:string}>) => {
+            async (err: unknown, order: DataObject<{id: string}>) => {
               if (err) {
                 this.logger.info(`${err}, err`);
               }
@@ -61,11 +58,10 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                 payorder.metaData = {
                   razorpayOrderID: order.id,
                 };
-                razorpayTemplate =
-                  `<html>
+                razorpayTemplate = `<html>
                   <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
                   <body>
-                  <form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
+                  <form name="payment" action="/transactions/charge?method=razorpay" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
                   ${razorpayKey}
                   data-amount=${payorder.totalAmount}
                   data-buttontext="Pay with Razorpay" data-order_id=
@@ -83,17 +79,16 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           );
           await this.ordersRepository.updateById(payorder.id, {...payorder});
         } else {
-          razorpayTemplate =
-            `<html>
+          razorpayTemplate = `<html>
             <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
             <body>
-            <form name="payment" action="/transactions/charge" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
+            <form name="payment" action="/transactions/charge?method=razorpay" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
             ${razorpayKey}
             data-amount=
             ${payorder.totalAmount}
             data-buttontext="Pay with Razorpay" data-order_id=
             ${transRes.gatewayOrderRes.razorpayOrderID}
-            data-theme.color="#57AB5B"
+            data-theme.color="#57AB5B">
             </script>
             <input type="hidden" value="Hidden Element" name="hidden">
             </form>
@@ -104,13 +99,10 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         }
         const transactionData = {
           id: uuidv4(),
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          amount_paid: payorder.totalAmount,
+          amountPaid: payorder.totalAmount,
           status: 'draft',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          order_id: payorder.id,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          payment_gateway_id: payorder.paymentGatewayId,
+          orderId: payorder.id,
+          paymentGatewayId: payorder.paymentGatewayId,
           res: {
             gatewayOrderRes: payorder?.metaData,
           },
@@ -130,7 +122,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         }>,
       ) => {
         const order = await this.ordersRepository.execute(
-          `Select * FROM orders where metadata->>'razorpayOrderID'='${chargeResponse.razorpay_order_id}';`,
+          `Select * FROM main.orders where metadata->>'razorpayOrderID'='${chargeResponse.razorpay_order_id}';`,
         );
         if (
           chargeResponse.razorpay_payment_id &&
@@ -151,8 +143,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           );
           await instance.payments.fetch(
             chargeResponse.razorpay_payment_id,
-            // eslint-disable-next-line
-            async (err: unknown, resdata: DataObject<{status:string}>) => {
+            async (err: unknown, resdata: DataObject<{status: string}>) => {
               if (err) {
                 this.logger.info(`${err}, err`);
               }
@@ -162,8 +153,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                   ...order[0],
                 });
                 const transactions = await this.transactionsRepository.find({
-                  // eslint-disable-next-line
-                  where: {order_id: order[0].id},
+                  where: {orderId: order[0].id},
                 });
                 transactions[0].res = {
                   ...transactions[0].res,
@@ -177,14 +167,12 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             },
           );
         }
-        return (
-          `<html>
+        return `<html>
           <title>Razorpay Payment Demo</title>
           <body>
           <h3> Success with Razorpay for order ID :- ${order[0].id} </h3>
           </body>
-          </html>`
-        );
+          </html>`;
       },
 
       refund: async (transactionId: string) => {

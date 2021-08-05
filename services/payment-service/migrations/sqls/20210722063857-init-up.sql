@@ -2,15 +2,15 @@ CREATE SCHEMA IF NOT EXISTS main;
 
 CREATE  TABLE main.orders (
 	id                   uuid  NOT NULL ,
-	total_amount         numeric  NOT NULL ,
+	totalamount          numeric  NOT NULL ,
 	status               varchar(100)  NOT NULL ,
-	payment_method       varchar(100)   ,
-	payment_gateway_id   uuid   ,
+	paymentmethod        varchar(100)   ,
+	paymentgatewayid     uuid   ,
 	metadata             json   ,
 	CONSTRAINT pk_orders_id PRIMARY KEY ( id )
  );
 
-CREATE  TABLE main.payment_gateways (
+CREATE  TABLE main.paymentgateways (
 	id                   uuid  NOT NULL ,
 	name                 varchar(250)   ,
 	gateway_type         varchar(100)   ,

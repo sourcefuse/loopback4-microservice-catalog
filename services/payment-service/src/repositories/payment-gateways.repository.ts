@@ -1,13 +1,16 @@
 import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
-import {InMailDbDataSource} from '../datasources';
+import {DefaultCrudRepository, juggler} from '@loopback/repository';
+import {PaymentDatasourceName} from '../keys';
 import {PaymentGateways} from '../models';
 
 export class PaymentGatewaysRepository extends DefaultCrudRepository<
   PaymentGateways,
   typeof PaymentGateways.prototype.id
 > {
-  constructor(@inject('datasources.inmail') dataSource: InMailDbDataSource) {
+  constructor(
+    @inject(`datasources.${PaymentDatasourceName}`)
+    dataSource: juggler.DataSource,
+  ) {
     super(PaymentGateways, dataSource);
   }
 }

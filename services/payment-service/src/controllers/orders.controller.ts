@@ -17,9 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {
-  STATUS_CODE
-} from '@sourceloop/core';
+import {STATUS_CODE} from '@sourceloop/core';
 import {Orders} from '../models';
 import {OrdersRepository} from '../repositories';
 const orderIdPath = '/orders/{id}';

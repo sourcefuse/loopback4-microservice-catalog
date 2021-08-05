@@ -19,7 +19,7 @@ export class PaymentGateways extends Entity {
   @property({
     type: 'string',
     required: true,
-    name:'gateway_type'
+    name: 'gateway_type',
   })
   gatewayType: string;
 

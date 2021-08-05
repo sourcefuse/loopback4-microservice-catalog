@@ -26,9 +26,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Orders, Transactions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
 import {OrdersRepository, TransactionsRepository} from '../repositories';
-import {
-  STATUS_CODE
-} from '@sourceloop/core';
+import {STATUS_CODE} from '@sourceloop/core';
 const transactionsRoutePath = '/transactions';
 const tranasactionsIdRoutePath = '/transactions/{id}';
 const redirectStatusCode = 302;
@@ -212,9 +210,7 @@ export class TransactionsController {
       },
     },
   })
-  async transactionsPay(
-    @param.path.string('id') id: string,
-  ): Promise<unknown> {
+  async transactionsPay(@param.path.string('id') id: string): Promise<unknown> {
     const Order = await this.ordersRepository.findById(id);
     return this.res.send(await this.gatewayHelper.create(Order));
   }
@@ -254,7 +250,7 @@ export class TransactionsController {
   })
   async transactionsRefund(
     @param.path.string('id') id: string,
-  ): Promise<unknown>{
+  ): Promise<unknown> {
     return this.gatewayHelper.refund(id);
   }
 }

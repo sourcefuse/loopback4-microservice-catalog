@@ -31,40 +31,33 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
   value() {
     return {
       create: async (payorder: Orders) => {
+        const orderAmount = payorder.totalamount * 100;
         const transactionData = {
           id: uuidv4(),
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          amount_paid: payorder?.totalAmount,
+          amountPaid: payorder?.totalAmount,
           status: 'draft',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          order_id: payorder?.id,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          payment_gateway_id: payorder?.paymentGatewayId,
+          orderId: payorder?.id,
+          paymentGatewayId: payorder?.paymentGatewayId,
         };
         const transactions = await this.transactionsRepository.find({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          where: {order_id: payorder.id},
+          where: {orderId: payorder.id},
         });
         if (transactions.length === 0) {
           await this.transactionsRepository.create(transactionData);
         }
-        return (
-          `<html>
+        return `<html>
           <title>Stripe Payment Demo</title>
           <body>
           <h3>Welcome to Payment Gateway</h3>
-          <form action=/transactions/charge?method=stripe&orderId=
-          ${payorder?.id}
-          method="POST">
+          <form action="/transactions/charge?method=stripe&orderId=${payorder?.id}" method="POST">
           <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key=
           ${this.config?.publishKey}
           data-amount=
-          ${payorder.totalAmount}
+          ${orderAmount}
           data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>
           </form>
           </body>
-          </html>`
-        );
+          </html>`;
       },
 
       charge: async (
@@ -74,20 +67,21 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           orderId: string;
         }>,
       ) => {
+        console.log(chargeResponse, 'chargeResponse');
         const order = await this.ordersRepository.findById(
           chargeResponse?.orderId,
         );
+        console.log(order, 'order');
         const fetchTransaction = await this.transactionsRepository.find({
-          //eslint-disable-next-line @typescript-eslint/naming-convention
-          where: {order_id: order?.id},
+          where: {orderId: order?.id},
         });
-        const amount = order?.totalAmount;
+        const amount = order?.totalAmount * 100;
         await this.stripe.customers
           .create({
             email: chargeResponse.stripeEmail,
             source: chargeResponse.stripeToken,
           })
-          .then((customer: DataObject<{id:string}>) =>
+          .then((customer: DataObject<{id: string}>) =>
             this.stripe.charges.create({
               amount,
               description: 'Sample Charge',
@@ -107,14 +101,12 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
               await this.ordersRepository.updateById(order.id, {...order});
             }
           });
-        return (
-          `<html>
+        return `<html>
           <title>Stripe Payment Demo</title>
           <body>
           <h3> Success with Stripe</h3>
           </body>
-          </html>`
-        );
+          </html>`;
       },
 
       refund: async (transactionId: string) => {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
@@ -14,7 +13,7 @@ export class Transactions extends Entity {
   @property({
     type: 'number',
     required: true,
-    name: 'amount_paid'
+    name: 'amount_paid',
   })
   amountPaid: number;
 
@@ -26,19 +25,19 @@ export class Transactions extends Entity {
 
   @property({
     type: 'date',
-    name: 'paid_date'
+    name: 'paid_date',
   })
   paidDate?: string;
 
   @property({
     type: 'string',
-    name: 'payment_gateway_id'
+    name: 'payment_gateway_id',
   })
   paymentGatewayId?: string;
 
   @property({
     type: 'string',
-    name:'order_id'
+    name: 'order_id',
   })
   orderId?: string;
 

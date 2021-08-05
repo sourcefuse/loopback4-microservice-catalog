@@ -19,9 +19,7 @@ import {
 } from '@loopback/rest';
 import {PaymentGateways} from '../models';
 import {PaymentGatewaysRepository} from '../repositories';
-import {
-  STATUS_CODE
-} from '@sourceloop/core';
+import {STATUS_CODE} from '@sourceloop/core';
 const paymentGatewayRoutePath = '/payment-gateways';
 const paymentGatewayIDRoutePath = '/payment-gateways/{id}';
 

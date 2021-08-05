@@ -50,12 +50,12 @@ export class GatewayProvider implements Provider<IGateway> {
     const transaction = await this.transactionsRepository.findById(
       transactionId,
     );
-    const gatewayId = transaction?.payment_gateway_id;
+    const gatewayId = transaction?.paymentGatewayId;
     if (gatewayId) {
       const paymentGateway = await this.paymentGatewaysRepository.findById(
         gatewayId,
       );
-      const gatewayType = paymentGateway.gateway_type;
+      const gatewayType = paymentGateway.gatewayType;
       if (gatewayType === 'stripe') {
         return this.stripeHelper.refund(transactionId);
       } else if (gatewayType === 'razorpay') {
