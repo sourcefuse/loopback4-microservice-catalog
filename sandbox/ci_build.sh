@@ -20,6 +20,7 @@ install_microk8s() {
   pushd $HOME
   mkdir -p .kube
   microk8s config >.kube/config
+  cat ~/.kube/config
   popd
 }
 
