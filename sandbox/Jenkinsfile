@@ -6,7 +6,7 @@ pipeline {
                 dir("sandbox"){
                     sh "chmod +x ./ci_build.sh"
                     withCredentials([usernamePassword('credentialsId': 'sf-reference-arch-dockerhub', 'usernameVariable': 'DOCKER_USERNAME', 'passwordVariable': 'DOCKER_PASSWORD')]) {
-                        sh "./ci_build.sh"
+                        sh "./ci_build.sh ${env.WORKSPACE}/sandbox true"
                     }
                 }
             }
