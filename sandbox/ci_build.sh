@@ -9,9 +9,8 @@ install_microk8s() {
   microk8s enable dns registry
   microk8s kubectl get all --all-namespaces
   pushd $HOME
-  mkdir .kube
-  cd .kube
-  microk8s config > config
+  mkdir -p .kube
+  microk8s config > .kube/config
   popd
 }
 
@@ -28,7 +27,7 @@ local_docker_push() {
 docker_push() {
   docker tag ${LOCAL_REGISTRY}/auth-multitenant-example ${DOCKER_USERNAME}/auth-multitenant-example
   docker tag ${LOCAL_REGISTRY}/notification-socket-example ${DOCKER_USERNAME}/notification-socket-example
-  docker tag ${LOCAL_REGISTRY}/workflow-ms-examp ${DOCKER_USERNAME}/workflow-ms-example
+  docker tag ${LOCAL_REGISTRY}/workflow-ms-example ${DOCKER_USERNAME}/workflow-ms-example
   docker tag ${LOCAL_REGISTRY}/audit-ms-example ${DOCKER_USERNAME}/audit-ms-example
   docker tag ${LOCAL_REGISTRY}/scheduler-example ${DOCKER_USERNAME}/scheduler-example
   docker tag ${LOCAL_REGISTRY}/video-conferencing-ms-example ${DOCKER_USERNAME}/video-conferencing-ms-example
