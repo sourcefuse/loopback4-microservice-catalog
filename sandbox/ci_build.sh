@@ -54,16 +54,22 @@ docker_push() {
   #  docker system prune -a -f
 }
 
-apply_terraform() {
+terraform_apply() {
   pushd ${CURRENT_DIR}/k8s/tf-sourceloop-sandbox
   terraform init
   terraform apply -auto-approve
   popd
 }
 
+terraform_destroy() {
+  pushd ${CURRENT_DIR}/k8s/tf-sourceloop-sandbox
+  terraform destroy -auto-approve
+  popd
+}
+
 run_tests() {
   echo "Sleeping to wait for services to come online."
-  sleep 30
+  sleep 90
   ${CURRENT_DIR}/k8s/health_check.sh sourceloop.local
 }
 
@@ -89,6 +95,7 @@ if [ "${INSTALL_MICROK8S}" = "true" ]; then
 fi
 
 local_docker_push
-apply_terraform
+terraform_apply
 run_tests
+terraform_destroy
 docker_push
