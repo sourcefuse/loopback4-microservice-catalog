@@ -50,6 +50,9 @@ docker_push() {
   docker push ${DOCKER_USERNAME}/scheduler-example
   docker push ${DOCKER_USERNAME}/video-conferencing-ms-example
   docker push ${DOCKER_USERNAME}/in-mail-example
+
+  # TODO: should we clean up after build? Since agent is ephemeral, some caching may be helpful after an initial run
+  # TODO: remove specific images and cache
   #  docker system prune -a -f
 }
 
@@ -69,7 +72,7 @@ terraform_destroy() {
 run_tests() {
   echo "Sleeping to wait for services to come online."
   sleep 180
-  ${CURRENT_DIR}/k8s/health_check.sh sourceloop.local true
+  ${CURRENT_DIR}/health_check.sh sourceloop.local true
 }
 
 if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
