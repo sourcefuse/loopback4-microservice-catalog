@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.2 (2021-08-06)</small>
+
+* fix(notification-service): fix socket version from loopback4-notifications ([4e7bf6f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4e7bf6f)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.2.1 (2021-07-24)</small>
 
 * fix(bpmn-service): fix multiple workflow worker registration issue (#268) ([a29493c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a29493c)), closes [#268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/268) [#267](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/267)
