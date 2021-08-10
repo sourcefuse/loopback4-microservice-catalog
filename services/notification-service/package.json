@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-service",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -64,7 +64,7 @@
     "lodash": "^4.17.21",
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.2.0",
-    "loopback4-notifications": "^1.0.0",
+    "loopback4-notifications": "^1.5.0",
     "loopback4-soft-delete": "^3.2.2",
     "mocha": "^8.3.2",
     "prom-client": "^13.1.0",
