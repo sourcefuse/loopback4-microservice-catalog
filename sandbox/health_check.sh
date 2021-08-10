@@ -3,9 +3,6 @@ DOMAIN=$1
 IS_LOCALHOST=$2
 ERROR_COUNT=0
 
-# temporary check on ingress
-microk8s kubectl describe ingress
-
 # check the basic health check on its own
 if [ "$IS_LOCALHOST" = "true" ]; then
   curl_response=$(curl -Is -H "Host: health-check.${DOMAIN}" https://localhost --insecure -f)
