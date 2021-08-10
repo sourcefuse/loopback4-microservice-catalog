@@ -16,7 +16,7 @@ install_kubectl() {
 install_microk8s() {
   sudo snap install microk8s --classic
   microk8s status --wait-ready
-  microk8s enable dns registry
+  microk8s enable dns registry ingress
   microk8s kubectl get all --all-namespaces
   pushd $HOME
   mkdir -p .kube
