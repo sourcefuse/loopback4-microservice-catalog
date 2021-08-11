@@ -8,10 +8,10 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {
+  BPMTask,
   WorkflowServiceBindings,
   WorkflowServiceComponent,
 } from '@sourceloop/bpmn-service';
-import {BPMTask} from '@sourceloop/bpmn-service/dist/bpm-task';
 import path from 'path';
 import {SayHelloCommand} from './commands/sayhello.command';
 import {BpmnProvider} from './providers/bpmn.provider';
