@@ -44,7 +44,7 @@ export class PubnubExampleApplication extends BootMixin(
       useCustomEmailProvider: false,
       useCustomSMSProvider: false,
       useCustomPushProvider: true,
-      useCustomSequence: true,
+      useCustomSequence: false,
     });
 
     this.bind(PubnubBindings.Config).to({
