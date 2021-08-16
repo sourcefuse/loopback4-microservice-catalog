@@ -25,11 +25,26 @@ import {
 import {v4 as uuidv4} from 'uuid';
 import {Orders, Transactions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
-import {OrdersRepository, TransactionsRepository} from '../repositories';
+import {
+  OrdersRepository,
+  TransactionsRepository,
+  TemplatesRepository,
+  PaymentGatewaysRepository,
+} from '../repositories';
 import {STATUS_CODE} from '@sourceloop/core';
+import {ResponseMessage, TemplateName} from '../enums';
+const dotenvExt = require('dotenv-extended');
+const path = require('path');
+dotenvExt.load({
+  path: path.join(process.env.INIT_CWD, '.env'),
+  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  errorOnMissing: false,
+  includeProcessEnv: true,
+});
 const transactionsRoutePath = '/transactions';
 const tranasactionsIdRoutePath = '/transactions/{id}';
 const redirectStatusCode = 302;
+const permRedirectStatusCode = 302;
 
 export class TransactionsController {
   constructor(
@@ -41,6 +56,10 @@ export class TransactionsController {
     private readonly ordersRepository: OrdersRepository,
     @repository(TransactionsRepository)
     private readonly transactionsRepository: TransactionsRepository,
+    @repository(TemplatesRepository)
+    private readonly templatesRepository: TemplatesRepository,
+    @repository(PaymentGatewaysRepository)
+    private readonly paymentGatewaysRepository: PaymentGatewaysRepository,
   ) {}
 
   @post(transactionsRoutePath)
@@ -187,15 +206,18 @@ export class TransactionsController {
     const orderEntity = {
       id: uuidv4(),
       totalAmount: orders?.totalAmount,
+      currency: orders?.currency,
       status: orders?.status,
       metaData: orders?.metaData ?? {},
       paymentGatewayId: orders?.paymentGatewayId,
       paymentmethod: orders?.paymentmethod,
     };
     const newOrder = await this.ordersRepository.create(orderEntity);
+    const hostUrl = this.req.get('host');
+    const hostProtocol = this.req.protocol;
     return this.res.redirect(
       redirectStatusCode,
-      `http://localhost:3000/transactions/orderid/${newOrder.id}`,
+      `${hostProtocol}://${hostUrl}/transactions/orderid/${newOrder.id}?method=${newOrder.paymentmethod}`,
     );
   }
 
@@ -212,7 +234,16 @@ export class TransactionsController {
   })
   async transactionsPay(@param.path.string('id') id: string): Promise<unknown> {
     const Order = await this.ordersRepository.findById(id);
-    return this.res.send(await this.gatewayHelper.create(Order));
+    const templates = await this.templatesRepository.find({
+      where: {
+        paymentGatewayId: Order?.paymentGatewayId,
+        name: TemplateName.Create,
+      },
+    });
+    const paymentTemplate = templates[0]?.template;
+    return this.res.send(
+      await this.gatewayHelper.create(Order, paymentTemplate),
+    );
   }
 
   @post('/transactions/charge')
@@ -238,7 +269,21 @@ export class TransactionsController {
       ...chargeResponse,
       orderId: this.req.query.orderId,
     };
-    return this.gatewayHelper.charge(chargeResponse);
+    const chargeHelper = await this.gatewayHelper.charge(chargeResponse);
+    const hostUrl = this.req.get('host');
+    const hostProtocol = this.req.protocol;
+    const defaultUrl = `${hostProtocol}://${hostUrl}`;
+    if (chargeHelper?.res === ResponseMessage.Sucess) {
+      return this.res.redirect(
+        permRedirectStatusCode,
+        `${process.env.SUCCESS_CALLBACK_URL ?? defaultUrl}`,
+      );
+    } else {
+      return this.res.redirect(
+        permRedirectStatusCode,
+        `${process.env.FAILURE_CALLBACK_URL ?? defaultUrl}`,
+      );
+    }
   }
 
   @post(`/transactions/refund/{id}`)
@@ -249,6 +294,38 @@ export class TransactionsController {
     },
   })
   async transactionsRefund(
+    @param.path.string('id') id: string,
+  ): Promise<unknown> {
+    const transaction = await this.transactionsRepository.findById(id);
+    if (transaction) {
+      const gatewayId = transaction.paymentGatewayId;
+      if (gatewayId) {
+        const paymentGateway = await this.paymentGatewaysRepository.findById(
+          gatewayId,
+        );
+        const gatewayType = paymentGateway?.gatewayType;
+        const hostUrl = this.req.get('host');
+        const hostProtocol = this.req.protocol;
+        return this.res.redirect(
+          permRedirectStatusCode,
+          `${hostProtocol}://${hostUrl}/transactions/refund/parse/${id}?method=${gatewayType}`,
+        );
+      } else {
+        return 'Not Valid Gateway Id';
+      }
+    } else {
+      return 'Transaction does not exist';
+    }
+  }
+
+  @get(`/transactions/refund/parse/{id}`)
+  @response(STATUS_CODE.OK, {
+    description: 'Refund Object from payment gateway',
+    content: {
+      'application/json': {},
+    },
+  })
+  async transactionsRefundParse(
     @param.path.string('id') id: string,
   ): Promise<unknown> {
     return this.gatewayHelper.refund(id);

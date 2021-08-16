@@ -2,11 +2,18 @@ import {DataObject} from '@loopback/repository';
 import {Orders} from '../../models';
 
 export interface StripePaymentGateway {
-  create(payorder: Orders): Promise<string>;
+  create(
+    payorder: Orders,
+    paymentTemplate: string | undefined,
+  ): Promise<string> | DataObject<{}>;
   charge(
-    chargeResponse: DataObject<{stripeEmail: string; stripeToken: string}>,
-  ): Promise<{}>;
-  refund(transactionId: string): Promise<{}>;
+    chargeResponse: DataObject<{
+      stripeEmail: string;
+      stripeToken: string;
+      orderId: string;
+    }>,
+  ): Promise<DataObject<{res: string}>>;
+  refund(transactionId: string): Promise<{} | void>;
 }
 
 export interface StripeOrder {

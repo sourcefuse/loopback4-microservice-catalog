@@ -1,54 +1,43 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: true}})
-export class Orders extends Entity {
+@model({settings: {strict: false}})
+export class Templates extends Entity {
   @property({
     type: 'string',
     id: true,
-  })
-  id?: string;
-
-  @property({
-    type: 'number',
+    generated: false,
     required: true,
   })
-  totalAmount: number;
+  id: string;
 
   @property({
     type: 'string',
     required: true,
-  })
-  currency: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  status: string;
-
-  @property({
-    type: 'string',
-    required: true,
+    name: 'payment_gateway_id',
   })
   paymentGatewayId: string;
 
   @property({
     type: 'string',
+    required: true,
   })
-  paymentmethod: string;
+  name: string;
 
   @property({
-    type: 'Object',
+    type: 'string',
+    required: true,
   })
-  metaData?: Object;
+  template: string;
 
   // Define well-known properties here
 
   // Indexer property to allow additional data
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Orders>) {
+  constructor(data?: Partial<Templates>) {
     super(data);
   }
 }
+
+export type TemplatesWithRelations = Templates;

@@ -2,10 +2,13 @@ import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';
 import {Orders} from '../../models';
+import Handlebars from 'handlebars';
 import {OrdersRepository, TransactionsRepository} from '../../repositories';
 import {RazorpayPaymentGateway, IRazorpayConfig} from './types';
+import {razorpayCreateTemplate} from '../../templates';
 import {RazorpayBindings} from './keys';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import {ResponseMessage, Status} from '../../enums';
 const Razorpay = require('razorpay');
 
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
@@ -28,24 +31,23 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     });
     const razorpayKey = this.config?.dataKey;
     return {
-      create: async (payorder: Orders) => {
+      create: async (payorder: Orders, paymentTemplate: string) => {
         // eslint-disable-next-line
         let razorpayTemplate: any;
         const transactions = await this.transactionsRepository.find({
           where: {orderId: payorder.id},
         });
         const transRes = transactions[0]?.res;
-        if (payorder?.status === 'paid') {
-          return `<html>
-            <title>Razorpay Payment </title>
-            <body>
-            <h3> Payment already done for this order ID :- ${payorder.id} </h3>
-            </body>
-            </html>`;
+        if (payorder?.status === Status.Paid) {
+          return {
+            res: 'Payment already Done for this Order',
+            status: Status.AlreadyPaid,
+            orderId: payorder.id,
+          };
         }
         const razorPayOptions = {
           amount: payorder.totalAmount, // amount in the smallest currency unit
-          currency: 'INR',
+          currency: payorder.currency,
         };
         if (transactions.length === 0) {
           await instance.orders.create(
@@ -58,49 +60,37 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                 payorder.metaData = {
                   razorpayOrderID: order.id,
                 };
-                razorpayTemplate = `<html>
-                  <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
-                  <body>
-                  <form name="payment" action="/transactions/charge?method=razorpay" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
-                  ${razorpayKey}
-                  data-amount=${payorder.totalAmount}
-                  data-buttontext="Pay with Razorpay" data-order_id=
-                  ${order.id}
-                  data-theme.color="#57AB5B"
-                  ></script>
-                  <input type="hidden" value="Hidden Element" name="hidden">
-                  </form>
-                  <script>
-                  document.querySelector(".razorpay-payment-button").click()
-                  </script>
-                  </body></html>`;
+                const template = Handlebars.compile(
+                  paymentTemplate || razorpayCreateTemplate,
+                );
+
+                const data = {
+                  razorpayKey: razorpayKey,
+                  totalAmount: payorder.totalAmount,
+                  orderId: order.id,
+                };
+                razorpayTemplate = template(data);
               }
             },
           );
           await this.ordersRepository.updateById(payorder.id, {...payorder});
         } else {
-          razorpayTemplate = `<html>
-            <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
-            <body>
-            <form name="payment" action="/transactions/charge?method=razorpay" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
-            ${razorpayKey}
-            data-amount=
-            ${payorder.totalAmount}
-            data-buttontext="Pay with Razorpay" data-order_id=
-            ${transRes.gatewayOrderRes.razorpayOrderID}
-            data-theme.color="#57AB5B">
-            </script>
-            <input type="hidden" value="Hidden Element" name="hidden">
-            </form>
-            <script>
-            document.querySelector(".razorpay-payment-button").click()
-            </script>
-            </body></html>`;
+          const template = Handlebars.compile(
+            paymentTemplate || razorpayCreateTemplate,
+          );
+
+          const data = {
+            razorpayKey: razorpayKey,
+            totalAmount: payorder.totalAmount,
+            orderId: transRes.gatewayOrderRes.razorpayOrderID,
+          };
+          razorpayTemplate = template(data);
         }
         const transactionData = {
           id: uuidv4(),
           amountPaid: payorder.totalAmount,
-          status: 'draft',
+          currency: payorder.currency,
+          status: Status.Draft,
           orderId: payorder.id,
           paymentGatewayId: payorder.paymentGatewayId,
           res: {
@@ -121,9 +111,12 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           razorpay_payment_id: string;
         }>,
       ) => {
-        const order = await this.ordersRepository.execute(
-          `Select * FROM main.orders where metadata->>'razorpayOrderID'='${chargeResponse.razorpay_order_id}';`,
-        );
+        const order = await this.ordersRepository.find({
+          where: {
+            'metaData.razorpayOrderID': `${chargeResponse.razorpay_order_id}`,
+          },
+        });
+        let chargeComplete = false;
         if (
           chargeResponse.razorpay_payment_id &&
           order.length > 0 &&
@@ -132,7 +125,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           await instance.payments.capture(
             chargeResponse.razorpay_payment_id,
             order[0].totalamount,
-            'INR',
+            order[0].currency,
             (err: unknown, response: unknown) => {
               if (err) {
                 this.logger.info(`${err}, err`);
@@ -147,8 +140,11 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
               if (err) {
                 this.logger.info(`${err}, err`);
               }
-              if (resdata.status === 'captured' || resdata.status === 'paid') {
-                order[0].status = 'paid';
+              if (
+                resdata.status === Status.Captured ||
+                resdata.status === Status.Paid
+              ) {
+                order[0].status = Status.Paid;
                 await this.ordersRepository.updateById(order[0].id, {
                   ...order[0],
                 });
@@ -163,16 +159,16 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
                   transactions[0].id,
                   {...transactions[0]},
                 );
+                chargeComplete = true;
               }
             },
           );
         }
-        return `<html>
-          <title>Razorpay Payment Demo</title>
-          <body>
-          <h3> Success with Razorpay for order ID :- ${order[0].id} </h3>
-          </body>
-          </html>`;
+        if (chargeComplete) {
+          return {res: ResponseMessage.Sucess, orderId: order[0].id};
+        } else {
+          return {res: ResponseMessage.NotSucess, orderId: order[0].id};
+        }
       },
 
       refund: async (transactionId: string) => {
@@ -182,13 +178,18 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         const paymentId = transaction?.res?.chargeResponse?.id;
         const refund = await instance.payments.refund(paymentId);
         transaction.res.refundDetails = refund;
-        transaction.status = 'refund';
+        transaction.status = Status.Refund;
         if (refund) {
           await this.transactionsRepository.updateById(transactionId, {
             ...transaction,
           });
+          return refund;
+        } else {
+          return {
+            err: ResponseMessage.NotSucess,
+            message: 'please check PaymentId',
+          };
         }
-        return refund;
       },
     };
   }

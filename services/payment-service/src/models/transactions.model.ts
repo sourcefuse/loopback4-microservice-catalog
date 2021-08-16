@@ -21,6 +21,12 @@ export class Transactions extends Entity {
     type: 'string',
     required: true,
   })
+  currency: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   status: string;
 
   @property({

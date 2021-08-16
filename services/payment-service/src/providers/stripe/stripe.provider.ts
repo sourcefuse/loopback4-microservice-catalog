@@ -1,11 +1,14 @@
 import {inject, Provider} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import Handlebars from 'handlebars';
 import {Orders} from '../../models';
 import {v4 as uuidv4} from 'uuid';
 import {StripeBindings} from './keys';
+import {stripeCreateTemplate} from '../../templates';
 import {OrdersRepository, TransactionsRepository} from '../../repositories';
 import {IStripeConfig, StripePaymentGateway} from './types';
+import {ResponseMessage, Status} from '../../enums';
 const Stripe = require('stripe');
 
 export class StripeProvider implements Provider<StripePaymentGateway> {
@@ -30,12 +33,13 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
 
   value() {
     return {
-      create: async (payorder: Orders) => {
-        const orderAmount = payorder.totalamount * 100;
+      create: async (payorder: Orders, paymentTemplate: string) => {
+        const orderAmount = payorder.totalamount;
         const transactionData = {
           id: uuidv4(),
           amountPaid: payorder?.totalAmount,
-          status: 'draft',
+          currency: payorder?.currency,
+          status: Status.Draft,
           orderId: payorder?.id,
           paymentGatewayId: payorder?.paymentGatewayId,
         };
@@ -45,19 +49,17 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
         if (transactions.length === 0) {
           await this.transactionsRepository.create(transactionData);
         }
-        return `<html>
-          <title>Stripe Payment Demo</title>
-          <body>
-          <h3>Welcome to Payment Gateway</h3>
-          <form action="/transactions/charge?method=stripe&orderId=${payorder?.id}" method="POST">
-          <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key=
-          ${this.config?.publishKey}
-          data-amount=
-          ${orderAmount}
-          data-currency="inr" data-name="" data-description="Test Stripe" data-locale="auto" > </script>
-          </form>
-          </body>
-          </html>`;
+        const template = Handlebars.compile(
+          paymentTemplate || stripeCreateTemplate,
+        );
+
+        const data = {
+          orderId: payorder?.id,
+          publishKey: this.config?.publishKey,
+          orderAmount: orderAmount,
+          currency: payorder?.currency,
+        };
+        return template(data);
       },
 
       charge: async (
@@ -67,15 +69,14 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           orderId: string;
         }>,
       ) => {
-        console.log(chargeResponse, 'chargeResponse');
         const order = await this.ordersRepository.findById(
           chargeResponse?.orderId,
         );
-        console.log(order, 'order');
         const fetchTransaction = await this.transactionsRepository.find({
           where: {orderId: order?.id},
         });
-        const amount = order?.totalAmount * 100;
+        const amount = order?.totalAmount;
+        const currency = order?.currency;
         await this.stripe.customers
           .create({
             email: chargeResponse.stripeEmail,
@@ -84,29 +85,23 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           .then((customer: DataObject<{id: string}>) =>
             this.stripe.charges.create({
               amount,
-              description: 'Sample Charge',
-              currency: 'inr',
+              currency: currency,
               customer: customer.id,
             }),
           )
           .then(async (charge: DataObject<{}>) => {
-            fetchTransaction[0].status = charge ? 'paid' : 'draft';
+            fetchTransaction[0].status = charge ? Status.Paid : Status.Draft;
             fetchTransaction[0].res = {chargeResponse: charge};
             await this.transactionsRepository.updateById(
               fetchTransaction[0]?.id,
               {...fetchTransaction[0]},
             );
             if (charge) {
-              order.status = 'paid';
+              order.status = Status.Paid;
               await this.ordersRepository.updateById(order.id, {...order});
             }
           });
-        return `<html>
-          <title>Stripe Payment Demo</title>
-          <body>
-          <h3> Success with Stripe</h3>
-          </body>
-          </html>`;
+        return {res: ResponseMessage.Sucess, orderId: order.id};
       },
 
       refund: async (transactionId: string) => {
@@ -118,13 +113,18 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           charge: paymentId,
         });
         transaction.res.refundDetails = refund;
-        transaction.status = 'refund';
+        transaction.status = Status.Refund;
         if (refund) {
           await this.transactionsRepository.updateById(transactionId, {
             ...transaction,
           });
+          return refund;
+        } else {
+          return {
+            err: ResponseMessage.NotSucess,
+            message: 'please check PaymentId',
+          };
         }
-        return refund;
       },
     };
   }

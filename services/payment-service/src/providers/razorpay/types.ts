@@ -2,10 +2,15 @@ import {DataObject} from '@loopback/repository';
 import {Orders} from '../../models';
 
 export interface RazorpayPaymentGateway {
-  create(payorder: Orders): Promise<string>;
+  create(
+    payorder: Orders,
+    paymentTemplate: string | undefined,
+  ): Promise<string> | DataObject<{}>;
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  charge(chargeResponse: DataObject<{razorpay_order_id: string}>): Promise<{}>;
-  refund(transactionId: string): Promise<{}>;
+  charge(
+    chargeResponse: DataObject<{razorpay_order_id: string}>,
+  ): Promise<DataObject<{res: string}>>;
+  refund(transactionId: string): Promise<{}> | void;
 }
 export interface RazorpayOrder {
   id: string;

@@ -17,16 +17,18 @@ import {
   DEFAULT_PAYMENT_SERVICE_OPTIONS,
   PaymentServiceComponentOptions,
 } from './types';
-import {Orders, Transactions, PaymentGateways} from './models';
+import {Orders, Transactions, PaymentGateways, Templates} from './models';
 import {
   OrdersController,
   TransactionsController,
   PaymentGatewaysController,
+  TemplatesController,
 } from './controllers';
 import {
   OrdersRepository,
   TransactionsRepository,
   PaymentGatewaysRepository,
+  TemplatesRepository,
 } from './repositories';
 import {RazorpayProvider, GatewayProvider, StripeProvider} from './providers';
 
@@ -56,16 +58,18 @@ export class PaymentServiceComponent implements Component {
     private readonly options: PaymentServiceComponentOptions = DEFAULT_PAYMENT_SERVICE_OPTIONS,
   ) {
     this.application.component(CoreComponent);
-    this.models = [Orders, Transactions, PaymentGateways];
+    this.models = [Orders, Transactions, PaymentGateways, Templates];
     this.controllers = [
       OrdersController,
       TransactionsController,
       PaymentGatewaysController,
+      TemplatesController,
     ];
     this.repositories = [
       OrdersRepository,
       TransactionsRepository,
       PaymentGatewaysRepository,
+      TemplatesRepository,
     ];
     this.providers = {
       RazorpayProvider,
