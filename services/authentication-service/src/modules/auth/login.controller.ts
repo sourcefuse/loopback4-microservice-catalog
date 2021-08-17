@@ -315,9 +315,6 @@ export class LoginController {
     if (!accessToken || refreshPayload.accessToken !== accessToken) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokensRepo.set(refreshPayload.accessToken, {
-      token: refreshPayload.accessToken,
-    });
     await this.refreshTokenRepo.delete(req.refreshToken);
     return this.createJWT(
       {clientId: refreshPayload.clientId, userId: refreshPayload.userId},

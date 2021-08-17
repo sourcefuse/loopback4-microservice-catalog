@@ -12,7 +12,9 @@ import {
 import {setupApplication} from './test-helper';
 import {TestingApplication} from '../fixtures/application';
 
-describe('Authentication microservice', () => {
+describe('Authentication microservice', function () {
+  // eslint-disable-next-line @typescript-eslint/no-invalid-this
+  this.timeout(50000);
   let app: TestingApplication;
   let client: Client;
   let userRepo: UserRepository;
@@ -203,6 +205,33 @@ describe('Authentication microservice', () => {
       .send({refreshToken: reqForToken.body.refreshToken})
       .set('Authorization', `Bearer ${reqForToken.body.accessToken}`);
     expect(response.body).to.have.properties(['accessToken', 'refreshToken']);
+  });
+  it('should return TokenExpired after refresh token', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+      password: 'new_test_password',
+    };
+    const reqForCode = await client
+      .post(`/auth/login`)
+      .send(reqData)
+      .expect(200);
+    const reqForToken = await client.post(`/auth/token`).send({
+      clientId: 'web',
+      code: reqForCode.body.code,
+    });
+    await client
+      .post(`/auth/token-refresh`)
+      .send({refreshToken: reqForToken.body.refreshToken})
+      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`);
+    await new Promise(r => setTimeout(r, 30000));
+    const response = await client
+      .get(`/auth/me`)
+      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`)
+      .expect(401);
+    expect(response.body?.error?.message?.message).to.be.equal('TokenExpired');
   });
   it('should return 401 for token refresh request when Authentication token invalid', async () => {
     const reqData = {
@@ -494,7 +523,7 @@ describe('Authentication microservice', () => {
       clientId: 'web',
       clientSecret: 'test',
       redirectUrl: 'http://localhost:4200/login/success',
-      accessTokenExpiration: 900,
+      accessTokenExpiration: 20,
       refreshTokenExpiration: 86400,
       authCodeExpiration: 180,
       secret: 'poiuytrewq',
