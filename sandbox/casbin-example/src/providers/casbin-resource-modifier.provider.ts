@@ -1,8 +1,10 @@
 import {Getter, inject, Provider} from '@loopback/context';
-import {HttpErrors, Request} from '@loopback/rest';
+import {HttpErrors, Request, RestBindings} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {
   AuthorizationBindings,
   AuthorizationMetadata,
+  AuthorizeErrorKeys,
   CasbinResourceModifierFn,
 } from 'loopback4-authorization';
 
@@ -14,30 +16,39 @@ export class CasbinResValModifierProvider
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,
     @inject(AuthorizationBindings.PATHS_TO_ALLOW_ALWAYS)
     private readonly allowAlwaysPath: string[],
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(RestBindings.Http.REQUEST) private readonly request: Request,
   ) {}
 
   value(): CasbinResourceModifierFn {
-    return (pathParams: string[], req: Request) => this.action(pathParams, req);
+    return (pathParams: string[]) => this.action(pathParams);
   }
 
-  async action(pathParams: string[], req: Request): Promise<string> {
+  async action(pathParams: string[]): Promise<string> {
     const metadata: AuthorizationMetadata = await this.getCasbinMetadata();
-
-    if (
-      !metadata &&
-      !!this.allowAlwaysPath.find(path => req.path.indexOf(path) === 0)
-    ) {
-      return '';
+    const allowedPath = this.allowAlwaysPath.find(
+      path => this.request.path.indexOf(path) === 0,
+    );
+    if (allowedPath) {
+      return this.request.path;
     }
 
     if (!metadata) {
-      throw new HttpErrors.InternalServerError(`Metadata object not found`);
+      this.logger.error('Metadata for authorization not found');
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
-    const res = metadata.resource;
 
-    // Now modify the resource parameter using on path params, as per business logic.
-    // Returning resource value as such for default case.
+    const resIds: string[] = [];
+    for (const pathParam of pathParams) {
+      if (typeof pathParam === 'string') {
+        resIds.push(pathParam);
+      }
+    }
 
-    return `${res}`;
+    if (resIds.length) {
+      return resIds.join(',');
+    } else {
+      return '*';
+    }
   }
 }

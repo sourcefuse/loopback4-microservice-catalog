@@ -1,54 +1,99 @@
-import {Provider} from '@loopback/context';
-import {HttpErrors} from '@loopback/rest';
+import {Getter, inject, Provider} from '@loopback/core';
+import {AnyObject, repository} from '@loopback/repository';
+import {UserLevelResourceRepository} from '@sourceloop/authentication-service';
+import * as casbin from 'casbin';
 import {
+  AuthorizationBindings,
+  AuthorizationMetadata,
   CasbinConfig,
   CasbinEnforcerConfigGetterFn,
   IAuthUserWithPermissions,
+  ResourcePermissionObject,
 } from 'loopback4-authorization';
-import * as path from 'path';
 
 export class CasbinEnforcerConfigProvider
   implements Provider<CasbinEnforcerConfigGetterFn>
 {
+  constructor(
+    @inject.getter(AuthorizationBindings.METADATA)
+    private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,
+    @repository(UserLevelResourceRepository)
+    public userResourcesRepository: UserLevelResourceRepository,
+  ) {}
+
   value(): CasbinEnforcerConfigGetterFn {
     return (
       authUser: IAuthUserWithPermissions,
       resource: string,
-      isCasbinPolicy?: boolean,
-    ) => {
-      if (isCasbinPolicy !== undefined) {
-        return this.action(authUser, resource, isCasbinPolicy);
-      } else {
-        return this.action(authUser, resource, false);
-      }
-    };
+      isCasbinPolicy = false,
+    ) => this.action(authUser, resource, isCasbinPolicy);
   }
 
   async action(
     authUser: IAuthUserWithPermissions,
-    resource: string,
-    isCasbinPolicy?: boolean,
+    resourceValue: string,
+    isCasbinPolicy = false,
   ): Promise<CasbinConfig> {
-    if (isCasbinPolicy) {
-      const model = path.resolve(
-        __dirname,
-        './../../fixtures/casbin/model.conf',
-      );
-      // Write business logic to find out the allowed resource-permission sets for this user. Below is a dummy value.
-      const allowedRes = [{resource: 'user', permission: 'TodoCRUD'}];
+    const resourceIds = resourceValue.split(',');
+    const {permissions}: AuthorizationMetadata = await this.getCasbinMetadata(); // decorator permissions
 
-      const policy = path.resolve(
-        __dirname,
-        './../../fixtures/casbin/policy.csv',
-      );
+    const userPermissions = permissions.filter(permission =>
+      authUser.permissions.includes(permission),
+    );
+    let resourcesAllowed: ResourcePermissionObject[] = [];
 
-      return {
-        model,
-        allowedRes,
-        policy,
-      } as CasbinConfig;
-    } else {
-      throw new HttpErrors.Unauthorized('Casbin Policy is set as false');
+    const userResources = await this._getUserResources(authUser); //permissions with the resource value
+    resourcesAllowed = userPermissions.map(permission => {
+      return {permission: permission, resource: '*'};
+    });
+
+    for (const resourceId of resourceIds) {
+      userResources?.forEach(userResource => {
+        const [permission, resource] = userResource.split('/');
+        resourcesAllowed.push({
+          permission,
+          resource: resourceId === '*' ? '*' : resource,
+        });
+      });
     }
+
+    //sub=userId, obj:permission, action= * || resourceValue
+    const modelText = `
+    [request_definition]
+    r = sub, obj, act
+
+    [policy_definition]
+    p = sub, obj, act
+
+    [policy_effect]
+    e = some(where (p.eft == allow))
+
+    [matchers]
+    m = r.sub == p.sub && r.obj == p.obj && (r.act == p.act || p.act=='*')
+    `;
+
+    const model = casbin.newModelFromString(modelText);
+
+    return {
+      model,
+      allowedRes: resourcesAllowed,
+    };
+  }
+
+  private async _getUserResources(authUser: IAuthUserWithPermissions) {
+    const userResources = await this.userResourcesRepository.find({
+      where: {
+        userTenantId: (authUser as AnyObject).userTenantId,
+      },
+      fields: {
+        resourceName: true,
+        resourceValue: true,
+        allowed: true,
+      },
+    });
+    return userResources.map(
+      userResource =>
+        `${userResource.resourceName}/${userResource.resourceValue}`,
+    );
   }
 }

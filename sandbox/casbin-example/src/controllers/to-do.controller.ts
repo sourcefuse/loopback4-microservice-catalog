@@ -34,9 +34,8 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionKey.TodoCRUD],
-    resource: 'user',
-    isCasbinPolicy: true,
+    permissions: ['CreateTodo'],
+    resource: '*',
   })
   @post(base)
   @response(OK, {
@@ -91,8 +90,7 @@ export class ToDoController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.TodoCRUD],
-    resource: 'user',
-    isCasbinPolicy: true,
+    resource: '*',
   })
   @patch(base)
   @response(OK, {
@@ -134,8 +132,7 @@ export class ToDoController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.TodoCRUD],
-    resource: 'user',
-    isCasbinPolicy: true,
+    resource: '*',
   })
   @patch(`${base}/{id}`)
   @response(NOCONTENT, {
@@ -158,8 +155,7 @@ export class ToDoController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.TodoCRUD],
-    resource: 'user',
-    isCasbinPolicy: true,
+    resource: '*',
   })
   @put(`${base}/{id}`)
   @response(NOCONTENT, {
@@ -175,8 +171,7 @@ export class ToDoController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.TodoCRUD],
-    resource: 'user',
-    isCasbinPolicy: true,
+    resource: '*',
   })
   @del(`${base}/{id}`)
   @response(NOCONTENT, {
