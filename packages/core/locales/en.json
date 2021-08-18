@@ -16,5 +16,11 @@
 	"ENOENT": " no such file or directory, open '/home/samarpan/projects/loopback/loopback4-microservice-catalog/services/authentication-service/public/index.html'",
 	"The key 'sf.clientAuthentication.currentClient' is not bound to any value in context RequestContext-yWsyEvu3TeGuly75aFbRdg-13 (context": " RequestContext-yWsyEvu3TeGuly75aFbRdg-13, binding: sf.clientAuthentication.currentClient, resolutionPath: controllers.LoginController --> @LoginController.constructor[0])",
 	"Client Invalid": "Client Invalid",
-	"host is required": "host is required"
+	"host is required": "host is required",
+	"EntityNotFound": "EntityNotFound",
+	"Entity not found": " notifications with id \"undefined\"",
+	"Required parameter pubnubToken is missing!": "Required parameter pubnubToken is missing!",
+	"Pubnub Config missing !": "Pubnub Config missing !",
+	"this.kvModelClass.get is not a function": "this.kvModelClass.get is not a function",
+	"this.kvModelClass.set is not a function": "this.kvModelClass.set is not a function"
 }
