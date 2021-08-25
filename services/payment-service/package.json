@@ -1,5 +1,5 @@
 {
-  "name": "payment-service",
+  "name": "@sourceloop/payment-service",
   "version": "0.0.1",
   "description": "services",
   "keywords": [
