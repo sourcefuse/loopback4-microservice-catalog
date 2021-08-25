@@ -43,8 +43,11 @@ If you have issues with the Docker daemon connecting to an insecure registry, pl
 
 Run the following command to ensure that the base setup is working properly.
 
+<details open="true">
+
 ```sh
 $ microk8s kubectl get all --all-namespaces
+
 NAMESPACE            NAME                                             READY   STATUS      RESTARTS   AGE
 istio-system         pod/istio-security-post-install-1.5.1-w6l7l      0/1     Completed   0          25d
 istio-system         pod/istio-grafana-post-install-1.5.1-52zx2       0/1     Completed   0          25d
@@ -146,6 +149,7 @@ istio-system   job.batch/istio-security-post-install-1.5.1   1/1           82s  
 istio-system   job.batch/istio-grafana-post-install-1.5.1    1/1           82s        25d
 
 ```
+</details>
 
 Change your working directory to  `./sandbox`
 
@@ -153,6 +157,7 @@ Run the build script
 
 ```sh
 chmod +x ./build.sh
+
 ./build.sh
 ```
 
@@ -160,6 +165,7 @@ Now create the `sourceloop-sandbox` namespace.
 
 ```sh
 $ microk8s kubectl apply -f k8s/manifests/namespaces/
+...
 namespace/sourceloop-sandbox created
 ```
 
@@ -167,11 +173,14 @@ Setup your `microk8s kubectl context`
 
 ```sh
 $ microk8s kubectl config set-context sourceloop-sandbox \
---user=admin \
---cluster=microk8s-cluster \
---namespace sourceloop-sandbox
+    --user=admin \
+    --cluster=microk8s-cluster \
+    --namespace sourceloop-sandbox
+
 Context "sourceloop-sandbox" created.
+
 $ microk8s kubectl config use-context sourceloop-sandbox
+
 Switched to context "sourceloop-sandbox".
 ```
 
