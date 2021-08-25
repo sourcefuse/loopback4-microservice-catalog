@@ -161,11 +161,12 @@ chmod +x ./build.sh
 ./build.sh
 ```
 
-Now create the `sourceloop-sandbox` namespace.
+Now create the `sourceloop-sandbox` namespace.   
+:exclamation: Skip this step if you plan on using `terrform` to deploy.  
 
 ```sh
 $ microk8s kubectl apply -f k8s/manifests/namespaces/
-...
+
 namespace/sourceloop-sandbox created
 ```
 
@@ -184,7 +185,8 @@ $ microk8s kubectl config use-context sourceloop-sandbox
 Switched to context "sourceloop-sandbox".
 ```
 
-Now create the rest of the resources
+Now create the rest of the resources:  
+:exclamation: Skip this step if you plan on using `terrform` to deploy.  
 
 ```sh
 microk8s kubectl apply -f k8s/manifests/ --recursive
@@ -213,18 +215,50 @@ $ microk8s dashboard-proxy
 
 ### Terraform Setup
 
-If you prefer to use the Terraform module, follow the steps below. Terraform 0.14 + is required.
+If you prefer to use the Terraform module, follow the steps below. Terraform `1.0.3` + is required.
 
-Perform the same steps above to:
-
+Perform the same steps above to:  
 * Enable `microk8s` services
-* Adding host header entries
 * Running the container build script
+* Set the context
+* Adding host header entries
 
+Once the above steps are complete, you can proceed to run the following:  
 ```sh
 cd k8s/tf-sourceloop-sandbox
 terraform init
 terraform apply
 ```
+
+:warning: **Issues**:
+* <details open="true">
+  <summary>connection refused</summary>
+  
+  If you get an error similar the following, it shows you are unable to connect to the resources:  
+  
+  ```  
+  kubernetes_namespace.sourceloop_sandbox: Creating...
+  ╷
+  │ Error: Post "http://localhost/api/v1/namespaces": dial tcp 127.0.0.1:80: connect: connection refused
+  │ 
+  │   with kubernetes_namespace.sourceloop_sandbox,
+  │   on namespace.tf line 1, in resource "kubernetes_namespace" "sourceloop_sandbox":
+  │    1: resource "kubernetes_namespace" "sourceloop_sandbox" {
+  │ 
+  ╵
+  ```
+  You will need to execute the following in order to copy the kube config to the `.kube` folder: `microk8s config > $HOME/.kube/config`
+  
+  ---
+  If you downloaded MicroK8s using snap, and you get an error like the following:  
+  
+  ```
+  /snap/microk8s/2346/bin/sed: couldn't flush stdout: Permission denied
+  ```
+  You will can run `microk8s config` and manually copy the console output to `~/.kube/config`.  
+
+  </details>
+* Terraform apply failed on resource creation. 
+  * Give it about five minutes then re-run `terraform apply`, all resources should now properly apply.  
 
 See the [readme](./k8s/tf-sourceloop-sandbox/README.md) for more information on the Terraform module.

@@ -629,5 +629,22 @@ locals {
       replica_count         = 1
       environment_variables = []
     }
+//    pgadmin = {
+//      app_label             = ""
+//      container_image       = ""
+//      container_name        = ""
+//      container_port        = 8080
+//      deployment_name       = ""
+//      namespace_name        = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+//      port                  = 8080
+//
+//      port_name             = "8080"
+//      protocol              = "TCP"  required_version = ">= 1.0.3"
+
+//      service_name          = ""
+//      target_port           = 8080
+//      replica_count         = 1
+//      environment_variables = []
+//    }
   }
 }
