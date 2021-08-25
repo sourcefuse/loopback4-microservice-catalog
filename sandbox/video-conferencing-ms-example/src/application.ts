@@ -20,21 +20,22 @@ export {ApplicationConfig};
 
 const timeToStart = 10;
 const port = 3000;
+const PORT = 3001;
 export class VideoConferencingExampleApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     dotenv.config();
     dotenvExt.load({
-      schema: '.env.example',
+      schema: '.env',
       errorOnMissing: true,
       includeProcessEnv: true,
     });
     options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT ?? port);
-    options.rest.host = process.env.HOST;
+    options.rest.port = +(process.env.PORT?? port);
+    options.rest.host = 'localhost';
     super(options);
-
+    console.log("port", process.env.PORT);
     // Set up the custom sequence
     this.sequence(MySequence);
 

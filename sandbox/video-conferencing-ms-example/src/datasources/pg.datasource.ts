@@ -5,14 +5,21 @@ const config = {
   name: 'videochatDb',
   connector: 'postgresql',
   url: '',
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  schema: process.env.DB_SCHEMA,
+  host:process.env.HOST,
+  port: 5432,
+  user: 'postgres',
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  schema: process.env.SCHEMA,
 };
 
+console.log("*****");
+console.log('HOST', process.env.HOST);
+    console.log('USER', process.env.USER);
+    console.log('port', process.env.PORT);
+console.log('pASSWORD', process.env.PASSWORD);
+console.log('DATABASE', process.env.DATABASE);
+    console.log('SCHEMA', process.env.SCHEMA);
 @lifeCycleObserver('datasource')
 export class VideoConferecingDbDataSource
   extends juggler.DataSource

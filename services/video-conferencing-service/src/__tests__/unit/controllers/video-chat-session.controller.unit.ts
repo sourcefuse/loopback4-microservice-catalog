@@ -3,19 +3,20 @@ import {
   createStubInstance,
   expect,
   sinon,
-  StubbedInstanceWithSinonAccessor,
+  StubbedInstanceWithSinonAccessor
 } from '@loopback/testlab';
 import {VideoChatSessionController} from '../../../controllers';
 import {VonageConfig, VonageProvider} from '../../../providers/vonage';
+import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   AuditLogsRepository,
   SessionAttendeesRepository,
-  VideoChatSessionRepository,
+  VideoChatSessionRepository
 } from '../../../repositories';
-import {VonageService} from '../../../providers/vonage/vonage.service';
+import {ChatSessionService} from '../../../services/chatSession.service';
 import {VideoChatInterface} from '../../../types';
 import {
-  getDate,
+  getAttendeesList, getDate,
   getDatePastThreshold,
   getFutureDate,
   getMeetingOptions,
@@ -25,9 +26,7 @@ import {
   getSessionResponse,
   getVideoChatSession,
   getWebhookPayload,
-  setUpMockProvider,
-  getAttendeesList,
-  stream,
+  setUpMockProvider, stream
 } from '../../helpers';
 
 describe('Session APIs', () => {
@@ -44,7 +43,7 @@ describe('Session APIs', () => {
   let videoChatProvider: VideoChatInterface;
   let controller: VideoChatSessionController;
   let vonageService: VonageService;
-
+ let  chatSessionService: ChatSessionService
   afterEach(() => sinon.restore());
 
   describe('POST /session', () => {
@@ -516,11 +515,7 @@ describe('Session APIs', () => {
     vonageService = new VonageService(config);
     videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
     controller = new VideoChatSessionController(
-      videoChatSessionRepo,
-      videoChatProvider,
-      auditLogRepo,
-      sessionAttendeesRepo,
-      config,
+     chatSessionService
     );
   }
 });

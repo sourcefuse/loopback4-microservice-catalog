@@ -2,21 +2,22 @@ import {
   createStubInstance,
   expect,
   sinon,
-  StubbedInstanceWithSinonAccessor,
+  StubbedInstanceWithSinonAccessor
 } from '@loopback/testlab';
 import {VideoChatArchiveController} from '../../../controllers';
 import {VonageConfig, VonageProvider} from '../../../providers/vonage';
+import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   AuditLogsRepository,
-  VideoChatSessionRepository,
+  VideoChatSessionRepository
 } from '../../../repositories';
-import {VonageService} from '../../../providers/vonage/vonage.service';
+import {ChatArchiveService} from '../../../services/chatArchive.service';
 import {VideoChatInterface} from '../../../types';
 import {
   getArchiveResponse,
   getArchiveResponseList,
   getVideoChatSession,
-  setUpMockProvider,
+  setUpMockProvider
 } from '../../helpers';
 
 describe('Archive APIs', () => {
@@ -29,12 +30,13 @@ describe('Archive APIs', () => {
   let vonageService: VonageService;
   let config: VonageConfig;
   let controller: VideoChatArchiveController;
+  let chatArchiveService: ChatArchiveService
 
   afterEach(() => sinon.restore());
 
   describe('GET /archives/{archiveId}', () => {
     it('returns an archive object', async () => {
-      setUp({getArchives: sinon.stub().returns(getArchiveResponse({}))});
+      setUp({getArchives: sinon.stub().returns(getArchiveResponse({}))});   //create stubs
       const findOne = videoChatSessionRepo.stubs.findOne;
       findOne.resolves(getVideoChatSession({archiveId: archiveId}));
       const result = await controller.getArchive(archiveId);
@@ -149,9 +151,9 @@ describe('Archive APIs', () => {
     videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
 
     controller = new VideoChatArchiveController(
-      videoChatProvider,
-      videoChatSessionRepo,
-      auditLogRepo,
+    
+    chatArchiveService,
+
     );
   }
 });
