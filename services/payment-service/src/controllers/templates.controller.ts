@@ -19,6 +19,9 @@ import {
 } from '@loopback/rest';
 import {Templates} from '../models';
 import {TemplatesRepository} from '../repositories';
+import {STATUS_CODE} from '@sourceloop/core';
+const templatesRoutePath = '/templates';
+const templatesIDRoutePath = '/templates/{id}';
 
 export class TemplatesController {
   constructor(
@@ -26,8 +29,8 @@ export class TemplatesController {
     public templatesRepository: TemplatesRepository,
   ) {}
 
-  @post('/templates')
-  @response(200, {
+  @post(templatesRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Templates model instance',
     content: {'application/json': {schema: getModelSchemaRef(Templates)}},
   })
@@ -47,7 +50,7 @@ export class TemplatesController {
   }
 
   @get('/templates/count')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Templates model count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -57,8 +60,8 @@ export class TemplatesController {
     return this.templatesRepository.count(where);
   }
 
-  @get('/templates')
-  @response(200, {
+  @get(templatesRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of Templates model instances',
     content: {
       'application/json': {
@@ -75,8 +78,8 @@ export class TemplatesController {
     return this.templatesRepository.find(filter);
   }
 
-  @patch('/templates')
-  @response(200, {
+  @patch(templatesRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Templates PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -94,8 +97,8 @@ export class TemplatesController {
     return this.templatesRepository.updateAll(templates, where);
   }
 
-  @get('/templates/{id}')
-  @response(200, {
+  @get(templatesIDRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Templates model instance',
     content: {
       'application/json': {
@@ -111,8 +114,8 @@ export class TemplatesController {
     return this.templatesRepository.findById(id, filter);
   }
 
-  @patch('/templates/{id}')
-  @response(204, {
+  @patch(templatesIDRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Templates PATCH success',
   })
   async updateById(
@@ -129,8 +132,8 @@ export class TemplatesController {
     await this.templatesRepository.updateById(id, templates);
   }
 
-  @put('/templates/{id}')
-  @response(204, {
+  @put(templatesIDRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Templates PUT success',
   })
   async replaceById(
@@ -140,8 +143,8 @@ export class TemplatesController {
     await this.templatesRepository.replaceById(id, templates);
   }
 
-  @del('/templates/{id}')
-  @response(204, {
+  @del(templatesIDRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Templates DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

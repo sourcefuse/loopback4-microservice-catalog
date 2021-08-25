@@ -6,8 +6,8 @@ export interface RazorpayPaymentGateway {
     payorder: Orders,
     paymentTemplate: string | undefined,
   ): Promise<string> | DataObject<{}>;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   charge(
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     chargeResponse: DataObject<{razorpay_order_id: string}>,
   ): Promise<DataObject<{res: string}>>;
   refund(transactionId: string): Promise<{}> | void;

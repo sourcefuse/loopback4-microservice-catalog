@@ -1,11 +1,11 @@
 ---
 title: Audit Service v1.0.0
 language_tabs:
-  - javascript: JavaScript
-  - javascript--nodejs: Node.JS
+  - "'javascript": JavaScript
+  - "'javascript--nodejs": Node.JS'
 language_clients:
-  - javascript: request
-  - javascript--nodejs: ""
+  - "'javascript": request'
+  - "'javascript--nodejs": ""
 toc_footers: []
 includes: []
 search: false
@@ -38,28 +38,7 @@ Base URLs:
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -116,28 +95,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -204,39 +162,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "action": "string",
-  "actedAt": "2019-08-24T14:15:22Z",
-  "actedOn": "string",
-  "actionKey": "string",
-  "entityId": "string",
-  "actor": "string",
-  "before": {},
-  "after": {},
-  "actionGroup": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "action": "string",
@@ -329,28 +255,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
