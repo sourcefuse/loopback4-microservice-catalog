@@ -10,7 +10,7 @@
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.2.0",
     "cz-format-extension": "^1.4.0",
-    "husky": "^4.2.5",
+    "husky": "^4.3.8",
     "lerna": "^3.16.2"
   },
   "husky": {
