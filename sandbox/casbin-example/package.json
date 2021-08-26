@@ -66,6 +66,7 @@
     "@types/jsonwebtoken": "^8.5.4",
     "@types/lodash": "^4.14.171",
     "bcrypt": "^5.0.1",
+    "casbin": "^5.11.5",
     "casbin-pg-adapter": "^1.4.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
