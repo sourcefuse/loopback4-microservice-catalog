@@ -58,9 +58,7 @@ export class TranslateController {
         `Text type should be one of ${TextType.MARKDOWN}, ${TextType.HTML} or ${TextType.TEXT}`,
       );
     }
-    // if (process.env.NODE_ENV === 'test') {
-    //   return MOCK_RESPONSES[type];
-    // }
+
     if ([TextType.HTML, TextType.TEXT].includes(type)) {
       return this.jsDomService.translateTextUsingjsDom(
         String(text),
