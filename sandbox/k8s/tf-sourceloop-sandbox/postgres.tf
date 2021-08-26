@@ -5,6 +5,7 @@ resource "kubectl_manifest" "postgres_manifests" {
   depends_on = [kubernetes_namespace.sourceloop_sandbox]
 }
 
+// TODO - remove when migrated
 resource "kubectl_manifest" "pgadmin_manifests" {
   for_each   = fileset(path.module, "pgadmin/*.yaml")
   yaml_body  = file(each.key)

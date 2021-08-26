@@ -162,7 +162,7 @@ chmod +x ./build.sh
 ```
 
 Now create the `sourceloop-sandbox` namespace.   
-:exclamation: Skip this step if you plan on using `terrform` to deploy.  
+:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:  
 
 ```sh
 $ microk8s kubectl apply -f k8s/manifests/namespaces/
@@ -186,7 +186,7 @@ Switched to context "sourceloop-sandbox".
 ```
 
 Now create the rest of the resources:  
-:exclamation: Skip this step if you plan on using `terrform` to deploy.  
+:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:   
 
 ```sh
 microk8s kubectl apply -f k8s/manifests/ --recursive
