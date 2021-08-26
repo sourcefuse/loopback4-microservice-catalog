@@ -23,7 +23,7 @@ const translations = {
   [TEXT4]: 'texte gras',
 };
 
-class ComprehendStub {
+class AwsStub {
   accessKeyId: string;
   secretAccessKey: string;
   region: string;
@@ -31,6 +31,12 @@ class ComprehendStub {
     this.accessKeyId = '';
     this.secretAccessKey = '';
     this.region = '';
+  }
+}
+
+class ComprehendStub extends AwsStub {
+  constructor() {
+    super();
   }
   detectDominantLanguage(text: string) {
     return {
@@ -41,14 +47,9 @@ class ComprehendStub {
   }
 }
 
-class TranslateStub {
-  accessKeyId: string;
-  secretAccessKey: string;
-  region: string;
+class TranslateStub extends AwsStub {
   constructor() {
-    this.accessKeyId = '';
-    this.secretAccessKey = '';
-    this.region = '';
+    super();
   }
   translateText(
     data: {Text: string},
