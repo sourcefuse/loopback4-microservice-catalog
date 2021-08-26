@@ -213,6 +213,24 @@ To view the dashboard, run
 $ microk8s dashboard-proxy
 ```
 
+### MicroK8s  
+If you run into issue, these are the commands you may need to run locally, manually.  
+
+The contents of this function can be found in the `ci_build.sh` file located in `sandbox/ci_build.sh`
+
+```shell
+install_microk8s() {
+  sudo snap install microk8s --classic
+  microk8s status --wait-ready
+  microk8s enable dns registry ingress
+  microk8s kubectl get all --all-namespaces
+  pushd $HOME
+  mkdir -p .kube
+  microk8s config >.kube/config
+  popd
+}
+```
+
 ### Terraform Setup
 
 If you prefer to use the Terraform module, follow the steps below. Terraform `1.0.3` + is required.
@@ -262,3 +280,4 @@ terraform apply
   * Give it about five minutes then re-run `terraform apply`, all resources should now properly apply.  
 
 See the [readme](./k8s/tf-sourceloop-sandbox/README.md) for more information on the Terraform module.
+
