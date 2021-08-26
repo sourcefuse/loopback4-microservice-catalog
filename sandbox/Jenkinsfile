@@ -1,0 +1,15 @@
+pipeline {
+    agent { label 'jenkins-dynamic-slave' }
+    stages {
+        stage('Build') {
+            steps {
+                dir("sandbox"){
+                    sh "chmod +x ./ci_build.sh"
+                    withCredentials([usernamePassword('credentialsId': 'sf-reference-arch-dockerhub', 'usernameVariable': 'DOCKER_USERNAME', 'passwordVariable': 'DOCKER_PASSWORD')]) {
+                        sh "./ci_build.sh ${env.WORKSPACE}/sandbox true"
+                    }
+                }
+            }
+        }
+    }
+}

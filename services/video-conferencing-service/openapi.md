@@ -85,6 +85,8 @@ fetch('/archives/storage-target',
 
 `PUT /archives/storage-target`
 
+Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
+
 > Body parameter
 
 ```json
@@ -167,6 +169,8 @@ fetch('/archives/{archiveId}',
 
 `GET /archives/{archiveId}`
 
+Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.
+
 <h3 id="videochatarchivecontroller.getarchive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -245,6 +249,8 @@ fetch('/archives/{archiveId}',
 
 `DELETE /archives/{archiveId}`
 
+Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.
+
 <h3 id="videochatarchivecontroller.deletearchive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -320,6 +326,8 @@ fetch('/archives',
 ```
 
 `GET /archives`
+
+Used to fetch a list of archives (meetings that were recorded).
 
 > Example responses
 
@@ -472,6 +480,10 @@ fetch('/session/{meetingLinkId}/end',
 
 `PATCH /session/{meetingLinkId}/end`
 
+Used to stop the current active meeting. Meeting cannot be stopped again if it is 
+      already stopped. Successful execution will add the endTime attribute to a recently 
+      ending session.
+
 <h3 id="videochatsessioncontroller.endsession-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -541,6 +553,11 @@ fetch('/session/{meetingLinkId}/token',
 ```
 
 `POST /session/{meetingLinkId}/token`
+
+Used for Generating token, which is used for connecting to a room/session on a client side. 
+      In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
+      We can use expire time for limited validity of a token. Successful 
+      execution will send a token.
 
 > Body parameter
 
@@ -667,6 +684,8 @@ fetch('/session/{meetingLinkId}',
 
 `PATCH /session/{meetingLinkId}`
 
+Used for editing the meeting
+
 > Body parameter
 
 ```json
@@ -764,6 +783,11 @@ fetch('/session',
 
 `POST /session`
 
+Used for Creating a session with options such as end to end encryption, archive mode. 
+      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
+      an Error will be thrown. Successful execution will send a meeting link 
+      id which can be used to amend in client url.
+
 > Body parameter
 
 ```json
@@ -843,6 +867,8 @@ fetch('/webhooks/session',
 ```
 
 `POST /webhooks/session`
+
+Webhook API hit from a third party to add/update session attendees in a meeting.
 
 > Body parameter
 

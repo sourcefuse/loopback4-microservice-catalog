@@ -69,6 +69,9 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.CreateCalendar]})
   @post(basePath, {
+    description: `This is an api to create a calendar for any user. 
+      Recommendation: Use this while adding a user to the main application, in order to create 
+      a primary calendar for that particular user.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -189,6 +192,8 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(basePath, {
+    description:
+      'These requests will be available to everyone in the event to look at.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -242,6 +247,8 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.ViewCalendar]})
   @get(`${basePath}/{id}`, {
+    description:
+      'These requests will be available to everyone in the event to look at.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -293,6 +300,10 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.UpdateCalendar]})
   @put(`${basePath}/{id}`, {
+    description: `This api is to update the calendar by passing an id. This action will be allowed only to 
+      the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email 
+      passed in the token and the corresponding access level, whereas to identify the admin we will 
+      check for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -336,6 +347,10 @@ export class CalendarController {
   })
   @authorize({permissions: [PermissionKey.DeleteCalendar]})
   @del(`${basePath}/{id}`, {
+    description: `This api is to update the calendar by passing an id. This action will be allowed only to the 
+      owner of the calendar or the admin. To identify the ‘owner’ we will check for the email 
+      passed in the token and the corresponding access level, whereas to identify the admin we will 
+      check for the permission.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

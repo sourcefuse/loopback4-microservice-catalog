@@ -31,6 +31,8 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives/{archiveId}', {
+    description:
+      'Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -67,6 +69,8 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives', {
+    description:
+      'Used to fetch a list of archives (meetings that were recorded).',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -87,6 +91,8 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.DeleteArchive]})
   @del('/archives/{archiveId}', {
+    description:
+      'Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -125,6 +131,8 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.SetUploadTarget]})
   @put('/archives/storage-target', {
+    description:
+      'Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.',
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
