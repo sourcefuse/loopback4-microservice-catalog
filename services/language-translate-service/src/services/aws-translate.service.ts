@@ -58,6 +58,7 @@ export class AwsTranslateProvider
             TargetLanguageCode: targetLanguageCode,
           })
           .promise();
+        console.log('TRANSLATED TEXT', TranslatedText);
         return TranslatedText;
       },
     };

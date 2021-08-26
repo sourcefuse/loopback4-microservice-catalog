@@ -1,15 +1,19 @@
 import {TranslateController} from '../../controllers';
 import {HttpErrors} from '@loopback/rest';
-import {
-  JsdomService,
-  MarkdownService,
-  AwsTranslateProvider,
-} from '../../services';
 import {TextType} from '../../types';
 import {expect} from '@loopback/testlab';
 import {TranslateModelDto} from '../../models';
+import {JsdomService, MarkdownService} from '../../services';
+import {
+  SAMPLE_HTML,
+  SAMPLE_MARKDOWN,
+  SAMPLE_TEXT,
+  setUpAwsTranslateProvider,
+  translationsStubObj,
+} from './stubs';
 
 describe('TranslateController', () => {
+  const {AwsTranslateProvider} = setUpAwsTranslateProvider();
   const awsTranslateProvider = new AwsTranslateProvider({
     accessKeyId: '',
     secretAccessKey: '',
@@ -54,29 +58,27 @@ describe('TranslateController', () => {
     });
     it('translates html text', async () => {
       const translatedText = await translateController.makeTranslation({
-        text: `<h1>Hello World</h1><h2>How are you</h2>`,
+        text: SAMPLE_HTML,
         type: TextType.HTML,
         targetLanguage: 'fr',
       } as TranslateModelDto);
-      expect(translatedText).to.eql(
-        '<h1>Bonjour le monde</h1><h2>Comment allez-vous&nbsp;?</h2>',
-      );
-    }).timeout(5000);
+      expect(translatedText).to.eql(translationsStubObj[SAMPLE_HTML]);
+    });
     it('translates markdown text', async () => {
       const translatedText = await translateController.makeTranslation({
-        text: `I just love **bold text**.	`,
+        text: SAMPLE_MARKDOWN,
         type: TextType.MARKDOWN,
         targetLanguage: 'fr',
       } as TranslateModelDto);
-      expect(translatedText).to.be.instanceOf(String);
-    }).timeout(5000);
+      expect(translatedText).to.eql(translationsStubObj[SAMPLE_MARKDOWN]);
+    });
     it('translates plain text', async () => {
       const translatedText = await translateController.makeTranslation({
-        text: `This is just a plain test`,
+        text: SAMPLE_TEXT,
         type: TextType.TEXT,
         targetLanguage: 'fr',
       } as TranslateModelDto);
-      expect(translatedText).to.eql(`Ce n'est qu'un test simple.`);
-    }).timeout(5000);
+      expect(translatedText).to.eql(translationsStubObj[SAMPLE_TEXT]);
+    });
   });
 });
