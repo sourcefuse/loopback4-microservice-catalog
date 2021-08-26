@@ -88,7 +88,6 @@ resource "kubernetes_persistent_volume_claim" "default" {
   // TODO - should we add a PV resource to this module as a failback for the volume_name?
   spec {
     access_modes       = var.persistent_volume_claim_access_modes
-//    selector           = var.persistent_volume_claim_selector
     volume_name        = try(var.persistent_volume_claim_volume_name, null)
     storage_class_name = var.persistent_volume_claim_storage_class_name
 

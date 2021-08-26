@@ -102,11 +102,6 @@ variable "persistent_volume_claim_namespace" {
   default     = null
 }
 
-variable "persistent_volume_claim_selector" {
-  description = "A label query over volumes to consider for binding."
-  default     = null
-}
-
 variable "persistent_volume_claim_volume_name" {
   description = "The binding reference to the PersistentVolume backing this claim."
   default     = null
