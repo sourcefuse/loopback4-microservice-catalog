@@ -75,6 +75,48 @@ resource "kubernetes_deployment" "default" {
 }
 
 ## pv and pvc
+resource "kubernetes_persistent_volume" "default" {
+  count = var.persistent_volume_enable == true ? 1 : 0
+
+  metadata {
+    name        = var.persistent_volume_name
+    annotations = var.persistent_volume_annotations
+    labels      = var.persistent_volume_labels
+  }
+
+  // TODO - remove hardcoded values
+
+  spec {
+    access_modes                     = var.persistent_volume_access_modes
+    persistent_volume_reclaim_policy = var.persistent_volume_reclaim_policy
+
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key      = "kubernetes.io/hostname"
+            operator = "In"
+
+            values = [
+              "localhost"
+            ]
+          }
+        }
+      }
+    }
+
+    capacity = {
+      storage = var.persistent_volume_storage_size
+    }
+
+    persistent_volume_source {
+      local {
+        path = var.persistent_volume_storage_path
+      }
+    }
+  }
+}
+
 resource "kubernetes_persistent_volume_claim" "default" {
   count = var.persistent_volume_claim_enable == true ? 1 : 0
 
@@ -85,10 +127,9 @@ resource "kubernetes_persistent_volume_claim" "default" {
     namespace   = var.persistent_volume_claim_namespace
   }
 
-  // TODO - should we add a PV resource to this module as a failback for the volume_name?
   spec {
     access_modes       = var.persistent_volume_claim_access_modes
-    volume_name        = try(var.persistent_volume_claim_volume_name, null)
+    volume_name        = try(kubernetes_persistent_volume.default[0].metadata.0.name, var.persistent_volume_claim_volume_name)
     storage_class_name = var.persistent_volume_claim_storage_class_name
 
     resources {
