@@ -1,3 +1,4 @@
+'use strict';
 import {Client, createRestAppClient, expect} from '@loopback/testlab';
 import {RoleTypes} from '@sourceloop/core';
 import {

@@ -1,3 +1,4 @@
+'use strict';
 import {Client, expect} from '@loopback/testlab';
 import {TestingApplication} from '../fixtures/application';
 import {setupApplication} from './test-helper';
