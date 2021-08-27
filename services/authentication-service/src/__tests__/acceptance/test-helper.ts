@@ -3,9 +3,12 @@ import {
   givenHttpServerConfig,
   Client,
 } from '@loopback/testlab';
-import {AuthenticationBindings} from 'loopback4-authentication';
 import {TestingApplication} from '../fixtures/application';
 import {AuthDbSourceName, AuthCacheSourceName} from '../../types';
+import {AuthenticationBindings, Strategies} from 'loopback4-authentication';
+import {TestOauthPasswordVerifyProvider} from '../fixtures/providers/oauth-password-verifier.provider';
+import {TestPasswordVerifyProvider} from '../fixtures/providers/local-password.provider';
+import {TestResourceOwnerVerifyProvider} from '../fixtures/providers/resource-owner.provider';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({});
@@ -25,17 +28,24 @@ export async function setupApplication(): Promise<AppWithClient> {
     name: 'redis',
     connector: 'kv-memory',
   });
-  app.bind(AuthenticationBindings.CURRENT_USER).to({
-    id: 100,
-    username: 'test_user',
-    password: 'test_password',
-  });
 
   app.bind(AuthenticationBindings.CURRENT_USER).to({
     id: 1,
     username: 'test_user',
     password: 'temp123!@',
   });
+
+  app
+    .bind(Strategies.Passport.LOCAL_PASSWORD_VERIFIER)
+    .toProvider(TestPasswordVerifyProvider);
+
+  app
+    .bind(Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER)
+    .toProvider(TestOauthPasswordVerifyProvider);
+
+  app
+    .bind(Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER)
+    .toProvider(TestResourceOwnerVerifyProvider);
 
   await app.start();
 
