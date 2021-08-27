@@ -25,6 +25,8 @@ describe('Authentication microservice', () => {
   let roleRepository: RoleRepository;
   const useragent = 'test';
   const deviceId = 'test';
+  const useragentName = 'user-agent';
+  const deviceIdName = 'device_id';
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
   });
@@ -122,8 +124,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const response = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -146,8 +148,8 @@ describe('Authentication microservice', () => {
     process.env.JWT_SECRET = 'test';
     await client
       .post(`/auth/login-token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send(reqData)
       .expect(401);
   });
@@ -195,8 +197,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -223,8 +225,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -251,8 +253,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -402,8 +404,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -433,8 +435,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -464,8 +466,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,
@@ -495,8 +497,8 @@ describe('Authentication microservice', () => {
       .expect(200);
     const reqForToken = await client
       .post(`/auth/token`)
-      .set('device_id', deviceId)
-      .set('user-agent', useragent)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
       .send({
         clientId: 'web',
         code: reqForCode.body.code,

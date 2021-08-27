@@ -7,8 +7,9 @@ describe('SignUp Request Controller', () => {
   let app: TestingApplication;
   let client: Client;
   const basePath = '/auth/sign-up';
+  const sampleEmail = 'xyz@gmail.com';
   const reqData = {
-    email: 'xyz@gmail.com',
+    email: sampleEmail,
   };
 
   before('setupApplication', async () => {
@@ -35,7 +36,7 @@ describe('SignUp Request Controller', () => {
       .send(reqData)
       .expect(200);
     expect(response.body).to.have.properties(['code', 'email']);
-    expect(response.body.email).to.be.equal('xyz@gmail.com');
+    expect(response.body.email).to.be.equal(sampleEmail);
   });
 
   it('gives status 200 and user details for creating user', async () => {
@@ -46,7 +47,7 @@ describe('SignUp Request Controller', () => {
       .send(reqData)
       .expect(200);
     const reqDta = {
-      email: 'xyz@gmail.com',
+      email: sampleEmail,
       password: 'test_password',
     };
     const response = await client
@@ -55,6 +56,6 @@ describe('SignUp Request Controller', () => {
       .send(reqDta)
       .expect(200);
     expect(response.body).to.have.properties(['user', 'email']);
-    expect(response.body.email).to.be.equal('xyz@gmail.com');
+    expect(response.body.email).to.be.equal(sampleEmail);
   });
 });
