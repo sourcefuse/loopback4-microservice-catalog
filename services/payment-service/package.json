@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "description": "services",
   "keywords": [
-    "loopback-application",
+    "loopback-extension",
     "loopback"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": ">=10"
   },
   "scripts": {
     "build": "lb-tsc",
@@ -39,10 +39,11 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/payment-service"
   },
-  "author": " <sumiter92@gmail.com>",
-  "license": "",
+  "author": "Sourcefuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
@@ -52,6 +53,10 @@
     "database.json",
     "!*/__tests__"
   ],
+  "peerDependencies": {
+    "db-migrate": "< 1.0.0 || ^1.0.0",
+    "db-migrate-pg": "^1.0.0"
+  },
   "dependencies": {
     "@loopback/boot": "^3.4.0",
     "@loopback/context": "^3.16.0",
@@ -82,5 +87,9 @@
     "typescript": "~4.2.4",
     "widdershins": "^4.0.1",
     "source-map-support": "^0.5.19"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
