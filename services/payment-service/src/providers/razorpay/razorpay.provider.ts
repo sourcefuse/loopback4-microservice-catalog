@@ -33,7 +33,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     return {
       create: async (payorder: Orders, paymentTemplate: string) => {
         // eslint-disable-next-line
-        let razorpayTemplate: any;
+        let razorpayTemplate: unknown;
         const transactions = await this.transactionsRepository.find({
           where: {orderId: payorder.id},
         });

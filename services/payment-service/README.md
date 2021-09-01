@@ -182,3 +182,7 @@ Get details of particular transaction.
 ##### GET /orders/{id}
 
 Get details of particular order.
+
+##### POST /templates
+
+Create a template to overwrite the existing default Gateway Templates if needed.
