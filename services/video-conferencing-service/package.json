@@ -90,7 +90,7 @@
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
     "axios-mock-adapter": "^1.18.1",
-    "db-migrate": "^0.11.11",
+    "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",

@@ -13,8 +13,8 @@ export class VideoConfServiceApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
-    this.component(VideoConfServiceComponent);
 
+    this.component(VideoConfServiceComponent);
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {

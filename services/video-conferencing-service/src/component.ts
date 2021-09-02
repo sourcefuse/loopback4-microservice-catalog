@@ -26,7 +26,11 @@ import {
 
 import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
 import {VideoChatSessionController} from './controllers/video-chat-session.controller';
-import {VideoChatBindings} from './keys';
+import {
+  MeetLinkGeneratorProvider,
+  ServiceBindings,
+  VideoChatBindings,
+} from './keys';
 import {AuditLogs} from './models/audit-logs.model';
 import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageProvider} from './providers/vonage/vonage.provider';
@@ -34,6 +38,11 @@ import {VonageService} from './providers/vonage/vonage.service';
 import {SessionAttendeesRepository} from './repositories';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
+import {
+  ChatArchiveService,
+  ChatSessionService,
+  MeetingLinkIdGeneratorProvider,
+} from './services';
 
 export class VideoConfServiceComponent implements Component {
   constructor(
@@ -66,7 +75,22 @@ export class VideoConfServiceComponent implements Component {
         VonageProvider,
       ),
     );
+    this.bindings.push(
+      Binding.bind(MeetLinkGeneratorProvider).toProvider(
+        MeetingLinkIdGeneratorProvider,
+      ),
+    );
+    this.bindings.push(
+      Binding.bind(ServiceBindings.SessionChatService).toClass(
+        ChatSessionService,
+      ),
+    );
 
+    this.bindings.push(
+      Binding.bind(ServiceBindings.ArchiveChatService).toClass(
+        ChatArchiveService,
+      ),
+    );
     this.application.service(VonageService);
 
     if (!this.videChatConfig?.useCustomSequence) {

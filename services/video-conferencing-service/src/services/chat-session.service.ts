@@ -1,69 +1,59 @@
+import {injectable, /* inject, */ BindingScope} from '@loopback/core';
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import cryptoRandomString from 'crypto-random-string';
-import moment from 'moment';
+
 import {VonageEnums} from '../enums';
-import {VideoChatBindings} from '../keys';
+import {MeetLinkGeneratorProvider, VideoChatBindings} from '../keys';
 import {SessionAttendees, VideoChatSession} from '../models';
-import {VonageConfig, VonageSessionWebhookPayload} from '../providers/vonage';
+import {VonageSessionWebhookPayload} from '../providers/vonage';
+import {IConfig} from '../types';
 import {VonageBindings} from '../providers/vonage/keys';
 import {
-  AuditLogsRepository, SessionAttendeesRepository, VideoChatSessionRepository
+  SessionAttendeesRepository,
+  VideoChatSessionRepository,
 } from '../repositories';
+import moment from 'moment';
 import {
-  MeetingOptions, SessionOptions, SessionResponse, VideoChatInterface
+  MeetingOptions,
+  SessionOptions,
+  SessionResponse,
+  VideoChatInterface,
 } from '../types';
+import {MeetingLinkIdGenerator} from './meeting-link-id-generator.provider';
 
+@injectable({scope: BindingScope.TRANSIENT})
 export class ChatSessionService {
-
-
   constructor(
     @repository(VideoChatSessionRepository)
     private readonly videoChatSessionRepository: VideoChatSessionRepository,
     @inject(VideoChatBindings.VideoChatProvider)
     private readonly videoChatProvider: VideoChatInterface,
-    @repository(AuditLogsRepository)
-    private readonly auditLogRepository: AuditLogsRepository,
+    @inject(MeetLinkGeneratorProvider)
+    public generator: MeetingLinkIdGenerator,
     @repository(SessionAttendeesRepository)
     private readonly sessionAttendeesRepository: SessionAttendeesRepository,
     @inject(VonageBindings.config, {optional: true})
-    private readonly config: VonageConfig,
+    private readonly config: IConfig,
+  ) {}
 
-  ) {
-
-
-  }
-
-  async getMeetingLink(
-
-    meetingOptions: MeetingOptions,
-  ): Promise<string> {
+  async getMeetingLink(meetingOptions: MeetingOptions): Promise<string> {
     let scheduledTime: Date = new Date();
-    const auditLogPayload = {
-      action: 'session',
-      actionType: 'meeting-link',
-      actedAt: moment().format(),
-      before: meetingOptions,
-      after: {},
-    };
+
     let errorMessage: string;
 
     if (meetingOptions.isScheduled) {
       if (!meetingOptions.scheduleTime) {
         errorMessage = 'Schedule time is not set.';
-        auditLogPayload.after = {errorMessage};
-        await this.auditLogRepository.create(auditLogPayload);
+
         throw new HttpErrors.BadRequest(errorMessage);
       } else if (isNaN(meetingOptions.scheduleTime.valueOf())) {
         errorMessage = 'Scheduled time is not in correct format.';
-        auditLogPayload.after = {errorMessage};
-        await this.auditLogRepository.create(auditLogPayload);
+
         throw new HttpErrors.BadRequest(errorMessage);
       } else if (moment().isAfter(meetingOptions.scheduleTime)) {
         errorMessage = `Meeting can't be scheduled with schedule time in past!`;
-        auditLogPayload.after = {errorMessage};
-        await this.auditLogRepository.create(auditLogPayload);
+
         throw new HttpErrors.BadRequest(errorMessage);
       } else {
         scheduledTime = meetingOptions.scheduleTime;
@@ -73,8 +63,9 @@ export class ChatSessionService {
     const meetingResp = await this.videoChatProvider.getMeetingLink(
       meetingOptions,
     );
-
-    const meetingLinkId = cryptoRandomString({length: 10, type: 'url-safe'});
+    const meetingLinkId = this.generator();
+    console.log('id', meetingLinkId);
+    //provider for this cryptoRandomString
     const videoSessionDetail = new VideoChatSession({
       sessionId: meetingResp.sessionId,
       meetingLink: meetingLinkId,
@@ -84,29 +75,19 @@ export class ChatSessionService {
     });
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
-    auditLogPayload.after = videoSessionDetail;
-    await this.auditLogRepository.create(auditLogPayload);
+
     return meetingLinkId;
   }
 
   async getMeetingToken(
-
     sessionOptions: SessionOptions,
-   meetingLinkId: string,
+    meetingLinkId: string,
   ): Promise<SessionResponse> {
-    const auditLogPayload = {
-      action: 'session',
-      actionType: 'get-token',
-      before: {meetingLinkId},
-      actedAt: moment().format(),
-      after: {},
-    };
     let errorMessage;
 
     if (typeof meetingLinkId !== 'string' || !meetingLinkId) {
       errorMessage = 'Meeting link should be a valid string';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -115,15 +96,13 @@ export class ChatSessionService {
       isNaN(sessionOptions.expireTime?.valueOf())
     ) {
       errorMessage = 'Expire time is not in correct format.';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
     if (moment().isAfter(sessionOptions.expireTime)) {
       errorMessage = 'Expire time can not be in past.';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -135,16 +114,14 @@ export class ChatSessionService {
 
     if (!session) {
       errorMessage = 'Session does not exist';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
     // check if meeting is already ended
     if (session.endTime) {
       errorMessage = 'This meeting has been expired';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -157,8 +134,7 @@ export class ChatSessionService {
       ) {
         errorMessage = `Meeting can only be started ${this.config.timeToStart} minutes before
          the scheduled time`;
-        auditLogPayload.after = {errorMessage};
-        await this.auditLogRepository.create(auditLogPayload);
+
         throw new HttpErrors.BadRequest(errorMessage);
       }
     }
@@ -172,21 +148,13 @@ export class ChatSessionService {
     return this.videoChatProvider.getToken(session.sessionId, sessionOptions);
   }
 
-   async editMeeting(
-   meetingLinkId: string,
+  async editMeeting(
+    meetingLinkId: string,
 
     body: Partial<VideoChatSession>,
   ): Promise<void> {
     const {isScheduled, scheduleTime} = body;
     let errorMessage = '';
-
-    const auditLogPayload = {
-      action: 'session',
-      actionType: 'edit-meeting',
-      before: {meetingLinkId, isScheduled, scheduleTime},
-      actedAt: moment().format(),
-      after: {},
-    };
 
     const sessionDetail = await this.videoChatSessionRepository.findOne({
       where: {
@@ -196,41 +164,25 @@ export class ChatSessionService {
 
     if (!sessionDetail) {
       errorMessage = `Meeting link ${meetingLinkId} not found`;
-      auditLogPayload.after = {
-        errorMessage,
-      };
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.NotFound(errorMessage);
     }
 
     if (isScheduled && !scheduleTime) {
       errorMessage = `Schedule Time is required if isScheduled is set to true`;
-      auditLogPayload.after = {
-        errorMessage,
-      };
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
     if (scheduleTime && isNaN(moment(scheduleTime).valueOf())) {
       errorMessage = `Schedule Time is Not in correct format`;
-      auditLogPayload.after = {
-        errorMessage,
-      };
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
     if (moment().isAfter(scheduleTime)) {
       errorMessage = 'Schedule Time cannot be set in the past';
-      auditLogPayload.after = {
-        errorMessage,
-      };
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
@@ -245,28 +197,13 @@ export class ChatSessionService {
       sessionDetail.id,
       updateData,
     );
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.auditLogRepository.create(auditLogPayload);
-   }
+  }
 
-
-   async endSession(
-   meetingLinkId: string,
-  ): Promise<void> {
-
-
-    const auditLogPayload = {
-      action: 'session',
-      actionType: 'end-session',
-      before: {meetingLinkId},
-      actedAt: moment().format(),
-      after: {},
-    };
+  async endSession(meetingLinkId: string): Promise<void> {
     let errorMessage: string;
     if (typeof meetingLinkId !== 'string' || !meetingLinkId) {
       errorMessage = 'Meeting link should be a valid string.';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest('Meeting link should be a valid string.');
     }
 
@@ -278,30 +215,22 @@ export class ChatSessionService {
 
     if (!videoSessionDetail) {
       errorMessage = 'Meeting Not Found';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.NotFound(errorMessage);
     }
 
     if (videoSessionDetail.endTime) {
       errorMessage = 'Meeting has already been ended!';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
     await this.videoChatSessionRepository.updateById(videoSessionDetail.id, {
       endTime: new Date(),
     });
+  }
 
-    auditLogPayload.after = {response: 'end session successful'};
-    await this.auditLogRepository.create(auditLogPayload);
-   }
-
-
-  async checkWebhookPayload(
-   webhookPayload: VonageSessionWebhookPayload,
-  ) {
+  async checkWebhookPayload(webhookPayload: VonageSessionWebhookPayload) {
     try {
       const {
         connection: {data},
@@ -362,33 +291,13 @@ export class ChatSessionService {
           //DO NOTHING
         }
       }
-      await this.auditLogRepository.create(
-        {
-          action: 'session-webhook',
-          actionType: event,
-          before: webhookPayload,
-          after: {response: 'Webhook event triggered successfully'},
-          actedAt: moment().format(),
-        },
-        {skipCurrentUser: true},
-      );
     } catch (error) {
-      await this.auditLogRepository.create(
-        {
-          action: 'session-webhook',
-          actionType: webhookPayload.event,
-          before: webhookPayload,
-          after: {errorStack: error.stack},
-          actedAt: moment().format(),
-        },
-        {skipCurrentUser: true},
-      );
       throw new HttpErrors.InternalServerError(
         'Error occured triggering webhook event',
       );
     }
   }
-async processStreamDestroyedEvent(
+  async processStreamDestroyedEvent(
     webhookPayload: VonageSessionWebhookPayload,
     sessionAttendeeDetail: SessionAttendees,
     updatedAttendee: Partial<SessionAttendees>,
@@ -410,18 +319,10 @@ async processStreamDestroyedEvent(
     }
   }
 
-
   async getAttendeesList(
-   meetingLinkId: string,
+    meetingLinkId: string,
     active: string,
   ): Promise<SessionAttendees[]> {
-    const auditLogPayload = {
-      action: 'session',
-      actionType: 'session-attendees-list',
-      before: {meetingLinkId},
-      actedAt: moment().format(),
-      after: {},
-    };
     let errorMessage: string;
 
     const videoSessionDetail = await this.videoChatSessionRepository.findOne({
@@ -432,8 +333,7 @@ async processStreamDestroyedEvent(
 
     if (!videoSessionDetail) {
       errorMessage = 'Meeting Not Found';
-      auditLogPayload.after = {errorMessage};
-      await this.auditLogRepository.create(auditLogPayload);
+
       throw new HttpErrors.NotFound(errorMessage);
     }
 
@@ -452,9 +352,6 @@ async processStreamDestroyedEvent(
     const sessionAttendeeList = await this.sessionAttendeesRepository.find({
       where: whereFilter,
     });
-
-    auditLogPayload.after = {response: 'get attendees successful'};
-    await this.auditLogRepository.create(auditLogPayload);
 
     return sessionAttendeeList;
   }

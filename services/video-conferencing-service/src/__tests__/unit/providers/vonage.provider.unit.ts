@@ -1,9 +1,4 @@
-import {
-  createStubInstance,
-  expect,
-  sinon,
-  StubbedInstanceWithSinonAccessor,
-} from '@loopback/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {VonageEnums} from '../../../enums';
@@ -13,7 +8,7 @@ import {
   VonageProvider,
   VonageS3TargetOptions,
 } from '../../../providers/vonage';
-import {AuditLogsRepository} from '../../../repositories';
+
 import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   getVonageArchive,
@@ -26,8 +21,7 @@ describe('VonageProvider (unit)', () => {
   const sessionId = 'dummy-session-id';
   const vonageFailureError = new Error('Vonage failure');
   const archiveId = 'dummy-archive-id';
-  let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
-  let auidtLogCreate: sinon.SinonStub;
+
   let vonageProvider: VonageProvider;
   let vonageService: VonageService;
   let config: VonageConfig;
@@ -60,7 +54,6 @@ describe('VonageProvider (unit)', () => {
       expect(result).to.have.property('mediaMode').which.eql('routed');
       expect(result).to.have.property('archiveMode').which.eql('always');
       expect(result).to.have.property('sessionId').which.eql(sessionId);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns a session id for end to end encrypted session', async () => {
@@ -78,7 +71,6 @@ describe('VonageProvider (unit)', () => {
         .getMeetingLink(meetingOptions);
       expect(result).to.have.property('mediaMode').which.eql('relayed');
       expect(result).to.have.property('sessionId').which.eql(sessionId);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error if vonage fails to create session', async () => {
@@ -92,7 +84,6 @@ describe('VonageProvider (unit)', () => {
         .getMeetingLink(meetingOptions)
         .catch(err => err);
       expect(result).instanceOf(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error if enable archiving is enabled with end to end encryption', async () => {
@@ -120,7 +111,6 @@ describe('VonageProvider (unit)', () => {
         .getToken(sessionId, sessionOptions);
       expect(result).to.have.property('sessionId').which.eql(sessionId);
       expect(result).to.have.property('token').which.eql('dummy-token');
-      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error if vonage fails to generate token', async () => {
@@ -134,7 +124,6 @@ describe('VonageProvider (unit)', () => {
         .getToken(sessionId, sessionOptions)
         .catch(err => err);
       expect(error).instanceOf(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
   });
 
@@ -234,7 +223,6 @@ describe('VonageProvider (unit)', () => {
         )
         .reply(200);
       await vonageProvider.value().setUploadTarget(vonageS3Options);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('sets the upload target for Azure', async () => {
@@ -252,7 +240,6 @@ describe('VonageProvider (unit)', () => {
         )
         .reply(200);
       await vonageProvider.value().setUploadTarget(azureOptions);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
 
     it('returns an error if vonage API fails', async () => {
@@ -267,7 +254,6 @@ describe('VonageProvider (unit)', () => {
         .setUploadTarget(vonageS3Options)
         .catch(err => err);
       expect(error).instanceOf(Error);
-      sinon.assert.calledOnce(auidtLogCreate);
     });
   });
 
@@ -278,11 +264,7 @@ describe('VonageProvider (unit)', () => {
       timeToStart: 30,
     };
 
-    auditLogRepo = createStubInstance(AuditLogsRepository);
-
     vonageService = new VonageService(config);
-    vonageProvider = new VonageProvider(vonageService, auditLogRepo);
-    auidtLogCreate = auditLogRepo.stubs.create;
-    auidtLogCreate.resolves();
+    vonageProvider = new VonageProvider(vonageService);
   }
 });

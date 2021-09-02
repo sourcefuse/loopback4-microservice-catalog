@@ -1,20 +1,13 @@
-
 import {
   param,
   patch,
   post,
   requestBody,
-  
   get,
   getModelSchemaRef,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
-import {
-  MeetingOptions,
-  SessionOptions,
-
-  SessionResponse,
-} from '../types';
+import {MeetingOptions, SessionOptions, SessionResponse} from '../types';
 
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKeys} from '../enums/permission-keys.enum';
@@ -26,20 +19,20 @@ import {
 
 import {VideoChatSession, SessionAttendees} from '../models';
 
-import { VonageSessionWebhookPayload} from '../providers/vonage';
+import {VonageSessionWebhookPayload} from '../providers/vonage';
 
-import { service } from '@loopback/core';
-import { ChatSessionService } from '../services/chatSession.service';
+import {inject} from '@loopback/core';
+import {ChatSessionService} from '../services/chat-session.service';
+import {ServiceBindings} from '../keys';
 
 export class VideoChatSessionController {
   constructor(
-    @service(ChatSessionService) public chatSessionService: ChatSessionService,
-   
-   
-  ) { }
+    @inject(ServiceBindings.SessionChatService)
+    public chatSessionService: ChatSessionService,
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKeys.CreateSession] })
+  @authorize({permissions: [PermissionKeys.CreateSession]})
   @post('/session', {
     description: `Used for Creating a session with options such as end to end encryption, archive mode. 
       Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
@@ -49,7 +42,7 @@ export class VideoChatSessionController {
     responses: {
       [STATUS_CODE.OK]: {
         content: {
-          [CONTENT_TYPE.TEXT]: { schema: { type: 'string' } },
+          [CONTENT_TYPE.TEXT]: {schema: {type: 'string'}},
         },
       },
     },
@@ -62,7 +55,7 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKeys.GenerateToken] })
+  @authorize({permissions: [PermissionKeys.GenerateToken]})
   @post('/session/{meetingLinkId}/token', {
     description: `Used for Generating token, which is used for connecting to a room/session on a client side. 
       In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
@@ -87,12 +80,14 @@ export class VideoChatSessionController {
     sessionOptions: SessionOptions,
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<SessionResponse> {
-
-    return this.chatSessionService.getMeetingToken(sessionOptions, meetingLinkId)
+    return this.chatSessionService.getMeetingToken(
+      sessionOptions,
+      meetingLinkId,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKeys.EditMeeting] })
+  @authorize({permissions: [PermissionKeys.EditMeeting]})
   @patch('/session/{meetingLinkId}', {
     description: 'Used for editing the meeting',
     security: OPERATION_SECURITY_SPEC,
@@ -107,17 +102,17 @@ export class VideoChatSessionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(VideoChatSession, { partial: true }),
+          schema: getModelSchemaRef(VideoChatSession, {partial: true}),
         },
       },
     })
     body: Partial<VideoChatSession>,
   ): Promise<void> {
-    return this.chatSessionService.editMeeting(meetingLinkId, body)
+    return this.chatSessionService.editMeeting(meetingLinkId, body);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKeys.StopMeeting] })
+  @authorize({permissions: [PermissionKeys.StopMeeting]})
   @patch('/session/{meetingLinkId}/end', {
     description: `Used to stop the current active meeting. Meeting cannot be stopped again if it is 
       already stopped. Successful execution will add the endTime attribute to a recently 
@@ -132,11 +127,10 @@ export class VideoChatSessionController {
   async endSession(
     @param.path.string('meetingLinkId') meetingLinkId: string,
   ): Promise<void> {
-
     return this.chatSessionService.endSession(meetingLinkId);
   }
 
-  @authorize({ permissions: ['*'] })
+  @authorize({permissions: ['*']})
   @post('/webhooks/session', {
     description:
       'Webhook API hit from a third party to add/update session attendees in a meeting.',
@@ -157,18 +151,22 @@ export class VideoChatSessionController {
     sessionAttendeeDetail: SessionAttendees,
     updatedAttendee: Partial<SessionAttendees>,
   ) {
-   return this.chatSessionService.processStreamDestroyedEvent(webhookPayload, sessionAttendeeDetail, updatedAttendee)
+    return this.chatSessionService.processStreamDestroyedEvent(
+      webhookPayload,
+      sessionAttendeeDetail,
+      updatedAttendee,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: [PermissionKeys.GetAttendees] })
+  @authorize({permissions: [PermissionKeys.GetAttendees]})
   @get('/session/{meetingLinkId}/attendees', {
     security: OPERATION_SECURITY_SPEC,
-    parameters: [{ name: 'active', schema: { type: 'string' }, in: 'query' }],
+    parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],
     responses: {
       [STATUS_CODE.OK]: {
         content: {
-          [CONTENT_TYPE.TEXT]: { schema: { type: 'array' } },
+          [CONTENT_TYPE.TEXT]: {schema: {type: 'array'}},
         },
       },
     },
