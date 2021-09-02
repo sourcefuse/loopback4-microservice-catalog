@@ -16,8 +16,12 @@ import {
 import {getSampleMailData, user, message, group, thread} from './sample-data';
 const sampleMessageId = 'sample-message-id';
 const sampleThreadId = 'sample-thread-id';
-async function commit() {}
-async function rollback() {}
+async function commit() {
+  // This is intentional
+}
+async function rollback() {
+  // This is intentional
+}
 function isActive() {
   return true;
 }

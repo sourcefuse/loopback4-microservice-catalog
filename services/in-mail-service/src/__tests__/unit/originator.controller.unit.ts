@@ -77,7 +77,7 @@ describe('originatorcontroller(unit) as', () => {
   });
 
   describe('PUT /mails/{messageId}', () => {
-    it('throws error if attachment is not present', async () => {
+    it('throws error if attachment is not present in mail', async () => {
       setUpStub();
       const messageFindOneStub = messageRepository.stubs.findOne;
       messageFindOneStub.resolves(message);
@@ -166,7 +166,7 @@ describe('originatorcontroller(unit) as', () => {
   });
 
   describe('DELETE /mails/{messageId}/attachments/{attachmentId}', () => {
-    it('throws error if attachment is not present', async () => {
+    it('throws error if attachment is not present while deleting', async () => {
       setUpStub();
       const messageFindOneStub = messageRepository.stubs.findOne;
       messageFindOneStub.resolves(message);
