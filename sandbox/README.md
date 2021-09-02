@@ -43,8 +43,11 @@ If you have issues with the Docker daemon connecting to an insecure registry, pl
 
 Run the following command to ensure that the base setup is working properly.
 
+<details open="true">
+
 ```sh
 $ microk8s kubectl get all --all-namespaces
+
 NAMESPACE            NAME                                             READY   STATUS      RESTARTS   AGE
 istio-system         pod/istio-security-post-install-1.5.1-w6l7l      0/1     Completed   0          25d
 istio-system         pod/istio-grafana-post-install-1.5.1-52zx2       0/1     Completed   0          25d
@@ -146,6 +149,7 @@ istio-system   job.batch/istio-security-post-install-1.5.1   1/1           82s  
 istio-system   job.batch/istio-grafana-post-install-1.5.1    1/1           82s        25d
 
 ```
+</details>
 
 Change your working directory to  `./sandbox`
 
@@ -153,13 +157,16 @@ Run the build script
 
 ```sh
 chmod +x ./build.sh
+
 ./build.sh
 ```
 
-Now create the `sourceloop-sandbox` namespace.
+Now create the `sourceloop-sandbox` namespace.   
+:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:  
 
 ```sh
 $ microk8s kubectl apply -f k8s/manifests/namespaces/
+
 namespace/sourceloop-sandbox created
 ```
 
@@ -167,15 +174,19 @@ Setup your `microk8s kubectl context`
 
 ```sh
 $ microk8s kubectl config set-context sourceloop-sandbox \
---user=admin \
---cluster=microk8s-cluster \
---namespace sourceloop-sandbox
+    --user=admin \
+    --cluster=microk8s-cluster \
+    --namespace sourceloop-sandbox
+
 Context "sourceloop-sandbox" created.
+
 $ microk8s kubectl config use-context sourceloop-sandbox
+
 Switched to context "sourceloop-sandbox".
 ```
 
-Now create the rest of the resources
+Now create the rest of the resources:  
+:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:   
 
 ```sh
 microk8s kubectl apply -f k8s/manifests/ --recursive
@@ -202,20 +213,71 @@ To view the dashboard, run
 $ microk8s dashboard-proxy
 ```
 
+### MicroK8s  
+If you run into issue, these are the commands you may need to run locally, manually.  
+
+The contents of this function can be found in the `ci_build.sh` file located in `sandbox/ci_build.sh`
+
+```shell
+install_microk8s() {
+  sudo snap install microk8s --classic
+  microk8s status --wait-ready
+  microk8s enable dns registry ingress
+  microk8s kubectl get all --all-namespaces
+  pushd $HOME
+  mkdir -p .kube
+  microk8s config >.kube/config
+  popd
+}
+```
+
 ### Terraform Setup
 
-If you prefer to use the Terraform module, follow the steps below. Terraform 0.14 + is required.
+If you prefer to use the Terraform module, follow the steps below. Terraform `1.0.3` + is required.
 
-Perform the same steps above to:
-
+Perform the same steps above to:  
 * Enable `microk8s` services
-* Adding host header entries
 * Running the container build script
+* Set the context
+* Adding host header entries
 
+Once the above steps are complete, you can proceed to run the following:  
 ```sh
 cd k8s/tf-sourceloop-sandbox
 terraform init
 terraform apply
 ```
 
+:warning: **Issues**:
+* <details open="true">
+  <summary>connection refused</summary>
+  
+  If you get an error similar the following, it shows you are unable to connect to the resources:  
+  
+  ```  
+  kubernetes_namespace.sourceloop_sandbox: Creating...
+  ╷
+  │ Error: Post "http://localhost/api/v1/namespaces": dial tcp 127.0.0.1:80: connect: connection refused
+  │ 
+  │   with kubernetes_namespace.sourceloop_sandbox,
+  │   on namespace.tf line 1, in resource "kubernetes_namespace" "sourceloop_sandbox":
+  │    1: resource "kubernetes_namespace" "sourceloop_sandbox" {
+  │ 
+  ╵
+  ```
+  You will need to execute the following in order to copy the kube config to the `.kube` folder: `microk8s config > $HOME/.kube/config`
+  
+  ---
+  If you downloaded MicroK8s using snap, and you get an error like the following:  
+  
+  ```
+  /snap/microk8s/2346/bin/sed: couldn't flush stdout: Permission denied
+  ```
+  You will can run `microk8s config` and manually copy the console output to `~/.kube/config`.  
+
+  </details>
+* Terraform apply failed on resource creation. 
+  * Give it about five minutes then re-run `terraform apply`, all resources should now properly apply.  
+
 See the [readme](./k8s/tf-sourceloop-sandbox/README.md) for more information on the Terraform module.
+

@@ -329,7 +329,7 @@ services:
       - sandbox
     depends_on:
       - postgres
-    command:
+    command: |
       bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme}; sleep 30;
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' 2>&1;
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' 2>&1;
