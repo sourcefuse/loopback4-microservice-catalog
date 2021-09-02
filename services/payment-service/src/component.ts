@@ -49,7 +49,7 @@ export class PaymentServiceComponent implements Component {
    * An array of controller classes
    */
   controllers?: ControllerClass[];
-  bindings?: Binding[];
+  bindings?: Binding[] = [];
   providers?: ProviderMap = {};
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -57,6 +57,7 @@ export class PaymentServiceComponent implements Component {
     @config()
     private readonly options: PaymentServiceComponentOptions = DEFAULT_PAYMENT_SERVICE_OPTIONS,
   ) {
+    this.bindings = [];
     this.application.component(CoreComponent);
     this.models = [Orders, Transactions, PaymentGateways, Templates];
     this.controllers = [
