@@ -47,14 +47,24 @@ export class PubnubExampleApplication extends BootMixin(
       useCustomSequence: false,
     });
 
+    /*
+      subscribeKey: String - key used for subscribing to a channel (mandatory)
+      publishKey: String - key used for publishing messages to a channel (mandatory)
+      ssl: Boolean - if true request will be over HTTPS (optional)
+      logVerbosity: Boolean - log the HTTP request (optional)
+      uuid: String - set a unique uuid to identify a user or a device that connects to pubnub (mandatory)
+      apns2Env: String - the environment on which its running (optional)
+      apns2BundleId:  String - the bundle id (optional)
+    */
+
     this.bind(PubnubBindings.Config).to({
       subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
-      ssl: true,
-      logVerbosity: true,
-      uuid: 'my-app',
-      apns2Env: 'dev',
-      apns2BundleId: 'com.app.myapp',
+      ssl: process.env.SSL,
+      logVerbosity: process.env.LOG_VERBOSITY,
+      uuid: process.env.UUID,
+      apns2Env: process.env.APP_ENV,
+      apns2BundleId: process.env.APP_BUNDLE_ID,
     });
 
     this.bind(SNSBindings.Config).to({});
