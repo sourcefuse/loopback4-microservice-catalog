@@ -1,0 +1,58 @@
+{
+  "name": "sourceloop-cli",
+  "version": "0.1.0",
+  "description": "Sourceloop CLI",
+  "bin": {
+    "sourceloop-cli": "bin/cli-main.js"
+  },
+  "main": "generators/projects/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "generators",
+    "intl",
+    ".yo-rc.json"
+  ],
+  "engines": {
+    "node": "12 || 14 || 16"
+  },
+  "scripts": {
+    "test": "lb-mocha --lang en_US.UTF-8 \"test/**/*.js\"",
+    "smoke-test": "lb-mocha --allow-console-logs \"smoke-test/**/*.smoke.js\""
+  },
+  "author": "SourceFuse",
+  "license": "MIT",
+  "dependencies": {
+    "@loopback/cli": "^2.21.2",
+    "@loopback/core": "^2.16.2",
+    "@phenomnomnominal/tsquery": "^4.1.1",
+    "camelcase-keys": "^7.0.0",
+    "chalk": "^4.1.2",
+    "change-case": "^4.1.2",
+    "db-migrate": "^0.11.12",
+    "debug": "^4.3.2",
+    "fs-extra": "^10.0.0",
+    "latest-version": "^6.0.0",
+    "lerna": "^4.0.0",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.5",
+    "pluralize": "^8.0.0",
+    "regenerate": "^1.4.2",
+    "semver": "^7.3.5",
+    "stringify-object": "^3.3.0",
+    "tabtab": "^3.0.2",
+    "tildify": "^2.0.0",
+    "untildify": "^4.0.0",
+    "update-notifier": "^5.1.0",
+    "url-slug": "^3.0.2",
+    "validate-npm-package-name": "^3.0.0",
+    "yeoman-environment": "^3.5.1",
+    "yeoman-generator": "^5.4.0"
+  },
+  "config": {
+    "templateDependencies": {}
+  }
+}
