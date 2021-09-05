@@ -20,8 +20,6 @@
     "node": "12 || 14 || 16"
   },
   "scripts": {
-    "test": "lb-mocha --lang en_US.UTF-8 \"test/**/*.js\"",
-    "smoke-test": "lb-mocha --allow-console-logs \"smoke-test/**/*.smoke.js\""
   },
   "author": "SourceFuse",
   "license": "MIT",

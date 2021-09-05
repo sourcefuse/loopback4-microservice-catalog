@@ -226,7 +226,7 @@ async function checkLoopBackProject(generator) {
             ...incompatibleDeps.dependencies,
             ...incompatibleDeps.devDependencies,
             ...incompatibleDeps.peerDependencies,
-        }) === 0
+        }) == 0
     )
         return false;
 
