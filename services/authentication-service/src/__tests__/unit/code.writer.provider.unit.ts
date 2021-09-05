@@ -16,10 +16,10 @@ describe('Code Writer Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise', async () => {
+    it('checks if provider function returns a promise and returns the token value', async () => {
       const func = codeWriterProvider.value();
-      const result = func(token);
-      expect(result).to.be.Promise();
+      const result = await func(token);
+      expect(result).to.be.eql(token);
     });
   });
 

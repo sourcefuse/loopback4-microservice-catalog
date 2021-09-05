@@ -24,10 +24,10 @@ describe('Bearer Verify Signup Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise', async () => {
+    it('chexk if provider funtion throws error for token expiration', async () => {
       const func = bearerVerifyProvider.value();
-      const result = func(token);
-      expect(result).to.be.Promise();
+      const result = await func(token).catch(err => err.message);
+      expect(result).to.be.eql('TokenExpired');
     });
   });
 

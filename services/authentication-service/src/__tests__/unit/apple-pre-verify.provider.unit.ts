@@ -19,10 +19,10 @@ describe('Apple Oauth Pre Verify Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise', async () => {
+    it('checks if provider function returns a promise and it returns the user', async () => {
       const func = applePreVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile, user);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile, user);
+      expect(result).to.be.eql(user);
     });
   });
 

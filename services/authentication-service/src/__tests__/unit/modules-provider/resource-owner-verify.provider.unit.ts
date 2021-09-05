@@ -76,8 +76,8 @@ describe('Resource Owner Verify Provider', () => {
       const findFour = authClientRepo.stubs.findOne;
       findFour.resolves(authClient);
       const func = resourceOwnerVerifyProvider.value();
-      const result = func(clientId, clientSecret, username, password);
-      expect(result).to.be.Promise();
+      const result = await func(clientId, clientSecret, username, password);
+      expect(result).to.have.properties('client', 'user');
     });
 
     it('return user and client if verification for password is not done', async () => {
@@ -127,8 +127,8 @@ describe('Resource Owner Verify Provider', () => {
       const findFour = authClientRepo.stubs.findOne;
       findFour.resolves(authClient);
       const func = resourceOwnerVerifyProvider.value();
-      const result = func(clientId, clientSecret, username, password);
-      expect(result).to.be.Promise();
+      const result = await func(clientId, clientSecret, username, password);
+      expect(result).to.have.properties('client', 'user');
     });
   });
 

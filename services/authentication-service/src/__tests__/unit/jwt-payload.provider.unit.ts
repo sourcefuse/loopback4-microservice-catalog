@@ -53,10 +53,12 @@ describe('JWT Payload Provider', () => {
       expect(result).to.be.Function();
     });
 
-    it('returns error promise if no user exist', async () => {
+    it('returns error if no user exist', async () => {
       const func = jwtPayloadProvider.value();
-      const result = func(authUserData, authClient).catch(err => err.message);
-      expect(result).to.be.Promise();
+      const result = await func(authUserData, authClient).catch(
+        err => err.message,
+      );
+      expect(result).to.be.eql('UserDoesNotExist');
     });
   });
 

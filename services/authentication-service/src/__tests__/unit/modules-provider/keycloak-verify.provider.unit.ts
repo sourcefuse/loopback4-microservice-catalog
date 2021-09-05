@@ -61,16 +61,20 @@ describe('Keycloak Verify Provider', () => {
 
     it('return error promise for no user', async () => {
       const func = keycloakVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile).catch(
+        err => err.message,
+      );
+      expect(result).to.be.eql('Invalid Credentials');
     });
 
     it('return error promise if there is no user cred', async () => {
       const findOne = userRepo.stubs.findOne;
       findOne.resolves(user as UserWithRelations);
       const func = keycloakVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile).catch(
+        err => err.message,
+      );
+      expect(result).to.be.eql('Invalid Credentials');
       sinon.assert.calledOnce(findOne);
     });
 
@@ -86,8 +90,15 @@ describe('Keycloak Verify Provider', () => {
       const findTwo = userCredentialRepo.stubs.findOne;
       findTwo.resolves(userCred as UserCredentialsWithRelations);
       const func = keycloakVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile);
+      expect(result).to.have.properties(
+        'id',
+        'firstName',
+        'lastName',
+        'username',
+        'email',
+      );
+      expect(result?.username).to.be.eql('test_user');
       sinon.assert.calledOnce(findOne);
     });
   });

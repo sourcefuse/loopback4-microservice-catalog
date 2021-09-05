@@ -49,7 +49,6 @@ describe('Apple Verify Provider', () => {
     username: 'test_user',
     email: 'xyz@gmail.com',
     authClientIds: '{1}',
-    dob: new Date(),
   });
 
   afterEach(() => sinon.restore());
@@ -61,18 +60,22 @@ describe('Apple Verify Provider', () => {
       expect(result).to.be.Function();
     });
 
-    it('return error promise for no user', async () => {
+    it('return error for no user', async () => {
       const func = appleVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile).catch(
+        err => err.message,
+      );
+      expect(result).to.be.eql('Invalid Credentials');
     });
 
-    it('return error promise if there is no user cred', async () => {
+    it('return error if there is no user cred', async () => {
       const findOne = userRepo.stubs.findOne;
       findOne.resolves(user as UserWithRelations);
       const func = appleVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile).catch(
+        err => err.message,
+      );
+      expect(result).to.be.eql('Invalid Credentials');
       sinon.assert.calledOnce(findOne);
     });
 
@@ -88,8 +91,15 @@ describe('Apple Verify Provider', () => {
       const findTwo = userCredentialRepo.stubs.findOne;
       findTwo.resolves(userCred as UserCredentialsWithRelations);
       const func = appleVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile);
+      expect(result).to.have.properties(
+        'id',
+        'firstName',
+        'lastName',
+        'username',
+        'email',
+      );
+      expect(result?.username).to.be.eql('test_user');
       sinon.assert.calledOnce(findOne);
     });
   });

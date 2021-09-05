@@ -24,10 +24,10 @@ describe('Google Oauth Post Verify Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise', async () => {
+    it('checks if provider function returns a promise which returns the user', async () => {
       const func = googlePostVerifyProvider.value();
-      const result = func(profile, user);
-      expect(result).to.be.Promise();
+      const result = await func(profile, user);
+      expect(result).to.be.eql(user);
     });
   });
 

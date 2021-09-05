@@ -32,8 +32,8 @@ describe('Bearer Token Verify Provider', () => {
 
     it('return token expiry for expired token', async () => {
       const func = bearerTokenVerifyProvider.value();
-      const result = func(token);
-      expect(result).to.be.Promise();
+      const result = await func(token).catch(err => err.message);
+      expect(result).to.be.eql('TokenExpired');
     });
   });
 

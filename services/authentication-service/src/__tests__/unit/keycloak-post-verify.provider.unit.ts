@@ -29,10 +29,10 @@ describe('Keycloak Post Verify Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise', async () => {
+    it('checks if provider function returns a promise which is eql to user', async () => {
       const func = keycloakPostVerifyProvider.value();
-      const result = func(profile, user);
-      expect(result).to.be.Promise();
+      const result = await func(profile, user);
+      expect(result).to.be.eql(user);
     });
   });
 

@@ -50,8 +50,15 @@ describe('Local Password Verify Provider', () => {
       const findOne = userRepo.stubs.verifyPassword;
       findOne.resolves(user as UserWithRelations);
       const func = localPasswordVerifyProvider.value();
-      const result = func(username, password);
-      expect(result).to.be.Promise();
+      const result = await func(username, password);
+      expect(result).to.have.properties(
+        'id',
+        'firstName',
+        'lastName',
+        'username',
+        'email',
+      );
+      expect(result?.username).to.be.eql('test_user');
     });
 
     it('returns user if verify password is not working', async () => {
@@ -87,8 +94,15 @@ describe('Local Password Verify Provider', () => {
       const findFour = userTenantRepo.stubs.findOne;
       findFour.resolves(userTenant as UserTenantWithRelations);
       const func = localPasswordVerifyProvider.value();
-      const result = func(username, password);
-      expect(result).to.be.Promise();
+      const result = await func(username, password);
+      expect(result).to.have.properties(
+        'id',
+        'firstName',
+        'lastName',
+        'username',
+        'email',
+      );
+      expect(result?.username).to.be.eql('test_user');
     });
   });
 

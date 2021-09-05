@@ -31,10 +31,10 @@ describe('Keycloak Pre Verify Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise', async () => {
+    it('checks if provider function returns a promise which is eql to user', async () => {
       const func = keycloakPreVerifyProvider.value();
-      const result = func(accessToken, refreshToken, profile, user);
-      expect(result).to.be.Promise();
+      const result = await func(accessToken, refreshToken, profile, user);
+      expect(result).to.be.eql(user);
     });
   });
 
