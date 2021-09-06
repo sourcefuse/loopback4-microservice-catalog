@@ -32,10 +32,10 @@ export class VideoConferencingExampleApplication extends BootMixin(
       includeProcessEnv: true,
     });
     options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT?? port);
+    options.rest.port = +(process.env.PORT ?? port);
     options.rest.host = 'localhost';
     super(options);
-    console.log("port", process.env.PORT);
+
     // Set up the custom sequence
     this.sequence(MySequence);
 

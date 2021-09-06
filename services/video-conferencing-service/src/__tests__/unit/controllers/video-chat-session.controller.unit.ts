@@ -253,23 +253,15 @@ describe('Session APIs', () => {
     });
     it('returns an error for invalid meeting link', async () => {
       setUp({});
-      const invalidMeetingLink = '';
-      const error = await controller
-        .endSession(invalidMeetingLink)
-        .catch(err => err);
-
-      expect(error).instanceof(Error);
+      await meetingLinkNotValid(controller);
     });
     it('returns an error if meeting link not found ', async () => {
       setUp({});
-      const findOne = videoChatSessionRepo.stubs.findOne;
-      findOne.resolves();
-      const error = await controller
-        .endSession(meetingLinkId)
-        .catch(err => err);
-      expect(error).instanceof(Error);
-
-      sinon.assert.calledOnce(findOne);
+      await meetingLinkNotFound(
+        videoChatSessionRepo,
+        controller,
+        meetingLinkId,
+      );
     });
     it('returns an error if isScheduled is true but scheduleTime is not provided', async () => {
       setUp({});
@@ -347,11 +339,7 @@ describe('Session APIs', () => {
 
     it('returns an error for invalid meeting link', async () => {
       setUp({});
-      const invalidMeetingLink = '';
-      const error = await controller
-        .endSession(invalidMeetingLink)
-        .catch(err => err);
-      expect(error).instanceof(Error);
+      await meetingLinkNotValid(controller);
     });
 
     it('returns an error if meeting link not found ', async () => {
@@ -502,12 +490,10 @@ describe('Session APIs', () => {
     videoChatProvider = new VonageProvider(vonageService).value();
 
     const meetLinkGenerator = (): string => {
-      const meetLinkId = cryptoRandomString({
+      return cryptoRandomString({
         length: 10,
         type: 'url-safe',
       });
-
-      return meetLinkId;
     };
 
     chatSessionService = new ChatSessionService(
@@ -520,3 +506,23 @@ describe('Session APIs', () => {
     controller = new VideoChatSessionController(chatSessionService);
   }
 });
+async function meetingLinkNotFound(
+  videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>,
+  controller: VideoChatSessionController,
+  meetingLinkId: string,
+) {
+  const findOne = videoChatSessionRepo.stubs.findOne;
+  findOne.resolves();
+  const error = await controller.endSession(meetingLinkId).catch(err => err);
+  expect(error).instanceof(Error);
+
+  sinon.assert.calledOnce(findOne);
+}
+
+async function meetingLinkNotValid(controller: VideoChatSessionController) {
+  const invalidMeetingLink = '';
+  const error = await controller
+    .endSession(invalidMeetingLink)
+    .catch(err => err);
+  expect(error).instanceof(Error);
+}

@@ -1,5 +1,5 @@
-import {injectable, /* inject, */ BindingScope} from '@loopback/core';
-import {inject} from '@loopback/core';
+import {injectable, inject, BindingScope} from '@loopback/core';
+
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 

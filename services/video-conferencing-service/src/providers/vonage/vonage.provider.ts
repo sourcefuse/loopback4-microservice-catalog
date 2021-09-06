@@ -28,11 +28,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         meetingOptions: VonageMeetingOptions,
       ): Promise<VonageMeetingResponse> => {
         try {
-          const response = await this.vonageService.getMeetingLink(
-            meetingOptions,
-          );
-
-          return response;
+          return await this.vonageService.getMeetingLink(meetingOptions);
         } catch (error) {
           throw new HttpErrors.InternalServerError('Error creating session');
         }
@@ -42,12 +38,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         options: VonageSessionOptions,
       ): Promise<SessionResponse> => {
         try {
-          const response = await this.vonageService.getToken(
-            sessionId,
-            options,
-          );
-
-          return response;
+          return await this.vonageService.getToken(sessionId, options);
         } catch (error) {
           throw new HttpErrors.InternalServerError(
             'Error occured while generating Token',
@@ -58,9 +49,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         archiveId: string | null,
       ): Promise<ArchiveResponse | ArchiveResponseList> => {
         try {
-          const response = await this.vonageService.getArchives(archiveId);
-
-          return response;
+          return await this.vonageService.getArchives(archiveId);
         } catch (error) {
           throw new HttpErrors.InternalServerError(
             'Error occured while fetching archive(s)',

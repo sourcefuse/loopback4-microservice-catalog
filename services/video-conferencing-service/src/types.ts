@@ -150,7 +150,7 @@ export interface IArchiveService {
 }
 
 export interface ISessionService {
-  getMeetingLink(options: MeetingOptions): Promise<String>;
+  getMeetingLink(options: MeetingOptions): Promise<string>;
 
   getMeetingToken(
     sessionOptions: SessionOptions,

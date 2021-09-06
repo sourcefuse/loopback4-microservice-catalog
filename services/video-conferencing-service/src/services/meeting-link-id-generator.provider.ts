@@ -8,16 +8,12 @@ export type MeetingLinkIdGenerator = () => string;
 export class MeetingLinkIdGeneratorProvider
   implements Provider<MeetingLinkIdGenerator>
 {
-  constructor() {}
-
   value() {
     return (): string => {
-      const meetingLinkId = cryptoRandomString({
+      return cryptoRandomString({
         length: 10,
         type: 'url-safe',
       });
-
-      return meetingLinkId;
     };
   }
 }

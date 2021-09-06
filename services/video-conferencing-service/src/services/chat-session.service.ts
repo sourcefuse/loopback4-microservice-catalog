@@ -7,7 +7,7 @@ import {VonageEnums} from '../enums';
 import {MeetLinkGeneratorProvider, VideoChatBindings} from '../keys';
 import {SessionAttendees, VideoChatSession} from '../models';
 import {VonageSessionWebhookPayload} from '../providers/vonage';
-import {IConfig} from '../types';
+
 import {VonageBindings} from '../providers/vonage/keys';
 import {
   SessionAttendeesRepository,
@@ -19,6 +19,7 @@ import {
   SessionOptions,
   SessionResponse,
   VideoChatInterface,
+  IConfig,
 } from '../types';
 import {MeetingLinkIdGenerator} from './meeting-link-id-generator.provider';
 
@@ -64,7 +65,7 @@ export class ChatSessionService {
       meetingOptions,
     );
     const meetingLinkId = this.generator();
-    console.log('id', meetingLinkId);
+
     //provider for this cryptoRandomString
     const videoSessionDetail = new VideoChatSession({
       sessionId: meetingResp.sessionId,
@@ -202,8 +203,6 @@ export class ChatSessionService {
   async endSession(meetingLinkId: string): Promise<void> {
     let errorMessage: string;
     if (typeof meetingLinkId !== 'string' || !meetingLinkId) {
-      errorMessage = 'Meeting link should be a valid string.';
-
       throw new HttpErrors.BadRequest('Meeting link should be a valid string.');
     }
 
@@ -349,10 +348,8 @@ export class ChatSessionService {
       };
     }
 
-    const sessionAttendeeList = await this.sessionAttendeesRepository.find({
+    return this.sessionAttendeesRepository.find({
       where: whereFilter,
     });
-
-    return sessionAttendeeList;
   }
 }
