@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socketio-service
+  labels:
+    app: socketio-service
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: socketio-service
+  template:
+    metadata:
+      labels:
+        app: socketio-service
+      annotations:
+        prometheus.io/path: /socketio-service/obf/metrics
+        prometheus.io/port: '3000'
+        prometheus.io/scrape: 'true'
+    spec:
+      containers:
+        - name: notification-service
+          image: IMAGE_REPO_NAME/pms-socketio-service:IMAGE_TAG_VERSION
+          env:
+            - name: HOST
+              value: '::'
+            - name: PORT
+              value: '3000'
+            - name: SWAGGER_USER
+              value: ""
+            - name: SWAGGER_PASSWORD
+              value: ""
+            - name: BASE_PATH
+              value: '/socketio-service'
+            - name: JAEGER_ENDPOINT
+              value: 'http://simple-prod-collector:14268/api/traces'
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: socketio-service
+  labels:
+    run: socketio-service
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      protocol: TCP
+  selector:
+    app: socketio-service
