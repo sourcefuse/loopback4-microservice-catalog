@@ -1,6 +1,7 @@
-import {VideoChatInterface} from './types';
+import {IArchiveService, ISessionService, VideoChatInterface} from './types';
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX, IServiceConfig} from '@sourceloop/core';
+import {MeetingLinkIdGenerator} from './services';
 
 /**
  * @namespace VideoChatBindings
@@ -15,5 +16,18 @@ export namespace VideoChatBindings {
     `${BINDING_PREFIX}.videochat.config`,
   );
 }
+export namespace ServiceBindings {
+  export const ArchiveChatService = BindingKey.create<IArchiveService>(
+    'services.ChatArchiveService',
+  );
+  export const SessionChatService = BindingKey.create<ISessionService>(
+    'services.ChatSessionService',
+  );
+}
+
+export const MeetLinkGeneratorProvider =
+  BindingKey.create<MeetingLinkIdGenerator>(
+    'provider.MeetingLinkGeneratorProvider',
+  );
 
 export const VideoConfDatasource = 'videochatDb';
