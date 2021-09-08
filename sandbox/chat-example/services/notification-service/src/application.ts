@@ -8,8 +8,6 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {NotificationServiceComponent} from '@sourceloop/notification-service';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
 import {
   NotificationBindings,
   SocketBindings,

@@ -2,7 +2,6 @@ import {NotificationServiceApplication} from './application';
 
 export async function migrate(args: string[]) {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
-  console.log('Migrating schemas (%s existing schema)', existingSchema);
 
   const app = new NotificationServiceApplication();
   await app.boot();
@@ -15,6 +14,5 @@ export async function migrate(args: string[]) {
 }
 
 migrate(process.argv).catch(err => {
-  console.error('Cannot migrate database schema', err);
   process.exit(1);
 });

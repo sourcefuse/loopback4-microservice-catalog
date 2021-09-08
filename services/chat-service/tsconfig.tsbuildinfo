@@ -1606,6 +1606,11 @@
         "signature": "152f49b040e9561e8af6bffa1bff4875d9a937070f6ae94a25c335ee55929447",
         "affectsGlobalScope": false
       },
+      "../../packages/core/node_modules/@loopback/repository/dist/index.d.ts": {
+        "version": "3bdaad936d13dff4f51541fd6a30072281f0996c4d6567caff21b25bea58bb21",
+        "signature": "3bdaad936d13dff4f51541fd6a30072281f0996c4d6567caff21b25bea58bb21",
+        "affectsGlobalScope": false
+      },
       "../../packages/core/node_modules/loopback4-authentication/dist/component.d.ts": {
         "version": "78f2bf79f591150ab1ea13dc47a3ef36a6baa66b725b7a21aa5355046b0afb8f",
         "signature": "78f2bf79f591150ab1ea13dc47a3ef36a6baa66b725b7a21aa5355046b0afb8f",
@@ -1867,18 +1872,43 @@
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/components/bearer-verifier/keys.d.ts": {
-        "version": "64db4be25b4bd5cb9e4dca307322839e06a13230ba7cb4c79485cce47e884df5",
-        "signature": "64db4be25b4bd5cb9e4dca307322839e06a13230ba7cb4c79485cce47e884df5",
+        "version": "7df24972e6abedd9fe660d0b606e6e6c5371be4780bd7da5e9c7348af7ace2a2",
+        "signature": "7df24972e6abedd9fe660d0b606e6e6c5371be4780bd7da5e9c7348af7ace2a2",
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/components/bearer-verifier/component.d.ts": {
-        "version": "7b1fb93fb2270bbaa81402bcd3ba83b62d523c0149b37a942fa926bfe0175a93",
-        "signature": "7b1fb93fb2270bbaa81402bcd3ba83b62d523c0149b37a942fa926bfe0175a93",
+        "version": "9f44605ee69937c434a70ad9feb8ccfed31bedb5a844f68714bad41599c272a9",
+        "signature": "9f44605ee69937c434a70ad9feb8ccfed31bedb5a844f68714bad41599c272a9",
+        "affectsGlobalScope": false
+      },
+      "../../packages/core/dist/components/bearer-verifier/types.d.ts": {
+        "version": "90d028fb0cb667583f040e8947bd9477eeaee1bdda0280dbf5e53ac16c475fb3",
+        "signature": "90d028fb0cb667583f040e8947bd9477eeaee1bdda0280dbf5e53ac16c475fb3",
+        "affectsGlobalScope": false
+      },
+      "../../packages/core/dist/components/bearer-verifier/models/revoked-token.model.d.ts": {
+        "version": "a230006da9cc16f27181aa31ceb8aa116c7faf623d772c479d2c8fce33321172",
+        "signature": "a230006da9cc16f27181aa31ceb8aa116c7faf623d772c479d2c8fce33321172",
+        "affectsGlobalScope": false
+      },
+      "../../packages/core/dist/components/bearer-verifier/models/index.d.ts": {
+        "version": "8988c6f3a95c4341b2ada7f727b34b3e7cf24386e197f3a12a07d04c96551aa2",
+        "signature": "8988c6f3a95c4341b2ada7f727b34b3e7cf24386e197f3a12a07d04c96551aa2",
+        "affectsGlobalScope": false
+      },
+      "../../packages/core/dist/components/bearer-verifier/repositories/revoked-token.repository.d.ts": {
+        "version": "ba78dfa121eff65769f2c033bd68bf1763c7d5552169589117d94e4a2072033a",
+        "signature": "ba78dfa121eff65769f2c033bd68bf1763c7d5552169589117d94e4a2072033a",
+        "affectsGlobalScope": false
+      },
+      "../../packages/core/dist/components/bearer-verifier/repositories/index.d.ts": {
+        "version": "59279833a19886f3e059c5cc570995180612ebaaa9e808ef098e86a5f14c3d7c",
+        "signature": "59279833a19886f3e059c5cc570995180612ebaaa9e808ef098e86a5f14c3d7c",
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/components/bearer-verifier/index.d.ts": {
-        "version": "d2e64df457ce31f63460ff22e8ccad3432f4f326dccb36acf0ec6877ee154090",
-        "signature": "d2e64df457ce31f63460ff22e8ccad3432f4f326dccb36acf0ec6877ee154090",
+        "version": "946bfda587513e5756afc49d310d551c1eebc22fdddf5cff36949f57329476d2",
+        "signature": "946bfda587513e5756afc49d310d551c1eebc22fdddf5cff36949f57329476d2",
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/components/logger-extension/component.d.ts": {
@@ -1986,11 +2016,6 @@
         "signature": "1979cbf2503ffec0a37d19e00eca50f31f13a36251a1d0e010f5dae0515cb7b2",
         "affectsGlobalScope": false
       },
-      "../../packages/core/node_modules/@loopback/repository/dist/index.d.ts": {
-        "version": "3bdaad936d13dff4f51541fd6a30072281f0996c4d6567caff21b25bea58bb21",
-        "signature": "3bdaad936d13dff4f51541fd6a30072281f0996c4d6567caff21b25bea58bb21",
-        "affectsGlobalScope": false
-      },
       "../../packages/core/node_modules/tslib/tslib.d.ts": {
         "version": "ea7abf23498b7c214c67fc14f22f41983fbb7bf7c4826c7fcdef542b2022545f",
         "signature": "ea7abf23498b7c214c67fc14f22f41983fbb7bf7c4826c7fcdef542b2022545f",
@@ -2016,13 +2041,13 @@
         "affectsGlobalScope": false
       },
       "../../packages/core/node_modules/loopback4-soft-delete/dist/repositories/soft-crud.repository.base.d.ts": {
-        "version": "5bd4c04e99f8d64034917426fd56a114ff0b43ec13c6569882948aa4248a757a",
-        "signature": "5bd4c04e99f8d64034917426fd56a114ff0b43ec13c6569882948aa4248a757a",
+        "version": "c9bdd16e65dea7daaab01464cbc229e6edb642bb568da423c3af962c52e03e45",
+        "signature": "c9bdd16e65dea7daaab01464cbc229e6edb642bb568da423c3af962c52e03e45",
         "affectsGlobalScope": false
       },
       "../../packages/core/node_modules/loopback4-soft-delete/dist/repositories/default-transaction-soft-crud.repository.base.d.ts": {
-        "version": "a0a1260437192502e9608d2b75dd59e142215526a06a3b1e8ecb684e6401cc1a",
-        "signature": "a0a1260437192502e9608d2b75dd59e142215526a06a3b1e8ecb684e6401cc1a",
+        "version": "7517efecf62cc7be02a8a348d506a38676acc18134c1dc0f751b00e781784160",
+        "signature": "7517efecf62cc7be02a8a348d506a38676acc18134c1dc0f751b00e781784160",
         "affectsGlobalScope": false
       },
       "../../packages/core/node_modules/loopback4-soft-delete/dist/repositories/index.d.ts": {
@@ -2451,13 +2476,13 @@
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/secure-sequence.d.ts": {
-        "version": "2bce2258e1855e5dc85df6e5b7a65248c9a7c85b2fd070301c0e5fe75b47feb3",
-        "signature": "2bce2258e1855e5dc85df6e5b7a65248c9a7c85b2fd070301c0e5fe75b47feb3",
+        "version": "72af6473e86fe113d4b5bc1f16cc470d2f2464a905f2b3a2f80c94d347c1302c",
+        "signature": "72af6473e86fe113d4b5bc1f16cc470d2f2464a905f2b3a2f80c94d347c1302c",
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/casbin-secure-sequence.d.ts": {
-        "version": "6a44f8ba18008d269026c644adb665db5ee0f6f7231dcffdd8bbcb7855edfbbe",
-        "signature": "6a44f8ba18008d269026c644adb665db5ee0f6f7231dcffdd8bbcb7855edfbbe",
+        "version": "398288107579903457168760a278af9ec8fa4b3fabf6f7dd66f0eaf33bdf5ca9",
+        "signature": "398288107579903457168760a278af9ec8fa4b3fabf6f7dd66f0eaf33bdf5ca9",
         "affectsGlobalScope": false
       },
       "../../packages/core/dist/service-sequence.d.ts": {
@@ -3616,8 +3641,8 @@
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/inquirer/lib/objects/choice.d.ts": {
-        "version": "7873dd9ca703cb7ff373220096c7afe4d3285a0c722fbd7f86a0f640d80b5197",
-        "signature": "7873dd9ca703cb7ff373220096c7afe4d3285a0c722fbd7f86a0f640d80b5197",
+        "version": "502bd3d3dd93b012e56864157c9ec3a3a53695fb05d1f42671f3e6314698a665",
+        "signature": "502bd3d3dd93b012e56864157c9ec3a3a53695fb05d1f42671f3e6314698a665",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/inquirer/lib/objects/separator.d.ts": {
@@ -3726,18 +3751,18 @@
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/inquirer/index.d.ts": {
-        "version": "935afaded041e6052136407444f747ec87456e6420d44e7ddfedef421f6dd221",
-        "signature": "935afaded041e6052136407444f747ec87456e6420d44e7ddfedef421f6dd221",
+        "version": "e84784554ccec0a03886acbd0b08dece208335465800bc3b5c9ab152c780a303",
+        "signature": "e84784554ccec0a03886acbd0b08dece208335465800bc3b5c9ab152c780a303",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/minimist/index.d.ts": {
-        "version": "e437d83044ba17246a861aa9691aa14223ff4a9d6f338ab1269c41c758586a88",
-        "signature": "e437d83044ba17246a861aa9691aa14223ff4a9d6f338ab1269c41c758586a88",
+        "version": "209e814e8e71aec74f69686a9506dd7610b97ab59dcee9446266446f72a76d05",
+        "signature": "209e814e8e71aec74f69686a9506dd7610b97ab59dcee9446266446f72a76d05",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/normalize-package-data/index.d.ts": {
-        "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
-        "signature": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
+        "version": "6fa0008bf91a4cc9c8963bace4bba0bd6865cbfa29c3e3ccc461155660fb113a",
+        "signature": "6fa0008bf91a4cc9c8963bace4bba0bd6865cbfa29c3e3ccc461155660fb113a",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/parse-json/index.d.ts": {
@@ -4220,15 +4245,32 @@
       ],
       "../../packages/core/dist/components/bearer-verifier/component.d.ts": [
         "../../packages/core/dist/components/bearer-verifier/keys.d.ts",
-        "./node_modules/@loopback/core/dist/index.d.ts"
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "../../packages/core/dist/components/bearer-verifier/index.d.ts": [
         "../../packages/core/dist/components/bearer-verifier/component.d.ts",
-        "../../packages/core/dist/components/bearer-verifier/keys.d.ts"
+        "../../packages/core/dist/components/bearer-verifier/keys.d.ts",
+        "../../packages/core/dist/components/bearer-verifier/models/index.d.ts",
+        "../../packages/core/dist/components/bearer-verifier/repositories/index.d.ts",
+        "../../packages/core/dist/components/bearer-verifier/types.d.ts"
       ],
       "../../packages/core/dist/components/bearer-verifier/keys.d.ts": [
         "../../packages/core/node_modules/loopback4-authentication/index.d.ts",
         "./node_modules/@loopback/context/dist/index.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/models/index.d.ts": [
+        "../../packages/core/dist/components/bearer-verifier/models/revoked-token.model.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/models/revoked-token.model.d.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/repositories/index.d.ts": [
+        "../../packages/core/dist/components/bearer-verifier/repositories/revoked-token.repository.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/repositories/revoked-token.repository.d.ts": [
+        "../../packages/core/dist/components/bearer-verifier/models/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "../../packages/core/dist/components/index.d.ts": [
         "../../packages/core/dist/components/bearer-verifier/index.d.ts",
@@ -7588,15 +7630,32 @@
       ],
       "../../packages/core/dist/components/bearer-verifier/component.d.ts": [
         "../../packages/core/dist/components/bearer-verifier/keys.d.ts",
-        "./node_modules/@loopback/core/dist/index.d.ts"
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "../../packages/core/dist/components/bearer-verifier/index.d.ts": [
         "../../packages/core/dist/components/bearer-verifier/component.d.ts",
-        "../../packages/core/dist/components/bearer-verifier/keys.d.ts"
+        "../../packages/core/dist/components/bearer-verifier/keys.d.ts",
+        "../../packages/core/dist/components/bearer-verifier/models/index.d.ts",
+        "../../packages/core/dist/components/bearer-verifier/repositories/index.d.ts",
+        "../../packages/core/dist/components/bearer-verifier/types.d.ts"
       ],
       "../../packages/core/dist/components/bearer-verifier/keys.d.ts": [
         "../../packages/core/node_modules/loopback4-authentication/index.d.ts",
         "./node_modules/@loopback/context/dist/index.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/models/index.d.ts": [
+        "../../packages/core/dist/components/bearer-verifier/models/revoked-token.model.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/models/revoked-token.model.d.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/repositories/index.d.ts": [
+        "../../packages/core/dist/components/bearer-verifier/repositories/revoked-token.repository.d.ts"
+      ],
+      "../../packages/core/dist/components/bearer-verifier/repositories/revoked-token.repository.d.ts": [
+        "../../packages/core/dist/components/bearer-verifier/models/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "../../packages/core/dist/components/index.d.ts": [
         "../../packages/core/dist/components/bearer-verifier/index.d.ts",
@@ -10483,6 +10542,11 @@
       "../../packages/core/dist/components/bearer-verifier/component.d.ts",
       "../../packages/core/dist/components/bearer-verifier/index.d.ts",
       "../../packages/core/dist/components/bearer-verifier/keys.d.ts",
+      "../../packages/core/dist/components/bearer-verifier/models/index.d.ts",
+      "../../packages/core/dist/components/bearer-verifier/models/revoked-token.model.d.ts",
+      "../../packages/core/dist/components/bearer-verifier/repositories/index.d.ts",
+      "../../packages/core/dist/components/bearer-verifier/repositories/revoked-token.repository.d.ts",
+      "../../packages/core/dist/components/bearer-verifier/types.d.ts",
       "../../packages/core/dist/components/index.d.ts",
       "../../packages/core/dist/components/logger-extension/component.d.ts",
       "../../packages/core/dist/components/logger-extension/index.d.ts",
