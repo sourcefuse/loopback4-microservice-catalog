@@ -135,8 +135,9 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    entity.createdBy = currentUser.id;
-    entity.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    entity.createdBy = uid;
+    entity.modifiedBy = uid;
     return super.create(entity, options);
   }
 
