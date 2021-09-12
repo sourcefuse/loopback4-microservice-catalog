@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.3 (2021-09-12)</small>
+
+* chore(deps): bump path-parse in /sandbox/auth-multitenant-example (#304) ([64f94af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/64f94af)), closes [#304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/304)
+* chore(deps): bump tar in /sandbox/auth-multitenant-example (#309) ([48e6664](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/48e6664)), closes [#309](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/309)
+* chore(deps): bump tar in /sandbox/auth-multitenant-example (#320) ([1d75ad7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1d75ad7)), closes [#320](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/320)
+
+
+
+
+
 ## <small>2.1.2 (2021-08-02)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example
