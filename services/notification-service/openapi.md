@@ -1,11 +1,11 @@
 ---
 title: Notification Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,41 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "notificationId": "string",
+    "userId": "string",
+    "isRead": true,
+    "actionMeta": {}
+  }
+]';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/bulk',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = [
   {
@@ -135,7 +169,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -192,7 +247,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/hard',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -238,7 +313,39 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -314,7 +421,39 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -390,7 +529,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -456,7 +616,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -502,7 +682,39 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -595,7 +807,40 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -682,7 +927,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -769,7 +1035,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -817,7 +1103,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notification-users/{id}/notification',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -900,7 +1207,34 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "receiver": {},
+  "type": 0,
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string',
+  'pubnubToken':'string'
+};
+
+fetch('/notifications/access/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "receiver": {},
@@ -977,7 +1311,22 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+fetch('/notifications/access/{id}',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/notifications/access/{id}',
@@ -1019,7 +1368,38 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '[
+  {
+    "subject": "string",
+    "body": "string",
+    "receiver": {},
+    "type": 0,
+    "sentDate": "2019-08-24T14:15:22Z",
+    "options": {}
+  }
+]';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/bulk',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = [
   {
@@ -1095,7 +1475,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1152,7 +1553,36 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "id": "string",
@@ -1222,7 +1652,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/notifications/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1283,7 +1733,36 @@ This operation does not require authentication
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "subject": "string",
@@ -1367,7 +1846,37 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "id": "string",
@@ -1448,7 +1957,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1529,7 +2059,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1577,7 +2127,39 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1671,7 +2253,40 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "notificationId": "string",
+  "userId": "string",
+  "isRead": true,
+  "actionMeta": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1759,7 +2374,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1847,7 +2483,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/notification-users',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
