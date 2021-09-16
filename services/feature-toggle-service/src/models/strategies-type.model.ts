@@ -23,9 +23,4 @@ export class StrategiesType extends Model {
   }
 }
 
-export interface StrategiesTypeRelations {
-  // describe navigational properties here
-}
-
-export type StrategiesTypeWithRelations = StrategiesType &
-  StrategiesTypeRelations;
+export type StrategiesTypeWithRelations = StrategiesType;

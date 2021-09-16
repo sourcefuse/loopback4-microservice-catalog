@@ -17,17 +17,23 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+import {STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import {Projects} from '../models';
 import {ProjectsRepository} from '../repositories';
 
+const basePath = '/projects';
 export class ProjectsController {
   constructor(
     @repository(ProjectsRepository)
     public projectsRepository: ProjectsRepository,
   ) {}
 
-  @post('/projects')
-  @response(200, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @post(basePath)
+  @response(STATUS_CODE.OK, {
     description: 'Projects model instance',
     content: {'application/json': {schema: getModelSchemaRef(Projects)}},
   })
@@ -46,8 +52,10 @@ export class ProjectsController {
     return this.projectsRepository.create(projects);
   }
 
-  @get('/projects/count')
-  @response(200, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @get(`${basePath}/count`)
+  @response(STATUS_CODE.OK, {
     description: 'Projects model count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -55,8 +63,10 @@ export class ProjectsController {
     return this.projectsRepository.count(where);
   }
 
-  @get('/projects')
-  @response(200, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @get(basePath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of Projects model instances',
     content: {
       'application/json': {
@@ -73,8 +83,10 @@ export class ProjectsController {
     return this.projectsRepository.find(filter);
   }
 
-  @patch('/projects')
-  @response(200, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @patch(basePath)
+  @response(STATUS_CODE.OK, {
     description: 'Projects PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -92,8 +104,10 @@ export class ProjectsController {
     return this.projectsRepository.updateAll(projects, where);
   }
 
-  @get('/projects/{id}')
-  @response(200, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @get(`${basePath}/{id}`)
+  @response(STATUS_CODE.OK, {
     description: 'Projects model instance',
     content: {
       'application/json': {
@@ -109,8 +123,10 @@ export class ProjectsController {
     return this.projectsRepository.findById(id, filter);
   }
 
-  @patch('/projects/{id}')
-  @response(204, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @patch(`${basePath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Projects PATCH success',
   })
   async updateById(
@@ -127,8 +143,10 @@ export class ProjectsController {
     await this.projectsRepository.updateById(id, projects);
   }
 
-  @put('/projects/{id}')
-  @response(204, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @put(`${basePath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Projects PUT success',
   })
   async replaceById(
@@ -138,8 +156,10 @@ export class ProjectsController {
     await this.projectsRepository.replaceById(id, projects);
   }
 
-  @del('/projects/{id}')
-  @response(204, {
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @del(`${basePath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Projects DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

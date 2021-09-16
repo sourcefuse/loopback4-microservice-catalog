@@ -31,8 +31,4 @@ export class Projects extends Entity {
   }
 }
 
-export interface ProjectsRelations {
-  // describe navigational properties here
-}
-
-export type ProjectsWithRelations = Projects & ProjectsRelations;
+export type ProjectsWithRelations = Projects;

@@ -60,8 +60,4 @@ export class Strategies extends Entity {
   }
 }
 
-export interface StrategiesRelations {
-  // describe navigational properties here
-}
-
-export type StrategiesWithRelations = Strategies & StrategiesRelations;
+export type StrategiesWithRelations = Strategies;

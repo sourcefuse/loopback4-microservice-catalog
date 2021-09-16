@@ -1,4 +1,4 @@
-import {inject} from '@loopback/context';
+import {inject} from '@loopback/core';
 import {
   ExpressRequestHandler,
   FindRoute,
@@ -18,7 +18,7 @@ import {
   LOGGER,
   SFCoreBindings,
 } from '@sourceloop/core';
-import {isString} from 'lodash';
+import {isString} from 'lodash'; //NOSONAR
 import {
   AuthenticateFn,
   AuthenticationBindings,

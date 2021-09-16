@@ -84,8 +84,4 @@ export class Features extends Entity {
   }
 }
 
-export interface FeaturesRelations {
-  // describe navigational properties here
-}
-
-export type FeaturesWithRelations = Features & FeaturesRelations;
+export type FeaturesWithRelations = Features;

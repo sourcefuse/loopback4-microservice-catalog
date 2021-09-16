@@ -33,7 +33,7 @@ export class StrategiesController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
   @post(basePath)
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Strategies model instance',
     content: {'application/json': {schema: getModelSchemaRef(Strategies)}},
   })

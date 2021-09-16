@@ -5,6 +5,8 @@ import {
 
 export * from './application';
 
+const PORT = 3000;
+
 export async function main(options: ApplicationConfig = {}) {
   const app = new FeatureToggleServiceApplication(options);
   await app.boot();
@@ -21,7 +23,7 @@ if (require.main === module) {
   // Run the application
   const config = {
     rest: {
-      port: +(process.env.PORT ?? 3000),
+      port: +(process.env.PORT ?? PORT),
       host: process.env.HOST,
       // The `gracePeriodForClose` provides a graceful close for http/https
       // servers with keep-alive clients. The default value is `Infinity`

@@ -28,8 +28,4 @@ export class Parameters extends Model {
   }
 }
 
-export interface ParametersRelations {
-  // describe navigational properties here
-}
-
-export type ParametersWithRelations = Parameters & ParametersRelations;
+export type ParametersWithRelations = Parameters;
