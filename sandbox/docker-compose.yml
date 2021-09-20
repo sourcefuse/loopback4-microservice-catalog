@@ -123,6 +123,16 @@ x-in-mail-variables: &in-mail-variables
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
+x-search-ms-variables: &search-ms-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: search_db
+  DB_SCHEMA: main
+
 services:
   auth-multitenant-example:
     image: ${REGISTRY:-localhost:32000}/auth-multitenant-example
@@ -225,6 +235,36 @@ services:
       - postgres
       - postgres_orchestrator
       - audit-ms-migration
+    restart: on-failure
+
+  search-ms-example:
+    image: ${REGISTRY:-localhost:32000}/search-ms-example
+    build:
+      context: ./search-ms-example
+      dockerfile: Dockerfile
+    ports:
+      - '3037:3000'
+    networks:
+      - sandbox
+    environment: *search-ms-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+      - search-ms-migration
+    restart: on-failure
+
+  search-ms-migration:
+    image: ${REGISTRY:-localhost:32000}/search-ms-example
+    command: sh -c "sleep 60 && npm run db:migrate"
+    build:
+      context: ./search-ms-example
+      dockerfile: Dockerfile
+    environment: *search-ms-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
     restart: on-failure
 
   audit-ms-migration:
@@ -384,6 +424,7 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database pubnub_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&& 
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database search_db'&& 
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'"
 
   pgadmin:
