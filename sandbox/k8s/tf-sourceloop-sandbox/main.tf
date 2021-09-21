@@ -13,6 +13,14 @@ module "sandbox_applications" {
   service_name          = each.value.service_name
   target_port           = each.value.target_port
   replica_count         = each.value.replica_count
+
+  ## pvc
+  persistent_volume_claim_enable           = try(each.value.persistent_volume_claim_enable, false)
+  persistent_volume_claim_name             = try(each.value.persistent_volume_claim_name, null)
+  persistent_volume_claim_labels           = try(each.value.persistent_volume_claim_labels, {})
+  persistent_volume_claim_namespace        = try(each.value.persistent_volume_claim_namespace, null)
+  persistent_volume_claim_resource_request = try(each.value.persistent_volume_claim_resource_request, {})
+
   environment_variables = each.value.environment_variables
 }
 
@@ -628,6 +636,38 @@ locals {
       target_port           = 8080
       replica_count         = 1
       environment_variables = []
+    }
+    pgadmin = {
+      app_label       = "pgadmin"
+      container_image = var.pgadmin_image
+      container_name  = "pgadmin"
+      container_port  = 80
+      deployment_name = "pgadmin"
+      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port            = 80
+      port_name       = "80"
+      protocol        = "TCP"
+      service_name    = "pgadmin"
+      target_port     = 80
+      replica_count   = 1
+
+      ## pvc
+      persistent_volume_claim_enable           = true
+      persistent_volume_claim_name             = "pgadmin"
+      persistent_volume_claim_labels           = tomap({ "io.sourceloop.service" = "pgadmin" })
+      persistent_volume_claim_namespace        = "sourceloop-sandbox"
+      persistent_volume_claim_resource_request = tomap({ storage = "100Mi" })
+
+      environment_variables = [
+        {
+          name  = "PGADMIN_DEFAULT_EMAIL"
+          value = "pgadmin4@pgadmin.org"
+        },
+        {
+          name  = "PGADMIN_DEFAULT_PASSWORD"
+          value = "admin"
+        }
+      ]
     }
   }
 }

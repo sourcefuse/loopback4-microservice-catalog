@@ -26,7 +26,8 @@
         "@sourceloop/schedular-example",
         "@sourceloop/notification-socket-example",
         "@sourceloop/video-conferencing-ms-example",
-        "@sourceloop/workflow-ms-example"
+        "@sourceloop/workflow-ms-example",
+        "@sourceloop/pubnub-example"
       ]
     },
     "clean": {
@@ -36,6 +37,11 @@
     }
   },
   "changelogPreset": "custom-sf-changelog",
-  "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md"],
+  "ignoreChanges": [
+    "sandbox/**",
+    "**/__fixtures__/**",
+    "**/__tests__/**",
+    "**/*.md"
+  ],
   "version": "independent"
 }

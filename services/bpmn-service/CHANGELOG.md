@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.0 (2021-09-12)
+
+* fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(payment-service): adds payment-service feature (#257) ([e571834](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e571834)), closes [#257](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/257)
+
+
+
+
+
 ## 2.2.0 (2021-08-02)
 
 * feat(bpmn-service): add default types for camunda (#281) ([ce99a06](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ce99a06)), closes [#281](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/281)
