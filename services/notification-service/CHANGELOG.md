@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2021-09-12)
+
+* fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(deps): bump path-parse in /services/notification-service (#303) ([c3a2c99](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3a2c99)), closes [#303](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/303)
+* chore(deps): bump path-parse in /services/notification-service (#325) ([8aab9e1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8aab9e1)), closes [#325](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/325)
+* chore(deps): bump urijs in /services/notification-service (#326) ([096c84e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/096c84e)), closes [#326](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/326)
+* feat(payment-service): adds payment-service feature (#257) ([e571834](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e571834)), closes [#257](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/257)
+* feat(sandbox): example of pubnub as a provider in notification service (#279) ([e30a0ed](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30a0ed)), closes [#279](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/279) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#298](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/298) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208)
+* test(notification-service): added unit testcases (#264) ([6e650aa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6e650aa)), closes [#264](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/264) [#242](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/242) [#242](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/242) [#242](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/242) [#242](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/242)
+
+
+
+
+
 ## <small>1.2.2 (2021-08-06)</small>
 
 * fix(notification-service): fix socket version from loopback4-notifications ([4e7bf6f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4e7bf6f)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

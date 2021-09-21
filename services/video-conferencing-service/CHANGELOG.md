@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.3 (2021-09-12)</small>
+
+* chore(deps): bump path-parse in /services/video-conferencing-service (#300) ([9de4906](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9de4906)), closes [#300](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/300)
+
+
+
+
+
 ## <small>1.2.2 (2021-08-02)</small>
 
 * fix(scheduler-service): update openapi for video and scheduler service ([836e291](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/836e291)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
