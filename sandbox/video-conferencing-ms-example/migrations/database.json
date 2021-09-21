@@ -15,7 +15,7 @@
         "ENV": "DB_PASSWORD"
       },
       "database": {
-        "ENV": "DB_NAME"
+        "ENV": "DB_DATABASE"
       }
     }
   }
