@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-#        network/sourceloop-sanbox: "true"
+        #        network/sourceloop-sanbox: "true"
         io.sourceloop.service: postgres-orchestrator
     spec:
       containers:
