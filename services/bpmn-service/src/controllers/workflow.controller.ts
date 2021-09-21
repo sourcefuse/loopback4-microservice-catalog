@@ -86,6 +86,7 @@ export class WorkflowController {
         name: workflowDto.name,
         provider: workflowResponse.provider,
         inputSchema: workflowDto.inputSchema,
+        description: workflowDto.description,
       });
 
       const newWorkflow = await this.workflowRepository.create(entity);
@@ -136,6 +137,7 @@ export class WorkflowController {
       name: workflowDto.name,
       provider: workflowResponse.provider,
       inputSchema: workflowDto.inputSchema,
+      description: workflowDto.description,
     });
 
     await this.workflowRepository.updateById(id, entity);
