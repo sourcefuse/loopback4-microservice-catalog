@@ -37,6 +37,11 @@
     }
   },
   "changelogPreset": "custom-sf-changelog",
-  "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md"],
+  "ignoreChanges": [
+    "sandbox/**",
+    "**/__fixtures__/**",
+    "**/__tests__/**",
+    "**/*.md"
+  ],
   "version": "independent"
 }
