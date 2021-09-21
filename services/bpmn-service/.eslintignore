@@ -2,6 +2,7 @@ node_modules/
 dist/
 coverage/
 migrations/
+.nyc_output
 
 .eslintrc.js
 migration.js
