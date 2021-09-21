@@ -4,3 +4,4 @@ coverage/
 migrations/
 migration.js
 .eslintrc.js
+.nyc_output
