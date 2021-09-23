@@ -69,7 +69,7 @@ export class VideoConfServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-     this.bindings.push(
+    this.bindings.push(
       Binding.bind(VideoChatBindings.VideoChatProvider).toProvider(
         VonageProvider,
       ),
