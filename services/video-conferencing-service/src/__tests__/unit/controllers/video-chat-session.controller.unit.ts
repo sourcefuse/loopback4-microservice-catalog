@@ -13,7 +13,6 @@ import {
   VideoChatSessionRepository,
 } from '../../../repositories';
 import {VonageService} from '../../../providers/vonage/vonage.service';
-import {MeetingLinkIdGeneratorProvider} from '../../../services';
 import {ChatSessionService} from '../../../services/chat-session.service';
 import {VideoChatInterface} from '../../../types';
 import {
@@ -481,10 +480,6 @@ describe('Session APIs', () => {
     chatSessionService = createStubInstance(ChatSessionService);
 
     sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
-    const generatorProvider = createStubInstance(
-      MeetingLinkIdGeneratorProvider,
-    );
-    generatorProvider.stubs.value.value(() => 'abcd'); //setting temp value returned by the provider
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
     vonageService = new VonageService(config);
