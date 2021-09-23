@@ -69,25 +69,16 @@ export class VideoConfServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    this.bindings.push(
+     this.bindings.push(
       Binding.bind(VideoChatBindings.VideoChatProvider).toProvider(
         VonageProvider,
       ),
-    );
-
-    this.bindings.push(
       Binding.bind(MeetLinkGeneratorProvider).toProvider(
         MeetingLinkIdGeneratorProvider,
       ),
-    );
-
-    this.bindings.push(
       Binding.bind(ServiceBindings.SessionChatService).toClass(
         ChatSessionService,
       ),
-    );
-
-    this.bindings.push(
       Binding.bind(ServiceBindings.ArchiveChatService).toClass(
         ChatArchiveService,
       ),
