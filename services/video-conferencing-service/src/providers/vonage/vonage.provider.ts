@@ -26,6 +26,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
     return {
       getMeetingLink: async (
         meetingOptions: VonageMeetingOptions
+      
       ): Promise<VonageMeetingResponse> => {
         return this.vonageService.getMeetingLink(meetingOptions);
       },
