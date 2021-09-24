@@ -32,7 +32,6 @@ export class VonageProvider implements Provider<VonageVideoChat> {
         options: VonageSessionOptions,
       ): Promise<SessionResponse> =>
         this.vonageService.getToken(sessionId, options),
-
       getArchives: async (
         archiveId: string | null,
       ): Promise<ArchiveResponse | ArchiveResponseList> =>
