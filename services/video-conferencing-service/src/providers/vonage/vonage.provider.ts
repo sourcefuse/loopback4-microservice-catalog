@@ -15,7 +15,7 @@ import {
 
 import { VonageService } from "./vonage.service";
 
-import { HttpErrors } from "@loopback/rest";
+
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
@@ -25,9 +25,7 @@ export class VonageProvider implements Provider<VonageVideoChat> {
   value() {
     return {
       getMeetingLink: async (
-        meetingOptions: VonageMeetingOptions
-      
-      ): Promise<VonageMeetingResponse> => {
+        meetingOptions: VonageMeetingOptions): Promise<VonageMeetingResponse> => {
         return this.vonageService.getMeetingLink(meetingOptions);
       },
       getToken: async (
