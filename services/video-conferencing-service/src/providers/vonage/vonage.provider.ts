@@ -1,9 +1,9 @@
-import {Provider, service} from '@loopback/core';
+import { Provider, service } from "@loopback/core";
 import {
   ArchiveResponse,
   ArchiveResponseList,
   SessionResponse,
-} from '../../types';
+} from "../../types";
 import {
   VonageVideoChat,
   VonageMeetingOptions,
@@ -11,40 +11,40 @@ import {
   VonageSessionOptions,
   VonageS3TargetOptions,
   VonageAzureTargetOptions,
-} from './types';
+} from "./types";
 
-import {VonageService} from './vonage.service';
+import { VonageService } from "./vonage.service";
 
-import {HttpErrors} from '@loopback/rest';
+import { HttpErrors } from "@loopback/rest";
 
 export class VonageProvider implements Provider<VonageVideoChat> {
   constructor(
     @service(VonageService)
-    private readonly vonageService: VonageService,
+    private readonly vonageService: VonageService
   ) {}
   value() {
     return {
       getMeetingLink: async (
-        meetingOptions: VonageMeetingOptions,
+        meetingOptions: VonageMeetingOptions
       ): Promise<VonageMeetingResponse> => {
         return this.vonageService.getMeetingLink(meetingOptions);
       },
       getToken: async (
         sessionId: string,
-        options: VonageSessionOptions,
+        options: VonageSessionOptions
       ): Promise<SessionResponse> => {
         return this.vonageService.getToken(sessionId, options);
       },
       getArchives: async (
-        archiveId: string | null,
+        archiveId: string | null
       ): Promise<ArchiveResponse | ArchiveResponseList> => {
         return this.vonageService.getArchives(archiveId);
       },
       deleteArchive: async (archiveId: string) => {
-       await this.vonageService.deleteArchive(archiveId);
+        await this.vonageService.deleteArchive(archiveId);
       },
       setUploadTarget: async (
-        storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions,
+        storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions
       ): Promise<void> => {
         await this.vonageService.setUploadTarget(storageConfig);
       },
