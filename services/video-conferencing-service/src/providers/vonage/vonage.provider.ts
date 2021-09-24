@@ -25,20 +25,17 @@ export class VonageProvider implements Provider<VonageVideoChat> {
   value() {
     return {
       getMeetingLink: async (
-        meetingOptions: VonageMeetingOptions): Promise<VonageMeetingResponse> => {
-        return this.vonageService.getMeetingLink(meetingOptions);
-      },
+        meetingOptions: VonageMeetingOptions): Promise<VonageMeetingResponse> => this.vonageService.getMeetingLink(meetingOptions),
+      
       getToken: async (
         sessionId: string,
         options: VonageSessionOptions
-      ): Promise<SessionResponse> => {
-        return this.vonageService.getToken(sessionId, options);
-      },
+      ): Promise<SessionResponse> => this.vonageService.getToken(sessionId, options),
+      
       getArchives: async (
         archiveId: string | null
-      ): Promise<ArchiveResponse | ArchiveResponseList> => {
-        return this.vonageService.getArchives(archiveId);
-      },
+      ): Promise<ArchiveResponse | ArchiveResponseList> => this.vonageService.getArchives(archiveId),
+      
       deleteArchive: async (archiveId: string) => {
         await this.vonageService.deleteArchive(archiveId);
       },
