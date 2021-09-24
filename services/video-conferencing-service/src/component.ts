@@ -70,12 +70,6 @@ export class VideoConfServiceComponent implements Component {
     });
 
     this.bindings.push(
-      Binding.bind(VideoChatBindings.VideoChatProvider).toProvider(
-        VonageProvider,
-      ),
-      Binding.bind(MeetLinkGeneratorProvider).toProvider(
-        MeetingLinkIdGeneratorProvider,
-      ),
       Binding.bind(ServiceBindings.SessionChatService).toClass(
         ChatSessionService,
       ),
@@ -101,6 +95,7 @@ export class VideoConfServiceComponent implements Component {
 
     this.providers = {
       [VideoChatBindings.VideoChatProvider.key]: VonageProvider,
+      [MeetLinkGeneratorProvider.key]: MeetingLinkIdGeneratorProvider,
     };
 
     this.controllers = [VideoChatArchiveController, VideoChatSessionController];
