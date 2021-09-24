@@ -27,54 +27,26 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       getMeetingLink: async (
         meetingOptions: VonageMeetingOptions,
       ): Promise<VonageMeetingResponse> => {
-        try {
-          return await this.vonageService.getMeetingLink(meetingOptions);
-        } catch (error) {
-          throw new HttpErrors.InternalServerError('Error creating session');
-        }
+        return this.vonageService.getMeetingLink(meetingOptions);
       },
       getToken: async (
         sessionId: string,
         options: VonageSessionOptions,
       ): Promise<SessionResponse> => {
-        try {
-          return await this.vonageService.getToken(sessionId, options);
-        } catch (error) {
-          throw new HttpErrors.InternalServerError(
-            'Error occured while generating Token',
-          );
-        }
+        return this.vonageService.getToken(sessionId, options);
       },
       getArchives: async (
         archiveId: string | null,
       ): Promise<ArchiveResponse | ArchiveResponseList> => {
-        try {
-          return await this.vonageService.getArchives(archiveId);
-        } catch (error) {
-          throw new HttpErrors.InternalServerError(
-            'Error occured while fetching archive(s)',
-          );
-        }
+        return this.vonageService.getArchives(archiveId);
       },
       deleteArchive: async (archiveId: string) => {
-        try {
-          await this.vonageService.deleteArchive(archiveId);
-        } catch (error) {
-          throw new HttpErrors.InternalServerError(
-            'Error occured while deleting an archive',
-          );
-        }
+       await this.vonageService.deleteArchive(archiveId);
       },
       setUploadTarget: async (
         storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions,
       ): Promise<void> => {
-        try {
-          await this.vonageService.setUploadTarget(storageConfig);
-        } catch (error) {
-          throw new HttpErrors.InternalServerError(
-            'Error Occured while setting storage target',
-          );
-        }
+        await this.vonageService.setUploadTarget(storageConfig);
       },
     };
   }
