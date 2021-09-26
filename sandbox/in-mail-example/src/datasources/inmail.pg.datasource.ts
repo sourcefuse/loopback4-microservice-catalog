@@ -1,29 +1,29 @@
+
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+import InMailDatasourceName from '@sourceloop/in-mail-service';
+
 
 const config = {
-  name: 'inmailDb',
+  name: InMailDatasourceName,
   connector: 'postgresql',
-  url: '',
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  schema: process.env.DB_SCHEMA,
+  host: "localhost",
+  port: 5432,
+  user: "jyotidb",
+  password: "admin",
+  database: "inmail",
+ 
 };
 
 @lifeCycleObserver('datasource')
-export class InMailDbDataSource
+export class InmailDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static dataSourceName = 'inmail';
+  implements LifeCycleObserver {
+  static dataSourceName = InMailDatasourceName;
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.inmail' otherwise you might get Errors
-    @inject('datasources.config.inmail', {optional: true})
+    @inject(`datasources.config.InMailDatasourceName`, {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);

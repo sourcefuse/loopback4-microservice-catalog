@@ -24,7 +24,8 @@ any client application.
 - Add the `InMailServiceComponent` to your Loopback4 Application (in `application.ts`).
 	``` typescript
   // import the InMailServiceComponent
-  import { InMailServiceComponent } from '@sourceloop/in-mail-service';
+  // No need to destructure
+  import  InMailServiceComponent  from '@sourceloop/in-mail-service';
 	// add Component for InMailServiceComponent
 	this.component(InMailServiceComponent);
 	```
