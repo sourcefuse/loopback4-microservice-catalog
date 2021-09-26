@@ -1,8 +1,6 @@
-
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import InMailDatasourceName from '@sourceloop/in-mail-service';
-
 
 const config = {
   name: InMailDatasourceName,
@@ -13,13 +11,13 @@ const config = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   schema: process.env.DB_SCHEMA,
- 
 };
 
 @lifeCycleObserver('datasource')
 export class InmailDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = InMailDatasourceName;
   static readonly defaultConfig = config;
 
