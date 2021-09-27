@@ -7,13 +7,21 @@
 // as a decorator that contributes OpenAPI metadata in a way that allows
 // `@post` to merge the responses with the metadata provided at operation level
 
-import {Model} from '@loopback/repository';
+import {Constructor} from '@loopback/context';
 import {
-  getModelSchemaRef,
+  AnyObject,
+  model as modelDecorator,
+  Model,
+  ModelDefinition,
+} from '@loopback/repository';
+import {
   JsonSchemaOptions,
+  jsonToSchemaObject,
   MediaTypeObject,
+  modelToJsonSchema,
   ResponsesObject,
 } from '@loopback/rest';
+import assert = require('assert');
 
 export function response(
   statusCode: number,
@@ -40,7 +48,7 @@ export namespace response {
     options?: JsonSchemaOptions<T>,
   ) {
     return response(statusCode, description, {
-      schema: getModelSchemaRef(modelCtor, options),
+      schema: dynamicModelSchemaRef(modelCtor, options),
     });
   }
 
@@ -53,8 +61,36 @@ export namespace response {
     return response(statusCode, description, {
       schema: {
         type: 'array',
-        items: getModelSchemaRef(modelCtor, options),
+        items: dynamicModelSchemaRef(modelCtor, options),
       },
     });
   }
+}
+
+export function dynamicModelSchemaRef<T extends object>(
+  ctor: Function & {
+    prototype: T;
+  },
+  jsonSchemaOptions?: JsonSchemaOptions<T> | undefined,
+) {
+  return jsonToSchemaObject(modelToJsonSchema(ctor, jsonSchemaOptions));
+}
+
+export function defineModelClass<BaseCtor extends Constructor<Model>>(
+  base: BaseCtor /* Model or Entity */,
+  definition: ModelDefinition,
+): typeof Model {
+  const modelName = definition.name;
+  const defineNamedModelClass = () => {
+    const temp: AnyObject = {
+      [modelName]: class extends base {},
+    };
+    return temp[modelName];
+  };
+  const modelClass = defineNamedModelClass() as typeof Model;
+  assert.equal(modelClass.name, modelName);
+
+  // Apply `@model(definition)` to the generated class
+  modelDecorator(definition)(modelClass);
+  return modelClass;
 }

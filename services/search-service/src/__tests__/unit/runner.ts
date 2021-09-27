@@ -2,7 +2,7 @@ import {SearchQueryBuilder} from '../../classes';
 import {SearchQuery} from '../../models';
 import {DataObject} from '@loopback/repository';
 import {SearchableModelsList} from '../../types';
-import {TestSearched, TestSearchedCustom, TestSearchModel} from '../fixtures';
+import {TestSearchModel} from '../fixtures';
 import {BuilderTest} from './types';
 
 export function buildTestsRunner(
@@ -12,18 +12,10 @@ export function buildTestsRunner(
   ) => SearchQueryBuilder<TestSearchModel>,
   tests: Array<BuilderTest>,
   match: string,
+  matchOutput: string[],
   expect: Internal,
+  models: SearchableModelsList<TestSearchModel>,
 ) {
-  const models: SearchableModelsList<TestSearchModel> = [
-    TestSearched,
-    {
-      model: TestSearchedCustom,
-      columns: {
-        description: 'about',
-        name: 'identifier',
-      },
-    },
-  ];
   return () => {
     tests.forEach(test => {
       it(test.it, () => {
@@ -33,17 +25,17 @@ export function buildTestsRunner(
         });
         if (test.error) {
           try {
-            builder.build(models, TestSearchModel);
+            builder.build(models, [], TestSearchModel);
             throw new Error(`Expected: ${test.message}, but did'nt get one`);
           } catch (err) {
             expect(err).to.be.instanceOf(test.error);
             expect(err.message).to.be.equal(test.message);
           }
         } else {
-          expect(builder.build(models, TestSearchModel)).to.deepEqual([
-            test.expects,
-            [match],
-          ]);
+          expect(builder.build(models, [], TestSearchModel)).to.deepEqual({
+            query: test.expects,
+            params: matchOutput,
+          });
         }
       });
     });

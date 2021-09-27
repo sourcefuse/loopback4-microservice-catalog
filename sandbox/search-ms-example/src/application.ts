@@ -14,6 +14,7 @@ import {
   SearchServiceComponent,
 } from '../../../services/search-service/dist';
 import {ToDo, User} from './models';
+import {SECURITY_SCHEME_SPEC} from '@sourceloop/core';
 
 export {ApplicationConfig};
 
@@ -35,11 +36,26 @@ export class SearchMsExampleApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
 
+    this.api({
+      openapi: '3.0.0',
+      paths: {},
+      info: {
+        title: 'Search API Example',
+        version: '1.0',
+      },
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC,
+      },
+    });
+
     this.bind(SearchServiceBindings.Config).to({
-      useCustomSequence: true,
+      useCustomSequence: false,
       controller: {
         name: 'Test',
-        basePath: '/search-todo',
+        basePath: '/search',
+        authenticate: true,
+        authorizations: ['*'],
+        recents: true,
       },
       models: [
         ToDo,

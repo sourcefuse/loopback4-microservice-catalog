@@ -1,4 +1,5 @@
 import {BindingKey} from '@loopback/core';
+import {SearchFilter} from '.';
 import {SearchQueryBuilder} from './classes';
 import {SearchFunctionType, SearchServiceConfig} from './types';
 
@@ -16,4 +17,6 @@ export namespace SearchServiceBindings {
     BindingKey.create<SearchServiceConfig>('sf.search.config');
   export const FetchedColumns =
     BindingKey.create<string[]>('sf.search.columns');
+  export const SearchFilterFunction =
+    BindingKey.create<SearchFilter>('sf.search.filter');
 }

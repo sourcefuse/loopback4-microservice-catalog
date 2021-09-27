@@ -34,7 +34,10 @@
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
   },
   "repository": {
     "type": "git",
@@ -57,6 +60,8 @@
     "@loopback/service-proxy": "3.2.0",
     "@sourceloop/core": "^3.0.0",
     "@sourceloop/search-service": "0.0.1",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-mysql": "^6.0.2",

@@ -78,7 +78,11 @@ It sets the models and columns over which the search is performed. It's value is
 Configuration for the controller, it accepts three properties -
 - name - name of the Controller, by default it is SearchController
 - basePath - basePath of the controller, be default it is {name}/search, if even the name is not provided, it is just /search
+- authentication - if authentication should be required or not, this must be enable to use authorizations
 - authorizations - list of string corresponding to the permissions required for the search API, by default equal to `['*']`(allowed for everyone).
+- recents - provider an endpoint to fetch recent searches. authentication must be enabled to use this.
+- recentCount - number of recent searches to be saved for each user, default value is 5.
+
 
 ### Setting up a `DataSource`  
 
@@ -117,6 +121,19 @@ export  class  AuditDbDataSource  extends  juggler.DataSource implements  LifeCy
 
 ```
 
+Also not if you are using  `postgres` datasource, you need to add the following function in you db - 
+
+```
+CREATE OR REPLACE FUNCTION f_concat_ws(text, VARIADIC text[])
+  RETURNS text LANGUAGE sql IMMUTABLE AS 'SELECT array_to_string($2, $1)';
+```
+
+And to improve performance define an index like this - 
+
+```
+CREATE INDEX tbl_fts_idx ON main.<TABLENAME> USING GIN (
+       to_tsvector('english', f_concat_ws(' ', <COLUMN1>, <COLUMN2>)));
+```
 
 ### API Documentation
 
