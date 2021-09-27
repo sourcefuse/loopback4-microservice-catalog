@@ -22,5 +22,6 @@
 	"Pubnub Config missing !": "Pubnub Config missing !",
 	"Pubnub returned with error ! {\"name\"": "\"PubNubError\",\"status\":{\"message\":\"Missing Channel\",\"type\":\"validationError\",\"error\":true}}",
 	"AWS SES Config missing !": "AWS SES Config missing !",
-	"invalid input syntax for type uuid": " \"{\"to\":[{\"id\":\"14335492-38b6-2520-f1ab-b1b73aa5214c\",\"name\":\"Admin User\",\"type\":0}]}\""
+	"invalid input syntax for type uuid": " \"{\"to\":[{\"id\":\"14335492-38b6-2520-f1ab-b1b73aa5214c\",\"name\":\"Admin User\",\"type\":0}]}\"",
+	"EntityNotFound": "EntityNotFound"
 }
