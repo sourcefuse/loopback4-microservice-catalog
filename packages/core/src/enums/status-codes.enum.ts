@@ -1,8 +1,8 @@
-/* eslint-disable-next-line  @typescript-eslint/naming-convention */
 /**
  * List of all the HttpStatus codes
  * @link https://httpstatuses.com/
  */
+/* eslint-disable-next-line  @typescript-eslint/naming-convention */
 export const enum STATUS_CODE {
   // sonarignore:start
   CONTINUE = 100,
