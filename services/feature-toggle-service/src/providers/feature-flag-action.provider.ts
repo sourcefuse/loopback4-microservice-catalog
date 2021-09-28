@@ -1,5 +1,4 @@
-import {Context, Provider} from '@loopback/core';
-import {Getter, inject} from '@loopback/context';
+import {Context, Provider, Getter, inject} from '@loopback/core';
 import {FeatureFlagFn, FeatureFlagMetadata, FeatureInterface} from '../types';
 import {StrategyBindings} from '../keys';
 
@@ -23,7 +22,7 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
       return this.result;
     }
     const features = metadata.features;
-    for (const item in features) {
+    for (const item of features) {
       const isFeatureEnabled = await this.ctx.get<FeatureInterface>(item);
       this.result = isFeatureEnabled() && this.result;
     }

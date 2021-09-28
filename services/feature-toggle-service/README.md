@@ -9,7 +9,7 @@ We are using [UNEASH](https://docs.getunleash.io/) to achieve the toggle functio
 
 ## Working and Flow
 
-This service provides method level decorators - @featuresFlag that takes a provider key as metadata and verifies if the feature flag is enabled or disabled. Read more about creating loopback-4 [decorators](https://loopback.io/doc/en/lb4/Creating-decorators.html). Initial implementation for system level, tenant level and user level feature flag is provided, if you want to add any custom feature flag all you need to do is
+This service provides method level decorators - @featuresFlag that takes an array of provider keys as metadata and verifies if the feature flags are enabled or disabled, it uses an AND operator to check for multiple features. Read more about creating loopback-4 [decorators](https://loopback.io/doc/en/lb4/Creating-decorators.html). To check if a feature is enabled or not add the following decorator over a controller method @featuresFlag({features: [StrategyBindings.TENANT_FEATURE]}) and if you want to skip all the feature checks - @featuresFlag({features: ['*']}) will allow, irrespective even if any feature is disabled. Initial implementation for system level, tenant level and user level feature flag is provided, if you want to add any custom feature flag all you need to do is
 
 ```typescript
 // A provider that implements FeatureInterface
@@ -30,6 +30,9 @@ export const SYSTEM_FEATURE =
 
 // bind the Provider to the key
 this.bind(SYSTEM_FEATURE).toProvider(SystemFeatureProvider);
+
+// pass the key to the decorator
+@featuresFlag({features: [StrategyBindings.TENANT_FEATURE,StrategyBindings.SYSTEM_FEATURE]})
 ```
 
 ## Installation
@@ -45,7 +48,7 @@ Follow the steps to setup unleash [locally](https://docs.getunleash.io/deploy/ge
 ### Service Setup
 
 - Create a new Loopback4 Application (If you don't have one already) lb4 testapp
-- Install the notification service npm i @sourceloop/feature-toggle-service
+- Install the service - npm i @sourceloop/feature-toggle-service
 - Set up the [environment variables](#environment-variables)
 - Run the [migrations](#migrations). (this will create the features at system, tenant and user level and their strategies)
 - Add the `FeatureToggleServiceComponent` to your Loopback4 Application (in `application.ts`).
@@ -135,7 +138,7 @@ The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with
 
 ### Strategies
 
-The open source unleash allows us to create our custom strategies that the features can have, giving us a free hand in implementaion. Read more about [strategies](). We have created our custom strategies like Tenant and User once. Whenever a new strategy is added it needs to be mentioned while we initialize unleash in out application.
+The open source unleash allows us to create our custom strategies that the features can have, giving us a free hand in implementaion. Read more about [strategies](). Extend to the base Strategy class override the isEnabled() method and also whenever a new strategy is added it needs to be mentioned while we initialize unleash in our application. We have created our custom strategies like Tenant and User.
 
 ```typescript
 unleash.initialize({
