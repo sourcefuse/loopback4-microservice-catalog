@@ -21,7 +21,7 @@ CREATE  TABLE main.notifications (
 	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL ,
 	subject              varchar(100)   ,
 	body                 varchar(250)  NOT NULL ,
-	receiver             uuid  NOT NULL ,
+	receiver             json  NOT NULL ,
 	"type"               integer  NOT NULL ,
 	sent                 timestamptz   ,
 	"options"            text   ,

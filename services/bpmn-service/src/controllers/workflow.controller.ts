@@ -86,6 +86,7 @@ export class WorkflowController {
         name: workflowDto.name,
         provider: workflowResponse.provider,
         inputSchema: workflowDto.inputSchema,
+        description: workflowDto.description,
       });
 
       const newWorkflow = await this.workflowRepository.create(entity);
@@ -126,33 +127,30 @@ export class WorkflowController {
     workflowDto: WorkflowDto,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    try {
-      const workflowResponse = await this.workflowManagerService.updateWorkflow(
-        workflowDto,
-      );
+    const workflowResponse = await this.workflowManagerService.updateWorkflow(
+      workflowDto,
+    );
 
-      const entity = new Workflow({
-        workflowVersion: workflowResponse.version,
-        externalIdentifier: workflowResponse.processId,
-        name: workflowDto.name,
-        provider: workflowResponse.provider,
-        inputSchema: workflowDto.inputSchema,
-      });
+    const entity = new Workflow({
+      workflowVersion: workflowResponse.version,
+      externalIdentifier: workflowResponse.processId,
+      name: workflowDto.name,
+      provider: workflowResponse.provider,
+      inputSchema: workflowDto.inputSchema,
+      description: workflowDto.description,
+    });
 
-      await this.workflowRepository.updateById(id, entity);
+    await this.workflowRepository.updateById(id, entity);
 
-      const version = new WorkflowVersion({
-        workflowId: id,
-        version: workflowResponse.version,
-        bpmnDiagram: workflowResponse.fileRef,
-        externalWorkflowId: workflowResponse.externalId,
-        inputSchema: workflowDto.inputSchema,
-      });
+    const version = new WorkflowVersion({
+      workflowId: id,
+      version: workflowResponse.version,
+      bpmnDiagram: workflowResponse.fileRef,
+      externalWorkflowId: workflowResponse.externalId,
+      inputSchema: workflowDto.inputSchema,
+    });
 
-      await this.workflowVersionRepository.create(version);
-    } catch (e) {
-      throw new HttpErrors.BadRequest(e);
-    }
+    await this.workflowVersionRepository.create(version);
   }
 
   @authenticate(STRATEGY.BEARER)

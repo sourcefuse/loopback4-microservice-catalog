@@ -2,6 +2,6 @@
   "include": ["dist"],
   "exclude": ["dist/__tests__/"],
   "extension": [".js", ".ts"],
-  "reporter": ["text", "html"],
+  "reporter": ["text"],
   "exclude-after-remap": false
 }

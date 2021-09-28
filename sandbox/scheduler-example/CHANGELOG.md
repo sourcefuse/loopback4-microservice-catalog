@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.5 (2021-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/schedular-example
+
+
+
+
+
 ## <small>0.1.4 (2021-08-02)</small>
 
 * docs(schedular-service and video-conferencing-service): update README.md (#277) ([1257784](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1257784)), closes [#277](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/277)

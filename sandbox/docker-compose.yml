@@ -1,111 +1,127 @@
-version: "3.4"
+version: '3.4'
 
 x-auth-variables: &auth-variables
-      NODE_ENV: dev
-      LOG_LEVEL: debug
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DB_DATABASE: authentication_db
-      DB_SCHEMA: main
-      JWT_SECRET: i_am_a_strong_secret
-      JWT_ISSUER: https://loopback4-microservice-catalog
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_URL:
-      REDIS_PASSWORD:
-      REDIS_DB: 0
-      USER_TEMP_PASSWORD: tempP@ssw0rd
-      GOOGLE_AUTH_URL:
-      GOOGLE_AUTH_CLIENT_ID:
-      GOOGLE_AUTH_CLIENT_SECRET:
-      GOOGLE_AUTH_TOKEN_URL:
-      GOOGLE_AUTH_CALLBACK_URL:
-      LOCALE: en
-      FORGOT_PASSWORD_LINK_EXPIRY:
-      KEYCLOAK_HOST: test
-      KEYCLOAK_REALM: test
-      KEYCLOAK_CLIENT_ID: test
-      KEYCLOAK_CLIENT_SECRET: test
-      KEYCLOAK_CALLBACK_URL: test
-      RATE_LIMITER_WINDOW_MS: 100
-      RATE_LIMITER_MAX_REQS: 100
-      X_FRAME_OPTIONS: SAMEORIGIN
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: authentication_db
+  DB_SCHEMA: main
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+  USER_TEMP_PASSWORD: tempP@ssw0rd
+  GOOGLE_AUTH_URL:
+  GOOGLE_AUTH_CLIENT_ID:
+  GOOGLE_AUTH_CLIENT_SECRET:
+  GOOGLE_AUTH_TOKEN_URL:
+  GOOGLE_AUTH_CALLBACK_URL:
+  LOCALE: en
+  FORGOT_PASSWORD_LINK_EXPIRY:
+  KEYCLOAK_HOST: test
+  KEYCLOAK_REALM: test
+  KEYCLOAK_CLIENT_ID: test
+  KEYCLOAK_CLIENT_SECRET: test
+  KEYCLOAK_CALLBACK_URL: test
+  RATE_LIMITER_WINDOW_MS: 100
+  RATE_LIMITER_MAX_REQS: 100
+  X_FRAME_OPTIONS: SAMEORIGIN
 
 x-workflow-variables: &workflow-variables
-      NODE_ENV: dev
-      LOG_LEVEL: debug
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DB_DATABASE: workflow_db
-      DB_SCHEMA: main
-      CAMUNDA_URL: http://camunda:8080/engine-rest
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: workflow_db
+  DB_SCHEMA: main
+  CAMUNDA_URL: http://camunda:8080/engine-rest
 
 x-audit-variables: &audit-variables
-      NODE_ENV: dev
-      LOG_LEVEL: debug
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DB_DATABASE: audit_db
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_URL:
-      REDIS_PASSWORD: test
-      REDIS_DB: 0
-      JWT_SECRET: i_am_a_strong_secret
-      JWT_ISSUER: https://loopback4-microservice-catalog
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: audit_db
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD: test
+  REDIS_DB: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+
+x-pubnub-variables: &pubnub-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: pubnub_db
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
 
 x-scheduler-variables: &scheduler-variables
-      NODE_ENV: dev
-      LOG_LEVEL: debug
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DB_DATABASE: scheduler_db
-      DB_SCHEMA: main
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_URL:
-      REDIS_PASSWORD:
-      REDIS_DATABASE: 0
-      JWT_SECRET: i_am_a_strong_secret
-      JWT_ISSUER: https://loopback4-microservice-catalog
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: scheduler_db
+  DB_SCHEMA: main
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DATABASE: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
 
 x-video-variables: &video-variables
-    VONAGE_API_KEY: 0
-    VONAGE_API_SECRET: abc
-    TIME_TO_START: 10
-    DB_HOST: localhpostgresost
-    DB_PORT: 5432
-    DB_USER: ${POSTGRES_USER:-postgres}
-    DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-    DB_DATABASE: video_db
-    DB_SCHEMA: main
-    JWT_SECRET: i_am_a_strong_secret
-    JWT_ISSUER: https://loopback4-microservice-catalog
+  VONAGE_API_KEY: 0
+  VONAGE_API_SECRET: abc
+  TIME_TO_START: 10
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: video_db
+  DB_SCHEMA: main
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
 
 x-in-mail-variables: &in-mail-variables
-      NODE_ENV: dev
-      LOG_LEVEL: debug
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      DB_DATABASE: in_mail_db
-      DB_SCHEMA: main
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_URL:
-      REDIS_PASSWORD:
-      REDIS_DATABASE: 0
-      JWT_SECRET: i_am_a_strong_secret
-      JWT_ISSUER: https://loopback4-microservice-catalog
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: in_mail_db
+  DB_SCHEMA: main
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DATABASE: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
 
 services:
   auth-multitenant-example:
@@ -114,7 +130,7 @@ services:
       context: ./auth-multitenant-example
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     networks:
       - sandbox
     environment: *auth-variables
@@ -145,7 +161,7 @@ services:
       context: ./notification-socket-example
       dockerfile: Dockerfile
     ports:
-      - "3030:3000"
+      - '3030:3000'
     networks:
       - sandbox
     environment:
@@ -168,9 +184,9 @@ services:
       context: ./workflow-ms-example
       dockerfile: Dockerfile
       args:
-          - WORKFLOW_MIGRATION_SKIP=true
+        - WORKFLOW_MIGRATION_SKIP=true
     ports:
-      - "3031:3000"
+      - '3031:3000'
     networks:
       - sandbox
     environment: *workflow-variables
@@ -201,7 +217,7 @@ services:
       context: ./audit-ms-example
       dockerfile: Dockerfile
     ports:
-      - "3032:3000"
+      - '3032:3000'
     networks:
       - sandbox
     environment: *audit-variables
@@ -225,13 +241,43 @@ services:
       - sandbox
     restart: on-failure
 
+  pubnub-example:
+    image: ${REGISTRY:-localhost:32000}/pubnub-example
+    build:
+      context: ./pubnub-example
+      dockerfile: Dockerfile
+    ports:
+      - '3036:3000'
+    networks:
+      - sandbox
+    environment: *pubnub-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+      - pubnub-migration
+    restart: on-failure
+
+  pubnub-migration:
+    image: ${REGISTRY:-localhost:32000}/pubnub-example:latest
+    command: sh -c "sleep 60 && npm run db:migrate"
+    build:
+      context: ./pubnub-example
+      dockerfile: Dockerfile
+    environment: *pubnub-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
+
   scheduler-example:
     image: ${REGISTRY:-localhost:32000}/scheduler-example
     build:
       context: ./scheduler-example
       dockerfile: Dockerfile
     ports:
-      - "3034:3000"
+      - '3034:3000'
     networks:
       - sandbox
     environment: *scheduler-variables
@@ -246,7 +292,7 @@ services:
       context: ./video-conferencing-ms-example
       dockerfile: Dockerfile
     ports:
-      - "3040:3000"
+      - '3040:3000'
     networks:
       - sandbox
     environment: *video-variables
@@ -254,7 +300,7 @@ services:
       - postgres
       - postgres_orchestrator
     restart: on-failure
-  
+
   video-conferencing-ms-migration:
     image: ${REGISTRY:-localhost:32000}/video-conferencing-ms-example
     build:
@@ -275,7 +321,7 @@ services:
       context: ./in-mail-example
       dockerfile: Dockerfile
     ports:
-      - "3033:3000"
+      - '3033:3000'
     networks:
       - sandbox
     environment: *in-mail-variables
@@ -285,9 +331,9 @@ services:
     restart: on-failure
 
   redis:
-    image: "redis:alpine"
+    image: 'redis:alpine'
     ports:
-      - "6379:6379"
+      - '6379:6379'
     networks:
       - sandbox
 
@@ -295,7 +341,7 @@ services:
     container_name: camunda_engine
     image: camunda/camunda-bpm-platform:run-latest
     ports:
-      - "8080:8080"
+      - '8080:8080'
     networks:
       - sandbox
     restart: always
@@ -310,7 +356,7 @@ services:
     volumes:
       - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     networks:
       - sandbox
     restart: always
@@ -324,20 +370,21 @@ services:
       PGDATA: /data/postgres
       PGPASSWORD: ${POSTGRES_PASSWORD:-changeme}
     ports:
-      - "5433:5433"
+      - '5433:5433'
     networks:
       - sandbox
     depends_on:
       - postgres
-    command:
-      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme}; sleep 30;
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' 2>&1;
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' 2>&1;
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' 2>&1;
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' 2>&1;
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' 2>&1;
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db' 2>&1;
-               exit 0"
+    command: >
+      bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && sleep 30 &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database pubnub_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&& 
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'"
 
   pgadmin:
     container_name: pgadmin_container
@@ -348,7 +395,7 @@ services:
     volumes:
       - pgadmin:/root/.pgadmin
     ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - '${PGADMIN_PORT:-5050}:80'
     networks:
       - sandbox
     restart: always
