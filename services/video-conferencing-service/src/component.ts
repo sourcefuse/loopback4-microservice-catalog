@@ -26,7 +26,11 @@ import {
 
 import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
 import {VideoChatSessionController} from './controllers/video-chat-session.controller';
-import {VideoChatBindings} from './keys';
+import {
+  MeetLinkGeneratorProvider,
+  ServiceBindings,
+  VideoChatBindings,
+} from './keys';
 import {AuditLogs} from './models/audit-logs.model';
 import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageProvider} from './providers/vonage/vonage.provider';
@@ -34,7 +38,11 @@ import {VonageService} from './providers/vonage/vonage.service';
 import {SessionAttendeesRepository} from './repositories';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
-
+import {
+  ChatArchiveService,
+  ChatSessionService,
+  MeetingLinkIdGeneratorProvider,
+} from './services';
 export class VideoConfServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -62,8 +70,11 @@ export class VideoConfServiceComponent implements Component {
     });
 
     this.bindings.push(
-      Binding.bind(VideoChatBindings.VideoChatProvider).toProvider(
-        VonageProvider,
+      Binding.bind(ServiceBindings.SessionChatService).toClass(
+        ChatSessionService,
+      ),
+      Binding.bind(ServiceBindings.ArchiveChatService).toClass(
+        ChatArchiveService,
       ),
     );
 
@@ -84,6 +95,7 @@ export class VideoConfServiceComponent implements Component {
 
     this.providers = {
       [VideoChatBindings.VideoChatProvider.key]: VonageProvider,
+      [MeetLinkGeneratorProvider.key]: MeetingLinkIdGeneratorProvider,
     };
 
     this.controllers = [VideoChatArchiveController, VideoChatSessionController];
