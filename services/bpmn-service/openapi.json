@@ -348,6 +348,9 @@
           },
           "inputSchema": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "required": [
@@ -370,6 +373,9 @@
           },
           "inputSchema": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "required": [
@@ -392,6 +398,9 @@
           },
           "inputSchema": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "additionalProperties": true,

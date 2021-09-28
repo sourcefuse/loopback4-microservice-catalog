@@ -24,6 +24,11 @@ export class WorkflowDto extends Model {
   })
   inputSchema: AnyObject;
 
+  @property({
+    type: 'string',
+  })
+  description: string;
+
   constructor(data?: Partial<WorkflowDto>) {
     super(data);
   }

@@ -5,6 +5,7 @@ export const MOCK_CAMUNDA = 'https://mock-camunda.api/engine-rest';
 export const firstTestBpmn: WorkflowDto = new WorkflowDto({
   name: 'first-bpmn',
   bpmnFile: JSON.stringify(['topic1', 'topic2']),
+  description: 'test description',
   inputSchema: {
     type: 'object',
     properties: {valueA: {type: 'string'}, valueB: {type: 'string'}},
