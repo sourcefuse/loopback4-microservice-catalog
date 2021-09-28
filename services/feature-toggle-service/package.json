@@ -60,12 +60,14 @@
     "@sourceloop/core": "^2.0.1",
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.3.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "unleash-client": "^3.10.1"
   },
   "devDependencies": {
     "@loopback/build": "^6.4.1",
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
+    "@types/lodash": "^4.14.175",
     "@types/node": "^10.17.60",
     "eslint": "^7.28.0",
     "source-map-support": "^0.5.19",
