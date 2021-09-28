@@ -3,6 +3,7 @@ import {
   ArchiveResponse,
   ArchiveResponseList,
   AzureTargetOptions,
+  IConfig,
   MeetingOptions,
   MeetingResponse,
   S3TargetOptions,
@@ -11,10 +12,9 @@ import {
   VideoChatInterface,
 } from '../../types';
 
-export interface VonageConfig {
+export interface VonageConfig extends IConfig {
   apiKey: string;
   apiSecret: string;
-  timeToStart: number;
 }
 
 /**
