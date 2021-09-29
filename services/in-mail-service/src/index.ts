@@ -1,3 +1,4 @@
+export * from './keys';
 import {
   ComposeMailBody,
   PartyTypeMarker,
@@ -6,7 +7,6 @@ import {
   PermissionsEnums,
 } from './types';
 export * from './component';
-export * from './keys';
 export {
   ComposeMailBody,
   PartyTypeMarker,
