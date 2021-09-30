@@ -1,6 +1,5 @@
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
+import {model, property, AnyObject} from '@loopback/repository';
 import {BaseEntity} from '@sourceloop/core';
-import {NotificationDto} from './notification.dto';
 
 @model({
   name: 'notification_users',
