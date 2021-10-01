@@ -33,7 +33,7 @@ export class Transactions extends Entity {
     type: 'date',
     name: 'paid_date',
   })
-  paidDate?: string;
+  paidDate?: Date;
 
   @property({
     type: 'string',

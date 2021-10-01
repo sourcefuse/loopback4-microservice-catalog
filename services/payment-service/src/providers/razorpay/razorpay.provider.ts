@@ -1,11 +1,18 @@
 import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';
-import {Orders} from '../../models';
+import {Orders, Subscriptions} from '../../models';
 import Handlebars from 'handlebars';
-import {OrdersRepository, TransactionsRepository} from '../../repositories';
+import {
+  OrdersRepository,
+  TransactionsRepository,
+  SubscriptionsRepository,
+} from '../../repositories';
 import {RazorpayPaymentGateway, IRazorpayConfig} from './types';
-import {razorpayCreateTemplate} from '../../templates';
+import {
+  razorpayCreateTemplate,
+  razorpaySubscriptionCreateTemplate,
+} from '../../templates';
 import {RazorpayBindings} from './keys';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {ResponseMessage, Status} from '../../enums';
@@ -17,6 +24,8 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     private readonly transactionsRepository: TransactionsRepository,
     @repository(OrdersRepository)
     private readonly ordersRepository: OrdersRepository,
+    @repository(SubscriptionsRepository)
+    private readonly subscriptionsRepository: SubscriptionsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(RazorpayBindings.RazorpayConfig)
     private readonly config?: IRazorpayConfig,
@@ -189,6 +198,117 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             message: 'please check PaymentId',
           };
         }
+      },
+
+      subscriptionCreate: async (
+        subscription: Subscriptions,
+        paymentTemplate: string,
+      ) => {
+        const transactions = await this.transactionsRepository.find({
+          where: {orderId: subscription.id},
+        });
+        function monthDiff(d1: Date = new Date(), d2: Date = new Date()) {
+          let months;
+          months = (d2.getFullYear() - d1.getFullYear()) * 12;
+          months -= d1.getMonth();
+          months += d2.getMonth();
+          return months <= 0 ? 0 : months;
+        }
+        const razorpayPlan = await instance.plans.fetch(subscription.planId);
+        const params = {
+          // eslint-disable-next-line
+          plan_id: razorpayPlan.id,
+          // eslint-disable-next-line
+          total_count: monthDiff(subscription.startDate, subscription.endDate),
+          // eslint-disable-next-line
+          expire_by: subscription.endDate?.valueOf(),
+        };
+        const response = await instance.subscriptions.create(params);
+        await this.subscriptionsRepository.updateById(subscription.id, {
+          metaData: {gatewaySubRes: response},
+          gatewaySubscriptionId: response.id,
+        });
+        const template = Handlebars.compile(
+          paymentTemplate || razorpaySubscriptionCreateTemplate,
+        );
+
+        const data = {
+          razorpayKey: razorpayKey,
+          subscriptionId: response.id,
+        };
+        const razorpayTemplate = template(data);
+        const transactionData = {
+          id: uuidv4(),
+          amountPaid: subscription.totalAmount,
+          status: 'draft',
+          orderId: subscription.id,
+          paymentGatewayId: subscription.paymentGatewayId,
+          res: {
+            gatewaySubscriptionRes: response,
+          },
+        };
+        if (transactions.length === 0) {
+          await this.transactionsRepository.create(transactionData);
+        }
+        return razorpayTemplate;
+      },
+
+      subscriptionCharge: async (
+        chargeResponse: DataObject<{
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          razorpay_subscription_id: string;
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          razorpay_payment_id: string;
+        }>,
+      ) => {
+        const subscription = await this.subscriptionsRepository.find({
+          where: {
+            gatewaySubscriptionId: `${chargeResponse.razorpay_subscription_id}`,
+          },
+        });
+        await this.subscriptionsRepository.updateById(subscription[0].id, {
+          status: 'active',
+        });
+        const transactions = await this.transactionsRepository.find({
+          where: {orderId: subscription[0].id},
+        });
+        await this.transactionsRepository.updateById(transactions[0].id, {
+          status: 'paid',
+          paidDate: new Date(),
+          res: {...transactions[0].res, chargeResponse: chargeResponse},
+        });
+        if (subscription) {
+          return {
+            res: ResponseMessage.Sucess,
+            subscriptionId: subscription[0].id,
+          };
+        } else {
+          return {
+            res: ResponseMessage.NotSucess,
+            subscriptionId: chargeResponse.razorpay_subscription_id,
+          };
+        }
+      },
+
+      subscriptionWebHook: async (
+        sub: DataObject<{
+          payload: DataObject<{
+            subscription: DataObject<{
+              entity: DataObject<{id: string | undefined; status: string}>;
+            }>;
+          }>;
+        }>,
+      ) => {
+        const subId = sub?.payload?.subscription?.entity?.id ?? '';
+        const Subscription = await this.subscriptionsRepository.find({
+          where: {gatewaySubscriptionId: `${subId}`},
+        });
+        Subscription[0].status =
+          sub?.payload?.subscription?.entity?.status ?? Subscription[0].status;
+        await this.subscriptionsRepository.updateById(Subscription[0].id, {
+          ...Subscription[0],
+        });
+        return true;
       },
     };
   }

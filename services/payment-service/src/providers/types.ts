@@ -1,4 +1,4 @@
-import {Orders} from '../models';
+import {Orders, Subscriptions} from '../models';
 import {DataObject} from '@loopback/repository';
 
 export interface IGateway {
@@ -8,4 +8,22 @@ export interface IGateway {
   ): Promise<unknown> | DataObject<{}>;
   charge(chargeResponse: DataObject<{}>): Promise<DataObject<{res: string}>>;
   refund(transactionId: string): Promise<unknown> | void;
+  subscriptionCreate(
+    subscriptions: Subscriptions,
+    paymentTemplate: string | undefined,
+  ): Promise<string> | {};
+  subscriptionCharge(
+    chargeResponse: DataObject<{
+      stripeEmail: string;
+      stripeToken: string;
+      subscriptionId: string;
+    }>,
+  ): Promise<DataObject<{res: string}>>;
+  subscriptionWebHook(
+    sub: DataObject<{
+      data: DataObject<{
+        object: DataObject<{subscription: string; status: string}>;
+      }>;
+    }>,
+  ): Promise<{}>;
 }

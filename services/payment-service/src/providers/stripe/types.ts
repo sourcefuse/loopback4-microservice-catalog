@@ -1,5 +1,5 @@
 import {DataObject} from '@loopback/repository';
-import {Orders} from '../../models';
+import {Orders, Subscriptions} from '../../models';
 
 export interface StripePaymentGateway {
   create(
@@ -14,6 +14,24 @@ export interface StripePaymentGateway {
     }>,
   ): Promise<DataObject<{res: string}>>;
   refund(transactionId: string): Promise<{} | void>;
+  subscriptionCreate(
+    subscriptions: Subscriptions,
+    paymentTemplate: string | undefined,
+  ): Promise<string> | {};
+  subscriptionCharge(
+    chargeResponse: DataObject<{
+      stripeEmail: string;
+      stripeToken: string;
+      subscriptionId: string;
+    }>,
+  ): Promise<DataObject<{res: string}>>;
+  subscriptionWebHook(
+    sub: DataObject<{
+      data: DataObject<{
+        object: DataObject<{subscription: string; status: string}>;
+      }>;
+    }>,
+  ): Promise<{}>;
 }
 
 export interface StripeOrder {
