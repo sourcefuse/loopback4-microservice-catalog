@@ -213,6 +213,59 @@ NODE_ENV=dev
 
 You can now run the example service with `npm start`.
 
+### Config Hidden APIs
+
+Update `src/application.ts` of each service to use the new hidden api feature. Add the following lines
+
+```typescript
+import { OperationSpecEnhancer } from './enhancer/operationSpecEnhancer';
+import {OASBindings} from './keys'
+
+export class ExampleApplicationApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+   constructor(options: ApplicationConfig = {}) {
+    super(options);
+
+    // Bind OperationSpecEnhancer to read, update & delete openapi spec
+    this.add(createBindingFromClass(OperationSpecEnhancer));
+
+    // Set up the custom sequence
+    this.sequence(MySequence);
+
+    // Set up default home page
+    this.static('/', path.join(__dirname, '../public'));
+
+    // Customize @loopback/rest-explorer configuration here
+    this.configure(RestExplorerBindings.COMPONENT).to({
+      path: '/explorer',
+    });
+    this.component(RestExplorerComponent);
+
+    // Bind OASBinding namespace to hide APIs
+    this.bind(OASBindings.HiddenEndpoint).to([
+      {httpMethod:'GET', path: '/ping'},
+      {httpMethod:'POST', path: '/customers/{id}/users'},
+      {httpMethod:'PUT', path: '/roles/{id}'}
+    ]);
+
+    this.projectRoot = __dirname;
+    // Customize @loopback/boot Booter Conventions here
+    this.bootOptions = {
+      controllers: {
+        // Customize ControllerBooter Conventions here
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+      },
+    };
+  }
+};
+  
+
+
+```
+
 ### DataSources and Migrations
 
 The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s, it is not mandatory to use them.
