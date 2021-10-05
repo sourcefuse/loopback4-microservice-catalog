@@ -17,6 +17,7 @@ import {RazorpayBindings} from './keys';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {ResponseMessage, Status} from '../../enums';
 const Razorpay = require('razorpay');
+const monthsNumCount = 12;
 
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
   constructor(
@@ -209,7 +210,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
         });
         function monthDiff(d1: Date = new Date(), d2: Date = new Date()) {
           let months;
-          months = (d2.getFullYear() - d1.getFullYear()) * 12;
+          months = (d2.getFullYear() - d1.getFullYear()) * monthsNumCount;
           months -= d1.getMonth();
           months += d2.getMonth();
           return months <= 0 ? 0 : months;

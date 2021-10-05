@@ -39,5 +39,3 @@ export class Templates extends Entity {
     super(data);
   }
 }
-
-export type TemplatesWithRelations = Templates;

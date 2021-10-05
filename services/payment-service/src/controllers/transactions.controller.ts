@@ -251,7 +251,7 @@ export class TransactionsController {
 
   @post('/transactions/charge')
   @response(STATUS_CODE.OK, {
-    description: 'Order model instance',
+    description: 'Transacttion Gateway Request',
     content: {
       'application/json': {},
     },
@@ -335,7 +335,7 @@ export class TransactionsController {
   }
 
   @post('/create-subscription-and-pay')
-  @response(302, {
+  @response(redirectStatusCode, {
     description: 'Subscription model instance',
     content: {
       'text/html': {},
@@ -376,13 +376,13 @@ export class TransactionsController {
     const hostProtocol = this.req.protocol;
     this.req.query.method = newSubscription.paymentMethod;
     return this.res.redirect(
-      302,
+      redirectStatusCode,
       `${hostProtocol}://${hostUrl}/transactions/subscriptionid/${newSubscription.id}?method=${newSubscription.paymentMethod}`,
     );
   }
 
   @get(`/transactions/subscriptionid/{id}`)
-  @response(302, {
+  @response(redirectStatusCode, {
     description: 'Array of Transactions model instances',
     content: {
       'text/html': {
@@ -412,7 +412,7 @@ export class TransactionsController {
   }
 
   @post('/transactions/charge/subscriptions')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Subscription model instance',
     content: {
       'application/json': {},
@@ -454,8 +454,8 @@ export class TransactionsController {
   }
 
   @post('/transactions/webhook')
-  @response(200, {
-    description: 'Order model instance',
+  @response(STATUS_CODE.OK, {
+    description: 'Subscription Gateway Request',
     content: {
       'application/json': {},
     },

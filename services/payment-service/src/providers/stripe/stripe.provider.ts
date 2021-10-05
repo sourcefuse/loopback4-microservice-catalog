@@ -147,7 +147,6 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
         const transactions = await this.transactionsRepository.find({
           where: {orderId: subscription.id},
         });
-        console.log(transactions, 'transactions');
         if (transactions.length === 0) {
           await this.transactionsRepository.create(transactionData);
         }

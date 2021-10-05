@@ -18,7 +18,10 @@ import {
   response,
 } from '@loopback/rest';
 import {Subscriptions} from '../models';
+import {STATUS_CODE} from '@sourceloop/core';
 import {SubscriptionsRepository} from '../repositories';
+const subscriptionsRoutePath = '/subscriptions';
+const subscriptionsIdRoutePath = '/subscriptions/{id}';
 
 export class SubscriptionsController {
   constructor(
@@ -26,8 +29,8 @@ export class SubscriptionsController {
     public subscriptionsRepository: SubscriptionsRepository,
   ) {}
 
-  @post('/subscriptions')
-  @response(200, {
+  @post(subscriptionsRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Subscriptions model instance',
     content: {'application/json': {schema: getModelSchemaRef(Subscriptions)}},
   })
@@ -47,7 +50,7 @@ export class SubscriptionsController {
   }
 
   @get('/subscriptions/count')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Subscriptions model count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -57,8 +60,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.count(where);
   }
 
-  @get('/subscriptions')
-  @response(200, {
+  @get(subscriptionsRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of Subscriptions model instances',
     content: {
       'application/json': {
@@ -75,8 +78,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.find(filter);
   }
 
-  @patch('/subscriptions')
-  @response(200, {
+  @patch(subscriptionsRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Subscriptions PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -94,8 +97,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.updateAll(subscriptions, where);
   }
 
-  @get('/subscriptions/{id}')
-  @response(200, {
+  @get(subscriptionsIdRoutePath)
+  @response(STATUS_CODE.OK, {
     description: 'Subscriptions model instance',
     content: {
       'application/json': {
@@ -111,8 +114,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.findById(id, filter);
   }
 
-  @patch('/subscriptions/{id}')
-  @response(204, {
+  @patch(subscriptionsIdRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Subscriptions PATCH success',
   })
   async updateById(
@@ -129,8 +132,8 @@ export class SubscriptionsController {
     await this.subscriptionsRepository.updateById(id, subscriptions);
   }
 
-  @put('/subscriptions/{id}')
-  @response(204, {
+  @put(subscriptionsIdRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Subscriptions PUT success',
   })
   async replaceById(
@@ -140,8 +143,8 @@ export class SubscriptionsController {
     await this.subscriptionsRepository.replaceById(id, subscriptions);
   }
 
-  @del('/subscriptions/{id}')
-  @response(204, {
+  @del(subscriptionsIdRoutePath)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Subscriptions DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

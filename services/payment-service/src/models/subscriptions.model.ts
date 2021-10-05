@@ -79,9 +79,3 @@ export class Subscriptions extends Entity {
     super(data);
   }
 }
-
-export interface SubscriptionsRelations {
-  // describe navigational properties here
-}
-
-export type SubscriptionsWithRelations = Subscriptions & SubscriptionsRelations;
