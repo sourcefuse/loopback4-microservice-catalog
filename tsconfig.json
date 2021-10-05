@@ -1,1 +1,8 @@
-{}
+{
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+
+ 
+  
+}
