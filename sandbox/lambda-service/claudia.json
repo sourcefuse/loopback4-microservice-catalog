@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "lambda-example-executor",
+    "name": "lambda-example",
+    "region": "ap-southeast-2"
+  },
+  "api": {
+    "id": "2dqyiefagd"
+  }
+}
