@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-function apiSearchFunction(apiSearch: any, path: any) {
+import {PathsObject} from 'openapi3-ts/dist/model/OpenApi';
+import {OasHiddenApi} from '../services/enhancer-keys';
+
+function apiSearchFunction(
+  apiSearch: [string, OasHiddenApi],
+  path: PathsObject,
+) {
   if (path['get'] && apiSearch[1]['httpMethod'] === 'GET') {
     delete path['get'];
   }
@@ -16,7 +21,10 @@ function apiSearchFunction(apiSearch: any, path: any) {
     delete path['put'];
   }
 }
-export function apiHide(arrayApiSearch: Array<any>, paths: any) {
+export function apiHide(
+  arrayApiSearch: [string, OasHiddenApi][],
+  paths: PathsObject,
+) {
   arrayApiSearch.forEach(apiSearch => {
     for (const path in paths) {
       if (path === apiSearch[1]['path']) {

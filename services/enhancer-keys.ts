@@ -11,4 +11,4 @@ export namespace OASBindings {
   export const HiddenEndpoint = BindingKey.create<
     OasHiddenApi[]
   >(hiddenKey);
-}
+};
