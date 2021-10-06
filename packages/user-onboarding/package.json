@@ -8,7 +8,8 @@
     "test": "echo \"No tests available !\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "userOnboardingbuild": "ng build userOnboardingLib"
+    "userOnboardingbuild": "ng build userOnboardingLib",
+    "prepublishOnly": "ng-packagr -p projects/user-onboarding-lib/package.json"
   },
   "private": true,
   "dependencies": {
