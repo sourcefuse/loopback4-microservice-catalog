@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.1 (2021-10-06)</small>
+
+* fix(authentication-service): added test cases (#316) ([65d55e4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/65d55e4)), closes [#316](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/316) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181)
+
+
+
+
+
 ## 1.3.0 (2021-09-12)
 
 * fix(authentication-service): allow keycloak username to be an auth id as well, if needed ([e831237](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e831237)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

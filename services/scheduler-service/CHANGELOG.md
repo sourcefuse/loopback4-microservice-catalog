@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.0 (2021-10-06)
+
+* feat(bpmn-service): add unit and acceptance tests (#289) ([320e513](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e513)), closes [#289](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/289) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 2.0.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
