@@ -8,12 +8,12 @@
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": "userOb"
     },
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master",
+      "allowBranch": "userOb",
       "noPrivate": true
     },
     "run": {
