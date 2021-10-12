@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.2 (2021-10-12)</small>
+
+* refactor(core): publishing user onboarding ([5351b28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5351b28)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>2.0.1 (2021-10-12)</small>
 
 * chore(deps): bump passport-oauth2 in /services/notification-service (#376) ([a901a75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a901a75)), closes [#376](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/376)

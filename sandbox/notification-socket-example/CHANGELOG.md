@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.8 (2021-10-12)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>2.0.7 (2021-10-12)</small>
 
 * chore(deps): bump passport-oauth2 (#374) ([5a5fd55](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a5fd55)), closes [#374](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/374)

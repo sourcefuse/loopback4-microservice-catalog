@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.2 (2021-10-12)</small>
+
+* refactor(core): publishing user onboarding ([5351b28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5351b28)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>3.0.1 (2021-10-12)</small>
 
 * fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)

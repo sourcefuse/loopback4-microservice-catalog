@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -65,7 +65,7 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.2.1",
     "@loopback/service-proxy": "^3.1.1",
-    "@sourceloop/core": "^3.0.1",
+    "@sourceloop/core": "^3.0.2",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.2 (2021-10-12)</small>
+
+* refactor(core): publishing user onboarding ([5351b28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5351b28)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>1.3.1 (2021-10-12)</small>
 
 * chore(deps): bump i in /services/authentication-service (#356) ([b273e9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b273e9e)), closes [#356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/356)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.2 (2021-10-12)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-ms-example
+
+
+
+
+
 ## <small>0.2.1 (2021-10-12)</small>
 
 * fix(video-conferencing-service): add reusability (#330) ([12b7c8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12b7c8c)), closes [#330](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/330)

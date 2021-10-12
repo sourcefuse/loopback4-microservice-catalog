@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.1 (2021-10-12)</small>
+
+* refactor(core): publishing user onboarding ([5351b28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5351b28)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 2.4.0 (2021-10-12)
 
 * feat(audit-service): add unit test for audit service (#291) ([444ed5d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/444ed5d)), closes [#291](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/291) [#290](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/290)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.5 (2021-10-12)</small>
+
+* refactor(core): publishing user onboarding ([5351b28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5351b28)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>1.2.4 (2021-10-12)</small>
 
 * chore(deps): bump axios in /services/video-conferencing-service (#337) ([0b67c0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b67c0a)), closes [#337](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/337)
