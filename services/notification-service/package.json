@@ -94,8 +94,8 @@
     "widdershins": "^4.0.1"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
+    "registry": "http://localhost:4873/",
     "access": "public"
   },
-  "gitHead": "001b73253f7d8be4d2b892f618b7fd30df70ec37"
+  "gitHead": "3ad16f5631b51df923123868ded31bcbfe89e922"
 }
