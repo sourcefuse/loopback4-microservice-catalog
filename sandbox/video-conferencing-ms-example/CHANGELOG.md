@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2021-10-12)</small>
+
+* fix(video-conferencing-service): add reusability (#330) ([12b7c8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12b7c8c)), closes [#330](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/330)
+
+
+
+
+
 ## 0.2.0 (2021-09-12)
 
 * feat(sandbox): example of pubnub as a provider in notification service (#279) ([e30a0ed](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30a0ed)), closes [#279](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/279) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#298](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/298) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208)

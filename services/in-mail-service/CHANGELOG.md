@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.1 (2021-10-12)</small>
+
+* chore(deps): bump i from 0.3.6 to 0.3.7 in /services/in-mail-service (#357) ([728e461](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/728e461)), closes [#357](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/357)
+* chore(deps): bump passport-oauth2 in /services/in-mail-service (#375) ([6242400](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6242400)), closes [#375](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/375)
+* fix(in-mail-service): added test cases (#321) ([8a7fb48](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8a7fb48)), closes [#321](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/321) [#312](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/312) [#312](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/312)
+
+
+
+
+
 ## 1.3.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.1 (2021-10-12)</small>
+
+* chore(deps): bump passport-oauth2 in /services/notification-service (#376) ([a901a75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a901a75)), closes [#376](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/376)
+
+
+
+
+
 ## 2.0.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
