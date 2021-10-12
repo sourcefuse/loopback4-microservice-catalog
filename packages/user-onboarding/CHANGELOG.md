@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.3 (2021-10-06)</small>
+
+* refactor(core): publishing user onboarding ([f305ca0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f305ca0)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* refactor(core): publishing useronboarding ([5d448c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5d448c1)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* refactor(core): user onboarding ([faf3e58](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/faf3e58)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>0.2.2 (2021-10-06)</small>
 
 * refactor(core): publishing user onboarding ([f305ca0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f305ca0)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

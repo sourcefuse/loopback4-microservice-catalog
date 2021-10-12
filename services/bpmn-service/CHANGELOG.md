@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.5.0 (2021-10-06)
+
+* refactor(core): user onboarding ([faf3e58](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/faf3e58)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)
+* feat(bpmn-service): add unit and acceptance tests (#289) ([320e513](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e513)), closes [#289](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/289) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 2.4.0 (2021-10-06)
 
 * fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)

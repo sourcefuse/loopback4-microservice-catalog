@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.2 (2021-10-06)</small>
+
+* refactor(core): user onboarding ([faf3e58](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/faf3e58)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)
+* fix(core): add new HTTP status codes (#342) ([736ee28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/736ee28)), closes [#342](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/342)
+* fix(core): changed userId to userTenantId (#335) ([07c7e04](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/07c7e04)), closes [#335](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/335) [#329](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/329)
+* fix(core): fix linting issue in core (#348) ([6912bc2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6912bc2)), closes [#348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/348) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.1 (2021-10-06)</small>
 
 * fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)
