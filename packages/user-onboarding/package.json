@@ -8,9 +8,10 @@
     "test": "echo \"No tests available !\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "userOnboardingbuild": "ng build userOnboardingLib"
+    "userOnboardingbuild": "ng build userOnboardingLib",
+    "prepublishOnly": "ng-packagr -p projects/user-onboarding-lib/package.json"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~11.2.3",
     "@angular/common": "~11.2.3",
