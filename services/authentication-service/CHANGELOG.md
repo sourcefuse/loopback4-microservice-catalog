@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.3 (2021-10-12)</small>
+
+* refactor(core): user onboarding ([08d88f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/08d88f5)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* refactor(core): user onboarding ([faf3e58](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/faf3e58)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(authentication-service): added test cases (#316) ([65d55e4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/65d55e4)), closes [#316](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/316) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181)
+
+
+
+
+
 ## <small>1.3.2 (2021-10-06)</small>
 
 * refactor(core): user onboarding ([faf3e58](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/faf3e58)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
