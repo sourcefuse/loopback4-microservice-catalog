@@ -21,19 +21,7 @@ export class Channel extends Entity {
   })
   description?: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
-
   constructor(data?: Partial<Channel>) {
     super(data);
   }
 }
-
-export interface ChannelRelations {
-  // describe navigational properties here
-}
-
-export type ChannelWithRelations = Channel & ChannelRelations;

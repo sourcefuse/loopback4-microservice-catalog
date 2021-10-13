@@ -1,12 +1,11 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository} from '@loopback/repository';
 import {ChannelsDataSource} from '../datasources';
-import {Channel, ChannelRelations} from '../models';
+import {Channel} from '../models';
 
 export class ChannelRepository extends DefaultCrudRepository<
   Channel,
-  typeof Channel.prototype.id,
-  ChannelRelations
+  typeof Channel.prototype.id
 > {
   constructor(
     @inject('datasources.channels') dataSource: ChannelsDataSource,

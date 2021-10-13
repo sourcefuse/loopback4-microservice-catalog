@@ -1,5 +1,5 @@
 import {inject, Provider} from '@loopback/core';
-import { Filter, Where } from '@loopback/filter';
+import { Filter, Where } from '@loopback/repository';
 import {getService} from '@loopback/service-proxy';
 import {MessageDataSource} from '../datasources';
 import { PubnubMessage,PubnubMessageRecipient } from '../models';

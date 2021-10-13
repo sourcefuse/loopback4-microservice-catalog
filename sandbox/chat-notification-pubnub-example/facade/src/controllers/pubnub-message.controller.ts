@@ -9,7 +9,7 @@ import { PubnubMessageRecipient, Pubnubnotification } from "../models";
 import { PubnubMessage } from "../models/pubnub-message.model";
 import { Messageservice, Notificationservice } from "../services";
 import {CONTENT_TYPE, IAuthUserWithPermissions, OPERATION_SECURITY_SPEC, STATUS_CODE} from '@sourceloop/core';
-import {PermissionKey} from '../permission-key.enum'
+import {PermissionKey} from '../permission-key.enum';
 
 
 export class PubnubMessageController {
@@ -41,26 +41,23 @@ export class PubnubMessageController {
   async find(
     @inject(AuthenticationBindings.CURRENT_USER) user:IAuthUserWithPermissions,
     @param.header.string('Authorization') token:string,
-    @param.query.string('ChannelID') ChannelID?: string,
+    @param.query.string('ChannelID') channelID?: string,
     @param.filter(PubnubMessage) filter?: Filter<PubnubMessage>,
   ): Promise<PubnubMessage[]> {
-    
-    let filter1:Filter<PubnubMessage> = {
+    const filter1:Filter<PubnubMessage> = {
       where : {
         createdBy: user.userTenantId,
-        channelId: ChannelID
+        channelId: channelID
       }
-    }
-    
+    };
     const sentmessages = await this.messageService.getMessage(token, filter1);
 
-    let filter2:Filter<PubnubMessage> = {
+    const filter2:Filter<PubnubMessage> = {
       where : {
         toUserId: user.userTenantId,
-        channelId: ChannelID
+        channelId: channelID
       }
-    }
-    
+    };
     const receivedmessages = await this.messageService.getMessage(token,filter2);
 
     return [...sentmessages,...receivedmessages];
@@ -94,15 +91,13 @@ export class PubnubMessageController {
 
     message.channelId = message.channelId ?? message.toUserId;
     const msg = await this.messageService.createMessage(message,token);
-
-    let msgrecipient = new PubnubMessageRecipient({
+    const msgrecipient = new PubnubMessageRecipient({
       channelId : message.channelId,
       recipientId: message.toUserId ?? message.channelId,
       messageId: msg.id
     });
-    const createRecipient = this.messageService.createMessageRecipients(msgrecipient,token);
-
-    let notif = new Pubnubnotification({
+    await this.messageService.createMessageRecipients(msgrecipient,token);
+    const notif = new Pubnubnotification({
       subject: message.subject,
       body: message.body,
       type: 0,
@@ -113,7 +108,7 @@ export class PubnubMessageController {
         }]
       }
     });
-    const sentNotif = this.notifService.createNotification(notif,token)
+    await this.notifService.createNotification(notif,token);
 
     return msg;
   }
@@ -146,7 +141,7 @@ export class PubnubMessageController {
 
     const patched = {
       isRead: true
-    }
+    };
 
     return this.messageService.updateMsgRecipients(
       msgId,

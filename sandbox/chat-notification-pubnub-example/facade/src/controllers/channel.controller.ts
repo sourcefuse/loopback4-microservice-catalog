@@ -24,6 +24,8 @@ import {Channel} from '../models';
 import { PermissionKey } from '../permission-key.enum';
 import {ChannelRepository} from '../repositories';
 
+const base = '/channels';
+
 export class ChannelController {
   constructor(
     @repository(ChannelRepository)
@@ -58,7 +60,7 @@ export class ChannelController {
   }
 
   @get('/channels/count')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Channel model count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -93,7 +95,7 @@ export class ChannelController {
   }
 
   @patch('/channels')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'Channel PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -111,8 +113,8 @@ export class ChannelController {
     return this.channelRepository.updateAll(channel, where);
   }
 
-  @get('/channels/{id}')
-  @response(200, {
+  @get(`${base}/{id}`)
+  @response(STATUS_CODE.OK, {
     description: 'Channel model instance',
     content: {
       'application/json': {
@@ -127,8 +129,8 @@ export class ChannelController {
     return this.channelRepository.findById(id, filter);
   }
 
-  @patch('/channels/{id}')
-  @response(204, {
+  @patch(`${base}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Channel PATCH success',
   })
   async updateById(
@@ -145,8 +147,8 @@ export class ChannelController {
     await this.channelRepository.updateById(id, channel);
   }
 
-  @put('/channels/{id}')
-  @response(204, {
+  @put(`${base}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Channel PUT success',
   })
   async replaceById(
@@ -156,8 +158,8 @@ export class ChannelController {
     await this.channelRepository.replaceById(id, channel);
   }
 
-  @del('/channels/{id}')
-  @response(204, {
+  @del(`${base}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Channel DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

@@ -38,19 +38,12 @@ export class PubnubMessage extends Entity {
   })
   channelType: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @property({
+    type: 'string'
+  })
+  createdBy? : string;
 
   constructor(data?: Partial<PubnubMessage>) {
     super(data);
   }
 }
-
-export interface PubnubMessageRelations {
-  // describe navigational properties here
-}
-
-export type PubnubMessageWithRelations = PubnubMessage & PubnubMessageRelations;

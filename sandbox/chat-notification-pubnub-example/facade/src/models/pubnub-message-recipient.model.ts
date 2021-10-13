@@ -33,19 +33,7 @@ export class PubnubMessageRecipient extends Entity {
   })
   isRead?: boolean;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
-
   constructor(data?: Partial<PubnubMessageRecipient>) {
     super(data);
   }
 }
-
-export interface PubnubMessageRecipientRelations {
-  // describe navigational properties here
-}
-
-export type PubnubMessageRecipientWithRelations = PubnubMessageRecipient & PubnubMessageRecipientRelations;

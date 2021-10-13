@@ -30,9 +30,9 @@ export class FacadeApplication extends BootMixin(
       components: {
         securitySchemes: SECURITY_SCHEME_SPEC,
       },
-    })
+    });
+
     // Set up the custom sequence
-    // this.sequence(MySequence);
     this.sequence(SecureSequence);
 
     // Set up default home page
@@ -45,9 +45,7 @@ export class FacadeApplication extends BootMixin(
     this.component(RestExplorerComponent);
 
     this.component(CoreComponent);
-    
     this.component(AuthenticationComponent);
-    
     this.bind(BearerVerifierBindings.Config).to({
       type: BearerVerifierType.facade,
     } as BearerVerifierConfig);

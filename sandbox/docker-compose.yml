@@ -123,7 +123,40 @@ x-in-mail-variables: &in-mail-variables
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
+x-chat-notif-facade-variables: &chat-notif-facade-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  NOTIF_SERVICE_URL: http://localhost:3001
+  CHAT_SERVICE_URL: http://localhost:3002
+  CHANNEL_DB_HOST: localhost
+  CHANNEL_DB_PORT: 5432
+  CHANNEL_DB_USER: ${POSTGRES_USER:-postgres}
+  CHANNEL_DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  CHANNEL_DB_DATABASE: chatchannels
+  AUTH_DB_HOST: 127.0.0.1
+  AUTH_DB_PORT: 6379
+  AUTH_DB_PASSWORD:
+  AUTH_DB_DATABASE: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+
 services:
+  chat-notification-pubnub-example:
+    image: ${REGISTRY:-localhost:32000}/chat-notification-pubnub-example
+    build:
+      context: ./chat-notification-pubnub-example/facade
+      dockerfile: Dockerfile
+    ports:
+      - '3050:3000'
+    networks:
+      - sandbox
+    environment: *chat-notif-facade-variables
+    depends_on:
+      - postgres
+      - redis
+      - postgres_orchestrator
+    restart: on-failure
+
   auth-multitenant-example:
     image: ${REGISTRY:-localhost:32000}/auth-multitenant-example
     build:
@@ -384,7 +417,8 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database pubnub_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&& 
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db'"
 
   pgadmin:
     container_name: pgadmin_container

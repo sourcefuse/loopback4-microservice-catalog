@@ -4,7 +4,7 @@
   "baseURL": "",
   "crud": false,
   "options": {
-    "baseUrl": "http://localhost:3001",
+    "baseUrl": "$NOTIF_SERVICE_URL",
     "headers": {
       "accept": "application/json",
       "content-type": "application/json"
