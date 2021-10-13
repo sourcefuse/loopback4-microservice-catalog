@@ -13,7 +13,7 @@ export interface StripePaymentGateway {
       orderId: string;
     }>,
   ): Promise<DataObject<{res: string}>>;
-  refund(transactionId: string): Promise<{} | void>;
+  refund(transactionId: string): Promise<{}> | void;
   subscriptionCreate(
     subscriptions: Subscriptions,
     paymentTemplate: string | undefined,

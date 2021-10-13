@@ -244,6 +244,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           status: 'draft',
           orderId: subscription.id,
           paymentGatewayId: subscription.paymentGatewayId,
+          currency: subscription.currency,
           res: {
             gatewaySubscriptionRes: response,
           },

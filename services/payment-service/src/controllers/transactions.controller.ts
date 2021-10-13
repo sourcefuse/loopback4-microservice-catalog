@@ -411,7 +411,7 @@ export class TransactionsController {
     );
   }
 
-  @post('/transactions/charge/subscriptions')
+  @post('/transactions/charge/subscription')
   @response(STATUS_CODE.OK, {
     description: 'Subscription model instance',
     content: {

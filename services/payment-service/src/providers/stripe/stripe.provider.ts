@@ -142,6 +142,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           amountPaid: subscription?.totalAmount,
           status: 'draft',
           orderId: subscription?.id,
+          currency: subscription?.currency,
           paymentGatewayId: subscription?.paymentGatewayId,
         };
         const transactions = await this.transactionsRepository.find({
