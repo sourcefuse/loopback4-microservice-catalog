@@ -1,0 +1,19 @@
+{
+  "name": "search-lib",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/animations": "~12.1.5",
+    "@angular/common": "^12.1.5",
+    "@angular/compiler": "~12.1.5",
+    "@angular/core": "^12.1.5",
+    "@angular/forms": "~12.1.5",
+    "@angular/platform-browser": "~12.1.5",
+    "@angular/platform-browser-dynamic": "~12.1.5",
+    "@angular/router": "~12.1.5",
+    "rxjs": "~6.6.0",
+    "zone.js": "~0.11.4"
+  },
+  "dependencies": {
+    "tslib": "^2.2.0"
+  }
+}

@@ -1,0 +1,224 @@
+.search-container {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  padding: 0 15px;
+  position: relative;
+
+  &:hover {
+    outline: 2px solid #91263b;
+
+    &.search-focus-in {
+      outline: none;
+    }
+  }
+
+  &.search-focus-in {
+    outline: none;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
+
+    &:hover {
+      outline: 0;
+    }
+  }
+  .flex-box {
+    display: flex;
+  }
+  .align-items-center {
+    align-items: center;
+  }
+  .justify-content-between {
+    justify-content: space-between;
+  }
+  .search-column-left {
+    flex-direction: column;
+    width: 100%;
+  }
+  .search-column-right {
+    flex-direction: column;
+    width: 180px;
+    text-align: right;
+    select {
+      border: 0;
+      outline: 0;
+      width: 60px;
+      background-color: transparent;
+      margin-left: 10px;
+      font-size: 12px;
+      color: #333333;
+      border-left: 1px solid #d1d1d1;
+      padding-left: 4px;
+    }
+  }
+  .search-symbol {
+    color: #d1d1d1;
+    font-size: 12px;
+    display: inline-block;
+  }
+  .search-input {
+    padding: 0 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #333333;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+    box-sizing: border-box;
+    height: 38px;
+    display: inline-block;
+  }
+  .search-input::placeholder {
+    color: #d1d1d1;
+  }
+  .search-input:focus {
+    outline: none;
+  }
+  .clear-button {
+    background-color: transparent;
+    border: 0 solid #ced4da;
+    color: #d1d1d1;
+    font-size: 12px;
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 14px;
+    }
+  }
+  .search-popup {
+    padding: 0 15px 15px;
+    margin: 0;
+    max-height: 50vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: calc(100% - 2px);
+    left: -1px;
+    right: -1px;
+    z-index: 9999;
+    background-color: #fff;
+    box-shadow: 0 5px 4px #0003;
+    border-radius: 0 0 4px 4px;
+    hr {
+      border: 0;
+      border-top: 1px solid #ebebeb;
+      margin: 0;
+      position: sticky;
+      top: 0;
+      padding: 0 0 15px;
+      z-index: 1;
+    }
+    .search-item-info {
+      color: #91263b;
+      text-align: center;
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+    ul {
+      padding: 0;
+      margin: 0;
+
+      li {
+        list-style: none;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #333;
+
+        &.suggestions {
+          font-size: 15px;
+          line-height: 36px;
+          padding: 0 15px 0 44px;
+          // display: flex; causes words to join if bold
+          align-items: center;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #fee8e8;
+          }
+
+          svg {
+            margin-right: 5px;
+          }
+        }
+
+        &.suggestions-categorize-false:hover {
+          background-color: #fee8e8;
+        }
+      }
+    }
+    .search-result {
+      padding: 10px 0 0;
+      margin: 0 -15px;
+
+      &.no-categorize-result {
+        ul {
+          width: 100%;
+          padding: 0;
+          margin: 0 0 10px;
+
+          li {
+            font-size: 15px;
+            line-height: 36px;
+            padding: 0 15px 0 31px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #fee8e8;
+            }
+
+            img {
+              width: 18px;
+              margin-right: 9px;
+            }
+          }
+        }
+      }
+    }
+    .suggestions-heading {
+      color: #9c9c9c;
+      font-size: 14px;
+      font-weight: normal;
+      margin: 0 0 10px 17px;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      .show-more {
+        position: absolute;
+        right: 20px;
+        color: #d1d1d1;
+        font-size: 12px;
+        cursor: pointer;
+        text-decoration: none;
+
+        :hover {
+          text-decoration: underline;
+        }
+      }
+      img {
+        width: 18px;
+        margin-right: 9px;
+      }
+    }
+    .recent-searches {
+      padding: 10px 0 0;
+      margin: 0 -15px;
+
+      .suggestions-heading {
+        margin-left: 30px;
+      }
+      li.suggestions {
+        padding-left: 31px;
+      }
+    }
+  }
+}
