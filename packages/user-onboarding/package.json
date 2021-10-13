@@ -1,6 +1,11 @@
 {
   "name": "@sourceloop/user-onboarding-client",
   "version": "0.2.1",
+  "description": "Library for providing a smooth user onboarding",
+  "keywords": [
+    "angular-library"
+  ],
+  
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,9 +13,16 @@
     "test": "echo \"No tests available !\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "userOnboardingbuild": "ng build userOnboardingLib"
+    "userOnboardingbuild": "ng build userOnboardingLib",
+    "prepublishOnly": "ng-packagr -p projects/user-onboarding-lib/package.json"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "@angular/animations": "~11.2.3",
     "@angular/common": "~11.2.3",
@@ -49,5 +61,9 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.1.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
