@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.8 (2021-10-13)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
 ## <small>2.1.7 (2021-10-12)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example
