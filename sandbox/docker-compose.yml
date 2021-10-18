@@ -126,17 +126,50 @@ x-in-mail-variables: &in-mail-variables
 x-chat-notif-facade-variables: &chat-notif-facade-variables
   NODE_ENV: dev
   LOG_LEVEL: debug
-  NOTIF_SERVICE_URL: http://localhost:3001
-  CHAT_SERVICE_URL: http://localhost:3002
-  CHANNEL_DB_HOST: localhost
-  CHANNEL_DB_PORT: 5432
-  CHANNEL_DB_USER: ${POSTGRES_USER:-postgres}
-  CHANNEL_DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-  CHANNEL_DB_DATABASE: chatchannels
-  AUTH_DB_HOST: 127.0.0.1
+  NOTIF_SERVICE_URL: http://localhost:3052
+  CHAT_SERVICE_URL: http://localhost:3051
+  AUTH_DB_HOST: redis
   AUTH_DB_PORT: 6379
   AUTH_DB_PASSWORD:
   AUTH_DB_DATABASE: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+
+x-chat-notif-facade-chat-variables: &chat-notif-facade-chat-variables
+  NODE_ENV: dev
+  LOG_LEVEL: info
+  CHAT_DB_HOST: postgres
+  CHAT_DB_PORT: 5432
+  CHAT_DB_USER: ${POSTGRES_USER:-postgres}
+  CHAT_DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  CHAT_DB_DATABASE: chatdb
+  CHAT_DB_SCHEMA: main
+  AUTHCACHE_DB_HOST: redis
+  AUTHCACHE_DB_PORT: 6379
+  AUTHCACHE_DB_PASSWORD:
+  AUTHCACHE_DB_DATABASE: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+
+x-chat-notif-facade-notif-variables: &chat-notif-facade-notif-variables
+  NODE_ENV: dev
+  LOG_LEVEL: info
+  NOTIF_DB_HOST: postgres
+  NOTIF_DB_PORT: 5432
+  NOTIF_DB_USER: ${POSTGRES_USER:-postgres}
+  NOTIF_DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  NOTIF_DB_DATABASE: notifdb
+  AUTHCACHE_DB_HOST: redis
+  AUTHCACHE_DB_PORT: 6379
+  AUTHCACHE_DB_PASSWORD:
+  AUTHCACHE_DB_DATABASE: 0
+  NOTIFCACHE_DB_HOST: redis
+  NOTIFCACHE_DB_PORT: 6379
+  NOTIFCACHE_DB_PASSWORD:
+  NOTIFCACHE_DB_DATABASE: 0
+  PUBNUB_SUBSCRIBE_KEY: sub-c-795ac30a-1d26-11ec-ad6d-3eee4c94e219
+  PUBNUB_PUBLISH_KEY: pub-c-64a4aaf2-20d5-481a-b4d5-15b06b441883
+  UUID: 381f84ff-d68d-1997-5d8a-bb4c09165219
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
@@ -155,6 +188,70 @@ services:
       - postgres
       - redis
       - postgres_orchestrator
+      - facade-chat-service
+      - facade-notification-service
+    restart: on-failure
+
+  facade-chat-service:
+    image: ${REGISTRY:-localhost:32000}/facade-chat-service
+    build:
+      context: ./chat-notification-pubnub-example/services/chat-service
+      dockerfile: Dockerfile
+    ports:
+      - '3051:3000'
+    networks:
+      - sandbox
+    environment: *chat-notif-facade-chat-variables
+    depends_on:
+      - postgres
+      - redis
+      - postgres_orchestrator
+      - facade-chat-migration
+    restart: on-failure
+
+  facade-chat-migration:
+    image: ${REGISTRY:-localhost:32000}/facade-chat-service
+    build:
+      context: ./chat-notification-pubnub-example/services/chat-service
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
+    environment: *chat-notif-facade-chat-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
+
+  facade-notification-service:
+    image: ${REGISTRY:-localhost:32000}/facade-notification-service
+    build:
+      context: ./chat-notification-pubnub-example/services/notifications-service
+      dockerfile: Dockerfile
+    ports:
+      - '3052:3000'
+    networks:
+      - sandbox
+    environment: *chat-notif-facade-notif-variables
+    depends_on:
+      - postgres
+      - redis
+      - postgres_orchestrator
+      - facade-notification-migration
+    restart: on-failure
+
+  facade-notification-migration:
+    image: ${REGISTRY:-localhost:32000}/facade-notification-service
+    build:
+      context: ./chat-notification-pubnub-example/services/notifications-service
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
+    environment: *chat-notif-facade-notif-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
     restart: on-failure
 
   auth-multitenant-example:
@@ -418,7 +515,9 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&& 
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb'"
 
   pgadmin:
     container_name: pgadmin_container

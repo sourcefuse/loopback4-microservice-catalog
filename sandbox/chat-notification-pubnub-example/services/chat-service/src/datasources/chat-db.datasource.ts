@@ -10,7 +10,7 @@ const config = {
   user: process.env.CHAT_DB_USER,
   password: process.env.CHAT_DB_PASSWORD,
   database: process.env.CHAT_DB_DATABASE,
-  schema: 'main'
+  schema: process.env.CHAT_DB_SCHEMA
 };
 
 // Observe application's life cycle to disconnect the datasource when

@@ -7,7 +7,6 @@ import {
   RestExplorerComponent
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
 import {ChatServiceComponent} from '@sourceloop/chat-service';
 import path from 'path';
 import {MySequence} from './sequence';
@@ -36,7 +35,6 @@ export class ChatserviceApplication extends BootMixin(
 
     // add Component for ChatService
     this.component(ChatServiceComponent);
-    this.component(AuthenticationServiceComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

@@ -7,7 +7,6 @@ import {
   RestExplorerComponent
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
 import {NotificationServiceComponent, NotifServiceBindings} from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
@@ -40,7 +39,6 @@ export class ChatAndNotifApplication extends BootMixin(
 
     // add Component for AuthenticationService
     this.component(NotificationServiceComponent);
-    this.component(AuthenticationServiceComponent);
 
     this.bind(NotifServiceBindings.Config).to({
       useCustomEmailProvider: false,
