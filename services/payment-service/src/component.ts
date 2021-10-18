@@ -30,6 +30,8 @@ import {
   PaymentGatewaysController,
   TemplatesController,
   SubscriptionsController,
+  SubscriptionTransactionsController,
+  TransactionSubscriptionsController,
 } from './controllers';
 import {
   OrdersRepository,
@@ -80,6 +82,8 @@ export class PaymentServiceComponent implements Component {
       PaymentGatewaysController,
       TemplatesController,
       SubscriptionsController,
+      SubscriptionTransactionsController,
+      TransactionSubscriptionsController,
     ];
     this.repositories = [
       OrdersRepository,

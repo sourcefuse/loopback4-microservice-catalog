@@ -23,14 +23,13 @@ import {
   RestBindings,
 } from '@loopback/rest';
 import {v4 as uuidv4} from 'uuid';
-import {Orders, Transactions, Subscriptions} from '../models';
+import {Orders, Transactions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
 import {
   OrdersRepository,
   TransactionsRepository,
   TemplatesRepository,
   PaymentGatewaysRepository,
-  SubscriptionsRepository,
 } from '../repositories';
 import {STATUS_CODE} from '@sourceloop/core';
 import {ResponseMessage, TemplateName} from '../enums';
@@ -61,8 +60,6 @@ export class TransactionsController {
     private readonly templatesRepository: TemplatesRepository,
     @repository(PaymentGatewaysRepository)
     private readonly paymentGatewaysRepository: PaymentGatewaysRepository,
-    @repository(SubscriptionsRepository)
-    private readonly subscriptionRepository: SubscriptionsRepository,
   ) {}
 
   @post(transactionsRoutePath)
@@ -332,125 +329,6 @@ export class TransactionsController {
     @param.path.string('id') id: string,
   ): Promise<unknown> {
     return this.gatewayHelper.refund(id);
-  }
-
-  @post('/create-subscription-and-pay')
-  @response(redirectStatusCode, {
-    description: 'Subscription model instance',
-    content: {
-      'text/html': {},
-    },
-  })
-  async subscriptionandtransactionscreate(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-          },
-        },
-      },
-    })
-    subscriptions: Subscriptions,
-  ): Promise<void> {
-    const subscriptionEntity = {
-      id: uuidv4(),
-      totalAmount: subscriptions?.totalAmount,
-      status: subscriptions?.status,
-      metaData: subscriptions?.metaData ?? {},
-      paymentGatewayId: subscriptions?.paymentGatewayId,
-      paymentMethod: subscriptions?.paymentmethod,
-      currency: subscriptions?.currency,
-      startDate: subscriptions.startDate
-        ? new Date(subscriptions.startDate)
-        : new Date(),
-      endDate: subscriptions.endDate
-        ? new Date(subscriptions.endDate)
-        : new Date(),
-      planId: subscriptions?.planId,
-    };
-    const newSubscription = await this.subscriptionRepository.create(
-      subscriptionEntity,
-    );
-    const hostUrl = this.req.get('host');
-    const hostProtocol = this.req.protocol;
-    this.req.query.method = newSubscription.paymentMethod;
-    return this.res.redirect(
-      redirectStatusCode,
-      `${hostProtocol}://${hostUrl}/transactions/subscriptionid/${newSubscription.id}?method=${newSubscription.paymentMethod}`,
-    );
-  }
-
-  @get(`/transactions/subscriptionid/{id}`)
-  @response(redirectStatusCode, {
-    description: 'Array of Transactions model instances',
-    content: {
-      'text/html': {
-        schema: {
-          type: 'object',
-        },
-      },
-    },
-  })
-  async subscriptionTransactionsPay(
-    @param.path.string('id') id: string,
-  ): Promise<unknown> {
-    const Subscription = await this.subscriptionRepository.findById(id);
-    const templates = await this.templatesRepository.find({
-      where: {
-        paymentGatewayId: Subscription?.paymentGatewayId,
-        name: TemplateName.Create,
-      },
-    });
-    const paymentTemplate = templates[0]?.template;
-    return this.res.send(
-      await this.gatewayHelper.subscriptionCreate(
-        Subscription,
-        paymentTemplate,
-      ),
-    );
-  }
-
-  @post('/transactions/charge/subscription')
-  @response(STATUS_CODE.OK, {
-    description: 'Subscription model instance',
-    content: {
-      'application/json': {},
-    },
-  })
-  async subscriptionTransactionscharge(
-    @requestBody({
-      content: {
-        'application/x-www-form-urlencoded': {
-          schema: {
-            type: 'object',
-          },
-        },
-      },
-    })
-    chargeResponse: DataObject<{}>,
-  ): Promise<unknown> {
-    chargeResponse = {
-      ...chargeResponse,
-      subscriptionId: this.req.query.subscriptionId,
-    };
-    const chargeHelper = await this.gatewayHelper.subscriptionCharge(
-      chargeResponse,
-    );
-    const hostUrl = this.req.get('host');
-    const hostProtocol = this.req.protocol;
-    const defaultUrl = `${hostProtocol}://${hostUrl}`;
-    if (chargeHelper?.res === ResponseMessage.Sucess) {
-      return this.res.redirect(
-        permRedirectStatusCode,
-        `${process.env.SUCCESS_CALLBACK_URL ?? defaultUrl}`,
-      );
-    } else {
-      return this.res.redirect(
-        permRedirectStatusCode,
-        `${process.env.FAILURE_CALLBACK_URL ?? defaultUrl}`,
-      );
-    }
   }
 
   @post('/transactions/webhook')

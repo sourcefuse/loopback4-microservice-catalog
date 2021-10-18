@@ -32,7 +32,7 @@ export const stripeCreateTemplate = `<html>
 export const razorpaySubscriptionCreateTemplate = `<html>
   <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
   <body>
-  <form name="payment" action="/transactions/charge/subscription?method=razorpay" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
+  <form name="payment" action="/subscription/transaction/charge?method=razorpay" method="POST"> <script src="https://checkout.razorpay.com/v1/checkout.js"  data-key=
   {{razorpayKey}}
   data-subscription_id={{subscriptionId}}
   data-theme.color="#57AB5B"
@@ -48,7 +48,7 @@ export const stripeSubscriptionCreateTemplate = `<html>
   <title>Stripe Payment Demo</title>
   <body>
   <h3>Welcome to Payment Gateway</h3>
-  <form action="/transactions/charge/subscription?method=stripe&subscriptionId={{subscriptionId}}" method="POST">
+  <form action="/subscription/transaction/charge?method=stripe&subscriptionId={{subscriptionId}}" method="POST">
   <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key=
   {{publishKey}}
   data-amount=
