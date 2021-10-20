@@ -32,7 +32,7 @@ import {
   WorkerImplementationFn,
   WorkerMap,
 } from '../types';
-const basePath = '/workflow';
+const basePath = '/workflows';
 
 export class WorkflowController {
   constructor(
