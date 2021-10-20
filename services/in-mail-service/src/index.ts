@@ -14,5 +14,3 @@ export {
   StorageMarker,
   PermissionsEnums,
 };
-
-
