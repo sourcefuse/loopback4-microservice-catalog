@@ -1,19 +1,22 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
   HasManyRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {SearchServiceConfig} from '..';
 import {DEFAULT_RECENTS, Errors} from '../const';
 import {SearchServiceBindings} from '../keys';
 import {RecentSearch, SearchQuery} from '../models';
 import {SearchQueryRepository} from './search-query.repository';
 
-export class RecentSearchRepository extends DefaultCrudRepository<
+export class RecentSearchRepository extends DefaultUserModifyCrudRepository<
   RecentSearch,
   typeof RecentSearch.prototype.id
 > {
@@ -29,8 +32,12 @@ export class RecentSearchRepository extends DefaultCrudRepository<
     queryRepositoryGetter: Getter<SearchQueryRepository>,
     @inject(SearchServiceBindings.Config)
     private readonly config: SearchServiceConfig,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(RecentSearch, dataSource);
+    super(RecentSearch, dataSource, getCurrentUser);
     this.params = this.createHasManyRepositoryFactoryFor(
       'params',
       queryRepositoryGetter,
@@ -52,6 +59,9 @@ export class RecentSearchRepository extends DefaultCrudRepository<
     if (saved?.id) {
       const prev = await this.params(saved.id).find({
         order: ['created_on DESC'],
+        fields: {
+          where: false,
+        },
       });
 
       const recentCount =
@@ -64,7 +74,7 @@ export class RecentSearchRepository extends DefaultCrudRepository<
       }
     } else {
       saved = await super.create({
-        userId: user.id,
+        userId: user.userTenantId,
       });
     }
 

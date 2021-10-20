@@ -19,7 +19,7 @@ import {
   SearchWhereFilter,
   ShortHandEqualType,
 } from '../../types';
-import {ModelProperties} from '../..';
+import {IGNORED_COLUMN, ModelProperties} from '../..';
 
 export abstract class SearchQueryBuilder<T extends Model> {
   protected baseQueryList: Query[];
@@ -113,15 +113,31 @@ export abstract class SearchQueryBuilder<T extends Model> {
     if (Array.isArray(columns)) {
       return this._getColumnListFromArray(model, columns, filter);
     } else {
-      return this._getColumnListFromMap(columns, filter);
+      return this._getColumnListFromMap(model, columns, filter);
     }
   }
-  _getColumnListFromMap(columns: ColumnMap<T>, filter: (keyof T)[]) {
-    const columnList = Object.values(columns)
-      .filter(column => !filter.includes(column as keyof T))
+  _getColumnListFromMap(
+    model: typeof Model,
+    columns: ColumnMap<T>,
+    filter: (keyof T)[],
+  ) {
+    const columnList = Object.keys(columns)
+      .filter(
+        column =>
+          column !== IGNORED_COLUMN && !filter.includes(column as keyof T),
+      )
+      .map(column => (columns as AnyObject)[column])
       .join(', ');
     const selectors = Object.keys(columns)
-      .map(column => `${(columns as AnyObject)[column]} as ${column}`)
+      .map(column => {
+        const columnNameInMap = (columns as AnyObject)[column];
+        if (columnNameInMap === IGNORED_COLUMN) {
+          return `null as ${column}`;
+        } else {
+          const dbName = this._getColumnName(model, columnNameInMap);
+          return this._formatColumnSameInDb(column as keyof T, dbName);
+        }
+      })
       .join(', ');
     return {
       columnList,
@@ -136,16 +152,12 @@ export abstract class SearchQueryBuilder<T extends Model> {
   ) {
     const columnList = columns
       .filter(column => !filter.includes(column))
-      .map(column => this._getColumnName(model, column as string))
+      .map(column => this._getColumnName(model, column))
       .join(', ');
     const selectors = columns
       .map(column => {
-        const columnName = this._getColumnName(model, column as string);
-        if (columnName !== column) {
-          return `${columnName} as ${column}`;
-        } else {
-          return column;
-        }
+        const nameInDb = this._getColumnName(model, column);
+        return this._formatColumnSameInDb(column, nameInDb);
       })
       .join(', ');
     return {
@@ -199,10 +211,16 @@ export abstract class SearchQueryBuilder<T extends Model> {
     const skipped = ignoredColumns ?? [];
     const defaultColumns = Object.keys(
       type.definition.properties,
-    ) as (keyof T)[];
+    ) as ModelProperties<T>[];
     models.forEach(model => {
       if (isSearchableModel(model)) {
-        this.search(model.model, model.columns, skipped);
+        const mapWithDefaults = defaultColumns.reduce((combined, column) => {
+          if (!combined[column]) {
+            combined[column] = column as string;
+          }
+          return combined;
+        }, model.columns);
+        this.search(model.model, mapWithDefaults, skipped);
       } else {
         this.search(model, defaultColumns, skipped);
       }
@@ -350,9 +368,9 @@ export abstract class SearchQueryBuilder<T extends Model> {
     }
   }
 
-  _getColumnName(model: typeof Model, name: string) {
-    if (model.definition.properties[name]) {
-      return model.definition.properties[name].name || name;
+  _getColumnName(model: typeof Model, name: keyof T) {
+    if (model.definition.properties[name as string]) {
+      return model.definition.properties[name as string].name || name;
     }
     return undefined;
   }
@@ -438,7 +456,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
   }
 
   _buildExpression(
-    columnName: string,
+    columnName: keyof T,
     prop: PropertyDefinition,
     operator: string,
     value: (Query | ShortHandEqualType)[] | ShortHandEqualType | Query,
@@ -551,5 +569,13 @@ export abstract class SearchQueryBuilder<T extends Model> {
 
   private _isQuery(query: Query | ShortHandEqualType): query is Query {
     return !!(query && (query as Query).sql && (query as Query).params);
+  }
+
+  private _formatColumnSameInDb(modelColumn: keyof T, dbColumn: string) {
+    if (modelColumn !== dbColumn) {
+      return `${dbColumn} as ${modelColumn}`;
+    } else {
+      return modelColumn;
+    }
   }
 }

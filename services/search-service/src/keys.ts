@@ -20,3 +20,5 @@ export namespace SearchServiceBindings {
   export const SearchFilterFunction =
     BindingKey.create<SearchFilter>('sf.search.filter');
 }
+
+export const IGNORED_COLUMN = '-';

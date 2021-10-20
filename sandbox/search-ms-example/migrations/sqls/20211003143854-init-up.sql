@@ -18,13 +18,6 @@ CREATE TABLE main.recent_search (
 
 CREATE TABLE main.search_query (
 	id                      uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL ,
-	created_on              timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
-	modified_on             timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
-	created_by              uuid   ,
-	modified_by             uuid   ,
-	deleted                 bool DEFAULT false NOT NULL ,
-	deleted_on           	timestamptz   ,
-	deleted_by           	uuid   ,
     match                   text NOT NULL,
     "limit"                 integer NULL,
     "order"                 varchar(100) NULL,
