@@ -6,10 +6,8 @@ import {
 } from '@loopback/testlab';
 import {VideoChatArchiveController} from '../../../controllers';
 import {VonageConfig, VonageProvider} from '../../../providers/vonage';
-import {
-  AuditLogsRepository,
-  VideoChatSessionRepository,
-} from '../../../repositories';
+import {VideoChatSessionRepository} from '../../../repositories';
+import {ChatArchiveService} from '../../../services/chat-archive.service';
 import {VonageService} from '../../../providers/vonage/vonage.service';
 import {VideoChatInterface} from '../../../types';
 import {
@@ -22,14 +20,13 @@ import {
 describe('Archive APIs', () => {
   const archiveId = 'dummy-archive-id';
   const invalidArchiveId = '';
-  let auditLogRepo: StubbedInstanceWithSinonAccessor<AuditLogsRepository>;
-  let auidtLogCreate: sinon.SinonStub;
+
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
   let videoChatProvider: VideoChatInterface;
   let vonageService: VonageService;
   let config: VonageConfig;
   let controller: VideoChatArchiveController;
-
+  let chatArchiveService: ChatArchiveService;
   afterEach(() => sinon.restore());
 
   describe('GET /archives/{archiveId}', () => {
@@ -51,7 +48,6 @@ describe('Archive APIs', () => {
         .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.calledWith(findOne, {where: {archiveId: invalidArchiveId}});
-      sinon.assert.calledOnce(auidtLogCreate);
     });
   });
 
@@ -93,7 +89,6 @@ describe('Archive APIs', () => {
         .catch(err => err);
       expect(error).instanceOf(Error);
       sinon.assert.calledWith(findOne, {where: {archiveId: invalidArchiveId}});
-      sinon.assert.calledOnce(auidtLogCreate);
     });
   });
 
@@ -139,19 +134,15 @@ describe('Archive APIs', () => {
       timeToStart: 30,
     };
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
-    auditLogRepo = createStubInstance(AuditLogsRepository);
-    auidtLogCreate = auditLogRepo.stubs.create;
-    auidtLogCreate.resolves();
 
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
     vonageService = new VonageService(config);
-    videoChatProvider = new VonageProvider(vonageService, auditLogRepo).value();
-
-    controller = new VideoChatArchiveController(
+    videoChatProvider = new VonageProvider(vonageService).value();
+    chatArchiveService = new ChatArchiveService(
       videoChatProvider,
       videoChatSessionRepo,
-      auditLogRepo,
     );
+    controller = new VideoChatArchiveController(chatArchiveService);
   }
 });

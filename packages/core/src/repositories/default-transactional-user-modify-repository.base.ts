@@ -135,8 +135,9 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    entity.createdBy = currentUser.id;
-    entity.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    entity.createdBy = uid;
+    entity.modifiedBy = uid;
     return super.create(entity, options);
   }
 
@@ -146,9 +147,10 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
     entities.forEach(entity => {
-      entity.createdBy = currentUser ? currentUser.id : '';
-      entity.modifiedBy = currentUser ? currentUser.id : '';
+      entity.createdBy = uid ?? '';
+      entity.modifiedBy = uid ?? '';
     });
     return super.createAll(entities, options);
   }
@@ -158,7 +160,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    entity.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    entity.modifiedBy = uid;
     return super.save(entity, options);
   }
 
@@ -167,7 +170,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    entity.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    entity.modifiedBy = uid;
     return super.update(entity, options);
   }
 
@@ -181,7 +185,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    data.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    data.modifiedBy = uid;
     return super.updateAll(data, where, options);
   }
 
@@ -195,7 +200,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    data.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    data.modifiedBy = uid;
     return super.updateById(id, data, options);
   }
   async replaceById(
@@ -207,7 +213,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     if (!currentUser) {
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
-    data.modifiedBy = currentUser.id;
+    const uid = currentUser?.userTenantId ?? currentUser?.id;
+    data.modifiedBy = uid;
     return super.replaceById(id, data, options);
   }
 

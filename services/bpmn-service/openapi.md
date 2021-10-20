@@ -193,7 +193,8 @@ HTTPBearer
 const inputBody = '{
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -219,7 +220,8 @@ const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -248,7 +250,8 @@ fetch('/workflow/{id}',
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 ```
 
@@ -412,7 +415,8 @@ HTTPBearer
 const inputBody = '{
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -439,7 +443,8 @@ const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -469,7 +474,8 @@ fetch('/workflow',
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 ```
 
@@ -690,7 +696,8 @@ Workflow
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -704,6 +711,7 @@ NewWorkflow
 |name|string|true|none|none|
 |bpmnFile|string|true|none|none|
 |inputSchema|object|true|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_WorkflowDto">WorkflowDto</h2>
 <!-- backwards compatibility -->
@@ -716,7 +724,8 @@ NewWorkflow
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -730,6 +739,7 @@ WorkflowDto
 |name|string|true|none|none|
 |bpmnFile|string|true|none|none|
 |inputSchema|object|true|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_WorkflowDtoPartial">WorkflowDtoPartial</h2>
 <!-- backwards compatibility -->
@@ -742,7 +752,8 @@ WorkflowDto
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -756,6 +767,7 @@ WorkflowDtoPartial
 |name|string|false|none|none|
 |bpmnFile|string|false|none|none|
 |inputSchema|object|false|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_ExecuteWorkflowDto">ExecuteWorkflowDto</h2>
 <!-- backwards compatibility -->
