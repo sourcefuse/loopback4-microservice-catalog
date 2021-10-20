@@ -16,5 +16,11 @@
   },
   "devDependencies": {
     "@types/core-js": "^2.5.4"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/public-api.ts"
+    },
+    "dest": "../../dist/user-onboarding-lib"
   }
 }
