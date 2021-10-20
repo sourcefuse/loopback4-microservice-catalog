@@ -16,7 +16,7 @@ describe('Workflow Controller', () => {
   let mockBpmnEngine: MockEngine;
   let workflowRepo: WorkflowRepository;
   let workflowVersionRepo: WorkflowVersionRepository;
-  const basePath = '/workflow';
+  const basePath = '/workflows';
   const pass = 'test_password';
   const testUser = {
     id: 1,
