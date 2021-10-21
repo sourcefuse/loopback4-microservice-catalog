@@ -14,6 +14,7 @@ import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
+import { OperationSpecEnhancer } from './enhancer/operation-spec-enhancer';
 import * as swstats from 'swagger-stats';
 
 export class CoreComponent implements Component {
@@ -32,7 +33,7 @@ export class CoreComponent implements Component {
 
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
-
+    this.application.add(OperationSpecEnhancer);
     this.application.component(Loopback4HelmetComponent);
     this.application.component(RateLimiterComponent);
 
