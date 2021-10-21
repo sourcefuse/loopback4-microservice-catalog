@@ -1,4 +1,5 @@
 import {BindingKey} from '@loopback/core';
+import {IServiceConfig} from '@sourceloop/core';
 
 export const FeatureToggleDbName = 'FeatureToggleDB';
 
@@ -14,3 +15,5 @@ export interface FeatureFlagFn {
 export interface FeatureInterface {
   (): boolean;
 }
+
+export interface IToggleServiceConfig extends IServiceConfig {}

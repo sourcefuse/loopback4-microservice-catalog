@@ -21,7 +21,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {StrategyBindings} from './keys';
+import {StrategyBindings, ToggleServiceBindings} from './keys';
 import {
   Features,
   Parameters,
@@ -42,11 +42,14 @@ import {
   UserFeatureProvider,
 } from './providers';
 import {FeatureToggleSequence} from './sequence';
+import {IToggleServiceConfig} from './types';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(ToggleServiceBindings.Config, {optional: true})
+    private readonly config?: IToggleServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -67,7 +70,11 @@ export class FeatureToggleServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    this.setupSequence();
+    // Mount default sequence if needed
+    if (!this.config?.useCustomSequence) {
+      // Mount default sequence if needed
+      this.setupSequence();
+    }
     this.repositories = [
       FeaturesRepository,
       ProjectsRepository,

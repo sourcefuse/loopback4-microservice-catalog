@@ -1,6 +1,12 @@
 import {BindingKey, MetadataAccessor} from '@loopback/core';
-import {FeatureFlagFn, FeatureFlagMetadata, FeatureInterface} from './types';
+import {
+  FeatureFlagFn,
+  FeatureFlagMetadata,
+  FeatureInterface,
+  IToggleServiceConfig,
+} from './types';
 import {Unleash} from 'unleash-client';
+import {BINDING_PREFIX} from '@sourceloop/core';
 
 export namespace StrategyBindings {
   export const FEATURE_FLAG_ACTION = BindingKey.create<FeatureFlagFn>(
@@ -23,3 +29,9 @@ export const FEATURE_FLAG_METADATA_ACCESSOR = MetadataAccessor.create<
 >('sf.featuresFlag.accessor.operationsMetadata');
 
 export const UNLEASH_CONST = BindingKey.create<Unleash>('unleash.const');
+
+export namespace ToggleServiceBindings {
+  export const Config = BindingKey.create<IToggleServiceConfig | null>(
+    `${BINDING_PREFIX}.auth.config`,
+  );
+}
