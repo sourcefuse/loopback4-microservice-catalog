@@ -227,9 +227,6 @@ export class ExampleApplicationApplication extends BootMixin(
    constructor(options: ApplicationConfig = {}) {
     super(options);
 
-    // Bind OperationSpecEnhancer to read, update & delete openapi spec
-    this.add(createBindingFromClass(OperationSpecEnhancer));
-
     // Set up the custom sequence
     this.sequence(MySequence);
 
