@@ -1,7 +1,7 @@
 import {InjectionToken} from '@angular/core';
 import {Observable} from 'rxjs';
 
-export interface IRecentSearchResult {
+export interface ISearchQuery {
   match: string;
   limit: number | null;
   order: string | null;
@@ -23,27 +23,34 @@ export interface IDefaultReturnType extends IReturnType {
   description: string;
 }
 
-export interface IRequestParameters {
-  //here not null as there are default values if nothing is passed for these in config.
-  match: string;
-  source: 'All' | IModel;
-  limit: number;
-  limitByType: boolean;
-  order: string;
-  offset: number;
-  saveInRecents: boolean;
-}
-
 export interface ISearchService<T extends IReturnType> {
-  searchApiRequest(requestParameters: IRequestParameters): Observable<T[]>;
-  recentSearchApiRequest?(): Observable<IRecentSearchResult[]>;
+  searchApiRequest(
+    requestParameters: ISearchQuery,
+    saveInRecents: boolean,
+  ): Observable<T[]>;
+  recentSearchApiRequest?(): Observable<ISearchQuery[]>;
 }
 
-//cant use T extends IReturnType here
+// cant use T extends IReturnType here
 export const SEARCH_SERVICE_TOKEN: InjectionToken<ISearchService<IReturnType>> =
   new InjectionToken<ISearchService<IReturnType>>('Search_Service_Token');
 
-//IRequestParameters default values
+export type RecentSearchEvent = {
+  event: KeyboardEvent | Event;
+  keyword: string;
+  category: 'All' | IModel;
+};
+
+export type ItemClickedEvent<T> = {
+  event: MouseEvent;
+  item: T;
+};
+
+export type TypeEvent = {
+  event: Event;
+  input: string;
+};
+// IRequestParameters default values
 export const DEFAULT_LIMIT = 20;
 export const DEFAULT_LIMIT_TYPE = false;
 export const DEFAULT_ORDER = [];

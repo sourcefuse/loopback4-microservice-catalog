@@ -27,7 +27,7 @@
             [placeholder]="config.placeholder"
             #searchInput
             name="searchInput"
-            (focus)="suggestionsDisplay = true"
+            (focus)="showSuggestions()"
             (blur)="hideSuggestions()"
             [(ngModel)]="searchBoxInput"
             (keyup)="hitSearchApi($event)"
@@ -38,7 +38,6 @@
         </div>
       </div>
       <div class="search-column-right">
-        <div *ngIf="!searchBoxInput" class="search-symbol"><span>⌘</span>F</div>
         <button
           *ngIf="searchBoxInput"
           type="button"
@@ -49,26 +48,36 @@
           Clear x
         </button>
         <ng-container *ngIf="!config.hideCategorizeButton">
-          <select
-            name="searchDropDown"
-            [(ngModel)]="category"
-            (change)="hitSearchApi($event)"
-            style="
-              background-color: #91263b;
-              color: white;
-              width: 15%;
-              padding: 0.375rem 0.75rem;
-              font-size: 1rem;
-              font-weight: 400;
-              line-height: 1.5;
-              border-radius: 0.25rem;
-            "
-          >
-            <option>All</option>
-            <option *ngFor="let model of config.models" [ngValue]="model">
-              {{ model.displayName }}
-            </option>
-          </select>
+          <button class="category-button" (click)="showCategory()">
+            {{ category !== 'All' ? category.displayName : category }}
+            <svg height="14" viewBox="0 0 14 14" width="14">
+              <polygon
+                [attr.points]="
+                  categoryDisplay
+                    ? '0,14 7,6, 14,14, 7,6, 0,14'
+                    : '0,6 7,14, 14,6, 7,14, 0,6'
+                "
+                style="stroke: 'inherit'; fill: 'inherit'"
+              ></polygon>
+            </svg>
+          </button>
+          <ng-container *ngIf="categoryDisplay">
+            <div class="category-overlay" (click)="hideCategory()"></div>
+            <div class="category-popup">
+              <ul>
+                <li (click)="setCategory('All', $event)" class="category">
+                  All
+                </li>
+                <li
+                  *ngFor="let model of config.models"
+                  (click)="setCategory(model, $event)"
+                  class="category"
+                >
+                  {{ model.displayName }}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
         </ng-container>
       </div>
     </div>
@@ -96,7 +105,6 @@
               [alt]="model.displayName"
             />
             {{ model.displayName }}({{ relevantSuggestions?.length }})
-            <a href="#" class="show-more">Show More</a>
           </h3>
           <ul>
             <li
@@ -143,7 +151,7 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!config.hideRecentSearch">
+    <ng-container *ngIf="!config.hideRecentSearch && recentSearches.length > 0">
       <div class="recent-searches">
         <h3 class="suggestions-heading">Recent Searches</h3>
         <ul>
@@ -166,7 +174,7 @@
                 fill="#9C9C9C"
               />
             </svg>
-            {{ recentSearch.match }}
+            <span>{{ recentSearch.match }}</span>
           </li>
         </ul>
       </div>

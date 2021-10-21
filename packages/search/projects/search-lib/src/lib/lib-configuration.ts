@@ -1,18 +1,31 @@
 import {IDefaultReturnType, IModel} from './types';
 export class Configuration<T = IDefaultReturnType> {
+  /** property to be displayed in the results */
   displayPropertyName: keyof T;
+  /** list of model configuration to be render and categorize search results */
   models: IModel[];
+  /** max number of results (based on limitByType option) */
   limit?: number;
+  /** apply limit on individual models, or on overall results */
   limitByType?: boolean;
+  /** apply a particular ordering on results */
   order?: string[];
+  /** offset for results in case limit is used */
   offset?: number;
+  /** save the search query in recent history */
   saveInRecents?: boolean;
+  /** a placeholder to display in the search box */
   placeholder?: string;
-  categorizeResults?: boolean; //display results in list according to model name
-  hideRecentSearch?: boolean; //set true if user doesn't want recent search functionality
-  hideCategorizeButton?: boolean; //set true to hide the dropdown button which allows to search by category
-  saveInRecentsOnlyOnEnter?: boolean; //save values in recent search only on enter or change in category. If false also saved on typing
-  searchOnlyOnEnter?: boolean; //make search request only when enter key is pressed or category is changed
+  /** categorize results on the basis of models provided */
+  categorizeResults?: boolean;
+  /** hides the recent search list */
+  hideRecentSearch?: boolean;
+  /** hide the category selection button */
+  hideCategorizeButton?: boolean;
+  /** save value in recent search only on enter or change in category, if false, also saved on typing */
+  saveInRecentsOnlyOnEnter?: boolean;
+  /** search only on enter key or when category is changed */
+  searchOnlyOnEnter?: boolean;
 
   constructor(d: Configuration<T>) {
     if (
@@ -32,7 +45,8 @@ export class Configuration<T = IDefaultReturnType> {
     this.models = d.models;
 
     this.placeholder = d.placeholder ?? 'Search';
-    //IRequestParameters - will be given default values before call is made in case undefined/null, otherwise there ! is used on which sonar gives code smell
+    /* IRequestParameters - will be given default values before call is made in case undefined/null,
+    otherwise there ! is used on which sonar gives code smell */
     this.limit = d.limit;
     this.limitByType = d.limitByType;
     this.order = d.order;

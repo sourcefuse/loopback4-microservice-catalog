@@ -1,5 +1,5 @@
 {
-  "name": "search-lib",
+  "name": "@sourceloop/search-client",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/animations": "~12.1.5",
