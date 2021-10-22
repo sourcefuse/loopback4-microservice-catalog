@@ -1,11 +1,11 @@
 ---
 title: Bpmn Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,31 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "workflowVersion": 0,
+  "input": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows/{id}/execute',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "workflowVersion": 0,
@@ -49,7 +73,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/execute',
+fetch('/workflows/{id}/execute',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -63,7 +87,7 @@ fetch('/workflow/{id}/execute',
 
 ```
 
-`POST /workflow/{id}/execute`
+`POST /workflows/{id}/execute`
 
 > Body parameter
 
@@ -98,14 +122,13 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
-const fetch = require('node-fetch');
+```javascript
 
 const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/version/{version}',
+fetch('/workflows/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -119,7 +142,28 @@ fetch('/workflow/{id}/version/{version}',
 
 ```
 
-`DELETE /workflow/{id}/version/{version}`
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows/{id}/version/{version}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /workflows/{id}/version/{version}`
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -145,19 +189,46 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {},
+  "description": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 };
 const headers = {
   'Content-Type':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'PATCH',
   body: JSON.stringify(inputBody),
@@ -171,7 +242,7 @@ fetch('/workflow/{id}',
 
 ```
 
-`PATCH /workflow/{id}`
+`PATCH /workflows/{id}`
 
 > Body parameter
 
@@ -179,7 +250,8 @@ fetch('/workflow/{id}',
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 ```
 
@@ -207,14 +279,13 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
-const fetch = require('node-fetch');
+```javascript
 
 const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'GET',
 
@@ -228,7 +299,28 @@ fetch('/workflow/{id}',
 
 ```
 
-`GET /workflow/{id}`
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /workflows/{id}`
 
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
@@ -253,14 +345,13 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
-const fetch = require('node-fetch');
+```javascript
 
 const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'DELETE',
 
@@ -274,7 +365,28 @@ fetch('/workflow/{id}',
 
 ```
 
-`DELETE /workflow/{id}`
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /workflows/{id}`
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -299,12 +411,40 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {},
+  "description": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -312,7 +452,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -326,7 +466,7 @@ fetch('/workflow',
 
 ```
 
-`POST /workflow`
+`POST /workflows`
 
 > Body parameter
 
@@ -334,7 +474,8 @@ fetch('/workflow',
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 ```
 
@@ -384,15 +525,14 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
-const fetch = require('node-fetch');
+```javascript
 
 const headers = {
   'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'GET',
 
@@ -406,7 +546,29 @@ fetch('/workflow',
 
 ```
 
-`GET /workflow`
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/workflows',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /workflows`
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 
@@ -534,7 +696,8 @@ Workflow
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -548,6 +711,7 @@ NewWorkflow
 |name|string|true|none|none|
 |bpmnFile|string|true|none|none|
 |inputSchema|object|true|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_WorkflowDto">WorkflowDto</h2>
 <!-- backwards compatibility -->
@@ -560,7 +724,8 @@ NewWorkflow
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -574,6 +739,7 @@ WorkflowDto
 |name|string|true|none|none|
 |bpmnFile|string|true|none|none|
 |inputSchema|object|true|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_WorkflowDtoPartial">WorkflowDtoPartial</h2>
 <!-- backwards compatibility -->
@@ -586,7 +752,8 @@ WorkflowDto
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -600,6 +767,7 @@ WorkflowDtoPartial
 |name|string|false|none|none|
 |bpmnFile|string|false|none|none|
 |inputSchema|object|false|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_ExecuteWorkflowDto">ExecuteWorkflowDto</h2>
 <!-- backwards compatibility -->

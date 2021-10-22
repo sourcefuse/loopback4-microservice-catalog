@@ -1,11 +1,11 @@
 ---
 title: In-mail Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,35 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "messageIds": [
+    "string"
+  ],
+  "threadIds": [
+    "string"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/bulk/restore',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "messageIds": [
@@ -108,7 +136,35 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "messageIds": [
+    "string"
+  ],
+  "threadIds": [
+    "string"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/bulk/{storage}/{action}',
+{
+  method: 'DELETE',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "messageIds": [
@@ -180,7 +236,35 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "messageIds": [
+    "string"
+  ],
+  "threadIds": [
+    "string"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/marking/{markType}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "messageIds": [
@@ -248,7 +332,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/{messageId}/attachments/{attachmentId}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -298,7 +402,49 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "path": "string",
+      "thumbnail": "string",
+      "mime": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/{messageId}/attachments',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "attachments": [
@@ -441,7 +587,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/{messageId}/send',
+{
+  method: 'PATCH',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -490,7 +656,93 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "threadId": "string",
+  "groups": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "party": "string",
+      "type": "from",
+      "isImportant": true,
+      "storage": "inbox",
+      "visibility": "new",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string",
+      "threadId": "string"
+    }
+  ],
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "path": "string",
+      "thumbnail": "string",
+      "mime": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "meta": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "key": "string",
+      "value": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "body": "string",
+  "subject": "string",
+  "status": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/{messageId}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "threadId": "string",
@@ -679,7 +931,93 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "threadId": "string",
+  "groups": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "party": "string",
+      "type": "from",
+      "isImportant": true,
+      "storage": "inbox",
+      "visibility": "new",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string",
+      "threadId": "string"
+    }
+  ],
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "path": "string",
+      "thumbnail": "string",
+      "mime": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "meta": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "key": "string",
+      "value": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "body": "string",
+  "subject": "string",
+  "status": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "threadId": "string",
@@ -869,7 +1207,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails/{messageId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -937,7 +1296,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/mails',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -990,7 +1370,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/threads/{threadId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1083,7 +1484,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/threads',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1181,7 +1603,90 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "groups": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "party": "string",
+      "type": "from",
+      "isImportant": true,
+      "storage": "inbox",
+      "visibility": "new",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string",
+      "threadId": "string"
+    }
+  ],
+  "subject": "string",
+  "body": "string",
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "path": "string",
+      "thumbnail": "string",
+      "mime": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "meta": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "key": "string",
+      "value": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "status": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/threads/{threadId}/forward',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "groups": [
@@ -1436,7 +1941,69 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "path": "string",
+      "thumbnail": "string",
+      "mime": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "meta": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "key": "string",
+      "value": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "messageId": "string"
+    }
+  ],
+  "body": "string",
+  "subject": "string",
+  "status": "string",
+  "extId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/threads/{threadId}/mails/{messageId}/replies',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "attachments": [

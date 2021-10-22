@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.3.0 (2021-09-12)
+
+* fix(authentication-service): allow keycloak username to be an auth id as well, if needed ([e831237](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e831237)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(payment-service): adds payment-service feature (#257) ([e571834](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e571834)), closes [#257](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/257)
+* chore(deps): bump path-parse in /services/authentication-service (#301) ([280cf0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/280cf0a)), closes [#301](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/301)
+* chore(deps): bump tar in /services/authentication-service (#308) ([587be75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/587be75)), closes [#308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/308)
+* chore(deps): bump tar in /services/authentication-service (#319) ([2f1724a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2f1724a)), closes [#319](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/319)
+
+
+
+
+
 ## <small>1.2.2 (2021-08-02)</small>
 
 * fix(bpmn-service): fix readme for bpmn service (#278) ([299535b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/299535b)), closes [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211)
