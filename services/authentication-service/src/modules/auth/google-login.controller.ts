@@ -24,7 +24,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-
 import {User} from '../../models';
 import {AuthCodeBindings, CodeWriterFn} from '../../providers';
 import {AuthClientRepository} from '../../repositories';
@@ -42,7 +41,6 @@ const queryGen = (from: 'body' | 'query') => {
 
 export class GoogleLoginController {
   constructor(
-    
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
