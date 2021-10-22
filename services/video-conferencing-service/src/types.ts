@@ -1,9 +1,16 @@
+import {SessionAttendees} from './models/session-attendees.model';
+import {VideoChatSession} from './models/video-chat-session.model';
+import {VonageSessionWebhookPayload} from './providers';
+
 /**
  * @interface ResponseInterface
  * @param message describes sucess/failure or any descriptive message w.r.t any API/function executed
  */
 export interface ResponseInterface {
   message: string;
+}
+export interface IConfig {
+  timeToStart: number;
 }
 
 export interface VideoChatInterface {
@@ -132,4 +139,39 @@ export interface SessionOptions {
   meetingLink: string;
   expireTime?: Date;
   data?: string;
+}
+export interface IArchiveService {
+  getArchive(archiveId: string): void;
+  getArchives(): void;
+  deleteArchive(archiveId: string): Promise<void>;
+  setUploadTarget(body: S3TargetOptions | AzureTargetOptions): Promise<void>;
+}
+
+export interface ISessionService {
+  getMeetingLink(options: MeetingOptions): Promise<string>;
+
+  getMeetingToken(
+    sessionOptions: SessionOptions,
+    meetingLinkId: string,
+  ): Promise<SessionResponse>;
+
+  editMeeting(
+    meetingLinkId: string,
+
+    body: Partial<VideoChatSession>,
+  ): Promise<void>;
+
+  endSession(meetingLinkId: string): Promise<void>;
+
+  checkWebhookPayload(webhookPayload: VonageSessionWebhookPayload): void;
+  processStreamDestroyedEvent(
+    webhookPayload: VonageSessionWebhookPayload,
+    sessionAttendeeDetail: SessionAttendees,
+    updatedAttendee: Partial<SessionAttendees>,
+  ): void;
+
+  getAttendeesList(
+    meetingLinkId: string,
+    active: string,
+  ): Promise<SessionAttendees[]>;
 }

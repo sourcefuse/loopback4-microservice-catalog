@@ -1,0 +1,4 @@
+dist
+*.json
+coverage
+src/assets
