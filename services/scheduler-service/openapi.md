@@ -1,11 +1,11 @@
 ---
 title: Scheduler Service v1.0.0
 language_tabs:
-  - "'javascript": JavaScript
-  - "'javascript--nodejs": Node.JS'
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
 language_clients:
-  - "'javascript": request'
-  - "'javascript--nodejs": ""
+  - javascript: request
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: false
@@ -38,7 +38,28 @@ Base URLs:
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -95,7 +116,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -181,7 +239,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -267,7 +362,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -474,7 +590,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -520,7 +656,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -628,7 +801,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -725,7 +936,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attachments',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1074,7 +1306,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1131,7 +1384,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1219,7 +1510,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1307,7 +1636,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1515,7 +1865,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1561,7 +1931,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1672,7 +2080,46 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -1771,7 +2218,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/attendees',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2120,7 +2588,56 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscription": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/calendarSubscription',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "source": "string",
@@ -2265,7 +2782,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2322,7 +2860,57 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscription": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "id": "string",
@@ -2439,7 +3027,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -2527,7 +3153,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -3007,7 +3654,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -3058,7 +3725,56 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscription": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "source": "string",
@@ -3195,7 +3911,46 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -3294,7 +4049,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -3645,7 +4421,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/subscriptions/me',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -3992,7 +4789,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -4049,7 +4867,48 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -4143,7 +5002,48 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -4237,7 +5137,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -4448,7 +5369,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -4494,7 +5435,48 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -4614,7 +5596,49 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -4719,7 +5743,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/subscriptions',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -5068,7 +6113,56 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/events',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -5213,7 +6307,57 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/events',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -5335,7 +6479,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/events',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -5468,7 +6633,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/events',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -5528,7 +6714,48 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/subscriptions',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -5651,7 +6878,49 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/subscriptions',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -5763,7 +7032,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/subscriptions',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -5880,7 +7170,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/subscriptions',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -5945,7 +7256,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/working-hours',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -6053,7 +7400,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/working-hours',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -6149,7 +7533,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/working-hours',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -6257,7 +7662,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/calendars/{id}/working-hours',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -6317,7 +7743,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -6374,7 +7821,60 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "timeMax": "2019-08-24T14:15:22Z",
+  "timeMin": "2019-08-24T14:15:22Z",
+  "items": [
+    {
+      "id": "string",
+      "bgColor": "string",
+      "description": "string",
+      "endDateTime": "2019-08-24T14:15:22Z",
+      "extId": "string",
+      "extMetadata": {},
+      "fgColor": "string",
+      "iCalUid": "string",
+      "isFullDayEvent": true,
+      "isLocked": true,
+      "link": "string",
+      "location": "string",
+      "meetingLink": "string",
+      "identifier": "string",
+      "startDateTime": "2019-08-24T14:15:22Z",
+      "status": "confirmed",
+      "summary": "string",
+      "timezone": "string",
+      "attendeeId": "string",
+      "isOptional": true,
+      "attendeeIdentifier": "string",
+      "isOrganizer": true,
+      "messages": "string",
+      "eventId": "string"
+    }
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/freeBusy',
+{
+  method: 'GET',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "timeMax": "2019-08-24T14:15:22Z",
@@ -6526,7 +8026,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/hard',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -6572,7 +8092,56 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -6684,7 +8253,56 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -6796,7 +8414,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -7422,7 +9061,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -7470,7 +9129,86 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "fileUrl": "string",
+      "iconLink": "string",
+      "mimeType": "string",
+      "title": "string",
+      "eventId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "attendees": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "identifier": "string",
+      "isOptional": true,
+      "isOrganizer": true,
+      "messages": "string",
+      "responseStatus": "needsAction",
+      "eventId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "bgColor": "string",
@@ -7681,7 +9419,57 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -7802,7 +9590,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -8153,7 +9962,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attachments',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -8264,7 +10110,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attachments',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -8364,7 +10248,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attachments',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -8464,7 +10369,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attachments',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -8526,7 +10452,45 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attendees',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -8640,7 +10604,46 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attendees',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -8742,7 +10745,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attendees',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -8853,7 +10877,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}/attendees',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -8915,7 +10960,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -8972,7 +11038,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -9058,7 +11160,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -9142,7 +11280,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -9215,7 +11374,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -9263,7 +11442,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -9370,7 +11585,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -9465,7 +11717,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/settings',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -9571,7 +11844,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -9628,7 +11922,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -9712,7 +12042,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -9796,7 +12162,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -9867,7 +12254,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -9913,7 +12320,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -10018,7 +12461,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -10113,7 +12593,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/themes',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -10210,7 +12711,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -10267,7 +12789,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -10356,7 +12914,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -10440,7 +13034,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -10648,7 +13263,27 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -10699,7 +13334,43 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -10804,7 +13475,44 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "deleted": true,
@@ -10899,7 +13607,28 @@ HTTPBearer
 
 > Code samples
 
-```'javascript--nodejs
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/working-hours',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {

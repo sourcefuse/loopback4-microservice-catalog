@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.3.0 (2021-09-12)
+
+* feat(sandbox): example of pubnub as a provider in notification service (#279) ([e30a0ed](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30a0ed)), closes [#279](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/279) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#298](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/298) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208)
+* chore(deps): bump path-parse in /sandbox/in-mail-example (#306) ([d27839a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d27839a)), closes [#306](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/306)
+
+
+
+
+
 ## <small>0.2.1 (2021-07-24)</small>
 
 * fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

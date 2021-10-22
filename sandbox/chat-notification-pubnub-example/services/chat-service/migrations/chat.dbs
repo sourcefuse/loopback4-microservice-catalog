@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Chat" id="Project_1931829" database="PostgreSQL" >
+	<schema name="logs" catalogname="alivio-chat-1" >
+		<table name="audit_logs" >
+			<column name="id" type="integer" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="operation_name" type="varchar" length="10" decimal="0" jt="12" mandatory="y" />
+			<column name="operation_time" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>now()</defo>
+			</column>
+			<column name="table_name" type="varchar" length="60" decimal="0" jt="12" mandatory="y" />
+			<column name="log_type" type="varchar" length="100" decimal="0" jt="12" >
+				<defo>&#039;APPLICATION_LOGS&#039;::character varying</defo>
+			</column>
+			<column name="entity_id" type="varchar" decimal="0" jt="12" />
+			<column name="user_id" type="varchar" decimal="0" jt="12" />
+			<column name="before" type="jsonb" decimal="0" jt="2000" />
+			<column name="after" type="jsonb" decimal="0" jt="2000" />
+		</table>
+		<sequence name="audit_logs_id_seq" />
+		<procedure name="audit_trigger" id="Procedure_1473a8d" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION logs.audit_trigger()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+  DECLARE
+    USER_ID VARCHAR;
+    ENTITY_ID VARCHAR;
+BEGIN
+IF TG_OP = 'INSERT'
+THEN
+USER_ID := to_json(NEW)->'created_by';
+ENTITY_ID := to_json(NEW)->'id';
+INSERT INTO logs.audit_logs (
+  operation_name,
+  table_name,
+  log_type,
+  entity_id,
+  user_id,
+  after
+  )
+VALUES (
+  TG_OP,
+  TG_TABLE_NAME,
+  TG_ARGV[0],
+  ENTITY_ID,
+  USER_ID,
+  to_jsonb(NEW)
+  );
+RETURN NEW;
+ELSIF TG_OP = 'UPDATE'
+THEN
+USER_ID := to_json(NEW)->'modified_by';
+ENTITY_ID := to_json(NEW)->'id';
+-- IF NEW != OLD THEN
+ INSERT INTO logs.audit_logs (
+   operation_name,
+   table_name,
+   log_type,
+   entity_id,
+   user_id,
+   before,
+   after
+   )
+VALUES (
+  TG_OP,
+  TG_TABLE_NAME,
+  TG_ARGV[0],
+  ENTITY_ID,
+  USER_ID,
+  to_jsonb(OLD),
+  to_jsonb(NEW)
+  );
+-- END IF;
+ RETURN NEW;
+ELSIF TG_OP = 'DELETE'
+THEN
+USER_ID := to_json(OLD)->'modified_by';
+ENTITY_ID := to_json(OLD)->'id';
+INSERT INTO logs.audit_logs (
+  operation_name,
+  table_name,
+  log_type,
+  entity_id,
+  user_id,
+  before)
+VALUES (
+  TG_OP,
+  TG_TABLE_NAME,
+  TG_ARGV[0],
+  ENTITY_ID,
+  USER_ID,
+  to_jsonb(OLD)
+);
+RETURN OLD;
+END IF;
+END;
+$function$
+;]]></string>
+		</procedure>
+	</schema>
+	<schema name="main" >
+		<table name="message_recipients" >
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>(md5(((random())::text || (clock_timestamp())::text)))::uuid</defo>
+			</column>
+			<column name="channel_id" type="uuid" length="100" jt="1111" mandatory="y" >
+				<comment><![CDATA[the id of the channel entity(task)]]></comment>
+			</column>
+			<column name="created_by" type="uuid" jt="1111" />
+			<column name="created_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" length="1" decimal="0" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="deleted_by" type="uuid" jt="1111" />
+			<column name="deleted_on" type="timestamptz" jt="93" >
+				<defo>current_timestamp</defo>
+			</column>
+			<column name="forwarded_by" type="uuid" jt="1111" >
+				<comment><![CDATA[The user id of the person who forwardes the message]]></comment>
+			</column>
+			<column name="is_favorite" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="is_forwarded" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="is_read" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="message_id" type="uuid" jt="1111" mandatory="y" />
+			<column name="modified_by" type="uuid" jt="1111" />
+			<column name="modified_on" type="timestamptz" length="35" decimal="6" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="recipient_id" type="uuid" jt="1111" mandatory="y" >
+				<comment><![CDATA[user id of the recipient]]></comment>
+			</column>
+			<index name="pk_message_recipients_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_message_recipients_messages" to_schema="main" to_table="messages" >
+				<fk_column name="message_id" pk="id" />
+			</fk>
+		</table>
+		<table name="messages" >
+			<column name="id" type="uuid" jt="1111" mandatory="y" >
+				<defo>(md5(((random())::text || (clock_timestamp())::text)))::uuid</defo>
+			</column>
+			<column name="body" type="text" length="1000" jt="12" mandatory="y" >
+				<comment><![CDATA[The message body]]></comment>
+			</column>
+			<column name="channel_id" type="uuid" length="100" jt="1111" mandatory="y" >
+				<comment><![CDATA[The id of the type of channel(for now task)]]></comment>
+			</column>
+			<column name="channel_type" type="varchar" length="200" jt="12" mandatory="y" >
+				<comment><![CDATA[The type of channel for example task]]></comment>
+			</column>
+			<column name="created_by" type="uuid" jt="1111" />
+			<column name="created_on" type="timestamptz" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="deleted" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="deleted_by" type="uuid" jt="1111" />
+			<column name="deleted_on" type="timestamptz" jt="93" mandatory="y" >
+				<defo>current_timestamp</defo>
+			</column>
+			<column name="modified_by" type="uuid" jt="1111" />
+			<column name="modified_on" type="timestamptz" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="status" type="integer" length="1" jt="4" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="subject" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[subject of the message]]></comment>
+			</column>
+			<column name="to_user_id" type="uuid" jt="1111" >
+				<comment><![CDATA[For P2P message transfer, this would be the id of the user to whom message is sent]]></comment>
+			</column>
+			<column name="parent_message_id" type="uuid" jt="1111" >
+				<comment><![CDATA[id of the message at which this reply exists]]></comment>
+			</column>
+			<index name="pk_messages_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_messages_messages" to_schema="main" to_table="messages" >
+				<fk_column name="parent_message_id" pk="id" />
+			</fk>
+		</table>
+		<sequence name="categories_id_seq" />
+		<trigger name="mdt_message_recipients" table="message_recipients" id="Trigger_2da35e2" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_message_recipients BEFORE UPDATE ON main.message_recipients FOR EACH ROW EXECUTE PROCEDURE moddatetime('modified_on');]]></string>
+		</trigger>
+		<trigger name="mdt_messages" table="messages" id="Trigger_61dcc5" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mdt_messages BEFORE UPDATE ON main.messages FOR EACH ROW EXECUTE PROCEDURE moddatetime('modified_on');]]></string>
+		</trigger>
+		<trigger name="message_recipients_audit_trigger" table="message_recipients" id="Trigger_56c3896" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER message_recipients_audit_trigger AFTER INSERT OR DELETE OR UPDATE ON main.message_recipients FOR EACH ROW EXECUTE PROCEDURE logs.audit_trigger('Message_Recipients_Logs');]]></string>
+		</trigger>
+		<trigger name="messages_audit_trigger" table="messages" id="Trigger_ad0f0b" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER messages_audit_trigger AFTER INSERT OR DELETE OR UPDATE ON main.messages FOR EACH ROW EXECUTE PROCEDURE logs.audit_trigger('Message_Logs');]]></string>
+		</trigger>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.2.12.jar" driver_desc="Standard" host="localhost" port="5432" instance="postgres" user="postgres" passwd="cG9zdGdyZXN0ZXN0" />
+	<layout name="Default Layout" id="Layout_24248e2" show_column_type="y" show_relation="columns" >
+		<entity schema="alivio-chat-1.logs" name="audit_logs" color="00FF00" x="960" y="96" />
+		<entity schema="main" name="message_recipients" color="ECF0F7" x="368" y="80" />
+		<entity schema="main" name="messages" color="ECF0F7" x="48" y="80" />
+		<group name="Logs" color="00FF00" >
+			<entity schema="alivio-chat-1.logs" name="audit_logs" />
+		</group>
+		<group name="Messages" color="ECF0F7" >
+			<entity schema="main" name="messages" />
+			<entity schema="main" name="message_recipients" />
+		</group>
+		<script name="SQL_Editor" id="Editor_5b63291" language="SQL" >
+			<string><![CDATA[CREATE TABLE main.message_files (
+    id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
+    file_key varchar,
+    message_id uuid,
+    created_by uuid,
+    created_on timestamptz,
+    modified_by uuid,
+    modified_on timestamptz,
+    file_group_id uuid,
+    deleted boolean DEFAULT false,
+    meta_data jsonb
+);
+
+ALTER TABLE main.message_files
+ADD CONSTRAINT pk_message_files_id PRIMARY KEY (id);
+
+ALTER TABLE main.message_files
+ADD CONSTRAINT fk_message_files_messages FOREIGN KEY (message_id) REFERENCES main.messages(id);]]></string>
+		</script>
+		<script name="message_recipients_002" id="Editor_55a78b8" language="SQL" >
+			<string><![CDATA[CREATE  TABLE main.message_recipients ( 
+	id                   uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL ,
+	channel_id           uuid  NOT NULL ,
+	created_by           uuid   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	deleted              bool DEFAULT false NOT NULL ,
+	deleted_by           uuid   ,
+	deleted_on           timestamptz DEFAULT current_timestamp  ,
+	forwarded_by         uuid   ,
+	is_favorite          bool DEFAULT false NOT NULL ,
+	is_forwarded         bool DEFAULT false NOT NULL ,
+	is_read              bool DEFAULT false NOT NULL ,
+	message_id           uuid  NOT NULL ,
+	modified_by          uuid   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	recipient_id         uuid  NOT NULL ,
+	CONSTRAINT pk_message_recipients_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON COLUMN main.message_recipients.channel_id IS 'the id of the channel entity(task)';
+
+COMMENT ON COLUMN main.message_recipients.forwarded_by IS 'The user id of the person who forwardes the message';
+
+COMMENT ON COLUMN main.message_recipients.recipient_id IS 'user id of the recipient';
+
+ALTER TABLE main.message_recipients ADD CONSTRAINT fk_message_recipients_messages FOREIGN KEY ( message_id ) REFERENCES main.messages( id );]]></string>
+		</script>
+		<script name="messages_002" id="Editor_4df3a27" language="SQL" >
+			<string><![CDATA[CREATE  TABLE main.messages ( 
+	id                   uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL ,
+	body                 text  NOT NULL ,
+	channel_id           uuid  NOT NULL ,
+	channel_type         varchar(200)  NOT NULL ,
+	created_by           uuid   ,
+	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	deleted              bool DEFAULT false NOT NULL ,
+	deleted_by           uuid   ,
+	deleted_on           timestamptz DEFAULT current_timestamp NOT NULL ,
+	modified_by          uuid   ,
+	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	status               integer DEFAULT 0 NOT NULL ,
+	subject              varchar(200)   ,
+	to_user_id           uuid   ,
+	parent_message_id    uuid   ,
+	CONSTRAINT pk_messages_id PRIMARY KEY ( id )
+ );
+
+COMMENT ON COLUMN main.messages.body IS 'The message body';
+
+COMMENT ON COLUMN main.messages.channel_id IS 'The id of the type of channel(for now task)';
+
+COMMENT ON COLUMN main.messages.channel_type IS 'The type of channel for example task';
+
+COMMENT ON COLUMN main.messages.subject IS 'subject of the message';
+
+COMMENT ON COLUMN main.messages.to_user_id IS 'For P2P message transfer, this would be the id of the user to whom message is sent';
+
+COMMENT ON COLUMN main.messages.parent_message_id IS 'id of the message at which this reply exists';
+
+ALTER TABLE main.messages ADD CONSTRAINT fk_messages_messages FOREIGN KEY ( parent_message_id ) REFERENCES main.messages( id );]]></string>
+		</script>
+	</layout>
+</project>

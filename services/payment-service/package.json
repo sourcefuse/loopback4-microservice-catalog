@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -63,12 +63,12 @@
     "@loopback/core": "2.16.0",
     "@loopback/repository": "^3.6.0",
     "@loopback/rest": "^9.3.0",
-    "@sourceloop/core": "^2.0.1",
     "@loopback/rest-explorer": "^3.2.1",
     "@loopback/service-proxy": "^3.1.1",
-    "handlebars": "^4.7.7",
+    "@sourceloop/core": "^3.0.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
+    "handlebars": "^4.7.7",
     "razorpay": "^2.0.6",
     "stripe": "^8.150.0",
     "tslib": "^2.0.0",
@@ -84,9 +84,9 @@
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^7.25.0",
+    "source-map-support": "^0.5.19",
     "typescript": "~4.2.4",
-    "widdershins": "^4.0.1",
-    "source-map-support": "^0.5.19"
+    "widdershins": "^4.0.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
