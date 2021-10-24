@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.0 (2021-10-24)
+
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(bpmn-service): add unit and acceptance tests (#289) ([320e513](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e513)), closes [#289](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/289) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump i from 0.3.6 to 0.3.7 in /services/scheduler-service (#351) ([9fb40e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9fb40e3)), closes [#351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/351)
+* chore(deps): bump passport-oauth2 in /services/scheduler-service (#370) ([771f4da](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/771f4da)), closes [#370](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/370)
+
+
+
+
+
 ## 2.0.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2021-10-24)
+
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump i in /sandbox/auth-multitenant-example (#352) ([1485d16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1485d16)), closes [#352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/352)
+* chore(deps): bump passport-oauth2 in /sandbox/auth-multitenant-example (#371) ([21c402b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/21c402b)), closes [#371](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/371)
+
+
+
+
+
 ## <small>2.1.3 (2021-09-12)</small>
 
 * chore(deps): bump path-parse in /sandbox/auth-multitenant-example (#304) ([64f94af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/64f94af)), closes [#304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/304)
