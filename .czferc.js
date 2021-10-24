@@ -38,6 +38,7 @@ const scopes = [
     { name: 'bpmn-service' },
     { name: 'search-service' },
     { name: 'sandbox' },
+    { name: 'search-client'},
     {name: 'chat-service'},
 ]
 

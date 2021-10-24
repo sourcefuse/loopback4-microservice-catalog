@@ -1,0 +1,183 @@
+<div
+  class="search-container"
+  [ngClass]="suggestionsDisplay ? 'search-focus-in' : 'search-focus-out'"
+>
+  <form>
+    <div class="flex-box align-items-center justify-content-between">
+      <div class="search-column-left">
+        <div class="flex-box align-items-center justify-content-between">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M2 6.5C2 8.981 4.0185 11 6.5 11C8.981 11 11 8.981 11 6.5C11 4.0185 8.981 2 6.5 2C4.0185 2 2 4.0185 2 6.5ZM1 6.5C1 3.4625 3.4625 1 6.5 1C9.5375 1 12 3.4625 12 6.5C12 9.5375 9.5375 12 6.5 12C3.4625 12 1 9.5375 1 6.5ZM10.7236 11.4306C10.9771 11.2131 11.2131 10.9771 11.4306 10.7236L15.0001 14.2926L14.2931 15.0001L10.7236 11.4306Z"
+              fill="#9C9C9C"
+            />
+          </svg>
+          <input
+            class="search-input"
+            autocomplete="off"
+            type="text"
+            [placeholder]="config.placeholder"
+            #searchInput
+            name="searchInput"
+            (focus)="showSuggestions()"
+            (blur)="hideSuggestions()"
+            [(ngModel)]="searchBoxInput"
+            (keyup)="hitSearchApi($event)"
+            placeholder="Search"
+            (ngModelChange)="onChange(this.searchBoxInput)"
+            [disabled]="disabled"
+          />
+        </div>
+      </div>
+      <div class="search-column-right">
+        <button
+          *ngIf="searchBoxInput"
+          type="button"
+          class="clear-button"
+          id="clear-button"
+          (click)="resetInput()"
+        >
+          Clear x
+        </button>
+        <ng-container *ngIf="!config.hideCategorizeButton">
+          <button class="category-button" (click)="showCategory()">
+            {{ category !== 'All' ? category.displayName : category }}
+            <svg height="14" viewBox="0 0 14 14" width="14">
+              <polygon
+                [attr.points]="
+                  categoryDisplay
+                    ? '0,14 7,6, 14,14, 7,6, 0,14'
+                    : '0,6 7,14, 14,6, 7,14, 0,6'
+                "
+                style="stroke: 'inherit'; fill: 'inherit'"
+              ></polygon>
+            </svg>
+          </button>
+          <ng-container *ngIf="categoryDisplay">
+            <div class="category-overlay" (click)="hideCategory()"></div>
+            <div class="category-popup">
+              <ul>
+                <li (click)="setCategory('All', $event)" class="category">
+                  All
+                </li>
+                <li
+                  *ngFor="let model of config.models"
+                  (click)="setCategory(model, $event)"
+                  class="category"
+                >
+                  {{ model.displayName }}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="suggestionsDisplay" class="search-popup">
+    <ng-container *ngIf="config.categorizeResults">
+      <div class="search-item-info" *ngIf="category === 'All'">
+        You are searching on {{ category }}
+      </div>
+      <div class="search-item-info" *ngIf="category !== 'All'">
+        You are searching on {{ category.displayName }}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="searchBoxInput">
+      <ng-container *ngIf="config.categorizeResults">
+        <div class="search-result" *ngFor="let model of config.models">
+          <h3
+            *ngIf="getSuggestionsFromModelName(model.name)"
+            class="suggestions-heading"
+          >
+            <img
+              *ngIf="model.imageUrl"
+              [src]="model.imageUrl"
+              [alt]="model.displayName"
+            />
+            {{ model.displayName }}({{ relevantSuggestions?.length }})
+          </h3>
+          <ul>
+            <li
+              *ngFor="let suggestion of relevantSuggestions"
+              (mousedown)="populateValue(suggestion, $event)"
+              class="suggestions"
+              [innerHTML]="
+                boldString(
+                  suggestion[config.displayPropertyName],
+                  searchBoxInput
+                )
+              "
+            ></li>
+          </ul>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!config.categorizeResults">
+        <div class="search-result">
+          <ul>
+            <li
+              *ngFor="let suggestion of suggestions"
+              (mousedown)="populateValue(suggestion, $event)"
+            >
+              <!--Need to call fetchModelImageUrlFromSuggestion as each suggestion can come from different model-->
+              <img
+                *ngIf="fetchModelImageUrlFromSuggestion(suggestion)"
+                class="suggestions-categorize-false"
+                [src]="fetchModelImageUrlFromSuggestion(suggestion)"
+                style="margin-right: 5px"
+                alt="Img"
+              />
+              <p
+                [innerHTML]="
+                  boldString(
+                    suggestion[config.displayPropertyName],
+                    searchBoxInput
+                  )
+                "
+                style="display: inline"
+              ></p>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!config.hideRecentSearch && recentSearches.length > 0">
+      <div class="recent-searches">
+        <h3 class="suggestions-heading">Recent Searches</h3>
+        <ul>
+          <li
+            *ngFor="let recentSearch of recentSearches"
+            class="suggestions"
+            (mousedown)="populateValueRecentSearch(recentSearch, $event)"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M2 6.5C2 8.981 4.0185 11 6.5 11C8.981 11 11 8.981 11 6.5C11 4.0185 8.981 2 6.5 2C4.0185 2 2 4.0185 2 6.5ZM1 6.5C1 3.4625 3.4625 1 6.5 1C9.5375 1 12 3.4625 12 6.5C12 9.5375 9.5375 12 6.5 12C3.4625 12 1 9.5375 1 6.5ZM10.7236 11.4306C10.9771 11.2131 11.2131 10.9771 11.4306 10.7236L15.0001 14.2926L14.2931 15.0001L10.7236 11.4306Z"
+                fill="#9C9C9C"
+              />
+            </svg>
+            <span>{{ recentSearch.match }}</span>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+</div>
