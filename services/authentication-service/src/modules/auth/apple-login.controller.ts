@@ -41,8 +41,6 @@ const queryGen = (from: 'body' | 'query') => {
 
 export class AppleLoginController {
   constructor(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly user: AuthUser | undefined,
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
@@ -114,10 +112,12 @@ export class AppleLoginController {
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
     appleCodeWriter: CodeWriterFn,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    user: AuthUser | undefined,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
 
-    if (!clientId || !this.user) {
+    if (!clientId || !user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     const client = await this.authClientRepository.findOne({
@@ -131,7 +131,7 @@ export class AppleLoginController {
     try {
       const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
         clientId,
-        user: this.user,
+        user: user,
       };
       const token = await appleCodeWriter(
         jwt.sign(codePayload, client.secret, {
@@ -141,7 +141,7 @@ export class AppleLoginController {
           algorithm: 'HS256',
         }),
       );
-      const role = this.user.role;
+      const role = user.role;
       response.redirect(
         `${process.env.WEBAPP_URL ?? ''}${
           client.redirectUrl
