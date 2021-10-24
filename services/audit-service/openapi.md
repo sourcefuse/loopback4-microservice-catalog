@@ -83,10 +83,6 @@ fetch('/audit-logs/count',
 
 `GET /audit-logs/count`
 
-| Permissions |
-| ------- |
-| ViewAudit   |
-
 <h3 id="auditcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -164,10 +160,6 @@ fetch('/audit-logs/{id}',
 ```
 
 `GET /audit-logs/{id}`
-
-| Permissions |
-| ------- |
-| ViewAudit   |
 
 <h3 id="auditcontroller.findbyid-parameters">Parameters</h3>
 
@@ -279,10 +271,6 @@ fetch('/audit-logs',
 
 `POST /audit-logs`
 
-| Permissions |
-| ------- |
-| CreateAudit   |
-
 > Body parameter
 
 ```json
@@ -385,10 +373,6 @@ fetch('/audit-logs',
 ```
 
 `GET /audit-logs`
-
-| Permissions |
-| ------- |
-| ViewAudit   |
 
 <h3 id="auditcontroller.find-parameters">Parameters</h3>
 

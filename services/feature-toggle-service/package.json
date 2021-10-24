@@ -41,10 +41,11 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/chat-service"
   },
-  "author": " <yesha.mavani@sourcefuse.com>",
-  "license": "",
+  "author": "Sourcefuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
@@ -62,6 +63,8 @@
     "@loopback/rest-explorer": "^3.3.1",
     "@loopback/service-proxy": "^3.2.1",
     "@sourceloop/core": "^2.0.1",
+    "dotenv": "^10.0.0",
+    "dotenv-extended": "^2.9.0",
     "lodash": "^4.17.21",
     "loopback4-authentication": "^4.6.0",
     "loopback4-authorization": "^3.3.0",
@@ -78,5 +81,9 @@
     "source-map-support": "^0.5.19",
     "symlink-resolver": "^0.2.1",
     "typescript": "~4.3.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

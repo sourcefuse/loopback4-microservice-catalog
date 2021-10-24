@@ -31,7 +31,6 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
         "parameters": [
           {
             "name": "where",
@@ -75,7 +74,6 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
         "parameters": [
           {
             "name": "id",
@@ -124,7 +122,6 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateAudit   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -162,7 +159,6 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
         "parameters": [
           {
             "name": "filter",

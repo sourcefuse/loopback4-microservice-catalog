@@ -175,7 +175,7 @@ export class KeycloakLoginController {
     try {
       const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
         clientId,
-        user:user,
+        user: user,
       };
       const token = await keycloackCodeWriter(
         jwt.sign(codePayload, client.secret, {
