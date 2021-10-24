@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "2.3.0",
+  "version": "2.5.0",
   "description": "A microservice for audit logging",
   "keywords": [
     "loopback-extension",
@@ -37,8 +37,8 @@
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
     "directory": "services/audit-service"
   },
-  "author": "",
-  "license": "",
+  "author": "Sourcefuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
