@@ -7,22 +7,23 @@
   width: inherit;
 
   &:hover {
-    outline: 2px solid #91263b;
+    border: 2px solid #91263b;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 
     &.search-focus-in {
-      outline: none;
+      border: none;
     }
   }
 
   &.search-focus-in {
-    outline: none;
+    border: none;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
     background-color: #fff;
     border-bottom: 0;
     border-radius: 4px 4px 0 0;
 
     &:hover {
-      outline: 0;
+      border: 0;
     }
   }
   .flex-box {
@@ -137,7 +138,6 @@
         line-height: 1.5;
         color: #333;
         user-select: none;
-        
 
         &.category {
           // display: flex; causes words to join if bold
@@ -146,7 +146,7 @@
           cursor: pointer;
           padding: 0 16px;
           border-bottom: 1px solid #f2f2f2;
-          font-family: "Rakuten Sans", sans-serif;
+          font-family: 'Rakuten Sans', sans-serif;
           font-size: 12.8px;
           line-height: 32px;
           letter-spacing: 0px;
@@ -174,9 +174,9 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: absolute;
-    top: calc(100% - 2px);
-    left: -1px;
-    right: -1px;
+    top: calc(100% - 4px);
+    left: 0px;
+    right: 0px;
     z-index: 9999;
     background-color: #fff;
     box-shadow: 0 5px 4px #0003;
@@ -195,6 +195,7 @@
       text-align: center;
       font-size: 12px;
       margin-bottom: 15px;
+      padding-top: 12px;
     }
     ul {
       padding: 0;
