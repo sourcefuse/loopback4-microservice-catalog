@@ -14,7 +14,7 @@ import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
-import { OperationSpecEnhancer } from './enhancer/operation-spec-enhancer';
+import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import * as swstats from 'swagger-stats';
 
 export class CoreComponent implements Component {

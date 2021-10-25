@@ -7,4 +7,3 @@ export namespace AuditServiceBindings {
     `${BINDING_PREFIX}.audit.config`,
   );
 }
-
