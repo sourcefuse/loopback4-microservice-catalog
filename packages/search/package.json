@@ -10,7 +10,8 @@
     "lint": "ng lint && npm run prettier:check",
     "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\" \"**/*.html\"",
     "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write"
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "prepublishOnly": "ng-packagr -p projects/search-lib/package.json"
   },
   "repository": {
     "type": "git",

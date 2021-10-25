@@ -50,7 +50,7 @@ import { SearchService } from './search.service';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: SEARCH_SERVICE_TOKEN, useExisting: SearchService }], //Add your service here
+  providers: [{ provide: SEARCH_SERVICE_TOKEN, useClass: SearchService }], //Add your service here
   bootstrap: [AppComponent]
 })
 export class AppModule { }
@@ -58,30 +58,17 @@ export class AppModule { }
 
 ### Search Service
 
-Create a new service using the Angular CLI. This service should implement ISearchService. You will have to implement searchApiRequest method which should return Observable&lt;Array&lt;T&gt;&gt;. Here T refers to the type of data returned from the search microservice. If you are using the default settings for the search microservice you can use IDefaultReturnType interface, else you need to pass your own return type interface.
-The type of data recieved by the searchApiRequest method is IRequestParameters
+Create a new service using the Angular CLI. This service should implement ISearchService. You will have to implement searchApiRequest method which should return Observable&lt;T[]&gt;. Here T refers to the type of data returned from the search microservice. If you are using the default settings for the search microservice you can use IDefaultReturnType interface, else you need to pass your own return type interface.
+searchApiRequest receives two parameters - requestParameters: ISearchQuery, saveInRecents: boolean,
 
 ```
-interface IRequestParameters {
-
-    match: string,
-    source: 'All' | IModel,
-    limit: number,
-    limitByType: boolean,
-    order: string,
-    offset: number,
-    saveInRecents: boolean
-
-}
-```
-
-Source is of type IModel in case the user wants to search a particular category.
-
-```
-interface IModel {
-    name: string,
-    displayName: string
-    imageUrl?: string
+export interface ISearchQuery {
+  match: string;
+  limit: number | null;
+  order: string | null;
+  limitByType: boolean | null;
+  offset: number | null;
+  sources: string[] | null;
 }
 ```
 
@@ -144,16 +131,25 @@ export class XComponent implements OnInit {
 Now in your template you can add the search library component selector like
 
 ```
-<sourceloop-search [config]="config"></sourceloop-search>
+<sourceloop-search [config]="config" [(ngModel)]="value"></sourceloop-search>
 ```
 
-You can access the value in the search input using [(ngModel)]. You can also listen to clicked and searched events. Clicked is a MouseEvent emitted when user clicks one of the suggested results (including recent search sugestions). Searched event is emitted when request is made to the api when user types, changes catagory or clicks suggestion. Searched event is also fired in case of calls to recent search api. Searched event will always be emitted whenever user clicks suggestion. This is done because the user might want to search again using the dropdown, so relevant suggestions need to be present. The type of value emitted by search event can be
-
-- In case of recent search Array of recent Search request result is emitted
-- If api is called when user types event of type KeyboardEvent is emitted
-- If api is called when user changes category event of type change is emitted
-- If api is called when user clicks suggestion, MouseEvent is emitted
+You can access the value in the search input using [(ngModel)]. You can also listen to clicked and searched events.
+Clicked event is of type ItemClickedEvent. It is emitted when user clicks one of the suggested results (including recent search sugestions). Searched event is emitted when request is made to the api when user types and relevant suggestinons are displayed. It is of type RecentSearchEvent.
 
 ```
-<sourceloop-search [config]="config" [(ngModel)]="value" (clicked)="logMouseEvent($event)" (searched)="logEventOrIRecentSearchResultArray($event)" disabled="false"></sourceloop-search>
+type ItemClickedEvent<T> = {
+  event: MouseEvent;
+  item: T;
+};
+
+type RecentSearchEvent = {
+  event: KeyboardEvent | Event;
+  keyword: string;
+  category: 'All' | IModel;
+};
+```
+
+```
+<sourceloop-search [config]="config" [(ngModel)]="value" (clicked)="logItemClickedEvent($event)" (searched)="logRecentSearchEvent($event)" disabled="false"></sourceloop-search>
 ```
