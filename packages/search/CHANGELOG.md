@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.2 (2021-10-25)</small>
+
+* docs(search-client): docs updated for versioning ([5192106](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5192106)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.1.1 (2021-10-25)</small>
 
 * chore(core): fix package json ([094b79b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/094b79b)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
