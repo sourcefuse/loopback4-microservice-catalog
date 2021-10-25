@@ -41,6 +41,10 @@
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
+  "files": [
+    "README.md",
+    "dist"
+  ],
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.11",
     "@angular/cli": "~11.2.2",
@@ -64,6 +68,7 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public"
+    "access": "public",
+    "directory": "dist"
   }
 }

@@ -21,6 +21,6 @@
     "lib": {
       "entryFile": "src/public-api.ts"
     },
-    "dest": "../../dist/user-onboarding-lib"
+    "dest": "../../dist"
   }
 }

@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -13,8 +13,7 @@
     "downlevelIteration": true,
     "paths": {
       "search-lib": [
-        "dist/search-lib/search-lib",
-        "dist/search-lib"
+        "dist"
       ]
     },
     "experimentalDecorators": true,
