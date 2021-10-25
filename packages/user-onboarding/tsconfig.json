@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -18,8 +18,7 @@
     ],
     "paths": {
       "user-onboarding-lib": [
-        "dist/user-onboarding-lib/user-onboarding-lib",
-        "dist/user-onboarding-lib"
+        "dist"
       ]
     }
   },

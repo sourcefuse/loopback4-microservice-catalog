@@ -19,7 +19,7 @@ npm i @sourceloop/search-service
 
  - Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
-- Install the audit service
+- Install the search service
 `npm i @sourceloop/search-service`
 - Bind the configuration for the service to the `SearchServiceBindings.Config` key -
    ``` typescript
@@ -45,9 +45,9 @@ npm i @sourceloop/search-service
    ```
 - Add the `SearchService` to your Loopback4 Application (in `application.ts`).
 	``` typescript
-  // import the AuditServiceComponent
+  // import the SearchServiceComponent
   import {SearchServiceComponent} from '@sourceloop/search-service';
-	// add Component for AuditServiceComponent
+	// add Component for SearchServiceComponent
 	this.component(SearchServiceComponent);
 	```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `SearchServiceBindings.DATABASE_NAME`. You can see an example datasource [here](#setting-up-a-datasource). This service supports MySQL and PostgreSQL based datasources as of now.
@@ -106,13 +106,13 @@ const  config = {
   
 
 @lifeCycleObserver('datasource')
-export  class  AuditDbDataSource  extends  juggler.DataSource implements  LifeCycleObserver {
+export  class  SearchDbDataSource  extends  juggler.DataSource implements  LifeCycleObserver {
   static  dataSourceName = SearchServiceBindings.DATABASE_NAME;
   static  readonly  defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.audit' otherwise you might get Errors
-    @inject('datasources.config.audit', {optional:  true})
+    // You need to set datasource configuration name as 'datasources.config.search' otherwise you might get Errors
+    @inject('datasources.config.search', {optional:  true})
     dsConfig: object = config,
   ) {
       super(dsConfig);
