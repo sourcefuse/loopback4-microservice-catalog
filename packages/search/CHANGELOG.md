@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.5 (2021-10-25)</small>
+
+* fix(search-client): change styling - add shadow to search container (#389) ([284ec32](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/284ec32)), closes [#389](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/389)
+
+
+
+
+
 ## <small>1.1.4 (2021-10-25)</small>
 
 * docs(search-client): minor change to trigger release ([0bda7df](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0bda7df)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
