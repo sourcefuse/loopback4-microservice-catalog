@@ -6,19 +6,19 @@ An Angular module that exports a component that can enable users to search over 
 
 First step is to clone the search folder inside the packages folder. Then navigate inside the search folder and run
 
-```
+```sh
 ng build
 ```
 
 This will create a dist folder then navigate inside the dist folder and then to search-lib and run
 
-```
+```sh
 npm pack
 ```
 
 This will create a Tar Package which can be installed by running the npm install command as follows
 
-```
+```sh
 npm install path-of-tar/name-of-tar.tgz
 ```
 
@@ -27,33 +27,30 @@ npm install path-of-tar/name-of-tar.tgz
 Create a new Application using Angular CLI and import the SearchLibModule and add it to the imports array of the module. Also create a new service that implements the ISearchService interface exported by the search library. This service will be used by the exported component to make API calls whenever needed. You will have to update the providers section of your module with { provide: SEARCH_SERVICE_TOKEN, useExisting: Your_Service_Name }
 Your module will then look something like this
 
-```
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+```ts
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
-import { XComponent } from './x/x.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {XComponent} from './x/x.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
-import { SearchLibModule, SEARCH_SERVICE_TOKEN} from 'search-lib';
-import { SearchService } from './search.service';
+import {SearchLibModule, SEARCH_SERVICE_TOKEN} from 'search-lib';
+import {SearchService} from './search.service';
 @NgModule({
-  declarations: [
-    AppComponent,
-    XComponent
-  ],
+  declarations: [AppComponent, XComponent],
   imports: [
     BrowserModule,
     SearchLibModule, //import SearchLibModule
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [{ provide: SEARCH_SERVICE_TOKEN, useClass: SearchService }], //Add your service here
-  bootstrap: [AppComponent]
+  providers: [{provide: SEARCH_SERVICE_TOKEN, useClass: SearchService}], //Add your service here
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 ### Search Service
@@ -61,7 +58,7 @@ export class AppModule { }
 Create a new service using the Angular CLI. This service should implement ISearchService. You will have to implement searchApiRequest method which should return Observable&lt;T[]&gt;. Here T refers to the type of data returned from the search microservice. If you are using the default settings for the search microservice you can use IDefaultReturnType interface, else you need to pass your own return type interface.
 searchApiRequest receives two parameters - requestParameters: ISearchQuery, saveInRecents: boolean,
 
-```
+```ts
 export interface ISearchQuery {
   match: string;
   limit: number | null;
@@ -97,47 +94,42 @@ Apart from these there are some optional properties that you can give:
 
 Your component might look something like
 
-```
+```ts
 export class XComponent implements OnInit {
-
-  config: Configuration<IDefaultReturnType>
+  config: Configuration<IDefaultReturnType>;
 
   constructor(private fb: FormBuilder) {
-
     this.config = new Configuration<IDefaultReturnType>({
       displayPropertyName: 'name',
       models: [
         {
-          name: "ToDo",
-          displayName: "List",
-
+          name: 'ToDo',
+          displayName: 'List',
         },
         {
-          name: "User",
-          displayName: "Users",
-          imageUrl: 'https://picsum.photos/id/1/50'
-
+          name: 'User',
+          displayName: 'Users',
+          imageUrl: 'https://picsum.photos/id/1/50',
         },
       ],
-      order: [`name ASC`, `description DESC`]
-
-    })
+      order: [`name ASC`, `description DESC`],
+    });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }
 ```
 
 Now in your template you can add the search library component selector like
 
-```
+```ts
 <sourceloop-search [config]="config" [(ngModel)]="value"></sourceloop-search>
 ```
 
 You can access the value in the search input using [(ngModel)]. You can also listen to clicked and searched events.
 Clicked event is of type ItemClickedEvent. It is emitted when user clicks one of the suggested results (including recent search sugestions). Searched event is emitted when request is made to the api when user types and relevant suggestinons are displayed. It is of type RecentSearchEvent.
 
-```
+```ts
 type ItemClickedEvent<T> = {
   event: MouseEvent;
   item: T;
@@ -150,6 +142,12 @@ type RecentSearchEvent = {
 };
 ```
 
-```
-<sourceloop-search [config]="config" [(ngModel)]="value" (clicked)="logItemClickedEvent($event)" (searched)="logRecentSearchEvent($event)" disabled="false"></sourceloop-search>
+```html
+<sourceloop-search
+  [config]="config"
+  [(ngModel)]="value"
+  (clicked)="logItemClickedEvent($event)"
+  (searched)="logRecentSearchEvent($event)"
+  disabled="false"
+></sourceloop-search>
 ```

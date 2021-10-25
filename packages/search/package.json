@@ -1,6 +1,7 @@
 {
   "name": "@sourceloop/search-client",
   "version": "1.1.1",
+  "description": "A global search component for search microservice",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
