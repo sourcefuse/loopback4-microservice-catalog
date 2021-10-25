@@ -71,7 +71,8 @@ export class SearchComponent<T extends IReturnType>
   constructor(
     @Inject(SEARCH_SERVICE_TOKEN)
     private readonly searchService: ISearchService<T>,
-    @Inject(PLATFORM_ID) private readonly platformId: Object, //sonar ignore - 'O' in object must be capital
+    // tslint:disable-next-line:ban-types
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
   ) {}
 
   ngOnInit(): void {
