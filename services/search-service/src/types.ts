@@ -22,6 +22,7 @@ export type SearchableModelsList<T extends Model> = (
 )[];
 export interface SearchServiceConfig<T extends Model = SearchResult> {
   useCustomSequence?: boolean;
+  doNotMountCoreComponent?: boolean;
   models: SearchableModelsList<T>;
   type?: Constructor<T> & typeof Model;
   ignoreColumns?: ModelProperties<T>[];

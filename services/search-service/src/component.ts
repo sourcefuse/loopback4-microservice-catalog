@@ -50,8 +50,11 @@ export class SearchServiceComponent<T extends Model> implements Component {
     this.bindings = [];
     this.providers = {};
 
-    // Mount core component
-    this.application.component(CoreComponent);
+    if (!this.config.doNotMountCoreComponent) {
+      // Mount core component
+      this.application.component(CoreComponent);
+    }
+
     if (!this.config?.useCustomSequence) {
       this.setupSequence();
     }
