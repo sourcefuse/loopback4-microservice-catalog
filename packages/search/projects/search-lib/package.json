@@ -1,6 +1,7 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "0.0.1",
+  "version": "1.1.2",
+  "description": "A global search component for search microservice",
   "peerDependencies": {
     "@angular/animations": "~12.1.5",
     "@angular/common": "^12.1.5",
@@ -20,6 +21,14 @@
     "lib": {
       "entryFile": "src/public-api.ts"
     },
-    "dest": "../../dist/search-lib"
-  }
+    "dest": "../../dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/search"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "private": false
 }

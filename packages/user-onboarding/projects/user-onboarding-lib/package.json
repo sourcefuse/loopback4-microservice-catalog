@@ -1,6 +1,10 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "0.0.1",
+  "version": "1.0.1",
+  "description": "Library for providing a smooth user onboarding",
+  "keywords": [
+    "angular-library"
+  ],
   "peerDependencies": {
     "@angular/common": "^11.2.12",
     "@angular/core": "^11.2.12",
@@ -11,7 +15,6 @@
     "@videogular/ngx-videogular": "^3.0.1"
   },
   "dependencies": {
-    
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -21,6 +24,9 @@
     "lib": {
       "entryFile": "src/public-api.ts"
     },
-    "dest": "../../dist/user-onboarding-lib"
-  }
+    "dest": "../../dist"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "private": true
 }
