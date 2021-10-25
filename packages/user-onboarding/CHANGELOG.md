@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.2 (2021-10-25)</small>
+
+* fix(search-client): fix package release dist issue (#387) ([51e5692](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51e5692)), closes [#387](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/387) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.0.1 (2021-10-24)</small>
 
 * fix: Tour not updating on route navigation (#358) ([d75ebfa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d75ebfa)), closes [#358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/358)

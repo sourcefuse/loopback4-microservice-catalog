@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.4 (2021-10-25)</small>
+
+* docs(search-client): minor change to trigger release ([0bda7df](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0bda7df)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>1.1.3 (2021-10-25)</small>
+
+* fix(search-client): fix package release dist issue (#387) ([51e5692](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51e5692)), closes [#387](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/387) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.1.2 (2021-10-25)</small>
 
 * docs(search-client): docs updated for versioning ([5192106](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5192106)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
