@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.6 (2021-10-25)</small>
+
+* fix(search-service): make mounting of core component configurable ([2fd0b8f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2fd0b8f)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.1.5 (2021-10-25)</small>
 
 * fix(search-client): change styling - add shadow to search container (#389) ([284ec32](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/284ec32)), closes [#389](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/389)
