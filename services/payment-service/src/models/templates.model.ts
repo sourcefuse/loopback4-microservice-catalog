@@ -29,6 +29,12 @@ export class Templates extends Entity {
   })
   template: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  type: string;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

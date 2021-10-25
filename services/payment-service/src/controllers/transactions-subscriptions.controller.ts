@@ -4,7 +4,7 @@ import {get, param, response, Response, RestBindings} from '@loopback/rest';
 
 import {GatewayBindings, IGateway} from '../providers';
 import {TemplatesRepository, SubscriptionsRepository} from '../repositories';
-import {TemplateName} from '../enums';
+import {TemplateName, TemplateType} from '../enums';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
@@ -41,13 +41,14 @@ export class TransactionSubscriptionsController {
     @param.path.string('id') id: string,
   ): Promise<unknown> {
     const Subscription = await this.subscriptionRepository.findById(id);
-    const templates = await this.templatesRepository.find({
+    const templates = await this.templatesRepository.findOne({
       where: {
         paymentGatewayId: Subscription?.paymentGatewayId,
         name: TemplateName.Create,
+        type: TemplateType.Subscription,
       },
     });
-    const paymentTemplate = templates[0]?.template;
+    const paymentTemplate = templates?.template;
     return this.res.send(
       await this.gatewayHelper.subscriptionCreate(
         Subscription,

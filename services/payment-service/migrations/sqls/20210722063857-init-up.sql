@@ -13,6 +13,7 @@ CREATE  TABLE main.templates (
 	payment_gateway_id   uuid  NOT NULL ,
 	name                 varchar  NOT NULL ,
 	"template"           text  NOT NULL ,
+	type                 varchar  NOT NULL ,
 	CONSTRAINT templates_pkey PRIMARY KEY ( id )
  );
 

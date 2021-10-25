@@ -32,7 +32,7 @@ import {
   PaymentGatewaysRepository,
 } from '../repositories';
 import {STATUS_CODE} from '@sourceloop/core';
-import {ResponseMessage, TemplateName} from '../enums';
+import {ResponseMessage, TemplateName, TemplateType} from '../enums';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
@@ -238,6 +238,7 @@ export class TransactionsController {
       where: {
         paymentGatewayId: Order?.paymentGatewayId,
         name: TemplateName.Create,
+        type: TemplateType.Order,
       },
     });
     const paymentTemplate = templates[0]?.template;
