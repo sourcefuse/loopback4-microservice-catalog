@@ -68,8 +68,11 @@ export class RecentSearchRepository extends DefaultUserModifyCrudRepository<
         this.config.controller?.recentCount ?? DEFAULT_RECENTS;
 
       if (prev.length >= recentCount) {
+        const latestOnes = prev.slice(0, recentCount).map(item => item.id);
         await this.params(saved.id).delete({
-          id: prev[recentCount - 1].id,
+          id: {
+            nin: latestOnes,
+          },
         });
       }
     } else {

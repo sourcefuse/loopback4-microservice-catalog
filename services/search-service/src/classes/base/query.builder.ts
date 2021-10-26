@@ -228,6 +228,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     this.order(defaultColumns);
     this.limit();
     const mainQuery = this.baseQueryList
+      .filter(q => q.sql)
       .map(q => `(${q.sql})`)
       .join(this.unionString);
 
@@ -311,10 +312,14 @@ export abstract class SearchQueryBuilder<T extends Model> {
         }
       }
       const joinString = ` ${(key as string).toUpperCase()} `;
-      return {
-        sql: `(${branches.join(joinString)})`,
-        params: branchParams,
-      };
+      if (branches.length > 0) {
+        return {
+          sql: `(${branches.join(joinString)})`,
+          params: branchParams,
+        };
+      } else {
+        return undefined;
+      }
     } else {
       // do nothing
     }

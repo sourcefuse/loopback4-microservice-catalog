@@ -1,11 +1,12 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {belongsTo, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
 import {SearchWhereFilterMap} from '..';
 import {RecentSearch} from './recent-search.model';
 
 @model({
   name: 'search_query',
 })
-export class SearchQuery extends Entity {
+export class SearchQuery extends UserModifiableEntity {
   @property({
     id: true,
     type: 'String',
@@ -57,11 +58,7 @@ export class SearchQuery extends Entity {
   })
   where?: SearchWhereFilterMap;
 
-  @belongsTo(
-    () => RecentSearch,
-    {name: 'recentSearch'},
-    {name: 'recent_search_id'},
-  )
+  @belongsTo(() => RecentSearch, {name: 'params'}, {name: 'recent_search_id'})
   recentSearchId: string;
 
   constructor(data?: Partial<SearchQuery>) {

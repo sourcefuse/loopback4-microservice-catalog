@@ -37,13 +37,17 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
 
     const where = this.whereBuild(model, this.query.where?.[modelName]);
     const whereClause = [
-      `to_tsvector(f_concat_ws(' ', ${columnList})) @@ to_tsquery($1)`,
+      `to_tsvector(${
+        this.schema || 'public'
+      }.f_concat_ws(' ', ${columnList})) @@ to_tsquery($1)`,
     ];
     if (where.sql) {
       whereClause.push(where.sql);
     }
 
-    const query = `SELECT ${selectors}, '${modelName}' as source, ts_rank_cd(to_tsvector(f_concat_ws(' ', ${columnList})), to_tsquery($1)) as rank from ${
+    const query = `SELECT ${selectors}, '${modelName}' as source, ts_rank_cd(to_tsvector(${
+      this.schema || 'public'
+    }.f_concat_ws(' ', ${columnList})), to_tsquery($1)) as rank from ${
       this.schema || 'public'
     }.${modelName} where ${whereClause.join(' AND ')}`;
 

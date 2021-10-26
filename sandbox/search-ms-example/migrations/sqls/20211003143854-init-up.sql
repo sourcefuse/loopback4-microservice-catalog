@@ -43,3 +43,6 @@ CREATE TABLE main.user (
 );
 
 ALTER TABLE main.search_query ADD CONSTRAINT fk_recent_search_in_query FOREIGN KEY ( recent_search_id ) REFERENCES main.recent_search( id );
+
+CREATE OR REPLACE FUNCTION main.f_concat_ws(text, VARIADIC text[])
+  RETURNS text LANGUAGE sql IMMUTABLE AS 'SELECT array_to_string($2, $1)';

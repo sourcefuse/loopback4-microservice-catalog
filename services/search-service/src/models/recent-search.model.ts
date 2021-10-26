@@ -25,7 +25,7 @@ export class RecentSearch extends UserModifiableEntity {
   })
   userId?: string;
 
-  @hasMany(() => SearchQuery)
+  @hasMany(() => SearchQuery, {keyTo: 'recentSearchId'})
   params: SearchQuery[];
 
   constructor(data?: Partial<RecentSearch>) {
