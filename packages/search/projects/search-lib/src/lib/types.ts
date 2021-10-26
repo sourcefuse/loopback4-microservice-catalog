@@ -13,6 +13,7 @@ export interface IModel {
   name: string;
   displayName: string;
   imageUrl?: string;
+  icon?: string;
 }
 export interface IReturnType {
   rank: number;
@@ -36,9 +37,9 @@ export const SEARCH_SERVICE_TOKEN: InjectionToken<ISearchService<IReturnType>> =
   new InjectionToken<ISearchService<IReturnType>>('Search_Service_Token');
 
 export type RecentSearchEvent = {
-  event: KeyboardEvent | Event;
+  event?: Event;
   keyword: string;
-  category: 'All' | IModel;
+  category: string;
 };
 
 export type ItemClickedEvent<T> = {
@@ -47,7 +48,7 @@ export type ItemClickedEvent<T> = {
 };
 
 export type TypeEvent = {
-  event: Event;
+  event?: Event;
   input: string;
 };
 // IRequestParameters default values
