@@ -56,6 +56,7 @@ export class SearchMsExampleApplication extends BootMixin(
         authenticate: true,
         authorizations: ['*'],
         recents: true,
+        recentCount: 3,
       },
       models: [
         ToDo,

@@ -32,6 +32,7 @@ export function defineSearchController<T extends Model>(
   const name = options?.name;
   const authorizations = options?.authorizations ?? ['*'];
   const recentsConfig = options?.recents ?? false;
+  const recentCount = options?.recentCount ?? 3;
   @api({
     basePath: options?.basePath,
     paths: {},
@@ -108,25 +109,27 @@ export function defineSearchController<T extends Model>(
         where: {
           userId: user.userTenantId,
         },
-        fields: ['params'],
         include: [
           {
             relation: 'params',
             scope: {
+              fields: {
+                where: false,
+                deleted: false,
+                deletedOn: false,
+                deletedBy: false,
+                createdBy: false,
+                createdOn: false,
+                modifiedBy: false,
+                modifiedOn: false,
+              },
               order: ['created_on DESC'],
-              fields: [
-                'match',
-                'limit',
-                'limitByType',
-                'order',
-                'offset',
-                'sources',
-              ],
+              limit: recentCount,
             },
           },
         ],
       });
-      return result?.params ?? [];
+      return result?.params;
     }
   }
 

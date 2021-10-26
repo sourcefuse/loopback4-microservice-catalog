@@ -121,7 +121,7 @@ export  class  SearchDbDataSource  extends  juggler.DataSource implements  LifeC
 
 ```
 
-Also not if you are using  `postgres` datasource, you need to add the following function in you db - 
+Also if you are using  `postgres` datasource, you need to add the following function in your db - 
 
 ```
 CREATE OR REPLACE FUNCTION f_concat_ws(text, VARIADIC text[])

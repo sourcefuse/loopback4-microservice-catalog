@@ -25,6 +25,10 @@ CREATE TABLE main.search_query (
     "offset"                integer NULL,
     sources                 json NULL,
 	recent_search_id		uuid,
+	created_on              timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	modified_on             timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
+	created_by              uuid   ,
+	modified_by             uuid   ,
 	CONSTRAINT              search_query_pk PRIMARY KEY (id)
 );
 
