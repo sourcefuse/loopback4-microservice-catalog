@@ -1,4 +1,4 @@
-import {PathsObject} from 'openapi3-ts/dist/model/OpenApi';
+import {PathsObject} from 'openapi3-ts';
 import {OasHiddenApi} from '../keys';
 
 function apiSearchFunction(
