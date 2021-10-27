@@ -85,29 +85,9 @@ $search-width: 360px;
   }
 
   ::ng-deep .mat-form-field-infix {
-    padding: 0.98461538em 0 0.61538462em !important;
-    border: none;
+    height: auto !important;
   }
 
-  &:hover {
-    .toolbar-search-select {
-      color: white;
-      ::ng-deep {
-        .mat-form-field-outline .mat-form-field-outline-end {
-          border-width: 1px!important;
-          border-color: #a53159!important;
-          background-color: #a53159!important;
-          flex-grow: 1;
-        }
-    
-        .mat-form-field-outline .mat-form-field-outline-start {
-          border-radius: 0;
-          border-color: transparent!important;
-          background-color: #a53159!important;
-        }
-      }
-    }
-  }
 }
 
 
@@ -245,6 +225,87 @@ $search-width: 360px;
       li.suggestions {
         padding-left: 31px;
       }
+    }
+  }
+}
+
+::ng-deep {
+    .search-select.mat-select-panel {
+      //overflow: hidden !important;
+      margin-top: 30px;
+      margin-left: 10px;
+    }
+    .search-select .mat-option-text {
+      display: contents !important;
+    }
+}
+
+@mixin toolbar-search-mixin($width, $color) {
+  .toolbar-search-input {
+    &.mat-form-field:not(.mat-form-field-disabled) {
+      .mat-form-field-outline {
+        .mat-form-field-outline-start {
+          border-width: $width !important;
+          border-color: $color !important;
+        }
+        .mat-form-field-outline-end {
+          border: $width solid $color !important;
+          border-left-style: none !important;
+          border-right-style: none !important;
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+      }
+    }
+  }
+  .toolbar-search-select {
+    &.mat-form-field:not(.mat-form-field-disabled) {
+      .mat-form-field-outline {
+        .mat-form-field-outline-start {
+          border-radius: 0;
+          border-color: transparent !important;
+          background-color: $color !important;
+        }
+        .mat-form-field-outline-end {
+          border-width: $width !important;
+          border-color: $color !important;
+          background-color:$color !important;
+        }
+      }
+      .mat-select {
+        color: white !important;
+      }
+      .icomoon.arrow_down {
+        color: white;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .toolbar-search {
+    $size: 14px;
+    .mat-form-field-infix {
+      font-size: $size;
+    }
+    input {
+      line-height: $size;
+    }
+    .mat-form-field-outline:first-child {
+      .mat-form-field-outline-start,
+      .mat-form-field-outline-end {
+        background-color: #F1F3F4;
+      }
+    }
+    // Hover
+    &:hover {
+      @include toolbar-search-mixin(1px,#a53159);
+    }
+    &:focus-within {
+      @include toolbar-search-mixin(2px,#90003b);
+    }
+    .mat-select-arrow {
+      opacity: 0;
     }
   }
 }

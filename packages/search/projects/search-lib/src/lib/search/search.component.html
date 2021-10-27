@@ -46,9 +46,10 @@
     <mat-select
       [value]="category"
       (selectionChange)="setCategory($event.value)"
+      panelClass="search-select"
     >
       <mat-option [value]="model.name" *ngFor="let model of config.models">
-        <mat-icon class="icomoon {{ model.icon }}"></mat-icon>
+        <!-- <mat-icon class="icomoon {{ model.icon }}"></mat-icon> -->
         {{ model.displayName }}
       </mat-option>
     </mat-select>
