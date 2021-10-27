@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.8 (2021-10-27)</small>
+
+* fix(search-client): version issue ([bdceef6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdceef6)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.1.7 (2021-10-27)</small>
 
 * fix(search-client): add style for category dropdown (#391) ([207e378](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/207e378)), closes [#391](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/391)
