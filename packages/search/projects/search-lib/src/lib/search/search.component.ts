@@ -16,7 +16,6 @@ import {debounceTime, tap} from 'rxjs/operators';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {
   ISearchService,
-  IModel,
   ISearchQuery,
   SEARCH_SERVICE_TOKEN,
   DEBOUNCE_TIME,
@@ -32,6 +31,7 @@ import {
 } from '../types';
 import {isPlatformBrowser} from '@angular/common';
 
+const ALL_LABEL = 'All';
 @Component({
   selector: 'sourceloop-search',
   templateUrl: './search.component.html',
@@ -53,9 +53,33 @@ export class SearchComponent<T extends IReturnType>
   suggestions: T[] = [];
   relevantSuggestions: T[] = [];
   recentSearches: ISearchQuery[] = [];
-  category: IModel | 'All' = 'All';
-  observableForSearchRequest = new Subject<{input: string; event: Event}>();
-  @Input() config!: Configuration<T>;
+  category: string = ALL_LABEL;
+  searchRequest$ = new Subject<{input: string; event: Event}>();
+
+  private _config!: Configuration<T>;
+  public get config(): Configuration<T> {
+    return this._config;
+  }
+  @Input()
+  public set config(value: Configuration<T>) {
+    this._config = value;
+
+    if (value && value.models) {
+      value.models.unshift({
+        name: ALL_LABEL,
+        displayName: ALL_LABEL,
+      });
+    } else if (value && !value.models) {
+      value.models = [
+        {
+          name: ALL_LABEL,
+          displayName: ALL_LABEL,
+        },
+      ];
+    } else {
+      //do nothing
+    }
+  }
   // emitted when user clicks one of the suggested results (including recent search sugestions)
   @Output() clicked = new EventEmitter<ItemClickedEvent<T>>();
   @Output() searched = new EventEmitter<RecentSearchEvent>();
@@ -76,7 +100,7 @@ export class SearchComponent<T extends IReturnType>
   ) {}
 
   ngOnInit(): void {
-    this.observableForSearchRequest
+    this.searchRequest$
       .pipe(
         tap(v => (this.suggestions = [])),
         debounceTime(DEBOUNCE_TIME),
@@ -114,10 +138,9 @@ export class SearchComponent<T extends IReturnType>
     let saveInRecents = this.config.saveInRecents ?? DEFAULT_SAVE_IN_RECENTS;
     if (this.config.saveInRecents && this.config.saveInRecentsOnlyOnEnter) {
       if (
+        !eventValue.event ||
         (eventValue.event instanceof KeyboardEvent &&
-          eventValue.event.key === 'Enter') ||
-        (eventValue.event instanceof Event &&
-          eventValue.event.type === 'change')
+          eventValue.event.key === 'Enter')
       ) {
         saveInRecents = true; // save in recents only on enter or change in category
       } else {
@@ -164,7 +187,7 @@ export class SearchComponent<T extends IReturnType>
   }
 
   // event can be KeyBoardEvent or Event of type 'change' fired on change in value of drop down for category
-  hitSearchApi(event: Event) {
+  hitSearchApi(event?: Event) {
     // this will happen only in case user searches something and then erases it, we need to update recent search
     if (!this.searchBoxInput) {
       this.suggestions = [];
@@ -174,22 +197,19 @@ export class SearchComponent<T extends IReturnType>
 
     // no debounce time needed in case of searchOnlyOnEnter
     if (this.config.searchOnlyOnEnter) {
-      if (
-        (event instanceof KeyboardEvent && event.key === 'Enter') ||
-        (event instanceof Event && event.type === 'change')
-      ) {
+      if (!event || (event instanceof KeyboardEvent && event.key === 'Enter')) {
         this.getSuggestions({input: this.searchBoxInput, event});
       }
       return;
     }
 
     // no debounce time needed in case of change in category
-    if (event instanceof KeyboardEvent === false && event.type === 'change') {
+    if (!event) {
       this.getSuggestions({input: this.searchBoxInput, event});
       return;
     }
 
-    this.observableForSearchRequest.next({
+    this.searchRequest$.next({
       input: this.searchBoxInput,
       event,
     });
@@ -273,11 +293,11 @@ export class SearchComponent<T extends IReturnType>
     }
   }
 
-  setCategory(category: 'All' | IModel, event: MouseEvent) {
+  setCategory(category: string) {
     this.category = category;
     this.categoryDisplay = false;
     if (this.searchBoxInput) {
-      this.hitSearchApi(event);
+      this.hitSearchApi();
       this.focusInput();
       this.showSuggestions();
     }
@@ -300,14 +320,14 @@ export class SearchComponent<T extends IReturnType>
     this.getRecentSearches();
   }
   ngOnDestroy() {
-    this.observableForSearchRequest.unsubscribe();
+    this.searchRequest$.unsubscribe();
   }
 
-  _categoryToSourceName(category: 'All' | IModel) {
-    if (category === 'All') {
+  _categoryToSourceName(category: string) {
+    if (category === ALL_LABEL) {
       return [];
     } else {
-      return [category.name];
+      return [category];
     }
   }
 }

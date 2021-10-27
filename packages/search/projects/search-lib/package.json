@@ -7,6 +7,9 @@
     "@angular/common": "^12.1.5",
     "@angular/compiler": "~12.1.5",
     "@angular/core": "^12.1.5",
+    "@angular/cdk": "^10.2.0",
+    "@angular/flex-layout": "^10.0.0-beta.32",
+    "@angular/material": "^10.2.0",
     "@angular/forms": "~12.1.5",
     "@angular/platform-browser": "~12.1.5",
     "@angular/platform-browser-dynamic": "~12.1.5",
@@ -30,5 +33,10 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "@angular/cdk": "^10.2.0",
+    "@angular/flex-layout": "^10.0.0-beta.32",
+    "@angular/material": "^10.2.0"
+  }
 }
