@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.9 (2021-10-27)</small>
+
+* fix(search-client): increase width of search dropdown and add ellipsis on overflow (#392) ([4d2f0af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4d2f0af)), closes [#392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/392) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(search-client): update version ([2cbf41b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2cbf41b)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.1.8 (2021-10-27)</small>
 
 * fix(search-client): version issue ([bdceef6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdceef6)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
