@@ -87,9 +87,7 @@ $search-width: 360px;
   ::ng-deep .mat-form-field-infix {
     height: auto !important;
   }
-
 }
-
 
 .search-container {
   position: relative;
@@ -229,17 +227,6 @@ $search-width: 360px;
   }
 }
 
-::ng-deep {
-    .search-select.mat-select-panel {
-      //overflow: hidden !important;
-      margin-top: 30px;
-      margin-left: 10px;
-    }
-    .search-select .mat-option-text {
-      display: contents !important;
-    }
-}
-
 @mixin toolbar-search-mixin($width, $color) {
   .toolbar-search-input {
     &.mat-form-field:not(.mat-form-field-disabled) {
@@ -269,7 +256,7 @@ $search-width: 360px;
         .mat-form-field-outline-end {
           border-width: $width !important;
           border-color: $color !important;
-          background-color:$color !important;
+          background-color: $color !important;
         }
       }
       .mat-select {
@@ -283,6 +270,14 @@ $search-width: 360px;
 }
 
 ::ng-deep {
+  .search-select.mat-select-panel {
+    //overflow: hidden !important;
+    margin-top: 30px;
+    margin-left: 10px;
+  }
+  .search-select .mat-option-text {
+    display: contents !important;
+  }
   .toolbar-search {
     $size: 14px;
     .mat-form-field-infix {
@@ -294,15 +289,15 @@ $search-width: 360px;
     .mat-form-field-outline:first-child {
       .mat-form-field-outline-start,
       .mat-form-field-outline-end {
-        background-color: #F1F3F4;
+        background-color: #f1f3f4;
       }
     }
     // Hover
     &:hover {
-      @include toolbar-search-mixin(1px,#a53159);
+      @include toolbar-search-mixin(1px, #a53159);
     }
     &:focus-within {
-      @include toolbar-search-mixin(2px,#90003b);
+      @include toolbar-search-mixin(2px, #90003b);
     }
     .mat-select-arrow {
       opacity: 0;
