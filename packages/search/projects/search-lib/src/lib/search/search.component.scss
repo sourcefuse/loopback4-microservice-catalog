@@ -91,7 +91,7 @@ $search-width: 360px;
 
 .search-container {
   position: relative;
-  width: $search-width;
+  width: 515px;
 
   .search-popup {
     padding: 0 15px 15px;
@@ -138,9 +138,11 @@ $search-width: 360px;
           font-size: 15px;
           line-height: 36px;
           padding: 0 15px 0 44px;
-          // display: flex; causes words to join if bold
+          // display: flex; causes words to join if bold and also causes ellipsis to not work
           align-items: center;
-          display: flex;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           cursor: pointer;
 
           &:hover {
