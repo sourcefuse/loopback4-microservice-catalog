@@ -1,25 +1,15 @@
 import {PathsObject} from 'openapi3-ts';
 import {OasHiddenApi} from '../keys';
-
+import {HttpMethod, OasKeyMap} from '../enums/http-oas.enum';
 function apiSearchFunction(
   apiSearch: [string, OasHiddenApi],
   path: PathsObject,
 ) {
-  if (path['get'] && apiSearch[1]['httpMethod'] === 'GET') {
-    delete path['get'];
-  }
-  if (path['post'] && apiSearch[1]['httpMethod'] === 'POST') {
-    delete path['post'];
-  }
-  if (path['patch'] && apiSearch[1]['httpMethod'] === 'PATCH') {
-    delete path['patch'];
-  }
-  if (path['delete'] && apiSearch[1]['httpMethod'] === 'DELETE') {
-    delete path['delete'];
-  }
-  if (path['put'] && apiSearch[1]['httpMethod'] === 'PUT') {
-    delete path['put'];
-  }
+  Object.values(HttpMethod).forEach(method => {
+    if (path[OasKeyMap[method]] && apiSearch[1]['httpMethod'] === method) {
+      delete path[OasKeyMap[method]];
+    }
+  });
 }
 export function apiHide(
   arrayApiSearch: [string, OasHiddenApi][],

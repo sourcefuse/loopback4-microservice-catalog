@@ -218,13 +218,14 @@ You can now run the example service with `npm start`.
 Update `src/application.ts` of each service to use the new hidden api feature. Add the following lines
 
 ```typescript
-import { OperationSpecEnhancer } from './enhancer/operationSpecEnhancer';
-import {OASBindings} from './keys'
+import {OperationSpecEnhancer} from './enhancer/operationSpecEnhancer';
+import {OASBindings} from './keys';
+import {HttpMethod} from './enums/http-oas.enum';
 
 export class ExampleApplicationApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
-   constructor(options: ApplicationConfig = {}) {
+  constructor(options: ApplicationConfig = {}) {
     super(options);
 
     // Set up the custom sequence
@@ -241,9 +242,9 @@ export class ExampleApplicationApplication extends BootMixin(
 
     // Bind OASBinding namespace to hide APIs
     this.bind(OASBindings.HiddenEndpoint).to([
-      {httpMethod:'GET', path: '/ping'},
-      {httpMethod:'POST', path: '/customers/{id}/users'},
-      {httpMethod:'PUT', path: '/roles/{id}'}
+      {httpMethod: HttpMethod.GET, path: '/ping'},
+      {httpMethod: HttpMethod.POST, path: '/customers/{id}/users'},
+      {httpMethod: HttpMethod.PUT, path: '/roles/{id}'},
     ]);
 
     this.projectRoot = __dirname;
@@ -257,10 +258,7 @@ export class ExampleApplicationApplication extends BootMixin(
       },
     };
   }
-};
-  
-
-
+}
 ```
 
 ### DataSources and Migrations
