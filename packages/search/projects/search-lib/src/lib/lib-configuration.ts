@@ -26,6 +26,7 @@ export class Configuration<T = IDefaultReturnType> {
   saveInRecentsOnlyOnEnter?: boolean;
   /** search only on enter key or when category is changed */
   searchOnlyOnEnter?: boolean;
+  noResultMessage?: string;
 
   constructor(d: Configuration<T>) {
     if (
@@ -58,5 +59,6 @@ export class Configuration<T = IDefaultReturnType> {
     this.hideCategorizeButton = d.hideCategorizeButton ?? false;
     this.saveInRecentsOnlyOnEnter = d.saveInRecentsOnlyOnEnter ?? false;
     this.searchOnlyOnEnter = d.searchOnlyOnEnter ?? false;
+    this.noResultMessage = d.noResultMessage ?? 'No result found';
   }
 }
