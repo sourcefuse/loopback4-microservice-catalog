@@ -41,6 +41,12 @@
 <div class="search-container">
   <div *ngIf="suggestionsDisplay" class="search-popup">
     <ng-container *ngIf="searchBoxInput">
+      <span *ngIf="suggestions.length === 0" class="search-message">
+        <ng-container *ngIf="searching"> searching... </ng-container>
+        <ng-container *ngIf="!searching">
+          {{ config.noResultMessage }}
+        </ng-container>
+      </span>
       <ng-container *ngIf="config.categorizeResults">
         <div class="search-result" *ngFor="let model of config.models">
           <h3
@@ -52,20 +58,43 @@
               [src]="model.imageUrl"
               [alt]="model.displayName"
             />
-            {{ model.displayName }}({{ relevantSuggestions?.length }})
+            {{ model.displayName }} ({{ relevantSuggestions?.length }})
           </h3>
           <ul>
             <li
               *ngFor="let suggestion of relevantSuggestions"
               (mousedown)="populateValue(suggestion, $event)"
               class="suggestions"
-              [innerHTML]="
-                boldString(
-                  suggestion[config.displayPropertyName],
-                  searchBoxInput
-                )
-              "
-            ></li>
+            >
+              <ng-container *ngIf="subtitleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    subtitleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
+              <p
+                *ngIf="!titleTemplate"
+                [innerHTML]="
+                  boldString(
+                    suggestion[config.displayPropertyName],
+                    searchBoxInput
+                  )
+                "
+                style="display: inline"
+              ></p>
+              <ng-container *ngIf="titleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    titleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
+            </li>
           </ul>
         </div>
       </ng-container>
@@ -78,13 +107,25 @@
             >
               <!--Need to call fetchModelImageUrlFromSuggestion as each suggestion can come from different model-->
               <img
-                *ngIf="fetchModelImageUrlFromSuggestion(suggestion)"
+                *ngIf="
+                  !titleTemplate && fetchModelImageUrlFromSuggestion(suggestion)
+                "
                 class="suggestions-categorize-false"
                 [src]="fetchModelImageUrlFromSuggestion(suggestion)"
                 style="margin-right: 5px"
                 alt="Img"
               />
+              <ng-container *ngIf="subtitleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    subtitleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
               <p
+                *ngIf="!titleTemplate"
                 [innerHTML]="
                   boldString(
                     suggestion[config.displayPropertyName],
@@ -93,6 +134,15 @@
                 "
                 style="display: inline"
               ></p>
+              <ng-container *ngIf="titleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    titleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
             </li>
           </ul>
         </div>

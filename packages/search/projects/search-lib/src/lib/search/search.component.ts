@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   PLATFORM_ID,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import {Configuration} from '../lib-configuration';
@@ -50,6 +51,7 @@ export class SearchComponent<T extends IReturnType>
   searchBoxInput = '';
   suggestionsDisplay = false;
   categoryDisplay = false;
+  searching = false;
   suggestions: T[] = [];
   relevantSuggestions: T[] = [];
   recentSearches: ISearchQuery[] = [];
@@ -80,6 +82,9 @@ export class SearchComponent<T extends IReturnType>
       //do nothing
     }
   }
+
+  @Input() titleTemplate?: TemplateRef<any>;
+  @Input() subtitleTemplate?: TemplateRef<any>;
   // emitted when user clicks one of the suggested results (including recent search sugestions)
   @Output() clicked = new EventEmitter<ItemClickedEvent<T>>();
   @Output() searched = new EventEmitter<RecentSearchEvent>();
@@ -159,14 +164,17 @@ export class SearchComponent<T extends IReturnType>
       offset: this.config.offset ?? DEFAULT_OFFSET,
     };
 
+    this.searching = true;
     this.searchService
       .searchApiRequest(requestParameters, saveInRecents)
       .subscribe(
         (value: T[]) => {
           this.suggestions = value;
+          this.searching = false;
         },
         (_error: Error) => {
           this.suggestions = [];
+          this.searching = false;
         },
       );
   }
