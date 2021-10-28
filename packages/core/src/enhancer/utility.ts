@@ -1,6 +1,6 @@
 import {PathsObject} from 'openapi3-ts';
 import {OasHiddenApi} from '../keys';
-import {HttpMethod, OasKeyMap} from '../enums/http-oas.enum';
+import {HttpMethod, OasKeyMap} from '../enums';
 function apiSearchFunction(
   apiSearch: [string, OasHiddenApi],
   path: PathsObject,
