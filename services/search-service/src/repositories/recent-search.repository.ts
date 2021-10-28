@@ -67,6 +67,16 @@ export class RecentSearchRepository extends DefaultUserModifyCrudRepository<
       const recentCount =
         this.config.controller?.recentCount ?? DEFAULT_RECENTS;
 
+      //to delete from recent search if already present
+      const prevMatched = prev
+        .filter(item => item.match === query.match)
+        .map(item => item.id);
+      await this.params(saved.id).delete({
+        id: {
+          inq: prevMatched,
+        },
+      });
+
       if (prev.length >= recentCount) {
         const latestOnes = prev.slice(0, recentCount).map(item => item.id);
         await this.params(saved.id).delete({
