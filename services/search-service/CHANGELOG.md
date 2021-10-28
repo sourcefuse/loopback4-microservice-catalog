@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2021-10-28)</small>
+
+* fix(search-service): return unique results in recent search api (#394) ([ff9918e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ff9918e)), closes [#394](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/394)
+
+
+
+
+
 ## 0.2.0 (2021-10-26)
 
 * fix(search-service): fixed minor issues in search-service (#390) ([66e06b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/66e06b6)), closes [#390](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/390) [#346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/346)
