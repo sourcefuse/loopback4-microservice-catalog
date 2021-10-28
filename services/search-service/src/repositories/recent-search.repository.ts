@@ -69,7 +69,10 @@ export class RecentSearchRepository extends DefaultUserModifyCrudRepository<
 
       //to delete from recent search if already present
       const prevMatched = prev
-        .filter(item => item.match === query.match)
+        .filter(
+          item =>
+            item.match.toLocaleLowerCase() === query.match.toLocaleLowerCase(),
+        )
         .map(item => item.id);
       await this.params(saved.id).delete({
         id: {
