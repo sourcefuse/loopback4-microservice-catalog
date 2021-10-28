@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.2 (2021-10-28)</small>
+
+**Note:** Version bump only for package @sourceloop/search-ms-example
+
+
+
+
+
 ## <small>0.2.1 (2021-10-28)</small>
 
 **Note:** Version bump only for package @sourceloop/search-ms-example
