@@ -81,6 +81,7 @@ export function defineSearchController<T extends Model>(
         }
       }
       query.where = filter;
+      query.match = query.match.trim();
       return this.searchFn(query);
     }
 
