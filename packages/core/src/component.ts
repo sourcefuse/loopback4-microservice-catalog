@@ -4,6 +4,7 @@ import {
   ProviderMap,
   inject,
   CoreBindings,
+  createBindingFromClass,
 } from '@loopback/core';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
@@ -16,6 +17,7 @@ import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import * as swstats from 'swagger-stats';
+import {OASBindings} from './keys';
 
 export class CoreComponent implements Component {
   constructor(
@@ -33,7 +35,7 @@ export class CoreComponent implements Component {
 
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
-    this.application.add(OperationSpecEnhancer);
+
     this.application.component(Loopback4HelmetComponent);
     this.application.component(RateLimiterComponent);
 
@@ -86,8 +88,9 @@ export class CoreComponent implements Component {
     }
 
     this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
-
+    this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
+    this.application.add(createBindingFromClass(OperationSpecEnhancer));
   }
 
   localeObj: i18nAPI = {} as i18nAPI;
