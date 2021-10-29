@@ -10,14 +10,13 @@ import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 
 import {LocaleKey} from './enums';
-import {SFCoreBindings} from './keys';
+import {SFCoreBindings, OASBindings} from './keys';
 import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import * as swstats from 'swagger-stats';
-import {OASBindings} from './keys';
 
 export class CoreComponent implements Component {
   constructor(
