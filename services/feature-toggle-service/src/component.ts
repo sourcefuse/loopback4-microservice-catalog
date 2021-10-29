@@ -52,7 +52,6 @@ export class FeatureToggleServiceComponent implements Component {
     private readonly config?: IToggleServiceConfig,
   ) {
     this.bindings = [];
-    this.providers = {};
 
     // Mount core component
     this.application.component(CoreComponent);
@@ -82,14 +81,15 @@ export class FeatureToggleServiceComponent implements Component {
     ];
 
     this.models = [Features, Parameters, Projects, Strategies, StrategiesType];
+    this.providers = {
+      [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
+      [StrategyBindings.METADATA.key]: FeatureFlagMetadataProvider,
+      [StrategyBindings.TENANT_FEATURE.key]: TenantFeatureProvider,
+      [StrategyBindings.USER_FEATURE.key]: UserFeatureProvider,
+      [StrategyBindings.SYSTEM_FEATURE.key]: SystemFeatureProvider,
+    };
   }
-  providers?: ProviderMap = {
-    [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
-    [StrategyBindings.METADATA.key]: FeatureFlagMetadataProvider,
-    [StrategyBindings.TENANT_FEATURE.key]: TenantFeatureProvider,
-    [StrategyBindings.USER_FEATURE.key]: UserFeatureProvider,
-    [StrategyBindings.SYSTEM_FEATURE.key]: SystemFeatureProvider,
-  };
+  providers?: ProviderMap = {};
 
   bindings?: Binding[] = [];
   /**
