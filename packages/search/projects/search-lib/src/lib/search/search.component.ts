@@ -325,6 +325,7 @@ export class SearchComponent<T extends IReturnType>
 
   resetInput() {
     this.searchBoxInput = '';
+    this.suggestions = [];
     this.suggestionsDisplay = true;
     this.focusInput();
     // ngModelChange doesn't detect change in value when populated from outside, hence calling manually
