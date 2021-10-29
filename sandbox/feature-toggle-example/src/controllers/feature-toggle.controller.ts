@@ -9,8 +9,6 @@ import {STATUS_CODE} from '@sourceloop/core';
 import {FeatureToggleBindings} from '../keys';
 
 export class FeatureToggleController {
-  constructor() {}
-
   @get('/featureFlag')
   @response(STATUS_CODE.OK, {
     description: '',
@@ -84,7 +82,7 @@ export class FeatureToggleController {
   @featuresFlag({features: [FeatureToggleBindings.ROLE_REATURE]})
   async roleFeatureFlag(): Promise<Object> {
     return {
-      message: 'Will skip the flag check and be accessible always',
+      message: 'Role level Feature Enabled!!',
     };
   }
 }
