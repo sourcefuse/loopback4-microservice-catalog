@@ -136,6 +136,10 @@ export class SearchComponent<T extends IReturnType>
   }
 
   getSuggestions(eventValue: TypeEvent) {
+    eventValue.input = eventValue.input.trim();
+    if (!eventValue.input.length) {
+      return;
+    }
     const order = this.config.order ?? DEFAULT_ORDER;
     let orderString = '';
     order.forEach(preference => (orderString = `${orderString}${preference} `));
