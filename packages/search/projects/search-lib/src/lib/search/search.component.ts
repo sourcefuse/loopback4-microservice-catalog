@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -102,6 +103,7 @@ export class SearchComponent<T extends IReturnType>
     private readonly searchService: ISearchService<T>,
     // tslint:disable-next-line:ban-types
     @Inject(PLATFORM_ID) private readonly platformId: Object,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +119,7 @@ export class SearchComponent<T extends IReturnType>
           category: this.category,
         });
         this.getSuggestions(value);
+        this.cdr.markForCheck();
       });
   }
 
@@ -169,16 +172,19 @@ export class SearchComponent<T extends IReturnType>
     };
 
     this.searching = true;
+    this.cdr.markForCheck();
     this.searchService
       .searchApiRequest(requestParameters, saveInRecents)
       .subscribe(
         (value: T[]) => {
           this.suggestions = value;
           this.searching = false;
+          this.cdr.markForCheck();
         },
         (_error: Error) => {
           this.suggestions = [];
           this.searching = false;
+          this.cdr.markForCheck();
         },
       );
   }
@@ -190,9 +196,11 @@ export class SearchComponent<T extends IReturnType>
       this.searchService.recentSearchApiRequest().subscribe(
         (value: ISearchQuery[]) => {
           this.recentSearches = value;
+          this.cdr.markForCheck();
         },
         (_error: Error) => {
           this.recentSearches = [];
+          this.cdr.markForCheck();
         },
       );
     }
