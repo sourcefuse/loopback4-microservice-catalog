@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.2 (2021-10-29)</small>
+
+* fix(search-client): fix version ([180252a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/180252a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(search-client): make suggestions empty after reset input button click (#399) ([3956484](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3956484)), closes [#399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/399)
+* fix(search-client): search api should not be called incase input has whitespaces (#397) ([0b21583](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b21583)), closes [#397](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/397)
+
+
+
+
+
 ## <small>1.2.1 (2021-10-28)</small>
 
 * fix(search-client): version update ([31d6849](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/31d6849)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
