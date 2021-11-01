@@ -132,6 +132,43 @@ x-search-ms-variables: &search-ms-variables
   DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
   DB_DATABASE: search_db
   DB_SCHEMA: main
+
+x-chat-variables-chat-service: &chat-variables-chat-service
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_NAME: chatauth
+  DB_DATABASE: chatauth
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+  JWT_SECRET: aaaa
+  JWT_ISSUER: aaaa
+  USER_TEMP_PASSWORD: test123!@#
+
+x-chat-variables-notification-service: &chat-variables-notification-service
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_NAME: notifauth
+  DB_DATABASE: notifauth
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+  JWT_SECRET: aaaa
+  JWT_ISSUER: aaaa
+  SOCKETIO_SERVER_URL: http://localhost:3003
+
 x-chat-notif-facade-variables: &chat-notif-facade-variables
   NODE_ENV: dev
   LOG_LEVEL: debug
