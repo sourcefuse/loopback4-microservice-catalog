@@ -37,7 +37,8 @@
         "@sourceloop/workflow-ms-example",
         "@sourceloop/pubnub-example",
         "@sourceloop/search-ms-example",
-        "@sourceloop/search-client-example"
+        "@sourceloop/search-client-example",
+        "@sourceloop/feature-toggle-example"
       ]
     },
     "clean": {
