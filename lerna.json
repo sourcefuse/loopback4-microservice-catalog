@@ -3,8 +3,7 @@
   "command": {
     "bootstrap": {
       "concurrency": 4,
-      "forceLocal": true,
-      "ignore": ["@sourceloop/search-ms-example"]
+      "forceLocal": true
     },
     "version": {
       "conventionalCommits": true,
