@@ -39,7 +39,10 @@
 </div>
 
 <div class="search-container">
-  <div *ngIf="suggestionsDisplay" class="search-popup">
+  <div
+    *ngIf="suggestionsDisplay && (recentSearches.length || suggestions.length)"
+    class="search-popup"
+  >
     <ng-container *ngIf="searchBoxInput">
       <span *ngIf="suggestions.length === 0" class="search-message">
         <ng-container *ngIf="searching"> searching... </ng-container>
@@ -47,22 +50,24 @@
           {{ config.noResultMessage }}
         </ng-container>
       </span>
-      <ng-container *ngIf="config.categorizeResults">
-        <div class="search-result" *ngFor="let model of config.models">
-          <h3
-            *ngIf="getSuggestionsFromModelName(model.name)"
-            class="suggestions-heading"
-          >
+      <ng-container *ngIf="config.categorizeResults && suggestions.length">
+        <div
+          class="search-result"
+          *ngFor="let modelWithSuggestions of getModelsWithSuggestions()"
+        >
+          <h3 class="suggestions-heading">
             <img
-              *ngIf="model.imageUrl"
-              [src]="model.imageUrl"
-              [alt]="model.displayName"
+              *ngIf="modelWithSuggestions.model.imageUrl"
+              [src]="modelWithSuggestions.model.imageUrl"
+              [alt]="modelWithSuggestions.model.displayName"
             />
-            {{ model.displayName }} ({{ relevantSuggestions?.length }})
+            {{ modelWithSuggestions.model.displayName }} ({{
+              modelWithSuggestions.items.length
+            }})
           </h3>
           <ul>
             <li
-              *ngFor="let suggestion of relevantSuggestions"
+              *ngFor="let suggestion of modelWithSuggestions.items"
               (mousedown)="populateValue(suggestion, $event)"
               class="suggestions"
             >

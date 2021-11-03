@@ -30,6 +30,7 @@ import {
   RecentSearchEvent,
   TypeEvent,
   ItemClickedEvent,
+  IModel,
 } from '../types';
 import {isPlatformBrowser} from '@angular/common';
 
@@ -54,7 +55,6 @@ export class SearchComponent<T extends IReturnType>
   categoryDisplay = false;
   searching = false;
   suggestions: T[] = [];
-  relevantSuggestions: T[] = [];
   recentSearches: ISearchQuery[] = [];
   category: string = ALL_LABEL;
   searchRequest$ = new Subject<{input: string; event: Event}>();
@@ -265,30 +265,12 @@ export class SearchComponent<T extends IReturnType>
       'source' as unknown as keyof T
     ] as unknown as string;
     let url: string | undefined;
-    this.config.models.forEach((model, i) => {
+    this.config.models.forEach(model => {
       if (model.name === modelName && model.imageUrl) {
         url = model.imageUrl;
       }
     });
     return url;
-  }
-
-  // also returns true if there are any suggestions related to the model
-  getSuggestionsFromModelName(modelName: string) {
-    this.relevantSuggestions = [];
-    this.suggestions.forEach(suggestion => {
-      const sourceModelName = suggestion[
-        'source' as keyof T
-      ] as unknown as string;
-      if (sourceModelName === modelName) {
-        this.relevantSuggestions.push(suggestion);
-      }
-    });
-    if (this.relevantSuggestions.length) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   boldString(str: T[keyof T] | string, substr: string) {
@@ -350,5 +332,28 @@ export class SearchComponent<T extends IReturnType>
     } else {
       return [category];
     }
+  }
+  getModelFromModelName(name: string) {
+    return this.config.models.find(item => item.name === name) as IModel;
+  }
+  getModelsWithSuggestions() {
+    const modelsWithSuggestions: {model: IModel; items: T[]}[] = [];
+    const sources: string[] = [];
+    this.suggestions.forEach(suggestion => {
+      if (sources.indexOf(suggestion['source']) >= 0) {
+        modelsWithSuggestions.every(modelWithSuggestions => {
+          if (modelWithSuggestions.model.name === suggestion['source']) {
+            modelWithSuggestions.items.push(suggestion);
+            return false;
+          }
+          return true;
+        });
+      } else {
+        const model = this.getModelFromModelName(suggestion['source']);
+        modelsWithSuggestions.push({model: model, items: [suggestion]});
+        sources.push(suggestion['source']);
+      }
+    });
+    return modelsWithSuggestions;
   }
 }

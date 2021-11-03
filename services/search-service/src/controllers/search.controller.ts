@@ -73,7 +73,8 @@ export function defineSearchController<T extends Model>(
       }
       const user = await getUser();
       const filter = await this.filter(query, user);
-      if (recentsConfig && saveInRecents) {
+      query.match = query.match.trim();
+      if (recentsConfig && saveInRecents && query.match) {
         if (!user) {
           throw new HttpErrors.BadRequest(Errors.USER_MISSING);
         } else {
@@ -81,7 +82,6 @@ export function defineSearchController<T extends Model>(
         }
       }
       query.where = filter;
-      query.match = query.match.trim();
       return this.searchFn(query);
     }
 
