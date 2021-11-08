@@ -37,18 +37,12 @@ export class FeatureToggleExampleApplication extends BootMixin(
     this.component(RestExplorerComponent);
     this.component(FeatureToggleServiceComponent);
     unleash.initialize({
-      url: 'http://localhost:4242/api/',
-      appName: 'my-node-name',
+      url: process.env.UNLEASH_URL,
+      appName: process.env.APP_NAME,
       environment: process.env.APP_ENV,
       customHeaders: {
-        Authorization:
-          '94ae432103ae5fee53d6ce8c57285b283c18f01314d5ce913ba1ddaa9563ce82',
+        Authorization: process.env.UNLEASH_AUTH,
       },
-      strategies: [
-        new TenantStrategy(),
-        new UserStrategy(),
-        new RoleStrategy(),
-      ],
     });
     this.bind(UNLEASH_CONST).to(unleash);
 
