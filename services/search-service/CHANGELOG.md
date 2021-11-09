@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.6 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>0.2.4 (2021-11-09)</small>
 
 * fix(search-client): reduce gap between input box and recent searches  (#400) ([2e5849d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2e5849d)), closes [#400](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/400)

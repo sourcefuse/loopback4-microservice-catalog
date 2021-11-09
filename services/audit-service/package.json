@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "A microservice for audit logging",
   "keywords": [
     "loopback-extension",
