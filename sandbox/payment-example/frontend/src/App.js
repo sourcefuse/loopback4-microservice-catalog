@@ -1,7 +1,7 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import SubsciptionPage  from './SubscriptionPage';
+import SubscriptionPage  from './SubscriptionPage';
 import CheckoutPage from './CheckoutPage';
 import OrdersPage from './OrdersPage';
 import {
@@ -16,7 +16,7 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/"
-             render={(props) => <SubsciptionPage {...props} />}/>
+             render={(props) => <SubscriptionPage {...props} />}/>
             <Route path="/checkout"
             render={(props) => <CheckoutPage {...props} />}/>
             <Route exact path="/orders"

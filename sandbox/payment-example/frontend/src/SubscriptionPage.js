@@ -2,7 +2,7 @@ import React from "react";
 import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn } from "mdbreact";
 import {useHistory} from "react-router-dom";
 
-export default function SubsciptionPage() {
+export default function SubscriptionPage() {
     const history = useHistory();
     function handleCheckOut(amount){
       const location = {

@@ -54,7 +54,7 @@ handlePayment = (amount,type) => {
         status: 'draft',
         paymentGatewayId:'', // payment gateway id from database
         paymentmethod:'stripe',
-        currency:'INR'   
+        currency:'INR'
       }).then((resp)=>this.res(resp));
     }
   else if(this.state.radio === 1){
