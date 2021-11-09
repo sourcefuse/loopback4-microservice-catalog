@@ -46,9 +46,12 @@ $search-width: 360px;
 }
 
 .toolbar-search-select {
-  width: 30%;
+  width: 20%;
   ::ng-deep .mat-select-arrow {
     opacity: 0;
+  }
+  ::ng-deep .mat-select-value-text {
+    font-size: 9px;
   }
   ::ng-deep {
     .mat-form-field-flex {

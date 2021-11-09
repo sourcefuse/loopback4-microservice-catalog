@@ -80,7 +80,7 @@ export class SearchComponent<T extends IReturnType>
         },
       ];
     } else {
-      //do nothing
+      // do nothing
     }
   }
 
@@ -350,7 +350,7 @@ export class SearchComponent<T extends IReturnType>
         });
       } else {
         const model = this.getModelFromModelName(suggestion['source']);
-        modelsWithSuggestions.push({model: model, items: [suggestion]});
+        modelsWithSuggestions.push({model, items: [suggestion]});
         sources.push(suggestion['source']);
       }
     });
