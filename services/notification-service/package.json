@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-service",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -60,7 +60,7 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.3.2",
     "@loopback/service-proxy": "^3.2.2",
-    "@sourceloop/core": "^3.1.1",
+    "@sourceloop/core": "^3.1.2",
     "aws-sdk": "^2.907.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",

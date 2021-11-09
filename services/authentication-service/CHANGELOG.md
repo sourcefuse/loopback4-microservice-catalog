@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.4.1 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/authentication-service (#403) ([c854899](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c854899)), closes [#403](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/403)
+
+
+
+
+
 ## 1.4.0 (2021-10-24)
 
 * fix: Token not working from swagger (#367) ([263db5c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/263db5c)), closes [#367](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/367)

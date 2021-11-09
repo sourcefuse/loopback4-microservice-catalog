@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.2 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/notification-service (#406) ([3c07ece](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c07ece)), closes [#406](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/406)
+
+
+
+
+
 ## <small>2.1.1 (2021-10-24)</small>
 
 * fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

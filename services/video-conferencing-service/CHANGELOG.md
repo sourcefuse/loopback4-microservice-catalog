@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
 ## 1.3.0 (2021-10-24)
 
 * feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)

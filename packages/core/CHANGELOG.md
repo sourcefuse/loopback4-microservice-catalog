@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.1.2 (2021-11-09)</small>
+
+* chore(deps): bump validator from 13.6.0 to 13.7.0 in /packages/core (#405) ([f0d3963](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f0d3963)), closes [#405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/405)
+
+
+
+
+
 ## <small>3.1.1 (2021-10-24)</small>
 
 * fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)

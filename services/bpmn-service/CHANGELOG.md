@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
 ## 3.0.0 (2021-10-24)
 
 * fix(bpmn-service): changed basePath (#383) ([d6e1dce](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d6e1dce)), closes [#383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/383) [#382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/382)

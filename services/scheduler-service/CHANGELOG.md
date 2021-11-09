@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.3.1 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/scheduler-service (#404) ([5bd916b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5bd916b)), closes [#404](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/404)
+
+
+
+
+
 ## 2.3.0 (2021-10-24)
 
 * fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

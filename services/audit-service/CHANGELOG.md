@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.6.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## 2.6.0 (2021-10-24)
 
 * fix(audit-service): open api update ([ac3775c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ac3775c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

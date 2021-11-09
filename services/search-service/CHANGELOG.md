@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.4 (2021-11-09)</small>
+
+* fix(search-client): reduce gap between input box and recent searches  (#400) ([2e5849d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2e5849d)), closes [#400](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/400)
+
+
+
+
+
 ## <small>0.2.3 (2021-10-29)</small>
 
 * fix(search-service): handle case in which match has whitespaces (#395) ([50e467e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/50e467e)), closes [#395](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/395)
