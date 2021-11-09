@@ -2,17 +2,16 @@ import React from "react";
 import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn } from "mdbreact";
 import {useHistory} from "react-router-dom";
 
-export default function Subsciption() {
+export default function SubsciptionPage() {
     const history = useHistory();
     function handleCheckOut(amount){
- 
       const location = {
           pathname: '/checkout',
           state: { amount: amount }
         };
         history.push(location);
-  
   }
+  const backgroundImageUrl = 'url("https://mdbootstrap.com/img/Photos/Others/pricing-table%20(6).jpg")';
     return (
     <section className="text-center my-5">
       <h2 className="h1-responsive font-weight-bold text-center my-5">
@@ -28,8 +27,7 @@ export default function Subsciption() {
           <MDBCard
             className="card-image"
             style={{
-              backgroundImage:
-                'url("https://mdbootstrap.com/img/Photos/Others/pricing-table%20(6).jpg")'
+              backgroundImage:backgroundImageUrl
             }}
           >
             <div className="text-white text-center pricing-card d-flex align-items-center rgba-stylish-strong py-3 px-3 rounded">
@@ -76,8 +74,7 @@ export default function Subsciption() {
           <MDBCard
             className="card-image"
             style={{
-              backgroundImage:
-                'url("https://mdbootstrap.com/img/Photos/Others/pricing-table%20(6).jpg")'
+              backgroundImage:backgroundImageUrl
             }}
           >
             <div className="text-white text-center pricing-card d-flex align-items-center rgba-teal-strong py-3 px-3 rounded">
@@ -124,8 +121,7 @@ export default function Subsciption() {
           <MDBCard
             className="card-image"
             style={{
-              backgroundImage:
-                'url("https://mdbootstrap.com/img/Photos/Others/pricing-table%20(6).jpg")'
+              backgroundImage:backgroundImageUrl
             }}
           >
             <div className="text-white text-center pricing-card d-flex align-items-center rgba-stylish-strong py-3 px-3 rounded">

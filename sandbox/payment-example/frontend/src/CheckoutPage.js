@@ -3,7 +3,7 @@ import { MDBContainer, MDBCol, MDBRow, MDBCard, MDBCardBody, MDBBtn, MDBNav, MDB
     MDBTabContent} from "mdbreact";
 import axios from 'axios';
 
-class checkOutPage extends Component {
+class CheckoutPage extends Component {
 state={
   activePill: "1",
   radio: 1,
@@ -32,35 +32,32 @@ selectNextTab = () => {
   });
 }
 
+res = (response) => {
+  // handle success
+  if(response){
+    window.location.href = response.request.responseURL;
+  }
+}
+
 handlePayment = (amount,type) => {
-  if(type === 'orders'){
-    if(this.state.radio === 1){
+    if( type === 'orders' && this.state.radio === 1){
       axios.post('http://localhost:3000/place-order-and-pay',{
       totalAmount: (amount * 100), //amount
       status: 'draft',
       paymentGatewayId:'', // payment gateway id from database
       paymentmethod:'razorpay',
       currency:'INR'
-    }).then(function(response) {
-      if(response){
-        window.location.href = response.request.responseURL;
-      }
-  });
-    }else if(this.state.radio === 2){
+    }).then((response) => this.res(response));
+    }else if(type === 'orders' && this.state.radio === 2){
       axios.post('http://localhost:3000/place-order-and-pay',{
         totalAmount: (amount * 100), //amount
         status: 'draft',
         paymentGatewayId:'', // payment gateway id from database
         paymentmethod:'stripe',
-        currency:'INR'    
-      }).then(function(response) {
-        if(response){
-          window.location.href = response.request.responseURL;
-        }
-      });
+        currency:'INR'   
+      }).then((resp)=>this.res(resp));
     }
-  }else{
-  if(this.state.radio === 1){
+  else if(this.state.radio === 1){
   axios.post('http://localhost:3000/create-subscription-and-pay',{
     totalAmount: 1000, //amount
     status: 'draft',
@@ -70,31 +67,19 @@ handlePayment = (amount,type) => {
     startDate: '', // Date in YYYY-MM-DD
     endDate: '', // Date in YYYY-MM-DD
     currency:'INR'
-  }).then(function(response) {
-    // handle success
-    if(response){
-      window.location.href = response.request.responseURL;
-    }
-  });
-}else if(this.state.radio === 2){
+  }).then((subres)=>this.res(subres));
+  }else if(this.state.radio === 2){
   axios.post('http://localhost:3000/create-subscription-and-pay',{
     totalAmount: 10000, //amount
     status: 'draft',
     paymentGatewayId:'', // payment gateway id from database
     paymentmethod:'stripe', //enum
     currency:'INR',
-    planId:'', // plan id from stripe
-    startDate: '', // Date in YYYY-MM-DD
-    endDate: '' // Date in YYYY-MM-DD
-
-  }).then(function(response) {
-    // handle success
-    if(response){
-      window.location.href = response.request.responseURL;
-    }
-  });
+    planId:'',// plan id from stripe
+    startDate: '',// Date in YYYY-MM-DD
+    endDate: ''// Date in YYYY-MM-DD
+  }).then((subresp)=>this.res(subresp));
 }
-  }
 }
 
 render() {
@@ -197,14 +182,19 @@ return (
                   <MDBTabPane tabId="3">
                     <div className="d-block my-6">
                       <div className="mb-2">
-                        <input name="group2" type="radio" style={{height:"34px",width:"20px"}} className="form-check-input with-gap" id="radioWithGap4" checked={this.state.radio===1 ? true : false} required  onClick={this.onClick(1)}/>
+                        <input name="group2" type="radio" style={{height:"34px",width:"20px"}}
+                          className="form-check-input with-gap" id="radioWithGap4"
+                          checked={this.state.radio===1 ? true : false} required
+                          onClick={this.onClick(1)}/>
                         <label className="form-check-label" htmlFor="radioWithGap4" style ={{fontSize: "1vw",
                           fontWeight: "bold",
                           marginLeft: "1.5vw",
                           marginTop: "1.0vh"}}>Pay with Razorpay</label>
                       </div>
                       <div className="mb-2">
-                        <input iname="group2" type="radio" style={{height:"34px",width:"20px"}} className="form-check-input with-gap" id="radioWithGap5" checked={this.state.radio===2 ? true : false}
+                        <input iname="group2" type="radio" style={{height:"34px",width:"20px"}}
+                          className="form-check-input with-gap" id="radioWithGap5"
+                          checked={this.state.radio===2 ? true : false}
                           required  onClick={this.onClick(2)}/>
                         <label className="form-check-label" htmlFor="radioWithGap5" style ={{fontSize: "1vw",
                           fontWeight: "bold",
@@ -226,4 +216,4 @@ return (
   }
 }
 
-export default checkOutPage;
+export default CheckoutPage;
