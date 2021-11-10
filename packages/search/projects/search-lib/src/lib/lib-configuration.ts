@@ -16,6 +16,8 @@ export class Configuration<T = IDefaultReturnType> {
   saveInRecents?: boolean;
   /** a placeholder to display in the search box */
   placeholder?: string;
+  /** a function to generate placeholder, overrides the placeholder property */
+  placeholderFunction?: (input: string, category: string) => string;
   /** categorize results on the basis of models provided */
   categorizeResults?: boolean;
   /** hides the recent search list */
@@ -46,6 +48,7 @@ export class Configuration<T = IDefaultReturnType> {
     this.models = d.models;
 
     this.placeholder = d.placeholder ?? 'Search';
+    this.placeholderFunction = d.placeholderFunction;
     /* IRequestParameters - will be given default values before call is made in case undefined/null,
     otherwise there ! is used on which sonar gives code smell */
     this.limit = d.limit;

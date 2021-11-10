@@ -4,7 +4,11 @@
       matInput
       autocomplete="off"
       type="text"
-      [placeholder]="config.placeholder || 'Search'"
+      [placeholder]="
+        config.placeholderFunction
+          ? config.placeholderFunction(searchInput.value, category)
+          : config.placeholder || 'Search'
+      "
       #searchInput
       name="searchInput"
       (focus)="showSuggestions()"
