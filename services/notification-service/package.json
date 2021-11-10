@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-service",
-  "version": "2.1.2",
+  "version": "2.1.4",
   "description": "services",
   "keywords": [
     "loopback-extension",

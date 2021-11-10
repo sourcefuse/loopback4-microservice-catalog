@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.3.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>2.3.1 (2021-11-09)</small>
 
 * chore(deps): bump validator in /services/scheduler-service (#404) ([5bd916b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5bd916b)), closes [#404](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/404)

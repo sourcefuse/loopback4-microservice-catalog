@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.3 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>2.1.2 (2021-11-09)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example
