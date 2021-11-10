@@ -4,7 +4,9 @@
     "title": "Audit Service",
     "version": "1.0.0",
     "description": "A microservice for audit logging",
-    "contact": {}
+    "contact": {
+      "name": "Sourcefuse"
+    }
   },
   "paths": {
     "/audit-logs/count": {

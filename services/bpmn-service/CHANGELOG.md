@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>3.0.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
+## 3.0.0 (2021-10-24)
+
+* fix(bpmn-service): changed basePath (#383) ([d6e1dce](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d6e1dce)), closes [#383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/383) [#382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/382)
+* fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)
+* feat(bpmn-service): add unit and acceptance tests (#289) ([320e513](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e513)), closes [#289](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/289) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+### BREAKING CHANGE
+
+* changed basePath from '/workflow' to '/workflows'
+
+
+
+
 ## 2.3.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

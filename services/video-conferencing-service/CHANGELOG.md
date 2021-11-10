@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>1.3.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
+## 1.3.0 (2021-10-24)
+
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump axios in /services/video-conferencing-service (#337) ([0b67c0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b67c0a)), closes [#337](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/337)
+* chore(deps): bump i in /services/video-conferencing-service (#350) ([b39e85c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b39e85c)), closes [#350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/350)
+* chore(deps): bump passport-oauth2 (#369) ([d68582b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d68582b)), closes [#369](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/369)
+* fix(video-conferencing-service): add reusability (#330) ([12b7c8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12b7c8c)), closes [#330](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/330)
+
+
+
+
+
 ## <small>1.2.3 (2021-09-12)</small>
 
 * chore(deps): bump path-parse in /services/video-conferencing-service (#300) ([9de4906](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9de4906)), closes [#300](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/300)

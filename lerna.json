@@ -27,7 +27,8 @@
         "@sourceloop/notification-socket-example",
         "@sourceloop/video-conferencing-ms-example",
         "@sourceloop/workflow-ms-example",
-        "@sourceloop/pubnub-example"
+        "@sourceloop/pubnub-example",
+        "@sourceloop/search-ms-example"
       ]
     },
     "clean": {
