@@ -36,7 +36,6 @@ export class ChatComponent implements OnInit {
     this.uuid2 = 'ff1b8600-0e86-e4cf-44da-67c0e627ab20';
   }
   public messages: ChatMessage[] = [];
-  public notifications: any[] = [];
   public senderUUID = '';
   public receiverUUID = '';
   public token = '';
@@ -71,7 +70,7 @@ export class ChatComponent implements OnInit {
       });
 
       this.messages = [];
-      for (let d of data) {
+      for (const d of data) {
         const temp: ChatMessage = {
           body: d.body,
           subject: d.subject,
