@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgxNotificationService} from 'ngx-notification';
 import {PubNubAngular} from 'pubnub-angular2';
+import {environment} from 'src/environments/environment';
 import {Chat, ChatMessage} from '../chat.model';
 import {UserService} from '../chat.service';
 
@@ -32,15 +33,15 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.uuid1 = '02d374a3-3d92-067b-6502-b513a7594087';
-    this.uuid2 = 'ff1b8600-0e86-e4cf-44da-67c0e627ab20';
+    this.uuid1 = environment.USER1_UUID;
+    this.uuid2 = environment.USER2_UUID;
   }
   public messages: ChatMessage[] = [];
   public senderUUID = '';
   public receiverUUID = '';
   public token = '';
-  private uuid1 = '02d374a3-3d92-067b-6502-b513a7594087';
-  private uuid2 = 'ff1b8600-0e86-e4cf-44da-67c0e627ab20';
+  private uuid1 = '';
+  private uuid2 = '';
 
   enterToken() {
     this.userHttpService.getUserTenantId(this.token).subscribe(data => {

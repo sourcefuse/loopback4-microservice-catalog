@@ -4,6 +4,11 @@
 
 export const environment = {
   production: false,
+  USER1_UUID: '',
+  USER2_UUID: '',
+  BASE_URL: 'http://localhost:3005',
+  PUBLISH_KEY: '',
+  SUBSCRIBE_KEY: '',
 };
 
 /*

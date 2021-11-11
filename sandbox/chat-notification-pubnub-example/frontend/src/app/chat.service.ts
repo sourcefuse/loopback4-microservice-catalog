@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Chat} from './chat.model';
+import {environment} from 'src/environments/environment';
 
-const baseUrl = `http://localhost:3005/messages`;
+const baseUrl = `${environment.BASE_URL}/messages`;
+const tenantIdUrl = `${environment.BASE_URL}/userTenantId`;
 
 @Injectable()
 export class UserService {
@@ -26,7 +28,7 @@ export class UserService {
 
   getUserTenantId(token: string) {
     const authHeader = new HttpHeaders({Authorization: `Bearer ${token}`});
-    return this.http.get('http://localhost:3005/userTenantId', {
+    return this.http.get(tenantIdUrl, {
       headers: authHeader,
       responseType: 'text',
     });
