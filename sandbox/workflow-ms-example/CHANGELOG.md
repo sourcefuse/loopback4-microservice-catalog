@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.3 (2021-11-11)</small>
+
+* chore(deps): bump validator in /sandbox/workflow-ms-example (#411) ([c0b25aa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c0b25aa)), closes [#411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/411)
+
+
+
+
+
+## <small>0.4.2 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/workflow-ms-example
+
+
+
+
+
+## <small>0.4.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/workflow-ms-example
+
+
+
+
+
+## 0.4.0 (2021-10-24)
+
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump i from 0.3.6 to 0.3.7 in /sandbox/workflow-ms-example (#353) ([7354ef2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7354ef2)), closes [#353](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/353)
+* chore(deps): bump passport-oauth2 in /sandbox/workflow-ms-example (#372) ([b62310d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b62310d)), closes [#372](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/372)
+
+
+
+
+
 ## 0.3.0 (2021-09-12)
 
 * feat(sandbox): basic-ci-setup (#298) ([fc50e81](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc50e81)), closes [#298](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/298)

@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.4.4 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>1.4.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>1.4.1 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/authentication-service (#403) ([c854899](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c854899)), closes [#403](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/403)
+
+
+
+
+
+## 1.4.0 (2021-10-24)
+
+* fix: Token not working from swagger (#367) ([263db5c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/263db5c)), closes [#367](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/367)
+* fix(auth-service): In authentication service fixed issue current user is not bound to any value in t ([85d3fb8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85d3fb8)), closes [#349](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/349)
+* fix(authentication-service): added test cases (#316) ([65d55e4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/65d55e4)), closes [#316](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/316) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181) [#181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/181)
+* fix(core): fix bugs ([e519774](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e519774)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump i in /services/authentication-service (#356) ([b273e9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b273e9e)), closes [#356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/356)
+* chore(deps): bump passport-oauth2 in /services/authentication-service (#373) ([dc56575](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dc56575)), closes [#373](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/373)
+
+
+
+
+
 ## 1.3.0 (2021-09-12)
 
 * fix(authentication-service): allow keycloak username to be an auth id as well, if needed ([e831237](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e831237)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

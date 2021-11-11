@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.6.4 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
+## <small>2.6.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.6.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
+## 2.6.0 (2021-10-24)
+
+* fix(audit-service): open api update ([ac3775c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ac3775c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(core): fix bugs ([e519774](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e519774)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(audit-service): add unit test for audit service (#291) ([444ed5d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/444ed5d)), closes [#291](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/291) [#290](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/290)
+* feat(search-service): add search service, with a sandbox example (#341) ([501513c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/501513c)), closes [#341](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/341)
+
+
+
+
+
 ## 2.3.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

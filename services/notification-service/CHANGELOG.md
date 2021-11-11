@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.5 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
+## <small>2.1.4 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.1.2 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/notification-service (#406) ([3c07ece](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c07ece)), closes [#406](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/406)
+
+
+
+
+
+## <small>2.1.1 (2021-10-24)</small>
+
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(deps): bump i in /services/notification-service (#355) ([f16d7e5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f16d7e5)), closes [#355](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/355)
+* chore(deps): bump passport-oauth2 in /services/notification-service (#376) ([a901a75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a901a75)), closes [#376](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/376)
+
+
+
+
+
 ## 2.0.0 (2021-09-12)
 
 * fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

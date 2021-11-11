@@ -36,7 +36,9 @@ const scopes = [
     { name: 'video-conferencing-service' },
     { name: 'audit-service' },
     { name: 'bpmn-service' },
+    { name: 'search-service' },
     { name: 'sandbox' },
+    { name: 'search-client'},
     {name: 'chat-service'},
 ]
 

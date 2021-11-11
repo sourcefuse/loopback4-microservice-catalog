@@ -1,12 +1,8 @@
-import { TourStoreServiceService } from './tour-store-service.service';
-import { Injectable } from '@angular/core';
+import {TourStoreServiceService} from './tour-store-service.service';
+import {Injectable} from '@angular/core';
 import Shepherd from 'shepherd.js';
-import { Tour, TourButton, TourStep } from '../models';
-import {
-  Router,
-  NavigationEnd,
-  Event as NavigationEvent,
-} from '@angular/router';
+import {Tour, TourButton, TourStep} from '../models';
+import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +16,13 @@ export class TourServiceService {
         enabled: true,
       },
       classes: 'class-1 class-2',
-      scrollTo: { behavior: 'smooth', block: 'center' },
+      scrollTo: {behavior: 'smooth', block: 'center'},
     },
   });
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
-    private readonly router: Router
-  ) { }
+    private readonly router: Router,
+  ) {}
 
   private addRemovedSteps(removedSteps): void {
     const count = removedSteps.length;
@@ -42,7 +38,7 @@ export class TourServiceService {
     wrapperNormalPrev,
     wrapperNext,
     wrapperPrev,
-    func
+    func,
   ): void {
     if (b.key === 'prevAction') {
       b.action =
@@ -56,7 +52,7 @@ export class TourServiceService {
   }
 
   private navigationCheckNext(event: NavigationEvent, e: TourStep): void {
-    if (event instanceof NavigationEnd) {
+    if (event instanceof NavigationEnd && event.url === e.currentRoute) {
       this.waitForElement(e.attachTo.element, 0)
         .then(() => {
           this.tour.cancel();
@@ -69,7 +65,7 @@ export class TourServiceService {
   }
 
   private navigationCheckBack(event: NavigationEvent, e: TourStep): void {
-    if (event instanceof NavigationEnd) {
+    if (event instanceof NavigationEnd && event.url === e.currentRoute) {
       this.waitForElement(e.attachTo.element, 0)
         .then(() => {
           this.tour.cancel();
@@ -92,7 +88,8 @@ export class TourServiceService {
         } else if (timeout && now - startTime >= timeout) {
           clearInterval(timer);
           reject();
-        } else {// do nothing
+        } else {
+          // do nothing
         }
       }, this.interval);
     });
@@ -102,7 +99,7 @@ export class TourServiceService {
     let removedSteps;
     const sessionId = this.tourStoreService.getSessionId();
     this.tourStoreService
-      .loadState({ tourId: tourInstance.tourId, sessionId })
+      .loadState({tourId: tourInstance.tourId, sessionId})
       .subscribe(currentStep => {
         if (currentStep) {
           let f = true;
@@ -136,7 +133,10 @@ export class TourServiceService {
               });
               this.router.navigate([e.nextRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
-                this.navigationCheckNext(event, e);
+                const nextStep = tourInstance.tourSteps.filter(
+                  ts => ts.id === e.nextStepId,
+                )[0];
+                this.navigationCheckNext(event, nextStep);
               });
             };
             const wrapperPrev = () => {
@@ -149,7 +149,10 @@ export class TourServiceService {
               });
               this.router.navigate([e.prevRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
-                this.navigationCheckBack(event, e);
+                const prevStep = tourInstance.tourSteps.filter(
+                  ts => ts.id === e.prevStepId,
+                )[0];
+                this.navigationCheckBack(event, prevStep);
               });
             };
             const wrapperNormalNext = () => {
@@ -181,7 +184,7 @@ export class TourServiceService {
               wrapperNormalPrev,
               wrapperNext,
               wrapperPrev,
-              func
+              func,
             );
           });
         });
@@ -247,7 +250,7 @@ export class TourServiceService {
                 wrapperNormalPrevRemoved,
                 wrapperNextRemoved,
                 wrapperPrevRemoved,
-                funcRemoved
+                funcRemoved,
               );
             });
           });
@@ -258,7 +261,7 @@ export class TourServiceService {
   }
 
   public run(tourId: string): void {
-    this.tourStoreService.loadTour({ tourId }).subscribe(tourInstance => {
+    this.tourStoreService.loadTour({tourId}).subscribe(tourInstance => {
       if (tourInstance) {
         this.triggerTour(tourInstance);
       } else {
