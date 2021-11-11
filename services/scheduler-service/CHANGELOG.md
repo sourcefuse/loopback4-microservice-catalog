@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.3.4 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/scheduler-service
+
+
+
+
+
+## <small>2.3.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.3.1 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/scheduler-service (#404) ([5bd916b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5bd916b)), closes [#404](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/404)
+
+
+
+
+
+## 2.3.0 (2021-10-24)
+
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(bpmn-service): add unit and acceptance tests (#289) ([320e513](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e513)), closes [#289](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/289) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump i from 0.3.6 to 0.3.7 in /services/scheduler-service (#351) ([9fb40e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9fb40e3)), closes [#351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/351)
+* chore(deps): bump passport-oauth2 in /services/scheduler-service (#370) ([771f4da](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/771f4da)), closes [#370](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/370)
+
+
+
+
+
+## 2.0.0 (2021-09-12)
+
+* fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(scheduler-service): schedular service migrations correction (#295) ([5b56f38](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b56f38)), closes [#295](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/295) [#233](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/233)
+* feat(payment-service): adds payment-service feature (#257) ([e571834](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e571834)), closes [#257](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/257)
+* feat(sandbox): example of pubnub as a provider in notification service (#279) ([e30a0ed](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30a0ed)), closes [#279](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/279) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#298](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/298) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208)
+* chore(deps): bump path-parse in /services/scheduler-service (#299) ([941cf88](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/941cf88)), closes [#299](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/299)
+
+
+
+
+
 ## <small>1.2.2 (2021-08-02)</small>
 
 * fix(scheduler-service): update openapi for video and scheduler service ([836e291](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/836e291)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

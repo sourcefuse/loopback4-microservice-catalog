@@ -844,6 +844,11 @@
         "tags": [
           "LoginController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "description": "Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
         "responses": {
           "200": {

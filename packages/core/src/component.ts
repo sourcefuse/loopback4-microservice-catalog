@@ -4,16 +4,18 @@ import {
   ProviderMap,
   inject,
   CoreBindings,
+  createBindingFromClass,
 } from '@loopback/core';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 
 import {LocaleKey} from './enums';
-import {SFCoreBindings} from './keys';
+import {SFCoreBindings, OASBindings} from './keys';
 import {LoggerExtensionComponent} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
+import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import * as swstats from 'swagger-stats';
 
 export class CoreComponent implements Component {
@@ -85,8 +87,9 @@ export class CoreComponent implements Component {
     }
 
     this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
-
+    this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
+    this.application.add(createBindingFromClass(OperationSpecEnhancer));
   }
 
   localeObj: i18nAPI = {} as i18nAPI;

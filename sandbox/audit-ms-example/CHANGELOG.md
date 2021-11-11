@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.4 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.3.3 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.3.2 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.3.1 (2021-10-24)</small>
+
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>0.2.2 (2021-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
 ## <small>0.2.1 (2021-07-24)</small>
 
 * fix(core): upgrade loopback4-soft-delete ([f653e0c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f653e0c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

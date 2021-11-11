@@ -11,8 +11,12 @@ export class ExecutionInputValidationProvider
       const ajv = new Ajv();
       const validate = ajv.compile(schema);
       try {
-        validate(input);
-        return true;
+        const valid = validate(input);
+        if (valid) {
+          return true;
+        } else {
+          throw new Error('invalid');
+        }
       } catch (e) {
         throw new HttpErrors.BadRequest(JSON.stringify(validate.errors));
       }

@@ -1,10 +1,13 @@
 # Sandbox Examples
-The sandbox examples have been pre-configured with a `docker-compose` file for easy setup. Please examine the environment variables in the file prior to running and change the variables where appropriate. For example, if you want to test the Keycloak integration, plugin your configuration values to the `docker-compose.yml` file. 
+
+The sandbox examples have been pre-configured with a `docker-compose` file for easy setup. Please examine the environment variables in the file prior to running and change the variables where appropriate. For example, if you want to test the Keycloak integration, plugin your configuration values to the `docker-compose.yml` file.
 
 ## Basic Setup
+
 You must have `docker-compose` installed locally. This is not a production grade setup.
 
 To start the services, simply run from this directory.
+
 ```shell
 docker-compose up --build
 ```
@@ -12,18 +15,20 @@ docker-compose up --build
 If you would like the services to run in detached mode, supply the `-d` parameter.
 
 The services are now running under the following:
-* [audit-ms-example](http://localhost:3032/explorer)
-* [notification-example](http://localhost:3030/explorer)
-* [auth-multitenant-example](http://localhost:3000/explorer)
-* [in-mail-example](http://localhost:3033/explorer)
-* [notification-socket-example](http://localhost:3030/explorer)
-* [scheduler-example](http://localhost:3034/explorer)
-* [video-conferencing-ms-example](http://localhost:3040/explorer)
-* [workflow-ms-example](http://localhost:3031/explorer)
-* [Camunda](http://localhost:8080)
-* [pgAdmin](http://localhost:5050)
-* PostgreSQL - localhost:5432
-* Redis - localhost:6739
+
+- [audit-ms-example](http://localhost:3032/explorer)
+- [notification-example](http://localhost:3030/explorer)
+- [auth-multitenant-example](http://localhost:3000/explorer)
+- [in-mail-example](http://localhost:3033/explorer)
+- [notification-socket-example](http://localhost:3030/explorer)
+- [scheduler-example](http://localhost:3034/explorer)
+- [video-conferencing-ms-example](http://localhost:3040/explorer)
+- [workflow-ms-example](http://localhost:3031/explorer)
+- [chat-notification-pubnub-example](http://localhost:3050/explorer)
+- [Camunda](http://localhost:8080)
+- [pgAdmin](http://localhost:5050)
+- PostgreSQL - localhost:5432
+- Redis - localhost:6739
 
 Credentials for the database and pgAdmin are in the `docker-compose` file or can be overridden with environment variables. An orchestration container creates all of the databases and another runs the service DB migrations for you.
 
@@ -149,9 +154,10 @@ istio-system   job.batch/istio-security-post-install-1.5.1   1/1           82s  
 istio-system   job.batch/istio-grafana-post-install-1.5.1    1/1           82s        25d
 
 ```
+
 </details>
 
-Change your working directory to  `./sandbox`
+Change your working directory to `./sandbox`
 
 Run the build script
 
@@ -161,8 +167,8 @@ chmod +x ./build.sh
 ./build.sh
 ```
 
-Now create the `sourceloop-sandbox` namespace.   
-:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:  
+Now create the `sourceloop-sandbox` namespace.  
+:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:
 
 ```sh
 $ microk8s kubectl apply -f k8s/manifests/namespaces/
@@ -186,7 +192,7 @@ Switched to context "sourceloop-sandbox".
 ```
 
 Now create the rest of the resources:  
-:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:   
+:exclamation: Skip this step if you plan on using `terrform` to deploy. :exclamation:
 
 ```sh
 microk8s kubectl apply -f k8s/manifests/ --recursive
@@ -205,7 +211,7 @@ To avoid adding a host header to every request, add the following entries to you
 127.0.0.1	camunda.sourceloop.local
 ```
 
-You're local setup is now up and running. 
+You're local setup is now up and running.
 
 To view the dashboard, run
 
@@ -213,8 +219,9 @@ To view the dashboard, run
 $ microk8s dashboard-proxy
 ```
 
-### MicroK8s  
-If you run into issue, these are the commands you may need to run locally, manually.  
+### MicroK8s
+
+If you run into issue, these are the commands you may need to run locally, manually.
 
 The contents of this function can be found in the `ci_build.sh` file located in `sandbox/ci_build.sh`
 
@@ -235,13 +242,15 @@ install_microk8s() {
 
 If you prefer to use the Terraform module, follow the steps below. Terraform `1.0.3` + is required.
 
-Perform the same steps above to:  
-* Enable `microk8s` services
-* Running the container build script
-* Set the context
-* Adding host header entries
+Perform the same steps above to:
 
-Once the above steps are complete, you can proceed to run the following:  
+- Enable `microk8s` services
+- Running the container build script
+- Set the context
+- Adding host header entries
+
+Once the above steps are complete, you can proceed to run the following:
+
 ```sh
 cd k8s/tf-sourceloop-sandbox
 terraform init
@@ -249,35 +258,39 @@ terraform apply
 ```
 
 :warning: **Issues**:
-* <details open="true">
+
+- <details open="true">
   <summary>connection refused</summary>
-  
-  If you get an error similar the following, it shows you are unable to connect to the resources:  
-  
-  ```  
+
+  If you get an error similar the following, it shows you are unable to connect to the resources:
+
+  ```
   kubernetes_namespace.sourceloop_sandbox: Creating...
   ╷
   │ Error: Post "http://localhost/api/v1/namespaces": dial tcp 127.0.0.1:80: connect: connection refused
-  │ 
+  │
   │   with kubernetes_namespace.sourceloop_sandbox,
   │   on namespace.tf line 1, in resource "kubernetes_namespace" "sourceloop_sandbox":
   │    1: resource "kubernetes_namespace" "sourceloop_sandbox" {
-  │ 
+  │
   ╵
   ```
+
   You will need to execute the following in order to copy the kube config to the `.kube` folder: `microk8s config > $HOME/.kube/config`
-  
-  ---
-  If you downloaded MicroK8s using snap, and you get an error like the following:  
-  
+
+  ***
+
+  If you downloaded MicroK8s using snap, and you get an error like the following:
+
   ```
   /snap/microk8s/2346/bin/sed: couldn't flush stdout: Permission denied
   ```
-  You will can run `microk8s config` and manually copy the console output to `~/.kube/config`.  
+
+  You will can run `microk8s config` and manually copy the console output to `~/.kube/config`.
 
   </details>
-* Terraform apply failed on resource creation. 
-  * Give it about five minutes then re-run `terraform apply`, all resources should now properly apply.  
+
+- Terraform apply failed on resource creation.
+  - Give it about five minutes then re-run `terraform apply`, all resources should now properly apply.
 
 See the [readme](./k8s/tf-sourceloop-sandbox/README.md) for more information on the Terraform module.
-

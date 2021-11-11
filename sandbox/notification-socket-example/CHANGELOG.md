@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.4 (2021-11-11)</small>
+
+* chore(deps): bump validator in /sandbox/notification-socket-example (#410) ([ed0581e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ed0581e)), closes [#410](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/410)
+
+
+
+
+
+## <small>2.1.3 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>2.1.2 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>2.1.1 (2021-10-24)</small>
+
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(deps): bump passport-oauth2 (#374) ([5a5fd55](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a5fd55)), closes [#374](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/374)
+
+
+
+
+
+## <small>2.0.6 (2021-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>2.0.5 (2021-08-06)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

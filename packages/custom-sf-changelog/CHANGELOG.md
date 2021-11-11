@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.3.0 (2021-10-24)
+
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+
+
+
+
+
+## 1.2.0 (2021-09-12)
+
+* feat(payment-service): adds payment-service feature (#257) ([e571834](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e571834)), closes [#257](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/257)
+
+
+
+
+
 ## 1.1.0 (2021-07-24)
 
 * refactor(authentication-service): fix sonar issues (#266) ([3ea2082](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea2082)), closes [#266](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/266) [#251](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/251)

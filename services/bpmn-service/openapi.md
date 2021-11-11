@@ -48,7 +48,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/execute',
+fetch('/workflows/{id}/execute',
 {
   method: 'POST',
   body: inputBody,
@@ -73,7 +73,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/execute',
+fetch('/workflows/{id}/execute',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -87,7 +87,7 @@ fetch('/workflow/{id}/execute',
 
 ```
 
-`POST /workflow/{id}/execute`
+`POST /workflows/{id}/execute`
 
 > Body parameter
 
@@ -128,7 +128,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/version/{version}',
+fetch('/workflows/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -149,7 +149,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/version/{version}',
+fetch('/workflows/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -163,7 +163,7 @@ fetch('/workflow/{id}/version/{version}',
 
 ```
 
-`DELETE /workflow/{id}/version/{version}`
+`DELETE /workflows/{id}/version/{version}`
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -193,14 +193,15 @@ HTTPBearer
 const inputBody = '{
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'PATCH',
   body: inputBody,
@@ -219,14 +220,15 @@ const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 };
 const headers = {
   'Content-Type':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'PATCH',
   body: JSON.stringify(inputBody),
@@ -240,7 +242,7 @@ fetch('/workflow/{id}',
 
 ```
 
-`PATCH /workflow/{id}`
+`PATCH /workflows/{id}`
 
 > Body parameter
 
@@ -248,7 +250,8 @@ fetch('/workflow/{id}',
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 ```
 
@@ -282,7 +285,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'GET',
 
@@ -303,7 +306,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'GET',
 
@@ -317,7 +320,7 @@ fetch('/workflow/{id}',
 
 ```
 
-`GET /workflow/{id}`
+`GET /workflows/{id}`
 
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
@@ -348,7 +351,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'DELETE',
 
@@ -369,7 +372,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'DELETE',
 
@@ -383,7 +386,7 @@ fetch('/workflow/{id}',
 
 ```
 
-`DELETE /workflow/{id}`
+`DELETE /workflows/{id}`
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -412,7 +415,8 @@ HTTPBearer
 const inputBody = '{
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -420,7 +424,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'POST',
   body: inputBody,
@@ -439,7 +443,8 @@ const fetch = require('node-fetch');
 const inputBody = {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -447,7 +452,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -461,7 +466,7 @@ fetch('/workflow',
 
 ```
 
-`POST /workflow`
+`POST /workflows`
 
 > Body parameter
 
@@ -469,7 +474,8 @@ fetch('/workflow',
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 ```
 
@@ -526,7 +532,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'GET',
 
@@ -548,7 +554,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'GET',
 
@@ -562,7 +568,7 @@ fetch('/workflow',
 
 ```
 
-`GET /workflow`
+`GET /workflows`
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 
@@ -690,7 +696,8 @@ Workflow
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -704,6 +711,7 @@ NewWorkflow
 |name|string|true|none|none|
 |bpmnFile|string|true|none|none|
 |inputSchema|object|true|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_WorkflowDto">WorkflowDto</h2>
 <!-- backwards compatibility -->
@@ -716,7 +724,8 @@ NewWorkflow
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -730,6 +739,7 @@ WorkflowDto
 |name|string|true|none|none|
 |bpmnFile|string|true|none|none|
 |inputSchema|object|true|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_WorkflowDtoPartial">WorkflowDtoPartial</h2>
 <!-- backwards compatibility -->
@@ -742,7 +752,8 @@ WorkflowDto
 {
   "name": "string",
   "bpmnFile": "string",
-  "inputSchema": {}
+  "inputSchema": {},
+  "description": "string"
 }
 
 ```
@@ -756,6 +767,7 @@ WorkflowDtoPartial
 |name|string|false|none|none|
 |bpmnFile|string|false|none|none|
 |inputSchema|object|false|none|none|
+|description|string|false|none|none|
 
 <h2 id="tocS_ExecuteWorkflowDto">ExecuteWorkflowDto</h2>
 <!-- backwards compatibility -->

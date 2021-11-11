@@ -9,7 +9,7 @@
     }
   },
   "paths": {
-    "/workflow/{id}/execute": {
+    "/workflows/{id}/execute": {
       "post": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "startWorkflow",
@@ -49,7 +49,7 @@
         "operationId": "WorkflowController.startWorkflow"
       }
     },
-    "/workflow/{id}/version/{version}": {
+    "/workflows/{id}/version/{version}": {
       "delete": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "deleteVersionById",
@@ -87,7 +87,7 @@
         "operationId": "WorkflowController.deleteVersionById"
       }
     },
-    "/workflow/{id}": {
+    "/workflows/{id}": {
       "patch": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "updateById",
@@ -182,7 +182,7 @@
         "operationId": "WorkflowController.deleteById"
       }
     },
-    "/workflow": {
+    "/workflows": {
       "post": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "create",
@@ -348,6 +348,9 @@
           },
           "inputSchema": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "required": [
@@ -370,6 +373,9 @@
           },
           "inputSchema": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "required": [
@@ -392,6 +398,9 @@
           },
           "inputSchema": {
             "type": "object"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "additionalProperties": true,

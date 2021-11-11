@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.2.0 (2021-11-11)
+
+* feat(hidden-api): adds hidden-api feature (#143) (#364) ([bdd8fc8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdd8fc8)), closes [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#364](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/364) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143)
+
+
+
+
+
+## <small>3.1.2 (2021-11-09)</small>
+
+* chore(deps): bump validator from 13.6.0 to 13.7.0 in /packages/core (#405) ([f0d3963](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f0d3963)), closes [#405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/405)
+
+
+
+
+
+## <small>3.1.1 (2021-10-24)</small>
+
+* fix(bpmn-service): fix description missing in model but present in migrations (#343) ([bde58f7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde58f7)), closes [#343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/343) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340) [#340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/340)
+* fix(core): add new HTTP status codes (#342) ([736ee28](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/736ee28)), closes [#342](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/342)
+* fix(core): changed userId to userTenantId (#335) ([07c7e04](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/07c7e04)), closes [#335](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/335) [#329](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/329)
+* fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(core): fix linting issue in core (#348) ([6912bc2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6912bc2)), closes [#348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/348) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* docs(core): correcting the typing mistake (#385) ([b1d4255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b1d4255)), closes [#385](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/385)
+* chore(deps): bump passport-oauth2 from 1.6.0 to 1.6.1 in /packages/core (#368) ([814fb37](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/814fb37)), closes [#368](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/368)
+
+
+
+
+
+## 3.0.0 (2021-09-12)
+
+* fix(core): add prom client installation step in core readme (#284) ([f7f93e2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7f93e2)), closes [#284](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/284) [#282](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/282)
+* fix(core): missing open api and package lock files ([3bd9686](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3bd9686)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(sandbox): example of pubnub as a provider in notification service (#279) ([e30a0ed](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30a0ed)), closes [#279](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/279) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#278](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/278) [#211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/211) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#298](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/298) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/263) [#280](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/280) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208) [#208](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/208)
+
+
+
+
+
 ## <small>2.0.1 (2021-07-24)</small>
 
 * fix(core): update readme ([4ec31ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ec31ca)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
