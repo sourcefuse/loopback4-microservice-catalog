@@ -186,6 +186,10 @@ export class PubnubMessageController {
     @inject(AuthenticationBindings.CURRENT_USER) user: IAuthUserWithPermissions,
     @param.header.string('Authorization') token: string,
   ): Promise<string> {
-    return user.userTenantId!;
+    if (user.userTenantId) {
+      return user.userTenantId;
+    } else {
+      return '';
+    }
   }
 }
