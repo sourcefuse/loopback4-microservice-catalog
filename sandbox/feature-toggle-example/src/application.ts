@@ -43,6 +43,11 @@ export class FeatureToggleExampleApplication extends BootMixin(
       customHeaders: {
         Authorization: process.env.UNLEASH_AUTH,
       },
+      strategies: [
+        new TenantStrategy(),
+        new UserStrategy(),
+        new RoleStrategy(),
+      ],
     });
     this.bind(UNLEASH_CONST).to(unleash);
 
