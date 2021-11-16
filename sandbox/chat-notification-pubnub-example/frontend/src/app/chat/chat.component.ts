@@ -33,89 +33,86 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.uuid1 = environment.USER1_UUID;
-    this.uuid2 = environment.USER2_UUID;
+    this.channelUUID = environment.CHAT_ROOM;
   }
   public messages: ChatMessage[] = [];
   public senderUUID = '';
-  public receiverUUID = '';
+  public channelUUID = environment.CHAT_ROOM;
   public token = '';
-  private uuid1 = '';
-  private uuid2 = '';
+  public inRoom = true;
 
   enterToken() {
     this.userHttpService.getUserTenantId(this.token).subscribe(data => {
       this.senderUUID = data;
-
-      if (this.senderUUID === this.uuid1) {
-        this.receiverUUID = this.uuid2;
-      } else {
-        this.receiverUUID = this.uuid1;
-      }
-
-      this.getMessages();
-      this.subcribeToNotifications();
     });
   }
 
-  getMessages() {
-    this.userHttpService.get(this.token).subscribe(data => {
-      data.sort((a, b) => {
-        if (a.createdOn === b.createdOn) {
-          return 0;
-        } else if (a.createdOn && b.createdOn && a.createdOn > b.createdOn) {
-          return 1;
-        } else {
-          return -1;
-        }
-      });
+  leaveRoom() {
+    this.messages = [];
+    this.pubnub.unsubscribe(this.channelUUID);
+    this.inRoom = false;
+  }
 
+  getMessages() {
+    this.inRoom = true;
+    this.userHttpService.get(this.token, this.channelUUID).subscribe(data => {
       this.messages = [];
+      console.log(data);
       for (const d of data) {
         const temp: ChatMessage = {
           body: d.body,
           subject: d.subject,
           channelType: '0',
-          reply: true,
-          sender: 'User',
+          reply: false,
+          sender: 'sender',
         };
-        if (d.toUserId === this.senderUUID) {
-          temp.sender = 'sender';
-          temp.reply = false;
+        if (d.createdBy === this.senderUUID) {
+          temp.sender = 'User';
+          temp.reply = true;
         }
         this.messages.push(temp);
       }
     });
+
+    this.subcribeToNotifications();
   }
 
   subcribeToNotifications() {
+    console.log('Subscribed to notfications line 77');
     this.pubnub.subscribe({
-      channels: [this.senderUUID],
+      channels: [this.channelUUID],
       triggerEvents: ['message'],
     });
+    console.log('Subscribed to notfications line 82');
 
-    this.pubnub.getMessage(this.senderUUID, msg => {
+    this.pubnub.getMessage(this.channelUUID, msg => {
       const receivedMessage: ChatMessage = {
         body: msg.message.description,
         subject: msg.message.title,
         reply: false,
         sender: 'sender',
       };
-      this.messages.push(receivedMessage);
-      this.ngxNotificationService.sendMessage(
-        `New message from sender: ${msg.message.description}`,
-        'info',
-        'top-left',
-      );
+      console.log(msg);
+      if (msg.message.title != this.senderUUID) {
+        this.messages.push(receivedMessage);
+        this.ngxNotificationService.sendMessage(
+          `New message from sender: ${msg.message.description}`,
+          'info',
+          'top-left',
+        );
+      }
     });
   }
 
   sendMessage(event: {message: string}, userName: string, avatar: string) {
+    if (!this.inRoom) {
+      return;
+    }
     const chatMessage: ChatMessage = {
       body: event.message,
       subject: 'new message',
-      toUserId: this.receiverUUID,
-      channelId: this.receiverUUID,
+      toUserId: this.channelUUID,
+      channelId: this.channelUUID,
       channelType: '0',
       reply: true,
       sender: userName,
@@ -123,9 +120,9 @@ export class ChatComponent implements OnInit {
 
     const dbMessage: Chat = {
       body: event.message,
-      subject: 'new message',
-      toUserId: this.receiverUUID,
-      channelId: this.receiverUUID,
+      subject: this.senderUUID,
+      toUserId: this.channelUUID,
+      channelId: this.channelUUID,
       channelType: '0',
     };
 

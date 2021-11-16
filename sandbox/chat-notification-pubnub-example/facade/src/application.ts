@@ -8,9 +8,20 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import * as path from 'path';
-import { AuthenticationComponent } from 'loopback4-authentication';
-import { AuthorizationBindings, AuthorizationComponent } from 'loopback4-authorization';
-import { BearerVerifierBindings, BearerVerifierComponent, BearerVerifierConfig, BearerVerifierType, CoreComponent, SecureSequence, SECURITY_SCHEME_SPEC } from '@sourceloop/core';
+import {AuthenticationComponent} from 'loopback4-authentication';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
+import {
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  CoreComponent,
+  SecureSequence,
+  SECURITY_SCHEME_SPEC,
+} from '@sourceloop/core';
 
 export {ApplicationConfig};
 
@@ -21,11 +32,11 @@ export class FacadeApplication extends BootMixin(
     super(options);
 
     this.api({
-      openapi: "3.0.0",
+      openapi: '3.0.0',
       paths: {},
       info: {
-        title: "Chat Facade app",
-        version: "1.0",
+        title: 'Chat Facade app',
+        version: '1.0',
       },
       components: {
         securitySchemes: SECURITY_SCHEME_SPEC,

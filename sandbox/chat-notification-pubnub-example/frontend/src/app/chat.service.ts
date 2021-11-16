@@ -14,10 +14,13 @@ export class UserService {
     headers.append('Authorization', `Bearer ${token}`);
   }
 
-  get(token: string) {
+  get(token: string, channelId: string) {
     const authHeader = new HttpHeaders({Authorization: `Bearer ${token}`});
     return this.http.get<Chat[]>(baseUrl, {
       headers: authHeader,
+      params: {
+        ChannelID: channelId,
+      },
     });
   }
 

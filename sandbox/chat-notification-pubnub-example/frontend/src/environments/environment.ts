@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
-  USER1_UUID: '',
-  USER2_UUID: '',
   BASE_URL: 'http://localhost:3005',
   PUBLISH_KEY: '',
   SUBSCRIBE_KEY: '',
+  CHAT_ROOM: 'ea24d84f-ef69-403c-b6c4-7758ea9c2093',
 };
 
 /*

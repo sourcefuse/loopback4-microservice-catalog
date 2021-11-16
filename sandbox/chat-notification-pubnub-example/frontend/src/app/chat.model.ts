@@ -17,4 +17,5 @@ export interface Chat {
   channelId: string;
   channelType: string;
   createdOn?: Date;
+  createdBy?: string;
 }

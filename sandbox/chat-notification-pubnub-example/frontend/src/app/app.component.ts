@@ -17,7 +17,7 @@ export class AppComponent {
       subscribeKey: environment.SUBSCRIBE_KEY,
     });
     this.pubnub.subscribe({
-      channels: [environment.USER1_UUID, environment.USER2_UUID],
+      channels: [environment.CHAT_ROOM],
       triggerEvents: ['message'],
     });
   }

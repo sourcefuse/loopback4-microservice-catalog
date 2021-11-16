@@ -4,13 +4,22 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
-  RestExplorerComponent
+  RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {NotificationServiceComponent, NotifServiceBindings} from '@sourceloop/notification-service';
+import {
+  NotificationServiceComponent,
+  NotifServiceBindings,
+} from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
-import {NotificationBindings, PubnubBindings, PubNubProvider, SESBindings, SNSBindings} from 'loopback4-notifications';
+import {
+  NotificationBindings,
+  PubnubBindings,
+  PubNubProvider,
+  SESBindings,
+  SNSBindings,
+} from 'loopback4-notifications';
 import path from 'path';
 import {MySequence} from './sequence';
 

@@ -62,24 +62,11 @@ export class PubnubMessageController {
   ): Promise<PubnubMessage[]> {
     const filter1: Filter<PubnubMessage> = {
       where: {
-        createdBy: user.userTenantId,
         channelId: channelID,
       },
+      order: ['createdOn ASC'],
     };
-    const sentmessages = await this.messageService.getMessage(token, filter1);
-
-    const filter2: Filter<PubnubMessage> = {
-      where: {
-        toUserId: user.userTenantId,
-        channelId: channelID,
-      },
-    };
-    const receivedmessages = await this.messageService.getMessage(
-      token,
-      filter2,
-    );
-
-    return [...sentmessages, ...receivedmessages];
+    return this.messageService.getMessage(token, filter1);
   }
 
   @authenticate(STRATEGY.BEARER)
