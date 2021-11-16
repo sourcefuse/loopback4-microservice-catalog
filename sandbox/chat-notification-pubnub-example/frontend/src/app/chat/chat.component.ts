@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgxNotificationService} from 'ngx-notification';
 import {PubNubAngular} from 'pubnub-angular2';
-import {environment} from 'src/environments/environment';
+import {environment} from '../../environments/environment';
 import {Chat, ChatMessage} from '../chat.model';
 import {UserService} from '../chat.service';
 
@@ -57,7 +57,6 @@ export class ChatComponent implements OnInit {
     this.inRoom = true;
     this.userHttpService.get(this.token, this.channelUUID).subscribe(data => {
       this.messages = [];
-      console.log(data);
       for (const d of data) {
         const temp: ChatMessage = {
           body: d.body,
@@ -78,12 +77,10 @@ export class ChatComponent implements OnInit {
   }
 
   subcribeToNotifications() {
-    console.log('Subscribed to notfications line 77');
     this.pubnub.subscribe({
       channels: [this.channelUUID],
       triggerEvents: ['message'],
     });
-    console.log('Subscribed to notfications line 82');
 
     this.pubnub.getMessage(this.channelUUID, msg => {
       const receivedMessage: ChatMessage = {
@@ -92,8 +89,7 @@ export class ChatComponent implements OnInit {
         reply: false,
         sender: 'sender',
       };
-      console.log(msg);
-      if (msg.message.title != this.senderUUID) {
+      if (msg.message.title !== this.senderUUID) {
         this.messages.push(receivedMessage);
         this.ngxNotificationService.sendMessage(
           `New message from sender: ${msg.message.description}`,

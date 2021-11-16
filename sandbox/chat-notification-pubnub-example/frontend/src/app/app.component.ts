@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {PubNubAngular} from 'pubnub-angular2';
-import {environment} from 'src/environments/environment';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',

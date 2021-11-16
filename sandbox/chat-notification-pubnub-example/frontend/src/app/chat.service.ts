@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Chat} from './chat.model';
-import {environment} from 'src/environments/environment';
+import {environment} from '../environments/environment';
 
 const baseUrl = `${environment.BASE_URL}/messages`;
 const tenantIdUrl = `${environment.BASE_URL}/userTenantId`;
