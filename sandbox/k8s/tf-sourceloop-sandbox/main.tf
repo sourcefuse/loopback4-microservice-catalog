@@ -15,6 +15,7 @@ module "sandbox_applications" {
   replica_count          = each.value.replica_count
   config_map_enabled     = try(each.value.config_map_enabled, false)
   secret_enable          = try(each.value.secret_enable, false)
+  secret_namespace       = each.value.namespace_name
   secret_name            = try(each.value.secret_name, "mysecret")
   secret_data            = try(each.value.secret_data, {})
   config_map_data        = try(each.value.config_map_data, {})
