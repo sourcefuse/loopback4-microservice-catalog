@@ -1,18 +1,26 @@
 module "sandbox_applications" {
-  source          = "git@github.com:sourcefuse/terraform-k8s-app.git"
-  for_each        = local.k8s_apps
-  app_label       = each.value.app_label
-  container_image = each.value.container_image
-  container_name  = each.value.container_name
-  container_port  = each.value.container_port
-  deployment_name = each.value.deployment_name
-  namespace_name  = each.value.namespace_name
-  port            = each.value.port
-  port_name       = each.value.port_name
-  protocol        = each.value.protocol
-  service_name    = each.value.service_name
-  target_port     = each.value.target_port
-  replica_count   = each.value.replica_count
+  source                 = "git@github.com:sourcefuse/terraform-k8s-app.git?ref=SRA-96"
+  for_each               = local.k8s_apps
+  app_label              = each.value.app_label
+  container_image        = each.value.container_image
+  container_name         = each.value.container_name
+  container_port         = each.value.container_port
+  deployment_name        = each.value.deployment_name
+  namespace_name         = each.value.namespace_name
+  port                   = each.value.port
+  port_name              = each.value.port_name
+  protocol               = each.value.protocol
+  service_name           = each.value.service_name
+  target_port            = each.value.target_port
+  replica_count          = each.value.replica_count
+  config_map_enabled     = try(each.value.config_map_enabled, false)
+  secret_enable          = try(each.value.secret_enable, false)
+  secret_name            = try(each.value.secret_name, "mysecret")
+  secret_data            = try(each.value.secret_data, {})
+  config_map_data        = try(each.value.config_map_data, {})
+  config_map_name        = try(each.value.config_map_name, "myconfig")
+  config_map_binary_data = try(each.value.config_map_binary_data, null)
+
 
   ## pvc
   persistent_volume_claim_enable           = try(each.value.persistent_volume_claim_enable, false)
@@ -47,6 +55,17 @@ locals {
       service_name    = "audit-ms-example"
       target_port     = 3000
       replica_count   = 1
+      secret_enable   = true
+      secret_name     = "mysecret"
+      secret_data = {
+        DB_PASSWORD = "changeme",
+        JWT_SECRET  = "i_am_a_strong_secret"
+      }
+      config_map_enabled     = false
+      config_map_name        = "myconfig"
+      config_map_binary_data = null
+      config_map_data        = {}
+
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -55,10 +74,6 @@ locals {
         {
           name  = "DB_HOST"
           value = local.postgres_host
-        },
-        {
-          name  = "DB_PASSWORD"
-          value = "changeme"
         },
         {
           name  = "DB_PORT"
@@ -71,10 +86,6 @@ locals {
         {
           name  = "JWT_ISSUER"
           value = "https://loopback4-microservice-catalog"
-        },
-        {
-          name  = "JWT_SECRET"
-          value = "i_am_a_strong_secret"
         },
         {
           name  = "LOG_LEVEL"
@@ -103,18 +114,20 @@ locals {
       ]
     }
     auth_multitenant_application = {
-      app_label       = "auth-multitenant-example"
-      container_image = var.auth_multitenant_ms_microservice_image
-      container_name  = "auth-multitenant-example"
-      container_port  = 3000
-      deployment_name = "auth-multitenant-example"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 3000
-      port_name       = "3000"
-      protocol        = "TCP"
-      service_name    = "auth-multitenant-example"
-      target_port     = 3000
-      replica_count   = 1
+      app_label          = "auth-multitenant-example"
+      container_image    = var.auth_multitenant_ms_microservice_image
+      container_name     = "auth-multitenant-example"
+      container_port     = 3000
+      deployment_name    = "auth-multitenant-example"
+      namespace_name     = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port               = 3000
+      port_name          = "3000"
+      protocol           = "TCP"
+      service_name       = "auth-multitenant-example"
+      target_port        = 3000
+      replica_count      = 1
+      secret_enable      = false
+      config_map_enabled = false
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -223,18 +236,20 @@ locals {
       ]
     }
     in_mail_ms_application = {
-      app_label       = "in-mail-example"
-      container_image = var.in_mail_ms_microservice_image
-      container_name  = "in-mail-example"
-      container_port  = 3000
-      deployment_name = "in-mail-example"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 3000
-      port_name       = "3000"
-      protocol        = "TCP"
-      service_name    = "in-mail-example"
-      target_port     = 3000
-      replica_count   = 1
+      app_label          = "in-mail-example"
+      container_image    = var.in_mail_ms_microservice_image
+      container_name     = "in-mail-example"
+      container_port     = 3000
+      deployment_name    = "in-mail-example"
+      namespace_name     = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port               = 3000
+      port_name          = "3000"
+      protocol           = "TCP"
+      service_name       = "in-mail-example"
+      target_port        = 3000
+      replica_count      = 1
+      secret_enable      = false
+      config_map_enabled = false
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -295,18 +310,20 @@ locals {
       ]
     }
     notification_ms_application = {
-      app_label       = "notification-socket-example"
-      container_image = var.notification_ms_microservice_image
-      container_name  = "notification-socket-example"
-      container_port  = 3000
-      deployment_name = "notification-socket-example"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 3000
-      port_name       = "3000"
-      protocol        = "TCP"
-      service_name    = "notification-socket-example"
-      target_port     = 3000
-      replica_count   = 1
+      app_label          = "notification-socket-example"
+      container_image    = var.notification_ms_microservice_image
+      container_name     = "notification-socket-example"
+      container_port     = 3000
+      deployment_name    = "notification-socket-example"
+      namespace_name     = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port               = 3000
+      port_name          = "3000"
+      protocol           = "TCP"
+      service_name       = "notification-socket-example"
+      target_port        = 3000
+      replica_count      = 1
+      secret_enable      = false
+      config_map_enabled = false
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -367,18 +384,20 @@ locals {
       ]
     }
     scheduler_ms_application = {
-      app_label       = "scheduler-example"
-      container_image = var.scheduler_ms_microservice_image
-      container_name  = "scheduler-example"
-      container_port  = 3000
-      deployment_name = "scheduler-example"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 3000
-      port_name       = "3000"
-      protocol        = "TCP"
-      service_name    = "scheduler-example"
-      target_port     = 3000
-      replica_count   = 1
+      app_label          = "scheduler-example"
+      container_image    = var.scheduler_ms_microservice_image
+      container_name     = "scheduler-example"
+      container_port     = 3000
+      deployment_name    = "scheduler-example"
+      namespace_name     = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port               = 3000
+      port_name          = "3000"
+      protocol           = "TCP"
+      service_name       = "scheduler-example"
+      target_port        = 3000
+      replica_count      = 1
+      secret_enable      = false
+      config_map_enabled = false
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -439,18 +458,20 @@ locals {
       ]
     }
     video_conferencing_ms_application = {
-      app_label       = "video-conferencing-ms-example"
-      container_image = var.video_ms_microservice_image
-      container_name  = "video-conferencing-ms-example"
-      container_port  = 3000
-      deployment_name = "video-conferencing-ms-example"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 3000
-      port_name       = "3000"
-      protocol        = "TCP"
-      service_name    = "video-conferencing-ms-example"
-      target_port     = 3000
-      replica_count   = 1
+      app_label          = "video-conferencing-ms-example"
+      container_image    = var.video_ms_microservice_image
+      container_name     = "video-conferencing-ms-example"
+      container_port     = 3000
+      deployment_name    = "video-conferencing-ms-example"
+      namespace_name     = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port               = 3000
+      port_name          = "3000"
+      protocol           = "TCP"
+      service_name       = "video-conferencing-ms-example"
+      target_port        = 3000
+      replica_count      = 1
+      secret_enable      = false
+      config_map_enabled = false
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -519,18 +540,21 @@ locals {
       ]
     }
     workflow_ms_application = {
-      app_label       = "workflow-ms-example"
-      container_image = var.workflow_ms_microservice_image
-      container_name  = "workflow-ms-example"
-      container_port  = 3000
-      deployment_name = "workflow-ms-example"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 3000
-      port_name       = "3000"
-      protocol        = "TCP"
-      service_name    = "workflow-ms-example"
-      target_port     = 3000
-      replica_count   = 1
+      app_label          = "workflow-ms-example"
+      container_image    = var.workflow_ms_microservice_image
+      container_name     = "workflow-ms-example"
+      container_port     = 3000
+      deployment_name    = "workflow-ms-example"
+      namespace_name     = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port               = 3000
+      port_name          = "3000"
+      protocol           = "TCP"
+      service_name       = "workflow-ms-example"
+      target_port        = 3000
+      replica_count      = 1
+      secret_enable      = false
+      config_map_enabled = false
+
       environment_variables = [
         {
           name  = "DB_DATABASE"
@@ -604,6 +628,8 @@ locals {
       target_port           = 6379
       replica_count         = 1
       environment_variables = []
+      secret_enable         = false
+      config_map_enabled    = false
     }
     health_check_application = {
       source                = "./tf-k8s-application"
@@ -620,36 +646,49 @@ locals {
       target_port           = 80
       replica_count         = 1
       environment_variables = []
+      secret_enable         = false
+      config_map_enabled    = false
     }
     //TODO: hook up to DB
     camunda_application = {
-      app_label             = "camunda"
-      container_image       = var.camunda_image
-      container_name        = "camunda"
-      container_port        = 8080
-      deployment_name       = "camunda"
-      namespace_name        = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port                  = 8080
-      port_name             = "8080"
-      protocol              = "TCP"
-      service_name          = "camunda"
-      target_port           = 8080
-      replica_count         = 1
-      environment_variables = []
+      app_label              = "camunda"
+      container_image        = var.camunda_image
+      container_name         = "camunda"
+      container_port         = 8080
+      deployment_name        = "camunda"
+      namespace_name         = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port                   = 8080
+      port_name              = "8080"
+      protocol               = "TCP"
+      service_name           = "camunda"
+      target_port            = 8080
+      replica_count          = 1
+      environment_variables  = []
+      secret_enable          = false
+      secret_name            = "mysecret"
+      secret_data            = {}
+      config_map_enabled     = false
+      config_map_name        = "myconfig"
+      config_map_binary_data = null
+      config_map_data        = {}
     }
     pgadmin = {
-      app_label       = "pgadmin"
-      container_image = var.pgadmin_image
-      container_name  = "pgadmin"
-      container_port  = 80
-      deployment_name = "pgadmin"
-      namespace_name  = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
-      port            = 80
-      port_name       = "80"
-      protocol        = "TCP"
-      service_name    = "pgadmin"
-      target_port     = 80
-      replica_count   = 1
+      app_label              = "pgadmin"
+      container_image        = var.pgadmin_image
+      container_name         = "pgadmin"
+      container_port         = 80
+      deployment_name        = "pgadmin"
+      namespace_name         = kubernetes_namespace.sourceloop_sandbox.metadata[0].name
+      port                   = 80
+      port_name              = "80"
+      protocol               = "TCP"
+      service_name           = "pgadmin"
+      target_port            = 80
+      replica_count          = 1
+      config_map_enabled     = false
+      config_map_name        = "myconfig"
+      config_map_binary_data = null
+      config_map_data        = {}
 
       ## pvc
       persistent_volume_claim_enable           = true
