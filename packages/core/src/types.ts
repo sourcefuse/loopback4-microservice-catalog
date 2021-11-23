@@ -1,9 +1,23 @@
+import {Constructor} from '@loopback/context';
+import {Entity, PropertyDefinition} from '@loopback/repository';
 import {IncomingMessage} from 'http';
 
 export interface IServiceConfig {
   useCustomSequence: boolean;
 }
 
+export type ModelConstructor<T extends Entity> = Constructor<T> & {
+  definition: {
+    properties: {
+      [property: string]: PropertyDefinition;
+    };
+  };
+  modelName: string;
+};
+
+export type ModelProperties<T extends Entity> = keyof Partial<
+  Omit<T, 'toJSON' | 'toObject' | 'getId' | 'getIdObject'>
+>;
 export interface CoreConfig {
   configObject?: i18n.ConfigurationOptions;
   enableObf?: boolean;
