@@ -13,7 +13,7 @@ module "sandbox_applications" {
   service_name           = each.value.service_name
   target_port            = each.value.target_port
   replica_count          = each.value.replica_count
-  config_map_enabled     = try(each.value.config_map_enabled, false)
+  config_map_enabled     = try(each.value.config_map_enabled, true)
   secret_enable          = try(each.value.secret_enable, false)
   secret_namespace       = each.value.namespace_name
   secret_name            = try(each.value.secret_name, "mysecret")
@@ -62,57 +62,24 @@ locals {
         DB_PASSWORD = "changeme",
         JWT_SECRET  = "i_am_a_strong_secret"
       }
-      config_map_enabled     = false
-      config_map_name        = "myconfig"
+      config_map_enabled     = true
+      config_map_name        = "audit-ms-example-configmap"
       config_map_binary_data = null
-      config_map_data        = {}
+      config_map_data = {
+        DB_DATABASE    = "audit_db"
+        DB_HOST        = "${local.postgres_host}"
+        DB_PORT        = "5432"
+        DB_USER        = "postgres"
+        JWT_ISSUER     = "https://loopback4-microservice-catalog"
+        LOG_LEVEL      = "debug"
+        NODE_ENV       = "dev"
+        REDIS_DB       = "0"
+        REDIS_HOST     = "${local.redis_host}"
+        REDIS_PASSWORD = "test"
+        REDIS_PORT     = "6379"
+      }
 
-      environment_variables = [
-        {
-          name  = "DB_DATABASE"
-          value = "audit_db"
-        },
-        {
-          name  = "DB_HOST"
-          value = local.postgres_host
-        },
-        {
-          name  = "DB_PORT"
-          value = "5432"
-        },
-        {
-          name  = "DB_USER"
-          value = "postgres"
-        },
-        {
-          name  = "JWT_ISSUER"
-          value = "https://loopback4-microservice-catalog"
-        },
-        {
-          name  = "LOG_LEVEL"
-          value = "debug"
-        },
-        {
-          name  = "NODE_ENV"
-          value = "dev"
-        },
-        {
-          name  = "REDIS_DB"
-          value = "0"
-        },
-        {
-          name  = "REDIS_HOST"
-          value = local.redis_host
-        },
-        {
-          name  = "REDIS_PASSWORD"
-          value = "test"
-        },
-        {
-          name  = "REDIS_PORT"
-          value = 6379
-        }
-      ]
+      environment_variables = []
     }
     auth_multitenant_application = {
       app_label          = "auth-multitenant-example"
