@@ -27,6 +27,13 @@ CREATE TABLE main.search_query (
 	recent_search_id		uuid,
 	CONSTRAINT              search_query_pk PRIMARY KEY (id)
 );
+alter table main.search_query add column created_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ;
+alter table main.search_query add column modified_on timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ;
+alter table main.search_query add column created_by uuid;
+alter table main.search_query add column modified_by uuid;
+alter table main.search_query add column deleted_on timestamptz;
+alter table main.search_query add column deleted bool DEFAULT false NOT NULL ;
+alter table main.search_query add column deleted_by uuid;
 
 CREATE TABLE main.todo (
 	id                      uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL ,
