@@ -29,6 +29,10 @@ export class Configuration<T = IDefaultReturnType> {
   /** search only on enter key or when category is changed */
   searchOnlyOnEnter?: boolean;
   noResultMessage?: string;
+  searchIconClass?: string;
+  crossIconClass?: string;
+  dropDownButtonIconClass?: string;
+  recentSearchIconClass?: string;
 
   constructor(d: Configuration<T>) {
     if (
@@ -63,5 +67,10 @@ export class Configuration<T = IDefaultReturnType> {
     this.saveInRecentsOnlyOnEnter = d.saveInRecentsOnlyOnEnter ?? false;
     this.searchOnlyOnEnter = d.searchOnlyOnEnter ?? false;
     this.noResultMessage = d.noResultMessage ?? 'No result found';
+    this.searchIconClass = d.searchIconClass ?? 'icomoon Search';
+    this.crossIconClass = d.crossIconClass ?? 'icomoon close';
+    this.dropDownButtonIconClass =
+      d.dropDownButtonIconClass ?? 'icomoon arrow_down';
+    this.recentSearchIconClass = d.recentSearchIconClass ?? 'icomoon Search';
   }
 }
