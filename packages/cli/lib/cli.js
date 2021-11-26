@@ -53,7 +53,14 @@ function runCommand(env, opts, log) {
  */
 function setupGenerators() {
   const env = yeoman.createEnv();
-  env.register(path.join(__dirname, '../generators/project'), PREFIX + 'project');
+  env.register(
+    path.join(__dirname, '../generators/scaffold'),
+    PREFIX + 'scaffold',
+  );
+  env.register(
+    path.join(__dirname, '../generators/extension'),
+    PREFIX + 'extension',
+  );
   return env;
 }
 
