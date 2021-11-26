@@ -38,7 +38,7 @@ import {
 } from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
-import {ChannelManagerProvider} from './providers';
+import {NotificationFilterProvider, ChannelManagerProvider} from './providers';
 import {NotificationUserProvider} from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
@@ -112,6 +112,7 @@ export class NotificationServiceComponent implements Component {
       [NotifServiceBindings.ChannelManager.key]: ChannelManagerProvider,
       [NotifServiceBindings.NotificationUserManager.key]:
         NotificationUserProvider,
+      [NotifServiceBindings.NotificationFilter.key]: NotificationFilterProvider,
     };
 
     this.controllers = [
