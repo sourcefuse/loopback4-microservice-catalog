@@ -26,7 +26,12 @@
     },
     "dest": "../../dist"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/search"
+  },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true
+  "private": false
 }

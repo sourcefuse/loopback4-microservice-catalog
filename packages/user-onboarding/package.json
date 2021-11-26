@@ -22,7 +22,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~11.2.3",
     "@angular/common": "~11.2.3",
