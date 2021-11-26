@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.4 (2021-11-26)</small>
+
+* fix(user-onboarding): fix version not updating in package.json publishing issue for angular library ([b2aaf34](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2aaf34))
+
+
+
+
+
 ## <small>1.0.3 (2021-10-25)</small>
 
 * fix(search-client): change styling - add shadow to search container (#389) ([284ec32](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/284ec32)), closes [#389](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/389)
