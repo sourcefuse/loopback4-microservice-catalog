@@ -40,8 +40,7 @@ export namespace Audit {
  * @description Empty interface that provides properties
  * and typings from the given gRPC Empty Message.
  */
-export interface Empty {
-}
+export interface Empty {}
 /**
  * @interface AuditLog
  * @author Jonathan Casarrubias <t: johncasarrubias>
