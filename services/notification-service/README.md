@@ -309,9 +309,9 @@ export class NotificationDbDataSource
 }
 ```
 
-### Blacklisting Someone
+### Blacklisting Users
 
-Here is a sample implementation of how we can add blacklist someone.
+Here is a sample implementation of how we can blacklist a user(s).
 
 Create a new provider:
 
@@ -337,7 +337,7 @@ export class NotificationfilterProvider
   notificationFilterFunc(notif: Notification) {
     const receivers = notif!.receiver.to;
     const result = receivers.filter(receiver => {
-      return this.blacklisted.indexOf(receiver.id) === -1;
+      return this.blacklistedUsers.indexOf(receiver.id) === -1;
     });
     notif.receiver.to = result;
     return notif;
