@@ -15,8 +15,6 @@ export class AuditCtrl implements Audit.Service {
   // Tell LoopBack that this is a Service RPC implementation
   @grpc(Audit.Create)
   create(request: auditLog): Empty {
-    console.log(request);
-
     return this.auditLogRepository.create(AuditLog);
   }
 }

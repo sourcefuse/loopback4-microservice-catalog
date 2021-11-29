@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import {util, configure, Writer, Reader} from 'protobufjs/minimal';
+import * as Long from 'long';
 
-export const protobufPackage = "google.protobuf";
+export const protobufPackage = 'google.protobuf';
 
 /**
  * A Timestamp represents a point in time independent of any time zone or local
@@ -113,7 +113,7 @@ export interface Timestamp {
   nanos: number;
 }
 
-const baseTimestamp: object = { seconds: 0, nanos: 0 };
+const baseTimestamp: object = {seconds: 0, nanos: 0};
 
 export const Timestamp = {
   encode(message: Timestamp, writer: Writer = Writer.create()): Writer {
@@ -129,7 +129,7 @@ export const Timestamp = {
   decode(input: Reader | Uint8Array, length?: number): Timestamp {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTimestamp } as Timestamp;
+    const message = {...baseTimestamp} as Timestamp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -148,7 +148,7 @@ export const Timestamp = {
   },
 
   fromJSON(object: any): Timestamp {
-    const message = { ...baseTimestamp } as Timestamp;
+    const message = {...baseTimestamp} as Timestamp;
     message.seconds =
       object.seconds !== undefined && object.seconds !== null
         ? Number(object.seconds)
@@ -168,7 +168,7 @@ export const Timestamp = {
   },
 
   fromPartial(object: DeepPartial<Timestamp>): Timestamp {
-    const message = { ...baseTimestamp } as Timestamp;
+    const message = {...baseTimestamp} as Timestamp;
     message.seconds = object.seconds ?? 0;
     message.nanos = object.nanos ?? 0;
     return message;
@@ -179,11 +179,11 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
+  if (typeof globalThis !== 'undefined') return globalThis;
+  if (typeof self !== 'undefined') return self;
+  if (typeof window !== 'undefined') return window;
+  if (typeof global !== 'undefined') return global;
+  throw 'Unable to locate global object';
 })();
 
 type Builtin =
@@ -201,12 +201,12 @@ export type DeepPartial<T> = T extends Builtin
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
   : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  ? {[K in keyof T]?: DeepPartial<T[K]>}
   : Partial<T>;
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+    throw new globalThis.Error('Value is larger than Number.MAX_SAFE_INTEGER');
   }
   return long.toNumber();
 }

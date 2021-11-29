@@ -15,7 +15,7 @@ export namespace Audit {
      * @description Audit method declaration
      * from the given gRPC Audit service.
      */
-    create(request: auditLog): Empty;
+    create(request: AuditLog): Empty;
   }
   /**
    * @namespace Audit.Create
@@ -25,12 +25,12 @@ export namespace Audit {
    * from the given gRPC Audit service.
    */
   export namespace Create {
-    export const PROTO_NAME: string = 'audit.proto';
-    export const PROTO_PACKAGE: string = 'auditpackage';
-    export const SERVICE_NAME: string = 'Audit';
-    export const METHOD_NAME: string = 'Create';
-    export const REQUEST_STREAM: boolean = false;
-    export const RESPONSE_STREAM: boolean = false;
+    export const PROTO_NAME = 'audit.proto';
+    export const PROTO_PACKAGE = 'auditpackage';
+    export const SERVICE_NAME = 'Audit';
+    export const METHOD_NAME = 'Create';
+    export const REQUEST_STREAM = false;
+    export const RESPONSE_STREAM = false;
   }
 }
 /**
@@ -43,13 +43,13 @@ export namespace Audit {
 export interface Empty {
 }
 /**
- * @interface auditLog
+ * @interface AuditLog
  * @author Jonathan Casarrubias <t: johncasarrubias>
  * @license MIT
- * @description auditLog interface that provides properties
- * and typings from the given gRPC auditLog Message.
+ * @description AuditLog interface that provides properties
+ * and typings from the given gRPC AuditLog Message.
  */
-export interface auditLog {
+export interface AuditLog {
   id: string;
   action: number;
   hasActedat(): boolean;

@@ -3,12 +3,12 @@ package auditpackage;
 import "timestamp.proto";
 
 service Audit{
-    rpc Create (auditLog) returns (Empty) {}
+    rpc Create (AuditLog) returns (Empty) {}
 }
 
 message Empty{}
 
-message auditLog{
+message AuditLog{
   string id = 1;
   enum Action{
     INSERT_ONE = 0;
