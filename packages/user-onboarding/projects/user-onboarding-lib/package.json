@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Library for providing a smooth user onboarding",
   "keywords": [
     "angular-library"
@@ -14,6 +14,13 @@
     "shepherd.js": "^8.3.1",
     "@videogular/ngx-videogular": "^3.0.1"
   },
+  "scripts": {
+    "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
+    "installNodeModules": "cd ../../ && npm i",
+    "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
+    "build": "ng build  && cp -r src/assets dist",
+    "prepublishOnly": "npm run build"
+  },
   "dependencies": {
     "tslib": "^2.0.0"
   },
@@ -24,9 +31,14 @@
     "lib": {
       "entryFile": "src/public-api.ts"
     },
-    "dest": "../../dist"
+    "dest": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/user-onboarding"
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true
+  "private": false
 }
