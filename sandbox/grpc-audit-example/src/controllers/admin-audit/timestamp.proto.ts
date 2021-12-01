@@ -115,7 +115,7 @@ export interface Timestamp {
 
 const baseTimestamp: object = {seconds: 0, nanos: 0};
 
-export const Timestamp = {
+export const Timestamps = {
   encode(message: Timestamp, writer: Writer = Writer.create()): Writer {
     if (message.seconds !== 0) {
       writer.uint32(8).int64(message.seconds);
@@ -128,7 +128,7 @@ export const Timestamp = {
 
   decode(input: Reader | Uint8Array, length?: number): Timestamp {
     const reader = input instanceof Reader ? input : new Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
+    const end = length === undefined ? reader.len : reader.pos + length;
     const message = {...baseTimestamp} as Timestamp;
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -147,7 +147,7 @@ export const Timestamp = {
     return message;
   },
 
-  fromJSON(object: any): Timestamp {
+  fromJSON(object: Timestamp): Timestamp {
     const message = {...baseTimestamp} as Timestamp;
     message.seconds =
       object.seconds !== undefined && object.seconds !== null
@@ -161,7 +161,10 @@ export const Timestamp = {
   },
 
   toJSON(message: Timestamp): unknown {
-    const obj: any = {};
+    const obj: Timestamp = {
+      seconds: 0,
+      nanos: 0
+    };
     message.seconds !== undefined && (obj.seconds = message.seconds);
     message.nanos !== undefined && (obj.nanos = message.nanos);
     return obj;
@@ -183,7 +186,7 @@ var globalThis: any = (() => {
   if (typeof self !== 'undefined') return self;
   if (typeof window !== 'undefined') return window;
   if (typeof global !== 'undefined') return global;
-  throw 'Unable to locate global object';
+  throw new Error('Unable to locate global object');
 })();
 
 type Builtin =
