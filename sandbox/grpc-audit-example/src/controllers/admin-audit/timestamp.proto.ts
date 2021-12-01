@@ -114,14 +114,15 @@ export interface Timestamp {
 }
 
 const baseTimestamp: object = {seconds: 0, nanos: 0};
-
+const bytesizeOne = 8;
+const bytesizeTwo = 16;
 export const Timestamps = {
   encode(message: Timestamp, writer: Writer = Writer.create()): Writer {
     if (message.seconds !== 0) {
-      writer.uint32(8).int64(message.seconds);
+      writer.uint32(bytesizeOne).int64(message.seconds);
     }
     if (message.nanos !== 0) {
-      writer.uint32(16).int32(message.nanos);
+      writer.uint32(bytesizeTwo).int32(message.nanos);
     }
     return writer;
   },
@@ -131,8 +132,10 @@ export const Timestamps = {
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = {...baseTimestamp} as Timestamp;
     while (reader.pos < end) {
+      const tagNumber = 3;
+      const tagNumberTwo = 7;
       const tag = reader.uint32();
-      switch (tag >>> 3) {
+      switch (tag >>> tagNumber) {
         case 1:
           message.seconds = longToNumber(reader.int64() as Long);
           break;
@@ -140,7 +143,7 @@ export const Timestamps = {
           message.nanos = reader.int32();
           break;
         default:
-          reader.skipType(tag & 7);
+          reader.skipType(tag & tagNumberTwo);
           break;
       }
     }
@@ -178,9 +181,9 @@ export const Timestamps = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
+declare var self: unknown | undefined;
+declare var window: unknown | undefined;
+declare var global: unknown | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== 'undefined') return globalThis;
   if (typeof self !== 'undefined') return self;
