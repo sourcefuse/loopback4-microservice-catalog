@@ -1,5 +1,13 @@
 {
-  "packages": ["packages/*", "services/*", "facades/*", "sandbox/*"],
+  "packages": [
+    "packages/core/*",
+    "packages/custom-sf-changelog/*",
+    "packages/user-onboarding/projects/user-onboarding-lib/",
+    "packages/search/projects/search-lib/",
+    "services/*",
+    "facades/*",
+    "sandbox/*"
+  ],
   "command": {
     "bootstrap": {
       "concurrency": 4,
