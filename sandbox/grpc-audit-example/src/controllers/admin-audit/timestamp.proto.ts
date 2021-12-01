@@ -135,11 +135,13 @@ export const Timestamps = {
       const tagNumber = 3;
       const tagNumberTwo = 7;
       const tag = reader.uint32();
+      const caseOne = 1;
+      const caseTwo = 2;
       switch (tag >>> tagNumber) {
-        case 1:
+        case caseOne:
           message.seconds = longToNumber(reader.int64() as Long);
           break;
-        case 2:
+        case caseTwo:
           message.nanos = reader.int32();
           break;
         default:
