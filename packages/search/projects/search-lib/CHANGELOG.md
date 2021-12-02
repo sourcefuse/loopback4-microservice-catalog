@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.1 (2021-12-02)</small>
+
+* WIP(search-service): checking if lerna is publishing only dist folder ([25a959f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/25a959f)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.2.8 (2021-12-02)</small>
 
 * WIP(search-service): checking if lerna publish is only publishing dist folder ([3dc3c2d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3dc3c2d)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
