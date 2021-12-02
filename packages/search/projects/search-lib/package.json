@@ -35,5 +35,9 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  }
 }
