@@ -16,7 +16,7 @@
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": ["master", "final-test-publish-search"]
     },
     "publish": {
       "conventionalCommits": true,
