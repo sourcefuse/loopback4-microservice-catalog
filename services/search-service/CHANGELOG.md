@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.9 (2021-12-03)</small>
+
+* chore: publish release ([32efcbc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/32efcbc))
+* fix: add missing mirations for columns in search-ms-example and search-service ([f55f425](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f55f425))
+
+
+
+
+
 ## <small>0.2.8 (2021-12-03)</small>
 
 * fix: add missing mirations for columns in search-ms-example and search-service ([f55f425](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f55f425))
