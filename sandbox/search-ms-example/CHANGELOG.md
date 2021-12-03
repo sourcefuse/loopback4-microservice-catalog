@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.7 (2021-12-03)</small>
+
+* fix: add missing mirations for columns in search-ms-example and search-service ([f55f425](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f55f425))
+
+
+
+
+
 ## <small>0.2.6 (2021-11-11)</small>
 
 **Note:** Version bump only for package @sourceloop/search-ms-example
