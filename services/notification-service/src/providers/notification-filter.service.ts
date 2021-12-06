@@ -1,4 +1,4 @@
-import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
+import {bind, BindingScope, Provider} from '@loopback/core';
 import {Notification} from '../models';
 import {INotificationFilterFunc} from '../types';
 
