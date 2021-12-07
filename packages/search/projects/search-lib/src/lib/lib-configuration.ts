@@ -35,24 +35,10 @@ export class Configuration<T = IDefaultReturnType> {
   recentSearchIconClass?: string;
 
   constructor(d: Configuration<T>) {
-    if (
-      d.categorizeResults === false &&
-      (d.hideCategorizeButton === false || d.hideCategorizeButton === undefined)
-    ) {
-      throw new Error(
-        'You must provide hideCategorizeButton:true as categorizeResults is false',
-      );
-    }
-    if (d.saveInRecents === false && d.saveInRecentsOnlyOnEnter === true) {
-      throw new Error(
-        'You must provide saveInRecents:true for saveInRecentsOnlyOnEnter:true',
-      );
-    }
+    checkForError(d);
     this.displayPropertyName = d.displayPropertyName;
     this.models = d.models;
 
-    this.placeholder = d.placeholder ?? 'Search';
-    this.placeholderFunction = d.placeholderFunction;
     /* IRequestParameters - will be given default values before call is made in case undefined/null,
     otherwise there ! is used on which sonar gives code smell */
     this.limit = d.limit;
@@ -61,16 +47,61 @@ export class Configuration<T = IDefaultReturnType> {
     this.offset = d.offset;
     this.saveInRecents = d.saveInRecents;
 
-    this.categorizeResults = d.categorizeResults ?? true;
-    this.hideRecentSearch = d.hideRecentSearch ?? false;
-    this.hideCategorizeButton = d.hideCategorizeButton ?? false;
-    this.saveInRecentsOnlyOnEnter = d.saveInRecentsOnlyOnEnter ?? false;
-    this.searchOnlyOnEnter = d.searchOnlyOnEnter ?? false;
-    this.noResultMessage = d.noResultMessage ?? 'No result found';
-    this.searchIconClass = d.searchIconClass ?? 'icomoon Search';
-    this.crossIconClass = d.crossIconClass ?? 'icomoon close';
-    this.dropDownButtonIconClass =
-      d.dropDownButtonIconClass ?? 'icomoon arrow_down';
-    this.recentSearchIconClass = d.recentSearchIconClass ?? 'icomoon Search';
+    const displayTexts = setDisplayText(d);
+    this.noResultMessage = displayTexts.noResultMessage;
+    this.placeholder = displayTexts.placeholder;
+    this.placeholderFunction = displayTexts.placeholderFunction;
+
+    const searchConfig = setSearchConfig(d);
+    this.categorizeResults = searchConfig.categorizeResults;
+    this.hideRecentSearch = searchConfig.hideRecentSearch;
+    this.hideCategorizeButton = searchConfig.hideCategorizeButton;
+    this.saveInRecentsOnlyOnEnter = searchConfig.saveInRecentsOnlyOnEnter;
+    this.searchOnlyOnEnter = searchConfig.searchOnlyOnEnter;
+
+    const classes = setIconClasses(d);
+    this.searchIconClass = classes.searchIconClass;
+    this.crossIconClass = classes.crossIconClass;
+    this.dropDownButtonIconClass = classes.dropDownButtonIconClass;
+    this.recentSearchIconClass = classes.recentSearchIconClass;
   }
+}
+function checkForError<T>(d: Configuration<T>) {
+  if (
+    d.categorizeResults === false &&
+    (d.hideCategorizeButton === false || d.hideCategorizeButton === undefined)
+  ) {
+    throw new Error(
+      'You must provide hideCategorizeButton:true as categorizeResults is false',
+    );
+  }
+  if (d.saveInRecents === false && d.saveInRecentsOnlyOnEnter === true) {
+    throw new Error(
+      'You must provide saveInRecents:true for saveInRecentsOnlyOnEnter:true',
+    );
+  }
+}
+function setDisplayText<T>(d: Configuration<T>) {
+  return {
+    placeholder: d.placeholder ?? 'Search',
+    noResultMessage: d.noResultMessage ?? 'No result found',
+    placeholderFunction: d.placeholderFunction,
+  };
+}
+function setSearchConfig<T>(d: Configuration<T>) {
+  return {
+    categorizeResults: d.categorizeResults ?? true,
+    hideRecentSearch: d.hideRecentSearch ?? false,
+    hideCategorizeButton: d.hideCategorizeButton ?? false,
+    saveInRecentsOnlyOnEnter: d.saveInRecentsOnlyOnEnter ?? false,
+    searchOnlyOnEnter: d.searchOnlyOnEnter ?? false,
+  };
+}
+function setIconClasses<T>(d: Configuration<T>) {
+  return {
+    searchIconClass: d.searchIconClass ?? 'icomoon Search',
+    crossIconClass: d.crossIconClass ?? 'icomoon close',
+    dropDownButtonIconClass: d.dropDownButtonIconClass ?? 'icomoon arrow_down',
+    recentSearchIconClass: d.recentSearchIconClass ?? 'icomoon Search',
+  };
 }
