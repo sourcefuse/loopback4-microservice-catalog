@@ -39,6 +39,7 @@ const scopes = [
     { name: 'search-service' },
     { name: 'sandbox' },
     { name: 'search-client'},
+    { name: 'user-onboarding'},
     {name: 'chat-service'},
 ]
 
