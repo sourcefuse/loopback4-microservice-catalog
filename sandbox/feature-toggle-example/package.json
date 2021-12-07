@@ -61,7 +61,7 @@
     "@loopback/rest-explorer": "^3.3.4",
     "@loopback/service-proxy": "^3.2.4",
     "@sourceloop/core": "^3.1.1",
-    "@sourceloop/feature-toggle-service": "^0.1.0",
+    "@sourceloop/feature-toggle-service": "^0.1.2",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
