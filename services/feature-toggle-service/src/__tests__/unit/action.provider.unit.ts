@@ -11,14 +11,13 @@ describe('Feature flag action provider', () => {
 
   before('setupApplication', async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({app, client} = await setupApplication());
+    ({app, client} = await setupApplication()); //NOSONAR
   });
   after(async () => app.stop());
 
   it('returns a promise when action completed', async () => {
-    const metadata = () => {
-      return app.get(StrategyBindings.METADATA) as Promise<FeatureFlagMetadata>;
-    };
+    const metadata = () =>
+      app.get(StrategyBindings.METADATA) as Promise<FeatureFlagMetadata>;
 
     const action = new FeatureFlagActionProvider(metadata, app).value();
     const result = action();
