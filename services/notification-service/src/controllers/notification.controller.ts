@@ -34,7 +34,7 @@ import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
-import {INotificationUserManager} from '../types';
+import {INotificationFilterFunc, INotificationUserManager} from '../types';
 const basePath = '/notifications';
 
 const maxBodyLen = 1000;
@@ -48,6 +48,8 @@ export class NotificationController {
     public notificationUserRepository: NotificationUserRepository,
     @inject(NotifServiceBindings.NotificationUserManager)
     private readonly notifUserService: INotificationUserManager,
+    @inject(NotifServiceBindings.NotificationFilter)
+    private readonly filterNotification: INotificationFilterFunc,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -73,6 +75,7 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
+    notification = await this.filterNotification(notification);
     const provider = await this.notifProvider();
     await provider.publish(notification);
     if (notification.body.length > maxBodyLen) {
