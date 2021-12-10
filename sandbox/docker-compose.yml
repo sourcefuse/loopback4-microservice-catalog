@@ -396,6 +396,17 @@ services:
       - sandbox
     restart: on-failure
 
+  search-client-example:
+    image: ${REGISTRY:-localhost:32000}/search-client-example
+    build:
+      context: ./search-client-example
+      dockerfile: Dockerfile
+    ports:
+      - '4200:4200'
+    networks:
+      - sandbox
+    restart: on-failure
+
   audit-ms-migration:
     image: ${REGISTRY:-localhost:32000}/audit-ms-example
     command: sh -c "sleep 60 && npm run db:migrate"
@@ -552,9 +563,9 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database pubnub_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&& 
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database search_db'&& 
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database search_db'&&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'&&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb'"
