@@ -15,7 +15,13 @@ describe('Google Oauth Pre Verify Service', () => {
     displayName: 'test_display_name',
     profileUrl: 'test_profiel_url',
     _raw: 'test_raw',
-    _json: 'test_json',
+    _json: {
+      iss: 'test',
+      aud: 'test',
+      sub: 'test',
+      iat: 1353601026,
+      exp: 1353601026,
+    },
     provider: 'test_provider',
   };
   const user = null;
