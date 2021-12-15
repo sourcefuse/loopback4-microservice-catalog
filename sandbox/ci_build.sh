@@ -34,6 +34,8 @@ local_docker_push() {
   docker push ${LOCAL_REGISTRY}/in-mail-example
   docker push ${LOCAL_REGISTRY}/search-ms-example
   docker push ${LOCAL_REGISTRY}/chat-notification-pubnub-example
+  docker push ${LOCAL_REGISTRY}/feature-toggle-example
+
 }
 
 docker_push() {
@@ -46,6 +48,7 @@ docker_push() {
   docker tag ${LOCAL_REGISTRY}/in-mail-example ${DOCKER_USERNAME}/in-mail-example
   docker tag ${LOCAL_REGISTRY}/search-ms-example ${DOCKER_USERNAME}/search-ms-example
   docker tag ${LOCAL_REGISTRY}/chat-notification-pubnub-example ${DOCKER_USERNAME}/chat-notification-pubnub-example
+  docker push ${LOCAL_REGISTRY}/feature-toggle-example ${DOCKER_USERNAME}/feature-toggle-example
 
   docker push ${DOCKER_USERNAME}/auth-multitenant-example
   docker push ${DOCKER_USERNAME}/notification-socket-example
@@ -56,6 +59,7 @@ docker_push() {
   docker push ${DOCKER_USERNAME}/in-mail-example
   docker push ${DOCKER_USERNAME}/search-ms-example
   docker push ${DOCKER_USERNAME}/chat-notification-pubnub-example
+  docker push ${DOCKER_USERNAME}/feature-toggle-example
 
   # TODO: should we clean up after build? Since agent is ephemeral, some caching may be helpful after an initial run
   # TODO: remove specific images and cache

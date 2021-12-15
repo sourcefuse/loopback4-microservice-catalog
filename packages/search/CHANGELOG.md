@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.3.0 (2021-11-11)
+
+* feat(search-client): add placeholder function, reduce width (#419) ([9c7fb91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9c7fb91)), closes [#419](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/419)
+
+
+
+
+
 ## <small>1.2.3 (2021-11-09)</small>
 
 * perf(search-client): updating package for release (#417) ([57a4a00](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/57a4a00)), closes [#417](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/417) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

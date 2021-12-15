@@ -3,22 +3,15 @@
   "private": false,
   "scripts": {},
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "@commitlint/config-lerna-scopes": "^8.3.4",
-    "commitizen": "^4.1.2",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-lerna-scopes": "^14.0.0",
+    "commitizen": "^4.2.4",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
-    "cz-conventional-changelog": "^3.2.0",
-    "cz-format-extension": "^1.4.0",
-    "husky": "^4.2.5",
-    "lerna": "^3.16.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lerna run test",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-format-extension": "^1.4.2",
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0"
   },
   "config": {
     "commitizen": {

@@ -337,7 +337,7 @@ Here sourceloopTitle mixin exposes title text color, font size and font weight s
 Here sourceloopCancelIcon mixin exposes background color of the cancel icon, border radius of the cancel icon and color of cancel icon style of the cancel icon.
 Here sourceloopText mixin exposes text color and font size of the tour text
 ```css
-@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@import "../../node_modules/@sourceloop/user-onboarding-client/assets/default.scss";
 .shepherd-element
 {
    @include sourceloopElement(black,5px,500px);
@@ -366,7 +366,7 @@ Here sourceloopText mixin exposes text color and font size of the tour text
 
 Now if you want to have both the buttons of different attributes you can overwrite the attributes of one button using the mixin shown below. You have to also include the class selector shown below while defining the steps.
 ```css
-@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@import "../../node_modules/@sourceloop/user-onboarding-client/assets/default.scss";
 @include sourceloopBtnClr1(white,5px,black);
 ```
 
@@ -419,10 +419,10 @@ sampleTour : TourStep[] = [{
 
 There are also two themes available for use i.e. the light theme and the dark theme which can be used for some default theming. You can use these themes like shown below.
 ```typescript
-@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@import "../../node_modules/@sourceloop/user-onboarding-client/assets/default.scss";
 @include sourceloopTheme('light');
 ```
 ```typescript
-@import "../../node_modules/@sourceloop/user-onboarding-client/src/assets/default.scss";
+@import "../../node_modules/@sourceloop/user-onboarding-client/assets/default.scss";
 @include sourceloopTheme('dark');
 ```

@@ -19,5 +19,9 @@ export interface INotifServiceConfig extends IServiceConfig {
   useCustomPushProvider: boolean;
 }
 
+export type INotificationFilterFunc = (
+  notif: Notification,
+) => Promise<Notification>;
+
 export const NotifDbSourceName = 'NotifDb';
 export const NotifAccessCacheSourceName = 'NotifAccessCache';

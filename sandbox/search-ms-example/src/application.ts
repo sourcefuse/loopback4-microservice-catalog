@@ -12,7 +12,7 @@ import {MySequence} from './sequence';
 import {
   SearchServiceBindings,
   SearchServiceComponent,
-} from '../../../services/search-service/dist';
+} from '@sourceloop/search-service';
 import {ToDo, User} from './models';
 import {SECURITY_SCHEME_SPEC} from '@sourceloop/core';
 

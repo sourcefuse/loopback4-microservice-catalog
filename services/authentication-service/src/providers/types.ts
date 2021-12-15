@@ -1,12 +1,8 @@
-import {
-  IAuthClient,
-  IAuthUser,
-  KeycloakProfile,
-} from 'loopback4-authentication';
-import * as GoogleStrategy from 'passport-google-oauth20';
-import * as InstagramStrategy from 'passport-instagram';
+import {IAuthClient, IAuthUser, Keycloak} from 'loopback4-authentication';
 import * as AppleStrategy from 'passport-apple';
 import * as FacebookStrategy from 'passport-facebook';
+import * as GoogleStrategy from 'passport-google-oauth20';
+import * as InstagramStrategy from 'passport-instagram';
 
 import {User, UserRelations} from '../models';
 
@@ -91,20 +87,23 @@ export interface FacebookPostVerifyFn {
 }
 
 export interface KeyCloakSignUpFn {
-  (profile: KeycloakProfile): Promise<IAuthUser | null>;
+  (profile: Keycloak.Profile): Promise<IAuthUser | null>;
 }
 
 export interface KeyCloakPreVerifyFn {
   (
     accessToken: string,
     refreshToken: string,
-    profile: KeycloakProfile,
+    profile: Keycloak.Profile,
     user: IAuthUser | null,
   ): Promise<IAuthUser | null>;
 }
 
 export interface KeyCloakPostVerifyFn {
-  (profile: KeycloakProfile, user: IAuthUser | null): Promise<IAuthUser | null>;
+  (
+    profile: Keycloak.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
 }
 
 export interface CodeWriterFn {

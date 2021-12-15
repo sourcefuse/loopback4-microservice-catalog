@@ -29,6 +29,7 @@ const types = [
 
 const scopes = [
     { name: 'core' },
+    { name: 'custom-sf-changelog' },
     { name: 'authentication-service' },
     { name: 'in-mail-service' },
     { name: 'notification-service' },
@@ -39,6 +40,7 @@ const scopes = [
     { name: 'search-service' },
     { name: 'sandbox' },
     { name: 'search-client'},
+    { name: 'user-onboarding'},
     {name: 'chat-service'},
 ]
 
