@@ -53,7 +53,7 @@
     "@loopback/repository": "^3.6.0",
     "@loopback/repository-json-schema": "^3.4.0",
     "@loopback/rest": "^9.3.0",
-    "@loopback/rest-explorer": "^3.3.0",
+    "@loopback/rest-explorer": "^3.3.4",
     "@loopback/service-proxy": "^3.2.0",
     "@sourceloop/core": "^3.2.0",
     "@sourceloop/notification-service": "^2.1.5",
