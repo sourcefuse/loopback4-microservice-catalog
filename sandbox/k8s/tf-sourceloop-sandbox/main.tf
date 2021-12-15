@@ -1,18 +1,18 @@
 module "sandbox_applications" {
-  source                = "./tf-k8s-application"
-  for_each              = local.k8s_apps
-  app_label             = each.value.app_label
-  container_image       = each.value.container_image
-  container_name        = each.value.container_name
-  container_port        = each.value.container_port
-  deployment_name       = each.value.deployment_name
-  namespace_name        = each.value.namespace_name
-  port                  = each.value.port
-  port_name             = each.value.port_name
-  protocol              = each.value.protocol
-  service_name          = each.value.service_name
-  target_port           = each.value.target_port
-  replica_count         = each.value.replica_count
+  source          = "git@github.com:sourcefuse/terraform-k8s-app.git"
+  for_each        = local.k8s_apps
+  app_label       = each.value.app_label
+  container_image = each.value.container_image
+  container_name  = each.value.container_name
+  container_port  = each.value.container_port
+  deployment_name = each.value.deployment_name
+  namespace_name  = each.value.namespace_name
+  port            = each.value.port
+  port_name       = each.value.port_name
+  protocol        = each.value.protocol
+  service_name    = each.value.service_name
+  target_port     = each.value.target_port
+  replica_count   = each.value.replica_count
 
   ## pvc
   persistent_volume_claim_enable           = try(each.value.persistent_volume_claim_enable, false)

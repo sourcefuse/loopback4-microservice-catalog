@@ -76,6 +76,22 @@ x-pubnub-variables: &pubnub-variables
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
+x-feature-toggle-variables: &feature-toggle-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: feature-toggle_db
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+
 x-scheduler-variables: &scheduler-variables
   NODE_ENV: dev
   LOG_LEVEL: debug
@@ -396,6 +412,17 @@ services:
       - sandbox
     restart: on-failure
 
+  search-client-example:
+    image: ${REGISTRY:-localhost:32000}/search-client-example
+    build:
+      context: ./search-client-example
+      dockerfile: Dockerfile
+    ports:
+      - '4200:4200'
+    networks:
+      - sandbox
+    restart: on-failure
+
   audit-ms-migration:
     image: ${REGISTRY:-localhost:32000}/audit-ms-example
     command: sh -c "sleep 60 && npm run db:migrate"
@@ -433,6 +460,36 @@ services:
       context: ./pubnub-example
       dockerfile: Dockerfile
     environment: *pubnub-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
+
+  feature-toggle-example:
+    image: ${REGISTRY:-localhost:32000}/feature-toggle-example
+    build:
+      context: ./feature-toggle-example
+      dockerfile: Dockerfile
+    ports:
+      - '3039:3000'
+    networks:
+      - sandbox
+    environment: *feature-toggle-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+      - feature-toggle-migration
+    restart: on-failure
+
+  feature-toggle-migration:
+    image: ${REGISTRY:-localhost:32000}/feature-toggle:latest
+    command: sh -c "sleep 60 && npm run db:migrate"
+    build:
+      context: ./feature-toggle-example
+      dockerfile: Dockerfile
+    environment: *feature-toggle-variables
     depends_on:
       - postgres
       - postgres_orchestrator
@@ -551,10 +608,11 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database pubnub_db' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database feature-toggle_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&& 
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database search_db'&& 
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database search_db'&&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'&&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb'"

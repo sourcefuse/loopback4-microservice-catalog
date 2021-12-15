@@ -5,6 +5,7 @@ export interface IServiceConfig {
 }
 
 export interface CoreConfig {
+  name?: string;
   configObject?: i18n.ConfigurationOptions;
   enableObf?: boolean;
   obfPath?: string;

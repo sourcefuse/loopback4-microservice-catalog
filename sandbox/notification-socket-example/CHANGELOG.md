@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.4 (2021-11-11)</small>
+
+* chore(deps): bump validator in /sandbox/notification-socket-example (#410) ([ed0581e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ed0581e)), closes [#410](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/410)
+
+
+
+
+
 ## <small>2.1.3 (2021-11-09)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

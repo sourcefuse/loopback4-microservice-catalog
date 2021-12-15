@@ -32,4 +32,8 @@ CREATE TABLE main.search_query (
 	CONSTRAINT              search_query_pk PRIMARY KEY (id)
 );
 
+alter table main.search_query add column deleted_on timestamptz;
+alter table main.search_query add column deleted bool DEFAULT false NOT NULL ;
+alter table main.search_query add column deleted_by uuid;
+
 ALTER TABLE main.search_query ADD CONSTRAINT fk_recent_search_in_query FOREIGN KEY ( recent_search_id ) REFERENCES main.recent_search( id );

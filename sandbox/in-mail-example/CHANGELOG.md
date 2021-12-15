@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.3 (2021-11-11)</small>
+
+* chore(deps): bump validator in /sandbox/in-mail-example (#412) ([69fb61d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/69fb61d)), closes [#412](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/412)
+
+
+
+
+
 ## <small>0.4.2 (2021-11-09)</small>
 
 **Note:** Version bump only for package @sourceloop/in-mail-example
