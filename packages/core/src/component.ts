@@ -41,11 +41,10 @@ export class CoreComponent implements Component {
     // Enable OBF
     if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
       const swStatsMiddleware = swstats.getMiddleware({
+        name: this.coreConfig?.name,
         uriPath: this.coreConfig?.obfPath ?? `/obf`,
         swaggerSpec: this.coreConfig?.openapiSpec,
-        authentication: this.coreConfig.authentication
-          ? this.coreConfig.authentication
-          : false,
+        authentication: this.coreConfig.authentication ?? false,
         onAuthenticate: this.coreConfig.swaggerAuthenticate
           ? this.coreConfig.swaggerAuthenticate
           : (req, username, password) => {

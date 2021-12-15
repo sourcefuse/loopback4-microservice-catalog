@@ -1,5 +1,5 @@
 import {Provider} from '@loopback/context';
-import {IAuthUser, KeycloakProfile} from 'loopback4-authentication';
+import {IAuthUser, Keycloak} from 'loopback4-authentication';
 
 import {KeyCloakPreVerifyFn} from './types';
 
@@ -12,7 +12,7 @@ export class KeyCloakPreVerifyProvider
     return async (
       accessToken: string,
       refreshToken: string,
-      profile: KeycloakProfile,
+      profile: Keycloak.Profile,
       user: IAuthUser | null,
     ) => user;
   }

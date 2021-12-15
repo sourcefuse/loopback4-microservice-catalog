@@ -109,6 +109,10 @@ fetch('/notification-users/bulk',
 
 `POST /notification-users/bulk`
 
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 > Body parameter
 
 ```json
@@ -214,6 +218,10 @@ fetch('/notification-users/count',
 
 `GET /notification-users/count`
 
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 <h3 id="notificationusercontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -289,6 +297,10 @@ fetch('/notification-users/hard',
 ```
 
 `DELETE /notification-users/hard`
+
+| Permissions |
+| ------- |
+| DeleteNotification   |
 
 <h3 id="notificationusercontroller.deleteallhard-parameters">Parameters</h3>
 
@@ -379,6 +391,10 @@ fetch('/notification-users/{id}',
 ```
 
 `PUT /notification-users/{id}`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 > Body parameter
 
@@ -488,6 +504,10 @@ fetch('/notification-users/{id}',
 
 `PATCH /notification-users/{id}`
 
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 > Body parameter
 
 ```json
@@ -574,6 +594,10 @@ fetch('/notification-users/{id}',
 
 `GET /notification-users/{id}`
 
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 <h3 id="notificationusercontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -658,6 +682,10 @@ fetch('/notification-users/{id}',
 ```
 
 `DELETE /notification-users/{id}`
+
+| Permissions |
+| ------- |
+| DeleteNotification   |
 
 <h3 id="notificationusercontroller.deletebyid-parameters">Parameters</h3>
 
@@ -748,6 +776,10 @@ fetch('/notification-users',
 ```
 
 `POST /notification-users`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 > Body parameter
 
@@ -876,6 +908,10 @@ fetch('/notification-users',
 
 `PATCH /notification-users`
 
+| Permissions |
+| ------- |
+| ViewNotification   |
+
 > Body parameter
 
 ```json
@@ -971,6 +1007,10 @@ fetch('/notification-users',
 ```
 
 `GET /notification-users`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationusercontroller.find-parameters">Parameters</h3>
 
@@ -1078,6 +1118,10 @@ fetch('/notification-users',
 
 `DELETE /notification-users`
 
+| Permissions |
+| ------- |
+| DeleteNotification   |
+
 <h3 id="notificationusercontroller.deleteall-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1147,6 +1191,10 @@ fetch('/notification-users/{id}/notification',
 ```
 
 `GET /notification-users/{id}/notification`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationusernotificationcontroller.getnotification-parameters">Parameters</h3>
 
@@ -1263,6 +1311,10 @@ fetch('/notifications/access/{id}',
 ```
 
 `PATCH /notifications/access/{id}`
+
+| Permissions |
+| ------- |
+| CanGetNotificationAccess   |
 
 > Body parameter
 
@@ -1433,6 +1485,10 @@ fetch('/notifications/bulk',
 
 `POST /notifications/bulk`
 
+| Permissions |
+| ------- |
+| CreateNotification   |
+
 > Body parameter
 
 ```json
@@ -1519,6 +1575,10 @@ fetch('/notifications/count',
 ```
 
 `GET /notifications/count`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationcontroller.count-parameters">Parameters</h3>
 
@@ -1614,6 +1674,10 @@ fetch('/notifications/{id}',
 
 `PATCH /notifications/{id}`
 
+| Permissions |
+| ------- |
+| UpdateNotification   |
+
 > Body parameter
 
 ```json
@@ -1694,6 +1758,10 @@ fetch('/notifications/{id}',
 ```
 
 `GET /notifications/{id}`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationcontroller.findbyid-parameters">Parameters</h3>
 
@@ -1793,6 +1861,10 @@ fetch('/notifications',
 ```
 
 `POST /notifications`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
 
 > Body parameter
 
@@ -1908,6 +1980,10 @@ fetch('/notifications',
 ```
 
 `PATCH /notifications`
+
+| Permissions |
+| ------- |
+| UpdateNotification   |
 
 > Body parameter
 
@@ -2102,6 +2178,10 @@ fetch('/notifications',
 
 `DELETE /notifications`
 
+| Permissions |
+| ------- |
+| DeleteNotification   |
+
 <h3 id="notificationcontroller.deleteall-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2193,6 +2273,10 @@ fetch('/notifications/{id}/notification-users',
 ```
 
 `POST /notifications/{id}/notification-users`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
 
 > Body parameter
 
@@ -2322,6 +2406,10 @@ fetch('/notifications/{id}/notification-users',
 
 `PATCH /notifications/{id}/notification-users`
 
+| Permissions |
+| ------- |
+| UpdateNotification   |
+
 > Body parameter
 
 ```json
@@ -2418,6 +2506,10 @@ fetch('/notifications/{id}/notification-users',
 ```
 
 `GET /notifications/{id}/notification-users`
+
+| Permissions |
+| ------- |
+| ViewNotification   |
 
 <h3 id="notificationnotificationusercontroller.find-parameters">Parameters</h3>
 
@@ -2527,6 +2619,10 @@ fetch('/notifications/{id}/notification-users',
 ```
 
 `DELETE /notifications/{id}/notification-users`
+
+| Permissions |
+| ------- |
+| DeleteNotification   |
 
 <h3 id="notificationnotificationusercontroller.delete-parameters">Parameters</h3>
 

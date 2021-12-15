@@ -89,6 +89,10 @@ fetch('/workflows/{id}/execute',
 
 `POST /workflows/{id}/execute`
 
+| Permissions |
+| ------- |
+| CreateWorkflow   |
+
 > Body parameter
 
 ```json
@@ -164,6 +168,10 @@ fetch('/workflows/{id}/version/{version}',
 ```
 
 `DELETE /workflows/{id}/version/{version}`
+
+| Permissions |
+| ------- |
+| DeleteWorkflow   |
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -244,6 +252,10 @@ fetch('/workflows/{id}',
 
 `PATCH /workflows/{id}`
 
+| Permissions |
+| ------- |
+| UpdateWorkflow   |
+
 > Body parameter
 
 ```json
@@ -322,6 +334,10 @@ fetch('/workflows/{id}',
 
 `GET /workflows/{id}`
 
+| Permissions |
+| ------- |
+| ViewWorkflow   |
+
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -387,6 +403,10 @@ fetch('/workflows/{id}',
 ```
 
 `DELETE /workflows/{id}`
+
+| Permissions |
+| ------- |
+| DeleteWorkflow   |
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -467,6 +487,10 @@ fetch('/workflows',
 ```
 
 `POST /workflows`
+
+| Permissions |
+| ------- |
+| CreateWorkflow   |
 
 > Body parameter
 
@@ -569,6 +593,10 @@ fetch('/workflows',
 ```
 
 `GET /workflows`
+
+| Permissions |
+| ------- |
+| ViewWorkflow   |
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 

@@ -2219,6 +2219,10 @@ fetch('/auth-clients/count',
 
 `GET /auth-clients/count`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 <h3 id="authclientcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2324,6 +2328,10 @@ fetch('/auth-clients/{id}',
 ```
 
 `PUT /auth-clients/{id}`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 > Body parameter
 
@@ -2442,6 +2450,10 @@ fetch('/auth-clients/{id}',
 
 `PATCH /auth-clients/{id}`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 > Body parameter
 
 ```json
@@ -2531,6 +2543,10 @@ fetch('/auth-clients/{id}',
 
 `GET /auth-clients/{id}`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 <h3 id="authclientcontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2618,6 +2634,10 @@ fetch('/auth-clients/{id}',
 ```
 
 `DELETE /auth-clients/{id}`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 <h3 id="authclientcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -2714,6 +2734,10 @@ fetch('/auth-clients',
 ```
 
 `POST /auth-clients`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 > Body parameter
 
@@ -2854,6 +2878,10 @@ fetch('/auth-clients',
 
 `PATCH /auth-clients`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 > Body parameter
 
 ```json
@@ -2952,6 +2980,10 @@ fetch('/auth-clients',
 ```
 
 `GET /auth-clients`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 <h3 id="authclientcontroller.find-parameters">Parameters</h3>
 

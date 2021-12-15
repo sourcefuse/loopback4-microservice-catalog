@@ -5,17 +5,18 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import cryptoRandomString from 'crypto-random-string';
+
 import {VideoChatSessionController} from '../../../controllers';
 import {VonageConfig, VonageProvider} from '../../../providers/vonage';
+import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   SessionAttendeesRepository,
   VideoChatSessionRepository,
 } from '../../../repositories';
-import {VonageService} from '../../../providers/vonage/vonage.service';
 import {ChatSessionService} from '../../../services/chat-session.service';
 import {VideoChatInterface} from '../../../types';
 import {
+  getAttendeesList,
   getDate,
   getDatePastThreshold,
   getFutureDate,
@@ -27,7 +28,6 @@ import {
   getVideoChatSession,
   getWebhookPayload,
   setUpMockProvider,
-  getAttendeesList,
   stream,
 } from '../../helpers';
 
@@ -485,12 +485,7 @@ describe('Session APIs', () => {
     vonageService = new VonageService(config);
     videoChatProvider = new VonageProvider(vonageService).value();
 
-    const meetLinkGenerator = (): string => {
-      return cryptoRandomString({
-        length: 10,
-        type: 'url-safe',
-      });
-    };
+    const meetLinkGenerator = () => Promise.resolve('test');
 
     chatSessionService = new ChatSessionService(
       videoChatSessionRepo,
