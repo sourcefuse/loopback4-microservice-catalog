@@ -16,7 +16,10 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
 
   async action(): Promise<boolean> {
     const metadata: FeatureFlagMetadata = await this.getMetadata();
-    if (metadata.features.length === 1 && metadata.features[0] === '*') {
+    if (
+      !metadata ||
+      (metadata.features.length === 1 && metadata.features[0] === '*')
+    ) {
       this.result = true;
       return this.result;
     }

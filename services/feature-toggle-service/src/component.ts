@@ -43,6 +43,11 @@ import {
 } from './providers';
 import {FeatureToggleSequence} from './sequence';
 import {IToggleServiceConfig} from './types';
+import {
+  FeaturesController,
+  ProjectsController,
+  StrategiesController,
+} from './controllers';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
@@ -88,6 +93,12 @@ export class FeatureToggleServiceComponent implements Component {
       [StrategyBindings.USER_FEATURE.key]: UserFeatureProvider,
       [StrategyBindings.SYSTEM_FEATURE.key]: SystemFeatureProvider,
     };
+
+    this.controllers = [
+      FeaturesController,
+      ProjectsController,
+      StrategiesController,
+    ];
   }
   providers?: ProviderMap = {};
 
