@@ -11,7 +11,21 @@
   "command": {
     "bootstrap": {
       "concurrency": 4,
-      "forceLocal": true
+      "forceLocal": true,
+      "ignore": [
+        "@sourceloop/audit-ms-example",
+        "@sourceloop/auth-ms-basic-example",
+        "@sourceloop/auth-multitenant-example",
+        "@sourceloop/in-mail-example",
+        "@sourceloop/schedular-example",
+        "@sourceloop/notification-socket-example",
+        "@sourceloop/video-conferencing-ms-example",
+        "@sourceloop/workflow-ms-example",
+        "@sourceloop/pubnub-example",
+        "@sourceloop/search-ms-example",
+        "@sourceloop/search-client-example",
+        "@sourceloop/feature-toggle-example"
+      ]
     },
     "version": {
       "conventionalCommits": true,
