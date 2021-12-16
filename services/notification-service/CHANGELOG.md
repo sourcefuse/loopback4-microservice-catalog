@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2021-12-16)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* feat(notification-service): added user-blacklisting feature (#429) ([c9f449e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c9f449e)), closes [#429](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/429)
+
+
+
+
+
 ## <small>2.1.5 (2021-11-11)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-service

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.2.1 (2021-12-16)</small>
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+
+
+
+
+
 ## 3.2.0 (2021-11-11)
 
 * feat(hidden-api): adds hidden-api feature (#143) (#364) ([bdd8fc8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdd8fc8)), closes [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#364](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/364) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143)
