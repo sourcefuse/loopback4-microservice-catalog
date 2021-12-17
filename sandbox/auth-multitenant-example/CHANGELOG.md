@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.2.4 (2021-12-17)</small>
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
+
+
+
+
+
 ## <small>2.2.3 (2021-11-11)</small>
 
 * chore(deps): bump validator in /sandbox/auth-multitenant-example (#409) ([c6fb08a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c6fb08a)), closes [#409](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/409)

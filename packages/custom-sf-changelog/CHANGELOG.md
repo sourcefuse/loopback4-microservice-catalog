@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.3.1 (2021-12-17)</small>
+
+* fix(ci-cd): add sandbox to ignore for bootstrap (#442) ([cc8c848](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/cc8c848)), closes [#442](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/442)
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(custom-sf-changelog): fix npm_audit failing on lerna bootstrap command (#431) ([3f307af](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/3f307af)), closes [#431](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/431) [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 1.3.0 (2021-10-24)
 
 * feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+* feat(sandbox): example for feature toggle service (#398) ([9410472](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9410472)), closes [#398](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/398) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396)
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
 ## <small>1.4.4 (2021-11-11)</small>
 
 * chore(deps): bump validator in /services/in-mail-service (#408) ([e19e481](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e19e481)), closes [#408](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/408)

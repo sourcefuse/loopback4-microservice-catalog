@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.5 (2021-12-17)</small>
+
+* fix: upgrade @loopback/boot from 3.4.0 to 3.4.4 (#422) ([ff28928](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/ff28928)), closes [#422](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/422)
+* fix: upgrade @loopback/repository from 3.6.0 to 3.7.3 (#425) ([12302f3](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/12302f3)), closes [#425](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/425)
+* fix: upgrade @loopback/rest-explorer from 3.3.0 to 3.3.4 (#423) ([f5aa597](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/f5aa597)), closes [#423](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/423)
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
+
+
+
+
+
 ## <small>2.1.4 (2021-11-11)</small>
 
 * chore(deps): bump validator in /sandbox/notification-socket-example (#410) ([ed0581e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ed0581e)), closes [#410](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/410)

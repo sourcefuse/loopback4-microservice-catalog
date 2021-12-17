@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.3.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
+* feat(sandbox): add search-client example (#427) ([4735004](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/4735004)), closes [#427](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/427) [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>0.2.6 (2021-11-11)</small>
 
 **Note:** Version bump only for package @sourceloop/search-ms-example
