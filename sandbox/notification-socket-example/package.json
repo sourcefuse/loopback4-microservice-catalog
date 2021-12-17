@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-socket-example",
-  "version": "2.1.5",
+  "version": "2.1.4",
   "description": "sandbox",
   "keywords": [
     "loopback-application",
@@ -55,8 +55,8 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.3.4",
     "@loopback/service-proxy": "^3.2.0",
-    "@sourceloop/core": "^3.2.1",
-    "@sourceloop/notification-service": "^2.2.0",
+    "@sourceloop/core": "^3.2.0",
+    "@sourceloop/notification-service": "^2.1.5",
     "loopback4-authorization": "^3.3.0",
     "loopback4-soft-delete": "^3.2.2",
     "tslib": "^2.0.0"

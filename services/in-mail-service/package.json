@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "2.0.0",
+  "version": "1.4.4",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -64,7 +64,7 @@
     "@loopback/repository": "^3.7.3",
     "@loopback/repository-tests": "^0.18.4",
     "@loopback/rest": "^10.1.0",
-    "@sourceloop/core": "^3.2.1",
+    "@sourceloop/core": "^3.2.0",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^5.0.2",

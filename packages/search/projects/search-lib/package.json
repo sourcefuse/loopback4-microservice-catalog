@@ -1,14 +1,14 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "4.3.0",
+  "version": "4.2.0",
   "description": "A global search component for search microservice",
   "peerDependencies": {
     "@angular/animations": "~12.1.5",
     "@angular/cdk": ">=10.2.0 <13.0.0",
     "@angular/common": "~12.1.5",
     "@angular/compiler": "~12.1.5",
-    "@angular/core": "~12.1.5",
     "@angular/flex-layout": "10.0.0-beta.32 - 12.0.0-beta.35",
+    "@angular/core": "~12.1.5",
     "@angular/forms": "~12.1.5",
     "@angular/material": ">=10.2.0 <13.0.0",
     "@angular/platform-browser": "~12.1.5",

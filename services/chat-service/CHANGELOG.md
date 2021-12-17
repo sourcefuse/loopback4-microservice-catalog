@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## <small>1.1.6 (2021-12-16)</small>
-
-* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
-
-
-
-
-
 ## <small>1.1.5 (2021-11-11)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-service

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "3.0.7",
+  "version": "3.0.6",
   "description": "Library for providing a smooth user onboarding",
   "keywords": [
     "angular-library"
@@ -8,11 +8,11 @@
   "peerDependencies": {
     "@angular/common": "^11.2.12",
     "@angular/core": "^11.2.12",
-    "@angular/router": "~11.2.3",
-    "@videogular/ngx-videogular": "^3.0.1",
-    "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.6.0",
-    "shepherd.js": "^8.3.1"
+    "@angular/router": "~11.2.3",
+    "ngx-webstorage-service": "^4.1.0",
+    "shepherd.js": "^8.3.1",
+    "@videogular/ngx-videogular": "^3.0.1"
   },
   "scripts": {
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
