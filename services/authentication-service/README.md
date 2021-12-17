@@ -1,7 +1,10 @@
-# authentication-service
+# @sourceloop/authentication-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/authentication-service/@loopback/core)
+
+![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/authentication-service/dev/@loopback/cli)
 
 ## Overview
 
@@ -25,7 +28,7 @@ For a more elaborate and custom implementation that overrides the default models
 
 ### Working and Flow
 
-This module uses the decorators provided by [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [loopback4-authorization](https://www.npmjs.com/package/loopback4-authorization). For reference, below is the flow for the login code generation that uses the authenticate client, authenticate user and authorization decorators from these npm packages - 
+This module uses the decorators provided by [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [loopback4-authorization](https://www.npmjs.com/package/loopback4-authorization). For reference, below is the flow for the login code generation that uses the authenticate client, authenticate user and authorization decorators from these npm packages -
 
 ![Login Flow](https://user-images.githubusercontent.com/77672713/126627507-072a056c-de27-4764-9e5b-03d871da2438.png)
 
@@ -39,29 +42,27 @@ npm i @sourceloop/authentication-service
 
 ### Usage
 
- - Create a new Loopback4 Application (If you don't have one already)
-	`lb4 testapp` 
- - Install the authentication service
-	 `npm i @sourceloop/authentication-service`
- - Set the [environment variables](#environment-variables).
- - Run the [migrations](#migrations).
- - Add the `AuthenticationServiceComponent` to your Loopback4 Application (in `application.ts`).
-	  ``` typescript
-	  // import the AuthenticationServiceComponent
-	  import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
-	  // add Component for AuthenticationService
-	  this.component(AuthenticationServiceComponent);
-	```
-  - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to 
-	`AuthDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
- - Set up a Loopback4 Datasource for caching tokens with `dataSourceName` property set to `AuthCacheSourceName`.
- - Bind any of the custom [providers](#providers) you need.
- - Start the application
-	`npm start`
-
+- Create a new Loopback4 Application (If you don't have one already)
+  `lb4 testapp`
+- Install the authentication service
+  `npm i @sourceloop/authentication-service`
+- Set the [environment variables](#environment-variables).
+- Run the [migrations](#migrations).
+- Add the `AuthenticationServiceComponent` to your Loopback4 Application (in `application.ts`).
+  ```typescript
+  // import the AuthenticationServiceComponent
+  import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
+  // add Component for AuthenticationService
+  this.component(AuthenticationServiceComponent);
+  ```
+- Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
+  `AuthDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+- Set up a Loopback4 Datasource for caching tokens with `dataSourceName` property set to `AuthCacheSourceName`.
+- Bind any of the custom [providers](#providers) you need.
+- Start the application
+  `npm start`
 
 ### Environment Variables
-
 
 | Name | Required | Default Value | Description |
 
@@ -123,45 +124,43 @@ npm i @sourceloop/authentication-service
 
 | `HTTPS_PROXY` | N | | Https proxy url for keycloak auth |
 
-
 ### Setting up a `DataSource`
 
 Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. The `auth-multitenant-example` utilizes both Redis and PostgreSQL as data sources.
 
 ```typescript
-import {inject, lifeCycleObserver, LifeCycleObserver} from  '@loopback/core';
-import {juggler} from  '@loopback/repository';
-import {AuthDbSourceName} from  '@sourceloop/authentication-service';
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuthDbSourceName} from '@sourceloop/authentication-service';
 
-const  config = {
-	name:  AuthDbSourceName,
-	connector:  'postgresql',
-	url:  '',
-	host:  process.env.DB_HOST,
-	port:  process.env.DB_PORT,
-	user:  process.env.DB_USER,
-	password:  process.env.DB_PASSWORD,
-	database:  process.env.DB_DATABASE,
-	schema:  process.env.DB_SCHEMA,
+const config = {
+  name: AuthDbSourceName,
+  connector: 'postgresql',
+  url: '',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
 };
 
 @lifeCycleObserver('datasource')
-export  class  AuthenticationDbDataSource
-extends  juggler.DataSource
-implements  LifeCycleObserver {
+export class AuthenticationDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuthDbSourceName;
+  static readonly defaultConfig = config;
 
-	static  dataSourceName = AuthDbSourceName;
-	static  readonly  defaultConfig = config;
-
-	constructor(
-		// You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
-		@inject('datasources.config.authentication', {optional:  true})
-		dsConfig: object = config,
-	) {
-		super(dsConfig);
-	}
+  constructor(
+    // You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
+    @inject('datasources.config.authentication', {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
+  }
 }
-
 ```
 
 ### Migrations
@@ -171,7 +170,6 @@ The migrations required for this service are processed during the installation a
 ### Database Schema
 
 ![Auth DB Schema](https://user-images.githubusercontent.com/77672713/126612271-3ce065aa-9f87-45d4-bf9a-c5cc8ad21764.jpg)
-
 
 ### Providers
 

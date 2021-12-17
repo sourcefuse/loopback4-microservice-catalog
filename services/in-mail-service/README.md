@@ -1,8 +1,10 @@
+# @sourceloop/in-mail-service
 
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
-# in-mail-service
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/in-mail-service/@loopback/core)
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/in-mail-service/dev/@loopback/cli)
 
 A Loopback Microservice primarily used for in-mail implementation to compose and view in-mails for
 any client application.
@@ -15,24 +17,23 @@ any client application.
 
 ## Usage
 
- - Create a new Loopback4 Application (If you don't have one already)
+- Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
 - Install the in mail service
-`npm i @sourceloop/in-mail-service`
+  `npm i @sourceloop/in-mail-service`
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Add the `InMailServiceComponent` to your Loopback4 Application (in `application.ts`).
-	``` typescript
+  ```typescript
   // import the InMailServiceComponent
   // No need to destructure
-  import  InMailServiceComponent  from '@sourceloop/in-mail-service';
-	// add Component for InMailServiceComponent
-	this.component(InMailServiceComponent);
-	```
+  import InMailServiceComponent from '@sourceloop/in-mail-service';
+  // add Component for InMailServiceComponent
+  this.component(InMailServiceComponent);
+  ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `InMailDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
-
 
 ### Setting up a `DataSource`
 
@@ -57,7 +58,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class InmailDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = InMailDatasourceName;
   static readonly defaultConfig = config;
 
@@ -81,6 +83,7 @@ The migrations required for this service are processed during the installation a
 ### Setting Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
+
 ```environment
 NODE_ENV=dev
 LOG_LEVEL=DEBUG
@@ -96,23 +99,20 @@ JWT_SECRET=super_secret_string
 JWT_ISSUER=https://authentication.service
 ```
 
-
-
-| Name          | Required | Default Value | Description                                                  |
-| ------------- | -------- | ------------- | ------------------------------------------------------------ |
-| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`           |
-| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
-| `HOST`        | Y        |               | Host for the service to run under, i.e. `0.0.0.0`            |
-| `PORT`        | Y        | `3000`        | Port for the service to listen on.                           |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                            |
-| `DB_PORT`     | Y        |               | Port for the database server.                                |
-| `DB_USER`     | Y        |               | User for the database.                                       |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                              |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.               |
+| Name          | Required | Default Value | Description                                                                                                                        |
+| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
+| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
+| `HOST`        | Y        |               | Host for the service to run under, i.e. `0.0.0.0`                                                                                  |
+| `PORT`        | Y        | `3000`        | Port for the service to listen on.                                                                                                 |
+| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
+| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
+| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
+| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
+| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
 | `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                      |
-| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                     |
-
+| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
+| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
 
 ### API Documentation
 
@@ -141,6 +141,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 **Description:** Compose or draft a Mail to various Recipients
 
 **Request Body:**
+
 ```javascript
 {
   "threadId": "string", // Optional, add if you want the messages in a same thread
@@ -171,13 +172,16 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
   "extMetadata": {} // External Metadata from the Client (Optional)
 }
 ```
+
 **Successful Response:**
+
 ```javascript
 {
   "id": "string", // id of the message
   "version": "string" // API vewrsion
 }
 ```
+
 ##### PUT /mails/{messageId}
 
 **Description:** Update Drafted Messages such as modifying attachment, receipients, message body, subject etc.
@@ -187,6 +191,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 {messageId}: Unique Id of the message which needs to be updated
 
 **Request Body:**
+
 ```javascript
 {
   "groups": [ // You can define one or more receipients in a group array.
@@ -216,7 +221,9 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
   "extMetadata": "object" // External Metadata from the Client (Optional)
 }
 ```
+
 Success Response:
+
 ```javascript
 {
   "id": "string", // id of the message
@@ -233,6 +240,7 @@ Success Response:
 {messageId}: The unique id of a mail
 
 **Request Body:**
+
 ```javascript
 {
   "attachments": [
@@ -247,12 +255,14 @@ Success Response:
 ```
 
 **Successful Response:**
+
 ```javascript
 {
   "items": "array", // array containing attachments,
   "version": "string", // an API version
 }
 ```
+
 ##### DELETE /mails/bulk/{storage}/{action}
 
 **Description:** Move inbox/sent items to trash or delete the trashed item
@@ -272,6 +282,7 @@ Success Response:
 ```
 
 **Successful Response:**
+
 ```javascript
 {
   "version" : "string", // the API version
@@ -292,6 +303,7 @@ Success Response:
 ```
 
 **Successful Response:**
+
 ```javascript
 {
   "version": "string", // the API version
@@ -308,6 +320,7 @@ Success Response:
 {messageId}: Unique message Id
 
 **Request Body:**
+
 ```javascript
 {
   "groups": [ // you can specify more recipients in groups array for forwarding the mail to multiple recipients
@@ -318,7 +331,9 @@ Success Response:
   ]
 }
 ```
+
 **Successful Response:**
+
 ```javascript
 {
   "version": "string", // the API version
@@ -335,6 +350,7 @@ Success Response:
 {messageId}: Unique Message Id
 
 Successful response
+
 ```javascript
 {
   "id": "string",
@@ -351,12 +367,12 @@ Successful response
 {markType}: read/unread/important/not-important
 
 Successful response
+
 ```javascript
 {
   success : true,
 }
 ```
-
 
 ##### GET /threads/{threadId}
 
@@ -369,6 +385,7 @@ Successful response
 filter: Object which contains attribute(s) key value pairs of thread model which is used to filter data.
 
 **Successful Response:**
+
 ```javascript
 {
   "version": "string", // the API version
@@ -384,6 +401,7 @@ groupFilter: Object which contains attribute(s) key value pairs of group model w
 threadFilter: Object which contains attribute(s) key value pairs of thread model which is used to filter items.
 
 **Successful Response:**
+
 ```javascript
 {
    "version": "string", // the API version

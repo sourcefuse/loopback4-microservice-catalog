@@ -1,6 +1,10 @@
-# feature-toggle-service
+# @sourceloop/feature-toggle-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/feature-toggle-service/@loopback/core)
+
+![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/feature-toggle-service/dev/@loopback/cli)
 
 ## Overview
 

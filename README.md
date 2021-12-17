@@ -5,7 +5,7 @@
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-![@loopback/core](https://img.shields.io/github/package-json/dependency-version/sourcefuse/loopback4-microservice-catalog/@loopback/core?filename=services%2Fauthentication-service%2Fpackage.json)
+![@loopback/core](https://img.shields.io/github/package-json/dependency-version/sourcefuse/loopback4-microservice-catalog/@loopback/core?filename=packages%2Fcore%2Fpackage.json)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sourcefuse_loopback4-microservice-catalog)](https://sonarcloud.io/summary/new_code?id=sourcefuse_loopback4-microservice-catalog)
 

@@ -1,6 +1,10 @@
-# video-conferencing-service
+# @sourceloop/video-conferencing-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/video-conferencing-service/@loopback/core)
+
+![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/video-conferencing-service/dev/@loopback/cli)
 
 Various features of Video Conferencing Services:
 
@@ -58,8 +62,8 @@ npm i @sourceloop/video-conferencing-service
   `npm start`
 
 ## Working and Flow
-![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
 
+![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
 
 ### Environment Variables
 

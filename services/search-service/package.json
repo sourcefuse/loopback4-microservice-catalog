@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "@loopback/build": "^7.0.2",
+    "@loopback/cli": "^2.22.1",
     "@loopback/eslint-config": "^11.0.2",
     "@loopback/testlab": "^3.4.4",
     "@types/mocha": "^9.0.0",
