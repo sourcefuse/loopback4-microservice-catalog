@@ -2,6 +2,10 @@
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
+![npm](https://img.shields.io/npm/dm/@sourceloop/search-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/search-service)
+
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/search-service/@loopback/core)
 
 ![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/search-service/dev/@loopback/cli)
