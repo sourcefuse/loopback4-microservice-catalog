@@ -457,6 +457,11 @@ This section must start with the upper case text `BREAKING CHANGE` followed by a
 colon (`:`) and a space (``). A description must be provided, describing what
 has changed and how to migrate from older versions.
 
+## Husky setup for commit hooks
+
+- run `npm i` at the root of the project
+- run `npx husky install` or `npm run prepare` at the root of the project
+
 ### Tools to help generate a commit message
 
 This repository has [commitizen](https://github.com/commitizen/cz-cli) support
