@@ -71,6 +71,11 @@ module.exports = class MGenerator extends AppGenerator {
     scripts['prestart'] = "npm run rebuild && npm run openapi-spec";
     scripts['rebuild'] = "npm run clean && npm run build";
     scripts['start'] = "node -r ./dist/opentelemetry-registry.js -r source-map-support/register .";
+    scripts['docker:build'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$npm_package_version .";
+    scripts['docker:push'] = "sudo docker push $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$npm_package_version";
+    scripts['docker:build:dev'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$IMAGE_TAG_VERSION .";
+    scripts['docker:push:dev'] = "sudo docker push $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$IMAGE_TAG_VERSION";
+    scripts['coverage'] = "nyc npm run test";
     packageJson.scripts = scripts;
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
     return super.install();
@@ -85,7 +90,11 @@ module.exports = class MGenerator extends AppGenerator {
           this._bearerVerifier(packageName).then(() =>
             this._dotenv(packageName).then(() =>
               this._swaggerStat(packageName).then(() =>
-                this._opentelemetry(packageName),
+                this._opentelemetry(packageName).then(() =>
+                  this._nyc(packageName).then(() =>
+                    this._openapi(packageName),
+                  ),
+                ),
               ),
             ),
           ),
@@ -136,6 +145,17 @@ module.exports = class MGenerator extends AppGenerator {
     await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg-pool', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/tracing', '--scope='+`${packageName}`], {packageName});
+  }
+
+  async _nyc(packageName){
+    console.log('nyc');
+    await this._spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
+    await this._spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
+  }
+
+  async _openapi(packageName){
+    console.log('openapi-spec');
+    await this._spawnProcess('npm', ['run', 'openapi-spec'], {packageName});
   }
 
   _spawnProcess(cmd, cmdArgs, cwd) {

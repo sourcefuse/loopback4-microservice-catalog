@@ -20,6 +20,7 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  SECURITY_SCHEME_SPEC,
 } from '@sourceloop/core';
 
 <% if (project.repositories) { -%>
@@ -37,7 +38,7 @@ import {
 } from '@loopback/apiconnect';
 <% } -%>
 import path from 'path';
-import * as openapi from './openapi.json';
+//import * as openapi from './openapi.json';
 
 export {ApplicationConfig};
 
@@ -142,7 +143,7 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     this.api({
       openapi: '3.0.0',
       info: {
-        title: '< Service name >',
+        title: '<%= project.name %>',
         version: '1.0.0',
       },
       paths: {},

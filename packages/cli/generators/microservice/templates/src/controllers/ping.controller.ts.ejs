@@ -6,6 +6,7 @@ import {
   response,
   ResponseObject,
 } from '@loopback/rest';
+import {authorize} from 'loopback4-authorization';
 
 /**
  * OpenAPI response for ping()
@@ -41,6 +42,7 @@ export class PingController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
   // Map to `GET /ping`
+  @authorize({permissions: ['*']})
   @get('/ping')
   @response(200, PING_RESPONSE)
   ping(): object {
