@@ -7,8 +7,10 @@ This document describes how to develop microservices living in loopback4-microse
 - [Building the project](#building-the-project)
 - [File naming convention](#file-naming-convention)
 - [Develop a new microservice](#develop-a-new-microservice)
+- [How to upgrade to new LB4 dependencies](#how-to-upgrade-to-new-lb4-dependencies)
 - [Sonar Setup in VS Code](#sonar-setup-in-vs-code)
 - [Commit message guidelines](#commit-message-guidelines)
+- [Husky setup for commit hooks](#husky-setup-for-commit-hooks)
 
 ## Setting up development environment
 
@@ -338,6 +340,25 @@ this.html = this.html.replace(/\$\{basePath\}/g, process.env.BASE_PATH ?? '');
 ```
 
 Create home-page.controller.ts if not already there.
+
+## How to upgrade to new LB4 dependencies
+
+1. Upgrade LB4 CLI version first. Use `npm i -g @loopback/cli@latest`.
+2. Run `npm i` at project root. This step is mandatory if node.js or npm version support is also needed to upgrade.
+3. Upgrade any deps, if needed, at project root. Verify it in the package.json at root. If not needed, skip this step.
+4. Navigate to core package. `cd packages/core`.
+5. Run `lb4 update`. It will prompt you to confirm the deps upgrade. Verify it carefully and confirm. Let it overwrite package.json.
+6. There may be some errors in previous step if there are any breaking changes coming in. If that's so, then, delete package-lock.json and run `npm i` again.
+7. Upgrade any other package related, like, loopback4 extensions - loopback4-authentication, etc. In order to ensure upgrade works, all the extensions should support the upgraded LB4 version. For example, `npm i loopback4-authentication@latest loopback4-authorization@latest loopback4-soft-delete@latest tslib@latest loopback-connector-postgresql@latest`.
+8. Run `npm audit fix`, if needed.
+9. Run `npm run test` to validate upgrade.
+10. Now, navigate to individual services. `cd ../../services/audit-service`.
+11. Re-execute steps 5-8 again.
+12. Before doing test, we need to update the `@sourceloop/core` with local symlinked package. Run `lerna bootstrap --force-local --scope=@sourceloop/audit-service`.
+13. Now run `npm run test` to validate upgrade.
+14. Repeat steps 10-13 for each service.
+
+After all the steps above done for all services and core package, all your deps are upgraded and tested. You can commit and push them to be released. Make sure to mention any breaking changes if any of the deps upgrade had breaking change.
 
 ## Sonar Setup in VS Code
 

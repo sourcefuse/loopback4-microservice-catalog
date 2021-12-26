@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/audit-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/audit-service/dev/@loopback/cli)
-
 A LoopBack microservice used for auditing user actions. It uses [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) to store the logs to a datasource. This service provides REST endpoints to perform CRUD operations for the audit logs.
 
 ## Installation

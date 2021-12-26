@@ -11,7 +11,6 @@
   "command": {
     "bootstrap": {
       "concurrency": 4,
-      "forceLocal": true,
       "ignore": [
         "@sourceloop/audit-ms-example",
         "@sourceloop/auth-ms-basic-example",
@@ -36,7 +35,8 @@
       "conventionalCommits": true,
       "message": "chore: publish release",
       "allowBranch": "master",
-      "noPrivate": true
+      "noPrivate": true,
+      "graphType": "all"
     },
     "run": {
       "concurrency": 1,

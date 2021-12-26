@@ -2,12 +2,14 @@
   "name": "@sourceloop/root",
   "private": false,
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\""
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@commitlint/config-lerna-scopes": "^14.0.0",
+    "@loopback/monorepo": "^0.4.0",
     "commitizen": "^4.2.4",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.3.0",

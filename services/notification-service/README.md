@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/notification-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/notification-service/dev/@loopback/cli)
-
 ## Overview
 
 Microservice for handling notifications to users through real time notifications, email, or SMS. This microservice uses the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module to publish/send the notifications.

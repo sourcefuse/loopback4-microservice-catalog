@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/chat-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/chat-service/dev/@loopback/cli)
-
 ## Overview
 
 Microservice for handling chat between users and user groups.
