@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -63,7 +63,7 @@
     "@loopback/rest": "^11.0.0",
     "@loopback/rest-explorer": "^4.0.0",
     "@loopback/service-proxy": "^4.0.0",
-    "@sourceloop/core": "^4.0.0",
+    "@sourceloop/core": "^5.0.0",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^8.5.1",
