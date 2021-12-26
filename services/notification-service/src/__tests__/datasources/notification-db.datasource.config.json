@@ -1,7 +1,0 @@
-{
-    "name": "notifDb",
-    "connector": "memory",
-    "localStorage": "",
-    "file": ""
-  }
-  
