@@ -35,6 +35,16 @@ module.exports = class MGenerator extends AppGenerator {
     return super.promptProjectDir();
   }
 
+  async promptUniquePrefix() {
+    this.answers = await this.prompt([
+        {
+            type: 'input',
+            name: 'uniquePrefix',
+            message: 'Unique prefix for the docker image:'
+        }
+    ]);
+}
+
   promptApplication() {
     if (this.shouldExit()) return;
     return super.promptApplication();
@@ -60,7 +70,6 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   install() {
-    console.log('install');
     const packageJsonFile = path.join(process.cwd(), 'package.json');
     const packageJson = require(packageJsonFile);
     const scripts = packageJson.scripts;
@@ -71,10 +80,10 @@ module.exports = class MGenerator extends AppGenerator {
     scripts['prestart'] = "npm run rebuild && npm run openapi-spec";
     scripts['rebuild'] = "npm run clean && npm run build";
     scripts['start'] = "node -r ./dist/opentelemetry-registry.js -r source-map-support/register .";
-    scripts['docker:build'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$npm_package_version .";
-    scripts['docker:push'] = "sudo docker push $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$npm_package_version";
-    scripts['docker:build:dev'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$IMAGE_TAG_VERSION .";
-    scripts['docker:push:dev'] = "sudo docker push $IMAGE_REPO_NAME/<app unique prefix>-$npm_package_name:$IMAGE_TAG_VERSION";
+    scripts['docker:build'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version .";
+    scripts['docker:push'] = "sudo docker push $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version";
+    scripts['docker:build:dev'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION .";
+    scripts['docker:push:dev'] = "sudo docker push $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION";
     scripts['coverage'] = "nyc npm run test";
     packageJson.scripts = scripts;
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
@@ -82,8 +91,6 @@ module.exports = class MGenerator extends AppGenerator {
   }
   
   _setupMicroservice(packageName) {
-    console.log('setupMicroservice');
-
     this._symlink(packageName)
       .then(() =>
         this._sourceloopCore(packageName).then(() =>
@@ -106,13 +113,11 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _symlink(packageName){
-    console.log('symlink');
     await this._spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
 
   }
 
   async _dotenv(packageName){
-    console.log('dotenv');
     await this._spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope='+`${packageName}`], {packageName});
@@ -120,23 +125,19 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _sourceloopCore(packageName){
-    console.log('sourceloopCore');
     await this._spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
   }
 
   async _bearerVerifier(packageName){
-    console.log('bearer');
     await this._spawnProcess('npx', ['lerna', 'add', 'loopback4-authentication', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', 'loopback4-authorization', '--scope='+`${packageName}`], {packageName});
   }
 
   async _swaggerStat(packageName){
-    console.log('swagger');
     await this._spawnProcess('npx', ['lerna', 'add', 'swagger-stats', '--scope='+`${packageName}`], {packageName});
   }
 
   async _opentelemetry(packageName){
-    console.log('opentelemetry');
     await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/exporter-jaeger', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/node', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-dns', '--scope='+`${packageName}`], {packageName});
@@ -148,7 +149,6 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _nyc(packageName){
-    console.log('nyc');
     await this._spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
   }

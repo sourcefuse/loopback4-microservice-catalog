@@ -10,7 +10,6 @@ module.exports = class extends Generator {
         super(args, opts, {});
     }
 
-
     async prompting() {
         this.answers = await this.prompt([
             {
