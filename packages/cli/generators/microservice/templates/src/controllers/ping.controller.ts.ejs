@@ -3,7 +3,6 @@ import {
   Request,
   RestBindings,
   get,
-  response,
   ResponseObject,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
@@ -43,8 +42,11 @@ export class PingController {
 
   // Map to `GET /ping`
   @authorize({permissions: ['*']})
-  @get('/ping')
-  @response(200, PING_RESPONSE)
+  @get('/ping', {
+    responses: {
+      '200': PING_RESPONSE,
+    },
+  })
   ping(): object {
     // Reply with a greeting, the current time, the url, and request headers
     return {

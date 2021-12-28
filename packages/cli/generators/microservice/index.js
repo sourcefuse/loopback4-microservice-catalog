@@ -8,8 +8,6 @@ const AppGenerator = require('@loopback/cli/generators/app');
 const path = require('path');
 const {spawn} = require('child_process');
 const fs = require('fs');
-const { promisify } = require('util');
-const { reject } = require('lodash');
 
 module.exports = class MGenerator extends AppGenerator {
   constructor(args, opts) {
@@ -43,7 +41,7 @@ module.exports = class MGenerator extends AppGenerator {
             message: 'Unique prefix for the docker image:'
         }
     ]);
-}
+  }
 
   promptApplication() {
     if (this.shouldExit()) return;
@@ -73,7 +71,6 @@ module.exports = class MGenerator extends AppGenerator {
     const packageJsonFile = path.join(process.cwd(), 'package.json');
     const packageJson = require(packageJsonFile);
     const scripts = packageJson.scripts;
-    console.log(packageJson.name);
     this._setupMicroservice(packageJson.name);
     scripts['symlink-resolver'] = "symlink-resolver";
     scripts['resolve-links'] = "npm run symlink-resolver build ./node_modules/@local";
@@ -99,7 +96,9 @@ module.exports = class MGenerator extends AppGenerator {
               this._swaggerStat(packageName).then(() =>
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
-                    this._openapi(packageName),
+                    this._promclient(packageName).then(() =>
+                      this._openapi(packageName),
+                    ),
                   ),
                 ),
               ),
@@ -152,9 +151,12 @@ module.exports = class MGenerator extends AppGenerator {
     await this._spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
   }
+  
+  async _promclient(packageName){
+    await this._spawnProcess('npm', ['i', 'prom-client'], {packageName});
+  }
 
   async _openapi(packageName){
-    console.log('openapi-spec');
     await this._spawnProcess('npm', ['run', 'openapi-spec'], {packageName});
   }
 
