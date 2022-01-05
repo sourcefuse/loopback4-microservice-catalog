@@ -1,5 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
+  DeleteStateParameters,
+  DeleteTourParameters,
   LoadStateParameters,
   LoadTourParameters,
   SaveStateParameters,
@@ -7,17 +9,27 @@ import {
   Tour,
   TourState,
 } from '../models';
-import { LoadSCommand, SaveSCommand } from '../commands/StateCommands';
-import { LoadTCommand, SaveTCommand } from '../commands/TourCommands';
+import {
+  DeleteSCommand,
+  LoadSCommand,
+  SaveSCommand,
+} from '../commands/StateCommands';
+import {
+  DeleteTCommand,
+  LoadTCommand,
+  SaveTCommand,
+} from '../commands/TourCommands';
 import {
   BaseCommand,
+  DeleteStateCommand,
+  DeleteTourCommand,
   LoadStateCommand,
   LoadTourCommand,
   SaveStateCommand,
   SaveTourCommand,
 } from '../commands/types';
-import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { Observable } from 'rxjs';
+import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,12 +42,16 @@ export class TourStoreServiceService {
   private readonly defaultSTCommand = new SaveTCommand(this.storage);
   private readonly defaultLSCommand = new LoadSCommand(this.storage);
   private readonly defaultLTCommand = new LoadTCommand(this.storage);
+  private readonly defaultDSCommand = new DeleteSCommand(this.storage);
+  private readonly defaultDTCommand = new DeleteTCommand(this.storage);
 
   constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) {
     this.commandMap.set('SaveTourCommand', this.defaultSTCommand);
     this.commandMap.set('LoadTourCommand', this.defaultLTCommand);
     this.commandMap.set('SaveStateCommand', this.defaultSSCommand);
     this.commandMap.set('LoadStateCommand', this.defaultLSCommand);
+    this.commandMap.set('DeleteStateCommand', this.defaultDSCommand);
+    this.commandMap.set('DeleteTourCommand', this.defaultDTCommand);
   }
   registerSaveTourCommand(cmd): void {
     this.commandMap.set('SaveTourCommand', cmd);
@@ -48,6 +64,12 @@ export class TourStoreServiceService {
   }
   registerLoadStateCommand(cmd): void {
     this.commandMap.set('LoadStateCommand', cmd);
+  }
+  registerDeleteStateCommand(cmd): void {
+    this.commandMap.set('DeleteStateCommand', cmd);
+  }
+  registerDeleteTourCommand(cmd): void {
+    this.commandMap.set('DeleteTourCommand', cmd);
   }
 
   public saveTour(parameters: SaveTourParameters): Observable<Tour> {
@@ -62,6 +84,14 @@ export class TourStoreServiceService {
     return command.execute();
   }
 
+  public deleteTour(parameters: DeleteTourParameters): void {
+    const command = this.commandMap.get(
+      'DeleteTourCommand',
+    ) as DeleteTourCommand;
+    command.parameters = parameters;
+    return command.execute();
+  }
+
   public saveState(parameters: SaveStateParameters): Observable<TourState> {
     const command = this.commandMap.get('SaveStateCommand') as SaveStateCommand;
     command.parameters = parameters;
@@ -70,6 +100,14 @@ export class TourStoreServiceService {
 
   public loadState(parameters: LoadStateParameters): Observable<TourState> {
     const command = this.commandMap.get('LoadStateCommand') as LoadStateCommand;
+    command.parameters = parameters;
+    return command.execute();
+  }
+
+  public deleteState(parameters: DeleteStateParameters): void {
+    const command = this.commandMap.get(
+      'DeleteStateCommand',
+    ) as DeleteStateCommand;
     command.parameters = parameters;
     return command.execute();
   }
