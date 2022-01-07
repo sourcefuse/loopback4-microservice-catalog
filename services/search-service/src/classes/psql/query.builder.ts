@@ -24,7 +24,9 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
     columns: Array<keyof T> | ColumnMap<T>,
     ignoreColumns: (keyof T)[],
   ) {
-    const modelName = model.modelName;
+    const tableName = this.getTableName(model);
+    const sourceName = this.getModelName(model);
+    const schemaName = this.getSchemaName(model);
     const {columnList, selectors} = this.getColumnListFromArrayOrMap(
       model,
       columns,
@@ -35,21 +37,17 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
       throw new HttpErrors.BadRequest(Errors.NO_COLUMNS_TO_MATCH);
     }
 
-    const where = this.whereBuild(model, this.query.where?.[modelName]);
+    const where = this.whereBuild(model, this.query.where?.[sourceName]);
     const whereClause = [
-      `to_tsvector(${
-        this.schema || 'public'
-      }.f_concat_ws(' ', ${columnList})) @@ to_tsquery($1)`,
+      `to_tsvector(${schemaName}.f_concat_ws(' ', ${columnList})) @@ to_tsquery($1)`,
     ];
     if (where.sql) {
       whereClause.push(where.sql);
     }
 
-    const query = `SELECT ${selectors}, '${modelName}' as source, ts_rank_cd(to_tsvector(${
-      this.schema || 'public'
-    }.f_concat_ws(' ', ${columnList})), to_tsquery($1)) as rank from ${
-      this.schema || 'public'
-    }.${modelName} where ${whereClause.join(' AND ')}`;
+    const query = `SELECT ${selectors}, '${sourceName}' as source, ts_rank_cd(to_tsvector(${schemaName}.f_concat_ws(' ', ${columnList})), to_tsquery($1)) as rank from ${schemaName}.${tableName} where ${whereClause.join(
+      ' AND ',
+    )}`;
 
     this.baseQueryList.push({
       sql: query,
@@ -67,6 +65,22 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
       [],
     );
     return [this._formatAndSanitize(param), ...params];
+  }
+
+  getTableName(model: typeof Model) {
+    const mappedName = this.modelNameMap.get(model.name);
+    return (
+      mappedName ??
+      model.definition?.settings?.postgresql?.table ??
+      model.modelName ??
+      model.name.toLowerCase()
+    );
+  }
+
+  getSchemaName(model: typeof Model) {
+    return (
+      this.schema ?? model.definition?.settings?.postgresql?.schema ?? `public`
+    );
   }
 
   _formatAndSanitize(param: string) {

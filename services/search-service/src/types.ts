@@ -48,6 +48,7 @@ export class SearchableModel<
 > {
   model: S;
   columns: ColumnMap<T>;
+  identifier?: string;
 }
 
 export function isSearchableModel<T extends Model>(
