@@ -19,6 +19,9 @@ import {
 } from '@loopback/rest';
 import {Subscriptions} from '../models';
 import {STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {SubscriptionsRepository} from '../repositories';
 const subscriptionsRoutePath = '/subscriptions';
 const subscriptionsIdRoutePath = '/subscriptions/{id}';
@@ -29,6 +32,8 @@ export class SubscriptionsController {
     public subscriptionsRepository: SubscriptionsRepository,
   ) {}
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post(subscriptionsRoutePath)
   @response(STATUS_CODE.OK, {
     description: 'Subscriptions model instance',
@@ -48,7 +53,9 @@ export class SubscriptionsController {
   ): Promise<Subscriptions> {
     return this.subscriptionsRepository.create(subscriptions);
   }
-
+  
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.GetSubscriptionCount]})
   @get('/subscriptions/count')
   @response(STATUS_CODE.OK, {
     description: 'Subscriptions model count',
@@ -60,6 +67,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.count(where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.GetSubscriptions]})
   @get(subscriptionsRoutePath)
   @response(STATUS_CODE.OK, {
     description: 'Array of Subscriptions model instances',
@@ -78,6 +87,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.find(filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
   @patch(subscriptionsRoutePath)
   @response(STATUS_CODE.OK, {
     description: 'Subscriptions PATCH success count',
@@ -97,6 +108,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.updateAll(subscriptions, where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.GetSubscriptions]})
   @get(subscriptionsIdRoutePath)
   @response(STATUS_CODE.OK, {
     description: 'Subscriptions model instance',
@@ -114,6 +127,8 @@ export class SubscriptionsController {
     return this.subscriptionsRepository.findById(id, filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
   @patch(subscriptionsIdRoutePath)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Subscriptions PATCH success',
@@ -132,6 +147,8 @@ export class SubscriptionsController {
     await this.subscriptionsRepository.updateById(id, subscriptions);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
   @put(subscriptionsIdRoutePath)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Subscriptions PUT success',
@@ -143,6 +160,8 @@ export class SubscriptionsController {
     await this.subscriptionsRepository.replaceById(id, subscriptions);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteSubscriptions]})
   @del(subscriptionsIdRoutePath)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Subscriptions DELETE success',
