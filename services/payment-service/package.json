@@ -65,6 +65,8 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.2.1",
     "@loopback/service-proxy": "^3.1.1",
+    "loopback4-authentication": "^4.6.0",
+    "loopback4-authorization": "^3.2.0",
     "@sourceloop/core": "^3.0.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",

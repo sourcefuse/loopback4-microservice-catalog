@@ -5,3 +5,4 @@ export const enum PermissionKey {
     UpdateSubscriptions = 'UpdateSubscriptions',
     DeleteSubscriptions = 'DeleteSubscriptions'
   }
+  

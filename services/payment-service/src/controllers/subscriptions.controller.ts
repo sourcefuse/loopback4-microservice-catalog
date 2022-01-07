@@ -53,7 +53,7 @@ export class SubscriptionsController {
   ): Promise<Subscriptions> {
     return this.subscriptionsRepository.create(subscriptions);
   }
-  
+
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.GetSubscriptionCount]})
   @get('/subscriptions/count')
