@@ -12,6 +12,9 @@ import {v4 as uuidv4} from 'uuid';
 import {Subscriptions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
 import {SubscriptionsRepository} from '../repositories';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {STATUS_CODE} from '@sourceloop/core';
 import {ResponseMessage} from '../enums';
 const dotenvExt = require('dotenv-extended');
@@ -35,6 +38,8 @@ export class SubscriptionTransactionsController {
     private readonly subscriptionRepository: SubscriptionsRepository,
   ) {}
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.CreateSubscription]})
   @post('/create-subscription-and-pay')
   @response(redirectStatusCode, {
     description: 'Subscription model instance',
