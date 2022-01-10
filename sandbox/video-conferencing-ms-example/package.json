@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/video-conferencing-ms-example",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Video conferencing service example",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -60,7 +60,7 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.3.0",
     "@loopback/service-proxy": "^3.2.0",
-    "@sourceloop/video-conferencing-service": "^1.3.4",
+    "@sourceloop/video-conferencing-service": "^2.0.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",

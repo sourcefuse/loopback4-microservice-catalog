@@ -1,35 +1,36 @@
 import {
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {IAuthUser, Keycloak} from 'loopback4-authentication';
 import sinon from 'sinon';
-import {KeycloakVerifyProvider} from '../../../modules/auth/providers/keycloak-verify.provider';
-import {KeyCloakSignUpFn} from '../../../providers';
-import {IAuthUser, KeycloakProfile} from 'loopback4-authentication';
+
 import {
   User,
   UserCredentials,
   UserCredentialsWithRelations,
   UserWithRelations,
 } from '../../../models';
+import {KeycloakVerifyProvider} from '../../../modules/auth/providers/keycloak-verify.provider';
+import {KeyCloakSignUpFn} from '../../../providers';
+import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 
 describe('Keycloak Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userCredentialRepo: StubbedInstanceWithSinonAccessor<UserCredentialsRepository>;
   let keycloakVerifyProvider: KeycloakVerifyProvider;
 
-  const signupProvider: KeyCloakSignUpFn = async (prof: KeycloakProfile) =>
+  const signupProvider: KeyCloakSignUpFn = async (prof: Keycloak.Profile) =>
     null;
   const preVerifyProvider = async (
     accToken: string,
     refToken: string,
-    prof: KeycloakProfile,
+    prof: Keycloak.Profile,
     usr: IAuthUser | null,
   ) => usr;
   const postVerifyProvider = async (
-    prof: KeycloakProfile,
+    prof: Keycloak.Profile,
     usr: IAuthUser | null,
   ) => usr;
 

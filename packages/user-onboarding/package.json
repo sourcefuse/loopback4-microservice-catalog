@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "1.0.3",
+  "version": "0.0.0",
   "description": "Library for providing a smooth user onboarding",
   "keywords": [
     "angular-library"
@@ -12,8 +12,7 @@
     "test": "echo \"No tests available !\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "userOnboardingbuild": "ng build userOnboardingLib",
-    "prepublishOnly": "ng-packagr -p projects/user-onboarding-lib/package.json"
+    "userOnBoardingBuild": "ng build userOnboardingLib  && cp -r projects/user-onboarding-lib/src/assets projects/user-onboarding-lib/dist"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~11.2.3",
     "@angular/common": "~11.2.3",

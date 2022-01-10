@@ -1,6 +1,12 @@
-# video-conferencing-service
+# @sourceloop/video-conferencing-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+![npm](https://img.shields.io/npm/dm/@sourceloop/video-conferencing-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/video-conferencing-service)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/video-conferencing-service/@loopback/core)
 
 Various features of Video Conferencing Services:
 
@@ -37,6 +43,7 @@ npm i @sourceloop/video-conferencing-service
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Bind Vonage config to the `VonageBindings.Config` key -
+
   ```typescript
   this.bind(VonageBindings.Config).to({
     apiKey: process.env.VONAGE_API_KEY,
@@ -44,7 +51,9 @@ npm i @sourceloop/video-conferencing-service
     timeToStart: 0, // time in minutes, meeting can not be started 'timeToStart' minutes before the scheduled time
   });
   ```
-- Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`).
+
+- Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`)
+
   ```typescript
   // import the component for VideoConfService
   import { VideoConfServiceComponent } from '@sourceloop/video-conferencing-service';
@@ -53,13 +62,14 @@ npm i @sourceloop/video-conferencing-service
   this.component(VideoConfServiceComponent);
   ...
   ```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `VideoConfDatasource`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
 
 ## Working and Flow
-![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
 
+![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
 
 ### Environment Variables
 

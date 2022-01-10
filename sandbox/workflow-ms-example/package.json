@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/workflow-ms-example",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "A workflow microservice example",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -60,8 +60,8 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.3.0",
     "@loopback/service-proxy": "^3.2.0",
-    "@sourceloop/bpmn-service": "^3.0.4",
-    "@sourceloop/core": "^3.2.0",
+    "@sourceloop/bpmn-service": "^4.0.0",
+    "@sourceloop/core": "^4.0.0",
     "@types/node-fetch": "^2.5.10",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",

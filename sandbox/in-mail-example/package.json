@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-example",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "in mail example",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "lb-tsc",
@@ -56,7 +56,7 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.3.0",
     "@loopback/service-proxy": "^3.2.0",
-    "@sourceloop/in-mail-service": "^1.4.4",
+    "@sourceloop/in-mail-service": "^2.0.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",

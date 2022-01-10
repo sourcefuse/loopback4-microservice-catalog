@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-ms-example",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Search service basic example",
   "keywords": [
     "loopback-application",
@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "private": true,
   "scripts": {
@@ -59,8 +59,8 @@
     "@loopback/rest": "9.3.0",
     "@loopback/rest-explorer": "3.2.0",
     "@loopback/service-proxy": "3.2.0",
-    "@sourceloop/core": "^3.2.0",
-    "@sourceloop/search-service": "^0.2.7",
+    "@sourceloop/core": "^4.0.0",
+    "@sourceloop/search-service": "^0.3.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",

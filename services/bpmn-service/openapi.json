@@ -26,6 +26,7 @@
             "description": "Workflow instance"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -66,6 +67,7 @@
             "description": "Workflow DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -104,6 +106,7 @@
             "description": "Workflow PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -141,6 +144,7 @@
             "description": "Workflow Model"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -169,6 +173,7 @@
             "description": "Workflow DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -206,6 +211,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -243,6 +249,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -423,6 +430,7 @@
         "additionalProperties": false
       },
       "workflows.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",

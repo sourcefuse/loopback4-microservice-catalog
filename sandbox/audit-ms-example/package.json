@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-ms-example",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "An audit microservice example",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -61,7 +61,7 @@
     "@loopback/rest-explorer": "^3.3.0",
     "@loopback/service-proxy": "^3.2.0",
     "@sourceloop/audit-log": "^1.3.0",
-    "@sourceloop/audit-service": "^2.6.4",
+    "@sourceloop/audit-service": "^3.0.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",

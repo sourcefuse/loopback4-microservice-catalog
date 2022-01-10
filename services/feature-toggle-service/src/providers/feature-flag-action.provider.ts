@@ -3,7 +3,7 @@ import {FeatureFlagFn, FeatureFlagMetadata, FeatureInterface} from '../types';
 import {StrategyBindings} from '../keys';
 
 export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
-  result = false;
+  result = true;
   constructor(
     @inject.getter(StrategyBindings.METADATA)
     private readonly getMetadata: Getter<FeatureFlagMetadata>,
@@ -16,8 +16,10 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
 
   async action(): Promise<boolean> {
     const metadata: FeatureFlagMetadata = await this.getMetadata();
-
-    if (metadata.features.length === 1 && metadata.features[0] === '*') {
+    if (
+      !metadata ||
+      (metadata.features.length === 1 && metadata.features[0] === '*')
+    ) {
       this.result = true;
       return this.result;
     }

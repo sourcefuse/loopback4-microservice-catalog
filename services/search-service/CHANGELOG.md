@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2021-12-26)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 0.4.0 (2021-12-26)
+
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
+## 0.3.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+* feat(sandbox): add search-client example (#427) ([4735004](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4735004)), closes [#427](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/427) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
 ## <small>0.2.7 (2021-11-11)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service

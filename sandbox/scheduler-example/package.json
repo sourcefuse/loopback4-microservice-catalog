@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/schedular-example",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "scheduler-example",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "lb-tsc",
@@ -56,7 +56,7 @@
     "@loopback/rest": "^9.3.0",
     "@loopback/rest-explorer": "^3.3.0",
     "@loopback/service-proxy": "^3.2.0",
-    "@sourceloop/scheduler-service": "^2.3.4",
+    "@sourceloop/scheduler-service": "^3.0.0",
     "dotenv": "^8.2.0",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-postgresql": "^5.3.0",

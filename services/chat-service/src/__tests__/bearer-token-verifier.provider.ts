@@ -4,7 +4,8 @@ import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from './keys';
 
 export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn> {
+  implements Provider<VerifyFunction.BearerFn>
+{
   constructor() {}
 
   value(): VerifyFunction.BearerFn {

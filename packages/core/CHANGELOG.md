@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.1 (2021-12-26)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 5.0.0 (2021-12-26)
+
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
+## 4.0.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
 ## 3.2.0 (2021-11-11)
 
 * feat(hidden-api): adds hidden-api feature (#143) (#364) ([bdd8fc8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdd8fc8)), closes [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#364](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/364) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143) [#143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/143)
