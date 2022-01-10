@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.9 (2022-01-10)</small>
+
+* fix(user-onboarding): add filter Function, fix overlay issue, fix steps issue, add default delete to ([fc8386e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc8386e)), closes [#448](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/448) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.8 (2021-12-26)</small>
 
 * fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

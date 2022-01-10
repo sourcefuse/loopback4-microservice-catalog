@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2022-01-10)
+
+* feat(search-service): add option to change source name (#450) ([b917898](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b917898)), closes [#450](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/450) [#449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/449)
+
+
+
+
+
 ## <small>0.4.1 (2021-12-26)</small>
 
 * fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Library for providing a smooth user onboarding",
   "keywords": [
     "angular-library"
