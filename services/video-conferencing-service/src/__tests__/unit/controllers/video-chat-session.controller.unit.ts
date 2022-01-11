@@ -485,7 +485,7 @@ describe('Session APIs', () => {
     vonageService = new VonageService(config);
     videoChatProvider = new VonageProvider(vonageService).value();
 
-    const meetLinkGenerator = () => Promise.resolve('test');
+    const meetLinkGenerator = () => 'test';
 
     chatSessionService = new ChatSessionService(
       videoChatSessionRepo,
