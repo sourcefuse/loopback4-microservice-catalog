@@ -1,0 +1,181 @@
+<div fxLayout fxLayoutAlign="start center" class="toolbar-search">
+  <mat-form-field appearance="outline" class="toolbar-search-input">
+    <input
+      matInput
+      autocomplete="off"
+      type="text"
+      [placeholder]="
+        config.placeholderFunction
+          ? config.placeholderFunction(searchInput.value, category)
+          : config.placeholder || 'Search'
+      "
+      #searchInput
+      name="searchInput"
+      (focus)="showSuggestions()"
+      (blur)="hideSuggestions()"
+      [(ngModel)]="searchBoxInput"
+      (keyup)="hitSearchApi($event)"
+      placeholder="Search"
+      (ngModelChange)="onChange(this.searchBoxInput)"
+      [disabled]="disabled"
+    />
+    <mat-icon matPrefix [className]="config.searchIconClass"></mat-icon>
+    <mat-icon
+      *ngIf="searchBoxInput"
+      matSuffix
+      [className]="config.crossIconClass"
+      (click)="resetInput()"
+    ></mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="toolbar-search-select">
+    <mat-icon matSuffix [className]="config.dropDownButtonIconClass"></mat-icon>
+    <mat-select
+      [value]="category"
+      (selectionChange)="setCategory($event.value)"
+      panelClass="search-select"
+    >
+      <mat-option [value]="model.name" *ngFor="let model of config.models">
+        {{ model.displayName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="search-container">
+  <div
+    *ngIf="suggestionsDisplay && (recentSearches.length || suggestions.length)"
+    class="search-popup"
+  >
+    <ng-container *ngIf="searchBoxInput">
+      <span *ngIf="suggestions.length === 0" class="search-message">
+        <ng-container *ngIf="searching"> searching... </ng-container>
+        <ng-container *ngIf="!searching">
+          {{ config.noResultMessage }}
+        </ng-container>
+      </span>
+      <ng-container *ngIf="config.categorizeResults && suggestions.length">
+        <div
+          class="search-result"
+          *ngFor="let modelWithSuggestions of getModelsWithSuggestions()"
+        >
+          <h3 class="suggestions-heading">
+            <img
+              *ngIf="modelWithSuggestions.model.imageUrl"
+              [src]="modelWithSuggestions.model.imageUrl"
+              [alt]="modelWithSuggestions.model.displayName"
+            />
+            {{ modelWithSuggestions.model.displayName }} ({{
+              modelWithSuggestions.items.length
+            }})
+          </h3>
+          <ul>
+            <li
+              *ngFor="let suggestion of modelWithSuggestions.items"
+              (mousedown)="populateValue(suggestion, $event)"
+              class="suggestions"
+            >
+              <ng-container *ngIf="subtitleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    subtitleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
+              <p
+                *ngIf="!titleTemplate"
+                [innerHTML]="
+                  boldString(
+                    suggestion[config.displayPropertyName],
+                    searchBoxInput
+                  )
+                "
+                style="display: inline"
+              ></p>
+              <ng-container *ngIf="titleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    titleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!config.categorizeResults">
+        <div class="search-result">
+          <ul>
+            <li
+              *ngFor="let suggestion of suggestions"
+              (mousedown)="populateValue(suggestion, $event)"
+            >
+              <!--Need to call fetchModelImageUrlFromSuggestion as each suggestion can come from different model-->
+              <img
+                *ngIf="
+                  !titleTemplate && fetchModelImageUrlFromSuggestion(suggestion)
+                "
+                class="suggestions-categorize-false"
+                [src]="fetchModelImageUrlFromSuggestion(suggestion)"
+                style="margin-right: 5px"
+                alt="Img"
+              />
+              <ng-container *ngIf="subtitleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    subtitleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
+              <p
+                *ngIf="!titleTemplate"
+                [innerHTML]="
+                  boldString(
+                    suggestion[config.displayPropertyName],
+                    searchBoxInput
+                  )
+                "
+                style="display: inline"
+              ></p>
+              <ng-container *ngIf="titleTemplate">
+                <ng-container
+                  *ngTemplateOutlet="
+                    titleTemplate;
+                    context: {$implicit: suggestion}
+                  "
+                >
+                </ng-container>
+              </ng-container>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!config.hideRecentSearch && recentSearches.length > 0">
+      <div class="recent-searches">
+        <h3 class="suggestions-heading">Recent Searches</h3>
+        <ul>
+          <li
+            *ngFor="let recentSearch of recentSearches"
+            class="suggestions"
+            (mousedown)="populateValueRecentSearch(recentSearch, $event)"
+          >
+            <mat-icon
+              matPrefix
+              [className]="config.recentSearchIconClass"
+            ></mat-icon>
+
+            <span>&nbsp;{{ recentSearch.match }}</span>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -5,3 +5,4 @@ export * from './TourParameters';
 export * from './TourStep';
 export * from './parameterModel';
 export * from './videoModel';
+export * from './filterFunction';

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-socket-example",
-  "version": "2.0.6",
+  "version": "2.1.5",
   "description": "sandbox",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -46,17 +46,17 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^3.4.0",
+    "@loopback/boot": "^3.4.4",
     "@loopback/context": "^3.16.0",
     "@loopback/core": "^2.16.0",
     "@loopback/openapi-v3": "^6.0.0",
-    "@loopback/repository": "^3.6.0",
+    "@loopback/repository": "^3.7.3",
     "@loopback/repository-json-schema": "^3.4.0",
     "@loopback/rest": "^9.3.0",
-    "@loopback/rest-explorer": "^3.3.0",
+    "@loopback/rest-explorer": "^3.3.4",
     "@loopback/service-proxy": "^3.2.0",
-    "@sourceloop/core": "^3.0.0",
-    "@sourceloop/notification-service": "^2.0.0",
+    "@sourceloop/core": "^4.0.0",
+    "@sourceloop/notification-service": "^3.0.0",
     "loopback4-authorization": "^3.3.0",
     "loopback4-soft-delete": "^3.2.2",
     "tslib": "^2.0.0"

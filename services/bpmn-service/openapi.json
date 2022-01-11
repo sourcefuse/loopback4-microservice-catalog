@@ -9,7 +9,7 @@
     }
   },
   "paths": {
-    "/workflow/{id}/execute": {
+    "/workflows/{id}/execute": {
       "post": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "startWorkflow",
@@ -26,6 +26,7 @@
             "description": "Workflow instance"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -49,7 +50,7 @@
         "operationId": "WorkflowController.startWorkflow"
       }
     },
-    "/workflow/{id}/version/{version}": {
+    "/workflows/{id}/version/{version}": {
       "delete": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "deleteVersionById",
@@ -66,6 +67,7 @@
             "description": "Workflow DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -87,7 +89,7 @@
         "operationId": "WorkflowController.deleteVersionById"
       }
     },
-    "/workflow/{id}": {
+    "/workflows/{id}": {
       "patch": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "updateById",
@@ -104,6 +106,7 @@
             "description": "Workflow PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -141,6 +144,7 @@
             "description": "Workflow Model"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -169,6 +173,7 @@
             "description": "Workflow DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n",
         "parameters": [
           {
             "name": "id",
@@ -182,7 +187,7 @@
         "operationId": "WorkflowController.deleteById"
       }
     },
-    "/workflow": {
+    "/workflows": {
       "post": {
         "x-controller-name": "WorkflowController",
         "x-operation-name": "create",
@@ -206,6 +211,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -243,6 +249,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -423,6 +430,7 @@
         "additionalProperties": false
       },
       "workflows.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",

@@ -1,0 +1,512 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Audit Service",
+    "version": "1.0.0",
+    "description": "A microservice for audit logging",
+    "contact": {}
+  },
+  "paths": {
+    "/audit-logs/count": {
+      "get": {
+        "x-controller-name": "AuditController",
+        "x-operation-name": "count",
+        "tags": [
+          "AuditController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuditLog model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "audit_logs.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AuditLog>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuditController.count"
+      }
+    },
+    "/audit-logs/{id}": {
+      "get": {
+        "x-controller-name": "AuditController",
+        "x-operation-name": "findById",
+        "tags": [
+          "AuditController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuditLog model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logs.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuditController.findById"
+      }
+    },
+    "/audit-logs": {
+      "post": {
+        "x-controller-name": "AuditController",
+        "x-operation-name": "create",
+        "tags": [
+          "AuditController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuditLog model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLog"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewAuditLog"
+              }
+            }
+          }
+        },
+        "operationId": "AuditController.create"
+      },
+      "get": {
+        "x-controller-name": "AuditController",
+        "x-operation-name": "find",
+        "tags": [
+          "AuditController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of AuditLog model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuditLogWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logs.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuditController.find"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "AuditLog": {
+        "title": "AuditLog",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          },
+          "actionGroup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "actedAt",
+          "actionKey",
+          "entityId",
+          "actor"
+        ],
+        "additionalProperties": true
+      },
+      "NewAuditLog": {
+        "title": "NewAuditLog",
+        "type": "object",
+        "description": "(tsType: Omit<AuditLog, 'id'>, schemaOptions: { title: 'NewAuditLog', exclude: [ 'id' ] })",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          },
+          "actionGroup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "actedAt",
+          "actionKey",
+          "entityId",
+          "actor"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "Omit<AuditLog, 'id'>"
+      },
+      "AuditLogWithRelations": {
+        "title": "AuditLogWithRelations",
+        "type": "object",
+        "description": "(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          },
+          "actionGroup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "actedAt",
+          "actionKey",
+          "entityId",
+          "actor"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "AuditLogWithRelations"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "audit_logs.Filter": {
+        "type": "object",
+        "title": "audit_logs.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "action": {
+                    "type": "boolean"
+                  },
+                  "actedAt": {
+                    "type": "boolean"
+                  },
+                  "actedOn": {
+                    "type": "boolean"
+                  },
+                  "actionKey": {
+                    "type": "boolean"
+                  },
+                  "entityId": {
+                    "type": "boolean"
+                  },
+                  "actor": {
+                    "type": "boolean"
+                  },
+                  "before": {
+                    "type": "boolean"
+                  },
+                  "after": {
+                    "type": "boolean"
+                  },
+                  "actionGroup": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "audit_logs.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AuditLog>"
+      },
+      "audit_logs.Filter1": {
+        "type": "object",
+        "title": "audit_logs.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "audit_logs.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "action": {
+                    "type": "boolean"
+                  },
+                  "actedAt": {
+                    "type": "boolean"
+                  },
+                  "actedOn": {
+                    "type": "boolean"
+                  },
+                  "actionKey": {
+                    "type": "boolean"
+                  },
+                  "entityId": {
+                    "type": "boolean"
+                  },
+                  "actor": {
+                    "type": "boolean"
+                  },
+                  "before": {
+                    "type": "boolean"
+                  },
+                  "after": {
+                    "type": "boolean"
+                  },
+                  "actionGroup": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "audit_logs.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AuditLog>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

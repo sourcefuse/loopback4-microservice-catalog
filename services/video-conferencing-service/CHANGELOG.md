@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.1 (2021-12-26)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 3.0.0 (2021-12-26)
+
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
+## 2.0.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+* feat(sandbox): example for feature toggle service (#398) ([9410472](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/9410472)), closes [#398](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/398) [#396](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/396)
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
+## <small>1.3.4 (2021-11-11)</small>
+
+* chore(deps): bump validator in /services/video-conferencing-service (#407) ([e63a2a5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e63a2a5)), closes [#407](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/407)
+
+
+
+
+
+## <small>1.3.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>1.3.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
+## 1.3.0 (2021-10-24)
+
+* feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)
+* chore(deps): bump axios in /services/video-conferencing-service (#337) ([0b67c0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b67c0a)), closes [#337](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/337)
+* chore(deps): bump i in /services/video-conferencing-service (#350) ([b39e85c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b39e85c)), closes [#350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/350)
+* chore(deps): bump passport-oauth2 (#369) ([d68582b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d68582b)), closes [#369](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/369)
+* fix(video-conferencing-service): add reusability (#330) ([12b7c8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12b7c8c)), closes [#330](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/330)
+
+
+
+
+
 ## <small>1.2.3 (2021-09-12)</small>
 
 * chore(deps): bump path-parse in /services/video-conferencing-service (#300) ([9de4906](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9de4906)), closes [#300](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/300)

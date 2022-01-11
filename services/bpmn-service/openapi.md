@@ -48,7 +48,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/execute',
+fetch('/workflows/{id}/execute',
 {
   method: 'POST',
   body: inputBody,
@@ -73,7 +73,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/execute',
+fetch('/workflows/{id}/execute',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -87,7 +87,11 @@ fetch('/workflow/{id}/execute',
 
 ```
 
-`POST /workflow/{id}/execute`
+`POST /workflows/{id}/execute`
+
+| Permissions |
+| ------- |
+| CreateWorkflow   |
 
 > Body parameter
 
@@ -128,7 +132,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/version/{version}',
+fetch('/workflows/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -149,7 +153,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}/version/{version}',
+fetch('/workflows/{id}/version/{version}',
 {
   method: 'DELETE',
 
@@ -163,7 +167,11 @@ fetch('/workflow/{id}/version/{version}',
 
 ```
 
-`DELETE /workflow/{id}/version/{version}`
+`DELETE /workflows/{id}/version/{version}`
+
+| Permissions |
+| ------- |
+| DeleteWorkflow   |
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -201,7 +209,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'PATCH',
   body: inputBody,
@@ -228,7 +236,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'PATCH',
   body: JSON.stringify(inputBody),
@@ -242,7 +250,11 @@ fetch('/workflow/{id}',
 
 ```
 
-`PATCH /workflow/{id}`
+`PATCH /workflows/{id}`
+
+| Permissions |
+| ------- |
+| UpdateWorkflow   |
 
 > Body parameter
 
@@ -285,7 +297,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'GET',
 
@@ -306,7 +318,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'GET',
 
@@ -320,7 +332,11 @@ fetch('/workflow/{id}',
 
 ```
 
-`GET /workflow/{id}`
+`GET /workflows/{id}`
+
+| Permissions |
+| ------- |
+| ViewWorkflow   |
 
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
@@ -351,7 +367,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'DELETE',
 
@@ -372,7 +388,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow/{id}',
+fetch('/workflows/{id}',
 {
   method: 'DELETE',
 
@@ -386,7 +402,11 @@ fetch('/workflow/{id}',
 
 ```
 
-`DELETE /workflow/{id}`
+`DELETE /workflows/{id}`
+
+| Permissions |
+| ------- |
+| DeleteWorkflow   |
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -424,7 +444,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'POST',
   body: inputBody,
@@ -452,7 +472,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -466,7 +486,11 @@ fetch('/workflow',
 
 ```
 
-`POST /workflow`
+`POST /workflows`
+
+| Permissions |
+| ------- |
+| CreateWorkflow   |
 
 > Body parameter
 
@@ -532,7 +556,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'GET',
 
@@ -554,7 +578,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/workflow',
+fetch('/workflows',
 {
   method: 'GET',
 
@@ -568,7 +592,11 @@ fetch('/workflow',
 
 ```
 
-`GET /workflow`
+`GET /workflows`
+
+| Permissions |
+| ------- |
+| ViewWorkflow   |
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 

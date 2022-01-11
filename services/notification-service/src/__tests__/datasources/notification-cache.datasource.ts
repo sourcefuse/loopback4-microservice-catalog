@@ -5,7 +5,13 @@ import {
   ValueOrPromise,
 } from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import * as config from './notification-db.datasource.config.json';
+
+const config = {
+  name: 'notifDb',
+  connector: 'memory',
+  localStorage: '',
+  file: '',
+};
 
 @lifeCycleObserver('datasource')
 export class NotificationDbCacheDataSource

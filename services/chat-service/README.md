@@ -2,6 +2,12 @@
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
+![npm](https://img.shields.io/npm/dm/@sourceloop/chat-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/chat-service)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/chat-service/@loopback/core)
+
 ## Overview
 
 Microservice for handling chat between users and user groups.
@@ -105,7 +111,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class ChatDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = 'chatDb';
   static readonly defaultConfig = config;
 

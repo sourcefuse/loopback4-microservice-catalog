@@ -30,3 +30,6 @@ docker push ${REGISTRY}/audit-ms-example
 docker push ${REGISTRY}/scheduler-example
 docker push ${REGISTRY}/video-conferencing-ms-example
 docker push ${REGISTRY}/in-mail-example
+docket push ${REGISTRY}/search-ms-example
+docker push ${REGISTRY}/chat-notification-pubnub-example
+docker push ${REGISTRY}/feature-toggle-example

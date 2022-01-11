@@ -33,6 +33,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "where",
@@ -69,6 +70,7 @@
             "description": "Attachment PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -107,6 +109,7 @@
             "description": "Attachment PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -152,6 +155,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -191,6 +195,7 @@
             "description": "Attachment DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n",
         "parameters": [
           {
             "name": "id",
@@ -228,6 +233,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateAttachment   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -262,6 +268,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "parameters": [
           {
             "name": "where",
@@ -315,6 +322,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -355,6 +363,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "where",
@@ -391,6 +400,7 @@
             "description": "Attendee PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -429,6 +439,7 @@
             "description": "Attendee PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -474,6 +485,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -513,6 +525,7 @@
             "description": "Attendee DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteAttendee   |\n",
         "parameters": [
           {
             "name": "id",
@@ -550,6 +563,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateAttendee   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -584,6 +598,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "parameters": [
           {
             "name": "where",
@@ -637,6 +652,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -677,6 +693,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateCalendar   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -713,6 +730,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewCalendar   |\n",
         "parameters": [
           {
             "name": "where",
@@ -759,6 +777,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -799,6 +818,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -844,6 +864,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -906,6 +927,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -969,6 +991,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1003,7 +1026,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
-        "description": "This is an api to create a calendar subscription for any calendar.",
+        "description": "This is an api to create a calendar subscription for any calendar.\n\n| Permissions |\n| ------- |\n| CreateSubscription   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1049,7 +1072,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
-        "description": "This api is to update the calendar subscription by passing an `id`. \n      This action will be allowed only to the owner of the calendar or the admin.\n      To identify the `owner` we will check for the email passed in the token and \n      the corresponding access level, whereas to identify the admin we will check \n      for the permission.",
+        "description": "This api is to update the calendar subscription by passing an `id`. \n      This action will be allowed only to the owner of the calendar or the admin.\n      To identify the `owner` we will check for the email passed in the token and \n      the corresponding access level, whereas to identify the admin we will check \n      for the permission.\n\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1109,7 +1132,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
-        "description": "These requests will be available to the owner of the subscription.",
+        "description": "These requests will be available to the owner of the subscription.\n\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1160,7 +1183,7 @@
         "tags": [
           "CalendarSubscriptionController"
         ],
-        "description": "This api is to update the calendar subscription by passing an id. \n      This action will be allowed only to the owner of the calendar or the admin. \n      To identify the ‘owner’ we will check for the email passed in the token and the \n      corresponding access level, whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar subscription by passing an id. \n      This action will be allowed only to the owner of the calendar or the admin. \n      To identify the ‘owner’ we will check for the email passed in the token and the \n      corresponding access level, whereas to identify the admin we will check for the permission.\n\n| Permissions |\n| ------- |\n| DeleteSubscription   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1212,7 +1235,7 @@
         "tags": [
           "CalendarWorkingHourController"
         ],
-        "description": "This is an api to create a calendar for any user.",
+        "description": "This is an api to create a calendar for any user.\n\n| Permissions |\n| ------- |\n| CreateWorkingHour   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1275,6 +1298,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1337,6 +1361,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1384,6 +1409,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1418,7 +1444,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "This api is to update the calendar by passing an id. This action will be allowed only to \n      the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.",
+        "description": "This api is to update the calendar by passing an id. This action will be allowed only to \n      the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.\n\n| Permissions |\n| ------- |\n| UpdateCalendar   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1467,6 +1493,7 @@
             "description": "Calendar PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateCalendar   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1495,7 +1522,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "These requests will be available to everyone in the event to look at.",
+        "description": "These requests will be available to everyone in the event to look at.\n\n| Permissions |\n| ------- |\n| ViewCalendar   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1542,7 +1569,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "This api is to update the calendar by passing an id. This action will be allowed only to the \n      owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.",
+        "description": "This api is to update the calendar by passing an id. This action will be allowed only to the \n      owner of the calendar or the admin. To identify the ‘owner’ we will check for the email \n      passed in the token and the corresponding access level, whereas to identify the admin we will \n      check for the permission.\n\n| Permissions |\n| ------- |\n| DeleteCalendar   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1573,7 +1600,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "This is an api to create a calendar for any user. \n      Recommendation: Use this while adding a user to the main application, in order to create \n      a primary calendar for that particular user.",
+        "description": "This is an api to create a calendar for any user. \n      Recommendation: Use this while adding a user to the main application, in order to create \n      a primary calendar for that particular user.\n\n| Permissions |\n| ------- |\n| CreateCalendar   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1625,6 +1652,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateCalendar   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1658,7 +1686,7 @@
         "tags": [
           "CalendarController"
         ],
-        "description": "These requests will be available to everyone in the event to look at.",
+        "description": "These requests will be available to everyone in the event to look at.\n\n| Permissions |\n| ------- |\n| ViewCalendar   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1719,6 +1747,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1762,6 +1791,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewEvent   |\n| ViewAttendee   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1781,7 +1811,7 @@
         "tags": [
           "EventAttachmentController"
         ],
-        "description": "Organizer can add attachments to the event (if it was missed while creating event).",
+        "description": "Organizer can add attachments to the event (if it was missed while creating event).\n\n| Permissions |\n| ------- |\n| CreateAttachment   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1827,7 +1857,7 @@
         "tags": [
           "EventAttachmentController"
         ],
-        "description": "Organizer can update details of the attachment.",
+        "description": "Organizer can update details of the attachment.\n\n| Permissions |\n| ------- |\n| UpdateAttachment   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1887,7 +1917,7 @@
         "tags": [
           "EventAttachmentController"
         ],
-        "description": "These requests will be available to everyone in the event to look at.",
+        "description": "These requests will be available to everyone in the event to look at.\n\n| Permissions |\n| ------- |\n| ViewAttachment   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1938,7 +1968,7 @@
         "tags": [
           "EventAttachmentController"
         ],
-        "description": "Organizer can delete the attachment.",
+        "description": "Organizer can delete the attachment.\n\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -1990,7 +2020,7 @@
         "tags": [
           "EventAttendeeController"
         ],
-        "description": "Attendees could be added to the event. This action could only be performed by the organizer",
+        "description": "Attendees could be added to the event. This action could only be performed by the organizer\n\n| Permissions |\n| ------- |\n| CreateAttendee   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2036,7 +2066,7 @@
         "tags": [
           "EventAttendeeController"
         ],
-        "description": "Attendees can update details here. (Mainly accept or reject the invitation)",
+        "description": "Attendees can update details here. (Mainly accept or reject the invitation)\n\n| Permissions |\n| ------- |\n| UpdateAttendee   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2096,7 +2126,7 @@
         "tags": [
           "EventAttendeeController"
         ],
-        "description": "Attendees are visible to everyone according to the access permissions provided to them.",
+        "description": "Attendees are visible to everyone according to the access permissions provided to them.\n\n| Permissions |\n| ------- |\n| ViewAttendee   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2147,7 +2177,7 @@
         "tags": [
           "EventAttendeeController"
         ],
-        "description": "Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.",
+        "description": "Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.\n\n| Permissions |\n| ------- |\n| DeleteAttendee   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2209,6 +2239,7 @@
             "description": "Event HARD DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| HardDeleteEvent   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2229,7 +2260,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).",
+        "description": "This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).\n\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2268,7 +2299,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).",
+        "description": "This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).\n\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2307,7 +2338,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.",
+        "description": "This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.\n\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2354,7 +2385,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).",
+        "description": "Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).\n\n| Permissions |\n| ------- |\n| DeleteEvent   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2385,7 +2416,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "While an organizer creates an event, we get participants details along with it. \n      This api will check for slot availability of all the participants in that particular \n      time slot. If the slot is free the event will be created. Events can be scheduled on \n      behalf of someone else, In this case we will be saving the creator details \n      (generally the organiser is the creator themselves, so we will be keeping the organiser \n        and created_by the same).",
+        "description": "While an organizer creates an event, we get participants details along with it. \n      This api will check for slot availability of all the participants in that particular \n      time slot. If the slot is free the event will be created. Events can be scheduled on \n      behalf of someone else, In this case we will be saving the creator details \n      (generally the organiser is the creator themselves, so we will be keeping the organiser \n        and created_by the same).\n\n| Permissions |\n| ------- |\n| CreateEvent   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2437,6 +2468,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateEvent   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2470,7 +2502,7 @@
         "tags": [
           "EventController"
         ],
-        "description": "This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.",
+        "description": "This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.\n\n| Permissions |\n| ------- |\n| ViewEvent   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2531,6 +2563,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewSettings   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2557,7 +2590,7 @@
         "tags": [
           "SettingsController"
         ],
-        "description": "Update setting.",
+        "description": "Update setting.\n\n| Permissions |\n| ------- |\n| UpdateSettings   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2606,6 +2639,7 @@
             "description": "Settings PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSettings   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2634,7 +2668,7 @@
         "tags": [
           "SettingsController"
         ],
-        "description": "These requests will be available to everyone in the setting to look at.",
+        "description": "These requests will be available to everyone in the setting to look at.\n\n| Permissions |\n| ------- |\n| ViewSettings   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2681,7 +2715,7 @@
         "tags": [
           "SettingsController"
         ],
-        "description": "Delete setting.",
+        "description": "Delete setting.\n\n| Permissions |\n| ------- |\n| DeleteSettings   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2712,7 +2746,7 @@
         "tags": [
           "SettingsController"
         ],
-        "description": "Create any new settings",
+        "description": "Create any new settings\n\n| Permissions |\n| ------- |\n| CreateSettings   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -2764,6 +2798,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSettings   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2817,6 +2852,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewSettings   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -2857,6 +2893,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "where",
@@ -2893,6 +2930,7 @@
             "description": "Subscription PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2931,6 +2969,7 @@
             "description": "Subscription PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2976,6 +3015,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3015,6 +3055,7 @@
             "description": "Subscription DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteSubscription   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3052,6 +3093,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateSubscription   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3086,6 +3128,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSubscription   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3139,6 +3182,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewSubscription   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -3179,6 +3223,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTheme   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3215,6 +3260,7 @@
             "description": "Theme PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3253,6 +3299,7 @@
             "description": "Theme PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3298,6 +3345,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3337,6 +3385,7 @@
             "description": "Theme DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteTheme   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3374,6 +3423,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateTheme   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3408,6 +3458,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTheme   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3461,6 +3512,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTheme   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -3501,6 +3553,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3527,7 +3580,7 @@
         "tags": [
           "WorkingHourController"
         ],
-        "description": "This api is to update the calendar by passing an `id`. This action will be allowed only \n      to the owner of the calendar or the admin. To identify the `owner` we \n      will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar by passing an `id`. This action will be allowed only \n      to the owner of the calendar or the admin. To identify the `owner` we \n      will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.\n\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -3576,6 +3629,7 @@
             "description": "WorkingHour PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "id",
@@ -3604,7 +3658,7 @@
         "tags": [
           "WorkingHourController"
         ],
-        "description": "These requests will be available to everyone to look at. This will be represent the work timings for the owner of the calendar.",
+        "description": "These requests will be available to everyone to look at. This will be represent the work timings for the owner of the calendar.\n\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -3651,7 +3705,7 @@
         "tags": [
           "WorkingHourController"
         ],
-        "description": "This api is to update the calendar by passing an `id`. This action will \n      be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ \n      we will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.",
+        "description": "This api is to update the calendar by passing an `id`. This action will \n      be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ \n      we will check for the email passed in the token and the corresponding access level, \n      whereas to identify the admin we will check for the permission.\n\n| Permissions |\n| ------- |\n| DeleteWorkingHour   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -3699,6 +3753,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkingHour   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3733,6 +3788,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkingHour   |\n",
         "parameters": [
           {
             "name": "where",
@@ -3786,6 +3842,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkingHour   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -6904,6 +6961,7 @@
         }
       },
       "attachments.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -7239,6 +7297,7 @@
         "x-typescript-type": "@loopback/repository#Filter<Attachment>"
       },
       "attendees.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -7582,6 +7641,7 @@
         "x-typescript-type": "@loopback/repository#Filter<Attendee>"
       },
       "subscriptions.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -7804,6 +7864,7 @@
         "x-typescript-type": "@loopback/repository#Filter<Subscription>"
       },
       "calendars.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -8147,6 +8208,7 @@
         "x-typescript-type": "@loopback/repository#Filter<Calendar>"
       },
       "events.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -8396,6 +8458,7 @@
         "x-typescript-type": "@loopback/repository#Filter<Event>"
       },
       "events_attendees_view.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -9277,6 +9340,7 @@
         "x-typescript-type": "@loopback/repository#Filter<Theme>"
       },
       "working_hours.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",

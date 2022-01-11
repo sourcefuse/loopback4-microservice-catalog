@@ -766,8 +766,9 @@ Gets you a new access and refresh token once your access token is expired. (both
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="authentication-service-facebooklogincontroller">FacebookLoginController</h1>
@@ -2218,6 +2219,10 @@ fetch('/auth-clients/count',
 
 `GET /auth-clients/count`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 <h3 id="authclientcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2323,6 +2328,10 @@ fetch('/auth-clients/{id}',
 ```
 
 `PUT /auth-clients/{id}`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 > Body parameter
 
@@ -2441,6 +2450,10 @@ fetch('/auth-clients/{id}',
 
 `PATCH /auth-clients/{id}`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 > Body parameter
 
 ```json
@@ -2530,6 +2543,10 @@ fetch('/auth-clients/{id}',
 
 `GET /auth-clients/{id}`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 <h3 id="authclientcontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2617,6 +2634,10 @@ fetch('/auth-clients/{id}',
 ```
 
 `DELETE /auth-clients/{id}`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 <h3 id="authclientcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -2713,6 +2734,10 @@ fetch('/auth-clients',
 ```
 
 `POST /auth-clients`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 > Body parameter
 
@@ -2853,6 +2878,10 @@ fetch('/auth-clients',
 
 `PATCH /auth-clients`
 
+| Permissions |
+| ------- |
+| NotAllowed   |
+
 > Body parameter
 
 ```json
@@ -2951,6 +2980,10 @@ fetch('/auth-clients',
 ```
 
 `GET /auth-clients`
+
+| Permissions |
+| ------- |
+| NotAllowed   |
 
 <h3 id="authclientcontroller.find-parameters">Parameters</h3>
 

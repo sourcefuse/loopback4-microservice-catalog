@@ -1,0 +1,19 @@
+<div style="padding-left: 10%">
+  <br />
+  <div *ngIf="tokenSet">JWT Token is set !</div>
+
+  <form (submit)="onSubmit()">
+    <div style="font-size: 10px">
+      <mat-form-field appearance="outline">
+        <mat-label>Token</mat-label>
+        <input
+          matInput
+          placeholder="JWT Token"
+          [(ngModel)]="token"
+          name="token"
+        />
+      </mat-form-field>
+      <button mat-stroked-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

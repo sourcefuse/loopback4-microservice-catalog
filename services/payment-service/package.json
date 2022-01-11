@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "0.1.0",
+  "version": "3.0.1",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -9,9 +9,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
@@ -79,10 +80,10 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.169",
     "@loopback/build": "^8.0.0",
     "@loopback/eslint-config": "^12.0.0",
     "@loopback/testlab": "^4.0.0",
+    "@types/lodash": "^4.14.169",
     "@types/node": "^10.17.60",
     "@types/uuid": "^8.3.3",
     "db-migrate": "^0.11.12",

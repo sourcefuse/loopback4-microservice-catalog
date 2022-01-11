@@ -16,7 +16,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
-        "description": "Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.",
+        "description": "Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.\n\n| Permissions |\n| ------- |\n| SetMeetingUploadTarget   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -52,7 +52,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
-        "description": "Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.",
+        "description": "Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -87,7 +87,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
-        "description": "Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.",
+        "description": "Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| DeleteMeetingArchive   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -124,7 +124,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
-        "description": "Used to fetch a list of archives (meetings that were recorded).",
+        "description": "Used to fetch a list of archives (meetings that were recorded).\n\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -184,6 +184,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| GetMeetingAttendees   |\n",
         "operationId": "VideoChatSessionController.getAttendeesList"
       }
     },
@@ -194,7 +195,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used to stop the current active meeting. Meeting cannot be stopped again if it is \n      already stopped. Successful execution will add the endTime attribute to a recently \n      ending session.",
+        "description": "Used to stop the current active meeting. Meeting cannot be stopped again if it is \n      already stopped. Successful execution will add the endTime attribute to a recently \n      ending session.\n\n| Permissions |\n| ------- |\n| StopMeeting   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -225,7 +226,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used for Generating token, which is used for connecting to a room/session on a client side. \n      In vonage, there are three different roles (Moderator, Subscriber, Publisher). \n      We can use expire time for limited validity of a token. Successful \n      execution will send a token.",
+        "description": "Used for Generating token, which is used for connecting to a room/session on a client side. \n      In vonage, there are three different roles (Moderator, Subscriber, Publisher). \n      We can use expire time for limited validity of a token. Successful \n      execution will send a token.\n\n| Permissions |\n| ------- |\n| GenerateMeetingToken   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -272,7 +273,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used for editing the meeting",
+        "description": "Used for editing the meeting\n\n| Permissions |\n| ------- |\n| EditMeeting   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -313,7 +314,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used for Creating a session with options such as end to end encryption, archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.",
+        "description": "Used for Creating a session with options such as end to end encryption, archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.\n\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
         "security": [
           {
             "HTTPBearer": []

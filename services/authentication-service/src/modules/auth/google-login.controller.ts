@@ -24,7 +24,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-
 import {User} from '../../models';
 import {AuthCodeBindings, CodeWriterFn} from '../../providers';
 import {AuthClientRepository} from '../../repositories';
@@ -42,8 +41,6 @@ const queryGen = (from: 'body' | 'query') => {
 
 export class GoogleLoginController {
   constructor(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly user: AuthUser | undefined,
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
@@ -158,9 +155,11 @@ export class GoogleLoginController {
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
     googleCodeWriter: CodeWriterFn,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    user: AuthUser | undefined,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
-    if (!clientId || !this.user) {
+    if (!clientId || !user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     const client = await this.authClientRepository.findOne({
@@ -174,7 +173,7 @@ export class GoogleLoginController {
     try {
       const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
         clientId,
-        user: this.user,
+        user: user,
       };
       const token = await googleCodeWriter(
         jwt.sign(codePayload, client.secret, {
