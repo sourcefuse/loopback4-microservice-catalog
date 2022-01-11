@@ -12,7 +12,8 @@
   "include": [
     "src",
     "migrations",
-    "migration.js"
+    "migration.js",
+    ".eslintrc.js"
   ],
   "references": [
     {
