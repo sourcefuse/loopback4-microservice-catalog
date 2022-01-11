@@ -21,43 +21,37 @@ module.exports = class EGenerator extends ExtensionGenerator {
   setOptions() {
     if (this.shouldExit()) {
       return }
-    else {
-      return super.setOptions()}
+    return super.setOptions()
   }
 
   promptProjectName() {
     if (this.shouldExit()) {
       return }
-    else {
-      return super.promptProjectName()}
+    return super.promptProjectName()
   }
 
   promptProjectDir() {
     if (this.shouldExit()) {
       return }
-    else {
-      return super.promptProjectDir()}
+    return super.promptProjectDir()
   }
 
   promptComponent() {
     if (this.shouldExit()) {
       return }
-    else {
-      return super.promptComponent()}
+    return super.promptComponent()
   }
 
   promptOptions() {
     if (this.shouldExit()) {
       return }
-    else {
-      return super.promptOptions()}
+    return super.promptOptions()
   }
 
   promptYarnInstall() {
     if (this.shouldExit()) {
       return }
-    else {
-      return super.promptYarnInstall()}
+    return super.promptYarnInstall()
   }
 
   scaffold() {

@@ -29,15 +29,15 @@ if (!ok) {
     console.warn(chalk.red(format), nodeVer, requiredVer);
 }
 
-// TODO: remap this so params get passed correctly
-// TODO: reorganize file
+// remap this so params get passed correctly
+// reorganize file
 // Intentionally have a separate `main.js` which can use JS features
 // supported by required version of Node
 const minimist = require('minimist');
 const updateNotifier = require("update-notifier");
 const main = require("@loopback/cli/lib/cli");
 
-// TODO: remap these for the composite CLI
+// remap these for the composite CLI
 const opts = minimist(process.argv.slice(2), {
     alias: {
         version: 'v', // --version or -v: print versions
@@ -76,7 +76,7 @@ function lb_cli() {
     });
     const originalSubCommand = opts._[0];
     if (tabCompletionCommands.includes(originalSubCommand)) {
-        // TODO: rename file so it's specific to LB4
+        // rename file so it's specific to LB4
         const yoJsonFile = path.join(__dirname, '../.yo-rc.json');
         const config = fs.readJsonSync(yoJsonFile);
         return runTabCompletionCommand(config.commands, originalSubCommand, console.log);
@@ -94,7 +94,7 @@ function lb_cli() {
     main(opts);
 }
 
-//TODO: gut anything lb4 specific and rewire to generators
+//gut anything lb4 specific and rewire to generators
 function sl_cli() {
     console.log("You've hit the awesome Sourceloop CLI")
     const opts = minimist(process.argv.slice(3), {
@@ -105,9 +105,9 @@ function sl_cli() {
         },
     });
     const originalSubCommand = opts._[0];
-    // TODO: restore auto complete
+    // restore auto complete
     // if (tabCompletionCommands.includes(originalSubCommand)) {
-    //     // TODO: rename file so it's specific to LB4
+    //     // rename file so it's specific to LB4
     //     const yoJsonFile = path.join(__dirname, '../.yo-rc.json');
     //     const config = fs.readJsonSync(yoJsonFile);
     //     return runTabCompletionCommand(config.commands, originalSubCommand, console.log);

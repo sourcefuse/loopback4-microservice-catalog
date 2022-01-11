@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const {answers} = require("./index");
 
-// TODO: Handle how paths are handled since some are not getting redirected correctly
+// Handle how paths are handled since some are not getting redirected correctly
 module.exports = class extends Generator {
     constructor(args, opts) {
         super(args, opts, {});
@@ -25,7 +25,7 @@ module.exports = class extends Generator {
         ]);
     }
 
-    // TODO: refactor since this is calling every function and order matters. Order should not matter
+    // refactor since this is calling every function and order matters. Order should not matter
     initProject() {
         const templatePath = this.templatePath();
         console.log(`Template path: ${templatePath}`);
@@ -36,9 +36,9 @@ module.exports = class extends Generator {
             }
         });
 
-        // TODO: refactor into common util
-        // TODO: determine why lerna is passing back output in STDERR
-        // TODO: modify so the commands aren't nested
+        // refactor into common util
+        // determine why lerna is passing back output in STDERR
+        // modify so the commands aren't nested
         console.log('Initializing lerna');
         this._lernaInit();
         this._npmInit();
@@ -108,7 +108,7 @@ module.exports = class extends Generator {
         });
     }
 
-    // TODO: refactor how templates are handled to use built in APIs
+    // refactor how templates are handled to use built in APIs
 
     _copyTemplates() {
         fs.readdirSync(this.templatePath()).forEach(file => {
@@ -117,7 +117,6 @@ module.exports = class extends Generator {
             const sourcePath = this.templatePath(file);
             console.log(`Source path: ${sourcePath}`);
             const destinationPath = path.join(this.answers.projectDir, targetFileName);
-            // fs.copyFileSync(this.templatePath(file), destinationPath);
             this.fs.copyTpl(sourcePath, destinationPath, {
                 upperDbKey: this.answers.dbKey.toUpperCase(),
                 ...this.answers
