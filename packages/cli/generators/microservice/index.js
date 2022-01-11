@@ -20,21 +20,21 @@ module.exports = class MGenerator extends AppGenerator {
 
   setOptions() {
     if (this.shouldExit()){
-      return }
+      return undefined}
     else{
       return super.setOptions()}
   }
 
   promptProjectName() {
     if (this.shouldExit()){
-      return }
+      return undefined}
     else{
       return super.promptProjectName()}
   }
 
   promptProjectDir() {
     if (this.shouldExit()){
-      return }
+      return undefined}
     else{
       return super.promptProjectDir()}
   }
@@ -51,28 +51,28 @@ module.exports = class MGenerator extends AppGenerator {
 
   promptApplication() {
     if (this.shouldExit()) {
-      return }
+      return undefined}
     else {
       return super.promptApplication()}
   }
 
   promptOptions() {
     if (this.shouldExit()){
-      return }
+      return undefined}
     else{
       return super.promptOptions()}
   }
 
   promptYarnInstall() {
     if (this.shouldExit()){
-      return }
+      return undefined}
     else{
       return super.promptYarnInstall()}
   }
 
   buildAppClassMixins() {
     if (this.shouldExit()){
-      return }
+      return undefined}
     else{
       return super.buildAppClassMixins()}
   }

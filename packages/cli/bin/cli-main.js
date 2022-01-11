@@ -67,14 +67,14 @@ switch (originalCommand) {
 }
 
 function lb_cli() {
-    const opts = minimist(process.argv.slice(3), {
+    const optsLocal = minimist(process.argv.slice(3), {
         alias: {
             version: 'v', // --version or -v: print versions
             commands: 'l', // --commands or -l: print commands
             help: 'h', // --help or -h: help
         },
     });
-    const originalSubCommand = opts._[0];
+    const originalSubCommand = optsLocal._[0];
     if (tabCompletionCommands.includes(originalSubCommand)) {
         // rename file so it's specific to LB4
         const yoJsonFile = path.join(__dirname, '../.yo-rc.json');
@@ -82,22 +82,22 @@ function lb_cli() {
         return runTabCompletionCommand(config.commands, originalSubCommand, console.log);
     }
 
-    const main = require('@loopback/cli/lib/cli');
-    const updateNotifier = require('update-notifier');
+    const mainLocal = require('@loopback/cli/lib/cli');
+    const updateNotifierLocal = require('update-notifier');
 // Force version check with `lb4 --version`
-    const interval = opts.version ? 0 : undefined;
-    updateNotifier({
+    const interval = optsLocal.version ? 0 : undefined;
+    updateNotifierLocal({
         pkg: pkg,
         updateCheckInterval: interval,
     }).notify({isGlobal: true});
 
-    main(opts);
+    mainLocal(optsLocal);
 }
 
 //gut anything lb4 specific and rewire to generators
 function sl_cli() {
     console.log("You've hit the awesome Sourceloop CLI")
-    const opts = minimist(process.argv.slice(3), {
+    const optsLocal = minimist(process.argv.slice(3), {
         alias: {
             version: 'v', // --version or -v: print versions
             commands: 'l', // --commands or -l: print commands
@@ -113,15 +113,15 @@ function sl_cli() {
     //     return runTabCompletionCommand(config.commands, originalSubCommand, console.log);
     // }
 
-    const main = require('../lib/cli');
-    const updateNotifier = require('update-notifier');
+    const mainLocal = require('../lib/cli');
+    const updateNotifierLocal = require('update-notifier');
 // Force version check with `lb4 --version`
-    const interval = opts.version ? 0 : undefined;
-    updateNotifier({
+    const interval = optsLocal.version ? 0 : undefined;
+    updateNotifierLocal({
         pkg: pkg,
         updateCheckInterval: interval,
     }).notify({isGlobal: true});
 
 
-    main(opts);
+    mainLocal(optsLocal);
 }
