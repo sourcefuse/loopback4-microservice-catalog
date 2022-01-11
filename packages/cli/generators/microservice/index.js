@@ -19,18 +19,24 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   setOptions() {
-    if (this.shouldExit()) { return };
-    return super.setOptions();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.setOptions();
   }
 
   promptProjectName() {
-    if (this.shouldExit()) { return };
-    return super.promptProjectName();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.promptProjectName();
   }
 
   promptProjectDir() {
-    if (this.shouldExit()) { return };
-    return super.promptProjectDir();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.promptProjectDir();
   }
 
   async promptUniquePrefix() {
@@ -44,23 +50,31 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   promptApplication() {
-    if (this.shouldExit()) { return };
-    return super.promptApplication();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.promptApplication();
   }
 
   promptOptions() {
-    if (this.shouldExit()) { return };
-    return super.promptOptions();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.promptOptions();
   }
 
   promptYarnInstall() {
-    if (this.shouldExit()) { return };
-    return super.promptYarnInstall();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.promptYarnInstall();
   }
 
   buildAppClassMixins() {
-    if (this.shouldExit()) { return };
-    return super.buildAppClassMixins();
+    if (this.shouldExit()) 
+      { return }
+    else
+      return super.buildAppClassMixins();
   }
 
   scaffold() {
@@ -77,12 +91,10 @@ module.exports = class MGenerator extends AppGenerator {
     scripts['prestart'] = "npm run rebuild && npm run openapi-spec";
     scripts['rebuild'] = "npm run clean && npm run build";
     scripts['start'] = "node -r ./dist/opentelemetry-registry.js -r source-map-support/register .";
-    scripts['docker:build'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"
-    +this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version .";
-    scripts['docker:push'] = "sudo docker push $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version";
-    scripts['docker:build:dev'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"
-    +this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION .";
-    scripts['docker:push:dev'] = "sudo docker push $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION";
+    scripts['docker:build'] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/ ${this.answers.uniquePrefix} -$npm_package_name:$npm_package_version .`;
+    scripts['docker:push'] = `sudo docker push $IMAGE_REPO_NAME/ ${this.answers.uniquePrefix} -$npm_package_name:$npm_package_version`;
+    scripts['docker:build:dev'] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/ ${this.answers.uniquePrefix} -$npm_package_name:$IMAGE_TAG_VERSION .`;
+    scripts['docker:push:dev'] = `sudo docker push $IMAGE_REPO_NAME/ ${this.answers.uniquePrefix} -$npm_package_name:$IMAGE_TAG_VERSION`;
     scripts['coverage'] = "nyc npm run test";
     packageJson.scripts = scripts;
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
