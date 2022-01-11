@@ -79,17 +79,17 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@loopback/build": "^6.4.0",
-    "@loopback/eslint-config": "^10.2.0",
-    "@loopback/testlab": "^3.4.0",
     "@types/lodash": "^4.14.169",
+    "@loopback/build": "^8.0.0",
+    "@loopback/eslint-config": "^12.0.0",
+    "@loopback/testlab": "^4.0.0",
     "@types/node": "^10.17.60",
-    "@types/uuid": "^8.3.1",
+    "@types/uuid": "^8.3.3",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
-    "eslint": "^7.25.0",
-    "source-map-support": "^0.5.19",
-    "typescript": "~4.2.4",
+    "eslint": "^7.32.0",
+    "source-map-support": "^0.5.20",
+    "typescript": "~4.5.2",
     "widdershins": "^4.0.1"
   },
   "publishConfig": {
