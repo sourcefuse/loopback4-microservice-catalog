@@ -19,17 +19,17 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   setOptions() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.setOptions();
   }
 
   promptProjectName() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.promptProjectName();
   }
 
   promptProjectDir() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.promptProjectDir();
   }
 
@@ -44,22 +44,22 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   promptApplication() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.promptApplication();
   }
 
   promptOptions() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.promptOptions();
   }
 
   promptYarnInstall() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.promptYarnInstall();
   }
 
   buildAppClassMixins() {
-    if (this.shouldExit()) return;
+    if (this.shouldExit()) { return };
     return super.buildAppClassMixins();
   }
 
@@ -77,17 +77,18 @@ module.exports = class MGenerator extends AppGenerator {
     scripts['prestart'] = "npm run rebuild && npm run openapi-spec";
     scripts['rebuild'] = "npm run clean && npm run build";
     scripts['start'] = "node -r ./dist/opentelemetry-registry.js -r source-map-support/register .";
-    scripts['docker:build'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version .";
+    scripts['docker:build'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"
+    +this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version .";
     scripts['docker:push'] = "sudo docker push $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$npm_package_version";
-    scripts['docker:build:dev'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION .";
+    scripts['docker:build:dev'] = "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/"
+    +this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION .";
     scripts['docker:push:dev'] = "sudo docker push $IMAGE_REPO_NAME/"+this.answers.uniquePrefix+"-$npm_package_name:$IMAGE_TAG_VERSION";
     scripts['coverage'] = "nyc npm run test";
     packageJson.scripts = scripts;
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
     return super.install();
   }
-  
-  _setupMicroservice(packageName) {
+  _setupMicroservice(packageName){
     this._symlink(packageName)
       .then(() =>
         this._sourceloopCore(packageName).then(() =>
@@ -113,14 +114,12 @@ module.exports = class MGenerator extends AppGenerator {
 
   async _symlink(packageName){
     await this._spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
-
   }
 
   async _dotenv(packageName){
     await this._spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope='+`${packageName}`], {packageName});
-    
   }
 
   async _sourceloopCore(packageName){
@@ -151,7 +150,6 @@ module.exports = class MGenerator extends AppGenerator {
     await this._spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
     await this._spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
   }
-  
   async _promclient(packageName){
     await this._spawnProcess('npm', ['i', 'prom-client'], {packageName});
   }
@@ -167,21 +165,17 @@ module.exports = class MGenerator extends AppGenerator {
       spawnedProcess.stdout.on("data", data => {
           console.log(`stdout: ${data}`);
       });
-  
       spawnedProcess.stderr.on("data", data => {
           console.log(`stderr: ${data}`);
       });
-  
       spawnedProcess.on('error', (error) => {
           console.log(`error: ${error.message}`);
           reject(error);
       });
-  
       spawnedProcess.on("close", code => {
           resolve();
       });
     })
-
   }
 
   end() {
