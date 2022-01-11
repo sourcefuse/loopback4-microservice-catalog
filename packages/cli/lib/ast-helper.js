@@ -34,8 +34,7 @@ exports.getIdFromModel = function (fileContent) {
       }
 
       if (!isPrimaryKeyFlag(node.initializer)) {
-        continue; 
-      }
+        continue}
 
       const propDeclarationNode = getModelPropertyDeclaration(node);
       const modelPropertyName = propDeclarationNode.name.escapedText;
