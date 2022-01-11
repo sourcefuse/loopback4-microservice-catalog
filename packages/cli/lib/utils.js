@@ -50,7 +50,7 @@ exports.promisify = promisify;
  */
 function generateValidRegex() {
   const get = function (what) {
-    return require('unicode-10.0.0/' + what + '/code-points.js');
+    return require(`unicode-10.0.0/${what}/code-points.js`);
   };
   const idStart = get('Binary_Property/ID_Start');
   const idContinue = get('Binary_Property/ID_Continue');
@@ -126,7 +126,7 @@ exports.logClassCreation = function (type, typePlural, name, log) {
     `${exports.toClassName(type)} ${chalk.yellow(
       name,
     )} will be created in src/${typePlural}/${chalk.yellow(
-      exports.toFileName(name) + '.' + `${type}.ts`,
+      exports.toFileName(name)`.${type}`.ts,
     )}`,
   );
   log();
@@ -397,7 +397,7 @@ exports.getDependencies = function () {
   }
   // Set it to be `^x.y.0`
   const loopbackVersion =
-    '^' + semver.major(version) + '.' + semver.minor(version) + '.0';
+    `^${semver.major(version)}.${semver.minor(version)}.0`;
 
   const deps = {};
   const dependencies = (pkg.config && pkg.config.templateDependencies) || {};
@@ -646,7 +646,7 @@ exports.getDataSourceConfig = function getDataSourceConfig(
   const config =
     readDataSourceConfigFromTypeScript(datasourcesDir, dataSourceClass) ||
     // Support legacy JSON-based configuration.
-    // TODO(semver-major) Print a deprecation warning for JSON-based datasources
+    // (semver-major) Print a deprecation warning for JSON-based datasources
     // or stop supporting them entirely.
     readDataSourceConfigFromJSON(datasourcesDir, dataSourceClass);
 

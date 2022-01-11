@@ -46,8 +46,8 @@ async function discoverSingleModel(ds, modelName, options) {
 function loadDataSource(modulePath) {
   const ds = require(modulePath);
   const key = Object.keys(ds)[0];
-  const val = new ds[key]();
-  return val;
+  //const val = new ds[key]();
+  return new ds[key]();
 }
 
 /**
@@ -61,7 +61,7 @@ function loadDataSourceByName(name) {
   debug(`Loaded ${dataSourceFiles.length} dataSource files`);
 
   // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  for (let i = 0; i < dataSourceFiles.length; i++) {
+  for (let i of dataSourceFiles.length) {
     const f = dataSourceFiles[i];
     const ds = loadDataSource(path.resolve(DEFAULT_DATASOURCE_DIRECTORY, f));
     if (ds.name === name) {

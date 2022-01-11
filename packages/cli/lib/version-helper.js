@@ -53,10 +53,7 @@ async function checkDependencies(generator) {
             return;
         }
         const err = new Error(
-            'No package.json found in ' +
-            generator.destinationRoot() +
-            '. ' +
-            'The command must be run in a LoopBack project.',
+            `No package.json found in ${generator.destinationRoot()}. The command must be run in a LoopBack project.`,
         );
         generator.exit(err);
         return;
@@ -81,10 +78,9 @@ async function checkDependencies(generator) {
 
     if (!isLBProj) {
         const err = new Error(
-            'No `@loopback/core` package found in the "dependencies" section of ' +
-            generator.destinationPath('package.json') +
-            '. ' +
-            'The command must be run in a LoopBack project.',
+            `No \`@loopback/core\` package found in the "dependencies" section of 
+            ${generator.destinationPath('package.json')}
+            . The command must be run in a LoopBack project.`,
         );
         generator.exit(err);
         return;
@@ -235,7 +231,7 @@ async function checkLoopBackProject(generator) {
             ...incompatibleDeps.dependencies,
             ...incompatibleDeps.devDependencies,
             ...incompatibleDeps.peerDependencies,
-        }) === 0
+        }) == 0
     ){
         return false
     }
