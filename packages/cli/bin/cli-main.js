@@ -104,7 +104,7 @@ function sl_cli() {
             help: 'h', // --help or -h: help
         },
     });
-    const originalSubCommand = opts._[0];
+    //const originalSubCommand = opts._[0];
     // restore auto complete
     // if (tabCompletionCommands.includes(originalSubCommand)) {
     //     // rename file so it's specific to LB4

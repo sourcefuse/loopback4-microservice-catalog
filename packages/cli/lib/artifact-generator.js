@@ -33,7 +33,9 @@ module.exports = class ArtifactGenerator extends BaseGenerator {
     const name = this.options.name;
     if (name) {
       const validationMsg = utils.validateClassName(name);
-      if (typeof validationMsg === 'string') throw new Error(validationMsg);
+      if (typeof validationMsg === 'string') {
+        throw new Error(validationMsg)
+      }
     }
     this.artifactInfo.name = name;
     this.artifactInfo.relPath = path.relative(
@@ -45,7 +47,8 @@ module.exports = class ArtifactGenerator extends BaseGenerator {
 
   promptArtifactName() {
     debug('Prompting for artifact name');
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false }
     const prompts = [
       {
         type: 'input',
@@ -96,7 +99,8 @@ module.exports = class ArtifactGenerator extends BaseGenerator {
 
   scaffold() {
     debug('Scaffolding artifact(s)');
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false }
     // Capitalize class name
     this.artifactInfo.name = utils.toClassName(this.artifactInfo.name);
 
@@ -159,7 +163,8 @@ module.exports = class ArtifactGenerator extends BaseGenerator {
   async _updateIndexFiles() {
     debug(`Indexes to be updated ${this.artifactInfo.indexesToBeUpdated}`);
     // Index Update Disabled
-    if (this.artifactInfo.disableIndexUpdate) return;
+    if (this.artifactInfo.disableIndexUpdate) {
+      return }
 
     if (!this.artifactInfo.indexesToBeUpdated) {
       this.artifactInfo.indexesToBeUpdated = [];

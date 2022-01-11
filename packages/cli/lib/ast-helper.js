@@ -33,7 +33,9 @@ exports.getIdFromModel = function (fileContent) {
         );
       }
 
-      if (!isPrimaryKeyFlag(node.initializer)) continue;
+      if (!isPrimaryKeyFlag(node.initializer)) {
+        continue; 
+      }
 
       const propDeclarationNode = getModelPropertyDeclaration(node);
       const modelPropertyName = propDeclarationNode.name.escapedText;
@@ -97,7 +99,7 @@ const MODEL_ID_QUERIES = {
     //   static definition = {properties: {id: {type:number, id:true|1}}}
     query:
       // Find all classes with static property `definition`
-      // TODO: check for "static" modifier
+      // check for "static" modifier
       'ClassDeclaration>PropertyDeclaration:has([name="definition"])>' +
       // Find object-literal argument used to initialize `definition`
       'ObjectLiteralExpression>' +
@@ -129,10 +131,9 @@ function isPrimaryKeyFlag(idInitializer) {
     );
   }
 
-  // {id: true}
-  if (kindName === 'TrueKeyword') return true;
+  if (kindName === 'TrueKeyword') {
+    return true }
 
-  // {id: number}
   if (kindName === 'NumericLiteral') {
     const ix = +idInitializer.text;
     // the value must be a non-zero number, e.g. {id: 1}

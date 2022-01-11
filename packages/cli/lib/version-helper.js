@@ -100,12 +100,16 @@ async function checkDependencies(generator) {
     for (const d in templateDeps) {
         for (const s in incompatibleDeps) {
             const versionRange = pkgDeps[s][d];
-            if (!versionRange) continue;
+            if (!versionRange) {
+                continue
+            }
             const templateDep = templateDeps[d];
             // https://github.com/loopbackio/loopback-next/issues/2028
             // https://github.com/npm/node-semver/pull/238
             // semver.intersects does not like `*`, `x`, or `X`
-            if (versionRange.match(/^\*|x|X/)) continue;
+            if (versionRange.match(/^\*|x|X/)) {
+                continue
+            }
             if (generator.options.semver === false) {
                 // For `lb4 update` command, check exact matches
                 if (versionRange !== templateDep) {
@@ -114,7 +118,8 @@ async function checkDependencies(generator) {
                 }
                 continue;
             }
-            if (semver.intersects(versionRange, templateDep)) continue;
+            if (semver.intersects(versionRange, templateDep)) {
+                continue }
             incompatibleDeps[s][d] = [versionRange, templateDep];
             found = true;
         }
@@ -217,18 +222,23 @@ function updateDependencies(generator) {
  * @param generator - Yeoman generator instance
  */
 async function checkLoopBackProject(generator) {
-    if (generator.shouldExit()) return false;
+    if (generator.shouldExit()) {
+        return false
+    }
 
     const incompatibleDeps = await checkDependencies(generator);
-    if (incompatibleDeps == null) return false;
+    if (incompatibleDeps == null) {
+        return false
+    }
     if (
         Object.keys({
             ...incompatibleDeps.dependencies,
             ...incompatibleDeps.devDependencies,
             ...incompatibleDeps.peerDependencies,
-        }) == 0
-    )
-        return false;
+        }) === 0
+    ){
+        return false
+    }
 
     const choices = [
         {
@@ -270,20 +280,7 @@ async function checkLoopBackProject(generator) {
  * Check if the current cli is out of date
  * @param log - Log function
  */
-async function checkCliVersion(log = console.log) {
-//     const latestCliVersion = await latestVersion('@loopback/cli');
-//     if (latestCliVersion !== cliPkg.version) {
-//         const current = chalk.grey(cliPkg.version);
-//         const latest = chalk.green(latestCliVersion);
-//         const cmd = chalk.cyan(`npm i -g ${cliPkg.name}`);
-//         const message = `
-// Update available ${current} ${chalk.reset(' → ')} ${latest}
-// Run ${cmd} to update.`;
-//         log(message);
-//     } else {
-//         log(chalk.green(`${cliPkg.name}@${cliPkg.version} is up to date.`));
-//     }
-}
+async function checkCliVersion(log = console.log) {}
 
 exports.printVersions = printVersions;
 exports.checkCliVersion = checkCliVersion;
