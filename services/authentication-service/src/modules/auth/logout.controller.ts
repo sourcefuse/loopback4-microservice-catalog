@@ -23,18 +23,13 @@ import {encode} from 'base-64';
 import {HttpsProxyAgent} from 'https-proxy-agent';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {RequestInfo, RequestInit} from 'node-fetch';
+import fetch from 'node-fetch';
 import {URLSearchParams} from 'url';
-
 import {RefreshTokenRequest} from '../../models';
 import {
   RefreshTokenRepository,
   RevokedTokenRepository,
 } from '../../repositories';
-
-// mod.cjs
-const fetch = (url: RequestInfo, init?: RequestInit) =>
-  import('node-fetch').then(({default: f}) => f(url, init));
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
