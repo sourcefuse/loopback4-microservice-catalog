@@ -22,14 +22,16 @@ const OrdersPage = () => {
     history.push(location);
   }
 
+  const dummyDescription =
+    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi,veritatis';
+
   const productList = [
     {
       name: 'Shoes',
       category: 'Leather boots',
       imageUrl:
         'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/img%20(39).jpg',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi,veritatis',
+      description: dummyDescription,
       price: 6900,
     },
     {
@@ -37,16 +39,14 @@ const OrdersPage = () => {
       category: 'Slim Jeans',
       imageUrl:
         'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/img%20(22).jpg',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi,veritatis',
+      description: dummyDescription,
       price: 9900,
     },
     {
       name: 'Shorts',
       category: 'Denim Shorts',
       imageUrl: 'https://mdbootstrap.com/img/Photos/Others/img%20(31).jpg',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi,veritatis',
+      description: dummyDescription,
       price: 4900,
     },
   ];

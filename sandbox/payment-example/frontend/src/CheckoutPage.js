@@ -55,12 +55,12 @@ class CheckoutPage extends Component {
       env.REACT_APP_BASE_API_PORT_EXISTS === 'true' ? true : false;
     const ordersApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${
       env.REACT_APP_BASE_API_URL
-    }${isPortExists ? ':' + env.REACT_APP_BASE_API_PORT + '/' : '/'}${
+    }${isPortExists ? `:${env.REACT_APP_BASE_API_PORT}/` : '/'}${
       env.REACT_APP_ORDERS_API_PATH
     }`;
     const subscriptionApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${
       env.REACT_APP_BASE_API_URL
-    }${isPortExists ? ':' + env.REACT_APP_BASE_API_PORT + '/' : '/'}${
+    }${isPortExists ? `:${env.REACT_APP_BASE_API_PORT}/` : '/'}${
       env.REACT_APP_SUBSCRIPTION_API_PATH
     }`;
     if (type === 'orders' && this.state.radio === 1) {
