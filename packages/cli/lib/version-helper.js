@@ -13,7 +13,7 @@ const chalk = require('chalk');
 
 const cliPkg = require('../package.json');
 const templateDeps = cliPkg.config.templateDependencies;
-
+const packagejson = 'package.json';
 /**
  * Print @loopback/* versions
  * @param log - A function to log information
@@ -34,7 +34,7 @@ function printVersions(log = console.log) {
  * @param generator - Yeoman generator instance
  */
 async function checkDependencies(generator) {
-    const pkg = generator.fs.readJSON(generator.destinationPath('package.json'));
+    const pkg = generator.fs.readJSON(generator.destinationPath(packagejson));
     generator.packageJson = pkg;
 
     const isUpdate = generator.command === 'update';
@@ -79,7 +79,7 @@ async function checkDependencies(generator) {
     if (!isLBProj) {
         const err = new Error(
             `No \`@loopback/core\` package found in the "dependencies" section of 
-            ${generator.destinationPath('package.json')}
+            ${generator.destinationPath(packagejson)}
             . The command must be run in a LoopBack project.`,
         );
         generator.exit(err);
@@ -165,7 +165,7 @@ async function checkDependencies(generator) {
 function updateDependencies(generator) {
     const pkg =
         generator.packageJson ||
-        generator.fs.readJSON(generator.destinationPath('package.json'));
+        generator.fs.readJSON(generator.destinationPath(packagejson));
     const depUpdates = [];
     for (const d in templateDeps) {
         if (
@@ -200,12 +200,13 @@ function updateDependencies(generator) {
         }
     }
     if (depUpdates.length) {
-        depUpdates.sort().forEach(d => generator.log(d));
+        depUpdates.sort()
+        .forEach(d => generator.log(d));
     }
     generator.log(
         chalk.red('Upgrading dependencies may break the current project.'),
     );
-    generator.fs.writeJSON(generator.destinationPath('package.json'), pkg);
+    generator.fs.writeJSON(generator.destinationPath(packagejson), pkg);
     // Remove `node_modules` force a fresh install
     if (generator.command === 'update' && !generator.options['skip-install']) {
         fse.removeSync(generator.destinationPath('node_modules'));

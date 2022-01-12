@@ -337,7 +337,7 @@ module.exports = class BaseGenerator extends Generator {
             `(While resolving a required prompt ${JSON.stringify(q.name)}.)`;
           this.log(chalk.red(msg));
           this.exit(new Error(msg));
-          return;
+          return undefined;
         }
         // Only prompt for non-skipped questions
         const props = await super.prompt([q]);

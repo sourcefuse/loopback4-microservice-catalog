@@ -85,9 +85,9 @@ module.exports = class MGenerator extends AppGenerator {
     const packageJsonFile = path.join(process.cwd(), 'package.json');
     const packageJson = require(packageJsonFile);
     const scripts = packageJson.scripts;
-    const symlink_resolver = 'symlink-resolver';
+    const symlinkresolver = 'symlink-resolver';
     this._setupMicroservice(packageJson.name);
-    scripts[symlink_resolver] = symlink_resolver;
+    scripts[symlinkresolver] = symlinkresolver;
     scripts['resolve-links'] = "npm run symlink-resolver build ./node_modules/@local";
     scripts['prestart'] = "npm run rebuild && npm run openapi-spec";
     scripts['rebuild'] = "npm run clean && npm run build";
