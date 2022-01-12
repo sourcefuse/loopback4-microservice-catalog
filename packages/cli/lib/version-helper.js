@@ -50,13 +50,13 @@ async function checkDependencies(generator) {
         if (isUpdate) {
             printVersions(generator.log);
             await checkCliVersion(generator.log);
-            return;
+            return undefined;
         }
         const err = new Error(
             `No package.json found in ${generator.destinationRoot()}. The command must be run in a LoopBack project.`,
         );
         generator.exit(err);
-        return;
+        return undefined;
     }
 
     const dependentPackage = '@loopback/core';
@@ -83,7 +83,7 @@ async function checkDependencies(generator) {
             . The command must be run in a LoopBack project.`,
         );
         generator.exit(err);
-        return;
+        return undefined;
     }
 
     const incompatibleDeps = {
@@ -129,7 +129,7 @@ async function checkDependencies(generator) {
                 ),
             );
         }
-        return;
+        return undefined;
     }
 
     const originalCliVersion = generator.config.get('update') || '<unknown>';
@@ -270,13 +270,16 @@ async function checkLoopBackProject(generator) {
         return true;
     }
     generator.exit(new Error('Incompatible dependencies'));
+    return undefined;
 }
 
 /**
  * Check if the current cli is out of date
  * @param log - Log function
  */
-async function checkCliVersion(log = console.log) {}
+async function checkCliVersion(log = console.log) {
+    return undefined;
+}
 
 exports.printVersions = printVersions;
 exports.checkCliVersion = checkCliVersion;

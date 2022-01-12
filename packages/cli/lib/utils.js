@@ -514,7 +514,9 @@ exports.readTextFromStdin = function () {
  */
 exports.checkPropertyName = function (name) {
   const result = exports.validateRequiredName(name);
-  if (result !== true) return result;
+  if (result !== true) {
+    return result
+  }
   if (RESERVED_PROPERTY_NAMES.includes(name)) {
     return `${name} is a reserved keyword. Please use another name`;
   }
@@ -637,7 +639,9 @@ exports.isConnectorOfType = function (
       config.connector === connector.name ||
       config.connector === `loopback-connector-${connector.name}`;
 
-    if (matchedConnector) return connectorType.includes(connector.baseModel);
+    if (matchedConnector) {
+      return connectorType.includes(connector.baseModel)
+    }
   }
 
   // Maybe for other connectors that are not in the supported list
@@ -732,7 +736,9 @@ exports.stringifyObject = function (data, options = {}) {
 };
 
 exports.stringifyModelSettings = function (modelSettings) {
-  if (!modelSettings || !Object.keys(modelSettings).length) return '';
+  if (!modelSettings || !Object.keys(modelSettings).length) {
+    return ''
+  }
   return exports.stringifyObject({settings: modelSettings});
 };
 
@@ -742,7 +748,9 @@ exports.stringifyModelSettings = function (modelSettings) {
  * @param {number} maxLineLength - Maximum line length before wrapping
  */
 function wrapLine(line, maxLineLength) {
-  if (line === '') return line;
+  if (line === '') {
+    return line
+  }
   let lineLength = 0;
   const words = line.split(/\s+/g);
   return words.reduce((result, word) => {
