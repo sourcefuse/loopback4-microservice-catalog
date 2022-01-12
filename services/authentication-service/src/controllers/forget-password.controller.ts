@@ -1,17 +1,8 @@
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {
-  get,
-  getModelSchemaRef,
-  HttpErrors,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
+import {get, HttpErrors, param, patch, post, requestBody} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
-  CONTENT_TYPE,
   ErrorCodes,
   STATUS_CODE,
   SuccessResponse,
@@ -26,11 +17,12 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {ForgotPasswordHandlerFn} from '../providers';
+import {AuthServiceBindings} from '../keys';
 
 import {
   AuthClient,
   ForgetPasswordDto,
-  ForgetPasswordResponseDto,
   ResetPasswordWithClient,
   User,
 } from '../models';
@@ -49,13 +41,8 @@ export class ForgetPasswordController {
   @post(`auth/forget-password`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Success Response.',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(ForgetPasswordResponseDto),
-          },
-        },
       },
       ...ErrorCodes,
     },
@@ -65,11 +52,14 @@ export class ForgetPasswordController {
     req: ForgetPasswordDto,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
     client: AuthClient,
-  ): Promise<ForgetPasswordResponseDto> {
+    @inject(AuthServiceBindings.ForgotPasswordHandler)
+    forgetPasswordHandler: ForgotPasswordHandlerFn,
+  ): Promise<void> {
     const user = await this.userRepo.findOne({
       where: {
         username: req.username,
       },
+      include: ['credentials'],
     });
     if (!user || !user.id) {
       throw new HttpErrors.NotFound('User not found !');
@@ -81,38 +71,32 @@ export class ForgetPasswordController {
       );
     }
 
-    try {
-      const codePayload: ClientAuthCode<User> = {
-        clientId: client.clientId,
-        userId: parseInt(user.id),
-        user: new User({
-          id: user.id,
-          email: user.email,
-          username: user.username,
-        }),
-      };
-      // Default expiry is 30 minutes
-      const expiryDuration = parseInt(
-        process.env.FORGOT_PASSWORD_LINK_EXPIRY ?? '1800',
-      );
-      const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
-        expiresIn: expiryDuration,
-        audience: req.client_id,
-        subject: user.username.toLowerCase(),
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      });
-      return new ForgetPasswordResponseDto({
-        code: token,
-        expiry: expiryDuration,
+    const codePayload: ClientAuthCode<User> = {
+      clientId: client.clientId,
+      userId: parseInt(user.id),
+      user: new User({
+        id: user.id,
         email: user.email,
-        user,
-      });
-    } catch (error) {
-      throw new HttpErrors.UnprocessableEntity(
-        AuthErrorKeys.ClientVerificationFailed,
-      );
-    }
+        username: user.username,
+      }),
+    };
+    // Default expiry is 30 minutes
+    const expiryDuration = parseInt(
+      process.env.FORGOT_PASSWORD_LINK_EXPIRY ?? '1800',
+    );
+    const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
+      expiresIn: expiryDuration,
+      audience: req.client_id,
+      subject: user.username.toLowerCase(),
+      issuer: process.env.JWT_ISSUER,
+      algorithm: 'HS256',
+    });
+    await forgetPasswordHandler({
+      code: token,
+      expiry: expiryDuration,
+      email: user.email,
+      user: user,
+    });
   }
 
   @authorize({permissions: ['*']})

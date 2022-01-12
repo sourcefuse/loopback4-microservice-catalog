@@ -1,5 +1,5 @@
 import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
+import {ApplicationConfig, BindingScope} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
@@ -15,6 +15,13 @@ import {
 import * as path from 'path';
 import {BearerTokenVerifyProvider} from './providers/bearer-token-verifier.provider';
 import {AuthenticationServiceComponent} from '../../component';
+import {
+  TestForgotPasswordTokenHandlerProvider,
+  TestSignupTokenHandlerProvider,
+} from './providers';
+import {AuthServiceBindings} from '../../keys';
+import {SignUpBindings} from '../../providers';
+import {TestHelperService} from './services';
 
 export {ApplicationConfig};
 
@@ -39,6 +46,13 @@ export class TestingApplication extends BootMixin(
     this.bind(Strategies.Passport.BEARER_TOKEN_VERIFIER).toProvider(
       BearerTokenVerifyProvider,
     );
+    this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(
+      TestSignupTokenHandlerProvider,
+    );
+    this.bind(AuthServiceBindings.ForgotPasswordHandler).toProvider(
+      TestForgotPasswordTokenHandlerProvider,
+    );
+    this.service(TestHelperService, {defaultScope: BindingScope.SINGLETON});
 
     // Add authorization component
     this.bind(AuthorizationBindings.CONFIG).to({

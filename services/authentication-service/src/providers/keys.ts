@@ -1,5 +1,6 @@
 import {BindingKey} from '@loopback/core';
 import {VerifyFunction} from 'loopback4-authentication';
+import {SignupTokenHandlerFn} from '.';
 import {PreSignupFn, UserSignupFn} from '../types';
 
 import {
@@ -45,6 +46,9 @@ export namespace SignUpBindings {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     UserSignupFn<any, any>
   >(`sf.local.signup.provider`);
+
+  export const SIGNUP_HANDLER_PROVIDER =
+    BindingKey.create<SignupTokenHandlerFn>(`sf.local.signup.handler.provider`);
 }
 
 export namespace VerifyBindings {
@@ -78,10 +82,10 @@ export namespace VerifyBindings {
 
 export namespace AuthCodeBindings {
   export const CODEWRITER_PROVIDER = BindingKey.create<CodeWriterFn>(
-    'sf.keycloack.codewriter.provider',
+    'sf.auth.codewriter.provider',
   );
 
   export const CODEREADER_PROVIDER = BindingKey.create<CodeReaderFn>(
-    'sf.oauth.codereader.provider',
+    'sf.auth.codereader.provider',
   );
 }
