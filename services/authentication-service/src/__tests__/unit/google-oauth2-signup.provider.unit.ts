@@ -13,7 +13,13 @@ describe('Google Oauth Signup Service', () => {
     displayName: 'test_display_name',
     profileUrl: 'test_profile_url',
     _raw: 'test_raw',
-    _json: 'test_json',
+    _json: {
+      iss: 'test',
+      aud: 'test',
+      sub: 'test',
+      iat: 1353601026,
+      exp: 1353601026,
+    },
     provider: 'test_provider',
   };
 

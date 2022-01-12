@@ -1,4 +1,4 @@
-import { TourButton } from './TourButton';
+import {TourButton} from './TourButton';
 
 export interface TourStep {
   id: string;
@@ -11,6 +11,7 @@ export interface TourStep {
     element: string;
     on: string;
     type: 'string' | 'function' | 'element';
+    scrollTo: boolean;
   };
   classes?: string;
   advanceOn?: {
@@ -22,4 +23,11 @@ export interface TourStep {
   currentRoute?: string;
   nextRoute?: string;
   prevRoute?: string;
+  cancelIcon?: {
+    enabled?: boolean;
+    label?: string;
+  };
+  modalOverlayOpeningRadius?: number;
+  modalOverlayOpeningPadding?: number;
+  popperOptions?: object;
 }

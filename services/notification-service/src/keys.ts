@@ -2,6 +2,7 @@ import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {
   IChannelManager,
+  INotificationFilterFunc,
   INotificationUserManager,
   INotifServiceConfig,
 } from './types';
@@ -16,5 +17,10 @@ export namespace NotifServiceBindings {
   export const NotificationUserManager =
     BindingKey.create<INotificationUserManager | null>(
       `${BINDING_PREFIX}.notification.notifUserMgr`,
+    );
+
+  export const NotificationFilter =
+    BindingKey.create<INotificationFilterFunc | null>(
+      `${BINDING_PREFIX}.notification.notificationFilter`,
     );
 }

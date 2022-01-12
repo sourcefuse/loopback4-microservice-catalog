@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.1 (2021-12-26)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 0.3.0 (2021-12-26)
+
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
+## 0.2.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+* fix(feature-toggle-service): minor fixes (#440) ([9562829](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9562829)), closes [#440](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/440)
+* feat(sandbox): example for feature toggle service (#398) ([9410472](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9410472)), closes [#398](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/398) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396) [#396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/396)
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
+## <small>0.1.2 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 0.1.0 (2021-10-24)
 
 * fix(core): fix bugs ([e519774](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e519774)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

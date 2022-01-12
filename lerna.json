@@ -1,9 +1,34 @@
 {
-  "packages": ["packages/*", "services/*", "facades/*", "sandbox/*"],
+  "packages": [
+    "packages/core/",
+    "packages/custom-sf-changelog/",
+    "packages/user-onboarding/projects/user-onboarding-lib/",
+    "packages/search/projects/search-lib/",
+    "services/*",
+    "facades/*",
+    "sandbox/*"
+  ],
   "command": {
     "bootstrap": {
       "concurrency": 4,
-      "forceLocal": true
+      "ignore": [
+        "@sourceloop/audit-ms-example",
+        "@sourceloop/auth-ms-basic-example",
+        "@sourceloop/auth-multitenant-example",
+        "@sourceloop/in-mail-example",
+        "@sourceloop/schedular-example",
+        "@sourceloop/notification-socket-example",
+        "@sourceloop/video-conferencing-ms-example",
+        "@sourceloop/workflow-ms-example",
+        "@sourceloop/pubnub-example",
+        "@sourceloop/chat-notif-example_facade",
+        "@sourceloop/chat-notif-example_ui",
+        "@sourceloop/chat-notif-example_chat-service",
+        "@sourceloop/chat-notif-example_notif-service",
+        "@sourceloop/search-ms-example",
+        "@sourceloop/search-client-example",
+        "@sourceloop/feature-toggle-example"
+      ]
     },
     "version": {
       "conventionalCommits": true,
@@ -14,7 +39,8 @@
       "conventionalCommits": true,
       "message": "chore: publish release",
       "allowBranch": "master",
-      "noPrivate": true
+      "noPrivate": true,
+      "graphType": "all"
     },
     "run": {
       "concurrency": 1,
@@ -28,7 +54,13 @@
         "@sourceloop/video-conferencing-ms-example",
         "@sourceloop/workflow-ms-example",
         "@sourceloop/pubnub-example",
-        "@sourceloop/search-ms-example"
+        "@sourceloop/chat-notif-example_facade",
+        "@sourceloop/chat-notif-example_ui",
+        "@sourceloop/chat-notif-example_chat-service",
+        "@sourceloop/chat-notif-example_notif-service",
+        "@sourceloop/search-ms-example",
+        "@sourceloop/search-client-example",
+        "@sourceloop/feature-toggle-example"
       ]
     },
     "clean": {

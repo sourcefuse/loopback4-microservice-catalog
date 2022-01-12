@@ -1,5 +1,5 @@
 /* initial migration scripts for adding features and strategies 
-these can we added via the console as well*/
+these can be added via the console as well*/
 
 insert into strategies (name,description,parameters) values 
 ('Tenant','tenant level strategy',

@@ -3,7 +3,16 @@
   "extends": "@loopback/build/config/tsconfig.common.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "composite": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "migration.js"
+  ],
+  "references": [
+    {
+      "path": "../../packages/core/tsconfig.json"
+    }
+  ]
 }

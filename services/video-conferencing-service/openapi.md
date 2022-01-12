@@ -87,6 +87,10 @@ fetch('/archives/storage-target',
 
 Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.
 
+| Permissions |
+| ------- |
+| SetMeetingUploadTarget   |
+
 > Body parameter
 
 ```json
@@ -171,6 +175,10 @@ fetch('/archives/{archiveId}',
 
 Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.
 
+| Permissions |
+| ------- |
+| GetMeetingArchives   |
+
 <h3 id="videochatarchivecontroller.getarchive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -251,6 +259,10 @@ fetch('/archives/{archiveId}',
 
 Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.
 
+| Permissions |
+| ------- |
+| DeleteMeetingArchive   |
+
 <h3 id="videochatarchivecontroller.deletearchive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -329,6 +341,10 @@ fetch('/archives',
 
 Used to fetch a list of archives (meetings that were recorded).
 
+| Permissions |
+| ------- |
+| GetMeetingArchives   |
+
 > Example responses
 
 > 200 Response
@@ -402,6 +418,10 @@ fetch('/session/{meetingLinkId}/attendees',
 ```
 
 `GET /session/{meetingLinkId}/attendees`
+
+| Permissions |
+| ------- |
+| GetMeetingAttendees   |
 
 <h3 id="videochatsessioncontroller.getattendeeslist-parameters">Parameters</h3>
 
@@ -484,6 +504,10 @@ Used to stop the current active meeting. Meeting cannot be stopped again if it i
       already stopped. Successful execution will add the endTime attribute to a recently 
       ending session.
 
+| Permissions |
+| ------- |
+| StopMeeting   |
+
 <h3 id="videochatsessioncontroller.endsession-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -558,6 +582,10 @@ Used for Generating token, which is used for connecting to a room/session on a c
       In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
       We can use expire time for limited validity of a token. Successful 
       execution will send a token.
+
+| Permissions |
+| ------- |
+| GenerateMeetingToken   |
 
 > Body parameter
 
@@ -686,6 +714,10 @@ fetch('/session/{meetingLinkId}',
 
 Used for editing the meeting
 
+| Permissions |
+| ------- |
+| EditMeeting   |
+
 > Body parameter
 
 ```json
@@ -787,6 +819,10 @@ Used for Creating a session with options such as end to end encryption, archive 
       Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
       an Error will be thrown. Successful execution will send a meeting link 
       id which can be used to amend in client url.
+
+| Permissions |
+| ------- |
+| CreateMeetingSession   |
 
 > Body parameter
 

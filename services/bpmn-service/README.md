@@ -1,23 +1,28 @@
-# BPMN Microservice
+# @sourceloop/bpmn-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+![npm](https://img.shields.io/npm/dm/@sourceloop/bpmn-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/bpmn-service)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/bpmn-service/@loopback/core)
 
 ## Overview
 
 A Loopback Microservice for handling BPMN workflows using engines like [Camunda](https://camunda.com/products/cloud/). NOTE: The microservice currently works with only one workflow definition for a single diagram. It provides -
 
- - Deployment and management of Workflows in a BPMN engine.
- - Process Versioning.
- - Executing Workflow using an endpoint, validate inputs before starting an execution.
+- Deployment and management of Workflows in a BPMN engine.
+- Process Versioning.
+- Executing Workflow using an endpoint, validate inputs before starting an execution.
 
 ### Sandbox Example
 
 The [sandbox example](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/sandbox/workflow-ms-example) provides a use of this microservice with the [Camunda](https://camunda.com/products/cloud/) BPMN engine.
 
-It uses [camunda-external-task-client-js](https://github.com/camunda/camunda-external-task-client-js) to implement external task workers, that are triggered on executing a workflow. The flow of control is shown in the diagram below - 
+It uses [camunda-external-task-client-js](https://github.com/camunda/camunda-external-task-client-js) to implement external task workers, that are triggered on executing a workflow. The flow of control is shown in the diagram below -
 
 ![Execute Workflow](https://user-images.githubusercontent.com/77672713/126749866-1344ff59-5a1e-47cf-bf90-d366da3e9498.png)
-
 
 ### Installation
 
@@ -27,34 +32,36 @@ npm i @sourceloop/bpmn-service
 
 ### Usage
 
- - Create a new Loopback4 Application (If you don't have one already)
-	`lb4 testapp` 
- - Install the bpmn service
-	 `npm i @sourceloop/bpmn-service`
- - Set the [environment variables](#environment-variables).
- - Run the [migrations](#migrations).
- - Bind the BPMN Config to `WorkflowServiceBindings.Config` key-
-    ``` typescript
-    this.bind(WorkflowServiceBindings.Config).to({
-        useCustomSequence: true,
-        workflowEngineBaseUrl: process.env.CAMUNDA_URL, // url for the rest engine in case of Camunda
-    });
-    ```
- - Implement `WorkflowProvider` (refer [this](#bpmnprovider)) and bind it to `WorkflowServiceBindings.WorkflowManager` key -
-    ``` typescript
-    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(WorkflowProvider);
-    ```
- - Add the `WorkflowServiceComponent` to your Loopback4 Application (in `application.ts`).
-	  ``` typescript
-    // import WorkflowServiceComponent
-    import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
-	  // add Component for WorkflowService
-	  this.component(WorkflowServiceComponent);
-	  ```
-  - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to 
-	`WorkflowCacheSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
- - Start the application
-	`npm start`
+- Create a new Loopback4 Application (If you don't have one already)
+  `lb4 testapp`
+- Install the bpmn service
+  `npm i @sourceloop/bpmn-service`
+- Set the [environment variables](#environment-variables).
+- Run the [migrations](#migrations).
+- Bind the BPMN Config to `WorkflowServiceBindings.Config` key-
+  ```typescript
+  this.bind(WorkflowServiceBindings.Config).to({
+    useCustomSequence: true,
+    workflowEngineBaseUrl: process.env.CAMUNDA_URL, // url for the rest engine in case of Camunda
+  });
+  ```
+- Implement `WorkflowProvider` (refer [this](#bpmnprovider)) and bind it to `WorkflowServiceBindings.WorkflowManager` key -
+  ```typescript
+  this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(
+    WorkflowProvider,
+  );
+  ```
+- Add the `WorkflowServiceComponent` to your Loopback4 Application (in `application.ts`).
+  ```typescript
+  // import WorkflowServiceComponent
+  import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
+  // add Component for WorkflowService
+  this.component(WorkflowServiceComponent);
+  ```
+- Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
+  `WorkflowCacheSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+- Start the application
+  `npm start`
 
 ### Setting up a `DataSource`
 
@@ -79,7 +86,8 @@ const config = {
 @lifeCycleObserver('datasource')
 export class BpmnDbDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static dataSourceName = WorkflowCacheSourceName;
   static readonly defaultConfig = config;
 
@@ -112,7 +120,6 @@ A sample implementation of a `DataSource` using environment variables and Postgr
 ### Database Schema
 
 ![bpmndb](https://user-images.githubusercontent.com/77672713/126750626-205bbd2c-4b51-4b98-ad81-1b39008f2cf5.jpg)
-
 
 ### Providers
 

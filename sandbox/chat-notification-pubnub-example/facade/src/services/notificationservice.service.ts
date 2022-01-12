@@ -7,11 +7,16 @@ export interface Notificationservice {
   // this is where you define the Node.js methods that will be
   // mapped to REST/SOAP/gRPC operations as stated in the datasource
   // json file.
-  getNotification(token:string): Promise<Pubnubnotification[]>;
-  createNotification(data:Pubnubnotification, token:string): Promise<Pubnubnotification>;
+  getNotification(token: string): Promise<Pubnubnotification[]>;
+  createNotification(
+    data: Pubnubnotification,
+    token: string,
+  ): Promise<Pubnubnotification>;
 }
 
-export class NotificationserviceProvider implements Provider<Notificationservice> {
+export class NotificationserviceProvider
+  implements Provider<Notificationservice>
+{
   constructor(
     // notification must match the name property in the datasource json file
     @inject('datasources.notification')

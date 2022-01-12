@@ -97,6 +97,10 @@ fetch('/mails/bulk/restore',
 
 `PATCH /mails/bulk/restore`
 
+| Permissions |
+| ------- |
+| RestoreMail   |
+
 > Body parameter
 
 ```json
@@ -194,6 +198,10 @@ fetch('/mails/bulk/{storage}/{action}',
 ```
 
 `DELETE /mails/bulk/{storage}/{action}`
+
+| Permissions |
+| ------- |
+| TrashMail   |
 
 > Body parameter
 
@@ -295,6 +303,10 @@ fetch('/mails/marking/{markType}',
 
 `PATCH /mails/marking/{markType}`
 
+| Permissions |
+| ------- |
+| UpdateMail   |
+
 > Body parameter
 
 ```json
@@ -374,6 +386,10 @@ fetch('/mails/{messageId}/attachments/{attachmentId}',
 ```
 
 `DELETE /mails/{messageId}/attachments/{attachmentId}`
+
+| Permissions |
+| ------- |
+| DeleteAttachment   |
 
 <h3 id="api-provides-an-interface-for-removing-attachment-before-message-is-sent-parameters">Parameters</h3>
 
@@ -488,6 +504,10 @@ fetch('/mails/{messageId}/attachments',
 ```
 
 `POST /mails/{messageId}/attachments`
+
+| Permissions |
+| ------- |
+| AddAttachments   |
 
 > Body parameter
 
@@ -630,6 +650,10 @@ fetch('/mails/{messageId}/send',
 
 `PATCH /mails/{messageId}/send`
 
+| Permissions |
+| ------- |
+| ComposeMail   |
+
 <h3 id="api-for-sending-a-drafted-message.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -672,8 +696,8 @@ const inputBody = '{
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -759,8 +783,8 @@ const inputBody = {
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -831,6 +855,10 @@ fetch('/mails/{messageId}',
 
 `PUT /mails/{messageId}`
 
+| Permissions |
+| ------- |
+| UpdateMail   |
+
 > Body parameter
 
 ```json
@@ -849,8 +877,8 @@ fetch('/mails/{messageId}',
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -947,8 +975,8 @@ const inputBody = '{
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -1034,8 +1062,8 @@ const inputBody = {
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -1106,6 +1134,10 @@ fetch('/mails',
 
 `POST /mails`
 
+| Permissions |
+| ------- |
+| ComposeMail   |
+
 > Body parameter
 
 ```json
@@ -1124,8 +1156,8 @@ fetch('/mails',
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -1252,6 +1284,10 @@ fetch('/mails/{messageId}',
 
 `GET /mails/{messageId}`
 
+| Permissions |
+| ------- |
+| GetInMail   |
+
 <h3 id="get-message-api.-collect-a-single-message-based-on-message-identity.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1341,6 +1377,10 @@ fetch('/mails',
 
 `GET /mails`
 
+| Permissions |
+| ------- |
+| GetInMails   |
+
 <h3 id="collect-a-list-of-all-messages.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1414,6 +1454,10 @@ fetch('/threads/{threadId}',
 ```
 
 `GET /threads/{threadId}`
+
+| Permissions |
+| ------- |
+| GetThread   |
 
 <h3 id="get-thread-message-api.-collect-complete-single-message-thread-based-on-thread-identity.-parameters">Parameters</h3>
 
@@ -1529,6 +1573,10 @@ fetch('/threads',
 
 `GET /threads`
 
+| Permissions |
+| ------- |
+| GetThread   |
+
 <h3 id="thread-list-api.-collect-a-list-of-all-threads.-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1618,8 +1666,8 @@ const inputBody = '{
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -1702,8 +1750,8 @@ const inputBody = {
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -1772,6 +1820,10 @@ fetch('/threads/{threadId}/forward',
 
 `PATCH /threads/{threadId}/forward`
 
+| Permissions |
+| ------- |
+| ComposeMail   |
+
 > Body parameter
 
 ```json
@@ -1789,8 +1841,8 @@ fetch('/threads/{threadId}/forward',
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -2068,6 +2120,10 @@ fetch('/threads/{threadId}/mails/{messageId}/replies',
 
 `PATCH /threads/{threadId}/mails/{messageId}/replies`
 
+| Permissions |
+| ------- |
+| ReplyMail   |
+
 > Body parameter
 
 ```json
@@ -2212,8 +2268,8 @@ false
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -2501,8 +2557,8 @@ MetaPartial
   "party": "string",
   "type": "from",
   "isImportant": true,
-  "storage": "inbox",
-  "visibility": "new",
+  "storage": "draft",
+  "visibility": "read",
   "extId": "string",
   "extMetadata": {},
   "messageId": "string",
@@ -2662,8 +2718,8 @@ Attachment add response schema
         "party": "string",
         "type": "from",
         "isImportant": true,
-        "storage": "inbox",
-        "visibility": "new",
+        "storage": "draft",
+        "visibility": "read",
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
@@ -2734,8 +2790,8 @@ Attachment add response schema
           "party": "string",
           "type": "from",
           "isImportant": true,
-          "storage": "inbox",
-          "visibility": "new",
+          "storage": "draft",
+          "visibility": "read",
           "extId": "string",
           "extMetadata": {},
           "messageId": "string",
@@ -2839,8 +2895,8 @@ AttachmentExcluding_deleted_WithRelations
           "party": "string",
           "type": "from",
           "isImportant": true,
-          "storage": "inbox",
-          "visibility": "new",
+          "storage": "draft",
+          "visibility": "read",
           "extId": "string",
           "extMetadata": {},
           "messageId": "string",
@@ -2907,8 +2963,8 @@ AttachmentExcluding_deleted_WithRelations
             "party": "string",
             "type": "from",
             "isImportant": true,
-            "storage": "inbox",
-            "visibility": "new",
+            "storage": "draft",
+            "visibility": "read",
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
@@ -2932,8 +2988,8 @@ AttachmentExcluding_deleted_WithRelations
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -3127,8 +3183,8 @@ ThreadExcluding_deleted_WithRelations
   "party": "string",
   "type": "from",
   "isImportant": true,
-  "storage": "inbox",
-  "visibility": "new",
+  "storage": "draft",
+  "visibility": "read",
   "extId": "string",
   "extMetadata": {},
   "messageId": "string",
@@ -3179,8 +3235,8 @@ ThreadExcluding_deleted_WithRelations
         "party": "string",
         "type": "from",
         "isImportant": true,
-        "storage": "inbox",
-        "visibility": "new",
+        "storage": "draft",
+        "visibility": "read",
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
@@ -3251,8 +3307,8 @@ ThreadExcluding_deleted_WithRelations
           "party": "string",
           "type": "from",
           "isImportant": true,
-          "storage": "inbox",
-          "visibility": "new",
+          "storage": "draft",
+          "visibility": "read",
           "extId": "string",
           "extMetadata": {},
           "messageId": "string",
@@ -3322,8 +3378,8 @@ ThreadExcluding_deleted_WithRelations
             "party": "string",
             "type": "from",
             "isImportant": true,
-            "storage": "inbox",
-            "visibility": "new",
+            "storage": "draft",
+            "visibility": "read",
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
@@ -3364,8 +3420,8 @@ ThreadExcluding_deleted_WithRelations
         "party": "string",
         "type": "from",
         "isImportant": true,
-        "storage": "inbox",
-        "visibility": "new",
+        "storage": "draft",
+        "visibility": "read",
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
@@ -3544,8 +3600,8 @@ GroupExcluding_deleted_WithRelations
         "party": "string",
         "type": "from",
         "isImportant": true,
-        "storage": "inbox",
-        "visibility": "new",
+        "storage": "draft",
+        "visibility": "read",
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
@@ -3616,8 +3672,8 @@ GroupExcluding_deleted_WithRelations
           "party": "string",
           "type": "from",
           "isImportant": true,
-          "storage": "inbox",
-          "visibility": "new",
+          "storage": "draft",
+          "visibility": "read",
           "extId": "string",
           "extMetadata": {},
           "messageId": "string",
@@ -3719,8 +3775,8 @@ MetaExcluding_deleted_WithRelations
             "party": "string",
             "type": "from",
             "isImportant": true,
-            "storage": "inbox",
-            "visibility": "new",
+            "storage": "draft",
+            "visibility": "read",
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
@@ -3791,8 +3847,8 @@ MetaExcluding_deleted_WithRelations
               "party": "string",
               "type": "from",
               "isImportant": true,
-              "storage": "inbox",
-              "visibility": "new",
+              "storage": "draft",
+              "visibility": "read",
               "extId": "string",
               "extMetadata": {},
               "messageId": "string",
@@ -3817,8 +3873,8 @@ MetaExcluding_deleted_WithRelations
       "party": "string",
       "type": "from",
       "isImportant": true,
-      "storage": "inbox",
-      "visibility": "new",
+      "storage": "draft",
+      "visibility": "read",
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
@@ -4029,8 +4085,8 @@ MetaExcluding_deleted_WithRelations
             "party": "string",
             "type": "from",
             "isImportant": true,
-            "storage": "inbox",
-            "visibility": "new",
+            "storage": "draft",
+            "visibility": "read",
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
@@ -4085,8 +4141,8 @@ MetaExcluding_deleted_WithRelations
               "party": "string",
               "type": "from",
               "isImportant": true,
-              "storage": "inbox",
-              "visibility": "new",
+              "storage": "draft",
+              "visibility": "read",
               "extId": "string",
               "extMetadata": {},
               "messageId": "string",
@@ -4158,8 +4214,8 @@ MetaExcluding_deleted_WithRelations
             "party": "string",
             "type": "from",
             "isImportant": true,
-            "storage": "inbox",
-            "visibility": "new",
+            "storage": "draft",
+            "visibility": "read",
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
@@ -4200,8 +4256,8 @@ MetaExcluding_deleted_WithRelations
         "party": "string",
         "type": "from",
         "isImportant": true,
-        "storage": "inbox",
-        "visibility": "new",
+        "storage": "draft",
+        "visibility": "read",
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",

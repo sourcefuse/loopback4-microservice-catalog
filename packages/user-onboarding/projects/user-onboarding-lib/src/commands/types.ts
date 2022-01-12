@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {
   LoadTourParameters,
   SaveTourParameters,
@@ -6,6 +6,8 @@ import {
   LoadStateParameters,
   SaveStateParameters,
   TourState,
+  DeleteStateParameters,
+  DeleteTourParameters,
 } from '../models';
 
 export interface SaveTourCommand {
@@ -18,6 +20,11 @@ export interface LoadTourCommand {
   execute(): Observable<Tour>;
 }
 
+export interface DeleteTourCommand {
+  parameters: DeleteTourParameters;
+  execute(): void;
+}
+
 export interface SaveStateCommand {
   parameters: SaveStateParameters;
   execute(): Observable<TourState>;
@@ -28,7 +35,12 @@ export interface LoadStateCommand {
   execute(): Observable<TourState>;
 }
 
+export interface DeleteStateCommand {
+  parameters: DeleteStateParameters;
+  execute(): void;
+}
+
 export interface BaseCommand<T = unknown, S = unknown> {
   parameters: S;
-  execute(): Observable<T>;
+  execute(): Observable<T> | void;
 }

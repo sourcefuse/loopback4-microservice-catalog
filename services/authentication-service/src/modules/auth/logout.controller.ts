@@ -20,10 +20,10 @@ import {
   SuccessResponse,
 } from '@sourceloop/core';
 import {encode} from 'base-64';
+import {HttpsProxyAgent} from 'https-proxy-agent';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {HttpsProxyAgent} from 'https-proxy-agent';
-import * as fetch from 'node-fetch';
+import {RequestInfo, RequestInit} from 'node-fetch';
 import {URLSearchParams} from 'url';
 
 import {RefreshTokenRequest} from '../../models';
@@ -31,6 +31,10 @@ import {
   RefreshTokenRepository,
   RevokedTokenRepository,
 } from '../../repositories';
+
+// mod.cjs
+const fetch = (url: RequestInfo, init?: RequestInit) =>
+  import('node-fetch').then(({default: f}) => f(url, init));
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
@@ -168,15 +172,14 @@ export class LogoutController {
       const logoutUrl = `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout`;
       params.append('refresh_token', refreshTokenModel.externalRefreshToken);
       const strToEncode = `${process.env.KEYCLOAK_CLIENT_ID}:${process.env.KEYCLOAK_CLIENT_SECRET}`;
-      fetch
-        .default(logoutUrl, {
-          agent: getProxyAgent(),
-          method: 'post',
-          body: params,
-          headers: {
-            Authorization: `Basic ${encode(strToEncode)}`,
-          },
-        })
+      fetch(logoutUrl, {
+        agent: getProxyAgent(),
+        method: 'post',
+        body: params,
+        headers: {
+          Authorization: `Basic ${encode(strToEncode)}`,
+        },
+      })
         .then(() => {
           this.logger.info(
             `User ${refreshTokenModel.username} logged off successfully from keycloak.`,

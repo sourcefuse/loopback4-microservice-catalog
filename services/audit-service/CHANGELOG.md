@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.1 (2021-12-26)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 4.0.0 (2021-12-26)
+
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
+## 3.0.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
+## <small>2.6.4 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
+## <small>2.6.3 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.6.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## 2.6.0 (2021-10-24)
 
 * fix(audit-service): open api update ([ac3775c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ac3775c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

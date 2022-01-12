@@ -4,7 +4,11 @@
       matInput
       autocomplete="off"
       type="text"
-      [placeholder]="config.placeholder || 'Search'"
+      [placeholder]="
+        config.placeholderFunction
+          ? config.placeholderFunction(searchInput.value, category)
+          : config.placeholder || 'Search'
+      "
       #searchInput
       name="searchInput"
       (focus)="showSuggestions()"
@@ -15,17 +19,17 @@
       (ngModelChange)="onChange(this.searchBoxInput)"
       [disabled]="disabled"
     />
-    <mat-icon matPrefix class="icomoon Search"></mat-icon>
+    <mat-icon matPrefix [className]="config.searchIconClass"></mat-icon>
     <mat-icon
       *ngIf="searchBoxInput"
       matSuffix
-      class="icomoon close"
+      [className]="config.crossIconClass"
       (click)="resetInput()"
     ></mat-icon>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="toolbar-search-select">
-    <mat-icon matSuffix class="icomoon arrow_down"></mat-icon>
+    <mat-icon matSuffix [className]="config.dropDownButtonIconClass"></mat-icon>
     <mat-select
       [value]="category"
       (selectionChange)="setCategory($event.value)"
@@ -163,21 +167,12 @@
             class="suggestions"
             (mousedown)="populateValueRecentSearch(recentSearch, $event)"
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M2 6.5C2 8.981 4.0185 11 6.5 11C8.981 11 11 8.981 11 6.5C11 4.0185 8.981 2 6.5 2C4.0185 2 2 4.0185 2 6.5ZM1 6.5C1 3.4625 3.4625 1 6.5 1C9.5375 1 12 3.4625 12 6.5C12 9.5375 9.5375 12 6.5 12C3.4625 12 1 9.5375 1 6.5ZM10.7236 11.4306C10.9771 11.2131 11.2131 10.9771 11.4306 10.7236L15.0001 14.2926L14.2931 15.0001L10.7236 11.4306Z"
-                fill="#9C9C9C"
-              />
-            </svg>
-            <span>{{ recentSearch.match }}</span>
+            <mat-icon
+              matPrefix
+              [className]="config.recentSearchIconClass"
+            ></mat-icon>
+
+            <span>&nbsp;{{ recentSearch.match }}</span>
           </li>
         </ul>
       </div>

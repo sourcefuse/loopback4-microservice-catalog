@@ -4,22 +4,8 @@ An Angular module that exports a component that can enable users to search over 
 
 ## Installation
 
-First step is to clone the search folder inside the packages folder. Then navigate inside the search folder and run
-
 ```sh
-ng build
-```
-
-This will create a dist folder then navigate inside the dist folder and then to search-lib and run
-
-```sh
-npm pack
-```
-
-This will create a Tar Package which can be installed by running the npm install command as follows
-
-```sh
-npm install path-of-tar/name-of-tar.tgz
+npm i @sourceloop/search-client
 ```
 
 ## Usage
@@ -91,6 +77,11 @@ Apart from these there are some optional properties that you can give:
 - **hideCategorizeButton (boolean) :** Option to hide the categorize button on the right of search dropdown. Default is false.
 - **saveInRecentsOnlyOnEnter (boolean) :** Option to save search query in recent searches only when user presses enter key or changes the category he/she is searching on. Default value is false.
 - **searchOnlyOnEnter (boolean) :** Option to call API to display search results only when user presses enter key. Default value is false.
+- **noResultMessage (string) :** Message to display in dropdown incase no matching result found.
+- **searchIconClass (string) :** Can be used to give custom icon for search in search bar.
+- **crossIconClass (string) :** Can be used to give custom icon for clearing text input in search bar.
+- **dropDownButtonIconClass (string) :** Can be used to give custom icon for category drop down button.
+- **recentSearchIconClass (string) :** Can be used to give custom icon for recent searches displayed in the search dropdown.
 
 Your component might look something like
 
@@ -127,7 +118,7 @@ Now in your template you can add the search library component selector like
 ```
 
 You can access the value in the search input using [(ngModel)]. You can also listen to clicked and searched events.
-Clicked event is of type ItemClickedEvent. It is emitted when user clicks one of the suggested results (including recent search sugestions). Searched event is emitted when request is made to the api when user types and relevant suggestinons are displayed. It is of type RecentSearchEvent.
+Clicked event is of type ItemClickedEvent. It is emitted when user clicks one of the suggested results. Searched event is emitted when request is made to the api when user types and relevant suggestinons are displayed. It is of type RecentSearchEvent.
 
 ```ts
 type ItemClickedEvent<T> = {
@@ -151,3 +142,13 @@ type RecentSearchEvent = {
   disabled="false"
 ></sourceloop-search>
 ```
+
+### Icons
+
+To use the default icons you will have to import the following in your styles.scss:
+
+```
+@import '../node_modules/@sourceloop/search-client/assets/icomoon/style.css';
+```
+
+You can also choose to use your own icons by providing classes for icons in the configuration.

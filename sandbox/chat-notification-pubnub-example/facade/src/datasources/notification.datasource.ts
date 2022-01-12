@@ -7,8 +7,10 @@ import * as config from './notification.datasource.config.json';
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class NotificationDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class NotificationDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = 'notification';
   static readonly defaultConfig = config;
 

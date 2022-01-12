@@ -18,5 +18,5 @@ export enum PermissionKey {
   ViewChannel = 'ViewChannel',
   CreateChannel = 'CreateChannel',
   UpdateChannel = 'UpdateChannel',
-  DeleteChannel = 'DeleteChannel'
+  DeleteChannel = 'DeleteChannel',
 }

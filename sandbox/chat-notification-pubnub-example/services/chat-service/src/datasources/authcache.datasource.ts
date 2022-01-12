@@ -9,7 +9,7 @@ const config = {
   host: process.env.AUTHCACHE_DB_HOST,
   port: process.env.AUTHCACHE_DB_PORT,
   password: process.env.AUTHCACHE_DB_PASSWORD,
-  db: process.env.AUTHCACHE_DB_DATABASE
+  db: process.env.AUTHCACHE_DB_DATABASE,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -17,8 +17,10 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class AuthcacheDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class AuthcacheDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = AuthCacheSourceName;
   static readonly defaultConfig = config;
 

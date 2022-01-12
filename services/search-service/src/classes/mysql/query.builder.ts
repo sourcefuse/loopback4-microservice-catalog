@@ -16,18 +16,19 @@ export class MySqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
     columns: Array<keyof T> | ColumnMap<T>,
     ignoredColumns: (keyof T)[],
   ) {
-    const modelName = model.modelName;
+    const tableName = this.getTableName(model);
+    const sourceName = this.getModelName(model);
     const {columnList, selectors} = this.getColumnListFromArrayOrMap(
       model,
       columns,
       ignoredColumns,
     );
-    const where = this.whereBuild(model, this.query.where?.[modelName]);
+    const where = this.whereBuild(model, this.query.where?.[sourceName]);
     const whereClause = [`MATCH (${columnList}) AGAINST (':0')`];
     if (where.sql) {
       whereClause.push(where.sql);
     }
-    const query = `SELECT ${selectors}, '${modelName}' as source, MATCH (${columnList}) AGAINST (':0') AS rank from ${modelName} where ${whereClause.join(
+    const query = `SELECT ${selectors}, '${sourceName}' as source, MATCH (${columnList}) AGAINST (':0') AS rank from ${tableName} where ${whereClause.join(
       ' AND ',
     )}`;
 
@@ -39,5 +40,15 @@ export class MySqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
 
   paramString(index: number) {
     return `$${index - 1}`;
+  }
+
+  getModelName(model: typeof Model) {
+    const mappedName = this.modelNameMap.get(model.name);
+    return (
+      mappedName ??
+      model.definition?.settings?.mysql?.table ??
+      model.modelName ??
+      model.name.toLowerCase()
+    );
   }
 }

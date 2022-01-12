@@ -2,9 +2,17 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "@loopback/build/config/tsconfig.common.json",
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "emitDecoratorMetadata": true,
+    "rootDir": "src",
+    "composite": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ],
+  "references": [
+    {
+      "path": "../../packages/core/tsconfig.json"
+    }
+  ]
 }

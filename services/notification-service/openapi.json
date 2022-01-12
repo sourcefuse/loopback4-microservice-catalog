@@ -33,6 +33,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -72,6 +73,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -108,6 +110,7 @@
             "description": "Notification DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -154,6 +157,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -184,6 +188,7 @@
             "description": "NotificationUser PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -222,6 +227,7 @@
             "description": "NotificationUser PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -267,6 +273,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -295,6 +302,7 @@
             "description": "NotificationUser DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -332,6 +340,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -366,6 +375,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -419,6 +429,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -450,6 +461,7 @@
             "description": "Notification DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -493,6 +505,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CanGetNotificationAccess   |\n",
         "parameters": [
           {
             "name": "id",
@@ -540,6 +553,7 @@
             "description": "Object with success"
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -583,6 +597,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -622,6 +637,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -665,6 +681,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -710,6 +727,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -772,6 +790,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -819,6 +838,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -863,6 +883,7 @@
             "description": "Notification PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -903,6 +924,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
         "parameters": [
           {
             "name": "id",
@@ -940,6 +962,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -974,6 +997,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1027,6 +1051,7 @@
             }
           }
         },
+        "description": "",
         "parameters": [
           {
             "name": "filter",
@@ -1058,6 +1083,7 @@
             "description": "Notification DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1413,6 +1439,7 @@
         }
       },
       "notification_users.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
@@ -1587,6 +1614,7 @@
         "x-typescript-type": "@loopback/repository#Filter<NotificationUser>"
       },
       "notifications.ScopeFilter": {
+        "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
