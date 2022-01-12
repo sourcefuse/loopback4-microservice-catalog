@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/in-mail-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/in-mail-service/dev/@loopback/cli)
-
 A Loopback Microservice primarily used for in-mail implementation to compose and view in-mails for
 any client application.
 

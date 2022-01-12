@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/video-conferencing-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/video-conferencing-service/dev/@loopback/cli)
-
 Various features of Video Conferencing Services:
 
 1. Schedule Meetings and Generate Token
@@ -45,6 +43,7 @@ npm i @sourceloop/video-conferencing-service
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Bind Vonage config to the `VonageBindings.Config` key -
+
   ```typescript
   this.bind(VonageBindings.Config).to({
     apiKey: process.env.VONAGE_API_KEY,
@@ -52,7 +51,9 @@ npm i @sourceloop/video-conferencing-service
     timeToStart: 0, // time in minutes, meeting can not be started 'timeToStart' minutes before the scheduled time
   });
   ```
-- Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`).
+
+- Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`)
+
   ```typescript
   // import the component for VideoConfService
   import { VideoConfServiceComponent } from '@sourceloop/video-conferencing-service';
@@ -61,6 +62,7 @@ npm i @sourceloop/video-conferencing-service
   this.component(VideoConfServiceComponent);
   ...
   ```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `VideoConfDatasource`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`

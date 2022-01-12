@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/payment-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/payment-service/dev/@loopback/cli)
-
 A Loopback Microservice primarily used for payment implementation to charge the payments for
 any client application.
 

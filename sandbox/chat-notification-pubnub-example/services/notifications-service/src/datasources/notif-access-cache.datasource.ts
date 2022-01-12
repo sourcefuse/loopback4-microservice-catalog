@@ -8,7 +8,7 @@ const config = {
   host: process.env.NOTIFCACHE_DB_HOST,
   port: process.env.NOTIFCACHE_DB_PORT,
   password: process.env.NOTIFCACHE_DB_PASSWORD,
-  db: process.env.NOTIFCACHE_DB_DATABASE
+  db: process.env.NOTIFCACHE_DB_DATABASE,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -16,8 +16,10 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class NotifAccessCacheDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class NotifAccessCacheDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = 'NotifAccessCache';
   static readonly defaultConfig = config;
 

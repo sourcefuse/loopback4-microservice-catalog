@@ -11,7 +11,6 @@
   "command": {
     "bootstrap": {
       "concurrency": 4,
-      "forceLocal": true,
       "ignore": [
         "@sourceloop/audit-ms-example",
         "@sourceloop/auth-ms-basic-example",
@@ -22,6 +21,10 @@
         "@sourceloop/video-conferencing-ms-example",
         "@sourceloop/workflow-ms-example",
         "@sourceloop/pubnub-example",
+        "@sourceloop/chat-notif-example_facade",
+        "@sourceloop/chat-notif-example_ui",
+        "@sourceloop/chat-notif-example_chat-service",
+        "@sourceloop/chat-notif-example_notif-service",
         "@sourceloop/search-ms-example",
         "@sourceloop/search-client-example",
         "@sourceloop/feature-toggle-example"
@@ -36,7 +39,8 @@
       "conventionalCommits": true,
       "message": "chore: publish release",
       "allowBranch": "master",
-      "noPrivate": true
+      "noPrivate": true,
+      "graphType": "all"
     },
     "run": {
       "concurrency": 1,
@@ -50,6 +54,10 @@
         "@sourceloop/video-conferencing-ms-example",
         "@sourceloop/workflow-ms-example",
         "@sourceloop/pubnub-example",
+        "@sourceloop/chat-notif-example_facade",
+        "@sourceloop/chat-notif-example_ui",
+        "@sourceloop/chat-notif-example_chat-service",
+        "@sourceloop/chat-notif-example_notif-service",
         "@sourceloop/search-ms-example",
         "@sourceloop/search-client-example",
         "@sourceloop/feature-toggle-example"

@@ -1,5 +1,5 @@
 {
-  "name": "chatservice",
+  "name": "@sourceloop/chat-notif-example_chat-service",
   "version": "0.0.1",
   "description": "sourceloop chat service",
   "keywords": [

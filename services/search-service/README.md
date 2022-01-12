@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/search-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/search-service/dev/@loopback/cli)
-
 A LoopBack microservice used for searching over configured models. It uses in-build Full Text Search support in PostgreSQL and MySQL databases to perform searches.
 
 ## Installation
@@ -27,6 +25,7 @@ npm i @sourceloop/search-service
 - Install the search service
   `npm i @sourceloop/search-service`
 - Bind the configuration for the service to the `SearchServiceBindings.Config` key -
+
   ```typescript
   this.bind({
     useCustomSequence: false, //default
@@ -50,13 +49,16 @@ npm i @sourceloop/search-service
     },
   });
   ```
-- Add the `SearchService` to your Loopback4 Application (in `application.ts`).
+
+- Add the `SearchService` to your Loopback4 Application (in `application.ts`)
+
   ```typescript
   // import the SearchServiceComponent
   import {SearchServiceComponent} from '@sourceloop/search-service';
   // add Component for SearchServiceComponent
   this.component(SearchServiceComponent);
   ```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `SearchServiceBindings.DATABASE_NAME`. You can see an example datasource [here](#setting-up-a-datasource). This service supports MySQL and PostgreSQL based datasources as of now.
 - Start the application
   `npm start`
@@ -131,14 +133,14 @@ export  class  SearchDbDataSource  extends  juggler.DataSource implements  LifeC
 
 Also if you are using `postgres` datasource, you need to add the following function in your db -
 
-```
+```sql
 CREATE OR REPLACE FUNCTION f_concat_ws(text, VARIADIC text[])
   RETURNS text LANGUAGE sql IMMUTABLE AS 'SELECT array_to_string($2, $1)';
 ```
 
 And to improve performance define an index like this -
 
-```
+```sql
 CREATE INDEX tbl_fts_idx ON main.<TABLENAME> USING GIN (
        to_tsvector('english', f_concat_ws(' ', <COLUMN1>, <COLUMN2>)));
 ```
@@ -147,7 +149,7 @@ CREATE INDEX tbl_fts_idx ON main.<TABLENAME> USING GIN (
 
 #### Common Headers
 
-Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.
+Authorization: Bearer \<token> where \<token> is a JWT token signed using JWT issuer and secret.
 `Content-Type: application/json` in the response and in request if the API method is NOT GET
 
 #### Common Request path Parameters

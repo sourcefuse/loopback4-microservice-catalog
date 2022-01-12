@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/feature-toggle-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/feature-toggle-service/dev/@loopback/cli)
-
 ## Overview
 
 Microservice that provides functionality to maintain feature flags at various levels. Initial support for system level, tenant level and user level is provided.

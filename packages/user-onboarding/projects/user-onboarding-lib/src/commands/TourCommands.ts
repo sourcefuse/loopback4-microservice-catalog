@@ -1,7 +1,12 @@
-import { Observable, of } from 'rxjs';
-import { LoadTourParameters, SaveTourParameters, Tour } from '../models';
-import { LoadTourCommand, SaveTourCommand } from './types';
-import { StorageService } from 'ngx-webstorage-service';
+import {Observable, of} from 'rxjs';
+import {
+  DeleteTourParameters,
+  LoadTourParameters,
+  SaveTourParameters,
+  Tour,
+} from '../models';
+import {DeleteTourCommand, LoadTourCommand, SaveTourCommand} from './types';
+import {StorageService} from 'ngx-webstorage-service';
 
 export class SaveTCommand implements SaveTourCommand {
   constructor(private readonly storage: StorageService) {}
@@ -23,5 +28,13 @@ export class LoadTCommand implements LoadTourCommand {
   execute(): Observable<Tour> {
     const existingTour = this.storage.get(this.parameters.tourId);
     return of(existingTour);
+  }
+}
+
+export class DeleteTCommand implements DeleteTourCommand {
+  constructor(private readonly storage: StorageService) {}
+  public parameters: DeleteTourParameters;
+  execute(): void {
+    this.storage.remove(this.parameters.tourId);
   }
 }

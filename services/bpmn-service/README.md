@@ -8,8 +8,6 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/bpmn-service/@loopback/core)
 
-![npm dev dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/bpmn-service/dev/@loopback/cli)
-
 ## Overview
 
 A Loopback Microservice for handling BPMN workflows using engines like [Camunda](https://camunda.com/products/cloud/). NOTE: The microservice currently works with only one workflow definition for a single diagram. It provides -
