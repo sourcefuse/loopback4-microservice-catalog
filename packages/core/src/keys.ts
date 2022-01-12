@@ -23,12 +23,6 @@ export namespace JoinBindings {
   export const Join = BindingKey.create<JoinExecutor>(
     `${BINDING_PREFIX}.join.executor`,
   );
-  export const PostgresQueryBuilder = BindingKey.create<
-    Constructor<PostgreqlQueryBuilder<Entity, {}, never>>
-  >(`${BINDING_PREFIX}.query.builder.psql`);
-  export const WhereBuilder = BindingKey.create<WhereBuilderFunction>(
-    `${BINDING_PREFIX}.query.where`,
-  );
 }
 
 const hiddenKey = 'sf.oas.hiddenEndpoints';

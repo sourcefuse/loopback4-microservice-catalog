@@ -1,6 +1,7 @@
 import {Constructor} from '@loopback/context';
 import {Entity, PropertyDefinition} from '@loopback/repository';
 import {IncomingMessage} from 'http';
+import {RelationsMap} from './providers';
 
 export interface IServiceConfig {
   useCustomSequence: boolean;
@@ -11,6 +12,7 @@ export type ModelConstructor<T extends Entity> = Constructor<T> & {
     properties: {
       [property: string]: PropertyDefinition;
     };
+    relations: RelationsMap;
   };
   modelName: string;
 };

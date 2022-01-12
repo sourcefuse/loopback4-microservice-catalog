@@ -9,4 +9,5 @@ export enum Errors {
   UNSUPPORTED_RELATION_TYPE = 'Relation type not supported',
   INVALID_RELATION = 'Invalid Relation',
   MUST_PROVIDE_JOIN = 'Must provide atleast a join filter to use this method',
+  NO_ID_PROPERTY = 'No ID property in the model',
 }

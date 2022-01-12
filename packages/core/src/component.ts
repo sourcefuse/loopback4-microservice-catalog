@@ -18,7 +18,11 @@ import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import * as swstats from 'swagger-stats';
 import {JoinBindings} from '.';
-import {PostgreqlQueryBuilder, WhereFunctionProvider} from './providers/query';
+import {
+  PostgreqlQueryBuilder,
+  QueryBuilderBindings,
+  WhereFunctionProvider,
+} from './providers/query';
 import {JoinProvider} from './providers/join.provider';
 
 export class CoreComponent implements Component {
@@ -93,13 +97,17 @@ export class CoreComponent implements Component {
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
     this.bindings.push(
-      Binding.bind(JoinBindings.WhereBuilder).toProvider(WhereFunctionProvider),
+      Binding.bind(QueryBuilderBindings.WhereBuilder).toProvider(
+        WhereFunctionProvider,
+      ),
     );
     this.bindings.push(
       Binding.bind(JoinBindings.Join).toProvider(JoinProvider),
     );
     this.bindings.push(
-      Binding.bind(JoinBindings.PostgresQueryBuilder).to(PostgreqlQueryBuilder),
+      Binding.bind(QueryBuilderBindings.PostgresQueryBuilder).to(
+        PostgreqlQueryBuilder,
+      ),
     );
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
   }

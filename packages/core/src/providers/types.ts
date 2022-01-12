@@ -1,19 +1,12 @@
-import {Entity, juggler} from '@loopback/repository';
-import {AnyObject} from 'loopback-datasource-juggler';
-import {ModelConstructor} from '..';
-import {FilterWithJoin, RelationMap} from '../mixins/types';
-export type JoinExecutor = <
-  T extends Entity,
-  S extends RelationMap,
-  R extends S[keyof S],
->(
-  filter: FilterWithJoin<T, S, R>,
+import {Entity, Filter, juggler, RelationMetadata} from '@loopback/repository';
+import {BuilderConfig, ModelConstructor} from '..';
+export type JoinExecutor = <T extends Entity>(
+  filter: Filter<T>,
   datasource: juggler.DataSource,
   model: ModelConstructor<T>,
-  relations: RelationsMap,
-  idType?: string,
+  options?: BuilderConfig,
 ) => Promise<T[]>;
 
 export type RelationsMap = {
-  [key: string]: AnyObject;
+  [key: string]: RelationMetadata;
 };

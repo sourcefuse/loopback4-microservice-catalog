@@ -6,6 +6,19 @@ export declare type PredicateValueType<PT> = PT | PT[] | [PT, PT];
 
 export declare type ShortHandEqualType = string | number | boolean | Date;
 
+export type FromClause = FromJoinClause | FromTableClause;
+
+export type FromJoinClause = {
+  sql: string;
+  prefix: string;
+  type: 'join';
+};
+
+export type FromTableClause = {
+  sql: string;
+  type: 'table';
+};
+
 export type Query = {
   sql: string;
   params: ShortHandEqualType[];
@@ -57,3 +70,8 @@ export type WhereBuilderFunction = <T extends Entity>(
   idType?: string,
   paramBuilder?: (i: number) => string,
 ) => Query;
+
+export type BuilderConfig = {
+  schema: string;
+  idType: string;
+};
