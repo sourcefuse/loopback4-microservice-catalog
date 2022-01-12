@@ -92,6 +92,7 @@ function lb_cli() {
     }).notify({isGlobal: true});
 
     mainLocal(optsLocal);
+    return undefined;
 }
 
 //gut anything lb4 specific and rewire to generators

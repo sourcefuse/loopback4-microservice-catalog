@@ -111,6 +111,7 @@ module.exports = class ArtifactGenerator extends BaseGenerator {
       this.destinationPath(),
       this.artifactInfo,
     );
+    return undefined;
   }
 
   async end() {

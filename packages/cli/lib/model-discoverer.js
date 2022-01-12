@@ -31,7 +31,7 @@ async function discoverModelNames(ds, options) {
 async function discoverSingleModel(ds, modelName, options) {
   const schema = await ds.discoverSchema(modelName, options);
   if (schema) {
-    schema.settings = schema && schema.options;
+    schema.settings = schema.options;
   }
   return schema;
 }
