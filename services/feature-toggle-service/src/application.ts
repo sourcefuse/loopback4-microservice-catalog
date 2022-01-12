@@ -4,6 +4,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import * as path from 'path';
+import {FeatureToggleComponent} from './component2';
 import {FeatureToggleServiceComponent} from './component';
 
 export {ApplicationConfig};
@@ -15,6 +16,7 @@ export class FeatureToggleServiceApplication extends BootMixin(
     super(options);
     this.static('/', path.join(__dirname, '../public'));
     this.component(FeatureToggleServiceComponent);
+    this.component(FeatureToggleComponent);
 
     this.projectRoot = __dirname;
     this.bootOptions = {
