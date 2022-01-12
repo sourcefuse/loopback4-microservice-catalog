@@ -1,14 +1,12 @@
 {
-  "name": "sourceloop-cli",
-  "version": "0.1.0",
+  "name": "@sourceloop/cli",
+  "version": "1.0.0",
   "description": "Sourceloop CLI",
   "bin": {
-    "sourceloop-cli": "bin/cli-main.js"
+    "@sourceloop/cli": "bin/cli-main.js"
   },
   "main": "generators/projects/index.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "files": [
     "bin",
     "lib",

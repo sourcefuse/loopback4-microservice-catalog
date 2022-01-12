@@ -10,25 +10,7 @@
   ],
   "command": {
     "bootstrap": {
-      "concurrency": 4,
-      "ignore": [
-        "@sourceloop/audit-ms-example",
-        "@sourceloop/auth-ms-basic-example",
-        "@sourceloop/auth-multitenant-example",
-        "@sourceloop/in-mail-example",
-        "@sourceloop/schedular-example",
-        "@sourceloop/notification-socket-example",
-        "@sourceloop/video-conferencing-ms-example",
-        "@sourceloop/workflow-ms-example",
-        "@sourceloop/pubnub-example",
-        "@sourceloop/chat-notif-example_facade",
-        "@sourceloop/chat-notif-example_ui",
-        "@sourceloop/chat-notif-example_chat-service",
-        "@sourceloop/chat-notif-example_notif-service",
-        "@sourceloop/search-ms-example",
-        "@sourceloop/search-client-example",
-        "@sourceloop/feature-toggle-example"
-      ]
+      "concurrency": 4
     },
     "version": {
       "conventionalCommits": true,
