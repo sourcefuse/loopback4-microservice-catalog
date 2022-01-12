@@ -200,8 +200,8 @@ function updateDependencies(generator) {
         }
     }
     if (depUpdates.length) {
-        depUpdates.sort()
-        .forEach(d => generator.log(d));
+        const updatesDep = depUpdates.sort()
+        updatesDep.forEach(d => generator.log(d));
     }
     generator.log(
         chalk.red('Upgrading dependencies may break the current project.'),
