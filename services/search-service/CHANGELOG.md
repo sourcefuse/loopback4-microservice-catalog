@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.1 (2022-01-12)</small>
+
+* fix(search-service): fix export of classes, fix search source name in query (#456) ([267da39](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/267da39)), closes [#456](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/456) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 0.5.0 (2022-01-10)
 
 * feat(search-service): add option to change source name (#450) ([b917898](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b917898)), closes [#450](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/450) [#449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/449)
