@@ -229,7 +229,9 @@ module.exports = class BaseGenerator extends Generator {
   async _getDefaultAnswer(question, answers) {
     // First check existing answers
     let defaultVal = answers[question.name];
-    if (defaultVal != null) return defaultVal;
+    if (defaultVal != null) {
+      return defaultVal
+    }
 
     // Now check the `default` of the prompt
     let def = question.default;
@@ -243,7 +245,9 @@ module.exports = class BaseGenerator extends Generator {
     }
     if (question.type === 'list' || question.type === 'rawList') {
       // Default to 1st item
-      if (def == null) def = 0;
+      if (def == null) {
+        def = 0
+      }
       if (typeof def === 'number') {
         // The `default` is an index
         const choice = question.choices[def];
@@ -303,13 +307,13 @@ module.exports = class BaseGenerator extends Generator {
           '--yes to skip optional prompts with default answers';
         this.log(chalk.red(msg));
         this.exit(new Error(msg));
-        return;
+        return undefined;
       }
       // Non-express mode, continue to prompt
       debug('Questions', questions);
-      const answers = await super.prompt(questions);
-      debug('Answers', answers);
-      return answers;
+      const answersLocal = await super.prompt(questions);
+      debug('Answers', answersLocal);
+      return answersLocal;
     }
 
     const answers = Object.assign({}, this.options);
@@ -319,7 +323,9 @@ module.exports = class BaseGenerator extends Generator {
       if (typeof when === 'function') {
         when = await q.when(answers);
       }
-      if (when === false) continue;
+      if (when === false) {
+        continue
+      }
       if (this._isQuestionOptional(q)) {
         const answer = await this._getDefaultAnswer(q, answers);
         debug('%s: %j', q.name, answer);
@@ -355,9 +361,13 @@ module.exports = class BaseGenerator extends Generator {
    */
   exit(reason) {
     // exit(false) should not exit
-    if (reason === false) return;
+    if (reason === false) {
+      return
+    }
     // exit(), exit(undefined), exit('') should exit
-    if (!reason) reason = true;
+    if (!reason) {
+      reason = true
+    }
     this.exitGeneration = reason;
   }
 
@@ -367,19 +377,22 @@ module.exports = class BaseGenerator extends Generator {
    * @param {Object} options
    * @param {Object} spawnOpts
    */
-  pkgManagerInstall(pkgs, options = {}, spawnOpts) {
+  pkgManagerInstall(pkgs, spawnOpts, options = {} ) {
     const pm = this.config.get('packageManager') || this.options.packageManager;
     if (pm === 'yarn') {
       return this.yarnInstall(pkgs, options.yarn, spawnOpts);
     }
     this.npmInstall(pkgs, options.npm, spawnOpts);
+    return undefined;
   }
 
   /**
    * Run `[pkgManager] install` in the project
    */
   install() {
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
     const opts = {
       npm: this.options.npmInstall,
       yarn: this.options.yarnInstall,
@@ -388,6 +401,7 @@ module.exports = class BaseGenerator extends Generator {
       cwd: this.destinationRoot(),
     });
     this.pkgManagerInstall(null, opts, spawnOpts);
+    return undefined;
   }
 
   /**
@@ -428,8 +442,12 @@ module.exports = class BaseGenerator extends Generator {
         stdio: [process.stdin, 'ignore', process.stderr],
         cwd: projectDir,
       }).on('close', code => {
-        if (code === 0) resolve();
-        else reject(new Error('npm exit code: ' + code));
+        if (code === 0) {
+          resolve()
+        }
+        else {
+          reject(new Error('npm exit code: ' + code))
+        }
       });
     });
   }

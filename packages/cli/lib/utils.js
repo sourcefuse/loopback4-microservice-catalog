@@ -247,8 +247,12 @@ exports.validateRelationName = function (name, type, foreignKeyName) {
  * Converts a name to class name after validation
  */
 exports.toClassName = function (name) {
-  if (name === '') return new Error('no input');
-  if (typeof name != 'string' || name == null) return new Error('bad input');
+  if (name === '') {
+    return new Error('no input')
+  }
+  if (typeof name != 'string' || name == null) {
+    return new Error('bad input')
+  }
   return pascalCase(camelCase(name));
 };
 
@@ -264,7 +268,9 @@ exports.tildify = tildify;
 
 exports.validate = function (name) {
   const isValid = validate(name).validForNewPackages;
-  if (!isValid) return 'Invalid npm package name: ' + name;
+  if (!isValid) {
+    return 'Invalid npm package name: ' + name
+  }
   return isValid;
 };
 
@@ -291,8 +297,9 @@ exports.validateUrlSlug = function (name) {
       transformer: false,
     }),
   );
-  if (!possibleSlugs.includes(name))
-    return `Invalid url slug. Suggested slug: ${backslashIfNeeded}${possibleSlugs[0]}`;
+  if (!possibleSlugs.includes(name)){
+    return `Invalid url slug. Suggested slug: ${backslashIfNeeded}${possibleSlugs[0]}`
+  }
   return true;
 };
 
@@ -486,8 +493,12 @@ exports.readTextFromStdin = function () {
         }
       })
       .on('close', () => {
-        if (err) reject(err);
-        else resolve(lines.join('\n'));
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(lines.join('\n'))
+        }
       })
       .on('error', e => {
         err = e;

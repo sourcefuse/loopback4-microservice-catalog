@@ -101,7 +101,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
 
   async setOptions() {
     await super.setOptions();
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
     if (this.options.name) {
       const msg = utils.validate(this.options.name);
       if (typeof msg === 'string') {
@@ -129,10 +131,13 @@ module.exports = class ProjectGenerator extends BaseGenerator {
         this.projectInfo[n] = this.options[n];
       }
     });
+    return undefined;
   }
 
   promptProjectName() {
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
     const prompts = [
       {
         type: 'input',
@@ -158,7 +163,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
   }
 
   promptProjectDir() {
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
     const prompts = [
       {
         type: 'input',
@@ -179,7 +186,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
   }
 
   promptOptions() {
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
     const choices = [];
     this.buildOptions.forEach(f => {
       if (this.options[f.name] == null) {
@@ -218,7 +227,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
   }
 
   promptYarnInstall() {
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
     const prompts = [
       {
         type: 'confirm',
@@ -237,7 +248,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
   }
 
   scaffold() {
-    if (this.shouldExit()) return false;
+    if (this.shouldExit()) {
+      return false
+    }
 
     this.destinationRoot(this.projectInfo.outdir);
 
@@ -308,5 +321,6 @@ module.exports = class ProjectGenerator extends BaseGenerator {
     if (this.options.packageManager === 'yarn') {
       this.fs.delete(this.destinationPath('.npmrc'));
     }
+    return undefined;
   }
 };

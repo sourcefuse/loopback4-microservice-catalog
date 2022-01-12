@@ -125,7 +125,7 @@ function main(opts, log) {
   log = log || console.log;
   if (opts.version) {
     printVersions(log);
-    return;
+    return undefined;
   }
 
   const env = setupGenerators();
@@ -133,7 +133,7 @@ function main(opts, log) {
   // list generators
   if (opts.commands) {
     printCommands(env, log);
-    return;
+    return undefined;
   }
 
   const yoJsonFile = path.join(__dirname, '../.yo-rc.json');
@@ -177,6 +177,7 @@ function main(opts, log) {
   }
 
   runCommand(env, opts, log);
+  return undefined;
 }
 
 module.exports = main;

@@ -63,7 +63,7 @@ function generateCompletions(optionsAndArgs, partial) {
  */
 function completion(optionsAndArgs, env) {
   if (!env.complete) {
-    return;
+    return undefined;
   }
 
   return tabtab.log(generateCompletions(optionsAndArgs, env.partial));
