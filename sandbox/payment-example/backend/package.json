@@ -1,7 +1,7 @@
 {
-  "name": "payment-example-backend",
+  "name": "@sourceloop/payment-example-backend",
   "version": "0.0.1",
-  "description": "backend",
+  "description": "backend of payment example",
   "keywords": [
     "loopback-application",
     "loopback"
