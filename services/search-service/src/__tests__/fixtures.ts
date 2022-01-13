@@ -38,8 +38,25 @@ export class TestSearched extends Entity {
   name: string;
 }
 
-@model({})
+@model({
+  name: 'TestSearchedCustom',
+})
 export class TestSearchedCustom extends Entity {
+  @property({
+    type: 'string',
+  })
+  about: string;
+
+  @property({
+    type: 'string',
+  })
+  identifier: string;
+}
+
+@model({
+  name: 'TestSearchedCustom',
+})
+export class TestSearchedCustomWithIdentifier extends Entity {
   @property({
     type: 'string',
   })

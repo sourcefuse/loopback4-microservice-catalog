@@ -85,7 +85,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
       }
       const models = this.config.models.map(model => {
         if (isSearchableModel(model)) {
-          return model.model.modelName;
+          return model.identifier ?? model.model.modelName;
         } else {
           return model.modelName;
         }

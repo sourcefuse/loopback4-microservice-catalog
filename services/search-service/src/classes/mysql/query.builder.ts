@@ -42,7 +42,7 @@ export class MySqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
     return `$${index - 1}`;
   }
 
-  getTableName(model: typeof Model) {
+  getModelName(model: typeof Model) {
     const mappedName = this.modelNameMap.get(model.name);
     return (
       mappedName ??
