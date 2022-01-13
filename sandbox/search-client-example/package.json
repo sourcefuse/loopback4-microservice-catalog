@@ -21,8 +21,9 @@
     "@angular/platform-browser": "~12.1.0-",
     "@angular/platform-browser-dynamic": "~12.1.0-",
     "@angular/router": "~12.1.0-",
-    "@sourceloop/search-client": "^4.3.0",
-    "ajv": "^6.12.6",
+    "@sourceloop/search-client": "^4.3.1",
+    "ajv": "^8.8.2",
+    "ajv-errors": "^1.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
