@@ -1,0 +1,175 @@
+{
+  "name": "<%= project.name -%>",
+  "version": "0.0.1",
+  "description": "<%= project.description -%>",
+  "keywords": [
+    "loopback-<%= project.projectType -%>",
+    "loopback"
+  ],
+<% if (project.private) { -%>
+  "private": true,
+<% } -%>
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+<% if (project.prettier && project.eslint) { -%>
+<% if (packageManager === 'yarn') { -%>
+    "lint": "yarn run eslint && yarn run prettier:check",
+    "lint:fix": "yarn run eslint:fix && yarn run prettier:fix",
+<% } else { -%>
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+<% } -%>
+<% } else if (project.prettier) { -%>
+<% if (packageManager === 'yarn') { -%>
+    "lint": "yarn run prettier:check",
+    "lint:fix": "yarn run prettier:fix",
+<% } else { -%>
+    "lint": "npm run prettier:check",
+    "lint:fix": "npm run prettier:fix",
+<% } -%>
+<% } else if (project.eslint) { -%>
+<% if (packageManager === 'yarn') { -%>
+    "lint": "yarn run eslint",
+    "lint:fix": "yarn run eslint:fix",
+<% } else { -%>
+    "lint": "npm run eslint",
+    "lint:fix": "npm run eslint:fix",
+<% } -%>
+<% } -%>
+<% if (project.prettier) { -%>
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+<% if (packageManager === 'yarn') { -%>
+    "prettier:check": "yarn run prettier:cli -l",
+    "prettier:fix": "yarn run prettier:cli --write",
+<% } else { -%>
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+<% } -%>
+<% } -%>
+<% if (project.eslint) { -%>
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+<% if (packageManager === 'yarn') { -%>
+    "eslint:fix": "yarn run eslint --fix",
+<% } else { -%>
+    "eslint:fix": "npm run eslint -- --fix",
+<% } -%>
+<% } -%>
+<% if (packageManager === 'yarn') { -%>
+    "pretest": "yarn run rebuild",
+<% } else { -%>
+    "pretest": "npm run rebuild",
+<% } -%>
+<% if (project.mocha) { -%>
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+<% } -%>
+<% if (project.prettier || project.eslint) { -%>
+<% if (packageManager === 'yarn') { -%>
+    "posttest": "yarn run lint",
+<% } else { -%>
+    "posttest": "npm run lint",
+<% } -%>
+<% } -%>
+<% if (project.mocha && (project.prettier || project.eslint)) { -%>
+<% if (packageManager === 'yarn') { -%>
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && yarn run posttest",
+<% } else { -%>
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+<% } -%>
+<% } else if (project.mocha) { -%>
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+<% } -%>
+<% if (project.projectType === 'application') { -%>
+<% if (project.docker) { -%>
+    "docker:build": "docker build -t <%= project.name -%> .",
+    "docker:run": "docker run -p 3000:3000 -d <%= project.name -%>",
+<% } -%>
+<% if (project.repositories && packageManager === 'yarn') { -%>
+    "premigrate": "yarn run build",
+<% } else if (project.repositories) { -%>
+    "premigrate": "npm run build",
+<% } -%>
+<% if (project.repositories) { -%>
+    "migrate": "node ./dist/migrate",
+<% } -%>
+<% if (packageManager === 'yarn') { -%>
+    "preopenapi-spec": "yarn run build",
+<% } else { -%>
+    "preopenapi-spec": "npm run build",
+<% } -%>
+    "openapi-spec": "node ./dist/openapi-spec",
+<% if (packageManager === 'yarn') { -%>
+    "prestart": "yarn run rebuild",
+<% } else { -%>
+    "prestart": "npm run rebuild",
+<% } -%>
+    "start": "node -r source-map-support/register .",
+<% } -%>
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+<% if (packageManager === 'yarn') { -%>
+    "rebuild": "yarn run clean && yarn run build"
+<% } else { -%>
+    "rebuild": "npm run clean && npm run build"
+<% } -%>
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+<% if (author) { -%>
+  "author": "<%= author.name %> <<%= author.email %>>",
+<% } else { -%>
+  "author": "",
+<% } -%>
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+<% if (project.projectType === 'extension') { -%>
+  "peerDependencies": {
+    "@loopback/core": "<%= project.dependencies['@loopback/core'] -%>"
+  },
+<% } -%>
+  "dependencies": {
+<% if (project.projectType === 'application') { -%>
+    "@loopback/boot": "<%= project.dependencies['@loopback/boot'] -%>",
+    "@loopback/core": "<%= project.dependencies['@loopback/core'] -%>",
+<% if (project.repositories) { -%>
+    "@loopback/repository": "<%= project.dependencies['@loopback/repository'] -%>",
+<% } -%>
+<% if (project.apiconnect) { -%>
+    "@loopback/apiconnect": "<%= project.dependencies['@loopback/apiconnect'] -%>",
+<% } -%>
+    "@loopback/rest": "<%= project.dependencies['@loopback/rest'] -%>",
+<% if (project.services) { -%>
+    "@loopback/rest-explorer": "<%= project.dependencies['@loopback/rest-explorer'] -%>",
+    "@loopback/service-proxy": "<%= project.dependencies['@loopback/service-proxy'] -%>",
+<% } else { -%>
+    "@loopback/rest-explorer": "<%= project.dependencies['@loopback/rest-explorer'] -%>",
+<% } -%>
+<% } -%>
+    "tslib": "<%= project.dependencies['tslib'] -%>"
+  },
+  "devDependencies": {
+    "@loopback/build": "<%= project.dependencies['@loopback/build'] -%>",
+    "source-map-support": "<%= project.dependencies['source-map-support'] -%>",
+<% if (project.projectType === 'extension') { -%>
+    "@loopback/core": "<%= project.dependencies['@loopback/core'] -%>",
+<% } -%>
+    "@loopback/testlab": "<%= project.dependencies['@loopback/testlab'] -%>",
+    "@types/node": "<%= project.dependencies['@types/node'] -%>",
+<% if (project.eslint) { -%>
+    "@loopback/eslint-config": "<%= project.dependencies['@loopback/eslint-config'] -%>",
+    "eslint": "<%= project.dependencies['eslint'] -%>",
+<% } -%>
+    "typescript": "<%= project.dependencies['typescript'] -%>"
+  }
+}
