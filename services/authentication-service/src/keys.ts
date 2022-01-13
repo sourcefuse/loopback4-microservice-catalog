@@ -1,6 +1,6 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
-import {JwtPayloadFn} from './providers';
+import {ForgotPasswordHandlerFn, JwtPayloadFn} from './providers';
 import {IAuthServiceConfig} from './types';
 
 export namespace AuthServiceBindings {
@@ -11,6 +11,11 @@ export namespace AuthServiceBindings {
   export const JWTPayloadProvider = BindingKey.create<JwtPayloadFn>(
     `${BINDING_PREFIX}.auth.jwt.payload`,
   );
+
+  export const ForgotPasswordHandler =
+    BindingKey.create<ForgotPasswordHandlerFn>(
+      `${BINDING_PREFIX}.forgetpassword.handler.provider`,
+    );
 }
 
 export {AuthenticationBindings} from 'loopback4-authentication';

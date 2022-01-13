@@ -6,7 +6,11 @@ export class TestPasswordVerifyProvider
 {
   value(): VerifyFunction.LocalPasswordFn {
     return async (username: string, password: string) => {
-      return {id: 1, username: 'test_user', password: 'temp123!@'};
+      if (username === 'test_user') {
+        return {id: 1, username: 'test_user', password: 'temp123!@'};
+      } else {
+        return {id: 2, username: 'test_teacher', password: 'temp123!@'};
+      }
     };
   }
 }
