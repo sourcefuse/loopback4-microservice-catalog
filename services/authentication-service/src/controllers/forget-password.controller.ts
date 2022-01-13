@@ -7,6 +7,7 @@ import {
   STATUS_CODE,
   SuccessResponse,
   OPERATION_SECURITY_SPEC,
+  AuthProvider,
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
@@ -27,6 +28,7 @@ import {
   User,
 } from '../models';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
+import {omit} from 'lodash';
 
 export class ForgetPasswordController {
   constructor(
@@ -91,11 +93,18 @@ export class ForgetPasswordController {
       issuer: process.env.JWT_ISSUER,
       algorithm: 'HS256',
     });
+
+    if (user?.credentials?.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.BadRequest(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
+    }
+
     await forgetPasswordHandler({
       code: token,
       expiry: expiryDuration,
       email: user.email,
-      user: user,
+      user: omit(user, 'credentials'),
     });
   }
 
