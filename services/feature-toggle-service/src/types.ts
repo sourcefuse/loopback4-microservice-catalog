@@ -16,4 +16,6 @@ export interface FeatureInterface {
   (): boolean;
 }
 
-export interface IToggleServiceConfig extends IServiceConfig {}
+export interface IToggleServiceConfig extends IServiceConfig {
+  bindControllers: boolean;
+}
