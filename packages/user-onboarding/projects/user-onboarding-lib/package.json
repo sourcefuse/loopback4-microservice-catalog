@@ -12,7 +12,8 @@
     "@videogular/ngx-videogular": "^3.0.1",
     "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.6.0",
-    "shepherd.js": "^8.3.1"
+    "shepherd.js": "^8.3.1",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
