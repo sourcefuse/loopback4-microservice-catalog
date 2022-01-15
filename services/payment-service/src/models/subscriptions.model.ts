@@ -1,7 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Transactions extends Entity {
+export class Subscriptions extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -13,27 +13,20 @@ export class Transactions extends Entity {
   @property({
     type: 'number',
     required: true,
-    name: 'amount_paid',
+    name: 'total_amount',
   })
-  amountPaid: number;
+  totalAmount: number;
 
   @property({
     type: 'string',
-    required: true,
   })
-  currency: string;
+  currency?: string;
 
   @property({
     type: 'string',
     required: true,
   })
   status: string;
-
-  @property({
-    type: 'date',
-    name: 'paid_date',
-  })
-  paidDate?: Date;
 
   @property({
     type: 'string',
@@ -43,23 +36,46 @@ export class Transactions extends Entity {
 
   @property({
     type: 'string',
-    name: 'order_id',
+    name: 'payment_method',
   })
-  orderId?: string;
+  paymentMethod?: string;
 
   @property({
     type: 'Object',
   })
-  // eslint-disable-next-line
-  res: any;
+  metaData?: Object;
+
+  @property({
+    type: 'date',
+    name: 'start_date',
+  })
+  startDate?: Date;
+
+  @property({
+    type: 'date',
+    name: 'end_date',
+  })
+  endDate?: Date;
+
+  @property({
+    type: 'string',
+    name: 'gateway_subscription_id',
+  })
+  gatewaySubscriptionId?: string;
+
+  @property({
+    type: 'string',
+    name: 'plan_id',
+  })
+  planId?: string;
 
   // Define well-known properties here
 
   // Indexer property to allow additional data
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Transactions>) {
+  constructor(data?: Partial<Subscriptions>) {
     super(data);
   }
 }
