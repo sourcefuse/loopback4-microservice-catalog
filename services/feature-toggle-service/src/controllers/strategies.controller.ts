@@ -15,9 +15,12 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Strategies} from '../models';
@@ -32,10 +35,14 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Strategies model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Strategies)}},
+  @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Strategies model instance',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Strategies)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -54,10 +61,14 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${basePath}/count`)
-  @response(STATUS_CODE.OK, {
-    description: 'Strategies model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Strategies model count',
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+      },
+    },
   })
   async count(
     @param.where(Strategies) where?: Where<Strategies>,
@@ -67,14 +78,18 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Strategies model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Strategies, {includeRelations: true}),
+  @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Strategies model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Strategies, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -87,10 +102,14 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @patch(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Strategies PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Strategies PATCH success count',
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -108,12 +127,16 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${basePath}/{id}`)
-  @response(STATUS_CODE.OK, {
-    description: 'Strategies model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Strategies, {includeRelations: true}),
+  @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Strategies model instance',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(Strategies, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -127,9 +150,13 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @patch(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Strategies PATCH success',
+  @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Strategies PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -147,9 +174,13 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @put(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Strategies PUT success',
+  @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Strategies PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -160,9 +191,13 @@ export class StrategiesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @del(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Strategies DELETE success',
+  @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Strategies DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.strategiesRepository.deleteById(id);

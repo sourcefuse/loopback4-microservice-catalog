@@ -94,11 +94,13 @@ export class FeatureToggleServiceComponent implements Component {
       [StrategyBindings.SYSTEM_FEATURE.key]: SystemFeatureProvider,
     };
 
-    this.controllers = [
-      FeaturesController,
-      ProjectsController,
-      StrategiesController,
-    ];
+    if (this.config?.bindControllers) {
+      this.controllers = [
+        FeaturesController,
+        ProjectsController,
+        StrategiesController,
+      ];
+    }
   }
   providers?: ProviderMap = {};
 
