@@ -38,6 +38,7 @@ const scopes = [
   {name: 'bpmn-service'},
   {name: 'search-service'},
   {name: 'chat-service'},
+  {name: 'feature-toggle-service'},
   {name: 'sandbox'},
 ];
 
