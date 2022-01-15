@@ -1,10 +1,16 @@
+import {DataObject} from '@loopback/repository';
 import {IAuthClient, IAuthUser, Keycloak} from 'loopback4-authentication';
 import * as AppleStrategy from 'passport-apple';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
 
-import {User, UserRelations} from '../models';
+import {
+  ForgetPasswordResponseDto,
+  SignupRequestResponseDto,
+  User,
+  UserRelations,
+} from '../models';
 
 export interface GoogleSignUpFn {
   (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
@@ -125,4 +131,12 @@ export interface JwtPayloadFn {
     authClient: IAuthClient,
     deviceInfo?: IDeviceInfo,
   ): Promise<object>;
+}
+
+export interface ForgotPasswordHandlerFn {
+  (dto: DataObject<ForgetPasswordResponseDto>): Promise<void>;
+}
+
+export interface SignupTokenHandlerFn {
+  (dto: DataObject<SignupRequestResponseDto>): Promise<void>;
 }

@@ -14,9 +14,12 @@ import {
   patch,
   put,
   requestBody,
-  response,
 } from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Features} from '../models';
@@ -31,10 +34,14 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Features model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Features)}},
+  @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Features model instance',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Features)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -53,10 +60,14 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${basePath}/count`)
-  @response(STATUS_CODE.OK, {
-    description: 'Features model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Features model count',
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+      },
+    },
   })
   async count(@param.where(Features) where?: Where<Features>): Promise<Count> {
     return this.featuresRepository.count(where);
@@ -64,14 +75,18 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Features model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Features, {includeRelations: true}),
+  @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Features model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Features, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -84,10 +99,16 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @patch(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Features PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Features PATCH success count',
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: CountSchema},
+        },
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -105,12 +126,16 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${basePath}/{id}`)
-  @response(STATUS_CODE.OK, {
-    description: 'Features model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Features, {includeRelations: true}),
+  @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Features model instance',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(Features, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -124,9 +149,13 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @patch(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Features PATCH success',
+  @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Features PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -144,9 +173,13 @@ export class FeaturesController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @put(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Features PUT success',
+  @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Features PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,

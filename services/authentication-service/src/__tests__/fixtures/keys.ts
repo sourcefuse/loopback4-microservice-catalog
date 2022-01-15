@@ -8,6 +8,8 @@ export namespace BearerVerifierBindings {
   );
 }
 
+export const TestHelperKey = 'services.TestHelperService';
+
 export enum BearerVerifierType {
   service,
   facade,

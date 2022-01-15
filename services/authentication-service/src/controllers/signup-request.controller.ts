@@ -9,7 +9,6 @@ import {
 } from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {SignupRequestDto} from '../models/signup-request-dto.model';
-import {SignupRequestResponseDto} from '../models/signup-request-response-dto.model';
 import * as jwt from 'jsonwebtoken';
 import {LocalUserProfileDto} from '../models/local-user-profile';
 import {SignupWithTokenReponseDto} from '../models/signup-with-token-response-dto.model';
@@ -21,7 +20,11 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {SignupRequest} from '../models/signup-request.model';
-import {SignUpBindings, VerifyBindings} from '../providers';
+import {
+  SignUpBindings,
+  SignupTokenHandlerFn,
+  VerifyBindings,
+} from '../providers';
 import {AnyObject} from '@loopback/repository';
 
 const successResponse = 'Sucess Response.';
@@ -37,13 +40,8 @@ export class SignupRequestController {
   @authorize({permissions: ['*']})
   @post(`${basePath}/create-token`, {
     responses: {
-      [STATUS_CODE.OK]: {
+      [STATUS_CODE.NO_CONTENT]: {
         description: successResponse,
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(SignupRequestResponseDto),
-          },
-        },
       },
       ...ErrorCodes,
     },
@@ -51,7 +49,9 @@ export class SignupRequestController {
   async requestSignup(
     @requestBody()
     signUpRequest: SignupRequestDto<LocalUserProfileDto>,
-  ): Promise<SignupRequestResponseDto> {
+    @inject(SignUpBindings.SIGNUP_HANDLER_PROVIDER)
+    handler: SignupTokenHandlerFn,
+  ): Promise<void> {
     // Default expiry is 30 minutes
     const expiryDuration = parseInt(
       process.env.REQUEST_SIGNUP_LINK_EXPIRY ?? '1800',
@@ -66,7 +66,7 @@ export class SignupRequestController {
       algorithm: 'HS256',
     });
 
-    return new SignupRequestResponseDto({
+    await handler({
       code: token,
       expiry: expiryDuration,
       email: signUpRequest.email,

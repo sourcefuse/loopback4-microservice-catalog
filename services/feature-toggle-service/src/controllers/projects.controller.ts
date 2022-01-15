@@ -15,9 +15,12 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Projects} from '../models';
@@ -32,10 +35,14 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Projects model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Projects)}},
+  @post(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Projects model instance',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Projects)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -54,10 +61,14 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${basePath}/count`)
-  @response(STATUS_CODE.OK, {
-    description: 'Projects model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get(`${basePath}/count`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Projects model count',
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+      },
+    },
   })
   async count(@param.where(Projects) where?: Where<Projects>): Promise<Count> {
     return this.projectsRepository.count(where);
@@ -65,14 +76,20 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Projects model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Projects, {includeRelations: true}),
+  @get(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Projects model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              schema: {
+                type: 'array',
+                items: getModelSchemaRef(Projects, {includeRelations: true}),
+              },
+            },
+          },
         },
       },
     },
@@ -85,10 +102,14 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @patch(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Projects PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(basePath, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Projects PATCH success count',
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -106,12 +127,16 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${basePath}/{id}`)
-  @response(STATUS_CODE.OK, {
-    description: 'Projects model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Projects, {includeRelations: true}),
+  @get(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Projects model instance',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(Projects, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -125,9 +150,13 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @patch(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Projects PATCH success',
+  @patch(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Projects PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -145,9 +174,13 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @put(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Projects PUT success',
+  @put(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Projects PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -158,9 +191,13 @@ export class ProjectsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @del(`${basePath}/{id}`)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Projects DELETE success',
+  @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Projects DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.projectsRepository.deleteById(id);

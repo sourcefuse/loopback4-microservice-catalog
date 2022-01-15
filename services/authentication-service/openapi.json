@@ -169,15 +169,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success Response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ForgetPasswordResponseDto"
-                }
-              }
-            }
+          "204": {
+            "description": "Success Response."
           },
           "400": {
             "description": "The syntax of the request entity is incorrect."
@@ -683,15 +676,8 @@
           "SignupRequestController"
         ],
         "responses": {
-          "200": {
-            "description": "Sucess Response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SignupRequestResponseDto"
-                }
-              }
-            }
+          "204": {
+            "description": "Sucess Response."
           },
           "400": {
             "description": "The syntax of the request entity is incorrect."
@@ -1865,113 +1851,6 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<AuthClient>"
       },
-      "User": {
-        "title": "User",
-        "type": "object",
-        "description": "This is signature for user model.",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "middleName": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string",
-            "pattern": "^\\+?[1-9]\\d{1,14}$"
-          },
-          "authClientIds": {
-            "type": "string"
-          },
-          "lastLogin": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "dob": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "gender": {
-            "type": "string",
-            "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
-          },
-          "defaultTenantId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "firstName",
-          "username"
-        ],
-        "additionalProperties": false
-      },
-      "ForgetPasswordResponseDto": {
-        "title": "ForgetPasswordResponseDto",
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "expiry": {
-            "type": "number"
-          },
-          "email": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        },
-        "required": [
-          "code",
-          "expiry",
-          "email"
-        ],
-        "additionalProperties": false
-      },
       "ForgetPasswordDto": {
         "title": "ForgetPasswordDto",
         "type": "object",
@@ -2015,27 +1894,6 @@
           "password",
           "client_id",
           "client_secret"
-        ],
-        "additionalProperties": false
-      },
-      "SignupRequestResponseDto": {
-        "title": "SignupRequestResponseDto",
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "expiry": {
-            "type": "number"
-          },
-          "email": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "code",
-          "expiry",
-          "email"
         ],
         "additionalProperties": false
       },
