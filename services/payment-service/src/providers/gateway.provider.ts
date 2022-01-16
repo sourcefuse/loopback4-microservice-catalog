@@ -5,7 +5,7 @@ import {StripeBindings, StripePaymentGateway} from './stripe';
 import {IGateway} from './types';
 import {GatewayType} from '../enums';
 const providerMissingError = 'Provider Not Implemented';
-const providerMethodNumbers = 3;
+const providerMethodNumbers = 6;
 export class GatewayProvider implements Provider<IGateway> {
   constructor(
     @inject(RestBindings.Http.RESPONSE) private readonly res: Response,
@@ -22,10 +22,22 @@ export class GatewayProvider implements Provider<IGateway> {
     } else if (this.req.query.method === GatewayType.Stripe) {
       return this.stripeHelper;
     } else {
-      const [create, charge, refund] = Array(providerMethodNumbers).fill(
-        providerMissingError,
-      );
-      return {create, charge, refund};
+      const [
+        create,
+        charge,
+        refund,
+        subscriptionCreate,
+        subscriptionCharge,
+        subscriptionWebHook,
+      ] = Array(providerMethodNumbers).fill(providerMissingError);
+      return {
+        create,
+        charge,
+        refund,
+        subscriptionCreate,
+        subscriptionCharge,
+        subscriptionWebHook,
+      };
     }
   }
 }

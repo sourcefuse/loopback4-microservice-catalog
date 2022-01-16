@@ -32,7 +32,7 @@ import {
   PaymentGatewaysRepository,
 } from '../repositories';
 import {STATUS_CODE} from '@sourceloop/core';
-import {ResponseMessage, TemplateName} from '../enums';
+import {ResponseMessage, TemplateName, TemplateType} from '../enums';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
@@ -238,6 +238,7 @@ export class TransactionsController {
       where: {
         paymentGatewayId: Order?.paymentGatewayId,
         name: TemplateName.Create,
+        type: TemplateType.Order,
       },
     });
     const paymentTemplate = templates[0]?.template;
@@ -248,7 +249,7 @@ export class TransactionsController {
 
   @post('/transactions/charge')
   @response(STATUS_CODE.OK, {
-    description: 'Order model instance',
+    description: 'Transacttion Gateway Request',
     content: {
       'application/json': {},
     },
@@ -329,5 +330,29 @@ export class TransactionsController {
     @param.path.string('id') id: string,
   ): Promise<unknown> {
     return this.gatewayHelper.refund(id);
+  }
+
+  @post('/transactions/webhook')
+  @response(STATUS_CODE.OK, {
+    description: 'Subscription Gateway Request',
+    content: {
+      'application/json': {},
+    },
+  })
+  async subscriptionWebHook(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+          },
+        },
+      },
+    })
+    chargeResponse: DataObject<{}>,
+  ): Promise<unknown> {
+    return this.res.send(
+      await this.gatewayHelper.subscriptionWebHook(chargeResponse),
+    );
   }
 }

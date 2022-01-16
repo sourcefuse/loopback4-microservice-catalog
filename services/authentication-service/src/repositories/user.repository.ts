@@ -11,6 +11,7 @@ import {Options} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
+  AuthProvider,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
   UserStatus,
@@ -141,6 +142,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     const creds = user && (await this.credentials(user.id).get());
     if (!user || user.deleted || !creds || !creds.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
+    } else if (creds.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.BadRequest(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
     } else if (!(await bcrypt.compare(password, creds.password))) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
     } else if (await bcrypt.compare(newPassword, creds.password)) {
@@ -170,6 +175,12 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       if (!otp || otp.otp !== oldPassword) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
       }
+    }
+
+    if (creds?.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.Unauthorized(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
     }
 
     if (!user || user.deleted || !creds || !creds.password) {

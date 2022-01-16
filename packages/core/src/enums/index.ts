@@ -7,3 +7,4 @@ export * from './locale-key.enum';
 export * from './tenant-status.enum';
 export * from './auth-error-keys.enum';
 export * from './http-oas.enum';
+export * from './auth-provider.enum';

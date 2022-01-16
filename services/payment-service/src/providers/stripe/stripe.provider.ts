@@ -2,11 +2,18 @@ import {inject, Provider} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import Handlebars from 'handlebars';
-import {Orders} from '../../models';
+import {Orders, Subscriptions} from '../../models';
 import {v4 as uuidv4} from 'uuid';
 import {StripeBindings} from './keys';
-import {stripeCreateTemplate} from '../../templates';
-import {OrdersRepository, TransactionsRepository} from '../../repositories';
+import {
+  stripeCreateTemplate,
+  stripeSubscriptionCreateTemplate,
+} from '../../templates';
+import {
+  OrdersRepository,
+  TransactionsRepository,
+  SubscriptionsRepository,
+} from '../../repositories';
 import {IStripeConfig, StripePaymentGateway} from './types';
 import {ResponseMessage, Status} from '../../enums';
 const Stripe = require('stripe');
@@ -17,6 +24,8 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
     private readonly transactionsRepository: TransactionsRepository,
     @repository(OrdersRepository)
     private readonly ordersRepository: OrdersRepository,
+    @repository(SubscriptionsRepository)
+    private readonly subscriptionsRepository: SubscriptionsRepository,
     @inject(StripeBindings.Config, {
       optional: true,
     })
@@ -125,6 +134,99 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
             message: 'please check PaymentId',
           };
         }
+      },
+
+      subscriptionCreate: async (subscription: Subscriptions) => {
+        const transactionData = {
+          id: uuidv4(),
+          amountPaid: subscription?.totalAmount,
+          status: 'draft',
+          orderId: subscription?.id,
+          currency: subscription?.currency,
+          paymentGatewayId: subscription?.paymentGatewayId,
+        };
+        const transactions = await this.transactionsRepository.find({
+          where: {orderId: subscription.id},
+        });
+        if (transactions.length === 0) {
+          await this.transactionsRepository.create(transactionData);
+        }
+        const template = Handlebars.compile(stripeSubscriptionCreateTemplate);
+
+        const data = {
+          publishKey: this.config?.publishKey,
+          orderAmount: subscription.totalAmount,
+          subscriptionId: subscription?.id,
+          currency: subscription?.currency,
+        };
+        return template(data);
+      },
+
+      subscriptionCharge: async (
+        chargeResponse: DataObject<{
+          stripeEmail: string;
+          stripeToken: string;
+          subscriptionId: string;
+        }>,
+      ) => {
+        const subscription = await this.subscriptionsRepository.findById(
+          chargeResponse?.subscriptionId ?? '',
+        );
+        const fetchTransaction = await this.transactionsRepository.find({
+          where: {orderId: subscription?.id},
+        });
+        await this.stripe.customers
+          .create({
+            email: chargeResponse.stripeEmail,
+            source: chargeResponse.stripeToken,
+          })
+          .then((customer: DataObject<{id: string}>) =>
+            this.stripe.subscriptions.create({
+              items: [{price: subscription.planId}],
+              customer: customer.id,
+            }),
+          )
+          .then(async (charge: DataObject<{id: string}>) => {
+            fetchTransaction[0].status = charge ? 'paid' : 'draft';
+            fetchTransaction[0].res = {chargeResponse: charge};
+            fetchTransaction[0].paidDate = new Date();
+            await this.transactionsRepository.updateById(
+              fetchTransaction[0]?.id,
+              {...fetchTransaction[0]},
+            );
+            if (charge) {
+              const updateSubscription = {
+                ...subscription,
+                metaData: {gatewaySubRes: charge},
+                gatewaySubscriptionId: charge.id,
+                status: 'active',
+              };
+
+              await this.subscriptionsRepository.updateById(subscription.id, {
+                ...updateSubscription,
+              });
+            }
+          });
+        return {res: ResponseMessage.Sucess, subscriptionId: subscription.id};
+      },
+
+      subscriptionWebHook: async (
+        sub: DataObject<{
+          data: DataObject<{
+            object: DataObject<{subscription: string; status: string}>;
+          }>;
+        }>,
+      ) => {
+        const subId = sub?.data?.object?.subscription ?? '';
+        const Subscription = await this.subscriptionsRepository.find({
+          where: {gatewaySubscriptionId: `${subId}`},
+        });
+        Subscription[0].status =
+          sub?.data?.object?.status ?? Subscription[0].status;
+        await this.subscriptionsRepository.updateById(Subscription[0].id, {
+          ...Subscription[0],
+        });
+        return true;
       },
     };
   }

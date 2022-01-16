@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -75,7 +75,7 @@
     "loopback4-soft-delete": "^5.0.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
-    "node-fetch": "^3.1.0",
+    "node-fetch": "^2.6.6",
     "passport-apple": "^2.0.1",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
@@ -93,7 +93,7 @@
     "@types/lodash": "^4.14.178",
     "@types/moment-timezone": "^0.5.30",
     "@types/node": "^10.17.60",
-    "@types/node-fetch": "^3.0.3",
+    "@types/node-fetch": "^2.5.12",
     "@types/passport-apple": "^1.1.0",
     "@types/passport-facebook": "^2.1.10",
     "@types/passport-google-oauth20": "^2.0.3",

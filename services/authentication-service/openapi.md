@@ -962,7 +962,6 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
@@ -989,7 +988,6 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
@@ -1025,44 +1023,11 @@ fetch('/auth/forget-password',
 |---|---|---|---|---|
 |body|body|[ForgetPasswordDto](#schemaforgetpassworddto)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "code": "string",
-  "expiry": 0,
-  "email": "string",
-  "user": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "dob": "2019-08-24T14:15:22Z",
-    "gender": "M",
-    "defaultTenantId": "string"
-  }
-}
-```
-
 <h3 id="forgetpasswordcontroller.forgetpassword-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success Response.|[ForgetPasswordResponseDto](#schemaforgetpasswordresponsedto)|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Success Response.|None|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
@@ -1916,8 +1881,7 @@ const inputBody = '{
   "data": {}
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
 fetch('/auth/sign-up/create-token',
@@ -1941,8 +1905,7 @@ const inputBody = {
   "data": {}
 };
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
 fetch('/auth/sign-up/create-token',
@@ -1976,23 +1939,11 @@ fetch('/auth/sign-up/create-token',
 |---|---|---|---|---|
 |body|body|[SignupRequestDto](#schemasignuprequestdto)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "code": "string",
-  "expiry": 0,
-  "email": "string"
-}
-```
-
 <h3 id="signuprequestcontroller.requestsignup-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Sucess Response.|[SignupRequestResponseDto](#schemasignuprequestresponsedto)|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Sucess Response.|None|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
@@ -3900,120 +3851,6 @@ AuthClientPartial
 |refreshTokenExpiration|number|false|none|none|
 |authCodeExpiration|number|false|none|none|
 
-<h2 id="tocS_User">User</h2>
-<!-- backwards compatibility -->
-<a id="schemauser"></a>
-<a id="schema_User"></a>
-<a id="tocSuser"></a>
-<a id="tocsuser"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "middleName": "string",
-  "username": "string",
-  "email": "string",
-  "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "2019-08-24T14:15:22Z",
-  "dob": "2019-08-24T14:15:22Z",
-  "gender": "M",
-  "defaultTenantId": "string"
-}
-
-```
-
-User
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|firstName|string|true|none|none|
-|lastName|string|false|none|none|
-|middleName|string|false|none|none|
-|username|string|true|none|none|
-|email|string|false|none|none|
-|phone|string|false|none|none|
-|authClientIds|string|false|none|none|
-|lastLogin|string(date-time)|false|none|none|
-|dob|string(date-time)|false|none|none|
-|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|defaultTenantId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|gender|M|
-|gender|F|
-|gender|O|
-
-<h2 id="tocS_ForgetPasswordResponseDto">ForgetPasswordResponseDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaforgetpasswordresponsedto"></a>
-<a id="schema_ForgetPasswordResponseDto"></a>
-<a id="tocSforgetpasswordresponsedto"></a>
-<a id="tocsforgetpasswordresponsedto"></a>
-
-```json
-{
-  "code": "string",
-  "expiry": 0,
-  "email": "string",
-  "user": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "dob": "2019-08-24T14:15:22Z",
-    "gender": "M",
-    "defaultTenantId": "string"
-  }
-}
-
-```
-
-ForgetPasswordResponseDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|code|string|true|none|none|
-|expiry|number|true|none|none|
-|email|string|true|none|none|
-|user|[User](#schemauser)|false|none|This is signature for user model.|
-
 <h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
 <!-- backwards compatibility -->
 <a id="schemaforgetpassworddto"></a>
@@ -4067,32 +3904,6 @@ ResetPasswordWithClient
 |password|string|true|none|none|
 |client_id|string|true|none|none|
 |client_secret|string|true|none|none|
-
-<h2 id="tocS_SignupRequestResponseDto">SignupRequestResponseDto</h2>
-<!-- backwards compatibility -->
-<a id="schemasignuprequestresponsedto"></a>
-<a id="schema_SignupRequestResponseDto"></a>
-<a id="tocSsignuprequestresponsedto"></a>
-<a id="tocssignuprequestresponsedto"></a>
-
-```json
-{
-  "code": "string",
-  "expiry": 0,
-  "email": "string"
-}
-
-```
-
-SignupRequestResponseDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|code|string|true|none|none|
-|expiry|number|true|none|none|
-|email|string|true|none|none|
 
 <h2 id="tocS_SignupRequestDto">SignupRequestDto</h2>
 <!-- backwards compatibility -->

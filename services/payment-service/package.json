@@ -83,6 +83,7 @@
     "@loopback/build": "^8.0.0",
     "@loopback/eslint-config": "^12.0.0",
     "@loopback/testlab": "^4.0.0",
+    "@types/lodash": "^4.14.169",
     "@types/node": "^10.17.60",
     "@types/uuid": "^8.3.3",
     "db-migrate": "^0.11.12",

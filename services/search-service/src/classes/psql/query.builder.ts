@@ -67,7 +67,7 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
     return [this._formatAndSanitize(param), ...params];
   }
 
-  getTableName(model: typeof Model) {
+  getModelName(model: typeof Model) {
     const mappedName = this.modelNameMap.get(model.name);
     return (
       mappedName ??

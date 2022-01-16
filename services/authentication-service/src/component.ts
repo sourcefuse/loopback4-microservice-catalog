@@ -51,6 +51,8 @@ import {
   KeyCloakPreVerifyProvider,
   SignUpBindings,
   VerifyBindings,
+  SignupTokenHandlerProvider,
+  ForgotPasswordProvider,
 } from './providers';
 import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
@@ -167,6 +169,8 @@ export class AuthenticationServiceComponent implements Component {
       LocalSignupProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
       LocalPreSignupProvider;
+    this.providers[SignUpBindings.SIGNUP_HANDLER_PROVIDER.key] =
+      SignupTokenHandlerProvider;
     this.providers[VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER.key] =
       KeyCloakPreVerifyProvider;
     this.providers[VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER.key] =
@@ -197,6 +201,8 @@ export class AuthenticationServiceComponent implements Component {
 
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;
+    this.providers[AuthServiceBindings.ForgotPasswordHandler.key] =
+      ForgotPasswordProvider;
   }
 
   setupAuthorizationComponent() {
