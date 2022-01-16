@@ -1,9 +1,10 @@
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 import {Model, model, property} from '@loopback/repository';
+import {IAuthClientDTO} from '..';
 
 @model()
-export class ResetPasswordWithClient extends Model {
+export class ResetPasswordWithClient extends Model implements IAuthClientDTO {
   @property({
     type: 'string',
     required: true,

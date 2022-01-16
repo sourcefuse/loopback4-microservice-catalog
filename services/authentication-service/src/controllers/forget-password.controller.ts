@@ -3,13 +3,14 @@ import {repository} from '@loopback/repository';
 import {get, HttpErrors, param, patch, post, requestBody} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
+  AuthProvider,
   ErrorCodes,
+  OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   SuccessResponse,
-  OPERATION_SECURITY_SPEC,
-  AuthProvider,
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
+import {omit} from 'lodash';
 import {
   authenticateClient,
   AuthenticationBindings,
@@ -18,24 +19,25 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {ForgotPasswordHandlerFn} from '../providers';
 import {AuthServiceBindings} from '../keys';
-
 import {
   AuthClient,
   ForgetPasswordDto,
   ResetPasswordWithClient,
   User,
 } from '../models';
+import {ForgotPasswordHandlerFn} from '../providers';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
-import {omit} from 'lodash';
+import {LoginHelperService} from '../services';
 
 export class ForgetPasswordController {
   constructor(
     @repository(UserRepository)
-    public userRepo: UserRepository,
+    private readonly userRepo: UserRepository,
     @repository(RevokedTokenRepository)
-    public revokedTokensRepo: RevokedTokenRepository,
+    private readonly revokedTokensRepo: RevokedTokenRepository,
+    @inject('services.LoginHelperService')
+    private readonly loginHelperService: LoginHelperService,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -63,6 +65,7 @@ export class ForgetPasswordController {
       },
       include: ['credentials'],
     });
+    await this.loginHelperService.verifyClientUserLogin(req, client, user);
     if (!user || !user.id) {
       throw new HttpErrors.NotFound('User not found !');
     }
@@ -170,7 +173,7 @@ export class ForgetPasswordController {
       throw new HttpErrors.BadRequest(AuthenticateErrorKeys.PasswordInvalid);
     }
 
-    let payload;
+    let payload: ClientAuthCode<User>;
 
     const isRevoked = await this.revokedTokensRepo.get(req.token);
     if (isRevoked?.token) {
@@ -189,6 +192,13 @@ export class ForgetPasswordController {
     if (!payload.clientId || !payload.user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
+    const user = await this.userRepo.findOne({
+      where: {
+        username: payload.user.username,
+      },
+    });
+    await this.loginHelperService.verifyClientUserLogin(req, client, user);
+
     await this.userRepo.changePassword(payload.user.username, req.password);
 
     await this.revokedTokensRepo.set(req.token, {

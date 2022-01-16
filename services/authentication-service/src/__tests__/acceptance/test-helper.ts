@@ -1,14 +1,16 @@
 import {
+  Client,
   createRestAppClient,
   givenHttpServerConfig,
-  Client,
 } from '@loopback/testlab';
-import {TestingApplication} from '../fixtures/application';
-import {AuthDbSourceName, AuthCacheSourceName} from '../../types';
 import {AuthenticationBindings, Strategies} from 'loopback4-authentication';
-import {TestOauthPasswordVerifyProvider} from '../fixtures/providers/oauth-password-verifier.provider';
-import {TestPasswordVerifyProvider} from '../fixtures/providers/local-password.provider';
-import {TestResourceOwnerVerifyProvider} from '../fixtures/providers/resource-owner.provider';
+import {
+  ClientPasswordVerifyProvider,
+  LocalPasswordVerifyProvider,
+  ResourceOwnerVerifyProvider,
+} from '../../modules/auth';
+import {AuthCacheSourceName, AuthDbSourceName} from '../../types';
+import {TestingApplication} from '../fixtures/application';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({});
@@ -37,15 +39,15 @@ export async function setupApplication(): Promise<AppWithClient> {
 
   app
     .bind(Strategies.Passport.LOCAL_PASSWORD_VERIFIER)
-    .toProvider(TestPasswordVerifyProvider);
+    .toProvider(LocalPasswordVerifyProvider);
 
   app
     .bind(Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER)
-    .toProvider(TestOauthPasswordVerifyProvider);
+    .toProvider(ClientPasswordVerifyProvider);
 
   app
     .bind(Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER)
-    .toProvider(TestResourceOwnerVerifyProvider);
+    .toProvider(ResourceOwnerVerifyProvider);
 
   await app.start();
 

@@ -35,7 +35,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-
 import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
 import {AuthCodeBindings, CodeReaderFn, JwtPayloadFn} from '../../providers';
@@ -50,6 +49,7 @@ import {
   UserTenantRepository,
 } from '../../repositories';
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
+import {LoginHelperService} from '../../services';
 import {AuthRefreshTokenRequest, AuthTokenRequest, LoginRequest} from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
@@ -86,6 +86,8 @@ export class LoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
+    @inject('services.LoginHelperService')
+    private readonly loginHelperService: LoginHelperService,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -108,27 +110,23 @@ export class LoginController {
   async login(
     @requestBody()
     req: LoginRequest,
+    @inject(AuthenticationBindings.CURRENT_CLIENT)
+    client: AuthClient | undefined,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    user: AuthUser | undefined,
   ): Promise<{
     code: string;
   }> {
-    const userStatus = await this.userTenantRepo.findOne({
-      where: {
-        userId: this.user?.id,
-      },
-      fields: {
-        status: true,
-      },
-    });
-    if (!this.client || !this.user) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    } else if (!req.client_secret) {
-      throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
-    } else if (userStatus?.status === UserStatus.REGISTERED) {
-      throw new HttpErrors.BadRequest('User not active yet');
-    } else {
-      // Do nothing and move ahead
-    }
+    await this.loginHelperService.verifyClientUserLogin(req, client, user);
+
     try {
+      if (!this.user || !this.client) {
+        // Control should never reach here
+        this.logger.error(
+          `${AuthErrorKeys.ClientInvalid} :: Control should never reach here`,
+        );
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+      }
       const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
         clientId: req.client_id,
         userId: this.user.id,
@@ -170,29 +168,20 @@ export class LoginController {
     @requestBody() req: LoginRequest,
     @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
-    const userStatus = await this.userTenantRepo.findOne({
-      where: {
-        userId: this.user?.id,
-      },
-      fields: {
-        status: true,
-      },
-    });
-    if (!this.client || !this.user) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    } else if (
-      !this.user.authClientIds ||
-      this.user.authClientIds.length === 0
-    ) {
-      throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.ClientUserMissing);
-    } else if (!req.client_secret) {
-      throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
-    } else if (userStatus?.status === UserStatus.REGISTERED) {
-      throw new HttpErrors.BadRequest('Your Sign-Up request is in process');
-    } else {
-      // Do nothing and move ahead
-    }
+    await this.loginHelperService.verifyClientUserLogin(
+      req,
+      this.client,
+      this.user,
+    );
+
     try {
+      if (!this.user || !this.client) {
+        // Control should never reach here
+        this.logger.error(
+          `${AuthErrorKeys.ClientInvalid} :: Control should never reach here`,
+        );
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+      }
       const payload: ClientAuthCode<User, typeof User.prototype.id> = {
         clientId: this.client.clientId,
         user: this.user,
