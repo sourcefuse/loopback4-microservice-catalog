@@ -14,11 +14,12 @@ import {
   AuthProvider,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
 import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
-
 import {
   Tenant,
   User,
@@ -64,6 +65,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {
     super(User, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
@@ -124,9 +126,15 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       where: {username: username.toLowerCase()},
     });
     const creds = user && (await this.credentials(user.id).get());
-    if (!user || user.deleted || !creds || !creds.password) {
+    if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
-    } else if (!(await bcrypt.compare(password, creds.password))) {
+    } else if (
+      !creds ||
+      !creds.password ||
+      creds.authProvider !== AuthProvider.INTERNAL ||
+      !(await bcrypt.compare(password, creds.password))
+    ) {
+      this.logger.error('User creds not found in DB or is invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     } else {
       return user;

@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/naming-convention */
 import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
 import {LocalUserProfileDto} from './models';
@@ -14,4 +15,11 @@ export interface PreSignupFn<T, S> {
 
 export interface UserSignupFn<T, S> {
   (model: T & LocalUserProfileDto, tokenInfo?: AnyObject): Promise<S>;
+}
+
+export interface IAuthClientDTO {
+  // sonarignore:start
+  client_id: string;
+  client_secret: string;
+  // sonarignore:end
 }
