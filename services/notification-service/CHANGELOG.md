@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.3 (2022-01-16)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
 ## <small>4.0.2 (2022-01-10)</small>
 
 * fix(notification-service): add packages required by notification service (#454) ([c8708b4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c8708b4)), closes [#454](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/454) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2022-01-16)
+
+* docs(core): locale file update and add to ignore ([4bbdae2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4bbdae2)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(authentication-service): change response of signup and forget password (#459) ([9ab48c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ab48c1)), closes [#459](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/459) [#457](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/457)
+
+
+### BREAKING CHANGE
+
+* removed response body and changed response code of signup-token and forget-password apis
+
+
+
+
 ## <small>5.0.1 (2021-12-26)</small>
 
 * fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

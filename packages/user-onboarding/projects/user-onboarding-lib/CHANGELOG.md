@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.10 (2022-01-16)</small>
+
+* fix(user-onboarding): add properties to tourState, save state initially, add tour complete observabl ([ab974e7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ab974e7)), closes [#462](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/462) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.9 (2022-01-10)</small>
 
 * fix(user-onboarding): add filter Function, fix overlay issue, fix steps issue, add default delete to ([fc8386e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc8386e)), closes [#448](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/448) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
