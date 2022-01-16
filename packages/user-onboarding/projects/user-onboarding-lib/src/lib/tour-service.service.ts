@@ -1,17 +1,31 @@
 import {TourStoreServiceService} from './tour-store-service.service';
 import {Injectable} from '@angular/core';
 import Shepherd from 'shepherd.js';
-import {Tour, TourButton, TourStep, TourState, filterFunction} from '../models';
+import {
+  Tour,
+  TourButton,
+  TourStep,
+  TourState,
+  filterFunction,
+  Props,
+  Status,
+} from '../models';
 import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
-import {interval} from 'rxjs';
+import {interval, Subject} from 'rxjs';
 import {filter, map, take, takeWhile, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TourServiceService {
-  currentStep;
+  private readonly tourComplete = new Subject<{
+    index: number;
+    tour: Shepherd.Tour;
+    tourId: string;
+  }>();
+  tourComplete$ = this.tourComplete.asObservable();
   private readonly interval = 100;
+
   private tour = new Shepherd.Tour({
     useModalOverlay: true,
     defaultStepOptions: {
@@ -43,6 +57,8 @@ export class TourServiceService {
     wrapperNext,
     wrapperPrev,
     func,
+    tourId: string,
+    props: Props,
   ): void {
     if (b.key === 'prevAction') {
       b.action =
@@ -51,7 +67,7 @@ export class TourServiceService {
       b.action =
         e.nextRoute === e.currentRoute ? wrapperNormalNext : wrapperNext;
     } else {
-      b.action = func.bind(this.tour);
+      b.action = func.bind({tour: this.tour, tourId, props});
     }
   }
 
@@ -97,7 +113,7 @@ export class TourServiceService {
     });
   }
 
-  private triggerTour(tourInstance: Tour): void {
+  private triggerTour(tourInstance: Tour, props: Props): void {
     let removedSteps;
     const sessionId = this.tourStoreService.getSessionId();
     if (!sessionId) {
@@ -106,7 +122,7 @@ export class TourServiceService {
     this.tourStoreService
       .loadState({tourId: tourInstance.tourId, sessionId})
       .subscribe(tourState => {
-        if (tourState) {
+        if (tourState && Object.keys(tourState).length) {
           removedSteps = this.getRemovedSteps(
             tourInstance.tourSteps,
             tourState,
@@ -115,19 +131,36 @@ export class TourServiceService {
             tourInstance.tourSteps,
             tourState,
           );
+        } else {
+          tourState = {
+            sessionId: this.tourStoreService.getSessionId(),
+            step: tourInstance.tourSteps[0].id,
+            props,
+            status: Status.InProgress,
+          };
+          this.tourStoreService
+            .saveState({
+              tourId: tourInstance.tourId,
+              state: tourState,
+            })
+            .subscribe();
         }
         tourInstance.tourSteps.forEach(e => {
           e.buttons.forEach(b => {
             const key = b.key;
             const func = this.tourStoreService.getFnByKey(key);
             const wrapperNext = () => {
-              this.tourStoreService.saveState({
-                tourId: tourInstance.tourId,
-                state: {
-                  sessionId: this.tourStoreService.getSessionId(),
-                  step: e.nextStepId,
-                },
-              });
+              this.tourStoreService
+                .saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: e.nextStepId,
+                    props: tourState.props,
+                    status: this.getStatus(e, tourInstance.tourSteps),
+                  },
+                })
+                .subscribe();
               this.router.navigate([e.nextRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
                 const nextStep = tourInstance.tourSteps.filter(
@@ -137,13 +170,17 @@ export class TourServiceService {
               });
             };
             const wrapperPrev = () => {
-              this.tourStoreService.saveState({
-                tourId: tourInstance.tourId,
-                state: {
-                  sessionId: this.tourStoreService.getSessionId(),
-                  step: e.prevStepId,
-                },
-              });
+              this.tourStoreService
+                .saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: e.prevStepId,
+                    props: tourState.props,
+                    status: Status.InProgress,
+                  },
+                })
+                .subscribe();
               this.router.navigate([e.prevRoute]);
               this.router.events.subscribe((event: NavigationEvent) => {
                 const prevStep = tourInstance.tourSteps.filter(
@@ -153,23 +190,31 @@ export class TourServiceService {
               });
             };
             const wrapperNormalNext = () => {
-              this.tourStoreService.saveState({
-                tourId: tourInstance.tourId,
-                state: {
-                  sessionId: this.tourStoreService.getSessionId(),
-                  step: e.nextStepId,
-                },
-              });
+              this.tourStoreService
+                .saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: e.nextStepId,
+                    props: tourState.props,
+                    status: this.getStatus(e, tourInstance.tourSteps),
+                  },
+                })
+                .subscribe();
               this.tour.next();
             };
             const wrapperNormalPrev = () => {
-              this.tourStoreService.saveState({
-                tourId: tourInstance.tourId,
-                state: {
-                  sessionId: this.tourStoreService.getSessionId(),
-                  step: e.prevStepId,
-                },
-              });
+              this.tourStoreService
+                .saveState({
+                  tourId: tourInstance.tourId,
+                  state: {
+                    sessionId: this.tourStoreService.getSessionId(),
+                    step: e.prevStepId,
+                    props: tourState.props,
+                    status: Status.InProgress,
+                  },
+                })
+                .subscribe();
               this.tour.back();
             };
             this.actionAssignment(
@@ -180,6 +225,8 @@ export class TourServiceService {
               wrapperNext,
               wrapperPrev,
               func,
+              tourInstance.tourId,
+              tourState.props,
             );
           });
         });
@@ -206,49 +253,65 @@ export class TourServiceService {
                   const k = br.key;
                   const funcRemoved = this.tourStoreService.getFnByKey(k);
                   const wrapperNextRemoved = () => {
-                    this.tourStoreService.saveState({
-                      tourId: tourInstance.tourId,
-                      state: {
-                        sessionId: this.tourStoreService.getSessionId(),
-                        step: er.nextStepId,
-                      },
-                    });
+                    this.tourStoreService
+                      .saveState({
+                        tourId: tourInstance.tourId,
+                        state: {
+                          sessionId: this.tourStoreService.getSessionId(),
+                          step: er.nextStepId,
+                          props: tourState.props,
+                          status: this.getStatus(er, tourInstance.tourSteps),
+                        },
+                      })
+                      .subscribe();
                     this.router.navigate([er.nextRoute]);
                     this.router.events.subscribe((event: NavigationEvent) => {
                       this.navigationCheckNext(event, er);
                     });
                   };
                   const wrapperPrevRemoved = () => {
-                    this.tourStoreService.saveState({
-                      tourId: tourInstance.tourId,
-                      state: {
-                        sessionId: this.tourStoreService.getSessionId(),
-                        step: er.prevStepId,
-                      },
-                    });
+                    this.tourStoreService
+                      .saveState({
+                        tourId: tourInstance.tourId,
+                        state: {
+                          sessionId: this.tourStoreService.getSessionId(),
+                          step: er.prevStepId,
+                          props: tourState.props,
+                          status: Status.InProgress,
+                        },
+                      })
+                      .subscribe();
                     this.router.navigate([er.prevRoute]);
                     this.router.events.subscribe((event: NavigationEvent) => {
                       this.navigationCheckBack(event, er);
                     });
                   };
                   const wrapperNormalNextRemoved = () => {
-                    this.tourStoreService.saveState({
-                      tourId: tourInstance.tourId,
-                      state: {
-                        sessionId: this.tourStoreService.getSessionId(),
-                        step: er.nextStepId,
-                      },
-                    });
+                    this.tourStoreService
+                      .saveState({
+                        tourId: tourInstance.tourId,
+                        state: {
+                          sessionId: this.tourStoreService.getSessionId(),
+                          step: er.nextStepId,
+                          props: tourState.props,
+                          status: this.getStatus(er, tourInstance.tourSteps),
+                        },
+                      })
+                      .subscribe();
                     this.tour.next();
                   };
                   const wrapperNormalPrevRemoved = () => {
-                    this.tourStoreService.saveState({
-                      tourId: tourInstance.tourId,
-                      state: {
-                        sessionId: this.tourStoreService.getSessionId(),
-                        step: er.prevStepId,
-                      },
-                    });
+                    this.tourStoreService
+                      .saveState({
+                        tourId: tourInstance.tourId,
+                        state: {
+                          sessionId: this.tourStoreService.getSessionId(),
+                          step: er.prevStepId,
+                          props: tourState.props,
+                          status: Status.InProgress,
+                        },
+                      })
+                      .subscribe();
                     this.tour.back();
                   };
                   this.actionAssignment(
@@ -259,6 +322,8 @@ export class TourServiceService {
                     wrapperNextRemoved,
                     wrapperPrevRemoved,
                     funcRemoved,
+                    tourInstance.tourId,
+                    tourState.props,
                   );
                 });
               });
@@ -271,11 +336,12 @@ export class TourServiceService {
   public run(
     tourId: string,
     params?: {[key: string]: string},
+    props?: Props,
     filterFn?: filterFunction,
   ): void {
     this.tourStoreService
       .loadTour({
-        tourId: tourId,
+        tourId,
         sessionId: this.tourStoreService.getSessionId(),
       })
       .subscribe(tourInstance => {
@@ -298,11 +364,18 @@ export class TourServiceService {
               scrollTo: {behavior: 'smooth', block: 'center'},
             },
           });
+          this.tour.on(
+            'complete',
+            (event: {index: number; tour: Shepherd.Tour; tourId: string}) => {
+              event.tourId = tourInstance.tourId;
+              this.tourComplete.next(event);
+            },
+          );
           if (filterFn) {
             tourInstance.tourSteps = filterFn(tourInstance.tourSteps);
           }
           tourInstance.tourSteps[0].attachTo.scrollTo = false;
-          this.triggerTour(tourInstance);
+          this.triggerTour(tourInstance, props);
         } else {
           // do nothing
         }
@@ -327,7 +400,9 @@ export class TourServiceService {
         default:
           return false;
       }
-    } else return false;
+    } else {
+      return false;
+    }
   }
   private getRemovedSteps(tourSteps: TourStep[], tourState: TourState) {
     let f = true;
@@ -346,5 +421,14 @@ export class TourServiceService {
       }
       return flag;
     });
+  }
+
+  private getStatus(currentTourStep: TourStep, tourSteps: TourStep[]) {
+    const lastId = tourSteps[tourSteps.length - 1].id;
+    if (currentTourStep.id === lastId) {
+      return Status.Complete;
+    } else {
+      return Status.InProgress;
+    }
   }
 }
