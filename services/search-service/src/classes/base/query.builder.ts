@@ -29,6 +29,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
   protected schema?: string;
   protected idType?: string = 'uuid';
   protected _placeholderIndex = 0;
+  protected modelNameMap = new Map<string, string>();
   protected get placeholder(): string {
     this._placeholderIndex += 1;
     return this.paramString(this._placeholderIndex);
@@ -49,6 +50,25 @@ export abstract class SearchQueryBuilder<T extends Model> {
   ): void;
 
   abstract unionString: string;
+
+  build(
+    models: (SearchableModel<T> | typeof Model)[],
+    ignoredColumns?: ModelProperties<T>[],
+    type?: typeof Model,
+    idType?: string,
+  ) {
+    this.idType = idType ?? 'uuid';
+    if (!this.query.match) {
+      throw new HttpErrors.BadRequest(Errors.MISSING_MATCH);
+    }
+    if (!(models && models.length > 0)) {
+      throw new HttpErrors.BadRequest(Errors.NO_COLUMNS_TO_MATCH);
+    }
+    return {
+      query: this.queryBuild(models, ignoredColumns, type),
+      params: this.paramsBuild(this.query.match),
+    };
+  }
 
   limit() {
     if (this.query.limit) {
@@ -111,12 +131,13 @@ export abstract class SearchQueryBuilder<T extends Model> {
     filter: (keyof T)[],
   ) {
     if (Array.isArray(columns)) {
-      return this._getColumnListFromArray(model, columns, filter);
+      return this.getColumnListFromArray(model, columns, filter);
     } else {
-      return this._getColumnListFromMap(model, columns, filter);
+      return this.getColumnListFromMap(model, columns, filter);
     }
   }
-  _getColumnListFromMap(
+
+  getColumnListFromMap(
     model: typeof Model,
     columns: ColumnMap<T>,
     filter: (keyof T)[],
@@ -134,7 +155,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
         if (columnNameInMap === IGNORED_COLUMN) {
           return `null as ${column}`;
         } else {
-          const dbName = this._getColumnName(model, columnNameInMap);
+          const dbName = this.getColumnName(model, columnNameInMap);
           return this._formatColumnSameInDb(column as keyof T, dbName);
         }
       })
@@ -145,43 +166,24 @@ export abstract class SearchQueryBuilder<T extends Model> {
     };
   }
 
-  _getColumnListFromArray(
+  getColumnListFromArray(
     model: typeof Model,
     columns: Array<keyof T>,
     filter: (keyof T)[],
   ) {
     const columnList = columns
       .filter(column => !filter.includes(column))
-      .map(column => this._getColumnName(model, column))
+      .map(column => this.getColumnName(model, column))
       .join(', ');
     const selectors = columns
       .map(column => {
-        const nameInDb = this._getColumnName(model, column);
+        const nameInDb = this.getColumnName(model, column);
         return this._formatColumnSameInDb(column, nameInDb);
       })
       .join(', ');
     return {
       columnList,
       selectors,
-    };
-  }
-
-  build(
-    models: (SearchableModel<T> | typeof Model)[],
-    ignoredColumns?: ModelProperties<T>[],
-    type?: typeof Model,
-    idType?: string,
-  ) {
-    this.idType = idType ?? 'uuid';
-    if (!this.query.match) {
-      throw new HttpErrors.BadRequest(Errors.MISSING_MATCH);
-    }
-    if (!(models && models.length > 0)) {
-      throw new HttpErrors.BadRequest(Errors.NO_COLUMNS_TO_MATCH);
-    }
-    return {
-      query: this.queryBuild(models, ignoredColumns, type),
-      params: this.paramsBuild(this.query.match),
     };
   }
 
@@ -220,6 +222,9 @@ export abstract class SearchQueryBuilder<T extends Model> {
           }
           return combined;
         }, model.columns);
+        if (model.identifier) {
+          this.modelNameMap.set(model.model.name, model.identifier);
+        }
         this.search(model.model, mapWithDefaults, skipped);
       } else {
         this.search(model, defaultColumns, skipped);
@@ -270,7 +275,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     const expression = where[key] as
       | PredicateComparison<typeof key>
       | (typeof key & ShortHandEqualType);
-    const columnName = this._getColumnName(model, key);
+    const columnName = this.getColumnName(model, key);
     if (expression === null || expression === undefined) {
       stmts.push({sql: `${columnName} IS NULL`, params: []});
     } else if (typeof expression === 'object') {
@@ -281,7 +286,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
         return;
       }
     } else {
-      columnValue = this._toColumnValue(p, expression);
+      columnValue = this.toColumnValue(p, expression);
       if (columnValue === null) {
         stmts.push({sql: `${columnName} IS NULL`, params: []});
       } else {
@@ -337,7 +342,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     const expressionValue = expression[
       operator
     ] as PredicateValueType<ShortHandEqualType>;
-    const columnValue = this._buildColumnValueForExpression(expressionValue, p);
+    const columnValue = this.buildColumnValueForExpression(expressionValue, p);
     if (['inq', 'nin', 'between'].includes(operator)) {
       if (operator === 'between' && columnValue.length !== TWO) {
         throw new HttpErrors.BadRequest(Errors.EXACTLY_TWO_VALUES_FOR_BETWEEN);
@@ -347,20 +352,20 @@ export abstract class SearchQueryBuilder<T extends Model> {
         }
       }
     }
-    return this._buildExpression(key, p, operator, columnValue, model);
+    return this.buildExpression(key, p, operator, columnValue, model);
   }
 
-  _buildColumnValueForExpression(
+  buildColumnValueForExpression(
     expressionValue: PredicateValueType<ShortHandEqualType>,
     p: PropertyDefinition,
   ) {
     const columnValue = [];
     if (Array.isArray(expressionValue)) {
       for (let j = 0, m = expressionValue.length; j < m; j++) {
-        columnValue.push(this._toColumnValue(p, expressionValue[j]));
+        columnValue.push(this.toColumnValue(p, expressionValue[j]));
       }
     } else {
-      columnValue.push(this._toColumnValue(p, expressionValue));
+      columnValue.push(this.toColumnValue(p, expressionValue));
     }
     return columnValue;
   }
@@ -373,14 +378,14 @@ export abstract class SearchQueryBuilder<T extends Model> {
     }
   }
 
-  _getColumnName(model: typeof Model, name: keyof T) {
+  getColumnName(model: typeof Model, name: keyof T) {
     if (model.definition.properties[name as string]) {
       return model.definition.properties[name as string].name || name;
     }
     return undefined;
   }
 
-  _toColumnValue(
+  toColumnValue(
     prop: PropertyDefinition,
     val: PredicateValueType<ShortHandEqualType>,
   ) {
@@ -400,7 +405,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
         (prop.type as Type<string>).name === 'Timestamp') &&
       (val instanceof Date || typeof val === 'string')
     ) {
-      return this._toDateType(val);
+      return this.toDateType(val);
     }
 
     // PostgreSQL support char(1) Y/N
@@ -410,13 +415,13 @@ export abstract class SearchQueryBuilder<T extends Model> {
 
     if (Array.isArray(prop.type)) {
       // There is two possible cases for the type of "val" as well as two cases for dataType
-      return this._toArrayPropTypes(prop, val);
+      return this.toArrayPropTypes(prop, val);
     }
 
     return val;
   }
 
-  _toDateType(val: Date | string) {
+  toDateType(val: Date | string) {
     if (!(val instanceof Date) || !val.toISOString) {
       val = new Date(val);
     }
@@ -429,7 +434,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     };
   }
 
-  _toArrayPropTypes<R>(prop: PropertyDefinition, val: R[] | R) {
+  toArrayPropTypes<R>(prop: PropertyDefinition, val: R[] | R) {
     const isArrayDataType =
       prop.postgresql && prop.postgresql.dataType === 'varchar[]';
     if (Array.isArray(val)) {
@@ -447,20 +452,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     }
   }
 
-  _escape(str: string) {
-    let escaped = '"';
-    for (const c of str) {
-      if (c === '"') {
-        escaped += c + c;
-      } else {
-        escaped += c;
-      }
-    }
-    escaped += '"';
-    return escaped;
-  }
-
-  _buildExpression(
+  buildExpression(
     columnName: keyof T,
     prop: PropertyDefinition,
     operator: string,
@@ -469,24 +461,24 @@ export abstract class SearchQueryBuilder<T extends Model> {
   ) {
     const getPlaceholder = () => this.parseIdPlaceholder(prop);
 
-    let expression = this._getColumnName(model, columnName);
+    let expression = this.getColumnName(model, columnName);
     let clause: Query;
     switch (operator) {
       case 'gt':
         expression += '>';
-        clause = this._buildClauseFromExpress(value, '', false, getPlaceholder);
+        clause = this.buildClauseFromExpress(value, '', false, getPlaceholder);
         break;
       case 'gte':
         expression += '>=';
-        clause = this._buildClauseFromExpress(value, '', false, getPlaceholder);
+        clause = this.buildClauseFromExpress(value, '', false, getPlaceholder);
         break;
       case 'lt':
         expression += '<';
-        clause = this._buildClauseFromExpress(value, '', false, getPlaceholder);
+        clause = this.buildClauseFromExpress(value, '', false, getPlaceholder);
         break;
       case 'lte':
         expression += '<=';
-        clause = this._buildClauseFromExpress(value, '', false, getPlaceholder);
+        clause = this.buildClauseFromExpress(value, '', false, getPlaceholder);
         break;
       case 'neq':
         if (value === null) {
@@ -494,11 +486,11 @@ export abstract class SearchQueryBuilder<T extends Model> {
         } else {
           expression += '!=';
         }
-        clause = this._buildClauseFromExpress(value, '', false, getPlaceholder);
+        clause = this.buildClauseFromExpress(value, '', false, getPlaceholder);
         break;
       case 'between':
         expression += ' BETWEEN ';
-        clause = this._buildClauseFromExpress(
+        clause = this.buildClauseFromExpress(
           value,
           ' AND ',
           false,
@@ -507,21 +499,11 @@ export abstract class SearchQueryBuilder<T extends Model> {
         break;
       case 'nin':
         expression += ' NOT IN ';
-        clause = this._buildClauseFromExpress(
-          value,
-          ', ',
-          true,
-          getPlaceholder,
-        );
+        clause = this.buildClauseFromExpress(value, ', ', true, getPlaceholder);
         break;
       case 'inq':
         expression += ' IN ';
-        clause = this._buildClauseFromExpress(
-          value,
-          ', ',
-          true,
-          getPlaceholder,
-        );
+        clause = this.buildClauseFromExpress(value, ', ', true, getPlaceholder);
         break;
       default:
         throw new HttpErrors.BadRequest(
@@ -534,7 +516,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     };
   }
 
-  _buildClauseFromExpress(
+  buildClauseFromExpress(
     values: (Query | ShortHandEqualType)[] | ShortHandEqualType | Query,
     separator: string,
     grouping: boolean,
@@ -570,6 +552,19 @@ export abstract class SearchQueryBuilder<T extends Model> {
         };
       }
     }
+  }
+
+  getTableName(model: typeof Model) {
+    return model.modelName;
+  }
+
+  getSchemaName(model: typeof Model) {
+    return this.schema ?? `public`;
+  }
+
+  getModelName(model: typeof Model) {
+    const mapName = this.modelNameMap.get(model.name);
+    return mapName ?? model.modelName ?? model.name;
   }
 
   private _isQuery(query: Query | ShortHandEqualType): query is Query {

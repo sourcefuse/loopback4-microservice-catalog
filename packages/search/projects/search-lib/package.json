@@ -1,21 +1,28 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "1.2.2",
+  "version": "4.3.1",
   "description": "A global search component for search microservice",
   "peerDependencies": {
     "@angular/animations": "~12.1.5",
-    "@angular/common": "^12.1.5",
+    "@angular/cdk": ">=10.2.0 <13.0.0",
+    "@angular/common": "~12.1.5",
     "@angular/compiler": "~12.1.5",
-    "@angular/core": "^12.1.5",
-    "@angular/cdk": "^10.2.0",
-    "@angular/flex-layout": "^10.0.0-beta.32",
-    "@angular/material": "^10.2.0",
+    "@angular/core": "~12.1.5",
+    "@angular/flex-layout": "10.0.0-beta.32 - 12.0.0-beta.35",
     "@angular/forms": "~12.1.5",
+    "@angular/material": ">=10.2.0 <13.0.0",
     "@angular/platform-browser": "~12.1.5",
     "@angular/platform-browser-dynamic": "~12.1.5",
     "@angular/router": "~12.1.5",
     "rxjs": "~6.6.0",
     "zone.js": "~0.11.4"
+  },
+  "scripts": {
+    "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
+    "installNodeModules": "cd ../../ && npm i",
+    "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
+    "build": "ng build && cp -r src/assets dist/assets",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "tslib": "^2.2.0"
@@ -24,7 +31,7 @@
     "lib": {
       "entryFile": "src/public-api.ts"
     },
-    "dest": "../../dist/"
+    "dest": "dist"
   },
   "repository": {
     "type": "git",
@@ -34,9 +41,9 @@
   "author": "Sourcefuse",
   "license": "MIT",
   "private": false,
-  "devDependencies": {
-    "@angular/cdk": "^10.2.0",
-    "@angular/flex-layout": "^10.0.0-beta.32",
-    "@angular/material": "^10.2.0"
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "directory": "dist"
   }
 }

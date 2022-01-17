@@ -24,24 +24,24 @@ export class PubnubMessage extends Entity {
     type: 'string',
     required: true,
   })
-  toUserId? : string;
+  toUserId?: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   channelId: string;
 
   @property({
     type: 'string',
-    required: true
+    required: true,
   })
   channelType: string;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
-  createdBy? : string;
+  createdBy?: string;
 
   constructor(data?: Partial<PubnubMessage>) {
     super(data);

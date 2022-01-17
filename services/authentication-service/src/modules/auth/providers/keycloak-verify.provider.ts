@@ -1,21 +1,21 @@
-import {Provider, inject} from '@loopback/context';
+import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   AuthErrorKeys,
   IAuthUser,
-  KeycloakProfile,
+  Keycloak,
   VerifyFunction,
 } from 'loopback4-authentication';
 
-import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {AuthUser} from '../models/auth-user.model';
+import {SignUpBindings, VerifyBindings} from '../../../providers';
 import {
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
 } from '../../../providers/types';
-import {SignUpBindings, VerifyBindings} from '../../../providers';
+import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {AuthUser} from '../models/auth-user.model';
 
 export class KeycloakVerifyProvider
   implements Provider<VerifyFunction.KeycloakAuthFn>
@@ -37,7 +37,7 @@ export class KeycloakVerifyProvider
     return async (
       accessToken: string,
       refreshToken: string,
-      profile: KeycloakProfile,
+      profile: Keycloak.Profile,
     ) => {
       let user: IAuthUser | null = await this.userRepository.findOne({
         where: {

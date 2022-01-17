@@ -1,6 +1,12 @@
-# scheduler-service
+# @sourceloop/scheduler-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+![npm](https://img.shields.io/npm/dm/@sourceloop/scheduler-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/scheduler-service)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/scheduler-service/@loopback/core)
 
 This is a loopback4 component for scheduling events in calendar (scheduler/calendar server).
 
@@ -46,13 +52,16 @@ npm install @sourceloop/scheduler-service
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Bind the Scheduler Config to `SchedulerBindings.Config` key-
+
   ```typescript
   this.bind(SchedulerBindings.Config).to({
       jwtIssuer: process.env.JWT_ISSUER;
       jwtSecret: process.env.JWT_SECRET;
   });
   ```
-- Add the `SchedulerComponent` to your Loopback4 Application (in `application.ts`).
+
+- Add the `SchedulerComponent` to your Loopback4 Application (in `application.ts`)
+
   ```typescript
   // import the SchedulerComponent
   import {SchedulerComponent} from '@sourceloop/scheduler-service';
@@ -61,6 +70,7 @@ npm install @sourceloop/scheduler-service
   this.component(SchedulerComponent);
   ...
   ```
+
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `SchedulerDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
@@ -193,7 +203,7 @@ export class AuthCacheDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `SCHEDULER_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SCHEDULER_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
-#### Database Schema
+## Database Schema
 
 ![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/migrations/scheduler_db_schema.png?raw=true)
 

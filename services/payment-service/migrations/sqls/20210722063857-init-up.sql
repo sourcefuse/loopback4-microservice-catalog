@@ -13,6 +13,7 @@ CREATE  TABLE main.templates (
 	payment_gateway_id   uuid  NOT NULL ,
 	name                 varchar  NOT NULL ,
 	"template"           text  NOT NULL ,
+	type                 varchar  NOT NULL ,
 	CONSTRAINT templates_pkey PRIMARY KEY ( id )
  );
 
@@ -37,6 +38,21 @@ CREATE  TABLE main.transactions (
 	paid_date            date DEFAULT CURRENT_DATE  ,
 	currency             varchar   ,
 	CONSTRAINT pk_transactions_id PRIMARY KEY ( id )
+ );
+
+ CREATE  TABLE main.subscriptions ( 
+	id                   uuid  NOT NULL ,
+	currency             varchar   ,
+	status               varchar   ,
+	payment_gateway_id   uuid   ,
+	payment_method       varchar   ,
+	metadata             json   ,
+	start_date           date   ,
+	end_date             date   ,
+	total_amount         numeric   ,
+	gateway_subscription_id varchar   ,
+	plan_id              varchar   ,
+	CONSTRAINT subscriptions_pkey PRIMARY KEY ( id )
  );
 
 ALTER TABLE main.orders ADD CONSTRAINT fk_orders_payment_gateways FOREIGN KEY ( paymentgatewayid ) REFERENCES main.paymentgateways( id );

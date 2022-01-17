@@ -1,5 +1,6 @@
 export const enum AuthenticateErrorKeys {
   UserDoesNotExist = 'UserDoesNotExist',
+  PasswordCannotBeChanged = 'PasswordCannotBeChangedForExternalUser',
   UserInactive = 'UserInactive',
   TokenRevoked = 'TokenRevoked',
   TokenMissing = 'TokenMissing',

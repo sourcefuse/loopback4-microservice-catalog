@@ -11,9 +11,7 @@
 	"Duplicate DayOfWeek": "Duplicate DayOfWeek",
 	"Id in Request Body not matching with Query Parameters": "Id in Request Body not matching with Query Parameters",
 	"AWS SNS Config missing !": "AWS SNS Config missing !",
-	"relation \"public.notifications\" does not exist": "relation \"public.notifications\" does not exist",
 	"The key 'datasources.NotifDb' is not bound to any value in context TestingApplication-aaab5914-12e5-4659-a433-164605389dde": "The key 'datasources.NotifDb' is not bound to any value in context TestingApplication-aaab5914-12e5-4659-a433-164605389dde",
-	"ENOENT": " no such file or directory, open '/home/samarpan/projects/loopback/loopback4-microservice-catalog/services/authentication-service/public/index.html'",
 	"The key 'sf.clientAuthentication.currentClient' is not bound to any value in context RequestContext-yWsyEvu3TeGuly75aFbRdg-13 (context": " RequestContext-yWsyEvu3TeGuly75aFbRdg-13, binding: sf.clientAuthentication.currentClient, resolutionPath: controllers.LoginController --> @LoginController.constructor[0])",
 	"Client Invalid": "Client Invalid",
 	"host is required": "host is required",
@@ -31,6 +29,8 @@
 	"Token Expired": "Token Expired",
 	"Not Found": "Not Found",
 	"WorkflowVersionNotFound": "WorkflowVersionNotFound",
-	"[{\"instancePath\"": "\"/valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"}]",
-	"WorkflowNotFound": "WorkflowNotFound"
+	"WorkflowNotFound": "WorkflowNotFound",
+	"PasswordCannotBeChangedForExternalUser": "PasswordCannotBeChangedForExternalUser",
+	"Password cannot be same as previous password!": "Password cannot be same as previous password!",
+	"[{\"instancePath\"": "\"/valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"}]"
 }

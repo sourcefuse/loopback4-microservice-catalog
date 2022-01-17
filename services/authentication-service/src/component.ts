@@ -14,49 +14,51 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-
 import {controllers} from './controllers';
 import {AuthServiceBindings} from './keys';
 import {models} from './models';
 import {
+  AppleOauth2VerifyProvider,
   BearerTokenVerifyProvider,
   ClientPasswordVerifyProvider,
+  FacebookOauth2VerifyProvider,
   GoogleOauth2VerifyProvider,
   LocalPasswordVerifyProvider,
   ResourceOwnerVerifyProvider,
-  AppleOauth2VerifyProvider,
-  FacebookOauth2VerifyProvider,
 } from './modules/auth';
-import {repositories} from './repositories';
-import {MySequence} from './sequence';
-import {IAuthServiceConfig} from './types';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
 import {
+  AppleOauth2SignupProvider,
+  ApplePostVerifyProvider,
+  ApplePreVerifyProvider,
   AuthCodeBindings,
   CodeWriterProvider,
+  FacebookOauth2SignupProvider,
+  FacebookPostVerifyProvider,
+  FacebookPreVerifyProvider,
+  ForgotPasswordProvider,
   GoogleOauth2SignupProvider,
   GooglePostVerifyProvider,
   GooglePreVerifyProvider,
   InstagramOauth2SignupProvider,
   InstagramPostVerifyProvider,
   InstagramPreVerifyProvider,
-  AppleOauth2SignupProvider,
-  ApplePostVerifyProvider,
-  ApplePreVerifyProvider,
-  FacebookOauth2SignupProvider,
-  FacebookPostVerifyProvider,
-  FacebookPreVerifyProvider,
   JwtPayloadProvider,
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
   SignUpBindings,
+  SignupTokenHandlerProvider,
   VerifyBindings,
 } from './providers';
-import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
-import {LocalSignupProvider} from './providers/local-signup.provider';
-import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
 import {OauthCodeReaderProvider} from './providers/code-reader.provider';
+import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
+import {LocalPreSignupProvider} from './providers/local-presignup.provider';
+import {LocalSignupProvider} from './providers/local-signup.provider';
+import {repositories} from './repositories';
+import {MySequence} from './sequence';
+import {LoginHelperService} from './services';
+import {IAuthServiceConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
@@ -97,7 +99,9 @@ export class AuthenticationServiceComponent implements Component {
     }
 
     this.repositories = repositories;
-
+    this.application
+      .bind('services.LoginHelperService')
+      .toClass(LoginHelperService);
     this.models = models;
 
     this.controllers = controllers;
@@ -167,6 +171,8 @@ export class AuthenticationServiceComponent implements Component {
       LocalSignupProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
       LocalPreSignupProvider;
+    this.providers[SignUpBindings.SIGNUP_HANDLER_PROVIDER.key] =
+      SignupTokenHandlerProvider;
     this.providers[VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER.key] =
       KeyCloakPreVerifyProvider;
     this.providers[VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER.key] =
@@ -197,6 +203,8 @@ export class AuthenticationServiceComponent implements Component {
 
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;
+    this.providers[AuthServiceBindings.ForgotPasswordHandler.key] =
+      ForgotPasswordProvider;
   }
 
   setupAuthorizationComponent() {

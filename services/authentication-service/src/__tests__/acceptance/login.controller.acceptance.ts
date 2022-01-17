@@ -1,6 +1,7 @@
 'use strict';
 import {Client, createRestAppClient, expect} from '@loopback/testlab';
-import {RoleTypes} from '@sourceloop/core';
+import {AuthenticateErrorKeys, AuthProvider, RoleTypes} from '@sourceloop/core';
+import {AuthErrorKeys} from 'loopback4-authentication';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -10,12 +11,15 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {setupApplication} from './test-helper';
 import {TestingApplication} from '../fixtures/application';
+import {TestHelperKey} from '../fixtures/keys';
+import {TestHelperService} from '../fixtures/services';
+import {setupApplication} from './test-helper';
 
 describe('Authentication microservice', () => {
   let app: TestingApplication;
   let client: Client;
+  let helper: TestHelperService;
   let userRepo: UserRepository;
   let userTenantRepo: UserTenantRepository;
   let authClientRepository: AuthClientRepository;
@@ -38,21 +42,23 @@ describe('Authentication microservice', () => {
   before(givenRefreshTokenRepository);
   before(givenRoleRepository);
   before(givenUserCredentialsRepository);
-  before(() => {
+  before(async () => {
     client = createRestAppClient(app);
+    helper = await app.get(TestHelperKey);
   });
   before(setMockData);
   after(deleteMockData);
   afterEach(() => {
     delete process.env.JWT_ISSUER;
     delete process.env.JWT_SECRET;
+    helper.reset();
   });
-  it('gives status 422 for login request with no client credentials', async () => {
+  it('should give status 422 for login request with no client credentials', async () => {
     const reqData = {};
     const response = await client.post(`/auth/login`).send(reqData).expect(422);
     expect(response).to.have.property('error');
   });
-  it('gives status 422 for login request with no user credentials', async () => {
+  it('should give status 422 for login request with no user credentials', async () => {
     const reqData = {
       clientId: 'web',
       clientSecret: 'blah',
@@ -60,7 +66,7 @@ describe('Authentication microservice', () => {
     const response = await client.post(`/auth/login`).send(reqData).expect(422);
     expect(response).to.have.property('error');
   });
-  it('gives status 401 for login request with wrong client credentials', async () => {
+  it('should give status 401 for login request with wrong client credentials', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web1', // eslint-disable-next-line
@@ -71,7 +77,7 @@ describe('Authentication microservice', () => {
     const response = await client.post(`/auth/login`).send(reqData).expect(401);
     expect(response).to.have.property('error');
   });
-  it('gives status 401 for login request with wrong user credentials', async () => {
+  it('should give status 401 for login request with wrong user credentials', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -82,7 +88,21 @@ describe('Authentication microservice', () => {
     const response = await client.post(`/auth/login`).send(reqData).expect(401);
     expect(response).to.have.property('error');
   });
-  it('gives status 200 for login request', async () => {
+  it('should give status 401 for login request with user credentials not belonging to client', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'mobile', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+      password: 'temp123!@',
+    };
+    const response = await client.post(`/auth/login`).send(reqData).expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message).to.be.equal(
+      AuthErrorKeys.ClientInvalid,
+    );
+  });
+  it('should give status 200 for login request', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -93,6 +113,7 @@ describe('Authentication microservice', () => {
     process.env.JWT_ISSUER = 'test';
     await client.post(`/auth/login`).send(reqData).expect(200);
   });
+
   it('should return code in response', async () => {
     const reqData = {
       // eslint-disable-next-line
@@ -108,6 +129,7 @@ describe('Authentication microservice', () => {
       .expect(200);
     expect(reqForCode.body).to.have.property('code');
   });
+
   it('should return refresh token, access token, expires in response', async () => {
     const reqData = {
       // eslint-disable-next-line
@@ -136,7 +158,8 @@ describe('Authentication microservice', () => {
       'expires',
     ]);
   });
-  it('should return 401 for incorrect moment creation', async () => {
+
+  it('should return refresh token and access token for token refresh request', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -146,14 +169,46 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
-    await client
-      .post(`/auth/login-token`)
+    const reqForCode = await client
+      .post(`/auth/login`)
+      .send(reqData)
+      .expect(200);
+    const reqForToken = await client
+      .post(`/auth/token`)
       .set(deviceIdName, deviceId)
       .set(useragentName, useragent)
+      .send({
+        clientId: 'web',
+        code: reqForCode.body.code,
+      });
+    const response = await client
+      .post(`/auth/token-refresh`)
+      .send({refreshToken: reqForToken.body.refreshToken})
+      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`);
+    expect(response.body).to.have.properties(['accessToken', 'refreshToken']);
+  });
+
+  it('should throw error when login for external user', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_teacher',
+      password: 'temp123!@',
+    };
+    process.env.JWT_ISSUER = 'test';
+    process.env.JWT_SECRET = 'test';
+    const reqForCode = await client
+      .post(`/auth/login`)
       .send(reqData)
       .expect(401);
+
+    expect(reqForCode.body.error.message.message).to.equal(
+      AuthErrorKeys.InvalidCredentials,
+    );
   });
-  it('should change password successfully', async () => {
+
+  it('should change password successfully for internal user', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -181,7 +236,8 @@ describe('Authentication microservice', () => {
       })
       .expect(200);
   });
-  it('should return refresh token and access token for token refresh request', async () => {
+
+  it('should return refresh token and access token for token refresh request with new password', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -209,6 +265,36 @@ describe('Authentication microservice', () => {
       .set('Authorization', `Bearer ${reqForToken.body.accessToken}`);
     expect(response.body).to.have.properties(['accessToken', 'refreshToken']);
   });
+
+  it('should revert to previous password successfully for internal user', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+      password: 'new_test_password',
+    };
+    process.env.JWT_ISSUER = 'test';
+    process.env.JWT_SECRET = 'test';
+    const reqForCode = await client
+      .post(`/auth/login`)
+      .send(reqData)
+      .expect(200);
+    const reqForToken = await client.post(`/auth/token`).send({
+      clientId: 'web',
+      code: reqForCode.body.code,
+    });
+    await client
+      .patch(`/auth/change-password`)
+      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`)
+      .send({
+        username: 'test_user',
+        password: 'temp123!@',
+        refreshToken: reqForToken.body.refreshToken,
+      })
+      .expect(200);
+  });
+
   it('should return 401 for token refresh request when Authentication token invalid', async () => {
     const reqData = {
       // eslint-disable-next-line
@@ -264,6 +350,24 @@ describe('Authentication microservice', () => {
       .send({refreshToken: reqForToken.body.refreshToken})
       .expect(401);
   });
+  it('should throw error if user does not belong to client id in forgot password request', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web1', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+    };
+    process.env.JWT_ISSUER = 'test';
+    process.env.JWT_SECRET = 'test';
+    const response = await client
+      .post(`/auth/forget-password`)
+      .send(reqData)
+      .expect(401);
+    expect(response.body.error.message.message).to.be.equal(
+      AuthErrorKeys.ClientInvalid,
+    );
+  });
+
   it('should send forgot password request successfully', async () => {
     const reqData = {
       // eslint-disable-next-line
@@ -273,13 +377,31 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
+    const token = helper.get('TOKEN');
+    expect(token).to.be.String();
+    expect(token).to.not.be.equal('');
+  });
+
+  it('should throw error on forgot password request for external user', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_teacher',
+    };
+    process.env.JWT_ISSUER = 'test';
+    process.env.JWT_SECRET = 'test';
     const response = await client
       .post(`/auth/forget-password`)
       .send(reqData)
-      .expect(200);
-    expect(response.body).to.have.properties(['code']);
+      .expect(400);
+    expect(response.body.error.message).to.be.equal(
+      AuthenticateErrorKeys.PasswordCannotBeChanged,
+    );
   });
-  it('should return error user does not exist', async () => {
+
+  it('should return error user does not exist for invalid user in forget password', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -289,10 +411,12 @@ describe('Authentication microservice', () => {
     const response = await client
       .post(`/auth/forget-password`)
       .send(reqData)
-      .expect(404);
-    expect(response.body).to.have.properties('error');
+      .expect(401);
+    expect(response.body.error.message).to.be.equal(
+      AuthErrorKeys.InvalidCredentials,
+    );
   });
-  it('should verify token successfully', async () => {
+  it('should verify reset password token successfully', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -301,17 +425,16 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
-    const response = await client
-      .post(`/auth/forget-password`)
-      .send(reqData)
-      .expect(200);
-    const responseToken = await client
-      .get(`/auth/verify-reset-password-link?token=${response.body.code}`)
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
+    const token = helper.get('TOKEN');
+    expect(token).to.be.String();
+    expect(token).to.not.be.equal('');
+    await client
+      .get(`/auth/verify-reset-password-link?token=${token}`)
       .send()
       .expect(200);
-    expect(responseToken.body).to.have.properties('success');
   });
-  it('should give token missing error', async () => {
+  it('should give token missing error when no token passed in verify reset password', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -320,14 +443,14 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
-    await client.post(`/auth/forget-password`).send(reqData).expect(200);
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const responseToken = await client
       .get(`/auth/verify-reset-password-link`)
       .send()
       .expect(400);
     expect(responseToken.body).to.have.properties('error');
   });
-  it('return error for token missing', async () => {
+  it('should return error for token missing when no token passed in reset password', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -336,7 +459,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
-    await client.post(`/auth/forget-password`).send(reqData).expect(200);
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const request = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -345,7 +468,7 @@ describe('Authentication microservice', () => {
     };
     await client.patch(`/auth/reset-password`).send(request).expect(422);
   });
-  it('return error for password missing', async () => {
+  it('should return error for password missing when new password not sent in reset password', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -354,19 +477,17 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
-    const response = await client
-      .post(`/auth/forget-password`)
-      .send(reqData)
-      .expect(200);
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
+    const token = helper.get('TOKEN');
     const request = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
       client_secret: 'test',
-      token: response.body.code,
+      token,
     };
     await client.patch(`/auth/reset-password`).send(request).expect(422);
   });
-  it('should reset password', async () => {
+  it('should throw error when reset password to previous password', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -375,26 +496,46 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
-    const response = await client
-      .post(`/auth/forget-password`)
-      .send(reqData)
-      .expect(200);
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
+    const token = helper.get('TOKEN');
     const request = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
       client_secret: 'test',
-      token: response.body.code,
-      password: 'test123',
+      token,
+      password: 'temp123!@',
+    };
+    await client.patch(`/auth/reset-password`).send(request).expect(401);
+  });
+
+  it('should reset password successfully', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      username: 'test_user',
+    };
+    process.env.JWT_ISSUER = 'test';
+    process.env.JWT_SECRET = 'test';
+    await client.post(`/auth/forget-password`).send(reqData).expect(204);
+    const token = helper.get('TOKEN');
+    const request = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      token,
+      password: 'test123#@',
     };
     await client.patch(`/auth/reset-password`).send(request).expect(204);
   });
+
   it('should return true on logout', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
       client_secret: 'test',
       username: 'test_user',
-      password: 'test123',
+      password: 'test123#@',
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
@@ -425,7 +566,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line
       client_secret: 'test',
       username: 'test_user',
-      password: 'test123',
+      password: 'test123#@',
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
@@ -450,68 +591,7 @@ describe('Authentication microservice', () => {
       })
       .expect(401);
   });
-  it('should return true on keycloak logout', async () => {
-    const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
-      client_secret: 'test',
-      username: 'test_user',
-      password: 'test123',
-    };
-    process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
-    const reqForCode = await client
-      .post(`/auth/login`)
-      .send(reqData)
-      .expect(200);
-    const reqForToken = await client
-      .post(`/auth/token`)
-      .set(deviceIdName, deviceId)
-      .set(useragentName, useragent)
-      .send({
-        clientId: 'web',
-        code: reqForCode.body.code,
-      })
-      .expect(200);
-    await client
-      .post(`/keycloak/logout`)
-      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`)
-      .send({
-        refreshToken: reqForToken.body.refreshToken,
-      })
-      .expect(200);
-  });
-  it('should return error for wrong token on keycloak logout', async () => {
-    const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
-      client_secret: 'test',
-      username: 'test_user',
-      password: 'test123',
-    };
-    process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
-    const reqForCode = await client
-      .post(`/auth/login`)
-      .send(reqData)
-      .expect(200);
-    const reqForToken = await client
-      .post(`/auth/token`)
-      .set(deviceIdName, deviceId)
-      .set(useragentName, useragent)
-      .send({
-        clientId: 'web',
-        code: reqForCode.body.code,
-      })
-      .expect(200);
-    await client
-      .post(`/keycloak/logout`)
-      .set('Authorization', `Bearer ${reqForToken.body.accessToken}`)
-      .send({
-        refreshToken: 'aaaa',
-      })
-      .expect(401);
-  });
+
   async function givenUserRepository() {
     userRepo = await app.getRepository(UserRepository);
   }
@@ -593,26 +673,28 @@ describe('Authentication microservice', () => {
         ],
       },
     ]);
+    process.env.USER_TEMP_PASSWORD = 'temp123!@';
+    await userRepo.create({
+      id: '1',
+      firstName: 'Test',
+      lastName: 'User',
+      username: 'test_user',
+      dob: '1996-11-05',
+      authClientIds: `{1}`,
+      email: 'xyz@gmail.com',
+    });
     await userRepo.createAll([
-      {
-        id: '1',
-        firstName: 'Test',
-        lastName: 'User',
-        username: 'test_user',
-        dob: '1996-11-05',
-        authClientIds: `{1}`,
-        email: 'xyz@gmail.com',
-      },
       {
         id: '2',
         firstName: 'Test',
         lastName: 'Teacher',
         username: 'test_teacher',
         dob: '1996-11-05',
+        email: 'test_teacher@test.com',
         authClientIds: `{1}`,
       },
     ]);
-    await userTenantRepo.create(
+    await userTenantRepo.createAll([
       {
         userId: '1',
         tenantId: '200',
@@ -623,7 +705,7 @@ describe('Authentication microservice', () => {
         tenantId: '200',
         roleId: '2',
       },
-    );
+    ]);
     await authClientRepository.create({
       id: 1,
       clientId: 'web',
@@ -634,11 +716,21 @@ describe('Authentication microservice', () => {
       authCodeExpiration: 180,
       secret: 'poiuytrewq',
     });
+    await authClientRepository.create({
+      id: 2,
+      clientId: 'mobile',
+      clientSecret: 'test',
+      redirectUrl: 'http://localhost:4200/login/success',
+      accessTokenExpiration: 900,
+      refreshTokenExpiration: 86400,
+      authCodeExpiration: 180,
+      secret: 'poiuytrewq',
+    });
+
     await userCredentialsRepository.create({
-      id: '1',
-      userId: '1',
-      authProvider: 'test_auth',
-      password: 'temp123!@',
+      id: '2',
+      userId: '2',
+      authProvider: AuthProvider.KEYCLOAK,
     });
   }
 });

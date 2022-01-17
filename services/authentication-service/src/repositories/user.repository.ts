@@ -11,13 +11,15 @@ import {Options} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
+  AuthProvider,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
 import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
-
 import {
   Tenant,
   User,
@@ -63,6 +65,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {
     super(User, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
@@ -123,9 +126,15 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       where: {username: username.toLowerCase()},
     });
     const creds = user && (await this.credentials(user.id).get());
-    if (!user || user.deleted || !creds || !creds.password) {
+    if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
-    } else if (!(await bcrypt.compare(password, creds.password))) {
+    } else if (
+      !creds ||
+      !creds.password ||
+      creds.authProvider !== AuthProvider.INTERNAL ||
+      !(await bcrypt.compare(password, creds.password))
+    ) {
+      this.logger.error('User creds not found in DB or is invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     } else {
       return user;
@@ -141,6 +150,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     const creds = user && (await this.credentials(user.id).get());
     if (!user || user.deleted || !creds || !creds.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
+    } else if (creds.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.BadRequest(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
     } else if (!(await bcrypt.compare(password, creds.password))) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
     } else if (await bcrypt.compare(newPassword, creds.password)) {
@@ -170,6 +183,12 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       if (!otp || otp.otp !== oldPassword) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
       }
+    }
+
+    if (creds?.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.Unauthorized(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
     }
 
     if (!user || user.deleted || !creds || !creds.password) {

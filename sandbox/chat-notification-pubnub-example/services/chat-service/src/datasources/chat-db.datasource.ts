@@ -10,7 +10,7 @@ const config = {
   user: process.env.CHAT_DB_USER,
   password: process.env.CHAT_DB_PASSWORD,
   database: process.env.CHAT_DB_DATABASE,
-  schema: process.env.CHAT_DB_SCHEMA
+  schema: process.env.CHAT_DB_SCHEMA,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -18,8 +18,10 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class ChatDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class ChatDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = 'chatDb';
   static readonly defaultConfig = config;
 

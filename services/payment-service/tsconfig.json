@@ -4,7 +4,20 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "lib": [ "es2015" ]
+    "lib": [
+      "es2015"
+    ],
+    "composite": true
   },
-  "include": ["src","migrations","migration.js"]
+  "include": [
+    "src",
+    "migrations",
+    "migration.js",
+    ".eslintrc.js"
+  ],
+  "references": [
+    {
+      "path": "../../packages/core/tsconfig.json"
+    }
+  ]
 }

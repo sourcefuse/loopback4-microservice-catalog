@@ -54,7 +54,7 @@ export class SearchProvider<T extends Model>
         const sources = search.sources;
         models = this.config.models.filter(model => {
           if (isSearchableModel(model)) {
-            return sources.includes(model.model.modelName);
+            return sources.includes(model.identifier ?? model.model.modelName);
           } else {
             return sources.includes(model.modelName);
           }

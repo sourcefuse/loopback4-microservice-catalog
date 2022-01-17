@@ -17,18 +17,28 @@ import {
   DEFAULT_PAYMENT_SERVICE_OPTIONS,
   PaymentServiceComponentOptions,
 } from './types';
-import {Orders, Transactions, PaymentGateways, Templates} from './models';
+import {
+  Orders,
+  Transactions,
+  PaymentGateways,
+  Templates,
+  Subscriptions,
+} from './models';
 import {
   OrdersController,
   TransactionsController,
   PaymentGatewaysController,
   TemplatesController,
+  SubscriptionsController,
+  SubscriptionTransactionsController,
+  TransactionSubscriptionsController,
 } from './controllers';
 import {
   OrdersRepository,
   TransactionsRepository,
   PaymentGatewaysRepository,
   TemplatesRepository,
+  SubscriptionsRepository,
 } from './repositories';
 import {RazorpayProvider, GatewayProvider, StripeProvider} from './providers';
 
@@ -59,18 +69,28 @@ export class PaymentServiceComponent implements Component {
   ) {
     this.bindings = [];
     this.application.component(CoreComponent);
-    this.models = [Orders, Transactions, PaymentGateways, Templates];
+    this.models = [
+      Orders,
+      Transactions,
+      PaymentGateways,
+      Templates,
+      Subscriptions,
+    ];
     this.controllers = [
       OrdersController,
       TransactionsController,
       PaymentGatewaysController,
       TemplatesController,
+      SubscriptionsController,
+      SubscriptionTransactionsController,
+      TransactionSubscriptionsController,
     ];
     this.repositories = [
       OrdersRepository,
       TransactionsRepository,
       PaymentGatewaysRepository,
       TemplatesRepository,
+      SubscriptionsRepository,
     ];
     this.providers = {
       RazorpayProvider,

@@ -1,4 +1,4 @@
-$search-width: 360px;
+$search-width: 86%;
 
 :host {
   ::ng-deep .mat-form-field-wrapper {
@@ -40,17 +40,25 @@ $search-width: 360px;
   &.close {
     cursor: pointer;
   }
-  &.arrow_down {
-    margin-bottom: 4px;
-  }
 }
 
 .toolbar-search-select {
-  width: 30%;
+  width: calc(100% - #{$search-width});
   ::ng-deep .mat-select-arrow {
     opacity: 0;
   }
   ::ng-deep {
+    .mat-select-arrow-wrapper {
+      display: inline-block;
+      width: 1px;
+    }
+    .mat-select-value-text {
+      font-size: 9px;
+    }
+    .mat-form-field-suffix .mat-icon {
+      width: 12px;
+      font-size: 14px;
+    }
     .mat-form-field-flex {
       .mat-form-field-outline:first-child {
         .mat-form-field-outline-start {

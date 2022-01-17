@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.3 (2022-01-16)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
+## <small>4.0.2 (2022-01-10)</small>
+
+* fix(notification-service): add packages required by notification service (#454) ([c8708b4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c8708b4)), closes [#454](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/454) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>4.0.1 (2021-12-26)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 4.0.0 (2021-12-26)
+
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
+## 3.0.0 (2021-12-17)
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/438)
+* fix(docs): added badges ([a66ed14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a66ed14))
+* feat(notification-service): added user-blacklisting feature (#429) ([c9f449e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c9f449e)), closes [#429](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/429)
+
+
+### BREAKING CHANGE
+
+* bump major versions
+
+
+
+
+## <small>2.1.5 (2021-11-11)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
+## <small>2.1.4 (2021-11-09)</small>
+
+* refactor(authentication-service): version bump in all services for release (#418) ([0808265](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0808265)), closes [#418](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/418) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.1.2 (2021-11-09)</small>
+
+* chore(deps): bump validator in /services/notification-service (#406) ([3c07ece](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c07ece)), closes [#406](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/406)
+
+
+
+
+
 ## <small>2.1.1 (2021-10-24)</small>
 
 * fix(core): fix all version problems ([7847008](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7847008)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

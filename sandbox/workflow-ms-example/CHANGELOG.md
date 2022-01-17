@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.4 (2021-12-17)</small>
+
+* fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
+
+
+
+
+
+## <small>0.4.3 (2021-11-11)</small>
+
+* chore(deps): bump validator in /sandbox/workflow-ms-example (#411) ([c0b25aa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c0b25aa)), closes [#411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/411)
+
+
+
+
+
+## <small>0.4.2 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/workflow-ms-example
+
+
+
+
+
+## <small>0.4.1 (2021-11-09)</small>
+
+**Note:** Version bump only for package @sourceloop/workflow-ms-example
+
+
+
+
+
 ## 0.4.0 (2021-10-24)
 
 * feat(core): new service for feature toggle (#339) ([70d5285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d5285)), closes [#339](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/339)

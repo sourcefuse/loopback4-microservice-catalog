@@ -1,10 +1,14 @@
+# @sourceloop/audit-service
 
-# audit-service
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
-[![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+![npm](https://img.shields.io/npm/dm/@sourceloop/audit-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/audit-service)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/audit-service/@loopback/core)
 
 A LoopBack microservice used for auditing user actions. It uses [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) to store the logs to a datasource. This service provides REST endpoints to perform CRUD operations for the audit logs.
-
 
 ## Installation
 
@@ -14,32 +18,29 @@ npm i @sourceloop/audit-service
 
 ```
 
-
 ## Usage
 
- - Create a new Loopback4 Application (If you don't have one already)
+- Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
 - Install the audit service
-`npm i @sourceloop/audit-service`
+  `npm i @sourceloop/audit-service`
 - Set the [environment variables](#environment-variables).
 - Run the [migrations](#migrations).
 - Add the `AuditServiceComponent` to your Loopback4 Application (in `application.ts`).
-	``` typescript
+  ```typescript
   // import the AuditServiceComponent
   import {AuditServiceComponent} from '@sourceloop/audit-service';
-	// add Component for AuditServiceComponent
-	this.component(AuditServiceComponent);
-	```
+  // add Component for AuditServiceComponent
+  this.component(AuditServiceComponent);
+  ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `AuditDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
 
-
 ### Creating Logs
 
-The logs in this service can either be created through the REST endpoint, or through a repository mixin provided with the [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log)  npm module. This mixin, by default, creates logs for all the inbuilt actions done through the extended repository.
-You can read more about how to use this package [here](https://github.com/sourcefuse/loopback4-audit-log#readme).  
-
+The logs in this service can either be created through the REST endpoint, or through a repository mixin provided with the [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) npm module. This mixin, by default, creates logs for all the inbuilt actions done through the extended repository.
+You can read more about how to use this package [here](https://github.com/sourcefuse/loopback4-audit-log#readme).
 
 ### Environment Variables
 
@@ -60,7 +61,6 @@ JWT_SECRET=super_secret_string
 JWT_ISSUER=https://authentication.service
 ```
 
-
 | Name          | Required | Default Value | Description                                                                                                                        |
 | ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
@@ -76,14 +76,14 @@ JWT_ISSUER=https://authentication.service
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
 
-
-### Setting up a `DataSource`  
+### Setting up a `DataSource`
 
 Here is a Sample Implementation `DataSource` implementation using environment variables.
-``` TypeScript
+
+```TypeScript
 import {inject, lifeCycleObserver, LifeCycleObserver} from  '@loopback/core';
 import {juggler} from  '@loopback/repository';
-import {AuditDbSourceName} from  '@sourceloop/audit-log';  
+import {AuditDbSourceName} from  '@sourceloop/audit-log';
 
 const  config = {
   name:  AuditDbSourceName,
@@ -96,7 +96,7 @@ const  config = {
   database:  process.env.DB_DATABASE,
   schema:  process.env.DB_SCHEMA,
 };
-  
+
 
 @lifeCycleObserver('datasource')
 export  class  AuditDbDataSource  extends  juggler.DataSource implements  LifeCycleObserver {
@@ -114,11 +114,9 @@ export  class  AuditDbDataSource  extends  juggler.DataSource implements  LifeCy
 
 ```
 
-
 ### Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `AUDIT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `AUDIT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
-
 
 ### API Documentation
 

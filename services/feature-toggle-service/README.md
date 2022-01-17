@@ -1,6 +1,12 @@
-# feature-toggle-service
+# @sourceloop/feature-toggle-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+![npm](https://img.shields.io/npm/dm/@sourceloop/feature-toggle-service)
+
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/feature-toggle-service)
+
+![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/feature-toggle-service/@loopback/core)
 
 ## Overview
 
@@ -53,6 +59,11 @@ Follow the steps to setup unleash [locally](https://docs.getunleash.io/deploy/ge
 - Run the [migrations](#migrations). (this will create the features at system, tenant and user level and their strategies)
 - Add the `FeatureToggleServiceComponent` to your Loopback4 Application (in `application.ts`).
   ```typescript
+  // add controllers to your application (optional)
+  this.bind(ToggleServiceBindings.Config).to({
+      bindControllers: true,
+      useCustomSequence: false
+  });
   // import the FeatureToggleServiceComponent
   import {FeatureToggleServiceComponent} from '@sourceloop/feature-toggle-service';
   // add Component for FeatureToggleService

@@ -83,6 +83,10 @@ fetch('/attachments/count',
 
 `GET /attachments/count`
 
+| Permissions |
+| ------- |
+| ViewAttachment   |
+
 <h3 id="attachmentcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -192,6 +196,10 @@ fetch('/attachments/{id}',
 ```
 
 `PUT /attachments/{id}`
+
+| Permissions |
+| ------- |
+| UpdateAttachment   |
 
 > Body parameter
 
@@ -316,6 +324,10 @@ fetch('/attachments/{id}',
 
 `PATCH /attachments/{id}`
 
+| Permissions |
+| ------- |
+| UpdateAttachment   |
+
 > Body parameter
 
 ```json
@@ -406,6 +418,10 @@ fetch('/attachments/{id}',
 ```
 
 `GET /attachments/{id}`
+
+| Permissions |
+| ------- |
+| ViewAttachment   |
 
 <h3 id="attachmentcontroller.findbyid-parameters">Parameters</h3>
 
@@ -633,6 +649,10 @@ fetch('/attachments/{id}',
 
 `DELETE /attachments/{id}`
 
+| Permissions |
+| ------- |
+| DeleteAttachment   |
+
 <h3 id="attachmentcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -732,6 +752,10 @@ fetch('/attachments',
 ```
 
 `POST /attachments`
+
+| Permissions |
+| ------- |
+| CreateAttachment   |
 
 > Body parameter
 
@@ -880,6 +904,10 @@ fetch('/attachments',
 
 `PATCH /attachments`
 
+| Permissions |
+| ------- |
+| UpdateAttachment   |
+
 > Body parameter
 
 ```json
@@ -980,6 +1008,10 @@ fetch('/attachments',
 ```
 
 `GET /attachments`
+
+| Permissions |
+| ------- |
+| ViewAttachment   |
 
 <h3 id="attachmentcontroller.find-parameters">Parameters</h3>
 
@@ -1351,6 +1383,10 @@ fetch('/attendees/count',
 
 `GET /attendees/count`
 
+| Permissions |
+| ------- |
+| ViewAttendee   |
+
 <h3 id="attendeecontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -1462,6 +1498,10 @@ fetch('/attendees/{id}',
 ```
 
 `PUT /attendees/{id}`
+
+| Permissions |
+| ------- |
+| UpdateAttendee   |
 
 > Body parameter
 
@@ -1589,6 +1629,10 @@ fetch('/attendees/{id}',
 
 `PATCH /attendees/{id}`
 
+| Permissions |
+| ------- |
+| UpdateAttendee   |
+
 > Body parameter
 
 ```json
@@ -1680,6 +1724,10 @@ fetch('/attendees/{id}',
 ```
 
 `GET /attendees/{id}`
+
+| Permissions |
+| ------- |
+| ViewAttendee   |
 
 <h3 id="attendeecontroller.findbyid-parameters">Parameters</h3>
 
@@ -1908,6 +1956,10 @@ fetch('/attendees/{id}',
 
 `DELETE /attendees/{id}`
 
+| Permissions |
+| ------- |
+| DeleteAttendee   |
+
 <h3 id="attendeecontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2009,6 +2061,10 @@ fetch('/attendees',
 ```
 
 `POST /attendees`
+
+| Permissions |
+| ------- |
+| CreateAttendee   |
 
 > Body parameter
 
@@ -2161,6 +2217,10 @@ fetch('/attendees',
 
 `PATCH /attendees`
 
+| Permissions |
+| ------- |
+| UpdateAttendee   |
+
 > Body parameter
 
 ```json
@@ -2262,6 +2322,10 @@ fetch('/attendees',
 ```
 
 `GET /attendees`
+
+| Permissions |
+| ------- |
+| ViewAttendee   |
 
 <h3 id="attendeecontroller.find-parameters">Parameters</h3>
 
@@ -2689,6 +2753,10 @@ fetch('/calendars/calendarSubscription',
 
 `POST /calendars/calendarSubscription`
 
+| Permissions |
+| ------- |
+| CreateCalendar   |
+
 > Body parameter
 
 ```json
@@ -2826,6 +2894,10 @@ fetch('/calendars/count',
 ```
 
 `GET /calendars/count`
+
+| Permissions |
+| ------- |
+| ViewCalendar   |
 
 <h3 id="calendarcontroller.count-parameters">Parameters</h3>
 
@@ -2968,6 +3040,10 @@ This api is to update the calendar by passing an id. This action will be allowed
       passed in the token and the corresponding access level, whereas to identify the admin we will 
       check for the permission.
 
+| Permissions |
+| ------- |
+| UpdateCalendar   |
+
 > Body parameter
 
 ```json
@@ -3106,6 +3182,10 @@ fetch('/calendars/{id}',
 
 `PATCH /calendars/{id}`
 
+| Permissions |
+| ------- |
+| UpdateCalendar   |
+
 > Body parameter
 
 ```json
@@ -3199,6 +3279,10 @@ fetch('/calendars/{id}',
 `GET /calendars/{id}`
 
 These requests will be available to everyone in the event to look at.
+
+| Permissions |
+| ------- |
+| ViewCalendar   |
 
 <h3 id="calendarcontroller.findbyid-parameters">Parameters</h3>
 
@@ -3702,6 +3786,10 @@ This api is to update the calendar by passing an id. This action will be allowed
       passed in the token and the corresponding access level, whereas to identify the admin we will 
       check for the permission.
 
+| Permissions |
+| ------- |
+| DeleteCalendar   |
+
 <h3 id="calendarcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -3829,6 +3917,10 @@ fetch('/calendars',
 This is an api to create a calendar for any user. 
       Recommendation: Use this while adding a user to the main application, in order to create 
       a primary calendar for that particular user.
+
+| Permissions |
+| ------- |
+| CreateCalendar   |
 
 > Body parameter
 
@@ -3992,6 +4084,10 @@ fetch('/calendars',
 
 `PATCH /calendars`
 
+| Permissions |
+| ------- |
+| UpdateCalendar   |
+
 > Body parameter
 
 ```json
@@ -4095,6 +4191,10 @@ fetch('/calendars',
 `GET /calendars`
 
 These requests will be available to everyone in the event to look at.
+
+| Permissions |
+| ------- |
+| ViewCalendar   |
 
 <h3 id="calendarcontroller.find-parameters">Parameters</h3>
 
@@ -4466,6 +4566,10 @@ fetch('/calendars/subscriptions/me',
 
 `GET /calendars/subscriptions/me`
 
+| Permissions |
+| ------- |
+| ViewSubscription   |
+
 <h3 id="subscriptioncontroller.findme-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -4834,6 +4938,10 @@ fetch('/subscriptions/count',
 
 `GET /subscriptions/count`
 
+| Permissions |
+| ------- |
+| ViewSubscription   |
+
 <h3 id="subscriptioncontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -4951,6 +5059,10 @@ fetch('/subscriptions/{id}',
 ```
 
 `PUT /subscriptions/{id}`
+
+| Permissions |
+| ------- |
+| UpdateSubscription   |
 
 > Body parameter
 
@@ -5087,6 +5199,10 @@ fetch('/subscriptions/{id}',
 
 `PATCH /subscriptions/{id}`
 
+| Permissions |
+| ------- |
+| UpdateSubscription   |
+
 > Body parameter
 
 ```json
@@ -5181,6 +5297,10 @@ fetch('/subscriptions/{id}',
 ```
 
 `GET /subscriptions/{id}`
+
+| Permissions |
+| ------- |
+| ViewSubscription   |
 
 <h3 id="subscriptioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -5412,6 +5532,10 @@ fetch('/subscriptions/{id}',
 
 `DELETE /subscriptions/{id}`
 
+| Permissions |
+| ------- |
+| DeleteSubscription   |
+
 <h3 id="subscriptioncontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -5519,6 +5643,10 @@ fetch('/subscriptions',
 ```
 
 `POST /subscriptions`
+
+| Permissions |
+| ------- |
+| CreateSubscription   |
 
 > Body parameter
 
@@ -5683,6 +5811,10 @@ fetch('/subscriptions',
 
 `PATCH /subscriptions`
 
+| Permissions |
+| ------- |
+| UpdateSubscription   |
+
 > Body parameter
 
 ```json
@@ -5787,6 +5919,10 @@ fetch('/subscriptions',
 ```
 
 `GET /subscriptions`
+
+| Permissions |
+| ------- |
+| ViewSubscription   |
 
 <h3 id="subscriptioncontroller.find-parameters">Parameters</h3>
 
@@ -6214,6 +6350,10 @@ fetch('/calendars/{id}/events',
 
 `POST /calendars/{id}/events`
 
+| Permissions |
+| ------- |
+| CreateEvent   |
+
 > Body parameter
 
 ```json
@@ -6410,6 +6550,10 @@ fetch('/calendars/{id}/events',
 
 `PATCH /calendars/{id}/events`
 
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -6523,6 +6667,10 @@ fetch('/calendars/{id}/events',
 ```
 
 `GET /calendars/{id}/events`
+
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="calendareventcontroller.find-parameters">Parameters</h3>
 
@@ -6678,6 +6826,10 @@ fetch('/calendars/{id}/events',
 
 `DELETE /calendars/{id}/events`
 
+| Permissions |
+| ------- |
+| DeleteEvent   |
+
 <h3 id="calendareventcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -6800,6 +6952,10 @@ fetch('/calendars/{id}/subscriptions',
 `POST /calendars/{id}/subscriptions`
 
 This is an api to create a calendar subscription for any calendar.
+
+| Permissions |
+| ------- |
+| CreateSubscription   |
 
 > Body parameter
 
@@ -6971,6 +7127,10 @@ This api is to update the calendar subscription by passing an `id`.
       the corresponding access level, whereas to identify the admin we will check 
       for the permission.
 
+| Permissions |
+| ------- |
+| UpdateSubscription   |
+
 > Body parameter
 
 ```json
@@ -7078,6 +7238,10 @@ fetch('/calendars/{id}/subscriptions',
 `GET /calendars/{id}/subscriptions`
 
 These requests will be available to the owner of the subscription.
+
+| Permissions |
+| ------- |
+| ViewSubscription   |
 
 <h3 id="calendarsubscriptioncontroller.find-parameters">Parameters</h3>
 
@@ -7220,6 +7384,10 @@ This api is to update the calendar subscription by passing an id.
       To identify the ‘owner’ we will check for the email passed in the token and the 
       corresponding access level, whereas to identify the admin we will check for the permission.
 
+| Permissions |
+| ------- |
+| DeleteSubscription   |
+
 <h3 id="calendarsubscriptioncontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -7332,6 +7500,10 @@ fetch('/calendars/{id}/working-hours',
 `POST /calendars/{id}/working-hours`
 
 This is an api to create a calendar for any user.
+
+| Permissions |
+| ------- |
+| CreateWorkingHour   |
 
 > Body parameter
 
@@ -7477,6 +7649,10 @@ fetch('/calendars/{id}/working-hours',
 
 `PATCH /calendars/{id}/working-hours`
 
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
+
 > Body parameter
 
 ```json
@@ -7577,6 +7753,10 @@ fetch('/calendars/{id}/working-hours',
 ```
 
 `GET /calendars/{id}/working-hours`
+
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
 
 <h3 id="calendarworkinghourcontroller.find-parameters">Parameters</h3>
 
@@ -7707,6 +7887,10 @@ fetch('/calendars/{id}/working-hours',
 
 `DELETE /calendars/{id}/working-hours`
 
+| Permissions |
+| ------- |
+| DeleteWorkingHour   |
+
 <h3 id="calendarworkinghourcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -7787,6 +7971,10 @@ fetch('/events/count',
 ```
 
 `GET /events/count`
+
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="eventcontroller.count-parameters">Parameters</h3>
 
@@ -7930,6 +8118,11 @@ fetch('/events/freeBusy',
 
 `GET /events/freeBusy`
 
+| Permissions |
+| ------- |
+| ViewEvent   |
+| ViewAttendee   |
+
 > Body parameter
 
 ```json
@@ -8069,6 +8262,10 @@ fetch('/events/{id}/hard',
 
 `DELETE /events/{id}/hard`
 
+| Permissions |
+| ------- |
+| HardDeleteEvent   |
+
 <h3 id="eventcontroller.harddeletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -8194,6 +8391,10 @@ fetch('/events/{id}',
 `PUT /events/{id}`
 
 This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).
+
+| Permissions |
+| ------- |
+| UpdateEvent   |
 
 > Body parameter
 
@@ -8356,6 +8557,10 @@ fetch('/events/{id}',
 
 This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).
 
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -8460,6 +8665,10 @@ fetch('/events/{id}',
 `GET /events/{id}`
 
 This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.
+
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="eventcontroller.findbyid-parameters">Parameters</h3>
 
@@ -9106,6 +9315,10 @@ fetch('/events/{id}',
 
 Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).
 
+| Permissions |
+| ------- |
+| DeleteEvent   |
+
 <h3 id="eventcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -9296,6 +9509,10 @@ While an organizer creates an event, we get participants details along with it.
       behalf of someone else, In this case we will be saving the creator details 
       (generally the organiser is the creator themselves, so we will be keeping the organiser 
         and created_by the same).
+
+| Permissions |
+| ------- |
+| CreateEvent   |
 
 > Body parameter
 
@@ -9522,6 +9739,10 @@ fetch('/events',
 
 `PATCH /events`
 
+| Permissions |
+| ------- |
+| UpdateEvent   |
+
 > Body parameter
 
 ```json
@@ -9636,6 +9857,10 @@ fetch('/events',
 `GET /events`
 
 This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.
+
+| Permissions |
+| ------- |
+| ViewEvent   |
 
 <h3 id="eventcontroller.find-parameters">Parameters</h3>
 
@@ -10041,6 +10266,10 @@ fetch('/events/{id}/attachments',
 
 Organizer can add attachments to the event (if it was missed while creating event).
 
+| Permissions |
+| ------- |
+| CreateAttachment   |
+
 > Body parameter
 
 ```json
@@ -10191,6 +10420,10 @@ fetch('/events/{id}/attachments',
 
 Organizer can update details of the attachment.
 
+| Permissions |
+| ------- |
+| UpdateAttachment   |
+
 > Body parameter
 
 ```json
@@ -10294,6 +10527,10 @@ fetch('/events/{id}/attachments',
 `GET /events/{id}/attachments`
 
 These requests will be available to everyone in the event to look at.
+
+| Permissions |
+| ------- |
+| ViewAttachment   |
 
 <h3 id="eventattachmentcontroller.find-parameters">Parameters</h3>
 
@@ -10416,6 +10653,10 @@ fetch('/events/{id}/attachments',
 
 Organizer can delete the attachment.
 
+| Permissions |
+| ------- |
+| DeleteAttachment   |
+
 <h3 id="eventattachmentcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -10532,6 +10773,10 @@ fetch('/events/{id}/attendees',
 `POST /events/{id}/attendees`
 
 Attendees could be added to the event. This action could only be performed by the organizer
+
+| Permissions |
+| ------- |
+| CreateAttendee   |
 
 > Body parameter
 
@@ -10687,6 +10932,10 @@ fetch('/events/{id}/attendees',
 
 Attendees can update details here. (Mainly accept or reject the invitation)
 
+| Permissions |
+| ------- |
+| UpdateAttendee   |
+
 > Body parameter
 
 ```json
@@ -10791,6 +11040,10 @@ fetch('/events/{id}/attendees',
 `GET /events/{id}/attendees`
 
 Attendees are visible to everyone according to the access permissions provided to them.
+
+| Permissions |
+| ------- |
+| ViewAttendee   |
 
 <h3 id="eventattendeecontroller.find-parameters">Parameters</h3>
 
@@ -10924,6 +11177,10 @@ fetch('/events/{id}/attendees',
 
 Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.
 
+| Permissions |
+| ------- |
+| DeleteAttendee   |
+
 <h3 id="eventattendeecontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -11004,6 +11261,10 @@ fetch('/settings/count',
 ```
 
 `GET /settings/count`
+
+| Permissions |
+| ------- |
+| ViewSettings   |
 
 <h3 id="settingscontroller.count-parameters">Parameters</h3>
 
@@ -11114,6 +11375,10 @@ fetch('/settings/{id}',
 `PUT /settings/{id}`
 
 Update setting.
+
+| Permissions |
+| ------- |
+| UpdateSettings   |
 
 > Body parameter
 
@@ -11235,6 +11500,10 @@ fetch('/settings/{id}',
 
 `PATCH /settings/{id}`
 
+| Permissions |
+| ------- |
+| UpdateSettings   |
+
 > Body parameter
 
 ```json
@@ -11327,6 +11596,10 @@ fetch('/settings/{id}',
 
 These requests will be available to everyone in the setting to look at.
 
+| Permissions |
+| ------- |
+| ViewSettings   |
+
 <h3 id="settingscontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -11418,6 +11691,10 @@ fetch('/settings/{id}',
 `DELETE /settings/{id}`
 
 Delete setting.
+
+| Permissions |
+| ------- |
+| DeleteSettings   |
 
 <h3 id="settingscontroller.deletebyid-parameters">Parameters</h3>
 
@@ -11518,6 +11795,10 @@ fetch('/settings',
 `POST /settings`
 
 Create any new settings
+
+| Permissions |
+| ------- |
+| CreateSettings   |
 
 > Body parameter
 
@@ -11662,6 +11943,10 @@ fetch('/settings',
 
 `PATCH /settings`
 
+| Permissions |
+| ------- |
+| UpdateSettings   |
+
 > Body parameter
 
 ```json
@@ -11761,6 +12046,10 @@ fetch('/settings',
 ```
 
 `GET /settings`
+
+| Permissions |
+| ------- |
+| ViewSettings   |
 
 <h3 id="settingscontroller.find-parameters">Parameters</h3>
 
@@ -11889,6 +12178,10 @@ fetch('/themes/count',
 
 `GET /themes/count`
 
+| Permissions |
+| ------- |
+| ViewTheme   |
+
 <h3 id="themecontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -11996,6 +12289,10 @@ fetch('/themes/{id}',
 ```
 
 `PUT /themes/{id}`
+
+| Permissions |
+| ------- |
+| UpdateTheme   |
 
 > Body parameter
 
@@ -12117,6 +12414,10 @@ fetch('/themes/{id}',
 
 `PATCH /themes/{id}`
 
+| Permissions |
+| ------- |
+| UpdateTheme   |
+
 > Body parameter
 
 ```json
@@ -12207,6 +12508,10 @@ fetch('/themes/{id}',
 
 `GET /themes/{id}`
 
+| Permissions |
+| ------- |
+| ViewTheme   |
+
 <h3 id="themecontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -12296,6 +12601,10 @@ fetch('/themes/{id}',
 ```
 
 `DELETE /themes/{id}`
+
+| Permissions |
+| ------- |
+| DeleteTheme   |
 
 <h3 id="themecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -12394,6 +12703,10 @@ fetch('/themes',
 ```
 
 `POST /themes`
+
+| Permissions |
+| ------- |
+| CreateTheme   |
 
 > Body parameter
 
@@ -12538,6 +12851,10 @@ fetch('/themes',
 
 `PATCH /themes`
 
+| Permissions |
+| ------- |
+| UpdateTheme   |
+
 > Body parameter
 
 ```json
@@ -12637,6 +12954,10 @@ fetch('/themes',
 ```
 
 `GET /themes`
+
+| Permissions |
+| ------- |
+| ViewTheme   |
 
 <h3 id="themecontroller.find-parameters">Parameters</h3>
 
@@ -12756,6 +13077,10 @@ fetch('/working-hours/count',
 
 `GET /working-hours/count`
 
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
+
 <h3 id="workinghourcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -12868,6 +13193,10 @@ This api is to update the calendar by passing an `id`. This action will be allow
       to the owner of the calendar or the admin. To identify the `owner` we 
       will check for the email passed in the token and the corresponding access level, 
       whereas to identify the admin we will check for the permission.
+
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
 
 > Body parameter
 
@@ -12989,6 +13318,10 @@ fetch('/working-hours/{id}',
 
 `PATCH /working-hours/{id}`
 
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
+
 > Body parameter
 
 ```json
@@ -13080,6 +13413,10 @@ fetch('/working-hours/{id}',
 `GET /working-hours/{id}`
 
 These requests will be available to everyone to look at. This will be represent the work timings for the owner of the calendar.
+
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
 
 <h3 id="workinghourcontroller.findbyid-parameters">Parameters</h3>
 
@@ -13311,6 +13648,10 @@ This api is to update the calendar by passing an `id`. This action will
       we will check for the email passed in the token and the corresponding access level, 
       whereas to identify the admin we will check for the permission.
 
+| Permissions |
+| ------- |
+| DeleteWorkingHour   |
+
 <h3 id="workinghourcontroller.deletebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -13408,6 +13749,10 @@ fetch('/working-hours',
 ```
 
 `POST /working-hours`
+
+| Permissions |
+| ------- |
+| CreateWorkingHour   |
 
 > Body parameter
 
@@ -13552,6 +13897,10 @@ fetch('/working-hours',
 
 `PATCH /working-hours`
 
+| Permissions |
+| ------- |
+| UpdateWorkingHour   |
+
 > Body parameter
 
 ```json
@@ -13651,6 +14000,10 @@ fetch('/working-hours',
 ```
 
 `GET /working-hours`
+
+| Permissions |
+| ------- |
+| ViewWorkingHour   |
 
 <h3 id="workinghourcontroller.find-parameters">Parameters</h3>
 

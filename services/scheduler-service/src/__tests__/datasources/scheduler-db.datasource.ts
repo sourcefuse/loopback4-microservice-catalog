@@ -5,7 +5,13 @@ import {
   ValueOrPromise,
 } from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import * as config from './scheduler-db.datasource.config.json';
+
+const config = {
+  name: 'schedulerDb',
+  connector: 'memory',
+  localStorage: '',
+  file: '',
+};
 
 @lifeCycleObserver('datasource')
 export class SchedulerDbDataSource

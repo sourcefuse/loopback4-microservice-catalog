@@ -1,6 +1,6 @@
 import {Context, Strategy} from 'unleash-client';
 
-export class TenantStrategy extends Strategy {
+export class UserStrategy extends Strategy {
   constructor() {
     super('User'); // name of the strategy
   }
