@@ -47,9 +47,8 @@ export class LoginHelperService {
     } else if (!req.client_secret) {
       this.logger.error('client secret key missing from request object');
       throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
-    } else if (
-      currentUser.authClientIds.indexOf((client.id ?? 0).toString()) < 0
-    ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } else if ((currentUser.authClientIds as any).indexOf(client.id ?? 0) < 0) {
       this.logger.error(
         'User is not allowed to access client id passed in request',
       );
