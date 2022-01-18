@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.1 (2022-01-17)</small>
+
+* fix(authentication-service): authclientId issue (#468) ([de351b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/de351b6)), closes [#468](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/468)
+
+
+
+
+
 ## 4.0.0 (2022-01-16)
 
 * fix(authentication-service): change response of signup and forget password (#459) ([9ab48c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ab48c1)), closes [#459](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/459) [#457](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/457)
