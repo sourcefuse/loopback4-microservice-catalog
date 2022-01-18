@@ -11,7 +11,10 @@ import {configure} from 'i18n';
 
 import {LocaleKey} from './enums';
 import {SFCoreBindings, OASBindings} from './keys';
-import {LoggerExtensionComponent} from './components';
+import {
+  LoggerExtensionComponent,
+  SwaggerAuthenticationComponent,
+} from './components';
 import {CoreConfig} from './types';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
@@ -55,6 +58,10 @@ export class CoreComponent implements Component {
             },
       });
       middlewares.push(swStatsMiddleware);
+    }
+
+    if (this.coreConfig?.authenticateSwaggerUI) {
+      this.application.component(SwaggerAuthenticationComponent);
     }
 
     // Configure locale provider

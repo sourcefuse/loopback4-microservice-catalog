@@ -18,17 +18,14 @@ npm i @sourceloop/authentication-service
   `lb4 testapp`
 - Install the authentication service
   `npm i @sourceloop/core`
-- Add the `SwaggerAuthenticationComponent` to your Loopback4 Application (in `application.ts`).
+- Configure `@sourceloop/core` component to include `SwaggerAuthenticateComponent` - 
   ```typescript
-  // import the AuthenticationServiceComponent
-  import {SwaggerAuthenticationComponent} from '@sourceloop/core';
-  // add Component for AuthenticationService
-  this.component(SwaggerAuthenticationComponent);
+  this.bind(SFCoreBindings.config).to({
+    authenticateSwaggerUI: true,
+    swaggerUsername: '<username>',
+    swaggerPassword: '<password>',
+  });
   ```
-- Bind the `HttpAuthenticationVerifier` to override the basic authentication logic provided by default.
+- Bind the `HttpAuthenticationVerifier` to override the basic authentication logic provided by [default](/providers/http-authentication.verifier.ts).
 - Start the application
   `npm start`
-
-### Environment Variables
-
-By default, the application allows access on the basis of `SWAGGER_CREDS_USER`(username) and `SWAGGER_CREDS_PASS`(password) variables provided in the environment.
