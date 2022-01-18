@@ -4,7 +4,6 @@ import * as AppleStrategy from 'passport-apple';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
-
 import {
   ForgetPasswordResponseDto,
   SignupRequestResponseDto,
@@ -134,7 +133,7 @@ export interface JwtPayloadFn {
 }
 
 export interface ForgotPasswordHandlerFn {
-  (dto: DataObject<ForgetPasswordResponseDto>): Promise<void>;
+  (dto: DataObject<ForgetPasswordResponseDto>): Promise<unknown>;
 }
 
 export interface SignupTokenHandlerFn {

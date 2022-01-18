@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "3.0.2",
+  "version": "4.0.1",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -26,7 +26,7 @@
     "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-    "coverage": "nyc npm run test",
+    "coverage": "nyc npm run test && npx update-badge",
     "posttest": "npm run lint",
     "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
@@ -62,7 +62,7 @@
     "@loopback/rest": "^11.0.0",
     "@loopback/rest-explorer": "^4.0.0",
     "@loopback/service-proxy": "^4.0.0",
-    "@sourceloop/core": "^5.0.1",
+    "@sourceloop/core": "^6.0.0",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^10.0.0",
@@ -83,6 +83,7 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@loopback/build": "^8.0.0",
     "@loopback/eslint-config": "^12.0.0",
     "@loopback/testlab": "^4.0.0",
@@ -99,6 +100,7 @@
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/passport-instagram": "^1.0.0",
     "@types/sinon": "^10.0.6",
+    "check-code-coverage": "^1.10.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^7.32.0",

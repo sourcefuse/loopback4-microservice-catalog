@@ -1,9 +1,9 @@
 /* eslint-disable  @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
+import {IAuthClientDTO} from '..';
 
 @model()
-export class ForgetPasswordDto extends Model {
+export class ForgetPasswordDto extends Model implements IAuthClientDTO {
   @property({
     type: 'string',
     required: true,

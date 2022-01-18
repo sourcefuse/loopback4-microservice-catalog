@@ -1,4 +1,4 @@
-import {TourState} from './Tour';
+import {TourState} from './tour';
 
 export interface SaveStateParameters {
   tourId: string;

@@ -30,6 +30,7 @@ import {
 } from '../commands/types';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {Observable} from 'rxjs';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,7 @@ export class TourStoreServiceService {
   private readonly defaultLTCommand = new LoadTCommand(this.storage);
   private readonly defaultDSCommand = new DeleteSCommand(this.storage);
   private readonly defaultDTCommand = new DeleteTCommand(this.storage);
+  private sessionGenerator: () => string = () => uuidv4();
 
   constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) {
     this.commandMap.set('SaveTourCommand', this.defaultSTCommand);
@@ -120,28 +122,16 @@ export class TourStoreServiceService {
     return this.functionMap.get(key);
   }
 
-  public createUUID(): string {
-    let dt = new Date().getTime();
-    const num1 = 16;
-    const num2 = 0x3;
-    const num3 = 0x8;
-    const crypto = window.crypto || window.Crypto.prototype;
-    const array = new Uint32Array(1);
-    crypto.getRandomValues(array); // Compliant for security-sensitive use cases
-    const FileId = array[0];
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, x => {
-      const r = (dt + FileId * num1) % num1 || 0;
-      dt = Math.floor(dt / num1);
-      return (x === 'x' ? r : (r && num2) || num3).toString(num1);
-    });
-  }
-
   public generateSessionId(): void {
-    this.sessionId = this.createUUID();
+    this.sessionId = this.sessionGenerator();
     this.storage.set('TOUR_SESSION_ID', this.sessionId);
   }
 
   public getSessionId(): string {
     return this.storage.get('TOUR_SESSION_ID');
+  }
+
+  public setSessionIdGenerator(fn: () => string) {
+    this.sessionGenerator = fn;
   }
 }

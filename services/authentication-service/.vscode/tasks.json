@@ -15,6 +15,20 @@
       "problemMatcher": "$tsc-watch"
     },
     {
+      "label": "Build Project",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$tsc"
+    },
+    {
       "label": "Build, Test and Lint",
       "type": "shell",
       "command": "npm",

@@ -74,7 +74,8 @@
     "sandbox/**",
     "**/__fixtures__/**",
     "**/__tests__/**",
-    "**/*.md"
+    "**/*.md",
+    "packages/core/locales/**"
   ],
   "version": "independent"
 }

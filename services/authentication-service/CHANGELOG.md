@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.1 (2022-01-17)</small>
+
+* fix(authentication-service): authclientId issue (#468) ([de351b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/de351b6)), closes [#468](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/468)
+
+
+
+
+
+## 4.0.0 (2022-01-16)
+
+* fix(authentication-service): change response of signup and forget password (#459) ([9ab48c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ab48c1)), closes [#459](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/459) [#457](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/457)
+* fix(authentication-service): security issue with forget password and login api (#466) ([7da5b0b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7da5b0b)), closes [#466](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/466) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+### BREAKING CHANGE
+
+* removed response body and changed response code of signup-token and forget-password apis
+* response type of forget password and login api changed
+
+
+
+
 ## <small>3.0.2 (2022-01-12)</small>
 
 * fix(authentication-service): downgrade node-fetch ([bd20548](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bd20548)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

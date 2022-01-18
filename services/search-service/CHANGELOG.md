@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.2 (2022-01-16)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
 ## <small>0.5.1 (2022-01-12)</small>
 
 * fix(search-service): fix export of classes, fix search source name in query (#456) ([267da39](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/267da39)), closes [#456](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/456) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
