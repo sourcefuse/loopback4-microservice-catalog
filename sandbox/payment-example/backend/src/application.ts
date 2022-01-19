@@ -7,15 +7,11 @@ import {
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {PaymentServiceComponent} from '@sourceloop/payment-service';
 import {
-  GatewayBindings,
-  GatewayProvider,
+  PaymentServiceComponent,
   RazorpayBindings,
-  RazorpayProvider,
   StripeBindings,
-  StripeProvider,
-} from '@sourceloop/payment-service/dist/providers';
+} from '@sourceloop/payment-service';
 import path from 'path';
 import {MySequence} from './sequence';
 
@@ -40,14 +36,11 @@ export class PaymentExampleBackendApplication extends BootMixin(
     this.component(RestExplorerComponent);
     this.component(PaymentServiceComponent);
     this.bind(StripeBindings.Config).to({dataKey: '', publishKey: ''});
-    this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
     this.bind(RazorpayBindings.RazorpayConfig).to({
       dataKey: '',
       publishKey: '',
     });
-    this.bind(RazorpayBindings.RazorpayHelper).toProvider(RazorpayProvider);
-    this.bind(GatewayBindings.GatewayHelper).toProvider(GatewayProvider);
-
+        
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {

@@ -40,7 +40,7 @@ import {
   TemplatesRepository,
   SubscriptionsRepository,
 } from './repositories';
-import {RazorpayProvider, GatewayProvider, StripeProvider} from './providers';
+import {RazorpayProvider, GatewayProvider, StripeProvider, GatewayBindings, RazorpayBindings, StripeBindings} from './providers';
 
 // Configure the binding for PaymentServiceComponent
 @injectable({
@@ -93,9 +93,9 @@ export class PaymentServiceComponent implements Component {
       SubscriptionsRepository,
     ];
     this.providers = {
-      RazorpayProvider,
-      StripeProvider,
-      GatewayProvider,
+      [GatewayBindings.GatewayHelper.key]: GatewayProvider,
+      [RazorpayBindings.RazorpayHelper.key]: RazorpayProvider,
+      [StripeBindings.StripeHelper.key]: StripeProvider,
     };
   }
 }
