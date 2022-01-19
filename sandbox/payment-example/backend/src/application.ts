@@ -40,7 +40,7 @@ export class PaymentExampleBackendApplication extends BootMixin(
       dataKey: '',
       publishKey: '',
     });
-        
+
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {

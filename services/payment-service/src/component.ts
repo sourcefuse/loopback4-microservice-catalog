@@ -40,7 +40,14 @@ import {
   TemplatesRepository,
   SubscriptionsRepository,
 } from './repositories';
-import {RazorpayProvider, GatewayProvider, StripeProvider, GatewayBindings, RazorpayBindings, StripeBindings} from './providers';
+import {
+  RazorpayProvider,
+  GatewayProvider,
+  StripeProvider,
+  GatewayBindings,
+  RazorpayBindings,
+  StripeBindings,
+} from './providers';
 
 // Configure the binding for PaymentServiceComponent
 @injectable({
