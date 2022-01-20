@@ -6,9 +6,11 @@ import {
   TourButton,
   TourStep,
   TourState,
-  filterFunction,
+  FilterFunction,
   Props,
   Status,
+  TourStepChange,
+  TourComplete,
 } from '../models';
 import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
 import {interval, Subject} from 'rxjs';
@@ -18,12 +20,10 @@ import {filter, map, take, takeWhile, tap} from 'rxjs/operators';
   providedIn: 'root',
 })
 export class TourServiceService {
-  private readonly tourComplete = new Subject<{
-    index: number;
-    tour: Shepherd.Tour;
-    tourId: string;
-  }>();
+  private readonly tourComplete = new Subject<TourComplete>();
   tourComplete$ = this.tourComplete.asObservable();
+  private readonly tourStepChange = new Subject<TourStepChange>();
+  tourStepChange$ = this.tourStepChange.asObservable();
   private readonly interval = 100;
 
   private tour = new Shepherd.Tour({
@@ -71,11 +71,24 @@ export class TourServiceService {
     }
   }
 
-  private navigationCheckNext(event: NavigationEvent, e: TourStep): void {
+  private navigationCheckNext(
+    event: NavigationEvent,
+    e: TourStep,
+    tourInstance: Tour,
+    currentStepId: string,
+    previousStepId: string,
+  ): void {
     if (event instanceof NavigationEnd && event.url === e.currentRoute) {
       this.waitForElement(e.attachTo.element, 0)
         .then(() => {
           this.tour.next();
+          this.tourStepChange.next({
+            tourId: tourInstance.tourId,
+            currentStepId,
+            previousStepId,
+            moveForward: true,
+          });
+          this.pauseAllVideos();
         })
         .catch(() => {
           throw new Error('Error detected in loading');
@@ -83,11 +96,24 @@ export class TourServiceService {
     }
   }
 
-  private navigationCheckBack(event: NavigationEvent, e: TourStep): void {
+  private navigationCheckBack(
+    event: NavigationEvent,
+    e: TourStep,
+    tourInstance: Tour,
+    currentStepId: string,
+    previousStepId: string,
+  ): void {
     if (event instanceof NavigationEnd && event.url === e.currentRoute) {
       this.waitForElement(e.attachTo.element, 0)
         .then(() => {
           this.tour.back();
+          this.tourStepChange.next({
+            tourId: tourInstance.tourId,
+            currentStepId,
+            previousStepId,
+            moveForward: false,
+          });
+          this.pauseAllVideos();
         })
         .catch(() => {
           throw new Error('Error detected in loading');
@@ -166,7 +192,13 @@ export class TourServiceService {
                 const nextStep = tourInstance.tourSteps.filter(
                   ts => ts.id === e.nextStepId,
                 )[0];
-                this.navigationCheckNext(event, nextStep);
+                this.navigationCheckNext(
+                  event,
+                  nextStep,
+                  tourInstance,
+                  e.nextStepId,
+                  e.id,
+                );
               });
             };
             const wrapperPrev = () => {
@@ -186,7 +218,14 @@ export class TourServiceService {
                 const prevStep = tourInstance.tourSteps.filter(
                   ts => ts.id === e.prevStepId,
                 )[0];
-                this.navigationCheckBack(event, prevStep);
+
+                this.navigationCheckBack(
+                  event,
+                  prevStep,
+                  tourInstance,
+                  e.prevStepId,
+                  e.id,
+                );
               });
             };
             const wrapperNormalNext = () => {
@@ -202,6 +241,13 @@ export class TourServiceService {
                 })
                 .subscribe();
               this.tour.next();
+              this.tourStepChange.next({
+                tourId: tourInstance.tourId,
+                currentStepId: e.nextStepId,
+                previousStepId: e.id,
+                moveForward: true,
+              });
+              this.pauseAllVideos();
             };
             const wrapperNormalPrev = () => {
               this.tourStoreService
@@ -216,6 +262,13 @@ export class TourServiceService {
                 })
                 .subscribe();
               this.tour.back();
+              this.tourStepChange.next({
+                tourId: tourInstance.tourId,
+                currentStepId: e.prevStepId,
+                previousStepId: e.id,
+                moveForward: true,
+              });
+              this.pauseAllVideos();
             };
             this.actionAssignment(
               e,
@@ -266,7 +319,13 @@ export class TourServiceService {
                       .subscribe();
                     this.router.navigate([er.nextRoute]);
                     this.router.events.subscribe((event: NavigationEvent) => {
-                      this.navigationCheckNext(event, er);
+                      this.navigationCheckNext(
+                        event,
+                        er,
+                        tourInstance,
+                        er.nextStepId,
+                        er.id,
+                      );
                     });
                   };
                   const wrapperPrevRemoved = () => {
@@ -283,7 +342,13 @@ export class TourServiceService {
                       .subscribe();
                     this.router.navigate([er.prevRoute]);
                     this.router.events.subscribe((event: NavigationEvent) => {
-                      this.navigationCheckBack(event, er);
+                      this.navigationCheckBack(
+                        event,
+                        er,
+                        tourInstance,
+                        er.prevStepId,
+                        er.id,
+                      );
                     });
                   };
                   const wrapperNormalNextRemoved = () => {
@@ -299,6 +364,13 @@ export class TourServiceService {
                       })
                       .subscribe();
                     this.tour.next();
+                    this.tourStepChange.next({
+                      tourId: tourInstance.tourId,
+                      currentStepId: er.nextStepId,
+                      previousStepId: er.id,
+                      moveForward: true,
+                    });
+                    this.pauseAllVideos();
                   };
                   const wrapperNormalPrevRemoved = () => {
                     this.tourStoreService
@@ -313,6 +385,13 @@ export class TourServiceService {
                       })
                       .subscribe();
                     this.tour.back();
+                    this.tourStepChange.next({
+                      tourId: tourInstance.tourId,
+                      currentStepId: er.nextStepId,
+                      previousStepId: er.id,
+                      moveForward: false,
+                    });
+                    this.pauseAllVideos();
                   };
                   this.actionAssignment(
                     er,
@@ -337,7 +416,7 @@ export class TourServiceService {
     tourId: string,
     params?: {[key: string]: string},
     props?: Props,
-    filterFn?: filterFunction,
+    filterFn?: FilterFunction,
   ): void {
     this.tourStoreService
       .loadTour({
@@ -346,14 +425,17 @@ export class TourServiceService {
       })
       .subscribe(tourInstance => {
         if (tourInstance && tourInstance.tourSteps.length > 0) {
-          let steps = JSON.stringify(tourInstance.tourSteps);
-          Object.keys(params).forEach(key => {
-            steps = steps.replace(
-              new RegExp(`\\{\\{${key}\\}\\}`),
-              params[key],
-            );
-          });
-          tourInstance.tourSteps = JSON.parse(steps);
+          if (params) {
+            let steps = JSON.stringify(tourInstance.tourSteps);
+
+            Object.keys(params).forEach(key => {
+              steps = steps.replace(
+                new RegExp(`\\{\\{${key}\\}\\}`),
+                params[key],
+              );
+            });
+            tourInstance.tourSteps = JSON.parse(steps);
+          }
           this.tour = new Shepherd.Tour({
             useModalOverlay: true,
             defaultStepOptions: {
@@ -430,5 +512,8 @@ export class TourServiceService {
     } else {
       return Status.InProgress;
     }
+  }
+  private pauseAllVideos() {
+    document.querySelectorAll('video').forEach(vid => vid.pause());
   }
 }
