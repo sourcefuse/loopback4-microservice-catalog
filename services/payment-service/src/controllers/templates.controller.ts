@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {Templates} from '../models';
 import {TemplatesRepository} from '../repositories';

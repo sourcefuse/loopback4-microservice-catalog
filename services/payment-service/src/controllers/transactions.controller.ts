@@ -18,7 +18,6 @@ import {
   put,
   Request,
   requestBody,
-  response,
   Response,
   RestBindings,
 } from '@loopback/rest';

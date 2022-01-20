@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {PaymentGateways} from '../models';
 import {PaymentGatewaysRepository} from '../repositories';

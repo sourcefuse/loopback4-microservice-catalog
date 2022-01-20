@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {Subscriptions} from '../models';
 import {STATUS_CODE} from '@sourceloop/core';

@@ -1,6 +1,6 @@
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {get, param, response, Response, RestBindings} from '@loopback/rest';
+import {get, param, Response, RestBindings} from '@loopback/rest';
 
 import {GatewayBindings, IGateway} from '../providers';
 import {TemplatesRepository, SubscriptionsRepository} from '../repositories';

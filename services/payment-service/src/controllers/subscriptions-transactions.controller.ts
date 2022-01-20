@@ -4,7 +4,6 @@ import {
   post,
   Request,
   requestBody,
-  response,
   Response,
   RestBindings,
 } from '@loopback/rest';

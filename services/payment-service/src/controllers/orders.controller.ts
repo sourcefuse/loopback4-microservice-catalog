@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
 import {Orders} from '../models';
