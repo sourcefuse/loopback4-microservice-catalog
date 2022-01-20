@@ -2,14 +2,10 @@
 This is a POC of a CLI that will work similarly to the `lb4` cli. The `sourceloop-cli` will perform similar scaffolding functions for `Sourceloop` based projects.
 
 ## Building
-From the root of the package, run
-```shell
-npm pack
-```
-which will output a `tar` file. You can then install the package globally or in another project.
+To install sourceloop-cli, run
 
 ```shell
-npm install -g sourceloop-cli-1.0.0.tgz
+npm install @sourceloop/cli
 ```
 
 ## Usage
