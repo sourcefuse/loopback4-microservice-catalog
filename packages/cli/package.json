@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Sourceloop CLI",
   "bin": {
-    "@sourceloop/cli": "bin/cli-main.js"
+    "sl": "bin/cli-main.js"
   },
   "main": "generators/projects/index.js",
   "private": true,
