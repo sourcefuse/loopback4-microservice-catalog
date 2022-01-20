@@ -40,7 +40,7 @@
     "type": "git",
     "url": ""
   },
-  "author": " <sumiter92@gmail.com>",
+  "author": "",
   "license": "",
   "files": [
     "README.md",
@@ -51,7 +51,7 @@
   "dependencies": {
     "@loopback/boot": "^3.3.1",
     "@loopback/context": "4.0.0",
-    "@loopback/core": "3.0.0",
+    "@loopback/core": "^3.0.0",
     "@loopback/repository": "^3.5.1",
     "@loopback/rest": "^9.2.1",
     "@loopback/rest-explorer": "^3.2.1",
