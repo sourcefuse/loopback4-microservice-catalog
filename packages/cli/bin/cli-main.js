@@ -55,12 +55,10 @@ if (args.length === 0) {
 
 const originalCommand = args[0];
 
-switch (originalCommand) {
-  case 'lb4':
-    lb_cli();
-    break;
-  default:
-    sl_cli();
+if (originalCommand == 'lb4') {
+  lb_cli();
+} else {
+  sl_cli();
 }
 
 function lb_cli() {
