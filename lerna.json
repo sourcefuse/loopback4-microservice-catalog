@@ -6,7 +6,7 @@
     "packages/search/projects/search-lib/",
     "services/*",
     "facades/*",
-    "sandbox/*"
+    "sandbox/**"
   ],
   "command": {
     "bootstrap": {

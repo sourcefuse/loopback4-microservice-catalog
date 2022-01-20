@@ -26,13 +26,16 @@ export class TransactionSubscriptionsController {
     private readonly subscriptionRepository: SubscriptionsRepository,
   ) {}
 
-  @get(`/transactions/subscription/{id}`)
-  @response(redirectStatusCode, {
-    description: 'Array of Transactions model instances',
-    content: {
-      'text/html': {
-        schema: {
-          type: 'object',
+  @get(`/transactions/subscription/{id}`, {
+    responses: {
+      [redirectStatusCode]: {
+        description: 'Array of Transactions model instances',
+        content: {
+          'text/html': {
+            schema: {
+              type: 'object',
+            },
+          },
         },
       },
     },

@@ -27,10 +27,13 @@ export class OrdersController {
     @repository(OrdersRepository)
     public ordersRepository: OrdersRepository,
   ) {}
-  @post('/orders')
-  @response(STATUS_CODE.OK, {
-    description: 'Orders model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Orders)}},
+  @post('/orders', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Orders model instance',
+        content: {'application/json': {schema: getModelSchemaRef(Orders)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -47,23 +50,29 @@ export class OrdersController {
     return this.ordersRepository.create(orders);
   }
 
-  @get('/orders/count')
-  @response(STATUS_CODE.OK, {
-    description: 'Orders model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get('/orders/count', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Orders model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(@param.where(Orders) where?: Where<Orders>): Promise<Count> {
     return this.ordersRepository.count(where);
   }
 
-  @get('/orders')
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Orders model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Orders, {includeRelations: true}),
+  @get('/orders', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Orders model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Orders, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -72,10 +81,13 @@ export class OrdersController {
     return this.ordersRepository.find(filter);
   }
 
-  @patch('/orders')
-  @response(STATUS_CODE.OK, {
-    description: 'Orders PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch('/orders', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Orders PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -91,12 +103,15 @@ export class OrdersController {
     return this.ordersRepository.updateAll(orders, where);
   }
 
-  @get(orderIdPath)
-  @response(STATUS_CODE.OK, {
-    description: 'Orders model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Orders, {includeRelations: true}),
+  @get(orderIdPath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Orders model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Orders, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -108,9 +123,12 @@ export class OrdersController {
     return this.ordersRepository.findById(id, filter);
   }
 
-  @patch(orderIdPath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Orders PATCH success',
+  @patch(orderIdPath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Orders PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -126,9 +144,12 @@ export class OrdersController {
     await this.ordersRepository.updateById(id, orders);
   }
 
-  @put(orderIdPath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Orders PUT success',
+  @put(orderIdPath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Orders PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -137,9 +158,12 @@ export class OrdersController {
     await this.ordersRepository.replaceById(id, orders);
   }
 
-  @del(orderIdPath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Orders DELETE success',
+  @del(orderIdPath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Orders DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.ordersRepository.deleteById(id);
