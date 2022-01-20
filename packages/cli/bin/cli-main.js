@@ -55,7 +55,7 @@ if (args.length === 0) {
 
 const originalCommand = args[0];
 
-if (originalCommand == 'lb4') {
+if (originalCommand === 'lb4') {
   lb_cli();
 } else {
   sl_cli();
