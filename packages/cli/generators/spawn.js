@@ -17,6 +17,6 @@ const {spawn} = require('child_process');
           resolve();
       });
     })
-  };
+  }
 
 module.exports = spawnProcess;
