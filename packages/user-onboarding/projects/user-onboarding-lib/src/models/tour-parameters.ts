@@ -1,4 +1,4 @@
-import {TourStep} from './tourStep';
+import {TourStep} from './tour-step';
 
 export interface SaveTourParameters {
   tourId: string;
