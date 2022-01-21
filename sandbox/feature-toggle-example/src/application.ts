@@ -11,6 +11,7 @@ import path from 'path';
 import {
   FeatureToggleServiceComponent,
   TenantStrategy,
+  ToggleServiceBindings,
   UNLEASH_CONST,
   UserStrategy,
 } from '@sourceloop/feature-toggle-service';
@@ -35,6 +36,11 @@ export class FeatureToggleExampleApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+
+    this.bind(ToggleServiceBindings.Config).to({
+      useCustomSequence: false,
+      bindControllers: true,
+    });
     this.component(FeatureToggleServiceComponent);
     unleash.initialize({
       url: process.env.UNLEASH_URL,
