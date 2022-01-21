@@ -1,4 +1,4 @@
-import {TourButton} from './tourButton';
+import {TourButton} from './tour-button';
 
 export interface TourStep {
   id: string;

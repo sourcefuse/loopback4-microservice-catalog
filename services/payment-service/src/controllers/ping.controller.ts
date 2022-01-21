@@ -1,11 +1,5 @@
 import {inject} from '@loopback/core';
-import {
-  Request,
-  RestBindings,
-  get,
-  response,
-  ResponseObject,
-} from '@loopback/rest';
+import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
 
 /**
@@ -44,8 +38,11 @@ export class PingController {
   ) {}
 
   // Map to `GET /ping`
-  @get('/ping')
-  @response(STATUS_CODE.OK, PING_RESPONSE)
+  @get('/ping', {
+    responses: {
+      [STATUS_CODE.OK]: PING_RESPONSE,
+    },
+  })
   ping(): object {
     // Reply with a greeting, the current time, the url, and request headers
     return {
