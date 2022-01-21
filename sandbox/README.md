@@ -25,6 +25,8 @@ The services are now running under the following:
 - [video-conferencing-ms-example](http://localhost:3040/explorer)
 - [workflow-ms-example](http://localhost:3031/explorer)
 - [chat-notification-pubnub-example](http://localhost:3050/explorer)
+- [feature-toggle-example](http://localhost:3039/explorer)
+- [unleash-server](http://localhost:4242)
 - [Camunda](http://localhost:8080)
 - [pgAdmin](http://localhost:5050)
 - PostgreSQL - localhost:5432

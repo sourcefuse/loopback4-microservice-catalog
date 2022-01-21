@@ -48,7 +48,7 @@ docker_push() {
   docker tag ${LOCAL_REGISTRY}/in-mail-example ${DOCKER_USERNAME}/in-mail-example
   docker tag ${LOCAL_REGISTRY}/search-ms-example ${DOCKER_USERNAME}/search-ms-example
   docker tag ${LOCAL_REGISTRY}/chat-notification-pubnub-example ${DOCKER_USERNAME}/chat-notification-pubnub-example
-  docker push ${LOCAL_REGISTRY}/feature-toggle-example ${DOCKER_USERNAME}/feature-toggle-example
+  docker tag ${LOCAL_REGISTRY}/feature-toggle-example ${DOCKER_USERNAME}/feature-toggle-example
 
   docker push ${DOCKER_USERNAME}/auth-multitenant-example
   docker push ${DOCKER_USERNAME}/notification-socket-example
