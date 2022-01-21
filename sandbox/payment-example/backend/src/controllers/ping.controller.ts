@@ -1,6 +1,5 @@
 import {inject} from '@loopback/core';
 import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
 
 /**
  * OpenAPI response for ping()
@@ -40,7 +39,7 @@ export class PingController {
   // Map to `GET /ping`
   @get('/ping', {
     responses: {
-      [STATUS_CODE.OK]: PING_RESPONSE,
+      '200': PING_RESPONSE,
     },
   })
   ping(): object {

@@ -139,6 +139,20 @@ x-in-mail-variables: &in-mail-variables
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
+x-payment-backend-variables: &payment-backend-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: payment_db
+  DB_SCHEMA: main
+  SUCCESS_CALLBACK_URL: http://localhost:3000
+  FAILURE_CALLBACK_URL: http://localhost:3000
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+
 x-search-ms-variables: &search-ms-variables
   NODE_ENV: dev
   LOG_LEVEL: debug
@@ -554,6 +568,35 @@ services:
     depends_on:
       - postgres
       - postgres_orchestrator
+    restart: on-failure
+
+  payment-backend-example:
+    image: ${REGISTRY:-localhost:32000}/payment-example/backend
+    build:
+      context: ./payment-example/backend
+      dockerfile: Dockerfile
+    ports:
+      - '3042:3000'
+    networks:
+      - sandbox
+    environment: *payment-backend-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    restart: on-failure
+
+  payment-backend-migration:
+    image: ${REGISTRY:-localhost:32000}/payment-example/backend
+    build:
+      context: ./payment-example/backend
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
+    environment: *payment-backend-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
     restart: on-failure
 
   redis:

@@ -6,7 +6,7 @@
     "packages/search/projects/search-lib/",
     "services/*",
     "facades/*",
-    "sandbox/*"
+    "sandbox/**"
   ],
   "command": {
     "bootstrap": {
@@ -27,7 +27,9 @@
         "@sourceloop/chat-notif-example_notif-service",
         "@sourceloop/search-ms-example",
         "@sourceloop/search-client-example",
-        "@sourceloop/feature-toggle-example"
+        "@sourceloop/feature-toggle-example",
+        "@sourceloop/payment-example-backend",
+        "@sourceloop/payment-example-frontend"
       ]
     },
     "version": {
@@ -60,7 +62,9 @@
         "@sourceloop/chat-notif-example_notif-service",
         "@sourceloop/search-ms-example",
         "@sourceloop/search-client-example",
-        "@sourceloop/feature-toggle-example"
+        "@sourceloop/feature-toggle-example",
+        "@sourceloop/payment-example-backend",
+        "@sourceloop/payment-example-frontend"
       ]
     },
     "clean": {

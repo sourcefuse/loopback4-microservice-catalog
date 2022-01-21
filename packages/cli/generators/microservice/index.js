@@ -6,7 +6,7 @@
 'use strict';
 const AppGenerator = require('@loopback/cli/generators/app');
 const path = require('path');
-const {spawn} = require('child_process');
+const spawnProcess = require('../spawn');
 const fs = require('fs');
 
 module.exports = class MGenerator extends AppGenerator {
@@ -128,69 +128,49 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _symlink(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
   }
 
   async _dotenv(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope='+`${packageName}`], {packageName});
   }
 
   async _sourceloopCore(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
   }
 
   async _bearerVerifier(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', 'loopback4-authentication', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', 'loopback4-authorization', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', 'loopback4-authentication', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', 'loopback4-authorization', '--scope='+`${packageName}`], {packageName});
   }
 
   async _swaggerStat(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', 'swagger-stats', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', 'swagger-stats', '--scope='+`${packageName}`], {packageName});
   }
 
   async _opentelemetry(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/exporter-jaeger', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/node', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-dns', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-http', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-https', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg-pool', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '@opentelemetry/tracing', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/exporter-jaeger', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/node', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-dns', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-http', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-https', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg-pool', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/tracing', '--scope='+`${packageName}`], {packageName});
   }
 
   async _nyc(packageName){
-    await this._spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
-    await this._spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
+    await spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
   }
   async _promclient(packageName){
-    await this._spawnProcess('npm', ['i', 'prom-client'], {packageName});
+    await spawnProcess('npm', ['i', 'prom-client'], {packageName});
   }
 
   async _openapi(packageName){
-    await this._spawnProcess('npm', ['run', 'openapi-spec'], {packageName});
-  }
-
-  _spawnProcess(cmd, cmdArgs, cwd) {
-    return new Promise((resolve, reject) => {
-      const spawnedProcess = spawn(cmd, cmdArgs, {...cwd});
-
-      spawnedProcess.stdout.on("data", data => {
-          console.log(`stdout: ${data}`);
-      });
-      spawnedProcess.stderr.on("data", data => {
-          console.log(`stderr: ${data}`);
-      });
-      spawnedProcess.on('error', (error) => {
-          console.log(`error: ${error.message}`);
-          reject(error);
-      });
-      spawnedProcess.on("close", code => {
-          resolve();
-      });
-    })
+    await spawnProcess('npm', ['run', 'openapi-spec'], {packageName});
   }
 
   end() {
