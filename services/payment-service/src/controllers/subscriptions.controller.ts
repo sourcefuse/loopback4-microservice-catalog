@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {Subscriptions} from '../models';
 import {STATUS_CODE} from '@sourceloop/core';
@@ -34,10 +33,15 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateSubscription]})
-  @post(subscriptionsRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Subscriptions model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Subscriptions)}},
+  @post(subscriptionsRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Subscriptions model instance',
+        content: {
+          'application/json': {schema: getModelSchemaRef(Subscriptions)},
+        },
+      },
+    },
   })
   async create(
     @requestBody({
@@ -56,10 +60,13 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.GetSubscriptionCount]})
-  @get('/subscriptions/count')
-  @response(STATUS_CODE.OK, {
-    description: 'Subscriptions model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get('/subscriptions/count', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Subscriptions model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(
     @param.where(Subscriptions) where?: Where<Subscriptions>,
@@ -69,14 +76,17 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.GetSubscriptions]})
-  @get(subscriptionsRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Subscriptions model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Subscriptions, {includeRelations: true}),
+  @get(subscriptionsRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Subscriptions model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Subscriptions, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -89,10 +99,13 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
-  @patch(subscriptionsRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Subscriptions PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(subscriptionsRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Subscriptions PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -110,12 +123,15 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.GetSubscriptions]})
-  @get(subscriptionsIdRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Subscriptions model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Subscriptions, {includeRelations: true}),
+  @get(subscriptionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Subscriptions model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Subscriptions, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -129,9 +145,12 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
-  @patch(subscriptionsIdRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Subscriptions PATCH success',
+  @patch(subscriptionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Subscriptions PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -149,9 +168,12 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
-  @put(subscriptionsIdRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Subscriptions PUT success',
+  @put(subscriptionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Subscriptions PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -162,9 +184,12 @@ export class SubscriptionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteSubscriptions]})
-  @del(subscriptionsIdRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Subscriptions DELETE success',
+  @del(subscriptionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Subscriptions DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.subscriptionsRepository.deleteById(id);
