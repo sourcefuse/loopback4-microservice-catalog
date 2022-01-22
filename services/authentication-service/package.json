@@ -75,7 +75,7 @@
     "loopback4-soft-delete": "^5.0.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^3.1.1",
     "passport-apple": "^2.0.1",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
