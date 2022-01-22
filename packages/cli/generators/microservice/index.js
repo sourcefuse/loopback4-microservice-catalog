@@ -141,7 +141,7 @@ module.exports = class MGenerator extends AppGenerator {
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
                     this._promclient(packageName).then(() =>
-                      this._openapi(packageName).then(() => 
+                      this._openapi(packageName).then(() =>
                         this._addDependency(packageName),
                       ),
                     ),
