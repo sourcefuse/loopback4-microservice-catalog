@@ -39,14 +39,32 @@ module.exports = class MGenerator extends AppGenerator {
       return super.promptProjectDir()}
   }
 
+  serviceChoices = ['audit-service','authentication-service','chat-service','notification-service'];
+
   async promptUniquePrefix() {
     this.answers = await this.prompt([
         {
             type: 'input',
             name: 'uniquePrefix',
             message: 'Unique prefix for the docker image:'
+        },
+        {
+            type: 'input',
+            name: 'serviceSelect',
+            message: 'Do you want to add sourceloop dependencies?(y/n)'
         }
     ]);
+
+    if(this.answers.serviceSelect === 'y') {
+      this.service = await this.prompt([
+        {
+          name: 'selector',
+          message: 'Select the service you want to add:',
+          type: 'list',
+          choices: this.serviceChoices,
+        },
+      ]);
+    }
   }
 
   promptApplication() {
@@ -113,7 +131,9 @@ module.exports = class MGenerator extends AppGenerator {
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
                     this._promclient(packageName).then(() =>
-                      this._openapi(packageName),
+                      this._openapi(packageName).then(() => 
+                        this._addDependency(packageName),
+                      ),
                     ),
                   ),
                 ),
@@ -139,6 +159,12 @@ module.exports = class MGenerator extends AppGenerator {
 
   async _sourceloopCore(packageName){
     await spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
+  }
+
+  async _addDependency(packageName){
+    if(this.answers.serviceSelect === 'y'){
+      await spawnProcess('npx', ['lerna', 'add', '@sourceloop/'+`${this.service.selector}`, '--scope='+`${packageName}`], {packageName});
+    }
   }
 
   async _bearerVerifier(packageName){

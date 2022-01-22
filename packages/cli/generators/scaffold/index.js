@@ -90,11 +90,11 @@ module.exports = class extends Generator {
         const spawnedProcess = spawn(cmd, cmdArgs, {...cwd});
 
         spawnedProcess.stdout.on("data", data => {
-            console.log(`stdout: ${data}`);
+            console.log(`${data}`);
         });
 
         spawnedProcess.stderr.on("data", data => {
-            console.log(`stderr: ${data}`);
+            console.log(`${data}`);
         });
 
         spawnedProcess.on('error', (error) => {
