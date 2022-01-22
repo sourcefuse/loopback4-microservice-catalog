@@ -39,7 +39,17 @@ module.exports = class MGenerator extends AppGenerator {
       return super.promptProjectDir()}
   }
 
-  serviceChoices = ['audit-service','authentication-service','chat-service','notification-service'];
+  serviceChoices = ['audit-service',
+                    'authentication-service',
+                    'chat-service',
+                    'notification-service',
+                    'bpmn-service',
+                    'feature-toggle-service',
+                    'in-mail-service',
+                    'payment-service',
+                    'scheduler-service',
+                    'search-service',
+                    'video-conferencing-service'];
 
   async promptUniquePrefix() {
     this.answers = await this.prompt([
@@ -55,7 +65,7 @@ module.exports = class MGenerator extends AppGenerator {
         }
     ]);
 
-    if(this.answers.serviceSelect === 'y') {
+    if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y') {
       this.service = await this.prompt([
         {
           name: 'selector',
@@ -162,7 +172,7 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _addDependency(packageName){
-    if(this.answers.serviceSelect === 'y'){
+    if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y'){
       await spawnProcess('npx', ['lerna', 'add', '@sourceloop/'+`${this.service.selector}`, '--scope='+`${packageName}`], {packageName});
     }
   }
