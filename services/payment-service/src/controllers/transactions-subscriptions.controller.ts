@@ -1,6 +1,6 @@
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {get, param, response, Response, RestBindings} from '@loopback/rest';
+import {get, param, Response, RestBindings} from '@loopback/rest';
 
 import {GatewayBindings, IGateway} from '../providers';
 import {TemplatesRepository, SubscriptionsRepository} from '../repositories';
@@ -26,13 +26,16 @@ export class TransactionSubscriptionsController {
     private readonly subscriptionRepository: SubscriptionsRepository,
   ) {}
 
-  @get(`/transactions/subscription/{id}`)
-  @response(redirectStatusCode, {
-    description: 'Array of Transactions model instances',
-    content: {
-      'text/html': {
-        schema: {
-          type: 'object',
+  @get(`/transactions/subscription/{id}`, {
+    responses: {
+      [redirectStatusCode]: {
+        description: 'Array of Transactions model instances',
+        content: {
+          'text/html': {
+            schema: {
+              type: 'object',
+            },
+          },
         },
       },
     },

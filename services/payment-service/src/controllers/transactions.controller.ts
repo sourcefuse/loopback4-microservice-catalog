@@ -18,7 +18,6 @@ import {
   put,
   Request,
   requestBody,
-  response,
   Response,
   RestBindings,
 } from '@loopback/rest';
@@ -62,10 +61,15 @@ export class TransactionsController {
     private readonly paymentGatewaysRepository: PaymentGatewaysRepository,
   ) {}
 
-  @post(transactionsRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Transactions model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Transactions)}},
+  @post(transactionsRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Transactions model instance',
+        content: {
+          'application/json': {schema: getModelSchemaRef(Transactions)},
+        },
+      },
+    },
   })
   async create(
     @requestBody({
@@ -82,10 +86,13 @@ export class TransactionsController {
     return this.transactionsRepository.create(transactions);
   }
 
-  @get('/transactions/count')
-  @response(STATUS_CODE.OK, {
-    description: 'Transactions model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get('/transactions/count', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Transactions model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(
     @param.where(Transactions) where?: Where<Transactions>,
@@ -93,14 +100,17 @@ export class TransactionsController {
     return this.transactionsRepository.count(where);
   }
 
-  @get(transactionsRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Transactions model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Transactions, {includeRelations: true}),
+  @get(transactionsRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Transactions model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Transactions, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -111,10 +121,13 @@ export class TransactionsController {
     return this.transactionsRepository.find(filter);
   }
 
-  @patch(transactionsRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Transactions PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(transactionsRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Transactions PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -130,12 +143,15 @@ export class TransactionsController {
     return this.transactionsRepository.updateAll(transactions, where);
   }
 
-  @get(tranasactionsIdRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Transactions model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Transactions, {includeRelations: true}),
+  @get(tranasactionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Transactions model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Transactions, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -147,9 +163,12 @@ export class TransactionsController {
     return this.transactionsRepository.findById(id, filter);
   }
 
-  @patch(tranasactionsIdRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Transactions PATCH success',
+  @patch(tranasactionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Transactions PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -165,9 +184,12 @@ export class TransactionsController {
     await this.transactionsRepository.updateById(id, transactions);
   }
 
-  @put(tranasactionsIdRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Transactions PUT success',
+  @put(tranasactionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Transactions PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -176,19 +198,25 @@ export class TransactionsController {
     await this.transactionsRepository.replaceById(id, transactions);
   }
 
-  @del(tranasactionsIdRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Transactions DELETE success',
+  @del(tranasactionsIdRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Transactions DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.transactionsRepository.deleteById(id);
   }
 
-  @post('/place-order-and-pay')
-  @response(redirectStatusCode, {
-    description: 'Order model instance',
-    content: {
-      'text/html': {},
+  @post('/place-order-and-pay', {
+    responses: {
+      [redirectStatusCode]: {
+        description: 'Order model instance',
+        content: {
+          'text/html': {},
+        },
+      },
     },
   })
   async orderandtransactionscreate(
@@ -221,13 +249,16 @@ export class TransactionsController {
     );
   }
 
-  @get(`/transactions/orderid/{id}`)
-  @response(STATUS_CODE.OK, {
-    description: 'HTML response for payment gateway interface.',
-    content: {
-      'text/html': {
-        schema: {
-          type: 'object',
+  @get(`/transactions/orderid/{id}`, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'HTML response for payment gateway interface.',
+        content: {
+          'text/html': {
+            schema: {
+              type: 'object',
+            },
+          },
         },
       },
     },
@@ -247,11 +278,14 @@ export class TransactionsController {
     );
   }
 
-  @post('/transactions/charge')
-  @response(STATUS_CODE.OK, {
-    description: 'Transacttion Gateway Request',
-    content: {
-      'application/json': {},
+  @post('/transactions/charge', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Transacttion Gateway Request',
+        content: {
+          'application/json': {},
+        },
+      },
     },
   })
   async transactionscharge(
@@ -287,11 +321,14 @@ export class TransactionsController {
     }
   }
 
-  @post(`/transactions/refund/{id}`)
-  @response(STATUS_CODE.OK, {
-    description: 'Refund Object from payment gateway',
-    content: {
-      'application/json': {},
+  @post(`/transactions/refund/{id}`, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Refund Object from payment gateway',
+        content: {
+          'application/json': {},
+        },
+      },
     },
   })
   async transactionsRefund(
@@ -319,11 +356,14 @@ export class TransactionsController {
     }
   }
 
-  @get(`/transactions/refund/parse/{id}`)
-  @response(STATUS_CODE.OK, {
-    description: 'Refund Object from payment gateway',
-    content: {
-      'application/json': {},
+  @get(`/transactions/refund/parse/{id}`, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Refund Object from payment gateway',
+        content: {
+          'application/json': {},
+        },
+      },
     },
   })
   async transactionsRefundParse(
@@ -332,11 +372,14 @@ export class TransactionsController {
     return this.gatewayHelper.refund(id);
   }
 
-  @post('/transactions/webhook')
-  @response(STATUS_CODE.OK, {
-    description: 'Subscription Gateway Request',
-    content: {
-      'application/json': {},
+  @post('/transactions/webhook', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Subscription Gateway Request',
+        content: {
+          'application/json': {},
+        },
+      },
     },
   })
   async subscriptionWebHook(

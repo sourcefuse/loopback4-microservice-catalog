@@ -4,7 +4,6 @@ import {
   post,
   Request,
   requestBody,
-  response,
   Response,
   RestBindings,
 } from '@loopback/rest';
@@ -40,11 +39,14 @@ export class SubscriptionTransactionsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateSubscription]})
-  @post('/create-subscription-and-pay')
-  @response(redirectStatusCode, {
-    description: 'Subscription model instance',
-    content: {
-      'text/html': {},
+  @post('/create-subscription-and-pay', {
+    responses: {
+      [redirectStatusCode]: {
+        description: 'Subscription model instance',
+        content: {
+          'text/html': {},
+        },
+      },
     },
   })
   async subscriptionandtransactionscreate(
@@ -87,11 +89,14 @@ export class SubscriptionTransactionsController {
     );
   }
 
-  @post('/subscription/transaction/charge')
-  @response(STATUS_CODE.OK, {
-    description: 'Subscription model instance',
-    content: {
-      'application/json': {},
+  @post('/subscription/transaction/charge', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Subscription model instance',
+        content: {
+          'application/json': {},
+        },
+      },
     },
   })
   async subscriptionTransactionscharge(

@@ -14,6 +14,7 @@ import {
   patch,
   put,
   requestBody,
+  del,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -22,6 +23,7 @@ import {
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums';
 import {Features} from '../models';
 import {FeaturesRepository} from '../repositories';
 
@@ -33,7 +35,7 @@ export class FeaturesController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreateFeature]})
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -59,7 +61,7 @@ export class FeaturesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewFeature]})
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -74,7 +76,7 @@ export class FeaturesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewFeature]})
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -98,7 +100,7 @@ export class FeaturesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateFeature]})
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -125,7 +127,7 @@ export class FeaturesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewFeature]})
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -148,7 +150,7 @@ export class FeaturesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateFeature]})
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -172,7 +174,7 @@ export class FeaturesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateFeature]})
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -186,5 +188,19 @@ export class FeaturesController {
     @requestBody() features: Features,
   ): Promise<void> {
     await this.featuresRepository.replaceById(id, features);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [PermissionKey.DeleteFeature]})
+  @del(`${basePath}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Features DELETE success',
+      },
+    },
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.featuresRepository.deleteById(id);
   }
 }

@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {Templates} from '../models';
 import {TemplatesRepository} from '../repositories';
@@ -29,10 +28,13 @@ export class TemplatesController {
     public templatesRepository: TemplatesRepository,
   ) {}
 
-  @post(templatesRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Templates model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Templates)}},
+  @post(templatesRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Templates model instance',
+        content: {'application/json': {schema: getModelSchemaRef(Templates)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -49,10 +51,13 @@ export class TemplatesController {
     return this.templatesRepository.create(templates);
   }
 
-  @get('/templates/count')
-  @response(STATUS_CODE.OK, {
-    description: 'Templates model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get('/templates/count', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Templates model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(
     @param.where(Templates) where?: Where<Templates>,
@@ -60,14 +65,17 @@ export class TemplatesController {
     return this.templatesRepository.count(where);
   }
 
-  @get(templatesRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Templates model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Templates, {includeRelations: true}),
+  @get(templatesRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Templates model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Templates, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -78,10 +86,13 @@ export class TemplatesController {
     return this.templatesRepository.find(filter);
   }
 
-  @patch(templatesRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Templates PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(templatesRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Templates PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -97,12 +108,15 @@ export class TemplatesController {
     return this.templatesRepository.updateAll(templates, where);
   }
 
-  @get(templatesIDRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Templates model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Templates, {includeRelations: true}),
+  @get(templatesIDRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Templates model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Templates, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -114,9 +128,12 @@ export class TemplatesController {
     return this.templatesRepository.findById(id, filter);
   }
 
-  @patch(templatesIDRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Templates PATCH success',
+  @patch(templatesIDRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Templates PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -132,9 +149,12 @@ export class TemplatesController {
     await this.templatesRepository.updateById(id, templates);
   }
 
-  @put(templatesIDRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Templates PUT success',
+  @put(templatesIDRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Templates PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -143,9 +163,12 @@ export class TemplatesController {
     await this.templatesRepository.replaceById(id, templates);
   }
 
-  @del(templatesIDRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Templates DELETE success',
+  @del(templatesIDRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Templates DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.templatesRepository.deleteById(id);
