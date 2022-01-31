@@ -8,14 +8,14 @@ export interface TourStep {
   text: string;
   arrow?: boolean;
   attachTo: {
-    element: string;
+    element: string | Element;
     on: string;
     type: 'string' | 'function' | 'element';
     scrollTo: boolean;
   };
   classes?: string;
   advanceOn?: {
-    element: string;
+    element: string | Element;
     event: string;
     elementType: 'string' | 'function' | 'element';
   };

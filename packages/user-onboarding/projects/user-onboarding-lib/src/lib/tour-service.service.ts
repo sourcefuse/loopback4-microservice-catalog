@@ -13,8 +13,8 @@ import {
   TourComplete,
 } from '../models';
 import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
-import {interval, Subject} from 'rxjs';
-import {filter, map, take, takeWhile, tap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {DEFAULT_MAX_WAIT_TIME, INTERVAL} from '../models/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -24,24 +24,30 @@ export class TourServiceService {
   tourComplete$ = this.tourComplete.asObservable();
   private readonly tourStepChange = new Subject<TourStepChange>();
   tourStepChange$ = this.tourStepChange.asObservable();
-  private readonly interval = 100;
+  private readonly interval = INTERVAL;
+  private _maxWaitTime = DEFAULT_MAX_WAIT_TIME;
+  private readonly tourFailed = new Subject<{
+    tourId: string;
+    message: string;
+  }>();
+  tourFailed$ = this.tourFailed.asObservable();
 
-  private tour = new Shepherd.Tour({
-    useModalOverlay: true,
-    defaultStepOptions: {
-      cancelIcon: {
-        enabled: true,
-      },
-      classes: 'class-1 class-2',
-      scrollTo: {behavior: 'smooth', block: 'center'},
-    },
-  });
+  private tour: Shepherd.Tour;
 
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
     private readonly router: Router,
   ) {}
 
+  public set maxWaitTime(maxTime: number) {
+    if (maxTime > 0) {
+      this._maxWaitTime = maxTime;
+    }
+  }
+
+  public get maxWaitTime() {
+    return this._maxWaitTime;
+  }
   private addRemovedSteps(removedSteps): void {
     const count = removedSteps.length;
     for (let i = 0; i < count; i++) {
@@ -79,7 +85,7 @@ export class TourServiceService {
     previousStepId: string,
   ): void {
     if (event instanceof NavigationEnd && event.url === e.currentRoute) {
-      this.waitForElement(e.attachTo.element, 0)
+      this.waitForElement(e, tourInstance.tourId)
         .then(() => {
           this.tour.next();
           this.tourStepChange.next({
@@ -90,8 +96,8 @@ export class TourServiceService {
           });
           this.pauseAllVideos();
         })
-        .catch(() => {
-          throw new Error('Error detected in loading');
+        .catch(err => {
+          this.tourFailed.next(err);
         });
     }
   }
@@ -104,7 +110,7 @@ export class TourServiceService {
     previousStepId: string,
   ): void {
     if (event instanceof NavigationEnd && event.url === e.currentRoute) {
-      this.waitForElement(e.attachTo.element, 0)
+      this.waitForElement(e, tourInstance.tourId)
         .then(() => {
           this.tour.back();
           this.tourStepChange.next({
@@ -115,23 +121,24 @@ export class TourServiceService {
           });
           this.pauseAllVideos();
         })
-        .catch(() => {
-          throw new Error('Error detected in loading');
+        .catch(err => {
+          this.tourFailed.next(err);
         });
     }
   }
 
-  private waitForElement(querySelector, timeout = 0): Promise<void> {
+  private waitForElement(tourStep: TourStep, tourId: string): Promise<Element> {
     const startTime = new Date().getTime();
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<Element>((resolve, reject) => {
       const timer = setInterval(() => {
         const now = new Date().getTime();
-        if (document.querySelector(querySelector)) {
+        const element = this.checkElement(tourStep.attachTo);
+        if (element) {
           clearInterval(timer);
-          resolve();
-        } else if (timeout && now - startTime >= timeout) {
+          resolve(element);
+        } else if (now - startTime >= this._maxWaitTime) {
           clearInterval(timer);
-          reject();
+          reject({tourId, message: `Error in loading tour`});
         } else {
           // do nothing
         }
@@ -284,21 +291,10 @@ export class TourServiceService {
           });
         });
         const originalSteps = Object.assign([], tourInstance.tourSteps);
-        let element;
         this.tour.addSteps(tourInstance.tourSteps);
-        const waitTime = 2000;
-        interval(1)
-          .pipe(
-            tap(_count => {
-              element = this.checkFirstElement(originalSteps);
-            }),
-            takeWhile(count => count < waitTime),
-            filter(_count => element),
-            take(1),
-            map(_count => element),
-          )
-          .subscribe((el: Element) => {
-            el.scrollIntoView(true);
+        this.waitForElement(originalSteps[0], tourInstance.tourId).then(
+          element => {
+            element.scrollIntoView(true);
             this.tour.start();
             if (removedSteps !== undefined) {
               removedSteps.forEach(er => {
@@ -409,7 +405,11 @@ export class TourServiceService {
               this.tour.addSteps(removedSteps);
               this.addRemovedSteps(removedSteps);
             }
-          });
+          },
+          err => {
+            this.tourFailed.next(err);
+          },
+        );
       });
   }
   public run(
@@ -463,27 +463,20 @@ export class TourServiceService {
         }
       });
   }
-  private checkFirstElement(tourSteps: TourStep[]) {
-    const firstStep = tourSteps[0];
-    if (firstStep) {
-      switch (firstStep.attachTo.type) {
-        case 'string':
-          return document.querySelector(firstStep.attachTo.element);
+  private checkElement(attachTo: TourStep['attachTo']) {
+    switch (attachTo.type) {
+      case 'string':
+        return document.querySelector(attachTo.element as string);
 
-        case 'element':
-          return firstStep.attachTo.element;
+      case 'element':
+        return attachTo.element as Element;
 
-        case 'function':
-          const fn = this.tourStoreService.getFnByKey(
-            firstStep.attachTo.element,
-          );
-          return fn();
+      case 'function':
+        const fn = this.tourStoreService.getFnByKey(attachTo.element);
+        return fn() as Element;
 
-        default:
-          return false;
-      }
-    } else {
-      return false;
+      default:
+        return false;
     }
   }
   private getRemovedSteps(tourSteps: TourStep[], tourState: TourState) {
