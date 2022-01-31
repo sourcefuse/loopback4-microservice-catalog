@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.12 (2022-01-28)</small>
+
+* fix(user-onboarding): add max wait time, add observable for error handling in case tour fails to sta ([8a819ea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8a819ea)), closes [#491](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/491) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.11 (2022-01-19)</small>
 
 * fix(user-onboarding): pause video on next/prev,  add tourStepChange observable, change names to keba ([076d12e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/076d12e)), closes [#474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/474) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

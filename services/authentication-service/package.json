@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -62,7 +62,7 @@
     "@loopback/rest": "^11.0.0",
     "@loopback/rest-explorer": "^4.0.1",
     "@loopback/service-proxy": "^4.0.0",
-    "@sourceloop/core": "^6.0.0",
+    "@sourceloop/core": "^6.1.0",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^10.0.0",
