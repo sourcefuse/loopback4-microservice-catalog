@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.1.0 (2022-01-28)
+
+* fix(core): deps incorrect ([fc7665a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc7665a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(core): add component to authenticate swagger ui access (#467) ([40f669f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/40f669f)), closes [#467](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/467)
+
+
+
+
+
 ## 6.0.0 (2022-01-16)
 
 * docs(core): locale file update and add to ignore ([4bbdae2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4bbdae2)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
