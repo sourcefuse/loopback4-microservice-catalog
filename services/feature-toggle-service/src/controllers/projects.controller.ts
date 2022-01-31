@@ -23,6 +23,7 @@ import {
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums';
 import {Projects} from '../models';
 import {ProjectsRepository} from '../repositories';
 
@@ -34,7 +35,7 @@ export class ProjectsController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreateProject]})
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -60,7 +61,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewProject]})
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -75,7 +76,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewProject]})
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -101,7 +102,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateProject]})
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -126,7 +127,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewProject]})
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -149,7 +150,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateProject]})
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -173,7 +174,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateProject]})
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -190,7 +191,7 @@ export class ProjectsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.DeleteProject]})
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

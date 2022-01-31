@@ -15,7 +15,6 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
 import {PaymentGateways} from '../models';
 import {PaymentGatewaysRepository} from '../repositories';
@@ -29,10 +28,15 @@ export class PaymentGatewaysController {
     public paymentGatewaysRepository: PaymentGatewaysRepository,
   ) {}
 
-  @post(paymentGatewayRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'PaymentGateways model instance',
-    content: {'application/json': {schema: getModelSchemaRef(PaymentGateways)}},
+  @post(paymentGatewayRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'PaymentGateways model instance',
+        content: {
+          'application/json': {schema: getModelSchemaRef(PaymentGateways)},
+        },
+      },
+    },
   })
   async create(
     @requestBody({
@@ -49,10 +53,13 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.create(paymentGateways);
   }
 
-  @get('/payment-gateways/count')
-  @response(STATUS_CODE.OK, {
-    description: 'PaymentGateways model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get('/payment-gateways/count', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'PaymentGateways model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(
     @param.where(PaymentGateways) where?: Where<PaymentGateways>,
@@ -60,14 +67,19 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.count(where);
   }
 
-  @get(paymentGatewayRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'Array of PaymentGateways model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(PaymentGateways, {includeRelations: true}),
+  @get(paymentGatewayRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of PaymentGateways model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(PaymentGateways, {
+                includeRelations: true,
+              }),
+            },
+          },
         },
       },
     },
@@ -78,10 +90,13 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.find(filter);
   }
 
-  @patch(paymentGatewayRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'PaymentGateways PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(paymentGatewayRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'PaymentGateways PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -97,12 +112,17 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.updateAll(paymentGateways, where);
   }
 
-  @get(paymentGatewayIDRoutePath)
-  @response(STATUS_CODE.OK, {
-    description: 'PaymentGateways model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(PaymentGateways, {includeRelations: true}),
+  @get(paymentGatewayIDRoutePath, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'PaymentGateways model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(PaymentGateways, {
+              includeRelations: true,
+            }),
+          },
+        },
       },
     },
   })
@@ -114,9 +134,12 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.findById(id, filter);
   }
 
-  @patch(paymentGatewayIDRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'PaymentGateways PATCH success',
+  @patch(paymentGatewayIDRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'PaymentGateways PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -132,9 +155,12 @@ export class PaymentGatewaysController {
     await this.paymentGatewaysRepository.updateById(id, paymentGateways);
   }
 
-  @put(paymentGatewayIDRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'PaymentGateways PUT success',
+  @put(paymentGatewayIDRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'PaymentGateways PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -143,9 +169,12 @@ export class PaymentGatewaysController {
     await this.paymentGatewaysRepository.replaceById(id, paymentGateways);
   }
 
-  @del(paymentGatewayIDRoutePath)
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'PaymentGateways DELETE success',
+  @del(paymentGatewayIDRoutePath, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'PaymentGateways DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.paymentGatewaysRepository.deleteById(id);

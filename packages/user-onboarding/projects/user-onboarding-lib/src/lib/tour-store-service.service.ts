@@ -118,7 +118,7 @@ export class TourStoreServiceService {
     this.functionMap.set(key, fn);
   }
 
-  public getFnByKey(key): () => void {
+  public getFnByKey(key): Function {
     return this.functionMap.get(key);
   }
 
