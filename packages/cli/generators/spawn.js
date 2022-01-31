@@ -3,10 +3,10 @@ const {spawn} = require('child_process');
  function spawnProcess(cmd, cmdArgs, cwd) {
     return new Promise((resolve, reject) => {
       const spawnedProcess = spawn(cmd, cmdArgs, {...cwd});
-      spawnedProcess.stdout.on("data", data => {
+      spawnedProcess.on("data", data => {
           console.log(`${data}`);
       });
-      spawnedProcess.stderr.on("data", data => {
+      spawnedProcess.on("data", data => {
           console.log(`${data}`);
       });
       spawnedProcess.on('error', (error) => {
