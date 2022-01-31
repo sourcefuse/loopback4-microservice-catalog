@@ -103,7 +103,7 @@ export class UserExtRepository extends DefaultSoftCrudRepository<
           case 'internal':
           default: {
             const password = await bcrypt.hash(
-              process.env.USER_TEMP_PASSWORD,
+              process.env.USER_TEMP_PASSWORD as string,
               saltRounds,
             );
             creds = new UserCredentials({
@@ -115,7 +115,7 @@ export class UserExtRepository extends DefaultSoftCrudRepository<
         }
       } else {
         const password = await bcrypt.hash(
-          process.env.USER_TEMP_PASSWORD,
+          process.env.USER_TEMP_PASSWORD as string,
           saltRounds,
         );
         creds = new UserCredentials({

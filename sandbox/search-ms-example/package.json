@@ -53,29 +53,32 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "3.4.0",
-    "@loopback/core": "2.16.0",
-    "@loopback/repository": "3.6.0",
-    "@loopback/rest": "9.3.0",
-    "@loopback/rest-explorer": "3.2.0",
-    "@loopback/service-proxy": "3.2.0",
-    "@sourceloop/core": "^4.0.0",
-    "@sourceloop/search-service": "^0.3.0",
-    "db-migrate": "^0.11.12",
+    "@loopback/boot": "^4.0.0",
+    "@loopback/core": "^3.0.0",
+    "@loopback/repository": "^4.0.0",
+    "@loopback/rest": "^11.0.0",
+    "@loopback/rest-explorer": "^4.0.0",
+    "@loopback/service-proxy": "^4.0.0",
+    "@sourceloop/core": "^5.0.1",
+    "@sourceloop/search-service": "^0.4.1",
+    "ajv": "^8.8.2",
+    "ajv-errors": "^1.0.1",
+    "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
-    "loopback-connector-mysql": "^6.0.2",
+    "loopback-connector-mysql": "^6.1.0",
     "loopback-connector-postgresql": "^5.4.0",
-    "tslib": "^2.0.0"
+    "prom-client": "^14.0.1",
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@loopback/build": "^7.0.0",
-    "@loopback/eslint-config": "^11.0.0",
-    "@loopback/testlab": "^3.4.2",
+    "@loopback/build": "^8.0.0",
+    "@loopback/eslint-config": "^12.0.0",
+    "@loopback/testlab": "^4.0.0",
     "@types/node": "^10.17.60",
-    "eslint": "^7.29.0",
-    "source-map-support": "^0.5.19",
-    "typescript": "~4.3.4"
+    "eslint": "^7.32.0",
+    "source-map-support": "^0.5.20",
+    "typescript": "~4.5.2"
   }
 }
