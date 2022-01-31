@@ -1,6 +1,6 @@
 import {Props} from './props';
 import {Status} from './status';
-import {TourStep} from './tourStep';
+import {TourStep} from './tour-step';
 export interface TourState {
   sessionId: string;
   status: Status;

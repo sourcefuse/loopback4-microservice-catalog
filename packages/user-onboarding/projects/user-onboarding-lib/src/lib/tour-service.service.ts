@@ -6,42 +6,48 @@ import {
   TourButton,
   TourStep,
   TourState,
-  filterFunction,
+  FilterFunction,
   Props,
   Status,
+  TourStepChange,
+  TourComplete,
 } from '../models';
 import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
-import {interval, Subject} from 'rxjs';
-import {filter, map, take, takeWhile, tap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {DEFAULT_MAX_WAIT_TIME, INTERVAL} from '../models/constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TourServiceService {
-  private readonly tourComplete = new Subject<{
-    index: number;
-    tour: Shepherd.Tour;
-    tourId: string;
-  }>();
+  private readonly tourComplete = new Subject<TourComplete>();
   tourComplete$ = this.tourComplete.asObservable();
-  private readonly interval = 100;
+  private readonly tourStepChange = new Subject<TourStepChange>();
+  tourStepChange$ = this.tourStepChange.asObservable();
+  private readonly interval = INTERVAL;
+  private _maxWaitTime = DEFAULT_MAX_WAIT_TIME;
+  private readonly tourFailed = new Subject<{
+    tourId: string;
+    message: string;
+  }>();
+  tourFailed$ = this.tourFailed.asObservable();
 
-  private tour = new Shepherd.Tour({
-    useModalOverlay: true,
-    defaultStepOptions: {
-      cancelIcon: {
-        enabled: true,
-      },
-      classes: 'class-1 class-2',
-      scrollTo: {behavior: 'smooth', block: 'center'},
-    },
-  });
+  private tour: Shepherd.Tour;
 
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
     private readonly router: Router,
   ) {}
 
+  public set maxWaitTime(maxTime: number) {
+    if (maxTime > 0) {
+      this._maxWaitTime = maxTime;
+    }
+  }
+
+  public get maxWaitTime() {
+    return this._maxWaitTime;
+  }
   private addRemovedSteps(removedSteps): void {
     const count = removedSteps.length;
     for (let i = 0; i < count; i++) {
@@ -71,41 +77,68 @@ export class TourServiceService {
     }
   }
 
-  private navigationCheckNext(event: NavigationEvent, e: TourStep): void {
+  private navigationCheckNext(
+    event: NavigationEvent,
+    e: TourStep,
+    tourInstance: Tour,
+    currentStepId: string,
+    previousStepId: string,
+  ): void {
     if (event instanceof NavigationEnd && event.url === e.currentRoute) {
-      this.waitForElement(e.attachTo.element, 0)
+      this.waitForElement(e, tourInstance.tourId)
         .then(() => {
           this.tour.next();
+          this.tourStepChange.next({
+            tourId: tourInstance.tourId,
+            currentStepId,
+            previousStepId,
+            moveForward: true,
+          });
+          this.pauseAllVideos();
         })
-        .catch(() => {
-          throw new Error('Error detected in loading');
+        .catch(err => {
+          this.tourFailed.next(err);
         });
     }
   }
 
-  private navigationCheckBack(event: NavigationEvent, e: TourStep): void {
+  private navigationCheckBack(
+    event: NavigationEvent,
+    e: TourStep,
+    tourInstance: Tour,
+    currentStepId: string,
+    previousStepId: string,
+  ): void {
     if (event instanceof NavigationEnd && event.url === e.currentRoute) {
-      this.waitForElement(e.attachTo.element, 0)
+      this.waitForElement(e, tourInstance.tourId)
         .then(() => {
           this.tour.back();
+          this.tourStepChange.next({
+            tourId: tourInstance.tourId,
+            currentStepId,
+            previousStepId,
+            moveForward: false,
+          });
+          this.pauseAllVideos();
         })
-        .catch(() => {
-          throw new Error('Error detected in loading');
+        .catch(err => {
+          this.tourFailed.next(err);
         });
     }
   }
 
-  private waitForElement(querySelector, timeout = 0): Promise<void> {
+  private waitForElement(tourStep: TourStep, tourId: string): Promise<Element> {
     const startTime = new Date().getTime();
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<Element>((resolve, reject) => {
       const timer = setInterval(() => {
         const now = new Date().getTime();
-        if (document.querySelector(querySelector)) {
+        const element = this.checkElement(tourStep.attachTo);
+        if (element) {
           clearInterval(timer);
-          resolve();
-        } else if (timeout && now - startTime >= timeout) {
+          resolve(element);
+        } else if (now - startTime >= this._maxWaitTime) {
           clearInterval(timer);
-          reject();
+          reject({tourId, message: `Error in loading tour`});
         } else {
           // do nothing
         }
@@ -166,7 +199,13 @@ export class TourServiceService {
                 const nextStep = tourInstance.tourSteps.filter(
                   ts => ts.id === e.nextStepId,
                 )[0];
-                this.navigationCheckNext(event, nextStep);
+                this.navigationCheckNext(
+                  event,
+                  nextStep,
+                  tourInstance,
+                  e.nextStepId,
+                  e.id,
+                );
               });
             };
             const wrapperPrev = () => {
@@ -186,7 +225,14 @@ export class TourServiceService {
                 const prevStep = tourInstance.tourSteps.filter(
                   ts => ts.id === e.prevStepId,
                 )[0];
-                this.navigationCheckBack(event, prevStep);
+
+                this.navigationCheckBack(
+                  event,
+                  prevStep,
+                  tourInstance,
+                  e.prevStepId,
+                  e.id,
+                );
               });
             };
             const wrapperNormalNext = () => {
@@ -202,6 +248,13 @@ export class TourServiceService {
                 })
                 .subscribe();
               this.tour.next();
+              this.tourStepChange.next({
+                tourId: tourInstance.tourId,
+                currentStepId: e.nextStepId,
+                previousStepId: e.id,
+                moveForward: true,
+              });
+              this.pauseAllVideos();
             };
             const wrapperNormalPrev = () => {
               this.tourStoreService
@@ -216,6 +269,13 @@ export class TourServiceService {
                 })
                 .subscribe();
               this.tour.back();
+              this.tourStepChange.next({
+                tourId: tourInstance.tourId,
+                currentStepId: e.prevStepId,
+                previousStepId: e.id,
+                moveForward: true,
+              });
+              this.pauseAllVideos();
             };
             this.actionAssignment(
               e,
@@ -231,21 +291,10 @@ export class TourServiceService {
           });
         });
         const originalSteps = Object.assign([], tourInstance.tourSteps);
-        let element;
         this.tour.addSteps(tourInstance.tourSteps);
-        const waitTime = 2000;
-        interval(1)
-          .pipe(
-            tap(_count => {
-              element = this.checkFirstElement(originalSteps);
-            }),
-            takeWhile(count => count < waitTime),
-            filter(_count => element),
-            take(1),
-            map(_count => element),
-          )
-          .subscribe((el: Element) => {
-            el.scrollIntoView(true);
+        this.waitForElement(originalSteps[0], tourInstance.tourId).then(
+          element => {
+            element.scrollIntoView(true);
             this.tour.start();
             if (removedSteps !== undefined) {
               removedSteps.forEach(er => {
@@ -266,7 +315,13 @@ export class TourServiceService {
                       .subscribe();
                     this.router.navigate([er.nextRoute]);
                     this.router.events.subscribe((event: NavigationEvent) => {
-                      this.navigationCheckNext(event, er);
+                      this.navigationCheckNext(
+                        event,
+                        er,
+                        tourInstance,
+                        er.nextStepId,
+                        er.id,
+                      );
                     });
                   };
                   const wrapperPrevRemoved = () => {
@@ -283,7 +338,13 @@ export class TourServiceService {
                       .subscribe();
                     this.router.navigate([er.prevRoute]);
                     this.router.events.subscribe((event: NavigationEvent) => {
-                      this.navigationCheckBack(event, er);
+                      this.navigationCheckBack(
+                        event,
+                        er,
+                        tourInstance,
+                        er.prevStepId,
+                        er.id,
+                      );
                     });
                   };
                   const wrapperNormalNextRemoved = () => {
@@ -299,6 +360,13 @@ export class TourServiceService {
                       })
                       .subscribe();
                     this.tour.next();
+                    this.tourStepChange.next({
+                      tourId: tourInstance.tourId,
+                      currentStepId: er.nextStepId,
+                      previousStepId: er.id,
+                      moveForward: true,
+                    });
+                    this.pauseAllVideos();
                   };
                   const wrapperNormalPrevRemoved = () => {
                     this.tourStoreService
@@ -313,6 +381,13 @@ export class TourServiceService {
                       })
                       .subscribe();
                     this.tour.back();
+                    this.tourStepChange.next({
+                      tourId: tourInstance.tourId,
+                      currentStepId: er.nextStepId,
+                      previousStepId: er.id,
+                      moveForward: false,
+                    });
+                    this.pauseAllVideos();
                   };
                   this.actionAssignment(
                     er,
@@ -330,14 +405,18 @@ export class TourServiceService {
               this.tour.addSteps(removedSteps);
               this.addRemovedSteps(removedSteps);
             }
-          });
+          },
+          err => {
+            this.tourFailed.next(err);
+          },
+        );
       });
   }
   public run(
     tourId: string,
     params?: {[key: string]: string},
     props?: Props,
-    filterFn?: filterFunction,
+    filterFn?: FilterFunction,
   ): void {
     this.tourStoreService
       .loadTour({
@@ -346,14 +425,17 @@ export class TourServiceService {
       })
       .subscribe(tourInstance => {
         if (tourInstance && tourInstance.tourSteps.length > 0) {
-          let steps = JSON.stringify(tourInstance.tourSteps);
-          Object.keys(params).forEach(key => {
-            steps = steps.replace(
-              new RegExp(`\\{\\{${key}\\}\\}`),
-              params[key],
-            );
-          });
-          tourInstance.tourSteps = JSON.parse(steps);
+          if (params) {
+            let steps = JSON.stringify(tourInstance.tourSteps);
+
+            Object.keys(params).forEach(key => {
+              steps = steps.replace(
+                new RegExp(`\\{\\{${key}\\}\\}`),
+                params[key],
+              );
+            });
+            tourInstance.tourSteps = JSON.parse(steps);
+          }
           this.tour = new Shepherd.Tour({
             useModalOverlay: true,
             defaultStepOptions: {
@@ -381,27 +463,20 @@ export class TourServiceService {
         }
       });
   }
-  private checkFirstElement(tourSteps: TourStep[]) {
-    const firstStep = tourSteps[0];
-    if (firstStep) {
-      switch (firstStep.attachTo.type) {
-        case 'string':
-          return document.querySelector(firstStep.attachTo.element);
+  private checkElement(attachTo: TourStep['attachTo']) {
+    switch (attachTo.type) {
+      case 'string':
+        return document.querySelector(attachTo.element as string);
 
-        case 'element':
-          return firstStep.attachTo.element;
+      case 'element':
+        return attachTo.element as Element;
 
-        case 'function':
-          const fn = this.tourStoreService.getFnByKey(
-            firstStep.attachTo.element,
-          );
-          return fn();
+      case 'function':
+        const fn = this.tourStoreService.getFnByKey(attachTo.element);
+        return fn() as Element;
 
-        default:
-          return false;
-      }
-    } else {
-      return false;
+      default:
+        return false;
     }
   }
   private getRemovedSteps(tourSteps: TourStep[], tourState: TourState) {
@@ -430,5 +505,8 @@ export class TourServiceService {
     } else {
       return Status.InProgress;
     }
+  }
+  private pauseAllVideos() {
+    document.querySelectorAll('video').forEach(vid => vid.pause());
   }
 }

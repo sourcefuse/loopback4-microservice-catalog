@@ -23,6 +23,7 @@ import {
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums';
 import {Strategies} from '../models';
 import {StrategiesRepository} from '../repositories';
 
@@ -34,7 +35,7 @@ export class StrategiesController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.CreateStrategy]})
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -60,7 +61,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewStrategy]})
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -77,7 +78,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewStrategy]})
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -101,7 +102,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateStrategy]})
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -126,7 +127,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.ViewStrategy]})
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -149,7 +150,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateStrategy]})
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -173,7 +174,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.UpdateStrategy]})
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -190,7 +191,7 @@ export class StrategiesController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [PermissionKey.DeleteStrategy]})
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

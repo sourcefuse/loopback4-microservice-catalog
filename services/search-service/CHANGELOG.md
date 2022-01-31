@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.3 (2022-01-28)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
 ## <small>0.5.2 (2022-01-16)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service
