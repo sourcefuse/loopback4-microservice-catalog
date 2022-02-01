@@ -1,5 +1,5 @@
 function sourceloopCliLog(message) {
-  if (process.env.sourceloopCliLog === 'true') {
+  if (process.env.DEBUG === 'sourceloop:cli') {
     console.log(`${message}`);
   }
 }
