@@ -8,6 +8,7 @@ const AppGenerator = require('@loopback/cli/generators/app');
 const path = require('path');
 const spawnProcess = require('../spawn');
 const fs = require('fs');
+const g = require('@loopback/cli/lib/globalize');
 
 module.exports = class MGenerator extends AppGenerator {
   constructor(args, opts) {
@@ -15,6 +16,10 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   _setupGenerator() {
+    super.option('serviceDependency', {
+      type : String,
+      description: g.f('Dependency service name'),
+    });
     return super._setupGenerator();
   }
 
@@ -74,6 +79,7 @@ module.exports = class MGenerator extends AppGenerator {
           choices: this.serviceChoices,
         },
       ]);
+    this.projectInfo.serviceDependency = this.service.selector;
     }
   }
 
@@ -141,8 +147,8 @@ module.exports = class MGenerator extends AppGenerator {
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
                     this._promclient(packageName).then(() =>
-                      this._openapi(packageName).then(() =>
-                        this._addDependency(packageName),
+                      this._addDependency(packageName).then(() =>
+                        this._openapi(packageName),
                       ),
                     ),
                   ),
