@@ -1,5 +1,6 @@
 import {inject} from '@loopback/context';
 import {
+  ControllerRoute,
   ExpressRequestHandler,
   FindRoute,
   HttpErrors,
@@ -92,6 +93,9 @@ export class ServiceSequence implements SequenceHandler {
       const finished = await this.invokeMiddleware(context);
       if (finished) return;
       const route = this.findRoute(request);
+      if (!(route instanceof ControllerRoute)) {
+        throw new HttpErrors.NotFound('Route not found');
+      }
       const args = await this.parseParams(request, route);
 
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
