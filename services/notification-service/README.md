@@ -93,7 +93,7 @@ npm i @sourceloop/notification-service
   ...
   ```
 - **Push Notifications with Pubnub** -
-  - Bind the Pubnub Config to the `PubNubProvider.Config` key -
+  - Bind the Pubnub Config to the `PubnubBindings.Config` key -
   ```typescript
   this.bind(PubnubBindings.Config).to({
     subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
