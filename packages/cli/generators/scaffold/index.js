@@ -2,6 +2,7 @@ const Generator = require('yeoman-generator');
 const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const sourceloopCliLog = require('../debug')
 const {answers} = require("./index");
 
 // Handle how paths are handled since some are not getting redirected correctly
@@ -90,11 +91,11 @@ module.exports = class extends Generator {
         const spawnedProcess = spawn(cmd, cmdArgs, {...cwd});
 
         spawnedProcess.stdout.on("data", data => {
-            console.log(`stdout: ${data}`);
+            sourceloopCliLog(data);
         });
 
         spawnedProcess.stderr.on("data", data => {
-            console.log(`stderr: ${data}`);
+            sourceloopCliLog(data);
         });
 
         spawnedProcess.on('error', (error) => {

@@ -8,6 +8,7 @@ const AppGenerator = require('@loopback/cli/generators/app');
 const path = require('path');
 const spawnProcess = require('../spawn');
 const fs = require('fs');
+const g = require('@loopback/cli/lib/globalize');
 
 module.exports = class MGenerator extends AppGenerator {
   constructor(args, opts) {
@@ -15,6 +16,10 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   _setupGenerator() {
+    super.option('serviceDependency', {
+      type : String,
+      description: g.f('Dependency service name'),
+    });
     return super._setupGenerator();
   }
 
@@ -39,14 +44,43 @@ module.exports = class MGenerator extends AppGenerator {
       return super.promptProjectDir()}
   }
 
+  serviceChoices = ['audit-service',
+                    'authentication-service',
+                    'chat-service',
+                    'notification-service',
+                    'bpmn-service',
+                    'feature-toggle-service',
+                    'in-mail-service',
+                    'payment-service',
+                    'scheduler-service',
+                    'search-service',
+                    'video-conferencing-service'];
+
   async promptUniquePrefix() {
     this.answers = await this.prompt([
         {
             type: 'input',
             name: 'uniquePrefix',
             message: 'Unique prefix for the docker image:'
+        },
+        {
+            type: 'input',
+            name: 'serviceSelect',
+            message: 'Do you want to add sourceloop dependencies?(y/n)'
         }
     ]);
+
+    if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y') {
+      this.service = await this.prompt([
+        {
+          name: 'selector',
+          message: 'Select the service you want to add:',
+          type: 'list',
+          choices: this.serviceChoices,
+        },
+      ]);
+    this.projectInfo.serviceDependency = this.service.selector;
+    }
   }
 
   promptApplication() {
@@ -113,7 +147,9 @@ module.exports = class MGenerator extends AppGenerator {
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
                     this._promclient(packageName).then(() =>
-                      this._openapi(packageName),
+                      this._addDependency(packageName).then(() =>
+                        this._openapi(packageName),
+                      ),
                     ),
                   ),
                 ),
@@ -139,6 +175,12 @@ module.exports = class MGenerator extends AppGenerator {
 
   async _sourceloopCore(packageName){
     await spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
+  }
+
+  async _addDependency(packageName){
+    if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y'){
+      await spawnProcess('npx', ['lerna', 'add', '@sourceloop/'+`${this.service.selector}`, '--scope='+`${packageName}`], {packageName});
+    }
   }
 
   async _bearerVerifier(packageName){
