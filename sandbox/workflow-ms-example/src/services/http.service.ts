@@ -8,11 +8,11 @@ import {HttpOptions} from './types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class HttpClientService {
-  get(url: string, options?: HttpOptions) {
+  get<T>(url: string, options?: HttpOptions) {
     const processed = this.processOptions(url, options);
     return fetch(processed.url, {
       headers: processed.headers,
-    }).then(res => this.handleRes(res));
+    }).then(res => this.handleRes<T>(res));
   }
 
   delete(url: string, options?: HttpOptions) {
@@ -23,7 +23,7 @@ export class HttpClientService {
     }).then(res => this.handleRes(res));
   }
 
-  post(url: string, body: AnyObject, options?: HttpOptions) {
+  post<T>(url: string, body: AnyObject, options?: HttpOptions) {
     const processed = this.processOptions(url, options);
     return fetch(processed.url, {
       method: 'post',
@@ -32,10 +32,10 @@ export class HttpClientService {
         'content-type': 'application/json',
         ...processed.headers,
       },
-    }).then(res => this.handleRes(res));
+    }).then(res => this.handleRes<T>(res));
   }
 
-  postFormData(url: string, body: FormData, options?: HttpOptions) {
+  postFormData<T>(url: string, body: FormData, options?: HttpOptions) {
     const processed = this.processOptions(url, options);
     return fetch(processed.url, {
       method: 'post',
@@ -44,7 +44,7 @@ export class HttpClientService {
         ...body.getHeaders(),
         ...processed.headers,
       },
-    }).then(res => this.handleRes(res));
+    }).then(res => this.handleRes<T>(res));
   }
 
   private processOptions(url: string, options?: HttpOptions) {
@@ -67,11 +67,13 @@ export class HttpClientService {
     return {url, headers};
   }
 
-  private async handleRes(res: Response) {
+  private async handleRes<T>(res: Response): Promise<T> {
     if (res.status === STATUS_CODE.OK) {
-      return res.json().catch(e => ({}));
+      return (res.json() as Promise<T>).catch(
+        e => Promise.resolve({}) as Promise<T>,
+      );
     } else if (res.status === STATUS_CODE.NO_CONTENT) {
-      return {};
+      return Promise.resolve({}) as Promise<T>;
     } else {
       throw new HttpErrors.BadRequest(await res.text());
     }
