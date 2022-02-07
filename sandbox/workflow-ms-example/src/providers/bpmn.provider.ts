@@ -18,7 +18,9 @@ export class BpmnProvider implements Provider<WorflowManager> {
   value(): WorflowManager {
     return {
       getWorkflowById: async workflow => {
-        const response = await this.camunda.get(workflow.externalIdentifier);
+        const response = await this.camunda.get<AnyObject>(
+          workflow.externalIdentifier,
+        );
 
         return new Workflow({
           provider: 'camunda',
@@ -32,12 +34,12 @@ export class BpmnProvider implements Provider<WorflowManager> {
       startWorkflow: async (input, workflow, version) => {
         let response;
         if (version) {
-          response = await this.camunda.execute(
+          response = await this.camunda.execute<AnyObject>(
             version.externalWorkflowId,
             input,
           );
         } else {
-          response = await this.camunda.execute(
+          response = await this.camunda.execute<AnyObject>(
             workflow.externalIdentifier,
             input,
           );
@@ -45,7 +47,7 @@ export class BpmnProvider implements Provider<WorflowManager> {
         return response;
       },
       createWorkflow: async (workflowDto: WorkflowDto) => {
-        const response = await this.camunda.create(
+        const response = await this.camunda.create<AnyObject>(
           workflowDto.name,
           Buffer.from(workflowDto.bpmnFile, 'utf-8'),
         );
@@ -72,7 +74,7 @@ export class BpmnProvider implements Provider<WorflowManager> {
         };
       },
       updateWorkflow: async (workflowDto: WorkflowDto) => {
-        const response = await this.camunda.create(
+        const response = await this.camunda.create<AnyObject>(
           workflowDto.name,
           Buffer.from(workflowDto.bpmnFile, 'utf-8'),
         );

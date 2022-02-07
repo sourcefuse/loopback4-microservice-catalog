@@ -3,7 +3,6 @@ import {
   Request,
   RestBindings,
   get,
-  response,
   ResponseObject,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
@@ -38,7 +37,6 @@ const PING_RESPONSE: ResponseObject = {
 /**
  * A simple controller to bounce back http requests
  */
-const OK = 200;
 
 export class PingController {
   constructor(
