@@ -53,11 +53,11 @@
     "db-migrate-pg": "^1.0.0"
   },
   "dependencies": {
-    "@loopback/boot": "^4.0.0",
-    "@loopback/core": "^3.0.0",
-    "@loopback/openapi-v3": "^7.0.0",
-    "@loopback/repository": "^4.0.0",
-    "@loopback/rest": "^11.0.0",
+    "@loopback/boot": "^4.0.1",
+    "@loopback/core": "^3.0.1",
+    "@loopback/openapi-v3": "^7.0.1",
+    "@loopback/repository": "^4.0.1",
+    "@loopback/rest": "^11.0.1",
     "@sourceloop/audit-log": "^3.0.0",
     "@sourceloop/core": "^6.1.0",
     "dotenv": "^10.0.0",
@@ -68,15 +68,15 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@loopback/build": "^8.0.0",
-    "@loopback/eslint-config": "^12.0.0",
-    "@loopback/testlab": "^4.0.0",
+    "@loopback/build": "^8.0.1",
+    "@loopback/eslint-config": "^12.0.1",
+    "@loopback/testlab": "^4.0.1",
     "@types/node": "^10.17.60",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
-    "eslint": "^7.32.0",
-    "source-map-support": "^0.5.20",
-    "typescript": "~4.5.2",
+    "eslint": "^8.6.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.5.4",
     "widdershins": "^4.0.1"
   },
   "publishConfig": {
