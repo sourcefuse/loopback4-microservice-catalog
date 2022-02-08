@@ -1,10 +1,5 @@
 import {inject} from '@loopback/core';
-import {
-  Request,
-  RestBindings,
-  get,
-  ResponseObject,
-} from '@loopback/rest';
+import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 
 /**
