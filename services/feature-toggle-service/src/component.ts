@@ -15,6 +15,7 @@ import {
   BearerVerifierType,
   CoreComponent,
   SECURITY_SCHEME_SPEC,
+  ServiceSequence,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
@@ -41,13 +42,13 @@ import {
   TenantFeatureProvider,
   UserFeatureProvider,
 } from './providers';
-import {FeatureToggleSequence} from './sequence';
 import {IToggleServiceConfig} from './types';
 import {
   FeaturesController,
   ProjectsController,
   StrategiesController,
 } from './controllers';
+import {FeatureToggleActionMiddlewareInterceptor} from './middlewares/feature-toggle-action.middleware';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
@@ -74,6 +75,7 @@ export class FeatureToggleServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
+    this.application.middleware(FeatureToggleActionMiddlewareInterceptor);
     // Mount default sequence if needed
     if (!this.config?.useCustomSequence) {
       // Mount default sequence if needed
@@ -122,7 +124,7 @@ export class FeatureToggleServiceComponent implements Component {
    */
   controllers?: ControllerClass[];
   setupSequence() {
-    this.application.sequence(FeatureToggleSequence);
+    this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
     this.application.component(AuthenticationComponent);
