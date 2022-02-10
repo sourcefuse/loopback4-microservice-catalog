@@ -48,7 +48,7 @@ import {
   ProjectsController,
   StrategiesController,
 } from './controllers';
-import {FeatureToggleActionMiddlewareInterceptor} from './middlewares/feature-toggle-action.middleware';
+import {FeatureToggleActionMiddlewareInterceptor} from './middlewares';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
