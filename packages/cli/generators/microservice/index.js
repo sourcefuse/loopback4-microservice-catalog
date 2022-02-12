@@ -9,6 +9,10 @@ const path = require('path');
 const spawnProcess = require('../spawn');
 const fs = require('fs');
 const g = require('@loopback/cli/lib/globalize');
+const {logBar, logBarStart, logBarStop} = require('../logbar');
+const cliProgress = require('cli-progress');
+
+const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 module.exports = class MGenerator extends AppGenerator {
   constructor(args, opts) {
@@ -118,6 +122,7 @@ module.exports = class MGenerator extends AppGenerator {
   install() {
     const packageJsonFile = path.join(process.cwd(), 'package.json');
     const packageJson = require(packageJsonFile);
+    packageJson.name = `${this.answers.uniquePrefix}-${packageJson.name}`;
     const scripts = packageJson.scripts;
     const symlinkresolver = 'symlink-resolver';
     this._setupMicroservice(packageJson.name);
@@ -126,12 +131,12 @@ module.exports = class MGenerator extends AppGenerator {
     scripts['prestart'] = "npm run rebuild && npm run openapi-spec";
     scripts['rebuild'] = "npm run clean && npm run build";
     scripts['start'] = "node -r ./dist/opentelemetry-registry.js -r source-map-support/register .";
-    scripts['docker:build'] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/ 
-    ${this.answers.uniquePrefix} -$npm_package_name:$npm_package_version .`;
-    scripts['docker:push'] = `sudo docker push $IMAGE_REPO_NAME/ ${this.answers.uniquePrefix} -$npm_package_name:$npm_package_version`;
-    scripts['docker:build:dev'] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/ 
-    ${this.answers.uniquePrefix} -$npm_package_name:$IMAGE_TAG_VERSION .`;
-    scripts['docker:push:dev'] = `sudo docker push $IMAGE_REPO_NAME/ ${this.answers.uniquePrefix} -$npm_package_name:$IMAGE_TAG_VERSION`;
+    scripts['docker:build'] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/
+    ${this.answers.uniquePrefix}-$npm_package_name:$npm_package_version .`;
+    scripts['docker:push'] = `sudo docker push $IMAGE_REPO_NAME/${this.answers.uniquePrefix}-$npm_package_name:$npm_package_version`;
+    scripts['docker:build:dev'] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/
+    ${this.answers.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION .`;
+    scripts['docker:push:dev'] = `sudo docker push $IMAGE_REPO_NAME/${this.answers.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION`;
     scripts['coverage'] = "nyc npm run test";
     packageJson.scripts = scripts;
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
@@ -146,9 +151,11 @@ module.exports = class MGenerator extends AppGenerator {
               this._swaggerStat(packageName).then(() =>
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
-                    this._promclient(packageName).then(() =>
-                      this._addDependency(packageName).then(() =>
-                        this._openapi(packageName),
+                    this._addDependency(packageName).then(() =>
+                      this._promclient(packageName).then(() =>
+                        this._openapi(packageName).then(() =>
+                          this._prettierfix(packageName),
+                        ),
                       ),
                     ),
                   ),
@@ -164,32 +171,39 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _symlink(packageName){
+    await logBarStart(bar1, 11);
     await spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
 
   async _dotenv(packageName){
     await spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
 
   async _sourceloopCore(packageName){
     await spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
 
   async _addDependency(packageName){
     if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y'){
       await spawnProcess('npx', ['lerna', 'add', '@sourceloop/'+`${this.service.selector}`, '--scope='+`${packageName}`], {packageName});
     }
+    await logBar(bar1);
   }
 
   async _bearerVerifier(packageName){
     await spawnProcess('npx', ['lerna', 'add', 'loopback4-authentication', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', 'loopback4-authorization', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
 
   async _swaggerStat(packageName){
     await spawnProcess('npx', ['lerna', 'add', 'swagger-stats', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
 
   async _opentelemetry(packageName){
@@ -201,18 +215,28 @@ module.exports = class MGenerator extends AppGenerator {
     await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg-pool', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/tracing', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
 
   async _nyc(packageName){
     await spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
+    await logBar(bar1);
   }
   async _promclient(packageName){
     await spawnProcess('npm', ['i', 'prom-client'], {packageName});
+    await logBar(bar1);
   }
 
   async _openapi(packageName){
     await spawnProcess('npm', ['run', 'openapi-spec'], {packageName});
+    await logBar(bar1);
+  }
+
+  async _prettierfix(packageName){
+    await spawnProcess('npm',['run', 'prettier:fix'], {packageName});
+    await logBar(bar1);
+    await logBarStop(bar1);
   }
 
   end() {
