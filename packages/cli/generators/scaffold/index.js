@@ -28,9 +28,6 @@ module.exports = class extends Generator {
 
     // refactor since this is calling every function and order matters. Order should not matter
     initProject() {
-        const templatePath = this.templatePath();
-        console.log(`Template path: ${templatePath}`);
-        console.log(`Creating directory ${this.answers.projectDir}`);
         fs.mkdir(this.answers.projectDir, {recursive: true}, (err) => {
             if (err) {
                 throw err;
@@ -113,16 +110,13 @@ module.exports = class extends Generator {
 
     _copyTemplates() {
         fs.readdirSync(this.templatePath()).forEach(file => {
-            console.log(this.templatePath());
             const targetFileName = file.replace('.tpl', '');
             const sourcePath = this.templatePath(file);
-            console.log(`Source path: ${sourcePath}`);
             const destinationPath = path.join(this.answers.projectDir, targetFileName);
             this.fs.copyTpl(sourcePath, destinationPath, {
                 upperDbKey: this.answers.dbKey.toUpperCase(),
                 ...this.answers
             });
-            console.log(file);
         });
 
         fs.mkdirSync(path.join(this.answers.projectDir, 'services'));
