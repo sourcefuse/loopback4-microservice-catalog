@@ -11,7 +11,6 @@ const fs = require('fs');
 const g = require('@loopback/cli/lib/globalize');
 const {logBar, logBarStart, logBarStop} = require('../logbar');
 const cliProgress = require('cli-progress');
-
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 module.exports = class MGenerator extends AppGenerator {
