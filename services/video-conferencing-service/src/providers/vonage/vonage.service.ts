@@ -6,6 +6,7 @@ import {
   VonageMeetingOptions,
   VonageMeetingResponse,
   VonageConfig,
+  VonageSessionWebhookPayload,
 } from '.';
 import {
   SessionResponse,
@@ -21,12 +22,17 @@ import axios from 'axios';
 import {VonageEnums} from '../../enums';
 import {VonageBindings} from './keys';
 import {inject} from '@loopback/core';
+import {ExternalStorageName, SessionAttendees, VideoChatFeatures} from '../..';
+import {SessionAttendeesRepository} from '../../repositories';
+import {repository} from '@loopback/repository';
 
 export class VonageService implements VonageVideoChat {
   VonageClient: OpenTok;
   constructor(
     @inject(VonageBindings.config, {optional: true})
     private readonly vonageConfig: VonageConfig,
+    @repository(SessionAttendeesRepository)
+    private readonly sessionAttendeesRepository: SessionAttendeesRepository,
   ) {
     const {apiKey, apiSecret} = vonageConfig;
     if (!(apiKey && apiSecret)) {
@@ -103,6 +109,14 @@ export class VonageService implements VonageVideoChat {
       token,
     };
   }
+  getFeatures(): VideoChatFeatures {
+    console.log('get features called');
+
+    return {
+      archive: true,
+      schedule: true,
+    };
+  }
   async getArchives(
     archiveId: string | null,
   ): Promise<ArchiveResponse | ArchiveResponseList> {
@@ -153,27 +167,42 @@ export class VonageService implements VonageVideoChat {
     const token = sign(jwtPayload, apiSecret);
     let type = '';
     const credentials = {};
-    const {accessKey, secretKey, bucket, endpoint} =
-      storageConfig as VonageS3TargetOptions;
-    const {accountName, accountKey, container, domain} =
-      storageConfig as VonageAzureTargetOptions;
-    if (accessKey && secretKey && bucket) {
-      type = 'S3';
-      Object.assign(credentials, {
-        accessKey,
-        secretKey,
-        bucket,
-        endpoint,
-      });
-    }
-    if (accountName && accountKey && container) {
-      type = 'Azure';
-      Object.assign(credentials, {
-        accountName,
-        accountKey,
-        container,
-        domain,
-      });
+    if (storageConfig.name === ExternalStorageName.AWSS3) {
+      const accessKey = this.vonageConfig.awsAccessKey;
+      const secretKey = this.vonageConfig.awsSecretKey;
+      if (!accessKey || !secretKey) {
+        throw new HttpErrors.InternalServerError(
+          `Missing Aws S3 credentials for setting vongae upload target`,
+        );
+      }
+      const {bucket, endpoint} = storageConfig as VonageS3TargetOptions;
+      if (bucket) {
+        type = 'S3';
+        Object.assign(credentials, {
+          accessKey,
+          secretKey,
+          bucket,
+          endpoint,
+        });
+      }
+    } else if (storageConfig.name === ExternalStorageName.AZURE) {
+      const accountKey = this.vonageConfig.azureAccountKey;
+      const container = this.vonageConfig.azureAccountContainer;
+      const {accountName, domain} = storageConfig as VonageAzureTargetOptions;
+      if (!accountKey || !container) {
+        throw new HttpErrors.InternalServerError(
+          `Missing Azure credentials for setting vongae upload target`,
+        );
+      }
+      if (accountName) {
+        type = 'Azure';
+        Object.assign(credentials, {
+          accountName,
+          accountKey,
+          container,
+          domain,
+        });
+      }
     }
     await axios({
       url: `https://api.opentok.com/v2/project/${this.vonageConfig.apiKey}/archive/storage`,
@@ -187,5 +216,97 @@ export class VonageService implements VonageVideoChat {
         'X-OPENTOK-AUTH': token,
       },
     });
+  }
+
+  async checkWebhookPayload(
+    webhookPayload: VonageSessionWebhookPayload,
+  ): Promise<void> {
+    try {
+      const {
+        connection: {data},
+        event,
+        sessionId,
+      } = webhookPayload;
+
+      const sessionAttendeeDetail =
+        await this.sessionAttendeesRepository.findOne({
+          where: {
+            sessionId: sessionId,
+            attendee: data,
+          },
+        });
+      if (!sessionAttendeeDetail) {
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
+          await this.sessionAttendeesRepository.create({
+            sessionId: sessionId,
+            attendee: data,
+            createdOn: new Date(),
+            isDeleted: false,
+            extMetadata: {webhookPayload: webhookPayload},
+          });
+        }
+      } else {
+        const updatedAttendee = {
+          modifiedOn: new Date(),
+          isDeleted: sessionAttendeeDetail.isDeleted,
+          extMetadata: {webhookPayload: webhookPayload},
+        };
+        console.log('event is ');
+
+        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
+          updatedAttendee.isDeleted = false;
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            updatedAttendee,
+          );
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            updatedAttendee,
+          );
+        } else if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
+          await this.processStreamDestroyedEvent(
+            webhookPayload,
+            sessionAttendeeDetail,
+            updatedAttendee,
+          );
+        } else if (
+          event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
+        ) {
+          updatedAttendee.isDeleted = true;
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendeeDetail.id,
+            updatedAttendee,
+          );
+        } else {
+          //DO NOTHING
+        }
+      }
+    } catch (error) {
+      throw new HttpErrors.InternalServerError(
+        'Error occured triggering webhook event',
+      );
+    }
+  }
+  async processStreamDestroyedEvent(
+    webhookPayload: VonageSessionWebhookPayload,
+    sessionAttendeeDetail: SessionAttendees,
+    updatedAttendee: Partial<SessionAttendees>,
+  ) {
+    if (
+      webhookPayload.reason === 'forceUnpublished' ||
+      webhookPayload.reason === 'mediaStopped'
+    ) {
+      await this.sessionAttendeesRepository.updateById(
+        sessionAttendeeDetail.id,
+        updatedAttendee,
+      );
+    } else {
+      updatedAttendee.isDeleted = true;
+      await this.sessionAttendeesRepository.updateById(
+        sessionAttendeeDetail.id,
+        updatedAttendee,
+      );
+    }
   }
 }

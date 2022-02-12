@@ -2,14 +2,11 @@ import {injectable, inject, BindingScope} from '@loopback/core';
 
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {ExternalStorageOptions} from '..';
 
 import {VideoChatBindings} from '../keys';
 import {VideoChatSessionRepository} from '../repositories';
-import {
-  AzureTargetOptions,
-  S3TargetOptions,
-  VideoChatInterface,
-} from '../types';
+import {VideoChatInterface} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ChatArchiveService {
@@ -52,19 +49,7 @@ export class ChatArchiveService {
     return this.videoChatProvider.deleteArchive(archiveId);
   }
 
-  async setUploadTarget(
-    body: S3TargetOptions | AzureTargetOptions,
-  ): Promise<void> {
-    const {accessKey, secretKey, bucket} = body as S3TargetOptions;
-    const {accountName, accountKey, container} = body as AzureTargetOptions;
-    if (
-      !(accessKey && secretKey && bucket) &&
-      !(accountName && accountKey && container)
-    ) {
-      throw new HttpErrors.BadRequest(
-        'Missing s3/azure credentials. Please check request body',
-      );
-    }
+  async setUploadTarget(body: ExternalStorageOptions): Promise<void> {
     await this.videoChatProvider.setUploadTarget(body);
   }
 }

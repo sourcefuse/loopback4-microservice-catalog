@@ -35,6 +35,7 @@ import {AuditLogs} from './models/audit-logs.model';
 import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageProvider} from './providers/vonage/vonage.provider';
 import {VonageService} from './providers/vonage/vonage.service';
+import {TwilioProvider} from './providers/twilio/twilio.provider';
 import {SessionAttendeesRepository} from './repositories';
 import {AuditLogsRepository} from './repositories/audit-logs.repository';
 import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
@@ -43,6 +44,7 @@ import {
   ChatSessionService,
   MeetingLinkIdGeneratorProvider,
 } from './services';
+import {TwilioService} from './providers/twilio/twilio.service';
 export class VideoConfServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -79,6 +81,7 @@ export class VideoConfServiceComponent implements Component {
     );
 
     this.application.service(VonageService);
+    this.application.service(TwilioService);
 
     if (!this.videChatConfig?.useCustomSequence) {
       // Mount default sequence if needed
@@ -96,6 +99,7 @@ export class VideoConfServiceComponent implements Component {
     this.providers = {
       [VideoChatBindings.VideoChatProvider.key]: VonageProvider,
       [MeetLinkGeneratorProvider.key]: MeetingLinkIdGeneratorProvider,
+      TwilioProvider,
     };
 
     this.controllers = [VideoChatArchiveController, VideoChatSessionController];
