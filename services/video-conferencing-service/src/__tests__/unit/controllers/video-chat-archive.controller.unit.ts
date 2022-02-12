@@ -6,7 +6,10 @@ import {
 } from '@loopback/testlab';
 import {VideoChatArchiveController} from '../../../controllers';
 import {VonageConfig, VonageProvider} from '../../../providers/vonage';
-import {VideoChatSessionRepository} from '../../../repositories';
+import {
+  VideoChatSessionRepository,
+  SessionAttendeesRepository,
+} from '../../../repositories';
 import {ChatArchiveService} from '../../../services/chat-archive.service';
 import {VonageService} from '../../../providers/vonage/vonage.service';
 import {VideoChatInterface} from '../../../types';
@@ -16,12 +19,15 @@ import {
   getVideoChatSession,
   setUpMockProvider,
 } from '../../helpers';
+import {ExternalStorageName} from '../../..';
 
 describe('Archive APIs', () => {
   const archiveId = 'dummy-archive-id';
   const invalidArchiveId = '';
 
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
+  let sessionAttendeesRepo: StubbedInstanceWithSinonAccessor<SessionAttendeesRepository>;
+
   let videoChatProvider: VideoChatInterface;
   let vonageService: VonageService;
   let config: VonageConfig;
@@ -99,6 +105,7 @@ describe('Archive APIs', () => {
         secretKey: '****',
         region: 'dummy-region',
         bucket: 'dummy-bucket',
+        name: ExternalStorageName.AWSS3,
       };
       await controller.setUploadTarget(S3Options);
     });
@@ -109,21 +116,9 @@ describe('Archive APIs', () => {
         accountKey: '1234',
         container: 'dummy-container',
         domain: 'dummy-domain',
+        name: ExternalStorageName.AZURE,
       };
       await controller.setUploadTarget(azureOptions);
-    });
-
-    it('returns an error if options are null', async () => {
-      const S3Options = {
-        accessKey: '',
-        secretKey: '',
-        region: 'dummy-region',
-        bucket: 'dummy-bucket',
-      };
-      const error = await controller
-        .setUploadTarget(S3Options)
-        .catch(err => err);
-      expect(error).instanceOf(Error);
     });
   });
 
@@ -134,10 +129,10 @@ describe('Archive APIs', () => {
       timeToStart: 30,
     };
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
-
+    sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    vonageService = new VonageService(config);
+    vonageService = new VonageService(config, sessionAttendeesRepo);
     videoChatProvider = new VonageProvider(vonageService).value();
     chatArchiveService = new ChatArchiveService(
       videoChatProvider,
