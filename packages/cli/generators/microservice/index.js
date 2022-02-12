@@ -171,39 +171,39 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _symlink(packageName){
-    await logBarStart(bar1, 11);
+    logBarStart(bar1, 11);
     await spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _dotenv(packageName){
     await spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _sourceloopCore(packageName){
     await spawnProcess('npx', ['lerna', 'add', '@sourceloop/core', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _addDependency(packageName){
     if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y'){
       await spawnProcess('npx', ['lerna', 'add', '@sourceloop/'+`${this.service.selector}`, '--scope='+`${packageName}`], {packageName});
     }
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _bearerVerifier(packageName){
     await spawnProcess('npx', ['lerna', 'add', 'loopback4-authentication', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', 'loopback4-authorization', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _swaggerStat(packageName){
     await spawnProcess('npx', ['lerna', 'add', 'swagger-stats', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _opentelemetry(packageName){
@@ -215,28 +215,28 @@ module.exports = class MGenerator extends AppGenerator {
     await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/plugin-pg-pool', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '@opentelemetry/tracing', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _nyc(packageName){
     await spawnProcess('npx', ['lerna', 'add', '-D', '@istanbuljs/nyc-config-typescript', '--scope='+`${packageName}`], {packageName});
     await spawnProcess('npx', ['lerna', 'add', '-D', 'nyc', '--scope='+`${packageName}`], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
   async _promclient(packageName){
     await spawnProcess('npm', ['i', 'prom-client'], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _openapi(packageName){
     await spawnProcess('npm', ['run', 'openapi-spec'], {packageName});
-    await logBar(bar1);
+    logBar(bar1);
   }
 
   async _prettierfix(packageName){
     await spawnProcess('npm',['run', 'prettier:fix'], {packageName});
-    await logBar(bar1);
-    await logBarStop(bar1);
+    logBar(bar1);
+    logBarStop(bar1);
   }
 
   end() {
