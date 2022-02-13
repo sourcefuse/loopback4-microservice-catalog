@@ -15,7 +15,7 @@
     ".yo-rc.json"
   ],
   "engines": {
-    "node": "12 || 14 || 16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {},
   "repository": {
@@ -25,15 +25,15 @@
   "author": "SourceFuse",
   "license": "MIT",
   "dependencies": {
-    "@loopback/cli": "^3.0.0",
-    "@loopback/core": "^2.16.2",
+    "@loopback/cli": "^3.0.1",
+    "@loopback/core": "^3.0.1",
     "@phenomnomnominal/tsquery": "^4.1.1",
     "camelcase-keys": "^7.0.0",
     "chalk": "^4.1.2",
     "change-case": "^4.1.2",
     "cli-progress": "^3.10.0",
     "db-migrate": "^0.11.12",
-    "debug": "^4.3.2",
+    "debug": "^4.3.3",
     "fs-extra": "^10.0.0",
     "latest-version": "^6.0.0",
     "lerna": "^4.0.0",
