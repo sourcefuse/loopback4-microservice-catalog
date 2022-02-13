@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.4 (2022-02-13)</small>
+
+* fix(version): microservice-catalog sandbox examples latest version (#452) ([6866f89](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6866f89)), closes [#452](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/452)
+
+
+
+
+
 ## <small>0.5.3 (2022-01-28)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.5 (2022-02-13)</small>
+
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+* fix(version): microservice-catalog sandbox examples latest version (#452) ([6866f89](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/6866f89)), closes [#452](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/452)
+
+
+
+
+
 ## <small>0.2.4 (2021-12-17)</small>
 
 * fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)
