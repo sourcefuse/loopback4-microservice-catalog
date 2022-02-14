@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.1 (2022-02-13)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
 ## 0.1.0 (2022-01-28)
 
 * fix(core): make payment example private ([abb23ef](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/abb23ef)), closes [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -3,7 +3,6 @@ import {del, get, param, put, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
-import {S3TargetOptions, AzureTargetOptions} from '../types';
 
 import {
   STATUS_CODE,
@@ -12,6 +11,7 @@ import {
 } from '@sourceloop/core';
 import {ChatArchiveService} from '../services/chat-archive.service';
 import {ServiceBindings} from '../keys';
+import {ExternalStorageOptions} from '..';
 
 export class VideoChatArchiveController {
   constructor(
@@ -106,7 +106,7 @@ export class VideoChatArchiveController {
     },
   })
   async setUploadTarget(
-    @requestBody() body: S3TargetOptions | AzureTargetOptions,
+    @requestBody() body: ExternalStorageOptions,
   ): Promise<void> {
     return this.chatArchiveService.setUploadTarget(body);
   }

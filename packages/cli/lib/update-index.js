@@ -15,7 +15,6 @@ const defaultFs = {
 };
 
 /**
- *
  * @param {String} dir The directory in which index.ts is to be updated/created
  * @param {*} file The new file to be exported from index.ts
  */

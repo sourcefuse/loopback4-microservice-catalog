@@ -12,6 +12,9 @@ export namespace VideoChatBindings {
     'sf.videochatprovider',
   );
 
+  export const TwilioVideoChatProvider = BindingKey.create<VideoChatInterface>(
+    'sf.twiliovideochatprovider',
+  );
   export const Config = BindingKey.create<IServiceConfig | null>(
     `${BINDING_PREFIX}.videochat.config`,
   );

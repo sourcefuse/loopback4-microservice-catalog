@@ -2,6 +2,7 @@ const Generator = require('yeoman-generator');
 const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const sourceloopCliLog = require('../debug')
 const {answers} = require("./index");
 
 // Handle how paths are handled since some are not getting redirected correctly
@@ -27,9 +28,6 @@ module.exports = class extends Generator {
 
     // refactor since this is calling every function and order matters. Order should not matter
     initProject() {
-        const templatePath = this.templatePath();
-        console.log(`Template path: ${templatePath}`);
-        console.log(`Creating directory ${this.answers.projectDir}`);
         fs.mkdir(this.answers.projectDir, {recursive: true}, (err) => {
             if (err) {
                 throw err;
@@ -90,11 +88,11 @@ module.exports = class extends Generator {
         const spawnedProcess = spawn(cmd, cmdArgs, {...cwd});
 
         spawnedProcess.stdout.on("data", data => {
-            console.log(`stdout: ${data}`);
+            sourceloopCliLog(data);
         });
 
         spawnedProcess.stderr.on("data", data => {
-            console.log(`stderr: ${data}`);
+            sourceloopCliLog(data);
         });
 
         spawnedProcess.on('error', (error) => {
@@ -112,16 +110,13 @@ module.exports = class extends Generator {
 
     _copyTemplates() {
         fs.readdirSync(this.templatePath()).forEach(file => {
-            console.log(this.templatePath());
             const targetFileName = file.replace('.tpl', '');
             const sourcePath = this.templatePath(file);
-            console.log(`Source path: ${sourcePath}`);
             const destinationPath = path.join(this.answers.projectDir, targetFileName);
             this.fs.copyTpl(sourcePath, destinationPath, {
                 upperDbKey: this.answers.dbKey.toUpperCase(),
                 ...this.answers
             });
-            console.log(file);
         });
 
         fs.mkdirSync(path.join(this.answers.projectDir, 'services'));

@@ -16,6 +16,9 @@ import {
 import {VonageEnums} from '../enums/video-chat.enum';
 import moment from 'moment';
 import {sinon} from '@loopback/testlab';
+import {TwilioMeetingOptions} from '..';
+import {RoomInstance} from 'twilio/lib/rest/video/v1/room';
+import {RecordingInstance} from 'twilio/lib/rest/video/v1/recording';
 
 const meetingLink = 'dummy-meeting-link-id';
 const sessionId = 'dummy-session-id';
@@ -61,11 +64,19 @@ export function setUpMockProvider(providerStub: Partial<VideoChatInterface>) {
       getArchives: sinon.stub().returnsThis(),
       deleteArchive: sinon.stub().returnsThis(),
       setUploadTarget: sinon.stub().returnsThis(),
+      getFeatures: sinon.stub().returns(getVideoChatFeatures()),
+      checkWebhookPayload: sinon.stub().returnsThis(),
     },
     providerStub,
   );
 }
 
+export function getVideoChatFeatures() {
+  return {
+    archive: true,
+    schedule: true,
+  };
+}
 export function getMeetingOptions(meetingOptions: Partial<MeetingOptions>) {
   return Object.assign(
     {
@@ -86,7 +97,9 @@ export function getSessionOptions(sessionOptions: Partial<SessionOptions>) {
   );
 }
 
-export function getMeetingResponse(meetingResponse: Partial<MeetingResponse>) {
+export function getVonageMeetingResponse(
+  meetingResponse: Partial<MeetingResponse>,
+) {
   return Object.assign(
     {
       mediaMode: VonageEnums.MediaMode.Routed,
@@ -149,6 +162,7 @@ export function getVonageSessionOptions(
       meetingId: 'dummy-meeting-id',
       expireTime: getFutureDate(),
       role: VonageEnums.Role.Subscriber,
+      sessionId: 'dummy-session-id',
     },
     vonageSessionOptions,
   );
@@ -248,4 +262,28 @@ export function getAttendeesList() {
       isDeleted: false,
     }),
   ];
+}
+export function getTwilioMeetingOptions(
+  twilioMeetingOptions: Partial<TwilioMeetingOptions>,
+) {
+  return Object.assign(
+    {
+      isScheduled: false,
+    },
+    twilioMeetingOptions,
+  );
+}
+
+export function getRoomInstance(): Promise<RoomInstance> {
+  const roomInstance = sinon.createStubInstance(RoomInstance);
+  roomInstance.sid = 'RMXXXXXXXX';
+  return Promise.resolve(roomInstance);
+}
+
+export function getTwilioArchiveResponse(): Promise<RecordingInstance> {
+  const recordingInstance = sinon.createStubInstance(RecordingInstance);
+  recordingInstance.groupingSids = {
+    roomSid: 'RMXXXXXXXX',
+  };
+  return Promise.resolve(recordingInstance);
 }
