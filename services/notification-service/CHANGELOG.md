@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.5 (2022-02-13)</small>
+
+* Corrected key in description in README.md (#508) ([4e16426](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4e16426)), closes [#508](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/508)
+
+
+
+
+
+## <small>4.0.4 (2022-01-28)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
 ## <small>4.0.3 (2022-01-16)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-service

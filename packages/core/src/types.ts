@@ -13,6 +13,7 @@ export interface CoreConfig {
   authentication?: boolean;
   swaggerUsername?: string;
   swaggerPassword?: string;
+  authenticateSwaggerUI?: boolean;
   swaggerAuthenticate?: (
     req?: IncomingMessage,
     username?: string,

@@ -5,6 +5,7 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
+import Sinon from 'sinon';
 
 import {VideoChatSessionController} from '../../../controllers';
 import {VonageConfig, VonageProvider} from '../../../providers/vonage';
@@ -21,7 +22,7 @@ import {
   getDatePastThreshold,
   getFutureDate,
   getMeetingOptions,
-  getMeetingResponse,
+  getVonageMeetingResponse,
   getSessionAttendeesModel,
   getSessionOptions,
   getSessionResponse,
@@ -30,6 +31,7 @@ import {
   setUpMockProvider,
   stream,
 } from '../../helpers';
+import {VonageVideoChat} from '../../../providers/vonage';
 
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
@@ -41,7 +43,7 @@ describe('Session APIs', () => {
   let sessionAttendeesRepo: StubbedInstanceWithSinonAccessor<SessionAttendeesRepository>;
   let config: VonageConfig;
 
-  let videoChatProvider: VideoChatInterface;
+  let videoChatProvider: VonageVideoChat;
   let controller: VideoChatSessionController;
   let vonageService: VonageService;
   let chatSessionService: ChatSessionService;
@@ -51,7 +53,7 @@ describe('Session APIs', () => {
   describe('POST /session', () => {
     it('returns a meeting Id of type string, saves the session Id, schedules meeting', async () => {
       setUp({
-        getMeetingLink: sinon.stub().returns(getMeetingResponse({})),
+        getMeetingLink: sinon.stub().returns(getVonageMeetingResponse({})),
       });
       const meetingOptions = getMeetingOptions({
         isScheduled: true,
@@ -134,8 +136,8 @@ describe('Session APIs', () => {
       setUp({
         getToken: sinon.stub().returns(getSessionResponse({})),
       });
-      const sessionOptions = getSessionOptions({});
       const invalidMeetingLink = '';
+      const sessionOptions = getSessionOptions({});
       const error = await controller
         .getMeetingToken(sessionOptions, invalidMeetingLink)
         .catch(err => err);
@@ -148,7 +150,7 @@ describe('Session APIs', () => {
           .stub()
           .rejects(new HttpErrors.BadRequest('Error generating token')),
       });
-      const sessionOptions = getSessionOptions({});
+      const sessionOptions = getSessionOptions({meetingLinkId});
       const error = await controller
         .getMeetingToken(sessionOptions, meetingLinkId)
         .catch(err => err);
@@ -191,7 +193,9 @@ describe('Session APIs', () => {
       setUp({
         getToken: sinon.stub().returns(getSessionResponse({})),
       });
-      const sessionOptions = getSessionOptions({expireTime: pastDate});
+      const sessionOptions = getSessionOptions({
+        expireTime: pastDate,
+      });
       const error = await controller
         .getMeetingToken(sessionOptions, meetingLinkId)
         .catch(err => err);
@@ -367,23 +371,27 @@ describe('Session APIs', () => {
     it('saves the attendee for event connectionCreated when attendee connects', async () => {
       setUp({});
       const webhookPayload = getWebhookPayload({});
+      const checkWebhookPayload =
+        videoChatProvider.checkWebhookPayload as Sinon.SinonStub;
       const find = sessionAttendeesRepo.stubs.find;
       find.resolves();
       const create = sessionAttendeesRepo.stubs.create;
       create.resolves();
       await controller.checkWebhookPayload(webhookPayload);
-      sinon.assert.calledOnce(create);
+      sinon.assert.calledOnce(checkWebhookPayload);
     });
 
     it('updates the metaData and isDeleted status for event connectionCreated if the attendee already exists', async () => {
       setUp({});
       const webhookPayload = getWebhookPayload({});
+      const checkWebhookPayload =
+        videoChatProvider.checkWebhookPayload as Sinon.SinonStub;
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
       const updateById = sessionAttendeesRepo.stubs.updateById;
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
-      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(checkWebhookPayload);
     });
 
     it('updates the metaData and isDeleted status for event connectionDestroyed if the attendee already exists', async () => {
@@ -392,12 +400,14 @@ describe('Session APIs', () => {
         event: 'connectionDestroyed',
         reason: 'clientDisconnected',
       });
+      const checkWebhookPayload =
+        videoChatProvider.checkWebhookPayload as Sinon.SinonStub;
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
       const updateById = sessionAttendeesRepo.stubs.updateById;
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
-      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(checkWebhookPayload);
     });
 
     it('updates the metaData and isDeleted status for event streamCreated if the attendee already exists', async () => {
@@ -406,12 +416,14 @@ describe('Session APIs', () => {
         event: 'streamCreated',
         stream: stream,
       });
+      const checkWebhookPayload =
+        videoChatProvider.checkWebhookPayload as Sinon.SinonStub;
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
       const updateById = sessionAttendeesRepo.stubs.updateById;
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
-      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(checkWebhookPayload);
     });
 
     it('updates the metaData and isDeleted status for event streamDestroyed if the attendee already exists', async () => {
@@ -421,12 +433,14 @@ describe('Session APIs', () => {
         reason: 'clientDisconnected',
         stream: stream,
       });
+      const checkWebhookPayload =
+        videoChatProvider.checkWebhookPayload as Sinon.SinonStub;
       const findOne = sessionAttendeesRepo.stubs.findOne;
       findOne.resolves(getSessionAttendeesModel());
       const updateById = sessionAttendeesRepo.stubs.updateById;
       updateById.resolves();
       await controller.checkWebhookPayload(webhookPayload);
-      sinon.assert.calledOnce(updateById);
+      sinon.assert.calledOnce(checkWebhookPayload);
     });
   });
 
@@ -477,12 +491,12 @@ describe('Session APIs', () => {
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
 
-    chatSessionService = createStubInstance(ChatSessionService);
+    // chatSessionService = createStubInstance(ChatSessionService);
 
     sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);
-    vonageService = new VonageService(config);
+    vonageService = new VonageService(config, sessionAttendeesRepo);
     videoChatProvider = new VonageProvider(vonageService).value();
 
     const meetLinkGenerator = () => Promise.resolve('test');

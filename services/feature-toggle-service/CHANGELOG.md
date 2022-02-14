@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2022-02-13)</small>
+
+* test(feature-toggle-service): test case for feature toggle service  (#502) ([1472962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1472962)), closes [#502](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/502) [#432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/432) [#432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/432)
+
+
+
+
+
+## 0.4.0 (2022-01-28)
+
+* feat(feature-toggle-service): added permissions and a delete method for features (#480) ([ca7b646](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca7b646)), closes [#480](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/480)
+
+
+
+
+
 ## <small>0.3.2 (2022-01-16)</small>
 
 * fix(feature-toggle-service): fixed controller, added a new component (#458) ([2160a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2160a1d)), closes [#458](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/458)

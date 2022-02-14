@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.2.1 (2022-02-13)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## 3.2.0 (2022-01-28)
+
+* feat(sandbox): backend example of payment-service (#402) ([138349c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/138349c)), closes [#402](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/402)
+
+
+
+
+
 ## 3.1.0 (2022-01-16)
 
 * feat(payment-service): add subscription payments (#360) ([83c8a09](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/83c8a09)), closes [#360](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/360)

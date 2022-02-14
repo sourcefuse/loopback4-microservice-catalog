@@ -19,14 +19,14 @@ export class CamundaService {
     this.baseUrl = config?.workflowEngineBaseUrl;
   }
 
-  async create(name: string, file: Buffer) {
+  async create<T>(name: string, file: Buffer) {
     const form = new FormData();
     form.append(`${name}.bpmn`, file.toString('utf-8'), {
       filename: `${name}.bpmn`,
     });
     form.append('deployment-name', name);
     form.append('deploy-changed-only', String(true));
-    return this.http.postFormData(`${this.baseUrl}/deployment/create`, form);
+    return this.http.postFormData<T>(`${this.baseUrl}/deployment/create`, form);
   }
 
   async delete(ids: string[]) {
@@ -45,12 +45,12 @@ export class CamundaService {
     return this.http.delete(`${this.baseUrl}/process-definition/${id}`);
   }
 
-  async get(id: string) {
-    return this.http.get(`${this.baseUrl}/process-definition/${id}`);
+  async get<T>(id: string) {
+    return this.http.get<T>(`${this.baseUrl}/process-definition/${id}`);
   }
 
-  async execute(id: string, input: AnyObject) {
-    return this.http.post(`${this.baseUrl}/process-definition/${id}/start`, {
+  async execute<T>(id: string, input: AnyObject) {
+    return this.http.post<T>(`${this.baseUrl}/process-definition/${id}/start`, {
       variables: this.formatInput(input),
     });
   }

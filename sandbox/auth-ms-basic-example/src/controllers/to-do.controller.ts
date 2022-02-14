@@ -15,8 +15,8 @@ import {
   put,
   del,
   requestBody,
-  response,
 } from '@loopback/rest';
+import {STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission.enum';
@@ -24,8 +24,6 @@ import {ToDo} from '../models';
 import {ToDoRepository} from '../repositories';
 
 const base = '/to-dos';
-const OK = 200;
-const NOCONTENT = 204;
 export class ToDoController {
   constructor(
     @repository(ToDoRepository)
@@ -34,10 +32,13 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.CreateTodo]})
-  @post(base)
-  @response(OK, {
-    description: 'ToDo model instance',
-    content: {'application/json': {schema: getModelSchemaRef(ToDo)}},
+  @post(base, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'ToDo model instance',
+        content: {'application/json': {schema: getModelSchemaRef(ToDo)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -57,10 +58,13 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get('/to-dos/count')
-  @response(OK, {
-    description: 'ToDo model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get('/to-dos/count', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'ToDo model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(@param.where(ToDo) where?: Where<ToDo>): Promise<Count> {
     return this.toDoRepository.count(where);
@@ -68,14 +72,17 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(base)
-  @response(OK, {
-    description: 'Array of ToDo model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(ToDo, {includeRelations: true}),
+  @get(base, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of ToDo model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(ToDo, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -86,10 +93,13 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateTodo]})
-  @patch(base)
-  @response(OK, {
-    description: 'ToDo PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(base, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'ToDo PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -107,12 +117,15 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @get(`${base}/{id}`)
-  @response(OK, {
-    description: 'ToDo model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(ToDo, {includeRelations: true}),
+  @get(`${base}/{id}`, {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'ToDo model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(ToDo, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -125,9 +138,12 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateTodo]})
-  @patch(`${base}/{id}`)
-  @response(NOCONTENT, {
-    description: 'ToDo PATCH success',
+  @patch(`${base}/{id}`, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'ToDo PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -145,9 +161,12 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.UpdateTodo]})
-  @put(`${base}/{id}`)
-  @response(NOCONTENT, {
-    description: 'ToDo PUT success',
+  @put(`${base}/{id}`, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'ToDo PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -158,9 +177,12 @@ export class ToDoController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKey.DeleteTodo]})
-  @del(`${base}/{id}`)
-  @response(NOCONTENT, {
-    description: 'ToDo DELETE success',
+  @del(`${base}/{id}`, {
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'ToDo DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.toDoRepository.deleteById(id);

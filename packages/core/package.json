@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/core",
-  "version": "6.0.0",
-  "description": "packages",
+  "version": "6.1.1",
+  "description": "Sourceloop core package",
   "keywords": [
     "loopback-extension",
     "loopback"
@@ -43,9 +43,11 @@
     "@loopback/boot": "^4.0.0",
     "@loopback/context": "^4.0.0",
     "@loopback/core": "^3.0.0",
+    "@loopback/express": "^4.0.0",
     "@loopback/openapi-v3": "^7.0.0",
     "@loopback/repository": "^4.0.0",
     "@loopback/rest": "^11.0.0",
+    "@loopback/rest-explorer": "^4.0.0",
     "@loopback/service-proxy": "^4.0.0",
     "casbin": "^5.11.5",
     "i18n": "^0.13.3",
