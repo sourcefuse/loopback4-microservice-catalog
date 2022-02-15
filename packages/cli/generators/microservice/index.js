@@ -11,8 +11,9 @@ const fs = require('fs');
 const g = require('@loopback/cli/lib/globalize');
 const {logBar, logBarStart, logBarStop} = require('../logbar');
 const cliProgress = require('cli-progress');
-
-const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+const bar1 = new cliProgress.Bar({
+  format: 'progress [{bar}] {percentage}% | {value}/{total} '
+}, cliProgress.Presets.shades_classic);
 
 module.exports = class MGenerator extends AppGenerator {
   constructor(args, opts) {
@@ -123,6 +124,7 @@ module.exports = class MGenerator extends AppGenerator {
     const packageJsonFile = path.join(process.cwd(), 'package.json');
     const packageJson = require(packageJsonFile);
     packageJson.name = `${this.answers.uniquePrefix}-${packageJson.name}`;
+    packageJson.license='MIT';
     const scripts = packageJson.scripts;
     const symlinkresolver = 'symlink-resolver';
     this._setupMicroservice(packageJson.name);
