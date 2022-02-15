@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.2 (2022-02-15)</small>
+
+* refactor(feature-toggle-service): changed sequence and added a middleware (#510) ([79e83bf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/79e83bf)), closes [#510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/510)
+
+
+
+
+
 ## <small>0.4.1 (2022-02-13)</small>
 
 * test(feature-toggle-service): test case for feature toggle service  (#502) ([1472962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1472962)), closes [#502](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/502) [#432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/432) [#432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/432)
