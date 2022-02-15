@@ -19,14 +19,14 @@ const packagejson = 'package.json';
  * @param log - A function to log information
  */
 function printVersions(log = console.log) {
-    const ver = cliPkg.version;
-    log('@loopback/cli version: %s', ver);
-    log('\n@loopback/* dependencies:');
-    for (const d in templateDeps) {
-        if (d.startsWith('@loopback/') && d !== '@loopback/cli') {
-            log('  - %s: %s', d, templateDeps[d]);
-        }
+  const ver = cliPkg.version;
+  log('@loopback/cli version: %s', ver);
+  log('\n@loopback/* dependencies:');
+  for (const d in templateDeps) {
+    if (d.startsWith('@loopback/') && d !== '@loopback/cli') {
+      log('  - %s: %s', d, templateDeps[d]);
     }
+  }
 }
 
 /**
@@ -34,127 +34,163 @@ function printVersions(log = console.log) {
  * @param generator - Yeoman generator instance
  */
 async function checkDependencies(generator) {
-    const pkg = generator.fs.readJSON(generator.destinationPath(packagejson));
-    generator.packageJson = pkg;
+  const pkg = generator.fs.readJSON(generator.destinationPath(packagejson));
+  generator.packageJson = pkg;
 
-    const isUpdate = generator.command === 'update';
-    const pkgDeps = pkg
-        ? {
-            dependencies: {...pkg.dependencies},
-            devDependencies: {...pkg.devDependencies},
-            peerDependencies: {...pkg.peerDependencies},
-        }
-        : {};
+  const isUpdate = generator.command === 'update';
+  const pkgDeps = pkg
+    ? {
+        dependencies: {...pkg.dependencies},
+        devDependencies: {...pkg.devDependencies},
+        peerDependencies: {...pkg.peerDependencies},
+      }
+    : {};
 
-    if (!pkg) {
-        if (isUpdate) {
-            printVersions(generator.log);
-            await checkCliVersion(generator.log);
-            return undefined;
-        }
-        const err = new Error(
-            `No package.json found in ${generator.destinationRoot()}. The command must be run in a LoopBack project.`,
-        );
-        generator.exit(err);
-        return undefined;
-    }
+  if (!pkg) {
+    return getNoPkgDependencies(generator, isUpdate);
+  }
 
-    const dependentPackage = '@loopback/core';
+  const dependentPackage = '@loopback/core';
 
-    const projectDepsNames = isUpdate
-        ? Object.keys(
-            // Check dependencies, devDependencies, and peerDependencies
-            {
-                ...pkgDeps.dependencies,
-                ...pkgDeps.devDependencies,
-                ...pkgDeps.peerDependencies,
-            },
-        )
-        : Object.keys(pkgDeps.dependencies);
+  const projectDepsNames = isUpdate
+    ? Object.keys(
+        // Check dependencies, devDependencies, and peerDependencies
+        {
+          ...pkgDeps.dependencies,
+          ...pkgDeps.devDependencies,
+          ...pkgDeps.peerDependencies,
+        },
+      )
+    : Object.keys(pkgDeps.dependencies);
 
-    const isLBProj = isUpdate
-        ? projectDepsNames.some(n => n.startsWith('@loopback/'))
-        : projectDepsNames.includes(dependentPackage);
+  const isLBProj = isUpdate
+    ? projectDepsNames.some(n => n.startsWith('@loopback/'))
+    : projectDepsNames.includes(dependentPackage);
 
-    if (!isLBProj) {
-        const err = new Error(
-            `No \`@loopback/core\` package found in the "dependencies" section of 
+  if (!isLBProj) {
+    const err = new Error(
+      `No \`@loopback/core\` package found in the "dependencies" section of 
             ${generator.destinationPath(packagejson)}
             . The command must be run in a LoopBack project.`,
-        );
-        generator.exit(err);
-        return undefined;
-    }
-
-    const incompatibleDeps = {
-        dependencies: {},
-        devDependencies: {},
-        peerDependencies: {},
-    };
-
-    let found = false;
-    for (const d in templateDeps) {
-        for (const s in incompatibleDeps) {
-            const versionRange = pkgDeps[s][d];
-            if (!versionRange) {
-                continue
-            }
-            const templateDep = templateDeps[d];
-            // https://github.com/loopbackio/loopback-next/issues/2028
-            // https://github.com/npm/node-semver/pull/238
-            // semver.intersects does not like `*`, `x`, or `X`
-            if (versionRange.match(/^\*|x|X/)) {
-                continue
-            }
-            if (generator.options.semver === false) {
-                // For `lb4 update` command, check exact matches
-                if (versionRange !== templateDep) {
-                    incompatibleDeps[s][d] = [versionRange, templateDep];
-                    found = true;
-                }
-                continue;
-            }
-            if (semver.intersects(versionRange, templateDep)) {
-                continue }
-            incompatibleDeps[s][d] = [versionRange, templateDep];
-            found = true;
-        }
-    }
-    if (!found) {
-        // No incompatible dependencies
-        if (generator.command === 'update') {
-            generator.log(
-                chalk.green(
-                    `The project dependencies are compatible with @loopback/cli@${cliPkg.version}`,
-                ),
-            );
-        }
-        return undefined;
-    }
-
-    const originalCliVersion = generator.config.get('update') || '<unknown>';
-    generator.log(
-        chalk.red(
-            `The project was originally generated by @loopback/cli@${originalCliVersion}.`
-        ),
     );
+    generator.exit(err);
+    return undefined;
+  }
 
-    generator.log(
-        chalk.red(
-            `The following dependencies are incompatible with @loopback/cli@${cliPkg.version}:`
+  const incompatibleDeps = {
+    dependencies: {},
+    devDependencies: {},
+    peerDependencies: {},
+  };
+
+  const found = getTemplateDependencies(generator, incompatibleDeps, false);
+  if (!found) {
+    // No incompatible dependencies
+    if (generator.command === 'update') {
+      generator.log(
+        chalk.green(
+          `The project dependencies are compatible with @loopback/cli@${cliPkg.version}`,
         ),
-    );
+      );
+    }
+    return undefined;
+  }
+
+  const originalCliVersion = generator.config.get('update') || '<unknown>';
+  generator.log(
+    chalk.red(
+      `The project was originally generated by @loopback/cli@${originalCliVersion}.`,
+    ),
+  );
+
+  generator.log(
+    chalk.red(
+      `The following dependencies are incompatible with @loopback/cli@${cliPkg.version}:`,
+    ),
+  );
+  for (const s in incompatibleDeps) {
+    generator.log(s);
+    for (const d in incompatibleDeps[s]) {
+      generator.log(
+        chalk.yellow('- %s: %s (cli %s)'),
+        d,
+        ...incompatibleDeps[s][d],
+      );
+    }
+  }
+  return incompatibleDeps;
+}
+
+function getTemplateDependencies(generator, incompatibleDeps, found) {
+  let isTemplateDep = found;
+  for (const d in templateDeps) {
     for (const s in incompatibleDeps) {
-        generator.log(s);
-        for (const d in incompatibleDeps[s]) {
-            generator.log(
-                chalk.yellow('- %s: %s (cli %s)'),
-                d,
-                ...incompatibleDeps[s][d],
-            );
-        }
+      const versionRange = pkgDeps[s][d];
+      if (isNotVersionRange(versionRange)) {
+        continue;
+      }
+      // https://github.com/loopbackio/loopback-next/issues/2028
+      // https://github.com/npm/node-semver/pull/238
+      // semver.intersects does not like `*`, `x`, or `X`
+      const templateDep = templateDeps[d];
+      if (generator.options.semver === false) {
+        // For `lb4 update` command, check exact matches
+        isTemplateDep = isTemplateDependency(
+          incompatibleDeps,
+          s,
+          templateDep,
+          isTemplateDep,
+          true,
+        );
+        continue;
+      }
+      if (semver.intersects(versionRange, templateDep)) {
+        continue;
+      }
+      isTemplateDep = isTemplateDependency(
+        incompatibleDeps,
+        s,
+        templateDep,
+        isTempDep,
+      );
     }
-    return incompatibleDeps;
+  }
+  return isTemplateDep;
+}
+function isNotVersionRange(versionRange) {
+  return !versionRange || versionRange.match(/^\*|x|X/);
+}
+
+function isTemplateDependency(
+  incompatibleDeps,
+  incompatibleDep,
+  templateDep,
+  versionRange,
+  isTemplateDep,
+  checkVersionRange = false,
+) {
+  let isTempDep = isTemplateDep;
+  if (!checkVersionRange || versionRange !== templateDep) {
+    incompatibleDeps[incompatibleDep][templateDep] = [
+      versionRange,
+      templateDep,
+    ];
+    isTempDep = true;
+  }
+  return isTempDep;
+}
+
+function getNoPkgDependencies(generator, isUpdate) {
+  if (isUpdate) {
+    printVersions(generator.log);
+    await checkCliVersion(generator.log);
+    return undefined;
+  }
+  const err = new Error(
+    `No package.json found in ${generator.destinationRoot()}. The command must be run in a LoopBack project.`,
+  );
+  generator.exit(err);
+  return undefined;
 }
 
 /**
@@ -163,55 +199,55 @@ async function checkDependencies(generator) {
  * @param generator - Yeoman generator instance
  */
 function updateDependencies(generator) {
-    const pkg =
-        generator.packageJson ||
-        generator.fs.readJSON(generator.destinationPath(packagejson));
-    const depUpdates = [];
-    for (const d in templateDeps) {
-        if (
-            pkg.dependencies &&
-            pkg.dependencies[d] &&
-            pkg.dependencies[d] !== templateDeps[d]
-        ) {
-            depUpdates.push(
-                `- Dependency ${d}: ${pkg.dependencies[d]} => ${templateDeps[d]}`,
-            );
-            pkg.dependencies[d] = templateDeps[d];
-        }
-        if (
-            pkg.devDependencies &&
-            pkg.devDependencies[d] &&
-            pkg.devDependencies[d] !== templateDeps[d]
-        ) {
-            depUpdates.push(
-                `- DevDependency ${d}: ${pkg.devDependencies[d]} => ${templateDeps[d]}`,
-            );
-            pkg.devDependencies[d] = templateDeps[d];
-        }
-        if (
-            pkg.peerDependencies &&
-            pkg.peerDependencies[d] &&
-            pkg.peerDependencies[d] !== templateDeps[d]
-        ) {
-            depUpdates.push(
-                `- PeerDependency ${d}: ${pkg.devDependencies[d]} => ${templateDeps[d]}`,
-            );
-            pkg.devDependencies[d] = templateDeps[d];
-        }
+  const pkg =
+    generator.packageJson ||
+    generator.fs.readJSON(generator.destinationPath(packagejson));
+  const depUpdates = [];
+  for (const d in templateDeps) {
+    if (
+      pkg.dependencies &&
+      pkg.dependencies[d] &&
+      pkg.dependencies[d] !== templateDeps[d]
+    ) {
+      depUpdates.push(
+        `- Dependency ${d}: ${pkg.dependencies[d]} => ${templateDeps[d]}`,
+      );
+      pkg.dependencies[d] = templateDeps[d];
     }
-    if (depUpdates.length) {
-        const updatesDep = depUpdates.sort()
-        updatesDep.forEach(d => generator.log(d));
+    if (
+      pkg.devDependencies &&
+      pkg.devDependencies[d] &&
+      pkg.devDependencies[d] !== templateDeps[d]
+    ) {
+      depUpdates.push(
+        `- DevDependency ${d}: ${pkg.devDependencies[d]} => ${templateDeps[d]}`,
+      );
+      pkg.devDependencies[d] = templateDeps[d];
     }
-    generator.log(
-        chalk.red('Upgrading dependencies may break the current project.'),
-    );
-    generator.fs.writeJSON(generator.destinationPath(packagejson), pkg);
-    // Remove `node_modules` force a fresh install
-    if (generator.command === 'update' && !generator.options['skip-install']) {
-        fse.removeSync(generator.destinationPath('node_modules'));
+    if (
+      pkg.peerDependencies &&
+      pkg.peerDependencies[d] &&
+      pkg.peerDependencies[d] !== templateDeps[d]
+    ) {
+      depUpdates.push(
+        `- PeerDependency ${d}: ${pkg.devDependencies[d]} => ${templateDeps[d]}`,
+      );
+      pkg.devDependencies[d] = templateDeps[d];
     }
-    generator.pkgManagerInstall();
+  }
+  if (depUpdates.length) {
+    depUpdates.sort();
+    depUpdates.forEach(d => generator.log(d));
+  }
+  generator.log(
+    chalk.red('Upgrading dependencies may break the current project.'),
+  );
+  generator.fs.writeJSON(generator.destinationPath(packagejson), pkg);
+  // Remove `node_modules` force a fresh install
+  if (generator.command === 'update' && !generator.options['skip-install']) {
+    fse.removeSync(generator.destinationPath('node_modules'));
+  }
+  generator.pkgManagerInstall();
 }
 
 /**
@@ -219,59 +255,59 @@ function updateDependencies(generator) {
  * @param generator - Yeoman generator instance
  */
 async function checkLoopBackProject(generator) {
-    if (generator.shouldExit()) {
-        return false
-    }
+  if (generator.shouldExit()) {
+    return false;
+  }
 
-    const incompatibleDeps = await checkDependencies(generator);
-    if (incompatibleDeps == null) {
-        return false
-    }
-    if (
-        Object.keys({
-            ...incompatibleDeps.dependencies,
-            ...incompatibleDeps.devDependencies,
-            ...incompatibleDeps.peerDependencies,
-        }) == 0
-    ){
-        return false
-    }
+  const incompatibleDeps = await checkDependencies(generator);
+  if (incompatibleDeps === null) {
+    return false;
+  }
+  if (
+    Object.keys({
+      ...incompatibleDeps.dependencies,
+      ...incompatibleDeps.devDependencies,
+      ...incompatibleDeps.peerDependencies,
+    }) == 0
+  ) {
+    return false;
+  }
 
-    const choices = [
-        {
-            name: 'Upgrade project dependencies',
-            value: 'upgrade',
-        },
-        {
-            name: 'Skip upgrading project dependencies',
-            value: 'continue',
-        },
-    ];
-    if (generator.command !== 'update') {
-        choices.unshift({
-            name: 'Abort now',
-            value: 'abort',
-        });
-    }
-    const prompts = [
-        {
-            name: 'decision',
-            message: 'How do you want to proceed?',
-            type: 'list',
-            choices,
-            default: 0,
-        },
-    ];
-    const answers = await generator.prompt(prompts);
-    if (answers && answers.decision === 'continue') {
-        return false;
-    }
-    if (answers && answers.decision === 'upgrade') {
-        updateDependencies(generator);
-        return true;
-    }
-    generator.exit(new Error('Incompatible dependencies'));
-    return undefined;
+  const choices = [
+    {
+      name: 'Upgrade project dependencies',
+      value: 'upgrade',
+    },
+    {
+      name: 'Skip upgrading project dependencies',
+      value: 'continue',
+    },
+  ];
+  if (generator.command !== 'update') {
+    choices.unshift({
+      name: 'Abort now',
+      value: 'abort',
+    });
+  }
+  const prompts = [
+    {
+      name: 'decision',
+      message: 'How do you want to proceed?',
+      type: 'list',
+      choices,
+      default: 0,
+    },
+  ];
+  const answers = await generator.prompt(prompts);
+  if (answers && answers.decision === 'continue') {
+    return false;
+  }
+  if (answers && answers.decision === 'upgrade') {
+    updateDependencies(generator);
+    return true;
+  }
+  generator.exit(new Error('Incompatible dependencies'));
+  return undefined;
 }
 
 /**
@@ -279,7 +315,7 @@ async function checkLoopBackProject(generator) {
  * @param log - Log function
  */
 async function checkCliVersion(log = console.log) {
-    return undefined;
+  return undefined;
 }
 
 exports.printVersions = printVersions;
