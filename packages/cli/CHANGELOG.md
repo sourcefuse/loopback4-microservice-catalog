@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.1 (2022-02-15)</small>
+
+* fix logs in cli (#523) ([f1df245](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f1df245)), closes [#523](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/523)
+
+
+
+
+
 ## 1.1.0 (2022-02-13)
 
 * fix(cli): change package lock ([d8cbf3e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d8cbf3e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
