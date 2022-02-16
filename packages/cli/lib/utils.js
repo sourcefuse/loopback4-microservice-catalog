@@ -122,13 +122,11 @@ exports.logNamingIssues = function (name, log) {
 };
 
 exports.logClassCreation = function (type, typePlural, name, log) {
-  log(
-    `${exports.toClassName(type)} ${chalk.yellow(
-      name,
-    )} will be created in src/${typePlural}/${chalk.yellow(
-      `\${exports.toFileName(name).${type}.ts}`,
-    )}`,
-  );
+  let logData = `${exports.toClassName(type)} ${chalk.yellow(
+    name,
+  )} will be created in src/${typePlural}/`;
+  logData += chalk.yellow(`\${exports.toFileName(name)}.${type}.ts`);
+  log(logData);
   log();
 };
 
@@ -248,10 +246,10 @@ exports.validateRelationName = function (name, type, foreignKeyName) {
  */
 exports.toClassName = function (name) {
   if (name === '') {
-    return new Error('no input')
+    return new Error('no input');
   }
   if (typeof name != 'string' || name == null) {
-    return new Error('bad input')
+    return new Error('bad input');
   }
   return pascalCase(camelCase(name));
 };
@@ -269,7 +267,7 @@ exports.tildify = tildify;
 exports.validate = function (name) {
   const isValid = validate(name).validForNewPackages;
   if (!isValid) {
-    return 'Invalid npm package name: ' + name
+    return 'Invalid npm package name: ' + name;
   }
   return isValid;
 };
@@ -288,7 +286,7 @@ exports.prependBackslash = httpPath => httpPath.replace(/^\/?/, '/');
 exports.validateUrlSlug = function (name) {
   const backslashIfNeeded = name.charAt(0) === '/' ? '/' : '';
   if (backslashIfNeeded === '/') {
-    name = name.substr(1);
+    name = name.substring(1);
   }
   const separators = ['-', '.', '_', '~', ''];
   const possibleSlugs = separators.map(separator =>
@@ -297,8 +295,8 @@ exports.validateUrlSlug = function (name) {
       transformer: false,
     }),
   );
-  if (!possibleSlugs.includes(name)){
-    return `Invalid url slug. Suggested slug: ${backslashIfNeeded}${possibleSlugs[0]}`
+  if (!possibleSlugs.includes(name)) {
+    return `Invalid url slug. Suggested slug: ${backslashIfNeeded}${possibleSlugs[0]}`;
   }
   return true;
 };
@@ -403,8 +401,9 @@ exports.getDependencies = function () {
     version = pkg.config.loopbackVersion;
   }
   // Set it to be `^x.y.0`
-  const loopbackVersion =
-    `^${semver.major(version)}.${semver.minor(version)}.0`;
+  const loopbackVersion = `^${semver.major(version)}.${semver.minor(
+    version,
+  )}.0`;
 
   const deps = {};
   const dependencies = (pkg.config && pkg.config.templateDependencies) || {};
@@ -494,10 +493,9 @@ exports.readTextFromStdin = function () {
       })
       .on('close', () => {
         if (err) {
-          reject(err)
-        }
-        else {
-          resolve(lines.join('\n'))
+          reject(err);
+        } else {
+          resolve(lines.join('\n'));
         }
       })
       .on('error', e => {
@@ -515,7 +513,7 @@ exports.readTextFromStdin = function () {
 exports.checkPropertyName = function (name) {
   const result = exports.validateRequiredName(name);
   if (result !== true) {
-    return result
+    return result;
   }
   if (RESERVED_PROPERTY_NAMES.includes(name)) {
     return `${name} is a reserved keyword. Please use another name`;
@@ -640,7 +638,7 @@ exports.isConnectorOfType = function (
       config.connector === `loopback-connector-${connector.name}`;
 
     if (matchedConnector) {
-      return connectorType.includes(connector.baseModel)
+      return connectorType.includes(connector.baseModel);
     }
   }
 
@@ -737,7 +735,7 @@ exports.stringifyObject = function (data, options = {}) {
 
 exports.stringifyModelSettings = function (modelSettings) {
   if (!modelSettings || !Object.keys(modelSettings).length) {
-    return ''
+    return '';
   }
   return exports.stringifyObject({settings: modelSettings});
 };
@@ -749,7 +747,7 @@ exports.stringifyModelSettings = function (modelSettings) {
  */
 function wrapLine(line, maxLineLength) {
   if (line === '') {
-    return line
+    return line;
   }
   let lineLength = 0;
   const words = line.split(/\s+/g);
