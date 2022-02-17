@@ -138,46 +138,48 @@ function main(opts, log) {
 
   const yoJsonFile = path.join(__dirname, '../.yo-rc.json');
   if (opts.meta) {
-    const optionsAndArgs = {
-      base: baseOptions,
-    };
-    const meta = env.getGeneratorsMeta();
-    for (const ns in meta) {
-      const gen = env.create(ns, {options: {help: true}});
-      const name = ns.substring('loopback4:'.length);
-      const commandOptions = {};
-      for (const n in gen._options) {
-        const opt = gen._options[n];
-        commandOptions[n] = {...opt, type: opt.type.name};
-      }
-      const commandArgs = [];
-      for (const arg of gen._arguments) {
-        commandArgs.push({...arg, type: arg.type.name});
-      }
-      optionsAndArgs[name] = {
-        options: commandOptions,
-        arguments: commandArgs,
-        name,
-      };
-    }
-
-    const yoJson = fs.readJsonSync(yoJsonFile);
-    const str = JSON.stringify(yoJson.commands, null, 2);
-    yoJson.commands = optionsAndArgs;
-    if (str !== JSON.stringify(optionsAndArgs, null, 2)) {
-      if (!dryRun) {
-        fs.writeJsonSync(yoJsonFile, yoJson, {spaces: 2, encoding: 'utf-8'});
-      }
-      log('%s has been updated.', path.relative(process.cwd(), yoJsonFile));
-    } else {
-      log('%s is up to date.', path.relative(process.cwd(), yoJsonFile));
-    }
-
-    return optionsAndArgs;
+    return getOptionsAndArgs(log, env, dryRun, yoJsonFile);
   }
 
   runCommand(env, opts, log);
   return undefined;
 }
+function getOptionsAndArgs(log, env, dryRun, yoJsonFile) {
+  const optionsAndArgs = {
+    base: baseOptions,
+  };
+  const meta = env.getGeneratorsMeta();
+  for (const ns in meta) {
+    const gen = env.create(ns, {options: {help: true}});
+    const name = ns.substring('loopback4:'.length);
+    const commandOptions = {};
+    for (const n in gen._options) {
+      const opt = gen._options[n];
+      commandOptions[n] = {...opt, type: opt.type.name};
+    }
+    const commandArgs = [];
+    for (const arg of gen._arguments) {
+      commandArgs.push({...arg, type: arg.type.name});
+    }
+    optionsAndArgs[name] = {
+      options: commandOptions,
+      arguments: commandArgs,
+      name,
+    };
+  }
 
+  const yoJson = fs.readJsonSync(yoJsonFile);
+  const str = JSON.stringify(yoJson.commands, null, 2);
+  yoJson.commands = optionsAndArgs;
+  if (str !== JSON.stringify(optionsAndArgs, null, 2)) {
+    if (!dryRun) {
+      fs.writeJsonSync(yoJsonFile, yoJson, {spaces: 2, encoding: 'utf-8'});
+    }
+    log('%s has been updated.', path.relative(process.cwd(), yoJsonFile));
+  } else {
+    log('%s is up to date.', path.relative(process.cwd(), yoJsonFile));
+  }
+
+  return optionsAndArgs;
+}
 module.exports = main;
