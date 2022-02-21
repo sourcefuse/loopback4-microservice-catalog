@@ -83,7 +83,12 @@ async function checkDependencies(generator) {
     peerDependencies: {},
   };
 
-  const found = getTemplateDependencies(generator, incompatibleDeps, false);
+  const found = getTemplateDependencies(
+    generator,
+    incompatibleDeps,
+    false,
+    pkgDeps,
+  );
   if (!found) {
     // No incompatible dependencies
     if (generator.command === 'update') {
@@ -121,7 +126,7 @@ async function checkDependencies(generator) {
   return incompatibleDeps;
 }
 
-function getTemplateDependencies(generator, incompatibleDeps, found) {
+function getTemplateDependencies(generator, incompatibleDeps, found, pkgDeps) {
   let isTemplateDep = found;
   for (const d in templateDeps) {
     for (const s in incompatibleDeps) {
@@ -147,12 +152,7 @@ function getTemplateDependencies(generator, incompatibleDeps, found) {
       if (semver.intersects(versionRange, templateDep)) {
         continue;
       }
-      isTemplateDep = isTemplateDependency(
-        incompatibleDeps,
-        s,
-        templateDep,
-        isTempDep,
-      );
+      isTemplateDep = isTemplateDependency(incompatibleDeps, s, d, isTempDep);
     }
   }
   return isTemplateDep;
@@ -173,14 +173,14 @@ function isTemplateDependency(
   if (!checkVersionRange || versionRange !== templateDep) {
     incompatibleDeps[incompatibleDep][templateDep] = [
       versionRange,
-      templateDep,
+      templateDeps[templateDep],
     ];
     isTempDep = true;
   }
   return isTempDep;
 }
 
-function getNoPkgDependencies(generator, isUpdate) {
+async function getNoPkgDependencies(generator, isUpdate) {
   if (isUpdate) {
     printVersions(generator.log);
     await checkCliVersion(generator.log);
