@@ -282,18 +282,18 @@ module.exports = class BaseGenerator extends Generator {
     return defaultVal;
   }
   mapCheckBoxDefaultVal(def, question) {
-    if (typeof d === 'number') {
-      const choice = question.choices[d];
+    if (typeof def === 'number') {
+      const choice = question.choices[def];
       if (choice && !choice.disabled) {
         return this.choiceValueOrName(choice);
       }
     } else {
       if (
         question.choices.find(
-          c => !c.disabled && d === this.choiceValueOrName(c),
+          c => !c.disabled && def === this.choiceValueOrName(c),
         )
       ) {
-        return d;
+        return def;
       }
     }
     return undefined;
