@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.4 (2022-02-13)</small>
+
+* fix(chat-service): minor fix in migration.js (#506) ([25b16ff](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/25b16ff)), closes [#506](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/506)
+
+
+
+
+
 ## <small>3.0.3 (2022-01-28)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-service

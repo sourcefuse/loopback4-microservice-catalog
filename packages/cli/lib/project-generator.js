@@ -102,7 +102,7 @@ module.exports = class ProjectGenerator extends BaseGenerator {
   async setOptions() {
     await super.setOptions();
     if (this.shouldExit()) {
-      return false
+      return false;
     }
     if (this.options.name) {
       const msg = utils.validate(this.options.name);
@@ -134,9 +134,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
     return undefined;
   }
 
-  promptProjectName() {
+  async promptProjectName() {
     if (this.shouldExit()) {
-      return false
+      return false;
     }
     const prompts = [
       {
@@ -162,9 +162,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
     });
   }
 
-  promptProjectDir() {
+  async promptProjectDir() {
     if (this.shouldExit()) {
-      return false
+      return false;
     }
     const prompts = [
       {
@@ -185,9 +185,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
     });
   }
 
-  promptOptions() {
+  async promptOptions() {
     if (this.shouldExit()) {
-      return false
+      return false;
     }
     const choices = [];
     this.buildOptions.forEach(f => {
@@ -226,9 +226,9 @@ module.exports = class ProjectGenerator extends BaseGenerator {
     });
   }
 
-  promptYarnInstall() {
+  async promptYarnInstall() {
     if (this.shouldExit()) {
-      return false
+      return false;
     }
     const prompts = [
       {
@@ -249,7 +249,7 @@ module.exports = class ProjectGenerator extends BaseGenerator {
 
   scaffold() {
     if (this.shouldExit()) {
-      return false
+      return false;
     }
 
     this.destinationRoot(this.projectInfo.outdir);

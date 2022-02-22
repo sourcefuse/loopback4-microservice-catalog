@@ -57,10 +57,12 @@ module.exports = class EGenerator extends ExtensionGenerator {
   install() {
     const packageJsonFile = path.join(process.cwd(), 'package.json');
     const packageJson = require(packageJsonFile);
+    packageJson.name=`@local/${packageJson.name}`;
+    packageJson.license='MIT';
     const scripts = packageJson.scripts;
     this._setupExtension(packageJson.name);
     scripts.preinstall =
-      'npm i @loopback/build@6.4.0 --no-save && npm run build';
+      'npm i @loopback/build --no-save && npm run build';
     scripts.prune = 'npm prune --production';
     packageJson.scripts = scripts;
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
