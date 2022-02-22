@@ -23,7 +23,7 @@ RUN npm run build
 
 # Workaround for symlinked packages [copy packages in temp folder]
 RUN mkdir -p /tmp/app-packages
-COPY --chown=node node_modules/@local/core /tmp/app-packages/core
+# COPY --chown=node node_modules/@local/core /tmp/app-packages/core
 
 # Run node prune
 RUN npm prune --production
@@ -48,7 +48,7 @@ COPY --from=BUILD_IMAGE /home/node/app/public ./public
 COPY --from=BUILD_IMAGE /home/node/app/node_modules ./node_modules
 
 # Workaround for symlinked packages [copy all packages manually]
-COPY --from=BUILD_IMAGE /tmp/app-packages/core ./node_modules/@local/core
+# COPY --from=BUILD_IMAGE /tmp/app-packages/core ./node_modules/@local/core
 
 COPY --from=BUILD_IMAGE /home/node/app/.env.example ./.env.example
 COPY --from=BUILD_IMAGE /home/node/app/.env.defaults ./.env.defaults

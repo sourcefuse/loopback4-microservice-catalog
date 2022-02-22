@@ -1,4 +1,6 @@
 import {Provider, service} from '@loopback/core';
+import {VonageSessionWebhookPayload} from '.';
+import {VideoChatFeatures} from '../..';
 import {
   ArchiveResponse,
   ArchiveResponseList,
@@ -45,6 +47,12 @@ export class VonageProvider implements Provider<VonageVideoChat> {
       ): Promise<void> => {
         await this.vonageService.setUploadTarget(storageConfig);
       },
+
+      getFeatures: (): VideoChatFeatures => this.vonageService.getFeatures(),
+      checkWebhookPayload: (
+        webhookPayload: VonageSessionWebhookPayload,
+      ): Promise<void> =>
+        this.vonageService.checkWebhookPayload(webhookPayload),
     };
   }
 }

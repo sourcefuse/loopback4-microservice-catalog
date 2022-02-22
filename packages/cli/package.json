@@ -1,13 +1,13 @@
 {
   "name": "@sourceloop/cli",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Sourceloop CLI",
   "bin": {
     "sl": "bin/cli-main.js"
   },
   "main": "generators/projects/index.js",
-  "private": true,
   "files": [
+    "README.md",
     "bin",
     "lib",
     "generators",
@@ -15,20 +15,25 @@
     ".yo-rc.json"
   ],
   "engines": {
-    "node": "12 || 14 || 16"
+    "node": "12 || 14 || 16 || 17"
   },
   "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+  },
   "author": "SourceFuse",
   "license": "MIT",
   "dependencies": {
-    "@loopback/cli": "^3.0.0",
-    "@loopback/core": "^2.16.2",
+    "@loopback/cli": "^3.0.1",
+    "@loopback/core": "^3.0.1",
     "@phenomnomnominal/tsquery": "^4.1.1",
     "camelcase-keys": "^7.0.0",
     "chalk": "^4.1.2",
     "change-case": "^4.1.2",
+    "cli-progress": "^3.10.0",
     "db-migrate": "^0.11.12",
-    "debug": "^4.3.2",
+    "debug": "^4.3.3",
     "fs-extra": "^10.0.0",
     "latest-version": "^6.0.0",
     "lerna": "^4.0.0",
@@ -56,5 +61,9 @@
   },
   "devDependencies": {
     "strong-globalize-cli": "^7.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
