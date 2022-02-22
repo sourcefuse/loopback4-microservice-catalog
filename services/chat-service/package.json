@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/chat-service",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "chat-service",
   "keywords": [
     "loopback-extension",
@@ -63,7 +63,7 @@
     "@loopback/rest": "^11.0.0",
     "@loopback/rest-explorer": "^4.0.0",
     "@loopback/service-proxy": "^4.0.0",
-    "@sourceloop/core": "^6.1.0",
+    "@sourceloop/core": "^6.1.1",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^8.5.1",
