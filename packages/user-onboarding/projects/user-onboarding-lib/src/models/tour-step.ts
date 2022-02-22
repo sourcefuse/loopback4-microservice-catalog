@@ -7,7 +7,7 @@ export interface TourStep {
   title?: string;
   text: string;
   arrow?: boolean;
-  attachTo: {
+  attachTo?: {
     element: string | Element;
     on: string;
     type: 'string' | 'function' | 'element';
