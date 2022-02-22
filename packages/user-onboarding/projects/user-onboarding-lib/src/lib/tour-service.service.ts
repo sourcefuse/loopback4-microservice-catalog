@@ -77,23 +77,30 @@ export class TourServiceService {
     }
   }
 
-  private waitForElement(tourStep: TourStep, tourId: string): Promise<Element> {
-    const startTime = new Date().getTime();
-    return new Promise<Element>((resolve, reject) => {
-      const timer = setInterval(() => {
-        const now = new Date().getTime();
-        const element = this.checkElement(tourStep.attachTo);
-        if (element) {
-          clearInterval(timer);
-          resolve(element);
-        } else if (now - startTime >= this._maxWaitTime) {
-          clearInterval(timer);
-          reject({tourId, message: `Error in loading tour`});
-        } else {
-          // do nothing
-        }
-      }, this.interval);
-    });
+  private waitForElement(
+    tourStep: TourStep,
+    tourId: string,
+  ): Promise<Element | ''> {
+    if (tourStep.attachTo === undefined) {
+      return Promise.resolve('');
+    } else {
+      const startTime = new Date().getTime();
+      return new Promise<Element | ''>((resolve, reject) => {
+        const timer = setInterval(() => {
+          const now = new Date().getTime();
+          const element = this.checkElement(tourStep.attachTo);
+          if (element) {
+            clearInterval(timer);
+            resolve(element);
+          } else if (now - startTime >= this._maxWaitTime) {
+            clearInterval(timer);
+            reject({tourId, message: `Error in loading tour`});
+          } else {
+            // do nothing
+          }
+        }, this.interval);
+      });
+    }
   }
 
   private triggerTour(tourInstance: Tour, props: Props): void {
@@ -106,6 +113,9 @@ export class TourServiceService {
       .loadState({tourId: tourInstance.tourId, sessionId})
       .subscribe(tourState => {
         if (tourState && Object.keys(tourState).length) {
+          if (tourState.status === Status.Complete) {
+            return;
+          }
           removedSteps = this.getRemovedSteps(
             tourInstance.tourSteps,
             tourState,
@@ -175,9 +185,11 @@ export class TourServiceService {
           tourInstance.tourId,
         ).then(
           element => {
-            element.scrollIntoView(true);
+            if (element) {
+              element.scrollIntoView(true);
+            }
             this.tour.start();
-            if (removedSteps !== undefined) {
+            if (removedSteps.length) {
               removedSteps.forEach((er, index) => {
                 er.buttons.forEach(br => {
                   const k = br.key;
@@ -282,7 +294,9 @@ export class TourServiceService {
         if (filterFn) {
           tourInstance.tourSteps = filterFn(tourInstance.tourSteps);
         }
-        tourInstance.tourSteps[0].attachTo.scrollTo = false;
+        if (tourInstance.tourSteps[0].attachTo) {
+          tourInstance.tourSteps[0].attachTo.scrollTo = false;
+        }
         this.triggerTour(tourInstance, props);
       });
   }
