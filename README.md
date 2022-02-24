@@ -21,6 +21,9 @@ The current catalog consists of the following services:
 - [video-conferencing-service](services/video-conferencing-service)
 - [bpmn-service](services/bpmn-service)
 - [chat-service](services/chat-service)
+- [feature-toggle-service](services/feature-toggle-service)
+- [payment-service](services/payment-service)
+- [search-service](services/search-service)
 
 This repository also contains a set of example projects in the [sandbox](sandbox) directory that can be run from `docker-compose`.
 
@@ -33,6 +36,10 @@ This repository also contains a set of example projects in the [sandbox](sandbox
 - [in-mail-example](sandbox/in-mail-example)
 - [scheduler-example](sandbox/scheduler-example)
 - [video-conferencing-ms-example](sandbox/video-conferencing-ms-example)
+- [feature-toggle-service-example](sandbox/feature-toggle-example)
+- [payment-service-example](sandbox/payment-example)
+- [search-client-example](sandbox/search-client-example)
+- [search-ms-example](sandbox/search-ms-example)
 
 ## Table of Contents
 
