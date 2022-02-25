@@ -10,10 +10,15 @@ const spawnProcess = require('../spawn');
 const fs = require('fs');
 const g = require('@loopback/cli/lib/globalize');
 const {logBar, logBarStart, logBarStop} = require('../logbar');
+const changeFileName = require('../datasourcerename');
 const cliProgress = require('cli-progress');
-const bar1 = new cliProgress.Bar({
-  format: 'progress [{bar}] {percentage}% | {value}/{total} '
-}, cliProgress.Presets.shades_classic);
+const {eventNames} = require('process');
+const bar1 = new cliProgress.Bar(
+  {
+    format: 'progress [{bar}] {percentage}% | {value}/{total} ',
+  },
+  cliProgress.Presets.shades_classic,
+);
 
 module.exports = class MGenerator extends AppGenerator {
   constructor(args, opts) {
@@ -22,60 +27,96 @@ module.exports = class MGenerator extends AppGenerator {
 
   _setupGenerator() {
     super.option('serviceDependency', {
-      type : String,
+      type: String,
       description: g.f('Dependency service name'),
     });
     return super._setupGenerator();
   }
 
   setOptions() {
-    if (this.shouldExit()){
-      return undefined}
-    else{
-      return super.setOptions()}
+    if (this.shouldExit()) {
+      return undefined;
+    } else {
+      return super.setOptions();
+    }
   }
 
   promptProjectName() {
-    if (this.shouldExit()){
-      return undefined}
-    else{
-      return super.promptProjectName()}
+    if (this.shouldExit()) {
+      return undefined;
+    } else {
+      return super.promptProjectName();
+    }
   }
 
   promptProjectDir() {
-    if (this.shouldExit()){
-      return undefined}
-    else{
-      return super.promptProjectDir()}
+    if (this.shouldExit()) {
+      return undefined;
+    } else {
+      return super.promptProjectDir();
+    }
   }
 
-  serviceChoices = ['audit-service',
-                    'authentication-service',
-                    'chat-service',
-                    'notification-service',
-                    'bpmn-service',
-                    'feature-toggle-service',
-                    'in-mail-service',
-                    'payment-service',
-                    'scheduler-service',
-                    'search-service',
-                    'video-conferencing-service'];
+  connectorChoices = ['postgresql', 'mysql'];
+
+  serviceChoices = [
+    'audit-service',
+    'authentication-service',
+    'chat-service',
+    'notification-service',
+    'bpmn-service',
+    'feature-toggle-service',
+    'in-mail-service',
+    'payment-service',
+    'scheduler-service',
+    'search-service',
+    'video-conferencing-service',
+  ];
 
   async promptUniquePrefix() {
     this.answers = await this.prompt([
-        {
-            type: 'input',
-            name: 'uniquePrefix',
-            message: 'Unique prefix for the docker image:'
-        },
-        {
-            type: 'input',
-            name: 'serviceSelect',
-            message: 'Do you want to add sourceloop dependencies?(y/n)'
-        }
+      {
+        type: 'input',
+        name: 'uniquePrefix',
+        message: 'Unique prefix for the docker image:',
+      },
+      {
+        type: 'input',
+        name: 'dbName',
+        message: 'Datasource name:',
+      },
+      {
+        type: 'list',
+        name: 'dbConnector',
+        message: 'Select the connector:',
+        choices: this.connectorChoices,
+      },
+      {
+        type: 'input',
+        name: 'migratedb',
+        message: 'Do you want to add migration?(y/n)',
+      },
+      {
+        type: 'input',
+        name: 'serviceSelect',
+        message: 'Do you want to add sourceloop dependencies?(y/n)',
+      },
     ]);
 
-    if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y') {
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    this.projectInfo.datasourceName = this.answers.dbName;
+    this.projectInfo.datasourceClassName = capitalizeFirstLetter(
+      this.answers.dbName,
+    );
+    this.projectInfo.datasourceConnectorName = this.answers.dbConnector;
+
+    if (
+      this.answers.serviceSelect === 'y' ||
+      this.answers.serviceSelect === 'Y'
+    ) {
       this.service = await this.prompt([
         {
           name: 'selector',
@@ -83,37 +124,46 @@ module.exports = class MGenerator extends AppGenerator {
           type: 'list',
           choices: this.serviceChoices,
         },
+        {
+          type: 'input',
+          name: 'copymigratdb',
+          message: 'Do you want to copy migration?(y/n)',
+        },
       ]);
-    this.projectInfo.serviceDependency = this.service.selector;
+      this.projectInfo.serviceDependency = this.service.selector;
     }
   }
 
   promptApplication() {
     if (this.shouldExit()) {
-      return undefined}
-    else {
-      return super.promptApplication()}
+      return undefined;
+    } else {
+      return super.promptApplication();
+    }
   }
 
   promptOptions() {
-    if (this.shouldExit()){
-      return undefined}
-    else{
-      return super.promptOptions()}
+    if (this.shouldExit()) {
+      return undefined;
+    } else {
+      return super.promptOptions();
+    }
   }
 
   promptYarnInstall() {
-    if (this.shouldExit()){
-      return undefined}
-    else{
-      return super.promptYarnInstall()}
+    if (this.shouldExit()) {
+      return undefined;
+    } else {
+      return super.promptYarnInstall();
+    }
   }
 
   buildAppClassMixins() {
-    if (this.shouldExit()){
-      return undefined}
-    else{
-      return super.buildAppClassMixins()}
+    if (this.shouldExit()) {
+      return undefined;
+    } else {
+      return super.buildAppClassMixins();
+    }
   }
 
   scaffold() {
@@ -153,10 +203,14 @@ module.exports = class MGenerator extends AppGenerator {
               this._swaggerStat(packageName).then(() =>
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
-                    this._addDependency(packageName).then(() =>
-                      this._promclient(packageName).then(() =>
-                        this._openapi(packageName).then(() =>
-                          this._prettierfix(packageName),
+                    this._changeFileName(packageName).then(() =>
+                      this._addDependency(packageName).then(() =>
+                        this._addMigrations(packageName).then(() =>
+                          this._promclient(packageName).then(() =>
+                            this._openapi(packageName).then(() =>
+                              this._prettierfix(packageName),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -190,11 +244,37 @@ module.exports = class MGenerator extends AppGenerator {
     logBar(bar1);
   }
 
+  async _changeFileName(){
+    console.log(process.cwd());
+    let oldPath = path.join(process.cwd(),"src/datasource/datasource.ts");
+    let newPath = path.join(process.cwd(),`src/datasource/${datasourceName}.datasource.ts`);
+    console.log(oldPath);
+    console.log(newPath);
+    await fs.rename(oldPath,newPath);
+  }
+
   async _addDependency(packageName){
     if(this.answers.serviceSelect === 'y' || this.answers.serviceSelect === 'Y'){
       await spawnProcess('npx', ['lerna', 'add', '@sourceloop/'+`${this.service.selector}`, '--scope='+`${packageName}`], {packageName});
     }
     logBar(bar1);
+  }
+
+  async _addMigrations(){
+   if(this.answers.migratedb === 'y' || this.answers.migratedb === 'Y'){
+      await spawnProcess('npx', ['lerna', 'create', 'migrations', '-y'], {cwd: process.cwd()});
+      await spawnProcess('npx', ['lerna', 'add', 'db-migrate', '--scope=migrations'], {cwd: process.cwd()});
+      await spawnProcess('npx', ['lerna', 'add', 'dotenv', '--scope=migrations'], {cwd: process.cwd()});
+      await spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope=migrations'], {cwd: process.cwd()});
+      await spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope=migrations'], {cwd: process.cwd()});
+      await spawnProcess('npx', ['lerna', 'add', '-D', 'npm-run-all', '--scope=migrations'], {cwd: process.cwd()});
+      if(this.answers.datasourceConnectorName === 'postgresql'){
+        await spawnProcess('npx', ['lerna', 'add', 'db-migrate-pg', '--scope=migrations'], {cwd: process.cwd()});
+      }
+      else{
+        await spawnProcess('npx', ['lerna', 'add', 'db-migrate-mysql', '--scope=migrations'], {cwd: process.cwd()});
+      }
+    }
   }
 
   async _bearerVerifier(packageName){
