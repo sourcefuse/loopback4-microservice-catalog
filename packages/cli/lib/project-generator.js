@@ -47,48 +47,39 @@ module.exports = class ProjectGenerator extends BaseGenerator {
       description: g.f('Project name for the %s', this.projectType),
     });
 
-    this.option('description', {
-      type: String,
-      description: g.f('Description for the %s', this.projectType),
-    });
+    this.setOption(
+      'description',
+      String,
+      'Description for the %s',
+      this.projectType,
+    );
 
-    this.option('outdir', {
-      type: String,
-      description: g.f('Project root directory for the %s', this.projectType),
-    });
+    this.setOption(
+      'outdir',
+      String,
+      'Project root directory for the %s',
+      this.projectType,
+    );
 
-    this.option('eslint', {
-      type: Boolean,
-      description: g.f('Enable eslint'),
-    });
-
-    this.option('prettier', {
-      type: Boolean,
-      description: g.f('Enable prettier'),
-    });
-
-    this.option('mocha', {
-      type: Boolean,
-      description: g.f('Enable mocha'),
-    });
-
-    this.option('loopbackBuild', {
-      type: Boolean,
-      description: g.f('Use @loopback/build'),
-    });
-
-    this.option('vscode', {
-      type: Boolean,
-      description: g.f('Use preconfigured VSCode settings'),
-    });
-
-    this.option('private', {
-      type: Boolean,
-      description: g.f('Mark the project private (excluded from npm publish)'),
-    });
-
+    this.setOption('eslint', Boolean, 'Enable eslint');
+    this.setOption('prettier', Boolean, 'Enable prettier');
+    this.setOption('mocha', Boolean, 'Enable mocha');
+    this.setOption('loopbackBuild', Boolean, 'Use @loopback/build');
+    this.setOption('vscode', Boolean, 'Use preconfigured VSCode settings');
+    this.setOption(
+      'private',
+      Boolean,
+      'Mark the project private (excluded from npm publish)',
+    );
     this._setupRenameTransformer();
     super._setupGenerator();
+  }
+
+  setOption(name, type, ...args) {
+    this.option(name, {
+      type,
+      description: g.f(...args),
+    });
   }
 
   /**

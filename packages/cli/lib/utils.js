@@ -37,7 +37,6 @@ const toFileName = name => {
 };
 
 const RESERVED_PROPERTY_NAMES = ['constructor'];
-
 /**
  * Either a reference to util.promisify or its polyfill, depending on
  * your version of Node.
@@ -85,27 +84,36 @@ exports.validateClassName = function (name) {
   if (name.match(validRegex)) {
     return true;
   }
-  if (!isNaN(name.charAt(0))) {
-    return util.format('Class name cannot start with a number: %s', name);
-  }
-  if (name.includes('.')) {
-    return util.format('Class name cannot contain .: %s', name);
-  }
-  if (name.includes(' ')) {
-    return util.format('Class name cannot contain spaces: %s', name);
-  }
-  if (name.includes('-')) {
-    return util.format('Class name cannot contain hyphens: %s', name);
-  }
-  if (name.match(/[\/@\s\+%:]/)) {
-    return util.format(
-      'Class name cannot contain special characters (/@+%: ): %s',
-      name,
-    );
+  const invalidNameText = getInvalidNameFormat('Class', name);
+  if (invalidNameText) {
+    return invalidNameText;
   }
   return util.format('Class name is invalid: %s', name);
 };
-
+function getInvalidNameFormat(entityType, name) {
+  if (!isNaN(name.charAt(0))) {
+    return util.format(
+      `${entityType} name cannot start with a number: %s`,
+      name,
+    );
+  }
+  if (name.includes('.')) {
+    return util.format(`${entityType} name cannot contain .: %s`, name);
+  }
+  if (name.includes(' ')) {
+    return util.format(`${entityType} name cannot contain spaces: %s`, name);
+  }
+  if (name.includes('-')) {
+    return util.format(`${entityType} name cannot contain hyphens: %s`, name);
+  }
+  if (name.match(/[\/@\s\+%:]/)) {
+    return util.format(
+      `${entityType} name cannot contain special characters (/@+%: ): %s`,
+      name,
+    );
+  }
+  return undefined;
+}
 exports.logNamingIssues = function (name, log) {
   if (name.includes('_')) {
     log(
@@ -148,23 +156,9 @@ exports.validateKeyName = function (name) {
   if (!name || name === '') {
     return 'Key name cannot be empty';
   }
-  if (!isNaN(name.charAt(0))) {
-    return util.format('Key name cannot start with a number: %s', name);
-  }
-  if (name.includes('.')) {
-    return util.format('Key name cannot contain .: %s', name);
-  }
-  if (name.includes(' ')) {
-    return util.format('Key name cannot contain spaces: %s', name);
-  }
-  if (name.includes('-')) {
-    return util.format('Key name cannot contain hyphens: %s', name);
-  }
-  if (name.match(/[\/@\s\+%:]/)) {
-    return util.format(
-      'Key name cannot contain special characters (/@+%: ): %s',
-      name,
-    );
+  const invalidNameFormat = getInvalidNameFormat('Key', name);
+  if (invalidNameFormat) {
+    return invalidNameFormat;
   }
   return true;
 };
@@ -184,23 +178,9 @@ exports.validateKeyToKeyFrom = function (input, comparedTo) {
       input,
     );
   }
-  if (!isNaN(input.charAt(0))) {
-    return util.format('Key name cannot start with a number: %s', input);
-  }
-  if (input.includes('.')) {
-    return util.format('Key name cannot contain .: %s', input);
-  }
-  if (input.includes(' ')) {
-    return util.format('Key name cannot contain spaces: %s', input);
-  }
-  if (input.includes('-')) {
-    return util.format('Key name cannot contain hyphens: %s', input);
-  }
-  if (input.match(/[\/@\s\+%:]/)) {
-    return util.format(
-      'Key name cannot contain special characters (/@+%: ): %s',
-      input,
-    );
+  const invalidNameFormat = getInvalidNameFormat('Key', input);
+  if (invalidNameFormat) {
+    return invalidNameFormat;
   }
   return true;
 };
@@ -220,23 +200,9 @@ exports.validateRelationName = function (name, type, foreignKeyName) {
       name,
     );
   }
-  if (!isNaN(name.charAt(0))) {
-    return util.format('Relation name cannot start with a number: %s', name);
-  }
-  if (name.includes('.')) {
-    return util.format('Relation name cannot contain .: %s', name);
-  }
-  if (name.includes(' ')) {
-    return util.format('Relation name cannot contain spaces: %s', name);
-  }
-  if (name.includes('-')) {
-    return util.format('Relation name cannot contain hyphens: %s', name);
-  }
-  if (name.match(/[\/@\s\+%:]/)) {
-    return util.format(
-      'Relation name cannot contain special characters (/@+%: ): %s',
-      name,
-    );
+  const invalidNameFormat = getInvalidNameFormat('Relation', name);
+  if (invalidNameFormat) {
+    return invalidNameFormat;
   }
   return true;
 };
@@ -447,25 +413,25 @@ exports.renameEJS = function () {
 exports.validateStringObject = function (type) {
   return function validateStringified(val) {
     if (val === null || val === '') {
-      return true;
+      return true; // NOSONAR
     }
 
     const err = `The value must be a stringified ${type}`;
 
     if (typeof val !== 'string') {
-      return err;
+      return err; // NOSONAR
     }
 
     try {
       const result = JSON.parse(val);
       if (type === 'array' && !Array.isArray(result)) {
-        return err;
+        return err; // NOSONAR
       }
     } catch (e) {
-      return err;
+      return err; // NOSONAR
     }
 
-    return true;
+    return true; // NOSONAR
   };
 };
 
@@ -513,12 +479,12 @@ exports.readTextFromStdin = function () {
 exports.checkPropertyName = function (name) {
   const result = exports.validateRequiredName(name);
   if (result !== true) {
-    return result;
+    return result; // NOSONAR
   }
   if (RESERVED_PROPERTY_NAMES.includes(name)) {
-    return `${name} is a reserved keyword. Please use another name`;
+    return `${name} is a reserved keyword. Please use another name`; // NOSONAR
   }
-  return true;
+  return true; // NOSONAR
 };
 
 /**
@@ -539,12 +505,12 @@ function validateValue(name, unallowedCharacters) {
     unallowedCharacters = /[\/@\s\+%:\.]/;
   }
   if (name.match(unallowedCharacters)) {
-    return `Name cannot contain special characters ${unallowedCharacters}: ${name}`;
+    return `Name cannot contain special characters ${unallowedCharacters}: ${name}`; // NOSONAR
   }
   if (name !== encodeURIComponent(name)) {
-    return `Name cannot contain special characters escaped by encodeURIComponent: ${name}`;
+    return `Name cannot contain special characters escaped by encodeURIComponent: ${name}`; // NOSONAR
   }
-  return true;
+  return true; // NOSONAR
 }
 /**
  *  Returns the modelName in the directory file format for the model
