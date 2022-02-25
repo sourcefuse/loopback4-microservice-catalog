@@ -230,7 +230,7 @@ module.exports = class BaseGenerator extends Generator {
     // First check existing answers
     let defaultVal = answers[question.name];
     if (defaultVal != null) {
-      return defaultVal
+      return defaultVal;
     }
 
     // Now check the `default` of the prompt
@@ -242,52 +242,64 @@ module.exports = class BaseGenerator extends Generator {
 
     if (question.type === 'confirm') {
       return defaultVal != null ? defaultVal : true;
-    }
-    if (question.type === 'list' || question.type === 'rawList') {
-      // Default to 1st item
-      if (def == null) {
-        def = 0
-      }
-      if (typeof def === 'number') {
-        // The `default` is an index
-        const choice = question.choices[def];
-        if (choice) {
-          defaultVal = choice.value || choice.name;
-        }
-      } else {
-        // The default is a value
-        if (question.choices.map(c => c.value || c.name).includes(def)) {
-          defaultVal = def;
-        }
-      }
+    } else if (new Set(['list', 'rawList']).has(question.type)) {
+      defaultVal = this.getListDefaultVal(question, def, defaultVal);
     } else if (question.type === 'checkbox') {
-      if (def == null) {
-        defaultVal = question.choices
-          .filter(c => c.checked && !c.disabled)
-          .map(c => c.value || c.name);
-      } else {
-        defaultVal = def
-          .map(d => {
-            if (typeof d === 'number') {
-              const choice = question.choices[d];
-              if (choice && !choice.disabled) {
-                return choice.value || choice.name;
-              }
-            } else {
-              if (
-                question.choices.find(
-                  c => !c.disabled && d === (c.value || c.name),
-                )
-              ) {
-                return d;
-              }
-            }
-            return undefined;
-          })
-          .filter(v => v != null);
+      defaultVal = this.getCheckBoxDefaultVal(question, def, defaultVal);
+    }
+    return defaultVal;
+  }
+
+  getListDefaultVal(question, def, defaultVal) {
+    // Default to 1st item
+    if (def == null) {
+      def = 0;
+    }
+    if (typeof def === 'number') {
+      // The `default` is an index
+      const choice = question.choices[def];
+      if (choice) {
+        defaultVal = choice.value || choice.name;
+      }
+    } else {
+      // The default is a value
+      if (question.choices.map(c => c.value || c.name).includes(def)) {
+        defaultVal = def;
       }
     }
     return defaultVal;
+  }
+  getCheckBoxDefaultVal(question, def, defaultVal) {
+    if (def == null) {
+      defaultVal = question.choices
+        .filter(c => c.checked && !c.disabled)
+        .map(c => this.choiceValueOrName(c));
+    } else {
+      defaultVal = def
+        .map(d => this.mapCheckBoxDefaultVal(d, question))
+        .filter(v => v != null);
+    }
+    return defaultVal;
+  }
+  mapCheckBoxDefaultVal(def, question) {
+    if (typeof def === 'number') {
+      const choice = question.choices[def];
+      if (choice && !choice.disabled) {
+        return this.choiceValueOrName(choice);
+      }
+    } else {
+      if (
+        question.choices.find(
+          c => !c.disabled && def === this.choiceValueOrName(c),
+        )
+      ) {
+        return def;
+      }
+    }
+    return undefined;
+  }
+  choiceValueOrName(choice) {
+    return choice.value || choice.name;
   }
 
   /**
@@ -324,7 +336,7 @@ module.exports = class BaseGenerator extends Generator {
         when = await q.when(answers);
       }
       if (when === false) {
-        continue
+        continue;
       }
       if (this._isQuestionOptional(q)) {
         const answer = await this._getDefaultAnswer(q, answers);
@@ -362,11 +374,11 @@ module.exports = class BaseGenerator extends Generator {
   exit(reason) {
     // exit(false) should not exit
     if (reason === false) {
-      return
+      return;
     }
     // exit(), exit(undefined), exit('') should exit
     if (!reason) {
-      reason = true
+      reason = true;
     }
     this.exitGeneration = reason;
   }
@@ -377,7 +389,7 @@ module.exports = class BaseGenerator extends Generator {
    * @param {Object} options
    * @param {Object} spawnOpts
    */
-  pkgManagerInstall(pkgs, spawnOpts, options = {} ) {
+  pkgManagerInstall(pkgs, spawnOpts, options = {}) {
     const pm = this.config.get('packageManager') || this.options.packageManager;
     if (pm === 'yarn') {
       return this.yarnInstall(pkgs, options.yarn, spawnOpts);
@@ -391,7 +403,7 @@ module.exports = class BaseGenerator extends Generator {
    */
   install() {
     if (this.shouldExit()) {
-      return false
+      return false;
     }
     const opts = {
       npm: this.options.npmInstall,
@@ -443,10 +455,9 @@ module.exports = class BaseGenerator extends Generator {
         cwd: projectDir,
       }).on('close', code => {
         if (code === 0) {
-          resolve()
-        }
-        else {
-          reject(new Error('npm exit code: ' + code))
+          resolve();
+        } else {
+          reject(new Error('npm exit code: ' + code));
         }
       });
     });
@@ -483,9 +494,7 @@ module.exports = class BaseGenerator extends Generator {
   async end() {
     if (this.shouldExit()) {
       debug(this.exitGeneration);
-      this.log(
-        chalk.red('Generation is aborted: %s', this.exitGeneration),
-      );
+      this.log(chalk.red('Generation is aborted: %s', this.exitGeneration));
       // Fail the process
       process.exitCode = 1;
       return;

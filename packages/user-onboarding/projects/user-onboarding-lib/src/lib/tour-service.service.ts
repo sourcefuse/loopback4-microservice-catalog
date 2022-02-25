@@ -77,77 +77,34 @@ export class TourServiceService {
     }
   }
 
-  private navigationCheckNext(
-    event: NavigationEvent,
-    e: TourStep,
-    tourInstance: Tour,
-    currentStepId: string,
-    previousStepId: string,
-  ): void {
-    if (event instanceof NavigationEnd && event.url === e.currentRoute) {
-      this.waitForElement(e, tourInstance.tourId)
-        .then(() => {
-          this.tour.next();
-          this.tourStepChange.next({
-            tourId: tourInstance.tourId,
-            currentStepId,
-            previousStepId,
-            moveForward: true,
-          });
-          this.pauseAllVideos();
-        })
-        .catch(err => {
-          this.tourFailed.next(err);
-        });
+  private waitForElement(
+    tourStep: TourStep,
+    tourId: string,
+  ): Promise<Element | ''> {
+    if (tourStep.attachTo === undefined) {
+      return Promise.resolve('');
+    } else {
+      const startTime = new Date().getTime();
+      return new Promise<Element | ''>((resolve, reject) => {
+        const timer = setInterval(() => {
+          const now = new Date().getTime();
+          const element = this.checkElement(tourStep.attachTo);
+          if (element) {
+            clearInterval(timer);
+            resolve(element);
+          } else if (now - startTime >= this._maxWaitTime) {
+            clearInterval(timer);
+            reject({tourId, message: `Error in loading tour`});
+          } else {
+            // do nothing
+          }
+        }, this.interval);
+      });
     }
-  }
-
-  private navigationCheckBack(
-    event: NavigationEvent,
-    e: TourStep,
-    tourInstance: Tour,
-    currentStepId: string,
-    previousStepId: string,
-  ): void {
-    if (event instanceof NavigationEnd && event.url === e.currentRoute) {
-      this.waitForElement(e, tourInstance.tourId)
-        .then(() => {
-          this.tour.back();
-          this.tourStepChange.next({
-            tourId: tourInstance.tourId,
-            currentStepId,
-            previousStepId,
-            moveForward: false,
-          });
-          this.pauseAllVideos();
-        })
-        .catch(err => {
-          this.tourFailed.next(err);
-        });
-    }
-  }
-
-  private waitForElement(tourStep: TourStep, tourId: string): Promise<Element> {
-    const startTime = new Date().getTime();
-    return new Promise<Element>((resolve, reject) => {
-      const timer = setInterval(() => {
-        const now = new Date().getTime();
-        const element = this.checkElement(tourStep.attachTo);
-        if (element) {
-          clearInterval(timer);
-          resolve(element);
-        } else if (now - startTime >= this._maxWaitTime) {
-          clearInterval(timer);
-          reject({tourId, message: `Error in loading tour`});
-        } else {
-          // do nothing
-        }
-      }, this.interval);
-    });
   }
 
   private triggerTour(tourInstance: Tour, props: Props): void {
-    let removedSteps;
+    let removedSteps: TourStep[] = [];
     const sessionId = this.tourStoreService.getSessionId();
     if (!sessionId) {
       this.tourStoreService.generateSessionId();
@@ -156,6 +113,9 @@ export class TourServiceService {
       .loadState({tourId: tourInstance.tourId, sessionId})
       .subscribe(tourState => {
         if (tourState && Object.keys(tourState).length) {
+          if (tourState.status === Status.Complete) {
+            return;
+          }
           removedSteps = this.getRemovedSteps(
             tourInstance.tourSteps,
             tourState,
@@ -178,104 +138,33 @@ export class TourServiceService {
             })
             .subscribe();
         }
-        tourInstance.tourSteps.forEach(e => {
+        tourInstance.tourSteps.forEach((e, index) => {
           e.buttons.forEach(b => {
             const key = b.key;
             const func = this.tourStoreService.getFnByKey(key);
             const wrapperNext = () => {
-              this.tourStoreService
-                .saveState({
-                  tourId: tourInstance.tourId,
-                  state: {
-                    sessionId: this.tourStoreService.getSessionId(),
-                    step: e.nextStepId,
-                    props: tourState.props,
-                    status: this.getStatus(e, tourInstance.tourSteps),
-                  },
-                })
-                .subscribe();
-              this.router.navigate([e.nextRoute]);
-              this.router.events.subscribe((event: NavigationEvent) => {
-                const nextStep = tourInstance.tourSteps.filter(
-                  ts => ts.id === e.nextStepId,
-                )[0];
-                this.navigationCheckNext(
-                  event,
-                  nextStep,
-                  tourInstance,
-                  e.nextStepId,
-                  e.id,
-                );
-              });
+              this.navigateAndMoveToNextStep(e, tourInstance, tourState, index);
             };
             const wrapperPrev = () => {
-              this.tourStoreService
-                .saveState({
-                  tourId: tourInstance.tourId,
-                  state: {
-                    sessionId: this.tourStoreService.getSessionId(),
-                    step: e.prevStepId,
-                    props: tourState.props,
-                    status: Status.InProgress,
-                  },
-                })
-                .subscribe();
-              this.router.navigate([e.prevRoute]);
-              this.router.events.subscribe((event: NavigationEvent) => {
-                const prevStep = tourInstance.tourSteps.filter(
-                  ts => ts.id === e.prevStepId,
-                )[0];
-
-                this.navigationCheckBack(
-                  event,
-                  prevStep,
-                  tourInstance,
-                  e.prevStepId,
-                  e.id,
-                );
-              });
+              this.navigateAndMoveToPrevStep(
+                e,
+                tourInstance,
+                tourState,
+                index,
+                removedSteps,
+              );
             };
             const wrapperNormalNext = () => {
-              this.tourStoreService
-                .saveState({
-                  tourId: tourInstance.tourId,
-                  state: {
-                    sessionId: this.tourStoreService.getSessionId(),
-                    step: e.nextStepId,
-                    props: tourState.props,
-                    status: this.getStatus(e, tourInstance.tourSteps),
-                  },
-                })
-                .subscribe();
-              this.tour.next();
-              this.tourStepChange.next({
-                tourId: tourInstance.tourId,
-                currentStepId: e.nextStepId,
-                previousStepId: e.id,
-                moveForward: true,
-              });
-              this.pauseAllVideos();
+              this.moveToNextStep(tourInstance, tourState, e, index);
             };
             const wrapperNormalPrev = () => {
-              this.tourStoreService
-                .saveState({
-                  tourId: tourInstance.tourId,
-                  state: {
-                    sessionId: this.tourStoreService.getSessionId(),
-                    step: e.prevStepId,
-                    props: tourState.props,
-                    status: Status.InProgress,
-                  },
-                })
-                .subscribe();
-              this.tour.back();
-              this.tourStepChange.next({
-                tourId: tourInstance.tourId,
-                currentStepId: e.prevStepId,
-                previousStepId: e.id,
-                moveForward: true,
-              });
-              this.pauseAllVideos();
+              this.moveToPrevStep(
+                tourInstance,
+                tourState,
+                e,
+                index,
+                removedSteps,
+              );
             };
             this.actionAssignment(
               e,
@@ -290,104 +179,56 @@ export class TourServiceService {
             );
           });
         });
-        const originalSteps = Object.assign([], tourInstance.tourSteps);
         this.tour.addSteps(tourInstance.tourSteps);
-        this.waitForElement(originalSteps[0], tourInstance.tourId).then(
+        this.waitForElement(
+          tourInstance.tourSteps[0],
+          tourInstance.tourId,
+        ).then(
           element => {
-            element.scrollIntoView(true);
+            if (element) {
+              element.scrollIntoView(true);
+            }
             this.tour.start();
-            if (removedSteps !== undefined) {
-              removedSteps.forEach(er => {
+            if (removedSteps.length) {
+              removedSteps.forEach((er, index) => {
                 er.buttons.forEach(br => {
                   const k = br.key;
                   const funcRemoved = this.tourStoreService.getFnByKey(k);
                   const wrapperNextRemoved = () => {
-                    this.tourStoreService
-                      .saveState({
-                        tourId: tourInstance.tourId,
-                        state: {
-                          sessionId: this.tourStoreService.getSessionId(),
-                          step: er.nextStepId,
-                          props: tourState.props,
-                          status: this.getStatus(er, tourInstance.tourSteps),
-                        },
-                      })
-                      .subscribe();
-                    this.router.navigate([er.nextRoute]);
-                    this.router.events.subscribe((event: NavigationEvent) => {
-                      this.navigationCheckNext(
-                        event,
-                        er,
-                        tourInstance,
-                        er.nextStepId,
-                        er.id,
-                      );
-                    });
+                    this.navigateAndMoveToNextStepRemoved(
+                      er,
+                      tourInstance,
+                      tourState,
+                      index,
+                      removedSteps,
+                    );
                   };
                   const wrapperPrevRemoved = () => {
-                    this.tourStoreService
-                      .saveState({
-                        tourId: tourInstance.tourId,
-                        state: {
-                          sessionId: this.tourStoreService.getSessionId(),
-                          step: er.prevStepId,
-                          props: tourState.props,
-                          status: Status.InProgress,
-                        },
-                      })
-                      .subscribe();
-                    this.router.navigate([er.prevRoute]);
-                    this.router.events.subscribe((event: NavigationEvent) => {
-                      this.navigationCheckBack(
-                        event,
-                        er,
-                        tourInstance,
-                        er.prevStepId,
-                        er.id,
-                      );
-                    });
+                    this.navigateAndMoveToPrevStepRemoved(
+                      er,
+                      tourInstance,
+                      tourState,
+                      index,
+                      removedSteps,
+                    );
                   };
                   const wrapperNormalNextRemoved = () => {
-                    this.tourStoreService
-                      .saveState({
-                        tourId: tourInstance.tourId,
-                        state: {
-                          sessionId: this.tourStoreService.getSessionId(),
-                          step: er.nextStepId,
-                          props: tourState.props,
-                          status: this.getStatus(er, tourInstance.tourSteps),
-                        },
-                      })
-                      .subscribe();
-                    this.tour.next();
-                    this.tourStepChange.next({
-                      tourId: tourInstance.tourId,
-                      currentStepId: er.nextStepId,
-                      previousStepId: er.id,
-                      moveForward: true,
-                    });
-                    this.pauseAllVideos();
+                    this.moveToNextStepRemoved(
+                      tourInstance,
+                      tourState,
+                      er,
+                      index,
+                      removedSteps,
+                    );
                   };
                   const wrapperNormalPrevRemoved = () => {
-                    this.tourStoreService
-                      .saveState({
-                        tourId: tourInstance.tourId,
-                        state: {
-                          sessionId: this.tourStoreService.getSessionId(),
-                          step: er.prevStepId,
-                          props: tourState.props,
-                          status: Status.InProgress,
-                        },
-                      })
-                      .subscribe();
-                    this.tour.back();
-                    this.tourStepChange.next({
-                      tourId: tourInstance.tourId,
-                      currentStepId: er.nextStepId,
-                      previousStepId: er.id,
-                      moveForward: false,
-                    });
-                    this.pauseAllVideos();
+                    this.moveToPrevStepRemoved(
+                      tourInstance,
+                      tourState,
+                      er,
+                      index,
+                      removedSteps,
+                    );
                   };
                   this.actionAssignment(
                     er,
@@ -412,6 +253,7 @@ export class TourServiceService {
         );
       });
   }
+
   public run(
     tourId: string,
     params?: {[key: string]: string},
@@ -424,43 +266,38 @@ export class TourServiceService {
         sessionId: this.tourStoreService.getSessionId(),
       })
       .subscribe(tourInstance => {
-        if (tourInstance && tourInstance.tourSteps.length > 0) {
-          if (params) {
-            let steps = JSON.stringify(tourInstance.tourSteps);
+        this.checkAndThrowError(tourInstance);
+        if (params) {
+          let steps = JSON.stringify(tourInstance.tourSteps);
 
-            Object.keys(params).forEach(key => {
-              steps = steps.replace(
-                new RegExp(`\\{\\{${key}\\}\\}`),
-                params[key],
-              );
-            });
-            tourInstance.tourSteps = JSON.parse(steps);
-          }
-          this.tour = new Shepherd.Tour({
-            useModalOverlay: true,
-            defaultStepOptions: {
-              cancelIcon: {
-                enabled: true,
-              },
-              classes: 'class-1 class-2',
-              scrollTo: {behavior: 'smooth', block: 'center'},
-            },
+          Object.keys(params).forEach(key => {
+            steps = steps.replace(
+              new RegExp(`\\{\\{${key}\\}\\}`),
+              params[key],
+            );
           });
-          this.tour.on(
-            'complete',
-            (event: {index: number; tour: Shepherd.Tour; tourId: string}) => {
-              event.tourId = tourInstance.tourId;
-              this.tourComplete.next(event);
-            },
-          );
-          if (filterFn) {
-            tourInstance.tourSteps = filterFn(tourInstance.tourSteps);
-          }
-          tourInstance.tourSteps[0].attachTo.scrollTo = false;
-          this.triggerTour(tourInstance, props);
-        } else {
-          // do nothing
+          tourInstance.tourSteps = JSON.parse(steps);
         }
+        this.tour = new Shepherd.Tour({
+          useModalOverlay: true,
+          defaultStepOptions: {
+            cancelIcon: {
+              enabled: true,
+            },
+            scrollTo: {behavior: 'smooth', block: 'center'},
+          },
+        });
+        this.tour.on('complete', (event: TourComplete) => {
+          event.tourId = tourInstance.tourId;
+          this.tourComplete.next(event);
+        });
+        if (filterFn) {
+          tourInstance.tourSteps = filterFn(tourInstance.tourSteps);
+        }
+        if (tourInstance.tourSteps[0].attachTo) {
+          tourInstance.tourSteps[0].attachTo.scrollTo = false;
+        }
+        this.triggerTour(tourInstance, props);
       });
   }
   private checkElement(attachTo: TourStep['attachTo']) {
@@ -497,16 +334,345 @@ export class TourServiceService {
       return flag;
     });
   }
-
-  private getStatus(currentTourStep: TourStep, tourSteps: TourStep[]) {
-    const lastId = tourSteps[tourSteps.length - 1].id;
-    if (currentTourStep.id === lastId) {
-      return Status.Complete;
-    } else {
-      return Status.InProgress;
-    }
-  }
   private pauseAllVideos() {
     document.querySelectorAll('video').forEach(vid => vid.pause());
+  }
+  private setTourComplete(tourId: string, props: Props) {
+    this.tourStoreService
+      .saveState({
+        tourId,
+        state: {
+          sessionId: this.tourStoreService.getSessionId(),
+          step: '',
+          props,
+          status: Status.Complete,
+        },
+      })
+      .subscribe();
+  }
+  private checkAndThrowError(tourInstance: Tour) {
+    if (!tourInstance) {
+      throw new Error(`No Tour Present`);
+    } else if (tourInstance.tourSteps.length === 0) {
+      throw new Error(`No Tour Steps Found`);
+    } else if (tourInstance.tourSteps[0].buttons) {
+      tourInstance.tourSteps[0].buttons.forEach(button => {
+        if (button.key === `prevAction`) {
+          throw new Error(`Step 1 can't have a previous button`);
+        }
+      });
+    } else {
+      //do nothing
+    }
+  }
+  private moveToNextStep(
+    tourInstance: Tour,
+    tourState: TourState,
+    step: TourStep,
+    index: number,
+  ) {
+    if (index === tourInstance.tourSteps.length - 1) {
+      this.setTourComplete(tourInstance.tourId, tourState.props);
+      this.tour.next();
+    } else {
+      this.waitForElement(
+        tourInstance.tourSteps[index + 1],
+        tourInstance.tourId,
+      ).then(
+        () => {
+          this.tourStoreService
+            .saveState({
+              tourId: tourInstance.tourId,
+              state: {
+                sessionId: this.tourStoreService.getSessionId(),
+                step: step.nextStepId,
+                props: tourState.props,
+                status: Status.InProgress,
+              },
+            })
+            .subscribe();
+
+          this.tour.show(step.nextStepId);
+          this.tourStepChange.next({
+            tourId: tourInstance.tourId,
+            currentStepId: step.nextStepId,
+            previousStepId: step.id,
+            moveForward: true,
+          });
+          this.pauseAllVideos();
+        },
+        err => {
+          this.tourFailed.next(err);
+        },
+      );
+    }
+  }
+
+  private moveToPrevStep(
+    tourInstance: Tour,
+    tourState: TourState,
+    step: TourStep,
+    index: number,
+    removedSteps: TourStep[],
+  ) {
+    let waitForLastElementOfRemovedSteps = false;
+    if (index === 0 && removedSteps.length) {
+      waitForLastElementOfRemovedSteps = true;
+    }
+    this.waitForElement(
+      waitForLastElementOfRemovedSteps
+        ? removedSteps[removedSteps.length - 1]
+        : tourInstance.tourSteps[index - 1],
+      tourInstance.tourId,
+    ).then(
+      () => {
+        this.tourStoreService
+          .saveState({
+            tourId: tourInstance.tourId,
+            state: {
+              sessionId: this.tourStoreService.getSessionId(),
+              step: waitForLastElementOfRemovedSteps
+                ? removedSteps[removedSteps.length - 1].id
+                : step.prevStepId,
+              props: tourState.props,
+              status: Status.InProgress,
+            },
+          })
+          .subscribe();
+        if (waitForLastElementOfRemovedSteps) {
+          this.tour.show(removedSteps[removedSteps.length - 1].id);
+        } else {
+          this.tour.show(step.prevStepId);
+        }
+        this.tourStepChange.next({
+          tourId: tourInstance.tourId,
+          currentStepId: waitForLastElementOfRemovedSteps
+            ? removedSteps[removedSteps.length - 1].id
+            : step.prevStepId,
+          previousStepId: step.id,
+          moveForward: false,
+        });
+        this.pauseAllVideos();
+      },
+      err => {
+        this.tourFailed.next(err);
+      },
+    );
+  }
+
+  private moveToNextStepRemoved(
+    tourInstance: Tour,
+    tourState: TourState,
+    step: TourStep,
+    index: number,
+    removedSteps: TourStep[],
+  ) {
+    let waitForFirstElementOfSteps = false;
+
+    if (index === removedSteps.length - 1) {
+      waitForFirstElementOfSteps = true;
+    }
+    this.waitForElement(
+      waitForFirstElementOfSteps
+        ? tourInstance.tourSteps[0]
+        : removedSteps[index + 1],
+      tourInstance.tourId,
+    ).then(
+      () => {
+        this.tourStoreService
+          .saveState({
+            tourId: tourInstance.tourId,
+            state: {
+              sessionId: this.tourStoreService.getSessionId(),
+              step: waitForFirstElementOfSteps
+                ? tourInstance.tourSteps[0].id
+                : step.nextStepId,
+              props: tourState.props,
+              status: Status.InProgress,
+            },
+          })
+          .subscribe();
+        if (waitForFirstElementOfSteps) {
+          this.tour.show(tourInstance.tourSteps[0].id);
+        } else {
+          this.tour.show(step.nextStepId);
+        }
+        this.tourStepChange.next({
+          tourId: tourInstance.tourId,
+          currentStepId: waitForFirstElementOfSteps
+            ? tourInstance.tourSteps[0].id
+            : step.nextStepId,
+          previousStepId: step.id,
+          moveForward: true,
+        });
+        this.pauseAllVideos();
+      },
+      err => {
+        this.tourFailed.next(err);
+      },
+    );
+  }
+
+  private moveToPrevStepRemoved(
+    tourInstance: Tour,
+    tourState: TourState,
+    step: TourStep,
+    index: number,
+    removedSteps: TourStep[],
+  ) {
+    this.waitForElement(removedSteps[index - 1], tourInstance.tourId).then(
+      () => {
+        this.tourStoreService
+          .saveState({
+            tourId: tourInstance.tourId,
+            state: {
+              sessionId: this.tourStoreService.getSessionId(),
+              step: step.prevStepId,
+              props: tourState.props,
+              status: Status.InProgress,
+            },
+          })
+          .subscribe();
+        this.tour.show(step.prevStepId);
+        this.tourStepChange.next({
+          tourId: tourInstance.tourId,
+          currentStepId: step.prevStepId,
+          previousStepId: step.id,
+          moveForward: false,
+        });
+        this.pauseAllVideos();
+      },
+      err => {
+        this.tourFailed.next(err);
+      },
+    );
+  }
+  private navigateAndMoveToNextStep(
+    currentStep: TourStep,
+    tourInstance: Tour,
+    tourState: TourState,
+    index: number,
+  ) {
+    if (index < tourInstance.tourSteps.length - 1) {
+      this.router.navigate([currentStep.nextRoute]);
+      this.router.events.subscribe((event: NavigationEvent) => {
+        const nextStep = tourInstance.tourSteps.filter(
+          ts => ts.id === currentStep.nextStepId,
+        )[0];
+        if (
+          event instanceof NavigationEnd &&
+          event.url === nextStep.currentRoute
+        ) {
+          this.moveToNextStep(tourInstance, tourState, currentStep, index);
+        }
+      });
+    } else {
+      this.moveToNextStep(tourInstance, tourState, currentStep, index);
+    }
+  }
+  private navigateAndMoveToPrevStep(
+    currentStep: TourStep,
+    tourInstance: Tour,
+    tourState: TourState,
+    index: number,
+    removedSteps: TourStep[],
+  ) {
+    let moveToLastRemovedStep = false;
+    if (index === 0 && removedSteps.length) {
+      moveToLastRemovedStep = true;
+    }
+    const prevRoute = moveToLastRemovedStep
+      ? removedSteps[removedSteps.length - 1].prevRoute
+      : currentStep.prevRoute;
+    this.router.navigate([prevRoute]);
+    this.router.events.subscribe((event: NavigationEvent) => {
+      let prevStep: TourStep;
+      if (moveToLastRemovedStep) {
+        prevStep = removedSteps[removedSteps.length - 1];
+      } else {
+        prevStep = tourInstance.tourSteps.filter(
+          ts => ts.id === currentStep.prevStepId,
+        )[0];
+      }
+
+      if (
+        event instanceof NavigationEnd &&
+        event.url === prevStep.currentRoute
+      ) {
+        this.moveToPrevStep(
+          tourInstance,
+          tourState,
+          currentStep,
+          index,
+          removedSteps,
+        );
+      }
+    });
+  }
+  private navigateAndMoveToNextStepRemoved(
+    currentStep: TourStep,
+    tourInstance: Tour,
+    tourState: TourState,
+    index: number,
+    removedSteps: TourStep[],
+  ) {
+    let moveToFirstStep = false;
+
+    if (index === removedSteps.length - 1) {
+      moveToFirstStep = true;
+    }
+    const nextRoute = moveToFirstStep
+      ? tourInstance.tourSteps[0].nextRoute
+      : currentStep.nextRoute;
+    this.router.navigate([nextRoute]);
+    this.router.events.subscribe((event: NavigationEvent) => {
+      let nextStep: TourStep;
+      if (moveToFirstStep) {
+        nextStep = tourInstance.tourSteps[0];
+      } else {
+        nextStep = tourInstance.tourSteps.filter(
+          ts => ts.id === currentStep.nextStepId,
+        )[0];
+      }
+
+      if (
+        event instanceof NavigationEnd &&
+        event.url === nextStep.currentRoute
+      ) {
+        this.moveToNextStepRemoved(
+          tourInstance,
+          tourState,
+          currentStep,
+          index,
+          removedSteps,
+        );
+      }
+    });
+  }
+  private navigateAndMoveToPrevStepRemoved(
+    currentStep: TourStep,
+    tourInstance: Tour,
+    tourState: TourState,
+    index: number,
+    removedSteps: TourStep[],
+  ) {
+    this.router.navigate([currentStep.prevRoute]);
+    this.router.events.subscribe((event: NavigationEvent) => {
+      const prevStep = tourInstance.tourSteps.filter(
+        ts => ts.id === currentStep.prevStepId,
+      )[0];
+      if (
+        event instanceof NavigationEnd &&
+        event.url === prevStep.currentRoute
+      ) {
+        this.moveToPrevStepRemoved(
+          tourInstance,
+          tourState,
+          currentStep,
+          index,
+          removedSteps,
+        );
+      }
+    });
   }
 }

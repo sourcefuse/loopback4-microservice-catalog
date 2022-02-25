@@ -50,19 +50,8 @@ class CheckoutPage extends Component {
   };
 
   handlePayment = (amount, type) => {
-    const env = process.env;
-    const isPortExists =
-      env.REACT_APP_BASE_API_PORT_EXISTS === 'true' ? true : false;
-    const ordersApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${
-      env.REACT_APP_BASE_API_URL
-    }${isPortExists ? `:${env.REACT_APP_BASE_API_PORT}/` : '/'}${
-      env.REACT_APP_ORDERS_API_PATH
-    }`;
-    const subscriptionApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${
-      env.REACT_APP_BASE_API_URL
-    }${isPortExists ? `:${env.REACT_APP_BASE_API_PORT}/` : '/'}${
-      env.REACT_APP_SUBSCRIPTION_API_PATH
-    }`;
+    const ordersApiUrl = this.getOrdersApiUrl();
+    const subscriptionApiUrl = this.getSubscriptionApiUrl();
     if (type === 'orders' && this.state.radio === 1) {
       axios
         .post(ordersApiUrl, {
@@ -111,6 +100,26 @@ class CheckoutPage extends Component {
         .then(subresp => this.res(subresp));
     }
   };
+  getOrdersApiUrl() {
+    const env = process.env;
+    const isPortExists =
+      env.REACT_APP_BASE_API_PORT_EXISTS === 'true' ? true : false;
+    let ordersApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${env.REACT_APP_BASE_API_URL}`;
+    ordersApiUrl += isPortExists ? `:${env.REACT_APP_BASE_API_PORT}/` : '/';
+    ordersApiUrl += `${env.REACT_APP_ORDERS_API_PATH}`;
+    return ordersApiUrl;
+  }
+  getSubscriptionApiUrl() {
+    const env = process.env;
+    const isPortExists =
+      env.REACT_APP_BASE_API_PORT_EXISTS === 'true' ? true : false;
+    let subscriptionApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${env.REACT_APP_BASE_API_URL}`;
+    subscriptionApiUrl += isPortExists
+      ? `:${env.REACT_APP_BASE_API_PORT}/`
+      : '/';
+    subscriptionApiUrl += `${env.REACT_APP_SUBSCRIPTION_API_PATH}`;
+    return subscriptionApiUrl;
+  }
 
   render() {
     const {activePill} = this.state;
