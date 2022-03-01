@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.6 (2022-03-01)</small>
+
+* chore(deps): bump vm2 in /services/notification-service (#521) ([80deb1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/80deb1d)), closes [#521](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/521)
+
+
+
+
+
 ## <small>4.0.5 (2022-02-13)</small>
 
 * Corrected key in description in README.md (#508) ([4e16426](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4e16426)), closes [#508](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/508)
