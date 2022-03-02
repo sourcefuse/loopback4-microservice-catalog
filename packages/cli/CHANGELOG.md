@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.1.2 (2022-03-01)</small>
+
+* fix(cli): sonar fix (#535) ([3d2dd89](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3d2dd89)), closes [#535](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/535)
+* fix(openapi): fixes in openapi (#524) ([f8ed140](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f8ed140)), closes [#524](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/524)
+* style(cli): sonar-fix (#522) ([15d3fda](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/15d3fda)), closes [#522](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/522)
+
+
+
+
+
 ## <small>1.1.1 (2022-02-15)</small>
 
 * fix logs in cli (#523) ([f1df245](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f1df245)), closes [#523](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/523)
