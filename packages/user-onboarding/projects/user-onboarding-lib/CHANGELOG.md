@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.14 (2022-03-01)</small>
+
+* fix(user-onboarding): popup should get displayed in center if attach to is not specified (#530) ([056e2e7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/056e2e7)), closes [#530](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/530) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.13 (2022-02-15)</small>
 
 * fix(user-onboarding): wait for next/prev step element to be present before moving to further steps,  ([b9a8e89](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b9a8e89)), closes [#503](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/503) [#451](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/451)
