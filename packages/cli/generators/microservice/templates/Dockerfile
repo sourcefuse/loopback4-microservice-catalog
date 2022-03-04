@@ -1,7 +1,6 @@
 # Check out https://hub.docker.com/_/node to select a new base image
 FROM node:16-alpine AS BUILD_IMAGE
 RUN apk update && apk add curl bash && rm -rf /var/cache/apk/*
-#RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
 RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin
 
 # Set to a non-root built-in user `node`
@@ -15,7 +14,6 @@ WORKDIR /home/node/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY --chown=node package*.json ./
-#RUN npm install
 
 # Bundle app source code
 COPY --chown=node . .
