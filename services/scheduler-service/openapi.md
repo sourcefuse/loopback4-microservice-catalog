@@ -2671,6 +2671,7 @@ const inputBody = '{
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "dayOfWeek": 0,
       "end": "string",
       "start": "string",
@@ -2721,6 +2722,7 @@ const inputBody = {
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "dayOfWeek": 0,
       "end": "string",
       "start": "string",
@@ -2778,6 +2780,7 @@ fetch('/calendars/calendarSubscription',
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "dayOfWeek": 0,
       "end": "string",
       "start": "string",
@@ -3832,6 +3835,7 @@ const inputBody = '{
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "dayOfWeek": 0,
       "end": "string",
       "start": "string",
@@ -3882,6 +3886,7 @@ const inputBody = {
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "dayOfWeek": 0,
       "end": "string",
       "start": "string",
@@ -3943,6 +3948,7 @@ This is an api to create a calendar for any user.
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "dayOfWeek": 0,
       "end": "string",
       "start": "string",
@@ -9370,6 +9376,7 @@ const inputBody = '{
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "fileUrl": "string",
       "iconLink": "string",
       "mimeType": "string",
@@ -9388,6 +9395,7 @@ const inputBody = '{
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "identifier": "string",
       "isOptional": true,
       "isOrganizer": true,
@@ -9450,6 +9458,7 @@ const inputBody = {
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "fileUrl": "string",
       "iconLink": "string",
       "mimeType": "string",
@@ -9468,6 +9477,7 @@ const inputBody = {
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "identifier": "string",
       "isOptional": true,
       "isOrganizer": true,
@@ -9544,6 +9554,7 @@ While an organizer creates an event, we get participants details along with it.
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "fileUrl": "string",
       "iconLink": "string",
       "mimeType": "string",
@@ -9562,6 +9573,7 @@ While an organizer creates an event, we get participants details along with it.
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "identifier": "string",
       "isOptional": true,
       "isOrganizer": true,
@@ -15715,120 +15727,6 @@ Calendar
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_WorkingHourExcluding_id_">WorkingHourExcluding_id_</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkinghourexcluding_id_"></a>
-<a id="schema_WorkingHourExcluding_id_"></a>
-<a id="tocSworkinghourexcluding_id_"></a>
-<a id="tocsworkinghourexcluding_id_"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "dayOfWeek": 0,
-  "end": "string",
-  "start": "string",
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-WorkingHourExcluding_id_
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|dayOfWeek|number|false|none|none|
-|end|string|false|none|none|
-|start|string|false|none|none|
-|calendarId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-
-<h2 id="tocS_NewCalendar">NewCalendar</h2>
-<!-- backwards compatibility -->
-<a id="schemanewcalendar"></a>
-<a id="schema_NewCalendar"></a>
-<a id="tocSnewcalendar"></a>
-<a id="tocsnewcalendar"></a>
-
-```json
-{
-  "source": "string",
-  "enableWorkingHours": true,
-  "location": "string",
-  "identifier": "string",
-  "summary": "string",
-  "timezone": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "workingHours": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "dayOfWeek": 0,
-      "end": "string",
-      "start": "string",
-      "calendarId": "string",
-      "extId": "string",
-      "extMetadata": {}
-    }
-  ],
-  "subscription": {}
-}
-
-```
-
-NewCalendar
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|source|string|false|none|none|
-|enableWorkingHours|boolean|false|none|none|
-|location|string|false|none|none|
-|identifier|string|true|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|workingHours|[[WorkingHourExcluding_id_](#schemaworkinghourexcluding_id_)]|false|none|[(tsType: Omit<WorkingHour, 'id'>, schemaOptions: { exclude: [ 'id' ] })]|
-|subscription|object|false|none|none|
-
 <h2 id="tocS_WorkingHour">WorkingHour</h2>
 <!-- backwards compatibility -->
 <a id="schemaworkinghour"></a>
@@ -15888,6 +15786,63 @@ WorkingHour
 |dayOfWeek|4|
 |dayOfWeek|5|
 |dayOfWeek|6|
+
+<h2 id="tocS_NewCalendar">NewCalendar</h2>
+<!-- backwards compatibility -->
+<a id="schemanewcalendar"></a>
+<a id="schema_NewCalendar"></a>
+<a id="tocSnewcalendar"></a>
+<a id="tocsnewcalendar"></a>
+
+```json
+{
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscription": {}
+}
+
+```
+
+NewCalendar
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|source|string|false|none|none|
+|enableWorkingHours|boolean|false|none|none|
+|location|string|false|none|none|
+|identifier|string|true|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
+|subscription|object|false|none|none|
 
 <h2 id="tocS_CalendarDTO">CalendarDTO</h2>
 <!-- backwards compatibility -->
@@ -16543,113 +16498,6 @@ Event
 |status|cancelled|
 |status|completed|
 
-<h2 id="tocS_AttachmentExcluding_id_">AttachmentExcluding_id_</h2>
-<!-- backwards compatibility -->
-<a id="schemaattachmentexcluding_id_"></a>
-<a id="schema_AttachmentExcluding_id_"></a>
-<a id="tocSattachmentexcluding_id_"></a>
-<a id="tocsattachmentexcluding_id_"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-AttachmentExcluding_id_
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|fileUrl|string|true|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_AttendeeExcluding_id_">AttendeeExcluding_id_</h2>
-<!-- backwards compatibility -->
-<a id="schemaattendeeexcluding_id_"></a>
-<a id="schema_AttendeeExcluding_id_"></a>
-<a id="tocSattendeeexcluding_id_"></a>
-<a id="tocsattendeeexcluding_id_"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "identifier": "string",
-  "isOptional": true,
-  "isOrganizer": true,
-  "messages": "string",
-  "responseStatus": "needsAction",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-AttendeeExcluding_id_
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|identifier|string|true|none|none|
-|isOptional|boolean|false|none|none|
-|isOrganizer|boolean|false|none|none|
-|messages|string|false|none|none|
-|responseStatus|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-
 <h2 id="tocS_NewEvent">NewEvent</h2>
 <!-- backwards compatibility -->
 <a id="schemanewevent"></a>
@@ -16685,6 +16533,7 @@ AttendeeExcluding_id_
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "fileUrl": "string",
       "iconLink": "string",
       "mimeType": "string",
@@ -16703,6 +16552,7 @@ AttendeeExcluding_id_
       "modifiedOn": "2019-08-24T14:15:22Z",
       "createdBy": "string",
       "modifiedBy": "string",
+      "id": "string",
       "identifier": "string",
       "isOptional": true,
       "isOrganizer": true,
@@ -16742,8 +16592,8 @@ NewEvent
 |timezone|string|false|none|none|
 |calendarId|string|true|none|none|
 |parentEventId|string|false|none|none|
-|attachments|[[AttachmentExcluding_id_](#schemaattachmentexcluding_id_)]|false|none|[(tsType: Omit<Attachment, 'id'>, schemaOptions: { exclude: [ 'id' ] })]|
-|attendees|[[AttendeeExcluding_id_](#schemaattendeeexcluding_id_)]|false|none|[(tsType: Omit<Attendee, 'id'>, schemaOptions: { exclude: [ 'id' ] })]|
+|attachments|[[Attachment](#schemaattachment)]|false|none|none|
+|attendees|[[Attendee](#schemaattendee)]|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 

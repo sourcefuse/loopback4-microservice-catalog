@@ -4,6 +4,7 @@ module.exports = {
     'no-extra-boolean-cast': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     'no-prototype-builtins': 'off',
+    'checksVoidReturn': false,
   },
   parserOptions: {
     project: './tsconfig.json',
