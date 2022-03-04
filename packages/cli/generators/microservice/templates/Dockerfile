@@ -1,8 +1,8 @@
 # Check out https://hub.docker.com/_/node to select a new base image
-FROM node:14-alpine AS BUILD_IMAGE
-
+FROM node:16-alpine AS BUILD_IMAGE
 RUN apk update && apk add curl bash && rm -rf /var/cache/apk/*
-RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
+#RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
+RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin
 
 # Set to a non-root built-in user `node`
 USER node
@@ -15,14 +15,19 @@ WORKDIR /home/node/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY --chown=node package*.json ./
-RUN npm install
+#RUN npm install
 
 # Bundle app source code
 COPY --chown=node . .
 RUN npm run build
 
+# To make npm prune work, else it looks for symbolically linked packages as well
+RUN rm package-lock.json
+
 # Workaround for symlinked packages [copy packages in temp folder]
 RUN mkdir -p /tmp/app-packages
+
+# uncomment if you are using core package
 # COPY --chown=node node_modules/@local/core /tmp/app-packages/core
 
 # Run node prune
@@ -37,7 +42,7 @@ RUN /usr/local/bin/node-prune
 # Workaround for symlinked packages [reset WORKDIR]
 WORKDIR /home/node/app
 
-FROM node:14-alpine
+FROM node:16-alpine
 WORKDIR /home/node/app
 
 ARG NR_ENABLED
@@ -48,10 +53,14 @@ COPY --from=BUILD_IMAGE /home/node/app/public ./public
 COPY --from=BUILD_IMAGE /home/node/app/node_modules ./node_modules
 
 # Workaround for symlinked packages [copy all packages manually]
-# COPY --from=BUILD_IMAGE /tmp/app-packages/core ./node_modules/@local/core
+#COPY --from=BUILD_IMAGE /tmp/app-packages/core ./node_modules/@local/core
 
 COPY --from=BUILD_IMAGE /home/node/app/.env.example ./.env.example
 COPY --from=BUILD_IMAGE /home/node/app/.env.defaults ./.env.defaults
+
+# Fix added so that npm i does not remove the other installed packages	
+COPY --from=BUILD_IMAGE /home/node/app/package.json ./package.json	
+COPY --from=BUILD_IMAGE /home/node/app/package-lock.json ./package-lock.json
 
 RUN if [ "$NR_ENABLED" = "1" ] ; then npm i newrelic; fi
 
@@ -61,3 +70,4 @@ ENV PORT=3000
 EXPOSE ${PORT}
 
 CMD [ "node", "-r", "./dist/opentelemetry-registry.js", "./dist/index.js" ]
+
