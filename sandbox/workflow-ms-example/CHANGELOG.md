@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.6 (2022-03-06)</small>
+
+* chore(deps): bump node-fetch in /sandbox/workflow-ms-example (#504) ([acb780e](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/acb780e)), closes [#504](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/504)
+
+
+
+
+
 ## <small>0.4.5 (2022-02-13)</small>
 
 * fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)

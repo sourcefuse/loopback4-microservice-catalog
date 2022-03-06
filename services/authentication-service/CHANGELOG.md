@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.4 (2022-03-06)</small>
+
+* fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)
+* chore(deps): bump urijs in /services/authentication-service (#545) ([d916e92](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d916e92)), closes [#545](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/545)
+
+
+
+
+
 ## <small>4.0.3 (2022-02-13)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service

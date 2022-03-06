@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.7 (2022-03-06)</small>
+
+**Note:** Version bump only for package @sourceloop/schedular-example
+
+
+
+
+
 ## <small>1.0.6 (2022-02-13)</small>
 
 * fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)

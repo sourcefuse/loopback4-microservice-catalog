@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.5 (2022-03-06)</small>
+
+* fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)
+* chore(deps): bump urijs in /services/scheduler-service (#543) ([698fb2a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/698fb2a)), closes [#543](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/543)
+* chore(deps): bump urijs in /services/scheduler-service (#568) ([1e0bd9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1e0bd9c)), closes [#568](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/568)
+
+
+
+
+
 ## <small>4.0.4 (2022-02-13)</small>
 
 **Note:** Version bump only for package @sourceloop/scheduler-service

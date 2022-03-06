@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/video-conferencing-service",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Microservice providing Video-Conferencing service",
   "keywords": [
     "loopback-extension",
@@ -64,7 +64,7 @@
     "@loopback/rest": "^11.1.1",
     "@loopback/rest-explorer": "^4.1.1",
     "@loopback/service-proxy": "^4.1.1",
-    "@sourceloop/core": "^6.1.1",
+    "@sourceloop/core": "^6.1.2",
     "@types/proxyquire": "^1.3.28",
     "axios": "^0.24.0",
     "dotenv": "^16.0.0",

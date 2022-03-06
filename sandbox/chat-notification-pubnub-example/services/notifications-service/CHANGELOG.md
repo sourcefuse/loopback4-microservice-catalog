@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.2 (2022-03-06)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
 ## <small>0.1.1 (2022-03-01)</small>
 
 * chore(deps): bump node-fetch (#498) ([68bd3b2](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/68bd3b2)), closes [#498](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/498)
