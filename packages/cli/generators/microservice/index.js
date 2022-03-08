@@ -8,11 +8,10 @@ const AppGenerator = require('@loopback/cli/generators/app');
 const path = require('path');
 const spawnProcess = require('../spawn');
 const fs = require('fs');
+const fse = require('fs-extra');
 const g = require('@loopback/cli/lib/globalize');
 const {logBar, logBarStart, logBarStop} = require('../logbar');
-const changeFileName = require('../datasourcerename');
 const cliProgress = require('cli-progress');
-const {eventNames} = require('process');
 const bar1 = new cliProgress.Bar(
   {
     format: 'progress [{bar}] {percentage}% | {value}/{total} ',
@@ -73,6 +72,9 @@ module.exports = class MGenerator extends AppGenerator {
     'video-conferencing-service',
   ];
 
+  migrationChoices = ['custom',
+                      'sourceloop'];
+
   async promptUniquePrefix() {
     this.answers = await this.prompt([
       {
@@ -125,9 +127,10 @@ module.exports = class MGenerator extends AppGenerator {
           choices: this.serviceChoices,
         },
         {
-          type: 'input',
-          name: 'copymigratdb',
-          message: 'Do you want to copy migration?(y/n)',
+          type: 'list',
+          name: 'copymigratedb',
+          message: 'Which type of migration do you want:',
+          choices:  this.migrationChoices,
         },
       ]);
       this.projectInfo.serviceDependency = this.service.selector;
@@ -206,9 +209,11 @@ module.exports = class MGenerator extends AppGenerator {
                     this._changeFileName(packageName).then(() =>
                       this._addDependency(packageName).then(() =>
                         this._addMigrations(packageName).then(() =>
-                          this._promclient(packageName).then(() =>
-                            this._openapi(packageName).then(() =>
-                              this._prettierfix(packageName),
+                          this._copyMigrations().then(() =>
+                            this._promclient(packageName).then(() =>
+                              this._openapi(packageName).then(() =>
+                                this._prettierfix(packageName),
+                              ),
                             ),
                           ),
                         ),
@@ -227,7 +232,7 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _symlink(packageName){
-    logBarStart(bar1, 11);
+    logBarStart(bar1, 14);
     await spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
     logBar(bar1);
   }
@@ -245,12 +250,10 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _changeFileName(){
-    console.log(process.cwd());
-    let oldPath = path.join(process.cwd(),"src/datasource/datasource.ts");
-    let newPath = path.join(process.cwd(),`src/datasource/${datasourceName}.datasource.ts`);
-    console.log(oldPath);
-    console.log(newPath);
-    await fs.rename(oldPath,newPath);
+    let oldPath = path.join(process.cwd(),"./src/datasources/datasource.ts");
+    let newPath = path.join(process.cwd(),`./src/datasources/${this.answers.dbName}.datasource.ts`);
+    fs.renameSync(oldPath,newPath);
+    logBar(bar1);
   }
 
   async _addDependency(packageName){
@@ -268,13 +271,61 @@ module.exports = class MGenerator extends AppGenerator {
       await spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', '--scope=migrations'], {cwd: process.cwd()});
       await spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', '--scope=migrations'], {cwd: process.cwd()});
       await spawnProcess('npx', ['lerna', 'add', '-D', 'npm-run-all', '--scope=migrations'], {cwd: process.cwd()});
-      if(this.answers.datasourceConnectorName === 'postgresql'){
+
+      if(this.answers.dbConnector === 'postgresql'){
         await spawnProcess('npx', ['lerna', 'add', 'db-migrate-pg', '--scope=migrations'], {cwd: process.cwd()});
       }
       else{
         await spawnProcess('npx', ['lerna', 'add', 'db-migrate-mysql', '--scope=migrations'], {cwd: process.cwd()});
       }
     }
+    fs.rmSync(path.join(process.cwd(), '../../packages/migrations/__tests__'), {recursive: true});
+    fs.rmSync(path.join(process.cwd(), '../../packages/migrations/lib'), {recursive: true});
+    const packageJsonFile = path.join(process.cwd(),'../../packages/migrations/package.json');
+    const packageJson = require(packageJsonFile);
+    const scripts = packageJson.scripts;
+    scripts["db:migrate"] = "run-s db:migrate:*";
+    scripts['db:migrate-down']= "run-s db:migrate-down:*";
+    scripts['db:migrate-reset'] = "run-s db:migrate-reset:*";
+    packageJson.scripts = scripts;
+    fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
+    logBar(bar1);
+  }
+
+  async _copyMigrations(){
+    const folderPath = path.join(process.cwd(),'../../packages/migrations',this.projectInfo.applicationName.substr(0,this.projectInfo.applicationName.indexOf('A')));
+    fs.mkdirSync(folderPath);
+
+    if(this.service.copymigratedb === 'custom'){
+      const sourceFolder = this.templatePath('../databasetemplate/database.json');
+      const destinationFolder = path.join(folderPath,'database.json');
+      fse.copySync(sourceFolder,destinationFolder);
+    }
+
+    else{
+      const sourcePath = this.templatePath('../databasetemplate/databasesourceloop.json');
+      const destinationPath = path.join(folderPath,'database.json');
+      fse.copySync(sourcePath,destinationPath);
+      const database = fs.readFileSync(destinationPath,{encoding:'utf8', flag:'r'});
+      if(this.answers.dbConnector === 'postgresql'){
+        const replaceConnector = database.replace(/<DbKey>/g,'pg');
+        fs.writeFileSync(destinationPath, replaceConnector, {encoding:'utf8'});
+      }
+      else{
+        const replaceConnector = database.replace(/<DbKey>/g,'mysql');
+        fs.writeFileSync(destinationPath, replaceConnector, {encoding:'utf8'});
+      }
+
+      // this.fs.copyTpl(
+      //   this.templatePath('../databasetemplate/database.json.tpl'), 
+      //   this.destinationPath(path.join(folderPath,'database.json')), 
+      //   {
+      //     upperDbKey : 'pg'
+      //   })
+      const serviceMigration = path.join(process.cwd(),`./node_modules/@sourceloop/${this.service.selector}/migrations`);
+      fse.copySync(serviceMigration,folderPath);
+    }
+    logBar(bar1);
   }
 
   async _bearerVerifier(packageName){

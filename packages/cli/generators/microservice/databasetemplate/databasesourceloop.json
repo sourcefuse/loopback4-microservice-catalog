@@ -1,0 +1,22 @@
+{
+  "defaultEnv": "master",
+  "master": {
+    "driver": "<DbKey>",
+    "host": {
+      "ENV": "<DbKey>_DB_HOST"
+    },
+    "port": {
+      "ENV": "<DbKey>_DB_PORT"
+    },
+    "user": {
+      "ENV": "<DbKey>_DB_USER"
+    },
+    "password": {
+      "ENV": "<DbKey>_DB_PASSWORD"
+    },
+    "database": {
+      "ENV": "<DbKey>_DB_DATABASE"
+    }
+  },
+  "sql-file": true
+}
