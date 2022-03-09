@@ -8,6 +8,7 @@ const AppGenerator = require('@loopback/cli/generators/app');
 const path = require('path');
 const spawnProcess = require('../spawn');
 const fs = require('fs');
+const fse = require('fs-extra');
 const g = require('@loopback/cli/lib/globalize');
 const {logBar, logBarStart, logBarStop} = require('../logbar');
 const cliProgress = require('cli-progress');
@@ -69,6 +70,8 @@ module.exports = class MGenerator extends AppGenerator {
       return super.promptProjectDir()}
   }
 
+  connectorChoices = ['postgresql', 'mysql'];
+
   serviceChoices = ['audit-service',
                     'authentication-service',
                     'chat-service',
@@ -80,6 +83,9 @@ module.exports = class MGenerator extends AppGenerator {
                     'scheduler-service',
                     'search-service',
                     'video-conferencing-service'];
+
+  migrationChoices = ['custom',
+                    'sourceloop'];
 
   async promptUniquePrefix() {
     this.projectInfo.dirName = this.dirAnswer.dirName;
@@ -118,14 +124,12 @@ module.exports = class MGenerator extends AppGenerator {
       function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
-  
       this.projectInfo.datasourceName = this.serviceDbAnswers.dbName;
       this.projectInfo.datasourceClassName = capitalizeFirstLetter(
         this.serviceDbAnswers.dbName,
       );
       this.projectInfo.datasourceConnectorName = this.serviceDbAnswers.dbConnector;
     }
-
 
     if (
       this.answers.serviceSelect === 'y' ||
@@ -211,7 +215,7 @@ module.exports = class MGenerator extends AppGenerator {
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson), null, 2);
     return super.install();
   }
-  _setupMicroservice(packageName){
+   _setupMicroservice(packageName){
     this._symlink(packageName)
       .then(() =>
         this._sourceloopCore(packageName).then(() =>
@@ -220,10 +224,16 @@ module.exports = class MGenerator extends AppGenerator {
               this._swaggerStat(packageName).then(() =>
                 this._opentelemetry(packageName).then(() =>
                   this._nyc(packageName).then(() =>
-                    this._addDependency(packageName).then(() =>
-                      this._promclient(packageName).then(() =>
-                        this._openapi(packageName).then(() =>
-                          this._prettierfix(packageName),
+                    this._changeFileName(packageName).then(() =>
+                      this._addDependency(packageName).then(() =>
+                        this._addMigrations(packageName).then(() =>
+                          this._copyMigrations().then(() =>
+                            this._promclient(packageName).then(() =>
+                              this._openapi(packageName).then(() =>
+                                this._prettierfix(packageName),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -240,7 +250,7 @@ module.exports = class MGenerator extends AppGenerator {
   }
 
   async _symlink(packageName){
-    logBarStart(bar1, 11);
+    logBarStart(bar1, 14);
     await spawnProcess('npx', ['lerna', 'add', '-D', 'symlink-resolver', '--scope='+`${packageName}`], {packageName});
     logBar(bar1);
   }
@@ -289,7 +299,6 @@ module.exports = class MGenerator extends AppGenerator {
          await spawnProcess('npx', ['lerna', 'add', 'dotenv-extended', migrationScope], {cwd: process.cwd()});
          await spawnProcess('npx', ['lerna', 'add', '-D', '@types/dotenv', migrationScope], {cwd: process.cwd()});
          await spawnProcess('npx', ['lerna', 'add', '-D', 'npm-run-all', migrationScope], {cwd: process.cwd()});
-   
          if(this.serviceDbAnswers.dbConnector === 'postgresql'){
            await spawnProcess('npx', ['lerna', 'add', 'db-migrate-pg', migrationScope], {cwd: process.cwd()});
          }
