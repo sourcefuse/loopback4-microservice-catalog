@@ -167,7 +167,12 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
       authServiceUrl: '',
+      <% if(project.dirName === 'service') { -%>
       type: BearerVerifierType.service,
+      <% } -%>
+      <% if(project.dirName === 'facade') { -%>
+        type: BearerVerifierType.facade,
+        <% } -%>
     } as BearerVerifierConfig);
     this.component(BearerVerifierComponent);
   
