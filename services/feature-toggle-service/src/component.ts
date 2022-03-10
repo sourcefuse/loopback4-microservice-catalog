@@ -43,6 +43,7 @@ import {
   StrategyController,
 } from './controllers';
 import {FeatureToggleActionMiddlewareInterceptor} from './middlewares';
+import {StrategyHelperService} from './services';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
@@ -80,7 +81,9 @@ export class FeatureToggleServiceComponent implements Component {
       FeatureToggleRepository,
       StrategyRepository,
     ];
-
+    this.application
+      .bind('services.StrategyHelperService')
+      .toClass(StrategyHelperService);
     this.models = [Feature, FeatureToggle, Strategy];
     this.providers = {
       [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
