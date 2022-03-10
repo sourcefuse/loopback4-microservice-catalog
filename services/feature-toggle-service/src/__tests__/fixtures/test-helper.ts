@@ -1,36 +1,36 @@
-import {
-  createRestAppClient,
-  givenHttpServerConfig,
-  Client,
-} from '@loopback/testlab';
-import {StrategyBindings} from '../../keys';
-import {TestingApplication} from './application';
-import {SystemFeatureTestProvider} from './system-feature-test.provider';
+// import {
+//   createRestAppClient,
+//   givenHttpServerConfig,
+//   Client,
+// } from '@loopback/testlab';
+// import {StrategyBindings} from '../../keys';
+// import {TestingApplication} from './application';
+// import {SystemFeatureTestProvider} from './system-feature-test.provider';
 
-export async function setupApplication(): Promise<AppWithClient> {
-  const restConfig = givenHttpServerConfig({});
+// export async function setupApplication(): Promise<AppWithClient> {
+//   const restConfig = givenHttpServerConfig({});
 
-  const app = new TestingApplication({
-    rest: restConfig,
-  });
+//   const app = new TestingApplication({
+//     rest: restConfig,
+//   });
 
-  await app.boot();
+//   await app.boot();
 
-  app.bind(StrategyBindings.METADATA).to({
-    features: [StrategyBindings.SYSTEM_FEATURE],
-  });
-  app
-    .bind(StrategyBindings.SYSTEM_FEATURE)
-    .toProvider(SystemFeatureTestProvider);
+//   app.bind(StrategyBindings.METADATA).to({
+//     features: [StrategyBindings.SYSTEM_FEATURE],
+//   });
+//   app
+//     .bind(StrategyBindings.SYSTEM_FEATURE)
+//     .toProvider(SystemFeatureTestProvider);
 
-  await app.start();
+//   await app.start();
 
-  const client = createRestAppClient(app);
+//   const client = createRestAppClient(app);
 
-  return {app, client};
-}
+//   return {app, client};
+// }
 
-export interface AppWithClient {
-  app: TestingApplication;
-  client: Client;
-}
+// export interface AppWithClient {
+//   app: TestingApplication;
+//   client: Client;
+// }

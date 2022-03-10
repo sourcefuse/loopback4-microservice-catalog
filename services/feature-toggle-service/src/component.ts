@@ -23,30 +23,24 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {StrategyBindings, ToggleServiceBindings} from './keys';
+import {Feature, FeatureToggle, Strategy} from './models';
 import {
-  Features,
-  Parameters,
-  Projects,
-  Strategies,
-  StrategiesType,
-} from './models';
-import {
-  FeaturesRepository,
-  ProjectsRepository,
-  StrategiesRepository,
+  FeatureRepository,
+  FeatureToggleRepository,
+  StrategyRepository,
 } from './repositories';
 import {
   FeatureFlagActionProvider,
   FeatureFlagMetadataProvider,
-  SystemFeatureProvider,
-  TenantFeatureProvider,
-  UserFeatureProvider,
+  SystemStrategyProvider,
+  TenantStrategyProvider,
+  UserStrategyProvider,
 } from './providers';
 import {IToggleServiceConfig} from './types';
 import {
-  FeaturesController,
-  ProjectsController,
-  StrategiesController,
+  FeatureController,
+  FeatureToggleController,
+  StrategyController,
 } from './controllers';
 import {FeatureToggleActionMiddlewareInterceptor} from './middlewares';
 
@@ -82,25 +76,25 @@ export class FeatureToggleServiceComponent implements Component {
       this.setupSequence();
     }
     this.repositories = [
-      FeaturesRepository,
-      ProjectsRepository,
-      StrategiesRepository,
+      FeatureRepository,
+      FeatureToggleRepository,
+      StrategyRepository,
     ];
 
-    this.models = [Features, Parameters, Projects, Strategies, StrategiesType];
+    this.models = [Feature, FeatureToggle, Strategy];
     this.providers = {
       [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
       [StrategyBindings.METADATA.key]: FeatureFlagMetadataProvider,
-      [StrategyBindings.TENANT_FEATURE.key]: TenantFeatureProvider,
-      [StrategyBindings.USER_FEATURE.key]: UserFeatureProvider,
-      [StrategyBindings.SYSTEM_FEATURE.key]: SystemFeatureProvider,
+      [StrategyBindings.TENANT_STRATEGY.key]: TenantStrategyProvider,
+      [StrategyBindings.USER_STRATEGY.key]: UserStrategyProvider,
+      [StrategyBindings.SYSTEM_STRATEGY.key]: SystemStrategyProvider,
     };
 
     if (this.config?.bindControllers) {
       this.controllers = [
-        FeaturesController,
-        ProjectsController,
-        StrategiesController,
+        FeatureController,
+        FeatureToggleController,
+        StrategyController,
       ];
     }
   }

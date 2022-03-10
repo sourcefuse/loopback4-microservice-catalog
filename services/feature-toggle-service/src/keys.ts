@@ -5,7 +5,6 @@ import {
   FeatureInterface,
   IToggleServiceConfig,
 } from './types';
-import {Unleash} from 'unleash-client';
 import {BINDING_PREFIX} from '@sourceloop/core';
 
 export namespace StrategyBindings {
@@ -15,20 +14,18 @@ export namespace StrategyBindings {
   export const METADATA = BindingKey.create<FeatureFlagMetadata | undefined>(
     'sf.featuresFlag.operationsMetadata',
   );
-  export const TENANT_FEATURE =
-    BindingKey.create<FeatureInterface>('sf.tenant.feature');
-  export const USER_FEATURE =
-    BindingKey.create<FeatureInterface>('sf.user.feature');
-  export const SYSTEM_FEATURE =
-    BindingKey.create<FeatureInterface>('sf.system.feature');
+  export const TENANT_STRATEGY =
+    BindingKey.create<FeatureInterface>('sf.tenant.strategy');
+  export const USER_STRATEGY =
+    BindingKey.create<FeatureInterface>('sf.user.strategy');
+  export const SYSTEM_STRATEGY =
+    BindingKey.create<FeatureInterface>('sf.system.strategy');
 }
 
 export const FEATURE_FLAG_METADATA_ACCESSOR = MetadataAccessor.create<
   FeatureFlagMetadata,
   MethodDecorator
 >('sf.featuresFlag.accessor.operationsMetadata');
-
-export const UNLEASH_CONST = BindingKey.create<Unleash>('unleash.const');
 
 export namespace ToggleServiceBindings {
   export const Config = BindingKey.create<IToggleServiceConfig | null>(

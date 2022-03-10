@@ -24,14 +24,14 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
-import {Features} from '../models';
-import {FeaturesRepository} from '../repositories';
+import {Feature} from '../models';
+import {FeatureRepository} from '../repositories';
 
-const basePath = '/features';
-export class FeaturesController {
+const basePath = '/Feature';
+export class FeatureController {
   constructor(
-    @repository(FeaturesRepository)
-    public featuresRepository: FeaturesRepository,
+    @repository(FeatureRepository)
+    public featureRepository: FeatureRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -40,8 +40,8 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Features model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Features)}},
+        description: 'Feature model instance',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Feature)}},
       },
     },
   })
@@ -49,15 +49,15 @@ export class FeaturesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Features, {
-            title: 'NewFeatures',
+          schema: getModelSchemaRef(Feature, {
+            title: 'NewFeature',
           }),
         },
       },
     })
-    features: Features,
-  ): Promise<Features> {
-    return this.featuresRepository.create(features);
+    feature: Feature,
+  ): Promise<Feature> {
+    return this.featureRepository.create(feature);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -66,13 +66,13 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Features model count',
+        description: 'Feature model count',
         content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
-  async count(@param.where(Features) where?: Where<Features>): Promise<Count> {
-    return this.featuresRepository.count(where);
+  async count(@param.where(Feature) where?: Where<Feature>): Promise<Count> {
+    return this.featureRepository.count(where);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -81,12 +81,12 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Features model instances',
+        description: 'Array of Feature model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Features, {includeRelations: true}),
+              items: getModelSchemaRef(Feature, {includeRelations: true}),
             },
           },
         },
@@ -94,9 +94,9 @@ export class FeaturesController {
     },
   })
   async find(
-    @param.filter(Features) filter?: Filter<Features>,
-  ): Promise<Features[]> {
-    return this.featuresRepository.find(filter);
+    @param.filter(Feature) filter?: Filter<Feature>,
+  ): Promise<Feature[]> {
+    return this.featureRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -105,7 +105,7 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Features PATCH success count',
+        description: 'Feature PATCH success count',
         content: {
           [CONTENT_TYPE.JSON]: {schema: CountSchema},
         },
@@ -116,14 +116,14 @@ export class FeaturesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Features, {partial: true}),
+          schema: getModelSchemaRef(Feature, {partial: true}),
         },
       },
     })
-    features: Features,
-    @param.where(Features) where?: Where<Features>,
+    feature: Feature,
+    @param.where(Feature) where?: Where<Feature>,
   ): Promise<Count> {
-    return this.featuresRepository.updateAll(features, where);
+    return this.featureRepository.updateAll(feature, where);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -132,10 +132,10 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Features model instance',
+        description: 'Feature model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Features, {includeRelations: true}),
+            schema: getModelSchemaRef(Feature, {includeRelations: true}),
           },
         },
       },
@@ -143,10 +143,10 @@ export class FeaturesController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Features, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Features>,
-  ): Promise<Features> {
-    return this.featuresRepository.findById(id, filter);
+    @param.filter(Feature, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Feature>,
+  ): Promise<Feature> {
+    return this.featureRepository.findById(id, filter);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -155,7 +155,7 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Features PATCH success',
+        description: 'Feature PATCH success',
       },
     },
   })
@@ -164,13 +164,13 @@ export class FeaturesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Features, {partial: true}),
+          schema: getModelSchemaRef(Feature, {partial: true}),
         },
       },
     })
-    features: Features,
+    feature: Feature,
   ): Promise<void> {
-    await this.featuresRepository.updateById(id, features);
+    await this.featureRepository.updateById(id, feature);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -179,15 +179,15 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Features PUT success',
+        description: 'Feature PUT success',
       },
     },
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() features: Features,
+    @requestBody() feature: Feature,
   ): Promise<void> {
-    await this.featuresRepository.replaceById(id, features);
+    await this.featureRepository.replaceById(id, feature);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -196,11 +196,11 @@ export class FeaturesController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Features DELETE success',
+        description: 'Feature DELETE success',
       },
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.featuresRepository.deleteById(id);
+    await this.featureRepository.deleteById(id);
   }
 }
