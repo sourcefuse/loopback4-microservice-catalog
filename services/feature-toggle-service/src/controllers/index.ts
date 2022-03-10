@@ -1,4 +1,3 @@
-export * from './ping.controller';
-export * from './features.controller';
-export * from './projects.controller';
-export * from './strategies.controller';
+export * from './feature.controller';
+export * from './strategy.controller';
+export * from './feature-toggle.controller';

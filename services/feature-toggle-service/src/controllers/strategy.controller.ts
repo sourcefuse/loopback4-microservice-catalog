@@ -24,24 +24,24 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
-import {Projects} from '../models';
-import {ProjectsRepository} from '../repositories';
+import {Strategy} from '../models';
+import {StrategyRepository} from '../repositories';
 
-const basePath = '/projects';
-export class ProjectsController {
+const basePath = '/Strategy';
+export class StrategyController {
   constructor(
-    @repository(ProjectsRepository)
-    public projectsRepository: ProjectsRepository,
+    @repository(StrategyRepository)
+    public strategyRepository: StrategyRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateProject]})
+  @authorize({permissions: [PermissionKey.CreateStrategy]})
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Projects model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Projects)}},
+        description: 'Strategy model instance',
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Strategy)}},
       },
     },
   })
@@ -49,46 +49,44 @@ export class ProjectsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Projects, {
-            title: 'NewProjects',
+          schema: getModelSchemaRef(Strategy, {
+            title: 'NewStrategy',
           }),
         },
       },
     })
-    projects: Projects,
-  ): Promise<Projects> {
-    return this.projectsRepository.create(projects);
+    strategy: Strategy,
+  ): Promise<Strategy> {
+    return this.strategyRepository.create(strategy);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewProject]})
+  @authorize({permissions: [PermissionKey.ViewStrategy]})
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Projects model count',
+        description: 'Strategy model count',
         content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
-  async count(@param.where(Projects) where?: Where<Projects>): Promise<Count> {
-    return this.projectsRepository.count(where);
+  async count(@param.where(Strategy) where?: Where<Strategy>): Promise<Count> {
+    return this.strategyRepository.count(where);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewProject]})
+  @authorize({permissions: [PermissionKey.ViewStrategy]})
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Projects model instances',
+        description: 'Array of Strategy model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
-              schema: {
-                type: 'array',
-                items: getModelSchemaRef(Projects, {includeRelations: true}),
-              },
+              type: 'array',
+              items: getModelSchemaRef(Strategy, {includeRelations: true}),
             },
           },
         },
@@ -96,18 +94,18 @@ export class ProjectsController {
     },
   })
   async find(
-    @param.filter(Projects) filter?: Filter<Projects>,
-  ): Promise<Projects[]> {
-    return this.projectsRepository.find(filter);
+    @param.filter(Strategy) filter?: Filter<Strategy>,
+  ): Promise<Strategy[]> {
+    return this.strategyRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateProject]})
+  @authorize({permissions: [PermissionKey.UpdateStrategy]})
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Projects PATCH success count',
+        description: 'Strategy PATCH success count',
         content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
@@ -116,26 +114,26 @@ export class ProjectsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Projects, {partial: true}),
+          schema: getModelSchemaRef(Strategy, {partial: true}),
         },
       },
     })
-    projects: Projects,
-    @param.where(Projects) where?: Where<Projects>,
+    strategy: Strategy,
+    @param.where(Strategy) where?: Where<Strategy>,
   ): Promise<Count> {
-    return this.projectsRepository.updateAll(projects, where);
+    return this.strategyRepository.updateAll(strategy, where);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewProject]})
+  @authorize({permissions: [PermissionKey.ViewStrategy]})
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Projects model instance',
+        description: 'Strategy model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Projects, {includeRelations: true}),
+            schema: getModelSchemaRef(Strategy, {includeRelations: true}),
           },
         },
       },
@@ -143,19 +141,19 @@ export class ProjectsController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Projects, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Projects>,
-  ): Promise<Projects> {
-    return this.projectsRepository.findById(id, filter);
+    @param.filter(Strategy, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Strategy>,
+  ): Promise<Strategy> {
+    return this.strategyRepository.findById(id, filter);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateProject]})
+  @authorize({permissions: [PermissionKey.UpdateStrategy]})
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Projects PATCH success',
+        description: 'Strategy PATCH success',
       },
     },
   })
@@ -164,43 +162,43 @@ export class ProjectsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Projects, {partial: true}),
+          schema: getModelSchemaRef(Strategy, {partial: true}),
         },
       },
     })
-    projects: Projects,
+    strategy: Strategy,
   ): Promise<void> {
-    await this.projectsRepository.updateById(id, projects);
+    await this.strategyRepository.updateById(id, strategy);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateProject]})
+  @authorize({permissions: [PermissionKey.UpdateStrategy]})
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Projects PUT success',
+        description: 'Strategy PUT success',
       },
     },
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() projects: Projects,
+    @requestBody() strategy: Strategy,
   ): Promise<void> {
-    await this.projectsRepository.replaceById(id, projects);
+    await this.strategyRepository.replaceById(id, strategy);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteProject]})
+  @authorize({permissions: [PermissionKey.DeleteStrategy]})
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Projects DELETE success',
+        description: 'Strategy DELETE success',
       },
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.projectsRepository.deleteById(id);
+    await this.strategyRepository.deleteById(id);
   }
 }

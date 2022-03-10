@@ -1,25 +1,42 @@
-/* initial migration scripts for adding features and strategies 
-these can be added via the console as well*/
+CREATE SCHEMA main;
 
-insert into strategies (name,description,parameters) values 
-('Tenant','tenant level strategy',
- '[{"name":"tenantId","type":"string","description":"tenant Id","required":true}]');
- 
-insert into strategies (name,description,parameters) values 
-('User','user level strategy',
- '[{"name":"email","type":"string","description":"email or username","required":true}]'); 
+SET search_path TO main,public;
+GRANT ALL ON SCHEMA main TO public;
 
-insert into features (name, enabled,description,archived,strategies,type,stale,project,last_seen_at) values 
-('tenant-feature',1,'tenant based feature',0,
- '[{"name":"Tenant","parameters":{"tenantId":""},"constraints":[]}]',
- 'release',false,'default',now());
- 
- insert into features (name, enabled,description,archived,strategies,type,stale,project,last_seen_at) values 
-('user-feature',1,'user based feature',0,
- '[{"name":"User","parameters":{"email":""},"constraints":[]}]',
- 'release',false,'default',now());
- 
- insert into features (name, enabled,description,archived,strategies,type,stale,project,last_seen_at) values 
-('system-feature',1,'system based feature',0,
- '[{"name":"default","parameters":{},"constraints":[]}]',
- 'release',false,'default',now());
+CREATE TABLE main.features (
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+	name            varchar(50)  NOT NULL ,
+	description        varchar(50) ,
+	default_value         bool DEFAULT true NOT NULL ,
+	CONSTRAINT pk_features_id PRIMARY KEY ( id )
+ );
+
+ CREATE TABLE main.strategies (
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+	name            varchar(50)  NOT NULL ,
+	priority        integer ,
+	CONSTRAINT pk_strategies_id PRIMARY KEY ( id )
+ );
+
+ CREATE TABLE main.feature_toggles (
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+	feature_id            uuid  NOT NULL ,
+	strategy_id        uuid  NOT NULL ,
+  item_id        uuid  NOT NULL ,
+	status         bool DEFAULT true NOT NULL ,
+	CONSTRAINT pk_feature_toggles_id PRIMARY KEY ( id )
+ );
+
+
+ALTER TABLE main.feature_toggles ADD CONSTRAINT fk_feature_toggles_feature FOREIGN KEY ( feature_id ) REFERENCES main.features( id );
+
+ALTER TABLE main.feature_toggles ADD CONSTRAINT fk_feature_toggles_strategies FOREIGN KEY ( feature_id ) REFERENCES main.strategies( id );
+
+INSERT INTO main.strategies(name, priority)
+	VALUES ('System', '1');
+
+INSERT INTO main.strategies(name, priority)
+	VALUES ('Tenant', '2');
+
+INSERT INTO main.strategies(name, priority)
+	VALUES ('User', '3');
