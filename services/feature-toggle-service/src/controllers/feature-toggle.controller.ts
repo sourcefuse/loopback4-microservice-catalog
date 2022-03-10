@@ -27,7 +27,7 @@ import {PermissionKey} from '../enums';
 import {FeatureToggle} from '../models';
 import {FeatureToggleRepository} from '../repositories';
 
-const basePath = '/FeatureToggle';
+const basePath = '/featuretoggles';
 export class FeatureToggleController {
   constructor(
     @repository(FeatureToggleRepository)
