@@ -27,7 +27,7 @@ import {PermissionKey} from '../enums';
 import {Strategy} from '../models';
 import {StrategyRepository} from '../repositories';
 
-const basePath = '/Strategy';
+const basePath = '/strategies';
 export class StrategyController {
   constructor(
     @repository(StrategyRepository)
