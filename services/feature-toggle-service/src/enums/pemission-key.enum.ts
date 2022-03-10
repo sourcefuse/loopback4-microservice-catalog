@@ -9,8 +9,8 @@ export enum PermissionKey {
   UpdateStrategy = 'UpdateStrategy',
   DeleteStrategy = 'DeleteStrategy',
 
-  ViewProject = 'ViewProject',
-  CreateProject = 'CreateProject',
-  UpdateProject = 'UpdateProject',
-  DeleteProject = 'DeleteProject',
+  ViewFeatureToggle = 'ViewFeatureToggle',
+  CreateFeatureToggle = 'CreateFeatureToggle',
+  UpdateFeatureToggle = 'UpdateFeatureToggle',
+  DeleteFeatureToggle = 'DeleteFeatureToggle',
 }

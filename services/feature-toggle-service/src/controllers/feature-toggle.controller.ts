@@ -24,24 +24,26 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
-import {Strategies} from '../models';
-import {StrategiesRepository} from '../repositories';
+import {FeatureToggle} from '../models';
+import {FeatureToggleRepository} from '../repositories';
 
-const basePath = '/strategies';
-export class StrategiesController {
+const basePath = '/FeatureToggle';
+export class FeatureToggleController {
   constructor(
-    @repository(StrategiesRepository)
-    public strategiesRepository: StrategiesRepository,
+    @repository(FeatureToggleRepository)
+    public featureToggleRepository: FeatureToggleRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateStrategy]})
+  @authorize({permissions: [PermissionKey.CreateFeatureToggle]})
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Strategies model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Strategies)}},
+        description: 'FeatureToggle model instance',
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(FeatureToggle)},
+        },
       },
     },
   })
@@ -49,46 +51,46 @@ export class StrategiesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Strategies, {
-            title: 'NewStrategies',
+          schema: getModelSchemaRef(FeatureToggle, {
+            title: 'NewFeatureToggle',
           }),
         },
       },
     })
-    strategies: Strategies,
-  ): Promise<Strategies> {
-    return this.strategiesRepository.create(strategies);
+    featureToggle: FeatureToggle,
+  ): Promise<FeatureToggle> {
+    return this.featureToggleRepository.create(featureToggle);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewStrategy]})
+  @authorize({permissions: [PermissionKey.ViewFeatureToggle]})
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Strategies model count',
+        description: 'FeatureToggle model count',
         content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async count(
-    @param.where(Strategies) where?: Where<Strategies>,
+    @param.where(FeatureToggle) where?: Where<FeatureToggle>,
   ): Promise<Count> {
-    return this.strategiesRepository.count(where);
+    return this.featureToggleRepository.count(where);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewStrategy]})
+  @authorize({permissions: [PermissionKey.ViewFeatureToggle]})
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Strategies model instances',
+        description: 'Array of FeatureToggle model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Strategies, {includeRelations: true}),
+              items: getModelSchemaRef(FeatureToggle, {includeRelations: true}),
             },
           },
         },
@@ -96,18 +98,18 @@ export class StrategiesController {
     },
   })
   async find(
-    @param.filter(Strategies) filter?: Filter<Strategies>,
-  ): Promise<Strategies[]> {
-    return this.strategiesRepository.find(filter);
+    @param.filter(FeatureToggle) filter?: Filter<FeatureToggle>,
+  ): Promise<FeatureToggle[]> {
+    return this.featureToggleRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateStrategy]})
+  @authorize({permissions: [PermissionKey.UpdateFeatureToggle]})
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Strategies PATCH success count',
+        description: 'FeatureToggle PATCH success count',
         content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
@@ -116,26 +118,26 @@ export class StrategiesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Strategies, {partial: true}),
+          schema: getModelSchemaRef(FeatureToggle, {partial: true}),
         },
       },
     })
-    strategies: Strategies,
-    @param.where(Strategies) where?: Where<Strategies>,
+    featureToggle: FeatureToggle,
+    @param.where(FeatureToggle) where?: Where<FeatureToggle>,
   ): Promise<Count> {
-    return this.strategiesRepository.updateAll(strategies, where);
+    return this.featureToggleRepository.updateAll(featureToggle, where);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewStrategy]})
+  @authorize({permissions: [PermissionKey.ViewFeatureToggle]})
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Strategies model instance',
+        description: 'FeatureToggle model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Strategies, {includeRelations: true}),
+            schema: getModelSchemaRef(FeatureToggle, {includeRelations: true}),
           },
         },
       },
@@ -143,19 +145,19 @@ export class StrategiesController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Strategies, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Strategies>,
-  ): Promise<Strategies> {
-    return this.strategiesRepository.findById(id, filter);
+    @param.filter(FeatureToggle, {exclude: 'where'})
+    filter?: FilterExcludingWhere<FeatureToggle>,
+  ): Promise<FeatureToggle> {
+    return this.featureToggleRepository.findById(id, filter);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateStrategy]})
+  @authorize({permissions: [PermissionKey.UpdateFeatureToggle]})
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Strategies PATCH success',
+        description: 'FeatureToggle PATCH success',
       },
     },
   })
@@ -164,43 +166,43 @@ export class StrategiesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Strategies, {partial: true}),
+          schema: getModelSchemaRef(FeatureToggle, {partial: true}),
         },
       },
     })
-    strategies: Strategies,
+    featureToggle: FeatureToggle,
   ): Promise<void> {
-    await this.strategiesRepository.updateById(id, strategies);
+    await this.featureToggleRepository.updateById(id, featureToggle);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateStrategy]})
+  @authorize({permissions: [PermissionKey.UpdateFeatureToggle]})
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Strategies PUT success',
+        description: 'FeatureToggle PUT success',
       },
     },
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() strategies: Strategies,
+    @requestBody() featureToggle: FeatureToggle,
   ): Promise<void> {
-    await this.strategiesRepository.replaceById(id, strategies);
+    await this.featureToggleRepository.replaceById(id, featureToggle);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteStrategy]})
+  @authorize({permissions: [PermissionKey.DeleteFeatureToggle]})
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Strategies DELETE success',
+        description: 'FeatureToggle DELETE success',
       },
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.strategiesRepository.deleteById(id);
+    await this.featureToggleRepository.deleteById(id);
   }
 }

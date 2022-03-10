@@ -1,16 +1,16 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {Features} from '../models';
+import {FeatureToggle} from '../models';
 import {FeatureToggleDbName} from '../types';
 
-export class FeaturesRepository extends DefaultCrudRepository<
-  Features,
-  typeof Features.prototype.name
+export class FeatureToggleRepository extends DefaultCrudRepository<
+  FeatureToggle,
+  typeof FeatureToggle.prototype.id
 > {
   constructor(
     @inject(`datasources.${FeatureToggleDbName}`)
     dataSource: juggler.DataSource,
   ) {
-    super(Features, dataSource);
+    super(FeatureToggle, dataSource);
   }
 }
