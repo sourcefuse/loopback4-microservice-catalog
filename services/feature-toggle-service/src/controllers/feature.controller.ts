@@ -27,7 +27,7 @@ import {PermissionKey} from '../enums';
 import {Feature} from '../models';
 import {FeatureRepository} from '../repositories';
 
-const basePath = '/Feature';
+const basePath = '/features';
 export class FeatureController {
   constructor(
     @repository(FeatureRepository)
