@@ -22,7 +22,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {StrategyBindings, ToggleServiceBindings} from './keys';
+import {StrategyBindings, FeatureToggleBindings} from './keys';
 import {Feature, FeatureToggle, Strategy} from './models';
 import {
   FeatureRepository,
@@ -49,7 +49,7 @@ export class FeatureToggleServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(ToggleServiceBindings.Config, {optional: true})
+    @inject(FeatureToggleBindings.Config, {optional: true})
     private readonly config?: IToggleServiceConfig,
   ) {
     this.bindings = [];
