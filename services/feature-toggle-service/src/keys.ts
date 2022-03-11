@@ -27,7 +27,7 @@ export const FEATURE_FLAG_METADATA_ACCESSOR = MetadataAccessor.create<
   MethodDecorator
 >('sf.featuresFlag.accessor.operationsMetadata');
 
-export namespace ToggleServiceBindings {
+export namespace FeatureToggleBindings {
   export const Config = BindingKey.create<IToggleServiceConfig | null>(
     `${BINDING_PREFIX}.auth.config`,
   );

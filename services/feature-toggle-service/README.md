@@ -11,35 +11,32 @@
 ## Overview
 
 Microservice that provides functionality to maintain feature flags at various levels. Initial support for system level, tenant level and user level is provided.
-We are using [UNEASH](https://docs.getunleash.io/) to achieve the toggle functionality here.
 
 ## Working and Flow
 
-This service provides method level decorators - @featuresFlag that takes an array of provider keys as metadata and verifies if the feature flags are enabled or disabled, it uses an AND operator to check for multiple features. Read more about creating loopback-4 [decorators](https://loopback.io/doc/en/lb4/Creating-decorators.html). To check if a feature is enabled or not add the following decorator over a controller method @featuresFlag({features: [StrategyBindings.TENANT_FEATURE]}) and if you want to skip all the feature checks - @featuresFlag({features: ['*']}) will allow, irrespective even if any feature is disabled. Initial implementation for system level, tenant level and user level feature flag is provided, if you want to add any custom feature flag all you need to do is
+This service provides method level decorators - @featuresFlag that takes name of feature and an array of provider keys, i.e., strategies, as metadata and verifies if the feature flags are enabled or disabled, it uses an AND operator to check for multiple strategies. Read more about creating loopback-4 [decorators](https://loopback.io/doc/en/lb4/Creating-decorators.html). To check if a feature is enabled or not add the following decorator over a controller method:
 
 ```typescript
-// A provider that implements FeatureInterface
-export class SystemFeatureProvider implements Provider<FeatureInterface> {
-  constructor(
-    @inject(UNLEASH_CONST)
-    private readonly unleashConst: Unleash,
-  ) {}
-  value(): FeatureInterface {
-    return () => {
-      return this.unleashConst.isEnabled('system-feature');
-    };
-  }
-}
-// Define a key of the type FeatureInterface
-export const SYSTEM_FEATURE =
-  BindingKey.create<FeatureInterface>('sf.system.feature');
-
-// bind the Provider to the key
-this.bind(SYSTEM_FEATURE).toProvider(SystemFeatureProvider);
-
-// pass the key to the decorator
-@featuresFlag({features: [StrategyBindings.TENANT_FEATURE,StrategyBindings.SYSTEM_FEATURE]})
+ @featuresFlag({
+    feature: 'feature_name',
+    strategies: [
+      StrategyBindings.SYSTEM_STRATEGY,
+      StrategyBindings.TENANT_STRATEGY,
+      StrategyBindings.USER_STRATEGY,
+    ],
+  })
 ```
+
+and if you want to skip all the feature checks:
+
+```typescript
+ @featuresFlag({
+   feature: 'feature_name',
+   strategies: [ '*' ],
+ })
+```
+
+Initial implementation for system level, tenant level and user level feature flag is provided.
 
 ## Installation
 
@@ -47,50 +44,31 @@ npm i @sourceloop/feature-toggle-service
 
 ## Usage
 
-### Unleash Admin UI Setup
-
-Follow the steps to setup unleash [locally](https://docs.getunleash.io/deploy/getting_started) ,make sure all the pre requisits as done. Provide correct database config values. Once the admin console is up generate the [API Token](https://docs.getunleash.io/user_guide/api-token). Token is used to initialise unleash in your application.
-
 ### Service Setup
 
 - Create a new Loopback4 Application (If you don't have one already) lb4 testapp
 - Install the service - npm i @sourceloop/feature-toggle-service
 - Set up the [environment variables](#environment-variables)
-- Run the [migrations](#migrations). (this will create the features at system, tenant and user level and their strategies)
+- Run the [migrations](#migrations). (this will create respective tables in your Database)
 - Add the `FeatureToggleServiceComponent` to your Loopback4 Application (in `application.ts`).
   ```typescript
-  // add controllers to your application (optional)
-  this.bind(ToggleServiceBindings.Config).to({
-      bindControllers: true,
-      useCustomSequence: false
-  });
   // import the FeatureToggleServiceComponent
   import {FeatureToggleServiceComponent} from '@sourceloop/feature-toggle-service';
+  // add controllers to your application (optional)
+  this.bind(FeatureToggleBindings.Config).to({
+    bindControllers: true,
+    useCustomSequence: false,
+  });
   // add Component for FeatureToggleService
   this.component(FeatureToggleServiceComponent);
   ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `FeatureToggleDbName`. You can see an example datasource [here](#setting-up-a-datasource).
-- Bind any of the custom providers you need.
-- Create new custom [strategies](#strategies) as an when required.
-- Initialize unleash and the strategies within your Loopback4 Application and bind it to the unleash constant key `UNLEASH_CONST` (in `application.ts`).
-  ```typescript
-  const unleash = require('unleash-client');
-  unleash.initialize({
-    url: 'app-url',
-    appName: 'my-node-name',
-    environment: process.env.APP_ENV,
-    customHeaders: {Authorization: 'key'},
-    strategies: [new TenantStrategy(), new UserStrategy()],
-  });
-  this.bind(UNLEASH_CONST).to(unleash);
-  ```
+
 - Start the application
   `npm start`
 
 ### Environment Variables
-
-Connect to the unleash database setup above.
 
 | Name          | Required | Default Value | Description                                                                                                                        |
 | ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -146,16 +124,6 @@ export class FeatureToggleDbDataSource
 ### Migrations
 
 The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
-
-### Strategies
-
-The open source unleash allows us to create our custom strategies that the features can have, giving us a free hand in implementaion. Read more about [strategies](). Extend to the base Strategy class override the isEnabled() method and also whenever a new strategy is added it needs to be mentioned while we initialize unleash in our application. We have created our custom strategies like Tenant and User.
-
-```typescript
-unleash.initialize({
-  strategies: [new TenantStrategy(), new UserStrategy()],
-});
-```
 
 ### API Documentation
 
