@@ -23,3 +23,8 @@ export interface IAuthClientDTO {
   client_secret: string;
   // sonarignore:end
 }
+
+export interface ExternalTokens {
+  externalAuthToken?: string;
+  externalRefreshToken?: string;
+}

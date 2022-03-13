@@ -35,6 +35,7 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
+import {ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
 import {AuthCodeBindings, CodeReaderFn, JwtPayloadFn} from '../../providers';
@@ -310,7 +311,12 @@ export class LoginController {
     });
     await this.refreshTokenRepo.delete(req.refreshToken);
     return this.createJWT(
-      {clientId: refreshPayload.clientId, userId: refreshPayload.userId},
+      {
+        clientId: refreshPayload.clientId,
+        userId: refreshPayload.userId,
+        externalAuthToken: refreshPayload.externalAuthToken,
+        externalRefreshToken: refreshPayload.externalRefreshToken,
+      },
       authClient,
       {
         deviceId,
@@ -430,7 +436,7 @@ export class LoginController {
   }
 
   private async createJWT(
-    payload: ClientAuthCode<User, typeof User.prototype.id>,
+    payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
     deviceInfo: DeviceInfo,
   ): Promise<TokenResponse> {
@@ -448,6 +454,11 @@ export class LoginController {
             },
           ],
         });
+        if (payload.externalAuthToken && payload.externalRefreshToken) {
+          (user as AuthUser).externalAuthToken = payload.externalAuthToken;
+          (user as AuthUser).externalRefreshToken =
+            payload.externalRefreshToken;
+        }
       } else {
         // Do nothing and move ahead
       }
