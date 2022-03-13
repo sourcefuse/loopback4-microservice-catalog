@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.6 (2022-03-13)</small>
+
+* chore(deps): bump urijs in /services/in-mail-service (#588) ([3703558](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3703558)), closes [#588](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/588)
+
+
+
+
+
 ## <small>3.0.5 (2022-03-06)</small>
 
 * fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)
