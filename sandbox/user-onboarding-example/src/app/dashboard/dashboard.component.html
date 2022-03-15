@@ -1,0 +1,15 @@
+<h2 class="dashboard-tour-step1">Sourceloop Devs</h2>
+<div
+  class="heroes-menu dashboard-tour-step3"
+  [ngClass]="{'tour-no-pointer-events': disablePointerEvents}"
+>
+  <a
+    *ngFor="let hero of heroes; let i = index"
+    routerLink="/detail/{{ hero.id }}"
+    [ngClass]="{'dashboard-tour-step2': i === 0}"
+  >
+    {{ hero.name }}
+  </a>
+</div>
+
+<app-hero-search></app-hero-search>
