@@ -88,6 +88,8 @@
   <% if (project.docker) { -%>
       "docker:build": "docker build -t <%= project.name -%> .",
       "docker:run": "docker run -p 3000:3000 -d <%= project.name -%>",
+      "symlink-resolver": "symlink-resolver",
+      "resolve-links": "npm run symlink-resolver build ./node_modules/@local",
   <% } -%>
   <% if (project.repositories && packageManager === 'yarn') { -%>
       "premigrate": "yarn run build",
@@ -169,6 +171,7 @@
       "@opentelemetry/plugin-pg": "<%= project.dependencies['@opentelemetry/plugin-pg'] -%>",
       "@opentelemetry/plugin-pg-pool": "<%= project.dependencies['@opentelemetry/plugin-pg-pool'] -%>",
       "@opentelemetry/tracing": "<%= project.dependencies['@opentelemetry/tracing'] -%>",
+      "symlink-resolver": "<%= project.dependencies['symlink-resolver'] -%>",
   <% if (project.datasourceType === 'postgres') { -%>
       "loopback-connector-postgresql": "<%= project.dependencies["loopback-connector-postgresql"]%>",
   <% } else if (project.datasourceType === 'mysql') { -%>

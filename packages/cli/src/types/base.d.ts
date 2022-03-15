@@ -1,7 +1,10 @@
-declare module "@loopback/cli/lib/base-generator" {
-  import Generator, { Questions } from 'yeoman-generator';
-  class BaseGenerator<T extends Generator.GeneratorOptions> extends Generator<T> {
+declare module '@loopback/cli/lib/base-generator' {
+  import Generator, {Questions} from 'yeoman-generator';
+  class BaseGenerator<
+    T extends Generator.GeneratorOptions,
+  > extends Generator<T> {
     constructor(args: string[], opts: T);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     conflicter: any;
     /**
      * Subclasses can extend _setupGenerator() to set up the generator
@@ -11,6 +14,7 @@ declare module "@loopback/cli/lib/base-generator" {
     /**
      * Read a json document from stdin
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _readJSONFromStdin(): Promise<any>;
     setOptions(): Promise<void>;
     /**
@@ -22,6 +26,7 @@ declare module "@loopback/cli/lib/base-generator" {
      * Get the default answer for a question
      * @param {*} question
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _getDefaultAnswer(question: any, answers: any): Promise<object>;
     /**
      * Override the base prompt to skip prompts with default answers
@@ -47,7 +52,7 @@ declare module "@loopback/cli/lib/base-generator" {
     pkgManagerInstall(
       pkgs: string | (object | string)[],
       options: Object,
-      spawnOpts: Object
+      spawnOpts: Object,
     ): object;
     /**
      * Run `[pkgManager] install` in the project
@@ -69,7 +74,7 @@ declare module "@loopback/cli/lib/base-generator" {
       to: string,
       context: object,
       templateOptions?: object,
-      copyOptions?: object
+      copyOptions?: object,
     ): object;
     /**
      * Checks if current directory is a LoopBack project by checking for

@@ -9,24 +9,24 @@ const yeoman_generator_1 = tslib_1.__importDefault(require("yeoman-generator"));
 class BaseGenerator extends yeoman_generator_1.default {
     constructor(args, opts) {
         super(args, opts);
-        this.root = "";
+        this.root = '';
     }
     copyTemplates() {
-        fs_1.readdirSync(this.templatePath()).forEach((file) => {
-            const targetFileName = file.replace(".tpl", "");
+        fs_1.readdirSync(this.templatePath()).forEach(file => {
+            const targetFileName = file.replace('.tpl', '');
             const sourcePath = this.templatePath(file);
             const destinationPath = path_1.join(this.destinationRoot(), targetFileName);
             this.fs.copyTpl(sourcePath, destinationPath, this.options);
         });
     }
     name() {
-        return this.options.namespace.split(":")[1];
+        return this.options.namespace.split(':')[1];
     }
-    destinationRoot(rootPath, skipEnvironment) {
+    destinationRoot(rootPath) {
         if (rootPath) {
             this.root = rootPath;
         }
-        return super.destinationRoot(rootPath, skipEnvironment);
+        return super.destinationRoot(rootPath);
     }
     exit(reason) {
         if (!!reason)
@@ -37,7 +37,7 @@ class BaseGenerator extends yeoman_generator_1.default {
         return !!this.exitGeneration;
     }
     async createFolders(names, force = false) {
-        for (let name of names) {
+        for (const name of names) {
             await promises_1.mkdir(`${path_1.join(this.destinationRoot(), name)}`, {
                 recursive: force,
             });

@@ -1,8 +1,8 @@
-declare module "@loopback/cli/lib/project-generator" {
-  import BaseGenerator from "@loopback/cli/lib/base-generator";
-  import Generator from "yeoman-generator";
+declare module '@loopback/cli/lib/project-generator' {
+  import BaseGenerator from '@loopback/cli/lib/base-generator';
+  import Generator from 'yeoman-generator';
   class ProjectGenerator<
-    T extends Generator.GeneratorOptions
+    T extends Generator.GeneratorOptions,
   > extends BaseGenerator<T> {
     constructor(args: string[], opts: T);
     buildOptions: {
@@ -17,7 +17,9 @@ declare module "@loopback/cli/lib/project-generator" {
     _setupRenameTransformer(): void;
     setOptions(): Promise<void>;
     projectInfo: {
-      projectType: "extension" | "microservice" | "application";
+      name: string;
+      outdir: string;
+      projectType: 'extension' | 'microservice' | 'application';
       serviceDependency: string;
       dependencies: {
         [key: string]: string;
@@ -26,6 +28,7 @@ declare module "@loopback/cli/lib/project-generator" {
       datasourceName?: string;
       datasourceClassName?: string;
       datasourceConnector?: string;
+      datasourceConnectorName?: string;
       datasourceType?: string;
       facade?: boolean;
     };

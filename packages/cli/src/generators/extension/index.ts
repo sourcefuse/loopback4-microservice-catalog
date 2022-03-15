@@ -1,72 +1,76 @@
-import { ExtensionOptions } from "../../types";
-import BaseExtensionGenerator from "../../extension-generator";
-import { join } from "path";
-import { writeFileSync } from "fs";
+import {AnyObject, ExtensionOptions} from '../../types';
+import BaseExtensionGenerator from '../../extension-generator';
+import {join} from 'path';
+import {writeFileSync} from 'fs';
+import {JSON_SPACING} from '../../utils';
 export default class ExtensionGenerator extends BaseExtensionGenerator<ExtensionOptions> {
   constructor(public args: string[], public opts: ExtensionOptions) {
     super(args, opts);
   }
 
   initializing() {
-    if (!this.fs.exists(join(this.destinationPath(), "lerna.json"))) {
-      this.exit("Can create an extension only from the root of a monorepo");
+    if (!this.fs.exists(join(this.destinationPath(), 'lerna.json'))) {
+      this.exit('Can create an extension only from the root of a monorepo');
     } else {
       this.destinationRoot(join('packages', this.options.name ?? 'module'));
     }
   }
 
   _setupGenerator() {
-    if (!this.shouldExit()) {
-      return super._setupGenerator();
+    return super._setupGenerator();
+  }
+
+  async promptName() {
+    if (!this.shouldExit() && !this.options.name) {
+      const {name} = await this.prompt([
+        {
+          type: 'input',
+          name: 'name',
+          message: 'Name of the extension:',
+          required: true,
+        },
+      ]);
+      this.options.name = name;
     }
   }
 
   async setOptions() {
-    if (!this.shouldExit()) {
-      return super.setOptions();
-    }
+    return super.setOptions();
   }
 
   async promptProjectName() {
-    if (!this.shouldExit()) {
-      return super.promptProjectName();
-    }
+    return super.promptProjectName();
   }
 
   async promptComponent() {
-    if (!this.shouldExit()) {
-      return super.promptComponent();
-    }
+    return super.promptComponent();
   }
 
   async promptOptions() {
-    if (!this.shouldExit()) {
-      return super.promptOptions();
-    }
+    return super.promptOptions();
   }
 
   scaffold() {
-    if(!this.shouldExit()) {
-      return super.scaffold();
-    } else {
-      return false;
-    }
+    return super.scaffold();
   }
 
   install() {
-    if(!this.shouldExit()) {
-      const packageJsonFile = join(this.destinationPath(), "package.json");
-      const packageJson = this.fs.readJSON(packageJsonFile) as any;
+    if (!this.shouldExit()) {
+      const packageJsonFile = join(this.destinationPath(), 'package.json');
+      const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
       packageJson.name = `@local/${packageJson.name}`;
-      packageJson.license = "MIT";
+      packageJson.license = 'MIT';
       const scripts = packageJson.scripts;
-      scripts.preinstall = "npm i @loopback/build --no-save && npm run build";
-      scripts.prune = "npm prune --production";
+      scripts.preinstall = 'npm i @loopback/build --no-save && npm run build';
+      scripts.prune = 'npm prune --production';
       packageJson.scripts = scripts;
-      writeFileSync(packageJsonFile, JSON.stringify(packageJson, undefined, 4));
+      writeFileSync(
+        packageJsonFile,
+        JSON.stringify(packageJson, undefined, JSON_SPACING),
+      );
       return super.install();
     } else {
-      return false
+      return false;
     }
   }
 

@@ -1,7 +1,9 @@
-declare module "@loopback/cli/generators/extension" {
-  import ProjectGenerator from "@loopback/cli/lib/project-generator";
+declare module '@loopback/cli/generators/extension' {
+  import ProjectGenerator from '@loopback/cli/lib/project-generator';
   import Generator from 'yeoman-generator';
-  class ExtensionGenerator<T extends Generator.GeneratorOptions> extends ProjectGenerator<T> {
+  class ExtensionGenerator<
+    T extends Generator.GeneratorOptions,
+  > extends ProjectGenerator<T> {
     constructor(args: string[], opts: T);
     _setupGenerator(): void;
     projectType: string;

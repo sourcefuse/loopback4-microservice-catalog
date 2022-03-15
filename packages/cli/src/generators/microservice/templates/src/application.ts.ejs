@@ -13,7 +13,7 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
-  CoreComponent, 
+  CoreComponent,
   ServiceSequence,
   SFCoreBindings,
   BearerVerifierBindings,
@@ -86,23 +86,22 @@ export class <%= project.applicationName %> extends BootMixin(
 export class <%= project.applicationName %> extends BootMixin(RestApplication) {
 <% } -%>
   constructor(options: ApplicationConfig = {}) {
-
     const port = 3000;
     dotenv.config();
     dotenvExt.load({
-    schema: '.env.example',
-    errorOnMissing: true,
-    includeProcessEnv: true,
+      schema: '.env.example',
+      errorOnMissing: true,
+      includeProcessEnv: true,
     });
     options.rest = options.rest ?? {};
     options.rest.basePath = process.env.BASE_PATH ?? '';
     options.rest.port = +(process.env.PORT ?? port);
     options.rest.host = process.env.HOST;
     options.rest.openApiSpec = {
-    endpointMapping: {
-    [`${options.rest.basePath}/openapi.json`]: {
-      version: '3.0.0',
-      format: 'json',
+      endpointMapping: {
+        [`${options.rest.basePath}/openapi.json`]: {
+          version: '3.0.0',
+          format: 'json',
         },
       },
     };
@@ -116,39 +115,39 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     // Add authentication component
     this.component(AuthenticationComponent);
 
-    <% if(project.serviceDependency === 'audit-service') { -%>
+<% if(project.serviceDependency === 'audit-service') { -%>
     this.component(AuditServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'authentication-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'authentication-service') { -%>
     this.component(AuthenticationServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'chat-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'chat-service') { -%>
     this.component(ChatServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'notification-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'notification-service') { -%>
     this.component(NotificationServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'bpmn-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'bpmn-service') { -%>
     this.component(WorkflowServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'feature-toggle-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'feature-toggle-service') { -%>
     this.component(FeatureToggleServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'in-mail-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'in-mail-service') { -%>
     this.component(InMailServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'payment-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'payment-service') { -%>
     this.component(PaymentServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'scheduler-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'scheduler-service') { -%>
     this.component(SchedulerServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'search-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'search-service') { -%>
     this.component(SearchServiceComponent);
-    <% } -%>
-    <% if(project.serviceDependency === 'video-conferencing-service') { -%>
+<% } -%>
+<% if(project.serviceDependency === 'video-conferencing-service') { -%>
     this.component(VideoConfServiceComponent);
-    <% } -%>
+<% } -%>
 
     // To check if monitoring is enabled from env or not
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
@@ -162,19 +161,18 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
       authentication: authentication,
       swaggerUsername: process.env.SWAGGER_USER,
       swaggerPassword: process.env.SWAGGER_PASSWORD,
-  });
-  
+    });
+
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
-      <% if(project.dirName === 'service') { -%>
+<% if(!project.facade) { -%>
       type: BearerVerifierType.service,
-      <% } -%>
-      <% if(project.dirName === 'facade') { -%>
-        type: BearerVerifierType.facade,
-        <% } -%>
+<% } -%>
+<% if(project.facade) { -%>
+      type: BearerVerifierType.facade,
+<% } -%>
     } as BearerVerifierConfig);
     this.component(BearerVerifierComponent);
-  
     // Add authorization component
     this.bind(AuthorizationBindings.CONFIG).to({
       allowAlwaysPaths: ['/explorer', '/openapi.json'],
