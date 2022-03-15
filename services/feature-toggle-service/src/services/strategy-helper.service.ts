@@ -3,6 +3,7 @@ import {BindingScope, Getter, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
+import {StrategyKey} from '../enums';
 import {StrategyBindings} from '../keys';
 import {
   FeatureRepository,
@@ -27,55 +28,43 @@ export class StrategyHelperService {
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
-  async isFeatureEnabled(strategyName: string): Promise<boolean> {
+  async isFeatureEnabled(strategyKey: string): Promise<boolean> {
     const metadata: FeatureFlagMetadata = await this.getMetadata();
-    const featureName = metadata.feature;
+    const featureKey = metadata.featureKey;
 
-    const feature = await this.featureRepository.findOne({
-      where: {
-        name: featureName,
-      },
-    });
-    if (!feature) {
-      this.logger.error('Feature does not exist');
-      return false;
-    }
-
-    let itemId = feature.id;
-    if (strategyName === 'Tenant') {
+    let itemId: string | undefined;
+    if (strategyKey === StrategyKey.System) {
+      const feature = await this.featureRepository.findOne({
+        where: {
+          key: featureKey,
+        },
+      });
+      itemId = feature?.id;
+    } else if (strategyKey === StrategyKey.Tenant) {
       itemId = this.user?.tenantId;
-    } else if (strategyName === 'User') {
+    } else if (strategyKey === StrategyKey.User) {
       itemId = this.user?.userTenantId;
+    } else {
+      this.logger.error('Incorrect Strategy Key');
+      return false;
     }
 
     const featureToggle = await this.featureToggleRepository.findOne({
       where: {
-        featureId: feature.id,
+        featureKey: featureKey,
+        strategyKey: strategyKey,
         itemId: itemId,
       },
     });
 
     //When toggle is not set
     if (!featureToggle) {
-      const strategy = await this.strategyRepository.findOne({
-        where: {
-          name: strategyName,
-        },
-      });
-
-      await this.featureToggleRepository.create({
-        featureId: feature?.id,
-        strategyId: strategy?.id,
-        itemId: itemId,
-        status: true,
-      });
-
       return true;
     }
 
     if (!featureToggle.status) {
       this.logger.error(
-        `${featureName} Feature is disabled at ${strategyName} Level`,
+        `${featureKey} Feature is disabled at ${strategyKey} Level`,
       );
     }
     return featureToggle.status;

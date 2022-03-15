@@ -1,4 +1,5 @@
 import {inject, Provider} from '@loopback/core';
+import {StrategyKey} from '../enums';
 import {StrategyHelperService} from '../services';
 import {FeatureInterface} from '../types';
 
@@ -12,6 +13,6 @@ export class SystemStrategyProvider implements Provider<FeatureInterface> {
   }
 
   async isEnabled() {
-    return this.strategyHelperService.isFeatureEnabled('System');
+    return this.strategyHelperService.isFeatureEnabled(StrategyKey.System);
   }
 }

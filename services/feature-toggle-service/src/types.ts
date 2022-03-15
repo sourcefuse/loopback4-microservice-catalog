@@ -5,7 +5,7 @@ export const FeatureToggleDbName = 'FeatureToggleDB';
 export const FeatureToggleCacheDb = 'FeatureToggleCache';
 
 export interface FeatureFlagMetadata {
-  feature: string;
+  featureKey: string;
   strategies: (BindingKey<FeatureInterface> | string)[];
   options?: Object;
 }

@@ -18,6 +18,12 @@ export class Strategy extends Entity {
   name: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  key: string;
+
+  @property({
     type: 'number',
   })
   priority: string;
