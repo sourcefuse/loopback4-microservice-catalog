@@ -4602,120 +4602,6 @@
         ],
         "additionalProperties": false
       },
-      "WorkingHourExcluding_id_": {
-        "title": "WorkingHourExcluding_id_",
-        "type": "object",
-        "description": "(tsType: Omit<WorkingHour, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "dayOfWeek": {
-            "type": "number",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
-          },
-          "end": {
-            "type": "string"
-          },
-          "start": {
-            "type": "string"
-          },
-          "calendarId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "calendarId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<WorkingHour, 'id'>"
-      },
-      "NewCalendar": {
-        "title": "NewCalendar",
-        "type": "object",
-        "description": "(tsType: Omit<CalendarDTO, 'id'>, schemaOptions: { title: 'NewCalendar', exclude: [ 'id' ] })",
-        "properties": {
-          "source": {
-            "type": "string"
-          },
-          "enableWorkingHours": {
-            "type": "boolean"
-          },
-          "location": {
-            "type": "string",
-            "maxLength": 300
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "summary": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "timezone": {
-            "type": "string",
-            "maxLength": 120
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "workingHours": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkingHourExcluding_id_"
-            }
-          },
-          "subscription": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<CalendarDTO, 'id'>"
-      },
       "WorkingHour": {
         "title": "WorkingHour",
         "type": "object",
@@ -4781,6 +4667,55 @@
           "calendarId"
         ],
         "additionalProperties": false
+      },
+      "NewCalendar": {
+        "title": "NewCalendar",
+        "type": "object",
+        "description": "(tsType: Omit<CalendarDTO, 'id'>, schemaOptions: { title: 'NewCalendar', exclude: [ 'id' ] })",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "enableWorkingHours": {
+            "type": "boolean"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "workingHours": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkingHour"
+            }
+          },
+          "subscription": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<CalendarDTO, 'id'>"
       },
       "CalendarDTO": {
         "title": "CalendarDTO",
@@ -5091,138 +5026,6 @@
         ],
         "additionalProperties": false
       },
-      "AttachmentExcluding_id_": {
-        "title": "AttachmentExcluding_id_",
-        "type": "object",
-        "description": "(tsType: Omit<Attachment, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "fileUrl": {
-            "type": "string"
-          },
-          "iconLink": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 400
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "fileUrl",
-          "eventId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Attachment, 'id'>"
-      },
-      "AttendeeExcluding_id_": {
-        "title": "AttendeeExcluding_id_",
-        "type": "object",
-        "description": "(tsType: Omit<Attendee, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "isOptional": {
-            "type": "boolean"
-          },
-          "isOrganizer": {
-            "type": "boolean"
-          },
-          "messages": {
-            "type": "string"
-          },
-          "responseStatus": {
-            "type": "string",
-            "enum": [
-              "needsAction",
-              "tentative",
-              "accepted",
-              "declined"
-            ]
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier",
-          "eventId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Attendee, 'id'>"
-      },
       "NewEvent": {
         "title": "NewEvent",
         "type": "object",
@@ -5292,13 +5095,13 @@
           "attachments": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AttachmentExcluding_id_"
+              "$ref": "#/components/schemas/Attachment"
             }
           },
           "attendees": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AttendeeExcluding_id_"
+              "$ref": "#/components/schemas/Attendee"
             }
           },
           "extId": {

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.4 (2022-03-13)</small>
+
+* chore(deps): bump urijs in /services/feature-toggle-service (#586) ([a6c8c21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a6c8c21)), closes [#586](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/586)
+
+
+
+
+
+## <small>0.4.3 (2022-03-06)</small>
+
+* fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)
+* chore(deps): bump urijs in /services/feature-toggle-service (#549) ([b532c03](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b532c03)), closes [#549](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/549)
+
+
+
+
+
 ## <small>0.4.2 (2022-02-15)</small>
 
 * refactor(feature-toggle-service): changed sequence and added a middleware (#510) ([79e83bf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/79e83bf)), closes [#510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/510)

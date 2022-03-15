@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.6 (2022-03-13)</small>
+
+* chore(deps): bump urijs from 1.19.9 to 1.19.10 in /services/chat-service (#589) ([6f4f5d1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6f4f5d1)), closes [#589](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/589)
+
+
+
+
+
+## <small>3.0.5 (2022-03-06)</small>
+
+* fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)
+* chore(deps): bump urijs from 1.19.7 to 1.19.8 in /services/chat-service (#550) ([1512fdb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1512fdb)), closes [#550](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/550)
+
+
+
+
+
 ## <small>3.0.4 (2022-02-13)</small>
 
 * fix(chat-service): minor fix in migration.js (#506) ([25b16ff](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/25b16ff)), closes [#506](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/506)

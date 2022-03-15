@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.8 (2022-03-13)</small>
+
+* chore(deps): bump urijs in /services/notification-service (#591) ([3a860eb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3a860eb)), closes [#591](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/591)
+
+
+
+
+
+## <small>4.0.7 (2022-03-06)</small>
+
+* fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)
+* chore(deps): bump urijs in /services/notification-service (#544) ([3c1f12a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c1f12a)), closes [#544](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/544)
+
+
+
+
+
 ## <small>4.0.6 (2022-03-01)</small>
 
 * chore(deps): bump vm2 in /services/notification-service (#521) ([80deb1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/80deb1d)), closes [#521](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/521)

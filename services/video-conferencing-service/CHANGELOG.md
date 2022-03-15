@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.1.2 (2022-03-13)</small>
+
+* chore(deps): bump urijs in /services/video-conferencing-service (#593) ([68ea7e3](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/68ea7e3)), closes [#593](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/593)
+
+
+
+
+
+## <small>3.1.1 (2022-03-06)</small>
+
+* fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/577)
+* chore(deps): bump urijs in /services/video-conferencing-service (#546) ([ddb727d](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/ddb727d)), closes [#546](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/546)
+
+
+
+
+
 ## 3.1.0 (2022-02-13)
 
 * feat(video-conferencing-service): add-twilio (#492) ([4f5d345](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/4f5d345)), closes [#492](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/492)
