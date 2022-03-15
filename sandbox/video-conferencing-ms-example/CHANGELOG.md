@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.8 (2022-03-13)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-ms-example
+
+
+
+
+
 ## <small>1.0.7 (2022-03-06)</small>
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-ms-example

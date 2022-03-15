@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "services",
   "keywords": [
     "loopback-extension",
