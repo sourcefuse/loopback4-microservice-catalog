@@ -19,6 +19,12 @@ export class Feature extends Entity {
 
   @property({
     type: 'string',
+    required: true,
+  })
+  key: string;
+
+  @property({
+    type: 'string',
     name: 'description',
   })
   description?: string;
