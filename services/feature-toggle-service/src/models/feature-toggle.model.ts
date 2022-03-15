@@ -13,15 +13,15 @@ export class FeatureToggle extends Entity {
 
   @property({
     type: 'string',
-    name: 'feature_id',
+    name: 'feature_key',
   })
-  featureId: string;
+  featureKey: string;
 
   @property({
     type: 'string',
-    name: 'strategy_id',
+    name: 'strategy_key',
   })
-  strategyId: string;
+  strategyKey: string;
 
   @property({
     type: 'string',
