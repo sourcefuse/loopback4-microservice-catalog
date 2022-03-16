@@ -25,9 +25,9 @@ export class FeatureToggle extends Entity {
 
   @property({
     type: 'string',
-    name: 'item_id',
+    name: 'strategy_entity_id',
   })
-  itemId: string;
+  strategyEntityId: string;
 
   @property({
     type: 'boolean',
