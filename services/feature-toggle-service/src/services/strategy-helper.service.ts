@@ -32,18 +32,18 @@ export class StrategyHelperService {
     const metadata: FeatureFlagMetadata = await this.getMetadata();
     const featureKey = metadata.featureKey;
 
-    let itemId: string | undefined;
+    let strategyEntityId: string | undefined;
     if (strategyKey === StrategyKey.System) {
       const feature = await this.featureRepository.findOne({
         where: {
           key: featureKey,
         },
       });
-      itemId = feature?.id;
+      strategyEntityId = feature?.id;
     } else if (strategyKey === StrategyKey.Tenant) {
-      itemId = this.user?.tenantId;
+      strategyEntityId = this.user?.tenantId;
     } else if (strategyKey === StrategyKey.User) {
-      itemId = this.user?.userTenantId;
+      strategyEntityId = this.user?.userTenantId;
     } else {
       this.logger.error('Incorrect Strategy Key');
       return false;
@@ -53,7 +53,7 @@ export class StrategyHelperService {
       where: {
         featureKey: featureKey,
         strategyKey: strategyKey,
-        itemId: itemId,
+        strategyEntityId: strategyEntityId,
       },
     });
 
