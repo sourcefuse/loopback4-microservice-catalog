@@ -24,15 +24,10 @@ CREATE TABLE main.features (
 	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
 	feature_key            varchar(50)  NOT NULL ,
 	strategy_key            varchar(50)  NOT NULL ,
-  item_id        uuid  NOT NULL ,
+  strategy_entity_id        uuid ,
 	status         bool DEFAULT true NOT NULL ,
 	CONSTRAINT pk_feature_toggles_id PRIMARY KEY ( id )
  );
-
-
--- ALTER TABLE main.feature_toggles ADD CONSTRAINT fk_feature_toggles_feature FOREIGN KEY ( feature_id ) REFERENCES main.features( id );
-
--- ALTER TABLE main.feature_toggles ADD CONSTRAINT fk_feature_toggles_strategies FOREIGN KEY ( feature_id ) REFERENCES main.strategies( id );
 
 INSERT INTO main.strategies(name, key, priority)
 	VALUES ('System', 'System', '1');
