@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.5 (2022-03-13)</small>
+
+* chore(deps): bump urijs in /services/authentication-service (#592) ([d081a36](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d081a36)), closes [#592](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/592)
+* fix(authentication-service): fix external token type (#597) ([71c351f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/71c351f)), closes [#597](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/597) [#569](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/569)
+
+
+
+
+
 ## <small>4.0.4 (2022-03-06)</small>
 
 * fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)

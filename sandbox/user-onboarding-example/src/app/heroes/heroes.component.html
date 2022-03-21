@@ -1,0 +1,33 @@
+<div [ngClass]="{'tour-no-pointer-events': disablePointerEvents}">
+  <h2>Sourceloop Devs:</h2>
+
+  <div class="dev-tour-step1">
+    <label for="new-hero">Dev Name: </label>
+    <input id="new-hero" #heroName />
+
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button
+      type="button"
+      class="add-button"
+      (click)="add(heroName.value); heroName.value = ''"
+    >
+      Add Dev
+    </button>
+  </div>
+
+  <ul class="heroes dev-tour-step2">
+    <li *ngFor="let hero of heroes">
+      <a routerLink="/detail/{{ hero.id }}">
+        <span class="badge">{{ hero.id }}</span> {{ hero.name }}
+      </a>
+      <button
+        type="button"
+        class="delete"
+        title="delete hero"
+        (click)="delete(hero)"
+      >
+        x
+      </button>
+    </li>
+  </ul>
+</div>

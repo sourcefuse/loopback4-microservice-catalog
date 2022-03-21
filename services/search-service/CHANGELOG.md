@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.6 (2022-03-13)</small>
+
+* chore(deps): bump urijs in /services/search-service (#587) ([4192724](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4192724)), closes [#587](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/587)
+
+
+
+
+
 ## <small>0.5.5 (2022-03-06)</small>
 
 * fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)

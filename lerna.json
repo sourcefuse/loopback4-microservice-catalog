@@ -30,7 +30,8 @@
         "@sourceloop/search-client-example",
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
-        "@sourceloop/payment-example-frontend"
+        "@sourceloop/payment-example-frontend",
+        "@sourceloop/user-onboarding-example"
       ]
     },
     "version": {
@@ -65,7 +66,8 @@
         "@sourceloop/search-client-example",
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
-        "@sourceloop/payment-example-frontend"
+        "@sourceloop/payment-example-frontend",
+        "@sourceloop/user-onboarding-example"
       ]
     },
     "clean": {

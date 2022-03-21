@@ -452,6 +452,17 @@ services:
       - sandbox
     restart: on-failure
 
+  user-onboarding-example:
+    image: ${REGISTRY:-localhost:32000}/user-onboarding-example
+    build:
+      context: ./user-onboarding-example
+      dockerfile: Dockerfile
+    ports:
+      - '4201:4200'
+    networks:
+      - sandbox
+    restart: on-failure
+
   audit-ms-migration:
     image: ${REGISTRY:-localhost:32000}/audit-ms-example
     command: sh -c "sleep 60 && npm run db:migrate"
