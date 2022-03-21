@@ -2,7 +2,6 @@ import {BindingKey} from '@loopback/core';
 import {IServiceConfig} from '@sourceloop/core';
 
 export const FeatureToggleDbName = 'FeatureToggleDB';
-export const FeatureToggleCacheDb = 'FeatureToggleCache';
 
 export interface FeatureFlagMetadata {
   featureKey: string;
