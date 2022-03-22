@@ -1,0 +1,86 @@
+@import '~@sourceloop/user-onboarding-client/assets/default.scss';
+@import './variables.scss';
+
+.shepherd-element {
+  @include sourceloopElement($color-white, 5px, 400px);
+}
+
+.tour-title {
+  color: #bf0000;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  margin-top: 8px;
+}
+.tour-description {
+  color: #191919;
+  font-size: 14px;
+  line-height: 18px;
+  align-items: center;
+  margin-top: 2px;
+}
+.tour-step {
+  color: #606060;
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 12px;
+}
+.shepherd-button {
+  font-size: 12px;
+  width: 45px;
+  height: 26px;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.shepherd-button-next {
+  background-color: $color-dark;
+  border: 1px solid $color-dark;
+  border-radius: 4px;
+  color: $color-white;
+}
+.shepherd-button-next:hover {
+  background-color: $color-light !important;
+  color: $color-white !important;
+}
+.shepherd-header {
+  background-color: $color-white !important;
+  padding: 0;
+}
+.shepherd-text {
+  left: 16px;
+  top: 230px;
+  line-height: 20px;
+  padding-bottom: 30px;
+}
+.shepherd-button-skip,
+.shepherd-button-prev {
+  background-color: transparent !important;
+  border: 1px solid $color-dark;
+  border-radius: 4px;
+  color: $color-dark !important;
+}
+.shepherd-button-prev {
+  margin-right: 197px;
+  width: 70px;
+}
+.shepherd-button-prev-no-skip {
+  margin-right: 254px;
+}
+.tour-images {
+  width: 375px;
+}
+
+.shepherd-arrow::before {
+  background: transparent;
+}
+
+.shepherd-footer {
+  border: 1px solid #f2f2f2;
+  padding-top: 12px;
+}
+
+.tour-no-pointer-events {
+  pointer-events: none;
+}
