@@ -26,6 +26,7 @@ export class TourServiceService {
   tourStepChange$ = this.tourStepChange.asObservable();
   private readonly interval = INTERVAL;
   private _maxWaitTime = DEFAULT_MAX_WAIT_TIME;
+  private _exitOnEsc = true;
   private readonly tourFailed = new Subject<{
     tourId: string;
     message: string;
@@ -47,6 +48,14 @@ export class TourServiceService {
 
   public get maxWaitTime() {
     return this._maxWaitTime;
+  }
+
+  public set exitOnEsc(esc: boolean) {
+    this._exitOnEsc = esc;
+  }
+
+  public get exitOnEsc() {
+    return this._exitOnEsc;
   }
   private addRemovedSteps(removedSteps): void {
     const count = removedSteps.length;
@@ -280,6 +289,7 @@ export class TourServiceService {
         }
         this.tour = new Shepherd.Tour({
           useModalOverlay: true,
+          exitOnEsc: this._exitOnEsc,
           defaultStepOptions: {
             cancelIcon: {
               enabled: true,
@@ -299,6 +309,9 @@ export class TourServiceService {
         }
         this.triggerTour(tourInstance, props);
       });
+  }
+  public hideTour() {
+    this.tour.hide();
   }
   private checkElement(attachTo: TourStep['attachTo']) {
     switch (attachTo.type) {
