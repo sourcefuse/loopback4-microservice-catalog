@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/bpmn-service",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "services",
   "keywords": [
     "loopback-extension",
