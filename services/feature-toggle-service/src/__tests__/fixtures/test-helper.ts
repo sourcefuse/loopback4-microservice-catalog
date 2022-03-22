@@ -4,6 +4,7 @@ import {
   Client,
 } from '@loopback/testlab';
 import {FeatureToggleDbName} from '../..';
+import {StrategyKey} from '../../enums';
 import {
   FeatureRepository,
   FeatureToggleRepository,
@@ -11,6 +12,7 @@ import {
 } from '../../repositories';
 import {TestingApplication} from './application';
 import {TestController} from './controllers/test.controller';
+import {Test} from './test.enum';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({});
@@ -45,58 +47,58 @@ async function seed(app: TestingApplication) {
 
   await featureRepo.createAll([
     {
-      id: 'feature_1',
-      name: 'feature_1',
-      key: 'feature_1',
+      id: Test.Feature1,
+      name: Test.Feature1,
+      key: Test.Feature1,
     },
     {
-      id: 'feature_2',
-      name: 'feature_2',
-      key: 'feature_2',
+      id: Test.Feature2,
+      name: Test.Feature2,
+      key: Test.Feature2,
     },
     {
-      id: 'feature_3',
-      name: 'feature_3',
-      key: 'feature_3',
+      id: Test.Feature3,
+      name: Test.Feature3,
+      key: Test.Feature3,
     },
     {
-      id: 'feature_4',
-      name: 'feature_4',
-      key: 'feature_4',
+      id: Test.Feature4,
+      name: Test.Feature4,
+      key: Test.Feature4,
     },
   ]);
 
   await strategyRepository.createAll([
     {
-      name: 'System',
-      key: 'System',
+      name: StrategyKey.System,
+      key: StrategyKey.System,
     },
     {
-      name: 'Tenant',
-      key: 'Tenant',
+      name: StrategyKey.Tenant,
+      key: StrategyKey.Tenant,
     },
     {
-      name: 'User',
-      key: 'User',
+      name: StrategyKey.User,
+      key: StrategyKey.User,
     },
   ]);
 
   await featureToggleRepo.createAll([
     {
-      featureKey: 'feature_4',
-      strategyKey: 'System',
-      strategyEntityId: 'feature_4',
+      featureKey: Test.Feature4,
+      strategyKey: StrategyKey.System,
+      strategyEntityId: Test.Feature4,
       status: false,
     },
     {
-      featureKey: 'feature_3',
-      strategyKey: 'Tenant',
+      featureKey: Test.Feature3,
+      strategyKey: StrategyKey.Tenant,
       strategyEntityId: 'tenant_id',
       status: false,
     },
     {
-      featureKey: 'feature_2',
-      strategyKey: 'User',
+      featureKey: Test.Feature2,
+      strategyKey: StrategyKey.User,
       strategyEntityId: 'user_tenant_id',
       status: false,
     },
