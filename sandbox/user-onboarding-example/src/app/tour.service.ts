@@ -58,15 +58,14 @@ export class TourService {
     });
   }
   registerSkipFunction() {
-    const that = this;
+    const {tourStoreService, tourRunning$} = this;
     this.tourStoreService.registerFnRef('skipAction', function () {
       this.tour.hide();
-
-      that.tourStoreService
+      tourStoreService
         .saveState({
           tourId: this.tourId,
           state: {
-            sessionId: that.tourStoreService.getSessionId(),
+            sessionId: tourStoreService.getSessionId(),
             step: '',
             status: Status.Complete,
           },
@@ -74,7 +73,7 @@ export class TourService {
         .subscribe(() => {
           this.tour.cancel();
         });
-      that.tourRunning$.next(false);
+      tourRunning$.next(false);
     });
   }
 }
