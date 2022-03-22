@@ -18,7 +18,7 @@ This service provides method level decorators - @featuresFlag that takes name of
 
 ```typescript
  @featuresFlag({
-    feature: 'feature_name',
+    featureKey: 'feature_key',
     strategies: [
       StrategyBindings.SYSTEM_STRATEGY,
       StrategyBindings.TENANT_STRATEGY,
@@ -31,7 +31,7 @@ and if you want to skip all the feature checks:
 
 ```typescript
  @featuresFlag({
-   feature: 'feature_name',
+   featureKey: 'feature_key',
    strategies: [ '*' ],
  })
 ```
@@ -123,7 +123,7 @@ export class FeatureToggleDbDataSource
 
 ### Migrations
 
-The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `FEATURETOGGLE_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `FEATURETOGGLE_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### API Documentation
 
