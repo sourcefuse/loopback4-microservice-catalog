@@ -1,32 +1,35 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import path from 'path';
 import {
+  FeatureToggleBindings,
   FeatureToggleServiceComponent,
-  TenantStrategy,
-  ToggleServiceBindings,
-  UNLEASH_CONST,
-  UserStrategy,
 } from '@sourceloop/feature-toggle-service';
-import {FeatureToggleBindings} from './keys';
-import {RoleFeatureProvider} from './providers';
-import {RoleStrategy} from './strategies';
-const unleash = require('unleash-client');
+import * as dotenv from 'dotenv';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
+import path from 'path';
+import {MySequence} from './sequence';
+dotenv.config();
+
 export {ApplicationConfig};
-require('dotenv').config();
 
 export class FeatureToggleExampleApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    // Set up the custom sequence
+    this.sequence(MySequence);
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
@@ -37,29 +40,16 @@ export class FeatureToggleExampleApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
 
-    this.bind(ToggleServiceBindings.Config).to({
-      useCustomSequence: false,
+    this.bind(FeatureToggleBindings.Config).to({
       bindControllers: true,
+      useCustomSequence: false,
     });
     this.component(FeatureToggleServiceComponent);
-    unleash.initialize({
-      url: process.env.UNLEASH_URL,
-      appName: process.env.APP_NAME,
-      environment: process.env.APP_ENV,
-      customHeaders: {
-        Authorization: process.env.UNLEASH_AUTH,
-      },
-      strategies: [
-        new TenantStrategy(),
-        new UserStrategy(),
-        new RoleStrategy(),
-      ],
-    });
-    this.bind(UNLEASH_CONST).to(unleash);
 
-    this.bind(FeatureToggleBindings.ROLE_REATURE).toProvider(
-      RoleFeatureProvider,
-    );
+    this.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer'],
+    });
+    this.component(AuthorizationComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

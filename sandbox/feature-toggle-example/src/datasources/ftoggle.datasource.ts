@@ -1,6 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import FeatureToggleDbName from '@sourceloop/feature-toggle-service';
+import {FeatureToggleDbName} from '@sourceloop/feature-toggle-service';
 
 const config = {
   name: FeatureToggleDbName,
@@ -11,6 +11,7 @@ const config = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
+  schema: process.env.DB_SCHEMA,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -18,7 +19,7 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class UnleashDataSource
+export class FtoggleDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
@@ -26,7 +27,7 @@ export class UnleashDataSource
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.unleash', {optional: true})
+    @inject('datasources.config.ftoggle', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);
