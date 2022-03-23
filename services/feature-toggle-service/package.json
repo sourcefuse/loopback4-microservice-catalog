@@ -38,6 +38,9 @@
     "rebuild": "npm run clean && npm run build",
     "symlink-resolver": "symlink-resolver",
     "resolve-links": "npm run symlink-resolver build ./node_modules",
+    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
     "postinstall": "node migration.js",
     "coverage": "nyc npm run test"
   },
@@ -85,6 +88,8 @@
     "@types/lodash": "^4.14.178",
     "@types/mocha": "^9.1.0",
     "@types/node": "^12.20.46",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
     "eslint": "^8.10.0",
     "source-map-support": "^0.5.21",
     "symlink-resolver": "^0.2.1",
