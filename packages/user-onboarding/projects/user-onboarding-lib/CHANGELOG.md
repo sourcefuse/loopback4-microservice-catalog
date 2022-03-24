@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.15 (2022-03-24)</small>
+
+* fix(user-onboarding): add option to exit tour on pressing esc, add hide tour function (#617) ([324c963](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/324c963)), closes [#617](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/617) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* docs(user-onboarding):  provide proper description for functions, observables, config options availa ([69afe1b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/69afe1b)), closes [#541](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/541) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.14 (2022-03-01)</small>
 
 * fix(user-onboarding): popup should get displayed in center if attach to is not specified (#530) ([056e2e7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/056e2e7)), closes [#530](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/530) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
