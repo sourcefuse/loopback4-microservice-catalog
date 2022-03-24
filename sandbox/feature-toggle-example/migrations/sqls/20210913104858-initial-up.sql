@@ -37,3 +37,6 @@ INSERT INTO main.strategies(name, key, priority)
 
 INSERT INTO main.strategies(name, key, priority)
 	VALUES ('User', 'User', '3');
+
+INSERT INTO main.features(name, key, default_value)
+  VALUES ('Calendar', 'Calendar', 'true');

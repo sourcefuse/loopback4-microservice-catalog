@@ -5,19 +5,16 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {
-  featuresFlag,
-  StrategyBindings,
-} from '@sourceloop/feature-toggle-service';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {featuresFlag, StrategyBindings} from '../../..';
 
-export class FeatureToggleExampleController {
+export class TestController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({
-    featureKey: 'Calendar',
+    featureKey: 'feature_1',
     strategies: [
       StrategyBindings.SYSTEM_STRATEGY,
       StrategyBindings.TENANT_STRATEGY,
@@ -25,11 +22,38 @@ export class FeatureToggleExampleController {
     ],
   })
   @authorize({permissions: ['*']})
-  @get('/all_3_strategies', {
+  @get('/all_strategies_enabled_test', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find0(): Promise<boolean> {
+    return true;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @featuresFlag({
+    featureKey: 'feature_1',
+    strategies: [
+      StrategyBindings.SYSTEM_STRATEGY,
+      StrategyBindings.TENANT_STRATEGY,
+      StrategyBindings.USER_STRATEGY,
+    ],
+  })
+  @authorize({permissions: ['*']})
+  @get('/all_strategies_enabled', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -46,15 +70,18 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [StrategyBindings.SYSTEM_STRATEGY],
+    featureKey: 'feature_4',
+    strategies: [
+      StrategyBindings.SYSTEM_STRATEGY,
+      StrategyBindings.TENANT_STRATEGY,
+      StrategyBindings.USER_STRATEGY,
+    ],
   })
   @authorize({permissions: ['*']})
-  @get('/system_strategy', {
+  @get('/system_strategy_is_off', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -71,15 +98,18 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [StrategyBindings.TENANT_STRATEGY],
+    featureKey: 'feature_3',
+    strategies: [
+      StrategyBindings.SYSTEM_STRATEGY,
+      StrategyBindings.TENANT_STRATEGY,
+      StrategyBindings.USER_STRATEGY,
+    ],
   })
   @authorize({permissions: ['*']})
-  @get('/tenant_strategy', {
+  @get('/tenant_strategy_is_off', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -96,15 +126,18 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [StrategyBindings.USER_STRATEGY],
+    featureKey: 'feature_2',
+    strategies: [
+      StrategyBindings.SYSTEM_STRATEGY,
+      StrategyBindings.TENANT_STRATEGY,
+      StrategyBindings.USER_STRATEGY,
+    ],
   })
   @authorize({permissions: ['*']})
-  @get('/user_strategy', {
+  @get('/user_strategy_is_off', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -121,15 +154,34 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({
-    featureKey: 'Calendar',
+    featureKey: 'feature_1',
     strategies: ['*'],
   })
   @authorize({permissions: ['*']})
-  @get('/skip_all_strategy', {
+  @get('/skip_all_strategy_checks', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find5(): Promise<boolean> {
+    return true;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @get('/no_decorator', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
