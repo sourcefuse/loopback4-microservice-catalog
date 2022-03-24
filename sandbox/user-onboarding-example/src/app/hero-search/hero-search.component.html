@@ -1,0 +1,16 @@
+<div
+  id="search-component"
+  class="dashboard-tour-step4"
+  [ngClass]="{'tour-no-pointer-events': disablePointerEvents}"
+>
+  <label for="search-box">Hero Search</label>
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+
+  <ul class="search-result">
+    <li *ngFor="let hero of heroes$ | async">
+      <a routerLink="/detail/{{ hero.id }}">
+        {{ hero.name }}
+      </a>
+    </li>
+  </ul>
+</div>

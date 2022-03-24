@@ -22,39 +22,34 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {StrategyBindings, ToggleServiceBindings} from './keys';
+import {StrategyBindings, FeatureToggleBindings} from './keys';
+import {Feature, FeatureToggle, Strategy} from './models';
 import {
-  Features,
-  Parameters,
-  Projects,
-  Strategies,
-  StrategiesType,
-} from './models';
-import {
-  FeaturesRepository,
-  ProjectsRepository,
-  StrategiesRepository,
+  FeatureRepository,
+  FeatureToggleRepository,
+  StrategyRepository,
 } from './repositories';
 import {
   FeatureFlagActionProvider,
   FeatureFlagMetadataProvider,
-  SystemFeatureProvider,
-  TenantFeatureProvider,
-  UserFeatureProvider,
+  SystemStrategyProvider,
+  TenantStrategyProvider,
+  UserStrategyProvider,
 } from './providers';
 import {IToggleServiceConfig} from './types';
 import {
-  FeaturesController,
-  ProjectsController,
-  StrategiesController,
+  FeatureController,
+  FeatureToggleController,
+  StrategyController,
 } from './controllers';
 import {FeatureToggleActionMiddlewareInterceptor} from './middlewares';
+import {StrategyHelperService} from './services';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(ToggleServiceBindings.Config, {optional: true})
+    @inject(FeatureToggleBindings.Config, {optional: true})
     private readonly config?: IToggleServiceConfig,
   ) {
     this.bindings = [];
@@ -82,25 +77,27 @@ export class FeatureToggleServiceComponent implements Component {
       this.setupSequence();
     }
     this.repositories = [
-      FeaturesRepository,
-      ProjectsRepository,
-      StrategiesRepository,
+      FeatureRepository,
+      FeatureToggleRepository,
+      StrategyRepository,
     ];
-
-    this.models = [Features, Parameters, Projects, Strategies, StrategiesType];
+    this.application
+      .bind('services.StrategyHelperService')
+      .toClass(StrategyHelperService);
+    this.models = [Feature, FeatureToggle, Strategy];
     this.providers = {
       [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
       [StrategyBindings.METADATA.key]: FeatureFlagMetadataProvider,
-      [StrategyBindings.TENANT_FEATURE.key]: TenantFeatureProvider,
-      [StrategyBindings.USER_FEATURE.key]: UserFeatureProvider,
-      [StrategyBindings.SYSTEM_FEATURE.key]: SystemFeatureProvider,
+      [StrategyBindings.TENANT_STRATEGY.key]: TenantStrategyProvider,
+      [StrategyBindings.USER_STRATEGY.key]: UserStrategyProvider,
+      [StrategyBindings.SYSTEM_STRATEGY.key]: SystemStrategyProvider,
     };
 
     if (this.config?.bindControllers) {
       this.controllers = [
-        FeaturesController,
-        ProjectsController,
-        StrategiesController,
+        FeatureController,
+        FeatureToggleController,
+        StrategyController,
       ];
     }
   }

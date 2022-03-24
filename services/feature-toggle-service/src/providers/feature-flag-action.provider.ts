@@ -3,7 +3,6 @@ import {FeatureFlagFn, FeatureFlagMetadata, FeatureInterface} from '../types';
 import {StrategyBindings} from '../keys';
 
 export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
-  result = true;
   constructor(
     @inject.getter(StrategyBindings.METADATA)
     private readonly getMetadata: Getter<FeatureFlagMetadata>,
@@ -18,16 +17,18 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
     const metadata: FeatureFlagMetadata = await this.getMetadata();
     if (
       !metadata ||
-      (metadata.features.length === 1 && metadata.features[0] === '*')
+      (metadata.strategies.length === 1 && metadata.strategies[0] === '*')
     ) {
-      this.result = true;
-      return this.result;
+      return true;
     }
-    const features = metadata.features;
-    for (const item of features) {
-      const isFeatureEnabled = await this.ctx.get<FeatureInterface>(item);
-      this.result = isFeatureEnabled() && this.result;
+    const strategies = metadata.strategies;
+    for (const item of strategies) {
+      const featureToggle = await this.ctx.get<FeatureInterface>(item);
+      const isFeatureEnabled = await featureToggle();
+      if (!isFeatureEnabled) {
+        return false;
+      }
     }
-    return this.result;
+    return true;
   }
 }

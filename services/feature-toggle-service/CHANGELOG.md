@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2022-03-24)
+
+* feat(feature-toggle-service): add new feature toggle logic (#598) ([f7d997a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7d997a)), closes [#598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/598) [#614](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/614) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#603](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/603)
+
+
+### BREAKING CHANGE
+
+* removed unleash
+
+* feat(feature-toggle-service): removed unleash
+
+* feat(feature-toggle-service): removed unleash
+
+* feat(feature-toggle-service): removed unleash
+
+* feat(feature-toggle-service): removed unleash
+
+MIGRATION CHANGE:
+migration-20210913104858- added key column
+
+* feat(feature-toggle-service): removed unleash
+
+MIGRATION CHANGE:
+migration-20210913104858- removed unleash schema
+
+* feat(feature-toggle-service): removed unleash
+
+
+
+
 ## <small>0.4.4 (2022-03-13)</small>
 
 * chore(deps): bump urijs in /services/feature-toggle-service (#586) ([a6c8c21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a6c8c21)), closes [#586](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/586)
