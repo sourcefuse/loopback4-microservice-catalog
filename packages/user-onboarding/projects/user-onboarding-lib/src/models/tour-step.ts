@@ -1,11 +1,11 @@
 import {TourButton} from './tour-button';
-
+import {Type} from '@angular/core';
 export interface TourStep {
   id: string;
   nextStepId: string;
   prevStepId: string;
   title?: string;
-  text: string;
+  text: string | {component: string} | (() => string);
   arrow?: boolean;
   attachTo?: {
     element: string | Element;
@@ -31,3 +31,13 @@ export interface TourStep {
   modalOverlayOpeningPadding?: number;
   popperOptions?: object;
 }
+
+export type ComponentStep = {
+  forStep: string;
+  component: Type<unknown>;
+};
+
+export type HTMLStep = {
+  forStep: string;
+  html: () => string;
+};
