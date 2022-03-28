@@ -429,7 +429,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   async end() {
-    this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
+    if (this.projectInfo) {
+      this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
+    }
     await super.end();
   }
 }

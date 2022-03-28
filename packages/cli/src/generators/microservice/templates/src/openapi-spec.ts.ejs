@@ -1,6 +1,7 @@
 import {ApplicationConfig} from '@loopback/core';
 import {<%= project.applicationName %>} from './application';
 
+const ARGV_INDEX = 2;
 /**
  * Export the OpenAPI spec from the application
  */
@@ -11,7 +12,7 @@ async function exportOpenApiSpec(): Promise<void> {
       host: process.env.HOST ?? 'localhost',
     },
   };
-  const outFile = process.argv[2] ?? './src/openapi.json';
+  const outFile = process.argv[ARGV_INDEX] ?? './src/openapi.json';
   const app = new <%= project.applicationName %>(config);
   await app.boot();
   await app.exportOpenApiSpec(outFile);
