@@ -159,6 +159,8 @@
       "@loopback/rest-explorer": "<%= project.dependencies['@loopback/rest-explorer'] -%>",
   <% } -%>
   <% if (project.projectType === 'microservice') { -%>
+      "@loopback/openapi-v3": "<%= project.dependencies['@loopback/openapi-v3'] -%>",
+      "@loopback/context": "<%= project.dependencies['@loopback/context'] -%>",
       "@sourceloop/core": "<%= project.dependencies['@sourceloop/core'] -%>",
       "loopback4-authentication": "<%= project.dependencies['loopback4-authentication'] -%>",
       "loopback4-authorization": "<%= project.dependencies['loopback4-authorization'] -%>",
