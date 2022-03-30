@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Type} from '@angular/core';
 import {
   DeleteStateParameters,
   DeleteTourParameters,
@@ -38,6 +38,7 @@ import {v4 as uuidv4} from 'uuid';
 export class TourStoreServiceService {
   private readonly commandMap = new Map<string, BaseCommand>();
   private readonly functionMap = new Map();
+  private readonly componentMap = new Map();
   private sessionId: string;
   private readonly defaultSSCommand = new SaveSCommand(this.storage);
   private readonly defaultSTCommand = new SaveTCommand(this.storage);
@@ -118,8 +119,16 @@ export class TourStoreServiceService {
     this.functionMap.set(key, fn);
   }
 
+  public registerComponent(key, component: Type<unknown>) {
+    this.componentMap.set(key, component);
+  }
+
   public getFnByKey(key): Function {
     return this.functionMap.get(key);
+  }
+
+  public getComponentByKey(key): Type<unknown> {
+    return this.componentMap.get(key);
   }
 
   public generateSessionId(): void {
