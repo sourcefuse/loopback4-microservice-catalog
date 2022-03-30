@@ -10,3 +10,4 @@ export * from './props';
 export * from './status';
 export * from './tour-step-change';
 export * from './tour-complete';
+export * from './tour-cancel';

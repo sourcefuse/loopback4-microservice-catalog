@@ -11,6 +11,7 @@ import {
   Status,
   TourStepChange,
   TourComplete,
+  TourCancel,
 } from '../models';
 import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
 import {Subject} from 'rxjs';
@@ -24,6 +25,8 @@ export class TourServiceService {
   tourComplete$ = this.tourComplete.asObservable();
   private readonly tourStepChange = new Subject<TourStepChange>();
   tourStepChange$ = this.tourStepChange.asObservable();
+  private readonly tourCancel = new Subject<TourCancel>();
+  tourCancel$ = this.tourCancel.asObservable();
   private readonly interval = INTERVAL;
   private _maxWaitTime = DEFAULT_MAX_WAIT_TIME;
   private _exitOnEsc = true;
@@ -301,6 +304,13 @@ export class TourServiceService {
           event.tourId = tourInstance.tourId;
           this.tourComplete.next(event);
         });
+
+        // on pressing esc cancel event is emitted by shepherd
+        this.tour.on('cancel', (event: TourCancel) => {
+          event.tourId = tourInstance.tourId;
+          this.tourCancel.next(event);
+        });
+
         if (filterFn) {
           tourInstance.tourSteps = filterFn(tourInstance.tourSteps);
         }
@@ -350,7 +360,7 @@ export class TourServiceService {
   private pauseAllVideos() {
     document.querySelectorAll('video').forEach(vid => vid.pause());
   }
-  private setTourComplete(tourId: string, props: Props) {
+  setTourComplete(tourId: string, props: Props) {
     this.tourStoreService
       .saveState({
         tourId,
