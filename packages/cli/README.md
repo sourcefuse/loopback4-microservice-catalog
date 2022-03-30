@@ -15,7 +15,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/1.1.3 darwin-arm64 node-v16.14.0
+@sourceloop/cli/1.2.0 darwin-arm64 node-v17.0.1
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -68,7 +68,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.1.3/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.0/src/commands/extension.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -108,7 +108,7 @@ OPTIONS
       include base microservice migrations
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.1.3/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.0/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -125,5 +125,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.1.3/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.0/src/commands/scaffold.ts)_
 <!-- commandsstop -->

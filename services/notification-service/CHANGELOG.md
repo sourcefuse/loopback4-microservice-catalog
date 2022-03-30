@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.9 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
 ## <small>4.0.8 (2022-03-13)</small>
 
 * chore(deps): bump urijs in /services/notification-service (#591) ([3a860eb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3a860eb)), closes [#591](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/591)

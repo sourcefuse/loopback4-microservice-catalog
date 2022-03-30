@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.1 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-service
+
+
+
+
+
 ## 0.5.0 (2022-03-24)
 
 * feat(feature-toggle-service): add new feature toggle logic (#598) ([f7d997a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7d997a)), closes [#598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/598) [#614](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/614) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#603](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/603)

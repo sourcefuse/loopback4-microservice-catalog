@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.7 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## <small>4.0.6 (2022-03-13)</small>
 
 * chore(deps): bump urijs in /services/audit-service (#594) ([6ad941b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6ad941b)), closes [#594](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/594)

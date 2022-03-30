@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.7 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
 ## <small>5.0.6 (2022-03-13)</small>
 
 * chore(deps): bump urijs from 1.19.9 to 1.19.10 in /services/bpmn-service (#585) ([9200764](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9200764)), closes [#585](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/585)

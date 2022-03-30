@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.1 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/user-onboarding-example
+
+
+
+
+
 ## 0.1.0 (2022-03-24)
 
 * fix(sandbox): fix code smell for user-onboarding example (#614) ([475eb96](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/475eb96)), closes [#614](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/614) [#0](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/0)

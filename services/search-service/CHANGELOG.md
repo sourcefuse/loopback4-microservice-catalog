@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.7 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
 ## <small>0.5.6 (2022-03-13)</small>
 
 * chore(deps): bump urijs in /services/search-service (#587) ([4192724](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4192724)), closes [#587](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/587)

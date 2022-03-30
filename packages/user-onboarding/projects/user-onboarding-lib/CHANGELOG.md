@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.16 (2022-03-30)</small>
+
+* fix(user-onboarding): add support for angular component (#621) ([fb1eca9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fb1eca9)), closes [#621](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/621) [#581](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/581)
+* fix(user-onboarding): user gets blocked on pressing esc key - TourCancel event emitted for the same  ([5a87289](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a87289)), closes [#625](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/625) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.0.15 (2022-03-24)</small>
 
 * fix(user-onboarding): add option to exit tour on pressing esc, add hide tour function (#617) ([324c963](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/324c963)), closes [#617](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/617) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

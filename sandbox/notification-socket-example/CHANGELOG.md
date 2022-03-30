@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.10 (2022-03-30)</small>
+
+* chore(deps): bump swagger-ui-dist (#603) ([22ac3a8](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/22ac3a8)), closes [#603](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/603)
+
+
+
+
+
 ## <small>2.1.9 (2022-03-13)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example
