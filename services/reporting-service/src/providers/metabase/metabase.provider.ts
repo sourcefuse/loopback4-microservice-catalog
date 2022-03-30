@@ -60,8 +60,8 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
               username: `${metabaseUserName}`,
               password: `${metabasePassword}`,
             })
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             .then(function (
+              // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               respon: DataObject<{data: DataObject<{id: string}>}> | any,
             ) {
               tokenValue = respon.data.id;
