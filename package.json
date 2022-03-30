@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "prepare": "husky install",
+    "postinstall": "patch-package",
     "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\""
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     }
   },
   "dependencies": {
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "patch-package": "^6.4.7"
   }
 }
