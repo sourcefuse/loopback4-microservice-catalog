@@ -19,21 +19,21 @@ export class MetabaseToken extends Entity {
   @property({
     type: 'string',
     required: true,
-    name:'session_key'
+    name: 'session_key',
   })
   sessionKey: string;
 
   @property({
     type: 'date',
     required: true,
-    name:'created_on'
+    name: 'created_on',
   })
   createdOn: Date;
 
   @property({
     type: 'date',
     required: true,
-    name:'modified_on'
+    name: 'modified_on',
   })
   modifiedOn: Date;
 

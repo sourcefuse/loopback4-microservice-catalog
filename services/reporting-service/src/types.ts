@@ -8,6 +8,7 @@ export interface ReportingServiceComponentOptions {
 /**
  * Default options for the component
  */
-export const DEFAULT_REPORTING_SERVICE_OPTIONS: ReportingServiceComponentOptions = {
-  // Specify the values here
-};
+export const DEFAULT_REPORTING_SERVICE_OPTIONS: ReportingServiceComponentOptions =
+  {
+    // Specify the values here
+  };

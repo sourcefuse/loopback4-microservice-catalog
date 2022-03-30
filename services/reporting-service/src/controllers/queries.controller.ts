@@ -19,25 +19,25 @@ import {
 } from '@loopback/rest';
 import {Queries} from '../models';
 import {QueriesRepository} from '../repositories';
+import {CONTENT_TYPE} from '@sourceloop/core';
 
 export class QueriesController {
   constructor(
     @repository(QueriesRepository)
-    public queriesRepository : QueriesRepository,
+    public queriesRepository: QueriesRepository,
   ) {}
 
   @post('/queries')
   @response(200, {
     description: 'Queries model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Queries)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Queries)}},
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Queries, {
             title: 'NewQueries',
-            
           }),
         },
       },
@@ -50,11 +50,9 @@ export class QueriesController {
   @get('/queries/count')
   @response(200, {
     description: 'Queries model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
-  async count(
-    @param.where(Queries) where?: Where<Queries>,
-  ): Promise<Count> {
+  async count(@param.where(Queries) where?: Where<Queries>): Promise<Count> {
     return this.queriesRepository.count(where);
   }
 
@@ -62,7 +60,7 @@ export class QueriesController {
   @response(200, {
     description: 'Array of Queries model instances',
     content: {
-      'application/json': {
+      [CONTENT_TYPE.JSON]: {
         schema: {
           type: 'array',
           items: getModelSchemaRef(Queries, {includeRelations: true}),
@@ -79,12 +77,12 @@ export class QueriesController {
   @patch('/queries')
   @response(200, {
     description: 'Queries PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+    content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Queries, {partial: true}),
         },
       },
@@ -99,14 +97,15 @@ export class QueriesController {
   @response(200, {
     description: 'Queries model instance',
     content: {
-      'application/json': {
+      [CONTENT_TYPE.JSON]: {
         schema: getModelSchemaRef(Queries, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Queries, {exclude: 'where'}) filter?: FilterExcludingWhere<Queries>
+    @param.filter(Queries, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Queries>,
   ): Promise<Queries> {
     return this.queriesRepository.findById(id, filter);
   }
@@ -119,7 +118,7 @@ export class QueriesController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Queries, {partial: true}),
         },
       },

@@ -19,7 +19,7 @@ export class Queries extends Entity {
   @property({
     type: 'string',
     required: true,
-    name: 'queryType'
+    name: 'queryType',
   })
   queryType: string;
 
@@ -33,7 +33,7 @@ export class Queries extends Entity {
   @property({
     type: 'array',
     itemType: 'number',
-    name: 'permittedRoles'
+    name: 'permittedRoles',
   })
   permittedRoles?: number[];
 

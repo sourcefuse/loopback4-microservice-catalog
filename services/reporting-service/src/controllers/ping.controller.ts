@@ -1,6 +1,6 @@
 import {inject} from '@loopback/core';
 import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 
 /**
  * OpenAPI response for ping()
@@ -8,7 +8,7 @@ import {STATUS_CODE} from '@sourceloop/core';
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',
   content: {
-    'application/json': {
+    [CONTENT_TYPE.JSON]: {
       schema: {
         type: 'object',
         title: 'PingResponse',
@@ -19,6 +19,7 @@ const PING_RESPONSE: ResponseObject = {
           headers: {
             type: 'object',
             properties: {
+              //eslint-disable-next-line @typescript-eslint/naming-convention
               'Content-Type': {type: 'string'},
             },
             additionalProperties: true,

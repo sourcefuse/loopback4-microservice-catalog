@@ -17,23 +17,14 @@ import {
   DEFAULT_REPORTING_SERVICE_OPTIONS,
   ReportingServiceComponentOptions,
 } from './types';
-import {
-  Queries,
-  MetabaseToken
-} from './models';
+import {Queries, MetabaseToken} from './models';
 import {
   QueriesController,
   QueryDataController,
   MetabaseTokenController,
 } from './controllers';
-import {
-  MetabaseTokenRepository,
-  QueriesRepository,
-} from './repositories';
-import {
-  ReportingProvider,
-  ReportingBindings,
-} from './providers';
+import {MetabaseTokenRepository, QueriesRepository} from './repositories';
+import {ReportingProvider, ReportingBindings} from './providers';
 
 // Configure the binding for ReportingServiceComponent
 @injectable({
@@ -62,19 +53,13 @@ export class ReportingServiceComponent implements Component {
   ) {
     this.bindings = [];
     this.application.component(CoreComponent);
-    this.models = [
-      Queries,
-      MetabaseToken,
-    ];
+    this.models = [Queries, MetabaseToken];
     this.controllers = [
       QueriesController,
       MetabaseTokenController,
       QueryDataController,
     ];
-    this.repositories = [
-      MetabaseTokenRepository,
-      QueriesRepository,
-    ];
+    this.repositories = [MetabaseTokenRepository, QueriesRepository];
     this.providers = {
       [ReportingBindings.ReportingHelper.key]: ReportingProvider,
     };

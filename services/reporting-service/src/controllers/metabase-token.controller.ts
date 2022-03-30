@@ -17,27 +17,27 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+import {CONTENT_TYPE} from '@sourceloop/core';
 import {MetabaseToken} from '../models';
 import {MetabaseTokenRepository} from '../repositories';
 
 export class MetabaseTokenController {
   constructor(
     @repository(MetabaseTokenRepository)
-    public metabaseTokenRepository : MetabaseTokenRepository,
+    public metabaseTokenRepository: MetabaseTokenRepository,
   ) {}
 
   @post('/metabase-tokens')
   @response(200, {
     description: 'MetabaseToken model instance',
-    content: {'application/json': {schema: getModelSchemaRef(MetabaseToken)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(MetabaseToken)}},
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(MetabaseToken, {
             title: 'NewMetabaseToken',
-            
           }),
         },
       },
@@ -50,7 +50,7 @@ export class MetabaseTokenController {
   @get('/metabase-tokens/count')
   @response(200, {
     description: 'MetabaseToken model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
   async count(
     @param.where(MetabaseToken) where?: Where<MetabaseToken>,
@@ -62,7 +62,7 @@ export class MetabaseTokenController {
   @response(200, {
     description: 'Array of MetabaseToken model instances',
     content: {
-      'application/json': {
+      [CONTENT_TYPE.JSON]: {
         schema: {
           type: 'array',
           items: getModelSchemaRef(MetabaseToken, {includeRelations: true}),
@@ -79,12 +79,12 @@ export class MetabaseTokenController {
   @patch('/metabase-tokens')
   @response(200, {
     description: 'MetabaseToken PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+    content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(MetabaseToken, {partial: true}),
         },
       },
@@ -99,14 +99,15 @@ export class MetabaseTokenController {
   @response(200, {
     description: 'MetabaseToken model instance',
     content: {
-      'application/json': {
+      [CONTENT_TYPE.JSON]: {
         schema: getModelSchemaRef(MetabaseToken, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(MetabaseToken, {exclude: 'where'}) filter?: FilterExcludingWhere<MetabaseToken>
+    @param.filter(MetabaseToken, {exclude: 'where'})
+    filter?: FilterExcludingWhere<MetabaseToken>,
   ): Promise<MetabaseToken> {
     return this.metabaseTokenRepository.findById(id, filter);
   }
@@ -119,7 +120,7 @@ export class MetabaseTokenController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(MetabaseToken, {partial: true}),
         },
       },

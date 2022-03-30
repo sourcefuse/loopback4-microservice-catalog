@@ -8,6 +8,6 @@ export class ReportingProvider implements Provider<IReporting> {
   ) {}
 
   value() {
-      return this.metabaseReportingHelper;  
+    return this.metabaseReportingHelper;
   }
 }
