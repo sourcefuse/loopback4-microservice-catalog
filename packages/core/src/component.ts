@@ -1,25 +1,24 @@
 import {
   Binding,
   Component,
-  ProviderMap,
-  inject,
   CoreBindings,
   createBindingFromClass,
+  inject,
+  ProviderMap,
 } from '@loopback/core';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
-
-import {LocaleKey} from './enums';
-import {SFCoreBindings, OASBindings} from './keys';
+import {Loopback4HelmetComponent} from 'loopback4-helmet';
+import {RateLimiterComponent} from 'loopback4-ratelimiter';
+import * as swstats from 'swagger-stats';
 import {
   LoggerExtensionComponent,
   SwaggerAuthenticationComponent,
 } from './components';
-import {CoreConfig} from './types';
-import {Loopback4HelmetComponent} from 'loopback4-helmet';
-import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
-import * as swstats from 'swagger-stats';
+import {LocaleKey} from './enums';
+import {OASBindings, SFCoreBindings} from './keys';
+import {CoreConfig} from './types';
 
 export class CoreComponent implements Component {
   constructor(
@@ -43,11 +42,17 @@ export class CoreComponent implements Component {
 
     // Enable OBF
     if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
+      const middlewareConfig = Object.assign(
+        this.coreConfig.swaggerStatsConfig ?? {},
+        {
+          name: this.coreConfig?.name,
+          uriPath: this.coreConfig?.obfPath ?? `/obf`,
+          swaggerSpec: this.coreConfig?.openapiSpec,
+          authentication: this.coreConfig.authentication ?? false,
+        },
+      );
       const swStatsMiddleware = swstats.getMiddleware({
-        name: this.coreConfig?.name,
-        uriPath: this.coreConfig?.obfPath ?? `/obf`,
-        swaggerSpec: this.coreConfig?.openapiSpec,
-        authentication: this.coreConfig.authentication ?? false,
+        ...middlewareConfig,
         onAuthenticate: this.coreConfig.swaggerAuthenticate
           ? this.coreConfig.swaggerAuthenticate
           : (req, username, password) => {

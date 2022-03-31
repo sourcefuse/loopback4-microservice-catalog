@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.1.3 (2022-03-30)</small>
+
+* chore(core): locale file ([e0ceab9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e0ceab9)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(core): allow all swagger stats config ([56038ea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/56038ea)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>6.1.2 (2022-03-06)</small>
 
 * fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)

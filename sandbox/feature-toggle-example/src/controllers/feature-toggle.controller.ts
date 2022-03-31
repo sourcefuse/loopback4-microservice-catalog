@@ -1,97 +1,146 @@
-import {get} from '@loopback/rest';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
+import {inject} from '@loopback/core';
+import {get, Request, RestBindings} from '@loopback/rest';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {
   featuresFlag,
   StrategyBindings,
 } from '@sourceloop/feature-toggle-service';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {FeatureToggleBindings} from '../keys';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 
-export class FeatureToggleController {
-  @get('/featureFlag', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: '',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {
-              type: 'object',
-              title: 'Response',
-              properties: {
-                message: {type: 'string'},
-              },
-            },
-          },
-        },
-      },
-    },
-  })
+export class FeatureToggleExampleController {
+  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
   @featuresFlag({
-    features: [
-      StrategyBindings.TENANT_FEATURE,
-      StrategyBindings.SYSTEM_FEATURE,
+    featureKey: 'Calendar',
+    strategies: [
+      StrategyBindings.SYSTEM_STRATEGY,
+      StrategyBindings.TENANT_STRATEGY,
+      StrategyBindings.USER_STRATEGY,
     ],
   })
-  async checkFeature(): Promise<Object> {
-    return {
-      message: 'Feature Flags are Enabled!!',
-    };
-  }
-
-  @get('/skipFeatureFlag', {
+  @authorize({permissions: ['*']})
+  @get('/all_3_strategies', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: '',
+        description: 'Array of Feature model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
-              type: 'object',
-              title: 'Response',
-              properties: {
-                message: {type: 'string'},
-              },
+              type: 'boolean',
             },
           },
         },
       },
     },
   })
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
-  @featuresFlag({features: ['*']})
-  async skipFeatureFlag(): Promise<Object> {
-    return {
-      message: 'Will skip the flag check and be accessible always',
-    };
+  async find1(): Promise<boolean> {
+    return true;
   }
 
-  @get('/customFeatureFlag', {
+  @authenticate(STRATEGY.BEARER)
+  @featuresFlag({
+    featureKey: 'Calendar',
+    strategies: [StrategyBindings.SYSTEM_STRATEGY],
+  })
+  @authorize({permissions: ['*']})
+  @get('/system_strategy', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: '',
+        description: 'Array of Feature model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
-              type: 'object',
-              title: 'Response',
-              properties: {
-                message: {type: 'string'},
-              },
+              type: 'boolean',
             },
           },
         },
       },
     },
   })
+  async find2(): Promise<boolean> {
+    return true;
+  }
+
   @authenticate(STRATEGY.BEARER)
+  @featuresFlag({
+    featureKey: 'Calendar',
+    strategies: [StrategyBindings.TENANT_STRATEGY],
+  })
   @authorize({permissions: ['*']})
-  @featuresFlag({features: [FeatureToggleBindings.ROLE_REATURE]})
-  async roleFeatureFlag(): Promise<Object> {
-    return {
-      message: 'Role level Feature Enabled!!',
-    };
+  @get('/tenant_strategy', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Feature model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find3(): Promise<boolean> {
+    return true;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @featuresFlag({
+    featureKey: 'Calendar',
+    strategies: [StrategyBindings.USER_STRATEGY],
+  })
+  @authorize({permissions: ['*']})
+  @get('/user_strategy', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Feature model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find4(): Promise<boolean> {
+    return true;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @featuresFlag({
+    featureKey: 'Calendar',
+    strategies: ['*'],
+  })
+  @authorize({permissions: ['*']})
+  @get('/skip_all_strategy', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Feature model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find6(): Promise<boolean> {
+    return true;
   }
 }

@@ -4,7 +4,8 @@ import {IServiceConfig} from '@sourceloop/core';
 export const FeatureToggleDbName = 'FeatureToggleDB';
 
 export interface FeatureFlagMetadata {
-  features: (BindingKey<FeatureInterface> | string)[];
+  featureKey: string;
+  strategies: (BindingKey<FeatureInterface> | string)[];
   options?: Object;
 }
 
@@ -13,7 +14,7 @@ export interface FeatureFlagFn {
 }
 
 export interface FeatureInterface {
-  (): boolean;
+  (): Promise<boolean>;
 }
 
 export interface IToggleServiceConfig extends IServiceConfig {

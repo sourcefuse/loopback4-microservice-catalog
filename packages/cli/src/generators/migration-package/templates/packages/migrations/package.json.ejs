@@ -1,0 +1,29 @@
+{
+  "name": "migrations",
+  "version": "1.0.0",
+  "description": "Package to handle Db migrations for all microservices DBs",
+  "main": "lib/migrations.js",
+  "scripts": {
+    "db:migrate": "run-s db:migrate:*",
+    "db:migrate-down": "run-s db:migrate-down:*",
+    "db:migrate-reset": "run-s db:migrate-reset:*"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "db-migrate": "<%= project.dependencies["db-migrate"] -%>",
+    "dotenv": "<%= project.dependencies["dotenv"] -%>",
+    "dotenv-extended": "<%= project.dependencies["dotenv-extended"] -%>",
+    "kindof": "<%= project.dependencies["kindof"] -%>"
+<% if (project.databaseType === 'postgres') { -%>
+    "db-migrate-pg": "<%= project.dependencies['db-migrate-pg'] -%>",
+<% } -%>
+<% if (project.databaseType === 'mysql') { -%>
+    "db-migrate-mysql": "<%= project.dependencies['db-migrate-mysql'] -%>",
+<% } -%>
+  },
+  "devDependencies": {
+    "@types/dotenv": "<%= project.dependencies["@types/dotenv"] -%>",
+    "npm-run-all": "<%= project.dependencies["npm-run-all"] -%>"
+  }
+}

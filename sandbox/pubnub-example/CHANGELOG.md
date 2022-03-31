@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.9 (2022-03-30)</small>
+
+* chore(deps): bump swagger-ui-dist in /sandbox/pubnub-example (#612) ([411fa6d](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/411fa6d)), closes [#612](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/612)
+
+
+
+
+
 ## <small>0.2.8 (2022-03-13)</small>
 
 **Note:** Version bump only for package @sourceloop/pubnub-example

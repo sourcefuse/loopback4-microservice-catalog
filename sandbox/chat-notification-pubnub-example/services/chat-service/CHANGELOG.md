@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.3 (2022-03-30)</small>
+
+* chore(deps): bump node-forge (#618) ([6fd23c5](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/6fd23c5)), closes [#618](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/618)
+* chore(deps): bump swagger-ui-dist (#609) ([3ea2a28](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/3ea2a28)), closes [#609](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/609)
+
+
+
+
+
 ## <small>0.1.2 (2022-03-13)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_chat-service

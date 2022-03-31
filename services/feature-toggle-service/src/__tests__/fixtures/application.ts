@@ -9,8 +9,13 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {FeatureToggleServiceComponent} from '../../component';
-import {UNLEASH_CONST} from '../../keys';
-const unleash = require('unleash-client');
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
+import {FeatureToggleMockDataSource} from './datasources/feature-toggle-mock.datasource';
 export {ApplicationConfig};
 require('dotenv').config();
 
@@ -29,15 +34,19 @@ export class TestingApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
     this.component(FeatureToggleServiceComponent);
-    unleash.initialize({
-      url: 'https://app.unleash-hosted.com/demo/api/',
-      appName: 'my-node-name',
-      environment: 'development',
-      customHeaders: {
-        Authorization: '56907a2fa53c1d16101d509a10b78e36190b0f918d9f122d',
-      },
+
+    this.component(AuthenticationComponent);
+    this.bind(Strategies.Passport.BEARER_TOKEN_VERIFIER).toProvider(
+      BearerTokenVerifyProvider,
+    );
+
+    // Add authorization component
+    this.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer'],
     });
-    this.bind(UNLEASH_CONST).to(unleash);
+    this.component(AuthorizationComponent);
+
+    this.dataSource(FeatureToggleMockDataSource);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

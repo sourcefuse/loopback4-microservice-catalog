@@ -29,7 +29,7 @@ export class FeatureToggleActionMiddlewareInterceptor
     const featureFlagEnabled: boolean = await this.checkFeatureFlag();
 
     if (!featureFlagEnabled) {
-      throw new HttpErrors.Forbidden('Feature Flag is disabled');
+      throw new HttpErrors.Forbidden('Feature is disabled');
     }
     return next();
   }

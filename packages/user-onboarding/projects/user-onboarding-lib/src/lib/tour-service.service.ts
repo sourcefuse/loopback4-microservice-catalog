@@ -1,5 +1,10 @@
 import {TourStoreServiceService} from './tour-store-service.service';
-import {Injectable} from '@angular/core';
+import {
+  ApplicationRef,
+  ComponentFactoryResolver,
+  Injectable,
+  Injector,
+} from '@angular/core';
 import Shepherd from 'shepherd.js';
 import {
   Tour,
@@ -11,6 +16,8 @@ import {
   Status,
   TourStepChange,
   TourComplete,
+  TourCancel,
+  ComponentStep,
 } from '../models';
 import {Router, NavigationEnd, Event as NavigationEvent} from '@angular/router';
 import {Subject} from 'rxjs';
@@ -24,8 +31,11 @@ export class TourServiceService {
   tourComplete$ = this.tourComplete.asObservable();
   private readonly tourStepChange = new Subject<TourStepChange>();
   tourStepChange$ = this.tourStepChange.asObservable();
+  private readonly tourCancel = new Subject<TourCancel>();
+  tourCancel$ = this.tourCancel.asObservable();
   private readonly interval = INTERVAL;
   private _maxWaitTime = DEFAULT_MAX_WAIT_TIME;
+  private _exitOnEsc = true;
   private readonly tourFailed = new Subject<{
     tourId: string;
     message: string;
@@ -37,6 +47,9 @@ export class TourServiceService {
   constructor(
     private readonly tourStoreService: TourStoreServiceService,
     private readonly router: Router,
+    private readonly componentFactory: ComponentFactoryResolver,
+    private readonly injector: Injector,
+    private readonly appRef: ApplicationRef,
   ) {}
 
   public set maxWaitTime(maxTime: number) {
@@ -48,11 +61,23 @@ export class TourServiceService {
   public get maxWaitTime() {
     return this._maxWaitTime;
   }
+
+  public set exitOnEsc(esc: boolean) {
+    this._exitOnEsc = esc;
+  }
+
+  public get exitOnEsc() {
+    return this._exitOnEsc;
+  }
   private addRemovedSteps(removedSteps): void {
     const count = removedSteps.length;
     for (let i = 0; i < count; i++) {
       this.tour.steps.splice(0, 0, this.tour.steps.pop());
     }
+  }
+
+  getTour() {
+    return this.tour;
   }
 
   private actionAssignment(
@@ -259,6 +284,7 @@ export class TourServiceService {
     params?: {[key: string]: string},
     props?: Props,
     filterFn?: FilterFunction,
+    inputs?: object,
   ): void {
     this.tourStoreService
       .loadTour({
@@ -280,6 +306,7 @@ export class TourServiceService {
         }
         this.tour = new Shepherd.Tour({
           useModalOverlay: true,
+          exitOnEsc: this._exitOnEsc,
           defaultStepOptions: {
             cancelIcon: {
               enabled: true,
@@ -291,14 +318,39 @@ export class TourServiceService {
           event.tourId = tourInstance.tourId;
           this.tourComplete.next(event);
         });
+
+        // on pressing esc cancel event is emitted by shepherd
+        this.tour.on('cancel', (event: TourCancel) => {
+          event.tourId = tourInstance.tourId;
+          this.tourCancel.next(event);
+        });
+
         if (filterFn) {
           tourInstance.tourSteps = filterFn(tourInstance.tourSteps);
         }
         if (tourInstance.tourSteps[0].attachTo) {
           tourInstance.tourSteps[0].attachTo.scrollTo = false;
         }
-        this.triggerTour(tourInstance, props);
+        this.checkComponents(tourInstance, inputs).then(() => {
+          this.triggerTour(tourInstance, props);
+        });
       });
+  }
+  private async checkComponents(tourInstance: Tour, inputs: object) {
+    for (const step of tourInstance.tourSteps) {
+      if (typeof step.text !== 'string' && typeof step.text !== 'function') {
+        const htmlStep = await this.parseComponent(
+          {
+            forStep: step.id,
+            component: this.tourStoreService.getComponentByKey(
+              step.text.component,
+            ),
+          },
+          inputs,
+        );
+        step.text = htmlStep.html;
+      }
+    }
   }
   private checkElement(attachTo: TourStep['attachTo']) {
     switch (attachTo.type) {
@@ -337,7 +389,7 @@ export class TourServiceService {
   private pauseAllVideos() {
     document.querySelectorAll('video').forEach(vid => vid.pause());
   }
-  private setTourComplete(tourId: string, props: Props) {
+  setTourComplete(tourId: string, props: Props) {
     this.tourStoreService
       .saveState({
         tourId,
@@ -673,6 +725,23 @@ export class TourServiceService {
           removedSteps,
         );
       }
+    });
+  }
+  private parseComponent(step: ComponentStep, input: object) {
+    return Promise.resolve({
+      forStep: step.forStep,
+      html: () => {
+        const factory = this.componentFactory.resolveComponentFactory(
+          step.component,
+        );
+        const constructedComponent = factory.create(this.injector);
+        Object.keys(input ?? {}).forEach(k => {
+          constructedComponent.instance[k] = input[k];
+        });
+        constructedComponent.instance['tour'] = this.tour;
+        this.appRef.attachView(constructedComponent.hostView);
+        return constructedComponent.location.nativeElement;
+      },
     });
   }
 }

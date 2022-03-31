@@ -1,4 +1,5 @@
 import {IncomingMessage} from 'http';
+import {SWStats} from 'swagger-stats';
 
 export interface IServiceConfig {
   useCustomSequence: boolean;
@@ -14,6 +15,12 @@ export interface CoreConfig {
   swaggerUsername?: string;
   swaggerPassword?: string;
   authenticateSwaggerUI?: boolean;
+
+  swaggerStatsConfig?: Omit<
+    SWStats,
+    'name' | 'uriPath' | 'swaggerSpec' | 'authentication' | 'onAuthenticate'
+  >;
+
   swaggerAuthenticate?: (
     req?: IncomingMessage,
     username?: string,

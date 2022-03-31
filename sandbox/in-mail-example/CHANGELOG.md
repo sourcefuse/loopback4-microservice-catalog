@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.4 (2022-03-30)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
 ## <small>0.5.3 (2022-03-13)</small>
 
 **Note:** Version bump only for package @sourceloop/in-mail-example

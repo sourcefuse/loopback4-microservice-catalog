@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.2.0 (2022-03-30)
+
+* fix(cli): fix issues in docker file, sonar (#624) ([7255501](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7255501)), closes [#624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/624) [#561](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/561) [#564](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/564)
+* feat(cli): refactored the code, add support for ds, facade and migration (#601) ([4196508](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4196508)), closes [#601](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/601) [#527](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/527) [#562](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/562) [#525](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/525) [#526](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/526) [#527](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/527) [#562](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/562) [#525](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/525) [#526](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/526)
+
+
+
+
+
 ## <small>1.1.3 (2022-03-06)</small>
 
 * fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)

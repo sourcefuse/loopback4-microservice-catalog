@@ -32,5 +32,6 @@
 	"WorkflowNotFound": "WorkflowNotFound",
 	"PasswordCannotBeChangedForExternalUser": "PasswordCannotBeChangedForExternalUser",
 	"Password cannot be same as previous password!": "Password cannot be same as previous password!",
-	"[{\"instancePath\"": "\"/valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"}]"
+	"[{\"instancePath\"": "\"/valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"}]",
+	"Feature is disabled": "Feature is disabled"
 }
