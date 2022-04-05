@@ -15,7 +15,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/1.2.0 darwin-arm64 node-v17.0.1
+@sourceloop/cli/1.2.0 darwin-arm64 node-v16.14.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
