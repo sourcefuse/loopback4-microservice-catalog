@@ -73,7 +73,7 @@
     "loopback4-authentication": "^6.0.2",
     "loopback4-authorization": "^5.0.1",
     "loopback4-soft-delete": "^5.0.3",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "nanoid": "^3.2.0",
     "opentok": "^2.12.1",
     "proxyquire": "^2.1.3",
