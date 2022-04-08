@@ -110,7 +110,6 @@ export class VonageService implements VonageVideoChat {
     };
   }
   getFeatures(): VideoChatFeatures {
-    console.log('get features called');
 
     return {
       archive: true,
@@ -251,7 +250,6 @@ export class VonageService implements VonageVideoChat {
           isDeleted: sessionAttendeeDetail.isDeleted,
           extMetadata: {webhookPayload: webhookPayload},
         };
-        console.log('event is ');
 
         if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           updatedAttendee.isDeleted = false;
