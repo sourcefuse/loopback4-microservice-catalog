@@ -24,6 +24,7 @@ import {
   FacebookOauth2VerifyProvider,
   GoogleOauth2VerifyProvider,
   LocalPasswordVerifyProvider,
+  OtpVerifyProvider,
   ResourceOwnerVerifyProvider,
 } from './modules/auth';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
@@ -46,6 +47,8 @@ import {
   JwtPayloadProvider,
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
+  OtpGenerateProvider,
+  OtpSenderProvider,
   SignUpBindings,
   SignupTokenHandlerProvider,
   VerifyBindings,
@@ -57,7 +60,7 @@ import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
-import {LoginHelperService} from './services';
+import {LoginHelperService, OtpSenderService} from './services';
 import {IAuthServiceConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
@@ -102,6 +105,9 @@ export class AuthenticationServiceComponent implements Component {
     this.application
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
+    this.application
+      .bind('services.OtpSenderService')
+      .toClass(OtpSenderService);
     this.models = models;
 
     this.controllers = controllers;
@@ -145,6 +151,7 @@ export class AuthenticationServiceComponent implements Component {
       ClientPasswordVerifyProvider;
     this.providers[Strategies.Passport.LOCAL_PASSWORD_VERIFIER.key] =
       LocalPasswordVerifyProvider;
+    this.providers[Strategies.Passport.OTP_VERIFIER.key] = OtpVerifyProvider;
     this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
       BearerTokenVerifyProvider;
     this.providers[Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key] =
@@ -195,6 +202,9 @@ export class AuthenticationServiceComponent implements Component {
       FacebookPostVerifyProvider;
     this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
       SignupBearerVerifyProvider;
+    this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
+      OtpGenerateProvider;
+    this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] = OtpSenderProvider;
 
     this.providers[AuthCodeBindings.CODEREADER_PROVIDER.key] =
       OauthCodeReaderProvider;

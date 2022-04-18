@@ -41,6 +41,7 @@ import {AuthClient, RefreshToken, User} from '../../models';
 import {AuthCodeBindings, CodeReaderFn, JwtPayloadFn} from '../../providers';
 import {
   AuthClientRepository,
+  OtpCacheRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
   RoleRepository,
@@ -55,6 +56,7 @@ import {AuthRefreshTokenRequest, AuthTokenRequest, LoginRequest} from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
+import {OtpSenderService} from '../../services/otp-sender.service';
 
 const userAgentKey = 'user-agent';
 
@@ -68,6 +70,8 @@ export class LoginController {
     public authClientRepository: AuthClientRepository,
     @repository(UserRepository)
     public userRepo: UserRepository,
+    @repository(OtpCacheRepository)
+    public otpCacheRepo: OtpCacheRepository,
     @repository(RoleRepository)
     public roleRepo: RoleRepository,
     @repository(UserLevelPermissionRepository)
@@ -89,6 +93,8 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject('services.OtpSenderService')
+    private readonly otpSenderService: OtpSenderService,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -433,6 +439,89 @@ export class LoginController {
     }
     delete this.user.deviceInfo;
     return new AuthUser(this.user);
+  }
+
+  // OTP APIs
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(STRATEGY.LOCAL)
+  @authorize({permissions: ['*']})
+  @post('/auth/login-otp', {
+    description: 'Sends OTP',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Sends otp to user',
+        content: {
+          [CONTENT_TYPE.JSON]: Object,
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async sendOtp(
+    @requestBody()
+    req: LoginRequest,
+    @inject(AuthenticationBindings.CURRENT_CLIENT)
+    client: AuthClient | undefined,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    user: AuthUser | undefined,
+  ): Promise<{
+    key: string;
+  }> {
+    try {
+      const key = await this.otpSenderService.sendOtp(client, user);
+      return {
+        key: key,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+  }
+
+  @authenticate(STRATEGY.OTP)
+  @authorize({permissions: ['*']})
+  @post('/auth/verify-otp', {
+    description:
+      'Gets you the code that will be used for getting token (webapps)',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
+        content: {
+          [CONTENT_TYPE.JSON]: Object,
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async verifyOtp(
+    @requestBody()
+    req: {
+      key: 'string';
+      otp: 'string';
+    },
+  ): Promise<{
+    code: string;
+  }> {
+    const otpCache = await this.otpCacheRepo.get(req.key);
+    try {
+      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+        clientId: otpCache.clientId,
+        userId: otpCache.userId,
+      };
+      const token = jwt.sign(codePayload, otpCache.clientSecret, {
+        expiresIn: 180,
+        audience: otpCache.clientId,
+        issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
+      });
+      return {
+        code: token,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
   }
 
   private async createJWT(

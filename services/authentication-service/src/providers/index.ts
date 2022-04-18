@@ -26,4 +26,6 @@ export * from './facebook-post-verify.provider';
 export * from './facebook-pre-verify.provider';
 export * from './signup-token-handler.provider';
 export * from './forgot-password.provider';
+export * from './otp-generate.provider';
+export * from './otp-sender.provider';
 export * from './keys';

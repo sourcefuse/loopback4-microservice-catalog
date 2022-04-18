@@ -10,6 +10,7 @@ import {
   User,
   UserRelations,
 } from '../models';
+import {AuthUser} from '../modules/auth';
 
 export interface GoogleSignUpFn {
   (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
@@ -134,6 +135,14 @@ export interface JwtPayloadFn {
 
 export interface ForgotPasswordHandlerFn {
   (dto: DataObject<ForgetPasswordResponseDto>): Promise<unknown>;
+}
+
+export interface OtpGenerateFn {
+  (): Promise<string>;
+}
+
+export interface OtpSenderFn {
+  (otp: string, user: AuthUser): Promise<void>;
 }
 
 export interface SignupTokenHandlerFn {
