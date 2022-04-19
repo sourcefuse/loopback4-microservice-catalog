@@ -33,6 +33,7 @@ export function response(
       [`${statusCode}`]: {
         description,
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'application/json': payload,
         },
       },

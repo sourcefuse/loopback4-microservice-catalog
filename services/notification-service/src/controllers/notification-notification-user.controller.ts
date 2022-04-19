@@ -34,9 +34,11 @@ export class NotificationNotificationUserController {
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '200': {
         description: 'Array of Notification has many NotificationUser',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'application/json': {
             schema: {
               type: 'array',
@@ -59,9 +61,11 @@ export class NotificationNotificationUserController {
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '200': {
         description: 'Notification model instance',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'application/json': {
             schema: getModelSchemaRef(NotificationUser),
           },
@@ -73,6 +77,7 @@ export class NotificationNotificationUserController {
     @param.path.string('id') id: typeof Notification.prototype.id,
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/json': {
           schema: getModelSchemaRef(NotificationUser, {
             title: 'NewNotificationUserInNotification',
@@ -94,8 +99,10 @@ export class NotificationNotificationUserController {
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '200': {
         description: 'Notification.NotificationUser PATCH success count',
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -104,6 +111,7 @@ export class NotificationNotificationUserController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/json': {
           schema: getModelSchemaRef(NotificationUser, {partial: true}),
         },
@@ -123,8 +131,10 @@ export class NotificationNotificationUserController {
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '200': {
         description: 'Notification.NotificationUser DELETE success count',
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         content: {'application/json': {schema: CountSchema}},
       },
     },

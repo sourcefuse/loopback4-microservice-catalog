@@ -18,9 +18,11 @@ export class NotificationUserNotificationController {
   @get('/notification-users/{id}/notification', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '200': {
         description: 'Notification belonging to NotificationUser',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'application/json': {
             schema: {
               type: 'array',

@@ -233,6 +233,7 @@ export class NotificationController {
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '204': {
         description: 'Notification PATCH success',
       },
