@@ -46,7 +46,7 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^4.0.0",
+    "@loopback/boot": "^4.1.2",
     "@loopback/context": "^4.0.0",
     "@loopback/core": "^3.0.0",
     "@loopback/openapi-v3": "^7.0.0",
