@@ -56,7 +56,7 @@
     "@loopback/boot": "^4.1.1",
     "@loopback/core": "^3.1.1",
     "@loopback/openapi-v3": "^7.1.1",
-    "@loopback/repository": "^4.1.1",
+    "@loopback/repository": "^4.1.2",
     "@loopback/rest": "^11.1.1",
     "@sourceloop/audit-log": "^3.0.2",
     "@sourceloop/core": "^6.1.3",
