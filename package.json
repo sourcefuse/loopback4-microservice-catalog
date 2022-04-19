@@ -11,9 +11,9 @@
     "@commitlint/config-conventional": "^15.0.0",
     "@commitlint/config-lerna-scopes": "^14.0.0",
     "@loopback/monorepo": "^0.4.3",
-    "commitizen": "^4.2.4",
+    "commitizen": "^1.0.4",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
-    "cz-conventional-changelog": "^3.3.0",
+    "cz-conventional-changelog": "^3.0.1",
     "cz-format-extension": "^1.4.2",
     "husky": "^7.0.4",
     "lerna": "^4.0.0"
