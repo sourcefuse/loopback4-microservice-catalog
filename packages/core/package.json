@@ -49,7 +49,7 @@
     "@loopback/rest": "^11.1.1",
     "@loopback/rest-explorer": "^4.1.1",
     "@loopback/service-proxy": "^4.1.1",
-    "casbin": "^5.11.5",
+    "casbin": "^5.14.0",
     "i18n": "^0.13.3",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
