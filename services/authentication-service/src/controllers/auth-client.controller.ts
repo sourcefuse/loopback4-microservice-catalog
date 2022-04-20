@@ -145,8 +145,7 @@ export class AuthClientController {
   @patch(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'AuthClient PATCH success',
       },
     },
@@ -170,8 +169,7 @@ export class AuthClientController {
   @put(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'AuthClient PUT success',
       },
     },
@@ -188,8 +186,7 @@ export class AuthClientController {
   @del(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'AuthClient DELETE success',
       },
     },

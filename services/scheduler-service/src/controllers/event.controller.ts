@@ -143,8 +143,7 @@ export class EventController {
   async getFeeBusyStatus(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(FreeBusyDTO, {
             title: 'FreeBusyRequest',
           }),

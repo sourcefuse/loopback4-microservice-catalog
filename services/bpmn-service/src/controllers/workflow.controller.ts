@@ -66,8 +66,7 @@ export class WorkflowController {
   async create(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkflowDto, {
             title: 'NewWorkflow',
           }),
@@ -112,8 +111,7 @@ export class WorkflowController {
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Workflow PATCH success',
       },
     },
@@ -121,8 +119,7 @@ export class WorkflowController {
   async updateById(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(WorkflowDto, {partial: true}),
         },
       },
@@ -161,8 +158,7 @@ export class WorkflowController {
   @post(`${basePath}/{id}/execute`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Workflow instance',
       },
     },
@@ -171,8 +167,7 @@ export class WorkflowController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(ExecuteWorkflowDto),
         },
       },
@@ -256,8 +251,7 @@ export class WorkflowController {
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Workflow DELETE success',
       },
     },
@@ -278,8 +272,7 @@ export class WorkflowController {
   @del(`${basePath}/{id}/version/{version}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Workflow DELETE success',
       },
     },

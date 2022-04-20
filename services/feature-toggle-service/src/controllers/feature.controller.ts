@@ -48,8 +48,7 @@ export class FeatureController {
   async create(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Feature, {
             title: 'NewFeature',
           }),
@@ -116,8 +115,7 @@ export class FeatureController {
   async updateAll(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Feature, {partial: true}),
         },
       },
@@ -165,8 +163,7 @@ export class FeatureController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Feature, {partial: true}),
         },
       },

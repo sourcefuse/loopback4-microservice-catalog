@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention*/
 import {
   Count,
   CountSchema,
@@ -19,7 +18,7 @@ import {
 } from '@loopback/rest';
 import {Templates} from '../models';
 import {TemplatesRepository} from '../repositories';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 const templatesRoutePath = '/templates';
 const templatesIDRoutePath = '/templates/{id}';
 
@@ -33,14 +32,14 @@ export class TemplatesController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Templates)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Templates)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Templates, {
             title: 'NewTemplates',
           }),
@@ -56,7 +55,7 @@ export class TemplatesController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -71,7 +70,7 @@ export class TemplatesController {
       [STATUS_CODE.OK]: {
         description: 'Array of Templates model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Templates, {includeRelations: true}),
@@ -91,14 +90,14 @@ export class TemplatesController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Templates, {partial: true}),
         },
       },
@@ -114,7 +113,7 @@ export class TemplatesController {
       [STATUS_CODE.OK]: {
         description: 'Templates model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Templates, {includeRelations: true}),
           },
         },
@@ -140,7 +139,7 @@ export class TemplatesController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Templates, {partial: true}),
         },
       },

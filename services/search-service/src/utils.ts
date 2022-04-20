@@ -21,6 +21,7 @@ import {
   modelToJsonSchema,
   ResponsesObject,
 } from '@loopback/rest';
+import {CONTENT_TYPE} from '@sourceloop/core';
 import assert = require('assert');
 
 export function response(
@@ -33,8 +34,7 @@ export function response(
       [`${statusCode}`]: {
         description,
         content: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'application/json': payload,
+          [CONTENT_TYPE.JSON]: payload,
         },
       },
     },

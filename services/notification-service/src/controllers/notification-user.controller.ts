@@ -236,8 +236,7 @@ export class NotificationUserController {
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'NotificationUser PATCH success',
       },
     },
@@ -266,8 +265,7 @@ export class NotificationUserController {
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'NotificationUser PUT success',
       },
     },
@@ -289,8 +287,7 @@ export class NotificationUserController {
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'NotificationUser DELETE success',
       },
     },

@@ -105,16 +105,16 @@ export class CalendarController {
     responses: {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        content: {'application/json': {schema: getModelSchemaRef(CalendarDTO)}},
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(CalendarDTO)},
+        },
       },
     },
   })
   async createWithSubscription(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(CalendarDTO, {
             title: 'NewCalendar',
             exclude: ['id'],

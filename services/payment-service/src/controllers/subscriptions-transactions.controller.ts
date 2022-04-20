@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention*/
 import {inject} from '@loopback/core';
 import {repository, DataObject} from '@loopback/repository';
 import {
@@ -15,7 +14,7 @@ import {SubscriptionsRepository} from '../repositories';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {ResponseMessage} from '../enums';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
@@ -45,6 +44,7 @@ export class SubscriptionTransactionsController {
       [redirectStatusCode]: {
         description: 'Subscription model instance',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'text/html': {},
         },
       },
@@ -53,7 +53,7 @@ export class SubscriptionTransactionsController {
   async subscriptionandtransactionscreate(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'object',
           },
@@ -95,7 +95,7 @@ export class SubscriptionTransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
         content: {
-          'application/json': {},
+          [CONTENT_TYPE.JSON]: {},
         },
       },
     },
@@ -103,6 +103,7 @@ export class SubscriptionTransactionsController {
   async subscriptionTransactionscharge(
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/x-www-form-urlencoded': {
           schema: {
             type: 'object',

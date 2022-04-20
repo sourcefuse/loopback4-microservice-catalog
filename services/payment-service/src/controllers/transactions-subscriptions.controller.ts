@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention*/
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {get, param, Response, RestBindings} from '@loopback/rest';
@@ -32,6 +31,7 @@ export class TransactionSubscriptionsController {
       [redirectStatusCode]: {
         description: 'Array of Transactions model instances',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'text/html': {
             schema: {
               type: 'object',

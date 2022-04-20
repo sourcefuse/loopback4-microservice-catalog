@@ -121,8 +121,7 @@ export class OriginatorController {
     security: OPERATION_SECURITY_SPEC,
     summary: 'ComposeAPI. For drafting, reply on and create new message',
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      201: {
+      [STATUS_CODE.CREATED]: {
         description: 'collect single message for user by message identifier',
         content: {
           [CONTENT_TYPE.JSON]: {

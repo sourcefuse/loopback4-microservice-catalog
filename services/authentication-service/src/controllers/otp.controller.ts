@@ -59,8 +59,7 @@ export class OtpController {
   @authorize({permissions: ['*']})
   @del('/otp-caches/{id}', {
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Otp DELETE success',
       },
     },
