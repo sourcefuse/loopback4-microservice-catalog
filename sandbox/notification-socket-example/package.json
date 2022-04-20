@@ -54,7 +54,7 @@
     "@loopback/repository-json-schema": "^5.0.0",
     "@loopback/rest": "^11.0.0",
     "@loopback/rest-explorer": "^4.0.1",
-    "@loopback/service-proxy": "^4.0.0",
+    "@loopback/service-proxy": "^4.1.2",
     "@sourceloop/core": "^5.0.1",
     "@sourceloop/notification-service": "^4.0.9",
     "ajv": "^8.8.2",
