@@ -72,6 +72,7 @@ export class AppleLoginController {
   postLoginViaApple(
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/x-www-form-urlencoded': {
           schema: getModelSchemaRef(ClientAuthRequest),
         },
@@ -100,6 +101,7 @@ export class AppleLoginController {
         description: 'Apple Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },
