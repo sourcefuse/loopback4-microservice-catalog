@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.1.4 (2022-04-20)</small>
+
+* chore(deps): bump minimist in /services/video-conferencing-service (#632) ([0b47028](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/0b47028)), closes [#632](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/632)
+* chore(deps): bump moment in /services/video-conferencing-service (#649) ([7c4ee2f](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/7c4ee2f)), closes [#649](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/649)
+* chore(deps): bump urijs in /services/video-conferencing-service (#682) ([2266111](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/2266111)), closes [#682](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/682)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>3.1.3 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service

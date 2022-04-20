@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.8 (2022-04-20)</small>
+
+* chore(deps): bump moment in /services/audit-service (#660) ([9c9c400](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9c9c400)), closes [#660](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/660)
+* chore(deps): bump urijs in /services/audit-service (#678) ([efb2c81](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/efb2c81)), closes [#678](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/678)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>4.0.7 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-service

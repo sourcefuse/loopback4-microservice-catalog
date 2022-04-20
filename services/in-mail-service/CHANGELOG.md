@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.8 (2022-04-20)</small>
+
+* chore(deps): bump minimist in /services/in-mail-service (#642) ([5967a3d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5967a3d)), closes [#642](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/642)
+* chore(deps): bump moment in /services/in-mail-service (#651) ([1de85de](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1de85de)), closes [#651](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/651)
+* chore(deps): bump urijs in /services/in-mail-service (#675) ([eb2adfe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eb2adfe)), closes [#675](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/675)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>3.0.7 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/in-mail-service

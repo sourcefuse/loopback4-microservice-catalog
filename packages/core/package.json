@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "6.1.3",
+  "version": "6.1.4",
   "description": "Sourceloop core package",
   "keywords": [
     "loopback-extension",
@@ -27,7 +27,6 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "postinstall": "patch-package"
-
   },
   "repository": {
     "type": "git",

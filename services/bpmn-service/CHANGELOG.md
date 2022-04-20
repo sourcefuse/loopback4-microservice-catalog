@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.8 (2022-04-20)</small>
+
+* chore(deps): bump moment from 2.29.1 to 2.29.2 in /services/bpmn-service (#663) ([8bd0b09](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8bd0b09)), closes [#663](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/663)
+* chore(deps): bump urijs in /services/bpmn-service (#677) ([02abf15](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/02abf15)), closes [#677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/677)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>5.0.7 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/bpmn-service

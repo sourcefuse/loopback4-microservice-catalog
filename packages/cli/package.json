@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Sourceloop CLI",
   "bin": {
     "sl": "./bin/run"
@@ -78,8 +78,8 @@
     "jake": {
       "async": "^3.2.3"
     },
-    "fast-glob":{
-      "glob-parent":"^6.0.0"
+    "fast-glob": {
+      "glob-parent": "^6.0.0"
     }
   },
   "oclif": {
