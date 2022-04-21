@@ -233,7 +233,7 @@ export class NotificationController {
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Notification PATCH success',
       },
     },

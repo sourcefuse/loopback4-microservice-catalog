@@ -120,6 +120,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ]);
         this.options.facade = isFacade;
         this.projectInfo.facade = isFacade;
+      } else {
+        this.projectInfo.facade = this.options.facade;
       }
     }
   }
@@ -152,6 +154,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         } else {
           // do nothing
         }
+      } else {
+        this.projectInfo.serviceDependency = this.options.baseService;
       }
     }
   }
@@ -205,6 +209,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ...this.options,
         ...answers,
       };
+
       this.projectInfo.datasourceName = this.options.datasourceName;
       this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
         this.options.datasourceName,

@@ -3,6 +3,7 @@
 import {inject} from '@loopback/core';
 import {repository, DataObject} from '@loopback/repository';
 import {post, requestBody} from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
@@ -28,11 +29,9 @@ export class QueryDataController {
   @authorize({permissions: ['MetaBase']})
   @post(`/query/data`, {
     responses: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      '200': 'Metabase instance',
+      [STATUS_CODE.OK]: 'Metabase instance',
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'object',
           },
@@ -43,8 +42,7 @@ export class QueryDataController {
   async metabaseTest(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'object',
           },

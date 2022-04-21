@@ -6,9 +6,9 @@
       "loopback-<%= project.projectType -%>",
       "loopback"
     ],
-  <% if (project.private) { -%>
+<% if (project.private) { -%>
     "private": true,
-  <% } -%>
+<% } -%>
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "engines": {
@@ -17,117 +17,118 @@
     "scripts": {
       "build": "lb-tsc",
       "build:watch": "lb-tsc --watch",
-  <% if (project.prettier && project.eslint) { -%>
-  <% if (packageManager === 'yarn') { -%>
+<% if (project.prettier && project.eslint) { -%>
+<% if (packageManager === 'yarn') { -%>
       "lint": "yarn run eslint && yarn run prettier:check",
       "lint:fix": "yarn run eslint:fix && yarn run prettier:fix",
-  <% } else { -%>
+<% } else { -%>
       "lint": "npm run eslint && npm run prettier:check",
       "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-  <% } -%>
-  <% } else if (project.prettier) { -%>
-  <% if (packageManager === 'yarn') { -%>
+<% } -%>
+<% } else if (project.prettier) { -%>
+<% if (packageManager === 'yarn') { -%>
       "lint": "yarn run prettier:check",
       "lint:fix": "yarn run prettier:fix",
-  <% } else { -%>
+<% } else { -%>
       "lint": "npm run prettier:check",
       "lint:fix": "npm run prettier:fix",
-  <% } -%>
-  <% } else if (project.eslint) { -%>
-  <% if (packageManager === 'yarn') { -%>
+<% } -%>
+<% } else if (project.eslint) { -%>
+<% if (packageManager === 'yarn') { -%>
       "lint": "yarn run eslint",
       "lint:fix": "yarn run eslint:fix",
-  <% } else { -%>
+<% } else { -%>
       "lint": "npm run eslint",
       "lint:fix": "npm run eslint:fix",
-  <% } -%>
-  <% } -%>
-  <% if (project.prettier) { -%>
+<% } -%>
+<% } -%>
+<% if (project.prettier) { -%>
       "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
-  <% if (packageManager === 'yarn') { -%>
+<% if (packageManager === 'yarn') { -%>
       "prettier:check": "yarn run prettier:cli -l",
       "prettier:fix": "yarn run prettier:cli --write",
-  <% } else { -%>
+<% } else { -%>
       "prettier:check": "npm run prettier:cli -- -l",
       "prettier:fix": "npm run prettier:cli -- --write",
-  <% } -%>
-  <% } -%>
-  <% if (project.eslint) { -%>
+<% } -%>
+<% } -%>
+<% if (project.eslint) { -%>
       "eslint": "lb-eslint --report-unused-disable-directives .",
-  <% if (packageManager === 'yarn') { -%>
+<% if (packageManager === 'yarn') { -%>
       "eslint:fix": "yarn run eslint --fix",
-  <% } else { -%>
+<% } else { -%>
       "eslint:fix": "npm run eslint -- --fix",
-  <% } -%>
-  <% } -%>
-  <% if (packageManager === 'yarn') { -%>
+<% } -%>
+<% } -%>
+<% if (packageManager === 'yarn') { -%>
       "pretest": "yarn run rebuild",
-  <% } else { -%>
+<% } else { -%>
       "pretest": "npm run rebuild",
-  <% } -%>
-  <% if (project.mocha) { -%>
+<% } -%>
+<% if (project.mocha) { -%>
       "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-  <% } -%>
-  <% if (project.prettier || project.eslint) { -%>
-  <% if (packageManager === 'yarn') { -%>
+<% } -%>
+<% if (project.prettier || project.eslint) { -%>
+<% if (packageManager === 'yarn') { -%>
       "posttest": "yarn run lint",
-  <% } else { -%>
+<% } else { -%>
       "posttest": "npm run lint",
-  <% } -%>
-  <% } -%>
-  <% if (project.mocha && (project.prettier || project.eslint)) { -%>
-  <% if (packageManager === 'yarn') { -%>
+<% } -%>
+<% } -%>
+<% if (project.mocha && (project.prettier || project.eslint)) { -%>
+<% if (packageManager === 'yarn') { -%>
       "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && yarn run posttest",
-  <% } else { -%>
+<% } else { -%>
       "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-  <% } -%>
-  <% } else if (project.mocha) { -%>
+<% } -%>
+<% } else if (project.mocha) { -%>
       "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-  <% } -%>
-  <% if (project.projectType === 'application' || project.projectType === 'microservice') { -%>
-  <% if (project.docker) { -%>
+<% } -%>
+<% if (project.projectType === 'application' || project.projectType === 'microservice') { -%>
+<% if (project.docker) { -%>
       "docker:build": "docker build -t <%= project.name -%> .",
       "docker:run": "docker run -p 3000:3000 -d <%= project.name -%>",
       "symlink-resolver": "symlink-resolver",
       "resolve-links": "npm run symlink-resolver build ./node_modules/@local",
-  <% } -%>
-  <% if (project.repositories && packageManager === 'yarn') { -%>
+<% } -%>
+<% if (project.repositories && packageManager === 'yarn') { -%>
       "premigrate": "yarn run build",
-  <% } else if (project.repositories) { -%>
+<% } else if (project.repositories) { -%>
       "premigrate": "npm run build",
-  <% } -%>
-  <% if (project.repositories) { -%>
+<% } -%>
+<% if (project.repositories) { -%>
       "migrate": "node ./dist/migrate",
-  <% } -%>
-  <% if (packageManager === 'yarn') { -%>
+<% } -%>
+<% if (packageManager === 'yarn') { -%>
       "preopenapi-spec": "yarn run build",
-  <% } else { -%>
+<% } else { -%>
       "preopenapi-spec": "npm run build",
-  <% } -%>
+<% } -%>
       "openapi-spec": "node ./dist/openapi-spec",
-  <% if (packageManager === 'yarn') { -%>
+<% if (packageManager === 'yarn') { -%>
       "prestart": "yarn run rebuild",
-  <% } else { -%>
+<% } else { -%>
       "prestart": "npm run rebuild",
-  <% } -%>
+<% } -%>
       "start": "node -r source-map-support/register .",
-  <% } -%>
+      "dev": "nodemon --watch src -e ts --exec \"npm run start\"",
+<% } -%>
       "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-  <% if (packageManager === 'yarn') { -%>
+<% if (packageManager === 'yarn') { -%>
       "rebuild": "yarn run clean && yarn run build"
-  <% } else { -%>
+<% } else { -%>
       "rebuild": "npm run clean && npm run build"
-  <% } -%>
+<% } -%>
     },
     "repository": {
       "type": "git",
       "url": ""
     },
-  <% if (author) { -%>
+<% if (author) { -%>
     "author": "<%= author.name %><<%= author.email %>>",
-  <% } else { -%>
+<% } else { -%>
     "author": "",
-  <% } -%>
+<% } -%>
     "license": "",
     "files": [
       "README.md",
@@ -135,30 +136,30 @@
       "src",
       "!*/__tests__"
     ],
-  <% if (project.projectType === 'extension') { -%>
+<% if (project.projectType === 'extension') { -%>
     "peerDependencies": {
       "@loopback/core": "<%= project.dependencies['@loopback/core'] -%>"
     },
-  <% } -%>
+<% } -%>
     "dependencies": {
-  <% if (project.projectType === 'application' || project.projectType === 'microservice') { -%>
+<% if (project.projectType === 'application' || project.projectType === 'microservice') { -%>
       "@loopback/boot": "<%= project.dependencies['@loopback/boot'] -%>",
       "@loopback/core": "<%= project.dependencies['@loopback/core'] -%>",
-  <% } -%>
-  <% if (project.repositories) { -%>
+<% } -%>
+<% if (project.repositories) { -%>
       "@loopback/repository": "<%= project.dependencies['@loopback/repository'] -%>",
-  <% } -%>
-  <% if (project.apiconnect) { -%>
+<% } -%>
+<% if (project.apiconnect) { -%>
       "@loopback/apiconnect": "<%= project.dependencies['@loopback/apiconnect'] -%>",
-  <% } -%>
+<% } -%>
       "@loopback/rest": "<%= project.dependencies['@loopback/rest'] -%>",
-  <% if (project.services) { -%>
+<% if (project.services) { -%>
       "@loopback/rest-explorer": "<%= project.dependencies['@loopback/rest-explorer'] -%>",
       "@loopback/service-proxy": "<%= project.dependencies['@loopback/service-proxy'] -%>",
-  <% } else { -%>
+<% } else { -%>
       "@loopback/rest-explorer": "<%= project.dependencies['@loopback/rest-explorer'] -%>",
-  <% } -%>
-  <% if (project.projectType === 'microservice') { -%>
+<% } -%>
+<% if (project.projectType === 'microservice') { -%>
       "@loopback/openapi-v3": "<%= project.dependencies['@loopback/openapi-v3'] -%>",
       "@loopback/context": "<%= project.dependencies['@loopback/context'] -%>",
       "@sourceloop/core": "<%= project.dependencies['@sourceloop/core'] -%>",
@@ -174,32 +175,33 @@
       "@opentelemetry/plugin-pg-pool": "<%= project.dependencies['@opentelemetry/plugin-pg-pool'] -%>",
       "@opentelemetry/tracing": "<%= project.dependencies['@opentelemetry/tracing'] -%>",
       "symlink-resolver": "<%= project.dependencies['symlink-resolver'] -%>",
-  <% if (project.datasourceType === 'postgres') { -%>
+<% if (project.datasourceType === 'postgres') { -%>
       "loopback-connector-postgresql": "<%= project.dependencies["loopback-connector-postgresql"]%>",
-  <% } else if (project.datasourceType === 'mysql') { -%>
+<% } else if (project.datasourceType === 'mysql') { -%>
       "loopback-connector-mysql": "<%= project.dependencies["loopback-connector-mysql"]%>",
-  <% } -%>
-  <% } -%>
+<% } -%>
+<% } -%>
       "tslib": "<%= project.dependencies['tslib'] -%>"
     },
     "devDependencies": {
       "@loopback/build": "<%= project.dependencies['@loopback/build'] -%>",
       "source-map-support": "<%= project.dependencies['source-map-support'] -%>",
-  <% if (project.projectType === 'extension') { -%>
+<% if (project.projectType === 'extension') { -%>
       "@loopback/core": "<%= project.dependencies['@loopback/core'] -%>",
-  <% } -%>
-  <% if (project.projectType === 'microservice') { -%>
+<% } -%>
+<% if (project.projectType === 'microservice') { -%>
+      "nodemon": "<%= project.dependencies['nodemon'] -%>",
       "dotenv": "<%= project.dependencies['dotenv'] -%>",
       "dotenv-extended": "<%= project.dependencies['dotenv-extended'] -%>",
       "nyc": "<%= project.dependencies['nyc'] -%>",
       "@istanbuljs/nyc-config-typescript": "<%= project.dependencies['@istanbuljs/nyc-config-typescript'] -%>",
-  <% } -%>
+<% } -%>
       "@loopback/testlab": "<%= project.dependencies['@loopback/testlab'] -%>",
       "@types/node": "<%= project.dependencies['@types/node'] -%>",
-  <% if (project.eslint) { -%>
+<% if (project.eslint) { -%>
       "@loopback/eslint-config": "<%= project.dependencies['@loopback/eslint-config'] -%>",
       "eslint": "<%= project.dependencies['eslint'] -%>",
-  <% } -%>
+<% } -%>
       "typescript": "<%= project.dependencies['typescript'] -%>"
     }
   }
