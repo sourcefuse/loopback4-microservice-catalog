@@ -29,3 +29,4 @@ export * from './forgot-password.provider';
 export * from './otp-generate.provider';
 export * from './otp-sender.provider';
 export * from './keys';
+export * from './google-authenticator-verify.provider';

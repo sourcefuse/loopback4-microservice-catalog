@@ -33,6 +33,7 @@ import {
   ApplePostVerifyProvider,
   ApplePreVerifyProvider,
   AuthCodeBindings,
+  AuthenticatorVerifyProvider,
   CodeWriterProvider,
   FacebookOauth2SignupProvider,
   FacebookPostVerifyProvider,
@@ -205,6 +206,8 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
       OtpGenerateProvider;
     this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] = OtpSenderProvider;
+    this.providers[VerifyBindings.GOOGLE_AUTHENTICATOR_VERIFY_PROVIDER.key] =
+      AuthenticatorVerifyProvider;
 
     this.providers[AuthCodeBindings.CODEREADER_PROVIDER.key] =
       OauthCodeReaderProvider;

@@ -81,6 +81,10 @@ export namespace VerifyBindings {
   export const OTP_SENDER_PROVIDER = BindingKey.create<OtpSenderFn>(
     'sf.otp.sender.provider',
   );
+  export const GOOGLE_AUTHENTICATOR_VERIFY_PROVIDER =
+    BindingKey.create<VerifyFunction.OtpAuthFn>(
+      'sf.google.authenticator.verify.provider',
+    );
 
   export const BEARER_SIGNUP_VERIFY_PROVIDER =
     BindingKey.create<VerifyFunction.GenericAuthFn>(

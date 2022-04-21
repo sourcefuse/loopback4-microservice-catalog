@@ -8,7 +8,7 @@ export class OtpSenderProvider implements Provider<OtpSenderFn> {
 
   value(): OtpSenderFn {
     return async (_otp: string, _user: AuthUser) => {
-      throw new HttpErrors.NotImplemented(`OtpSenderProvider not implemented`);
+      throw new HttpErrors.NotImplemented(`OtpSenderFn not implemented`);
     };
   }
 }

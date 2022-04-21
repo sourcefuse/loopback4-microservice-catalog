@@ -5,7 +5,7 @@ export class OtpCache extends Entity {
   @property({
     type: 'string',
   })
-  otp: string;
+  otp?: string;
 
   @property({
     type: 'string',

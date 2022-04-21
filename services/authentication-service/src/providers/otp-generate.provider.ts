@@ -1,6 +1,6 @@
 import {Provider} from '@loopback/context';
 import {OtpGenerateFn} from './types';
-const crypto = require('crypto');
+import * as crypto from 'crypto';
 
 export class OtpGenerateProvider implements Provider<OtpGenerateFn> {
   constructor() {}
@@ -9,7 +9,8 @@ export class OtpGenerateProvider implements Provider<OtpGenerateFn> {
     return async () => {
       const min = 100000;
       const max = 999999;
-      return crypto.randomInt(min, max);
+      const otp = crypto.randomInt(min, max);
+      return otp.toString();
     };
   }
 }

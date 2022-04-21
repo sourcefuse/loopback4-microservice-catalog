@@ -80,7 +80,8 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-instagram": "^1.0.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "2fa-util": "^1.1.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
