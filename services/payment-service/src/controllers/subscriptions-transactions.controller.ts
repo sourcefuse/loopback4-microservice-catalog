@@ -44,7 +44,7 @@ export class SubscriptionTransactionsController {
       [redirectStatusCode]: {
         description: 'Subscription model instance',
         content: {
-          [CONTENT_TYPE.TEXT_HTLM]: {},
+          [CONTENT_TYPE.TEXT_HTML]: {},
         },
       },
     },

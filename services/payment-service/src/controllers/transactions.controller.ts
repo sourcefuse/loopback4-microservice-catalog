@@ -214,7 +214,7 @@ export class TransactionsController {
       [redirectStatusCode]: {
         description: 'Order model instance',
         content: {
-          [CONTENT_TYPE.TEXT_HTLM]: {},
+          [CONTENT_TYPE.TEXT_HTML]: {},
         },
       },
     },
@@ -254,7 +254,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'HTML response for payment gateway interface.',
         content: {
-          [CONTENT_TYPE.TEXT_HTLM]: {
+          [CONTENT_TYPE.TEXT_HTML]: {
             schema: {
               type: 'object',
             },

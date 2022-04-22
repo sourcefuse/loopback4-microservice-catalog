@@ -32,7 +32,7 @@ export class TransactionSubscriptionsController {
       [redirectStatusCode]: {
         description: 'Array of Transactions model instances',
         content: {
-          [CONTENT_TYPE.TEXT_HTLM]: {
+          [CONTENT_TYPE.TEXT_HTML]: {
             schema: {
               type: 'object',
             },
