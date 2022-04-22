@@ -29,10 +29,10 @@ describe('Google Oauth Signup Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise and throws invalid credentials', async () => {
+    it('checks if provider function returns a promise and throws not implemented', async () => {
       const func = googleOauth2SignupProvider.value();
       const result = await func(profile).catch(err => err.message);
-      expect(result).to.be.eql('Invalid Credentials');
+      expect(result).to.be.eql('GoogleOauth2SignupProvider not implemented');
     });
   });
 
