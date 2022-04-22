@@ -1,8 +1,9 @@
 import {Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {VerifyFunction} from 'loopback4-authentication';
 import {OtpCacheRepository, UserRepository} from '../../../repositories';
+import {AuthenticateErrorKeys} from '@sourceloop/core';
 
 export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
   constructor(
@@ -16,11 +17,11 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
     return async (key: string, otp: string) => {
       const otpCache = await this.otpCacheRepo.get(key);
       if (!otpCache) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+        throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.InvalidKey);
       }
       const cachedOtp = otpCache.otp?.toString();
       if (cachedOtp !== otp) {
-        throw new HttpErrors.Unauthorized('Invalid OTP');
+        throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.InvalidOtp);
       }
       return this.userRepository.findById(otpCache.userId);
     };

@@ -3,6 +3,7 @@ import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {VerifyFunction} from 'loopback4-authentication';
 import {OtpCacheRepository, UserRepository} from '../repositories';
+import {AuthenticateErrorKeys} from '@sourceloop/core';
 const {verify} = require('2fa-util');
 
 export class AuthenticatorVerifyProvider
@@ -19,11 +20,11 @@ export class AuthenticatorVerifyProvider
     return async (key: string, otp: string) => {
       const otpCache = await this.otpCacheRepo.get(key);
       if (!otpCache) {
-        throw new HttpErrors.Unauthorized('Invalid Key');
+        throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.InvalidKey);
       }
       const isValid = await verify(otp, key);
       if (!isValid) {
-        throw new HttpErrors.Unauthorized('Invalid OTP');
+        throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.InvalidOtp);
       }
       return this.userRepository.findById(otpCache.userId);
     };

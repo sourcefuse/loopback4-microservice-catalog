@@ -41,6 +41,7 @@ import {AuthClient, OtpCache, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
   CodeReaderFn,
+  CodeWriterFn,
   JwtPayloadFn,
   VerifyBindings,
 } from '../../providers';
@@ -502,10 +503,13 @@ export class LoginController {
   async verifyOtp(
     @requestBody()
     req: OtpLoginRequest,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
     const otpCache = await this.otpCacheRepo.get(req.key);
+    const token = await codeWriter(this.createCode(otpCache));
     return {
-      code: this.createCode(otpCache),
+      code: token,
     };
   }
 
@@ -573,10 +577,13 @@ export class LoginController {
   async verifyQr(
     @requestBody()
     req: OtpLoginRequest,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
     const otpCache = await this.otpCacheRepo.get(req.key);
+    const token = await codeWriter(this.createCode(otpCache));
     return {
-      code: this.createCode(otpCache),
+      code: token,
     };
   }
 
