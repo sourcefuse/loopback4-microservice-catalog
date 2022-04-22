@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.1.4 (2022-04-20)</small>
+
+* chore(deps): bump moment from 2.29.1 to 2.29.2 in /packages/core (#648) ([8fb5e34](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8fb5e34)), closes [#648](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/648)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>6.1.3 (2022-03-30)</small>
 
 * chore(core): locale file ([e0ceab9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e0ceab9)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

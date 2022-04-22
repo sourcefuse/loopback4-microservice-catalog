@@ -8,7 +8,7 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/authentication-service/@loopback/core)
 
-![check-code-coverage](https://img.shields.io/badge/code--coverage-76.35%25-yellow)
+![check-code-coverage](https://img.shields.io/badge/code--coverage-76.27%25-yellow)
 
 ## Overview
 

@@ -31,6 +31,7 @@ export class TransactionSubscriptionsController {
       [redirectStatusCode]: {
         description: 'Array of Transactions model instances',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'text/html': {
             schema: {
               type: 'object',

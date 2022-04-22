@@ -213,6 +213,7 @@ export class VonageService implements VonageVideoChat {
         fallback: storageConfig.fallback,
       },
       headers: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'X-OPENTOK-AUTH': token,
       },
     });

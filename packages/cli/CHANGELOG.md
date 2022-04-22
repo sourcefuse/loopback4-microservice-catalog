@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.1 (2022-04-20)</small>
+
+* chore(deps): bump moment from 2.29.1 to 2.29.2 in /packages/cli (#667) ([12bb9d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12bb9d9)), closes [#667](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/667)
+* chore(deps): bump simple-git from 3.3.0 to 3.5.0 in /packages/cli (#673) ([468afa9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/468afa9)), closes [#673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/673)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+* fix(cli): fix options bug, add dev script (#637) ([fb1ef09](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fb1ef09)), closes [#637](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/637) [#563](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/563)
+
+
+
+
+
 ## 1.2.0 (2022-03-30)
 
 * fix(cli): fix issues in docker file, sonar (#624) ([7255501](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7255501)), closes [#624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/624) [#561](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/561) [#564](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/564)

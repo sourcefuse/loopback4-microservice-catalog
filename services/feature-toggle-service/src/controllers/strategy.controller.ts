@@ -48,7 +48,7 @@ export class StrategyController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Strategy, {
             title: 'NewStrategy',
           }),
@@ -113,7 +113,7 @@ export class StrategyController {
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Strategy, {partial: true}),
         },
       },
@@ -161,7 +161,7 @@ export class StrategyController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Strategy, {partial: true}),
         },
       },

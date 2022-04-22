@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.9 (2022-04-20)</small>
+
+* chore(deps): bump moment in /sandbox/workflow-ms-example (#655) ([2ca4fe1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/2ca4fe1)), closes [#655](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/655)
+
+
+
+
+
 ## <small>0.4.8 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/workflow-ms-example

@@ -66,6 +66,7 @@ export class InstagramLoginController {
         description: 'POST Call for Instagram based login',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },
@@ -75,6 +76,7 @@ export class InstagramLoginController {
   async postLoginViaInstagram(
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/x-www-form-urlencoded': {
           schema: getModelSchemaRef(ClientAuthRequest),
         },
@@ -102,6 +104,7 @@ export class InstagramLoginController {
         description: 'Instagram Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },

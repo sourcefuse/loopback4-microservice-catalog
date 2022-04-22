@@ -48,7 +48,7 @@ export class FeatureController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Feature, {
             title: 'NewFeature',
           }),
@@ -115,7 +115,7 @@ export class FeatureController {
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Feature, {partial: true}),
         },
       },
@@ -163,7 +163,7 @@ export class FeatureController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Feature, {partial: true}),
         },
       },
