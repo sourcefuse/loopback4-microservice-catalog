@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.2 (2022-04-20)</small>
+
+* chore(deps): bump minimist in /services/feature-toggle-service (#644) ([f0434c6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f0434c6)), closes [#644](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/644)
+* chore(deps): bump moment in /services/feature-toggle-service (#664) ([cf7130a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cf7130a)), closes [#664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/664)
+* chore(deps): bump urijs in /services/feature-toggle-service (#684) ([32b446a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/32b446a)), closes [#684](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/684)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>0.5.1 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/feature-toggle-service

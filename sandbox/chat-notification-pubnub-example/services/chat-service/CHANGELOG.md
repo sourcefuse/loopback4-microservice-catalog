@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.4 (2022-04-20)</small>
+
+* chore(deps): bump minimist (#635) ([d032b77](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/d032b77)), closes [#635](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/635)
+* chore(deps): bump moment (#669) ([1eba49c](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/1eba49c)), closes [#669](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/669)
+
+
+
+
+
 ## <small>0.1.3 (2022-03-30)</small>
 
 * chore(deps): bump node-forge (#618) ([6fd23c5](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/6fd23c5)), closes [#618](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/618)

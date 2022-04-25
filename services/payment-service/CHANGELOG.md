@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.2.5 (2022-04-20)</small>
+
+* chore(deps): bump minimist in /services/payment-service (#640) ([39a6302](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39a6302)), closes [#640](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/640)
+* chore(deps): bump moment in /services/payment-service (#661) ([08c3a99](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/08c3a99)), closes [#661](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/661)
+* chore(deps): bump urijs in /services/payment-service (#676) ([6d5b833](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d5b833)), closes [#676](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/676)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>3.2.4 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-service

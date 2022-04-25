@@ -1,0 +1,120 @@
+{
+  "name": "@sourceloop/reporting-service",
+  "version": "0.1.0",
+  "description": "services",
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "12 || 14 || 16 || 17"
+  },
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "echo \"No tests !\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t reporting-service .",
+    "docker:run": "docker run -p 3000:3000 -d reporting-service",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "postinstall": "patch-package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/reporting-service"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "database.json",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate-pg": "^1.2.2",
+    "patch-package": "^6.4.7"
+  },
+  "dependencies": {
+    "@loopback/boot": "^4.1.2",
+    "@loopback/context": "^4.1.2",
+    "@loopback/core": "^3.1.2",
+    "@loopback/openapi-v3": "^7.1.2",
+    "@loopback/repository": "^4.1.2",
+    "@loopback/rest": "^11.1.2",
+    "@loopback/rest-explorer": "^4.1.2",
+    "@loopback/service-proxy": "^4.1.2",
+    "@sourceloop/core": "^6.1.4",
+    "axios": "^0.26.1",
+    "circular-json": "^0.5.9",
+    "dotenv": "^16.0.0",
+    "dotenv-extended": "^2.9.0",
+    "handlebars": "^4.7.7",
+    "loopback4-authentication": "^6.0.3",
+    "loopback4-authorization": "^5.0.3",
+    "loopback4-soft-delete": "^5.0.4",
+    "moment": "^2.29.3",
+    "razorpay": "^2.8.1",
+    "stripe": "^8.218.0",
+    "tslib": "^2.3.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@loopback/build": "^8.1.2",
+    "@loopback/eslint-config": "^12.0.4",
+    "@loopback/testlab": "^4.1.2",
+    "@types/circular-json": "^0.4.0",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^17.0.25",
+    "@types/uuid": "^8.3.4",
+    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate-pg": "1.2.2",
+    "eslint": "^8.13.0",
+    "patch-package": "^6.4.7",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.6.3",
+    "widdershins": "^4.0.1"
+  },
+  "overrides": {
+    "jake": {
+      "async": "^3.2.3"
+    },
+    "passport-azure-ad": {
+      "async": "^3.2.3"
+    },
+    "cache-manager": {
+      "async": "^3.2.3"
+    },
+    "widdershins": {
+      "swagger2openapi": "^7.0.8",
+      "markdown-it": "^12.3.2",
+      "yargs": "^17.4.1"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}

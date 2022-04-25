@@ -66,6 +66,7 @@ export class FacebookLoginController {
         description: 'POST Call for Facebook based login',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },
@@ -75,6 +76,7 @@ export class FacebookLoginController {
   async postLoginViaFacebook(
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/x-www-form-urlencoded': {
           schema: getModelSchemaRef(ClientAuthRequest),
         },
@@ -102,6 +104,7 @@ export class FacebookLoginController {
         description: 'Facebook Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },

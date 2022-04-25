@@ -59,7 +59,7 @@ export class OtpController {
   @authorize({permissions: ['*']})
   @del('/otp-caches/{id}', {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Otp DELETE success',
       },
     },

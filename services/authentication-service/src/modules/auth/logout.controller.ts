@@ -62,6 +62,7 @@ export class LogoutController {
         description: 'Success Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': SuccessResponse},
           },
         },
@@ -126,6 +127,7 @@ export class LogoutController {
         description: 'Success Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': SuccessResponse},
           },
         },

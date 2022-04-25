@@ -177,6 +177,7 @@ export class LoginController {
         description: 'Token Response Model',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },
@@ -233,6 +234,7 @@ export class LoginController {
         description: 'Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },
@@ -295,6 +297,7 @@ export class LoginController {
         description: 'New Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             schema: {'x-ts-type': TokenResponse},
           },
         },
