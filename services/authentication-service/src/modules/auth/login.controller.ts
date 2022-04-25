@@ -480,7 +480,7 @@ export class LoginController {
   ): Promise<OtpResponse> {
     const key = await this.otpSenderService.sendOtp(client, user);
     return {
-      key: key,
+      key,
     };
   }
 
