@@ -28,6 +28,7 @@ const scopes = [
   {name: 'deps'},
   {name: 'core'},
   {name: 'cli'},
+  {name: 'cache'},
   {name: 'search-client'},
   {name: 'user-onboarding'},
   {name: 'authentication-service'},
