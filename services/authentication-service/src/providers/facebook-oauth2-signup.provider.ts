@@ -1,6 +1,5 @@
 import {Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
-import {AuthErrorKeys} from 'loopback4-authentication/index';
 import {FacebookSignUpFn} from './types';
 
 export class FacebookOauth2SignupProvider
@@ -8,7 +7,9 @@ export class FacebookOauth2SignupProvider
 {
   value(): FacebookSignUpFn {
     return async profile => {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      throw new HttpErrors.NotImplemented(
+        `FacebookOauth2SignupProvider not implemented`,
+      );
     };
   }
 }

@@ -16,7 +16,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {Orders} from '../models';
 import {OrdersRepository} from '../repositories';
 const orderIdPath = '/orders/{id}';
@@ -30,14 +30,14 @@ export class OrdersController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Orders)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Orders)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Orders, {
             title: 'NewOrders',
           }),
@@ -53,7 +53,7 @@ export class OrdersController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -66,7 +66,7 @@ export class OrdersController {
       [STATUS_CODE.OK]: {
         description: 'Array of Orders model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Orders, {includeRelations: true}),
@@ -84,14 +84,14 @@ export class OrdersController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Orders, {partial: true}),
         },
       },
@@ -107,7 +107,7 @@ export class OrdersController {
       [STATUS_CODE.OK]: {
         description: 'Orders model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Orders, {includeRelations: true}),
           },
         },
@@ -133,7 +133,7 @@ export class OrdersController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Orders, {partial: true}),
         },
       },

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.1.0 (2022-04-20)
+
+* chore(deps): bump minimist in /services/reporting-service (#628) ([d74114a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d74114a)), closes [#628](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/628)
+* chore(deps): bump moment in /services/reporting-service (#672) ([1757c94](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1757c94)), closes [#672](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/672)
+* chore(deps): bump node-forge in /services/reporting-service (#638) ([c29a883](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c29a883)), closes [#638](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/638)
+* chore(deps): bump urijs in /services/reporting-service (#685) ([be74772](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be74772)), closes [#685](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/685)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+* feat(services): adds reporting service feature (#600) ([84322b8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/84322b8)), closes [#600](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/600)
+
+
+
+
+
 ## <small>3.2.2 (2022-03-06)</small>
 
 * fix(chore): update package dependencies to latest version (#577) ([bb04c18](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb04c18)), closes [#577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/577)

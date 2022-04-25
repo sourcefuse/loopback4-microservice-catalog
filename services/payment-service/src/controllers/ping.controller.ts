@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention*/
 import {inject} from '@loopback/core';
 import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';

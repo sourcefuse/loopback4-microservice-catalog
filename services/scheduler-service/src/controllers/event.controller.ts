@@ -143,7 +143,7 @@ export class EventController {
   async getFeeBusyStatus(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(FreeBusyDTO, {
             title: 'FreeBusyRequest',
           }),

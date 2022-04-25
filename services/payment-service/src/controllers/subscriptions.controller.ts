@@ -17,7 +17,7 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {Subscriptions} from '../models';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
@@ -38,7 +38,7 @@ export class SubscriptionsController {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Subscriptions)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscriptions)},
         },
       },
     },
@@ -46,7 +46,7 @@ export class SubscriptionsController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscriptions, {
             title: 'NewSubscriptions',
           }),
@@ -64,7 +64,7 @@ export class SubscriptionsController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -81,7 +81,7 @@ export class SubscriptionsController {
       [STATUS_CODE.OK]: {
         description: 'Array of Subscriptions model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Subscriptions, {includeRelations: true}),
@@ -103,14 +103,14 @@ export class SubscriptionsController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscriptions, {partial: true}),
         },
       },
@@ -128,7 +128,7 @@ export class SubscriptionsController {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Subscriptions, {includeRelations: true}),
           },
         },
@@ -156,7 +156,7 @@ export class SubscriptionsController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscriptions, {partial: true}),
         },
       },

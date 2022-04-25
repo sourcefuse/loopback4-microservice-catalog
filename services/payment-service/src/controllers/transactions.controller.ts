@@ -30,7 +30,7 @@ import {
   TemplatesRepository,
   PaymentGatewaysRepository,
 } from '../repositories';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {ResponseMessage, TemplateName, TemplateType} from '../enums';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
@@ -66,7 +66,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Transactions model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(Transactions)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Transactions)},
         },
       },
     },
@@ -74,7 +74,7 @@ export class TransactionsController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Transactions, {
             title: 'NewTransactions',
           }),
@@ -90,7 +90,7 @@ export class TransactionsController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transactions model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -105,7 +105,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Array of Transactions model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Transactions, {includeRelations: true}),
@@ -125,14 +125,14 @@ export class TransactionsController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transactions PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Transactions, {partial: true}),
         },
       },
@@ -148,7 +148,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Transactions model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(Transactions, {includeRelations: true}),
           },
         },
@@ -174,7 +174,7 @@ export class TransactionsController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Transactions, {partial: true}),
         },
       },
@@ -214,6 +214,7 @@ export class TransactionsController {
       [redirectStatusCode]: {
         description: 'Order model instance',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'text/html': {},
         },
       },
@@ -222,7 +223,7 @@ export class TransactionsController {
   async orderandtransactionscreate(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'object',
           },
@@ -254,6 +255,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'HTML response for payment gateway interface.',
         content: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           'text/html': {
             schema: {
               type: 'object',
@@ -283,7 +285,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Transacttion Gateway Request',
         content: {
-          'application/json': {},
+          [CONTENT_TYPE.JSON]: {},
         },
       },
     },
@@ -291,6 +293,7 @@ export class TransactionsController {
   async transactionscharge(
     @requestBody({
       content: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'application/x-www-form-urlencoded': {
           schema: {
             type: 'object',
@@ -326,7 +329,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Refund Object from payment gateway',
         content: {
-          'application/json': {},
+          [CONTENT_TYPE.JSON]: {},
         },
       },
     },
@@ -361,7 +364,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Refund Object from payment gateway',
         content: {
-          'application/json': {},
+          [CONTENT_TYPE.JSON]: {},
         },
       },
     },
@@ -377,7 +380,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Subscription Gateway Request',
         content: {
-          'application/json': {},
+          [CONTENT_TYPE.JSON]: {},
         },
       },
     },
@@ -385,7 +388,7 @@ export class TransactionsController {
   async subscriptionWebHook(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'object',
           },

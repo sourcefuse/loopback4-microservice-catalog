@@ -105,14 +105,16 @@ export class CalendarController {
     responses: {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
-        content: {'application/json': {schema: getModelSchemaRef(CalendarDTO)}},
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(CalendarDTO)},
+        },
       },
     },
   })
   async createWithSubscription(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(CalendarDTO, {
             title: 'NewCalendar',
             exclude: ['id'],
