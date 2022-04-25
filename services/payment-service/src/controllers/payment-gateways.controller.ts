@@ -18,7 +18,7 @@ import {
 } from '@loopback/rest';
 import {PaymentGateways} from '../models';
 import {PaymentGatewaysRepository} from '../repositories';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 const paymentGatewayRoutePath = '/payment-gateways';
 const paymentGatewayIDRoutePath = '/payment-gateways/{id}';
 
@@ -33,7 +33,7 @@ export class PaymentGatewaysController {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(PaymentGateways)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(PaymentGateways)},
         },
       },
     },
@@ -41,7 +41,7 @@ export class PaymentGatewaysController {
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(PaymentGateways, {
             title: 'NewPaymentGateways',
           }),
@@ -57,7 +57,7 @@ export class PaymentGatewaysController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -72,7 +72,7 @@ export class PaymentGatewaysController {
       [STATUS_CODE.OK]: {
         description: 'Array of PaymentGateways model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(PaymentGateways, {
@@ -94,14 +94,14 @@ export class PaymentGatewaysController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(PaymentGateways, {partial: true}),
         },
       },
@@ -117,7 +117,7 @@ export class PaymentGatewaysController {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(PaymentGateways, {
               includeRelations: true,
             }),
@@ -145,7 +145,7 @@ export class PaymentGatewaysController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(PaymentGateways, {partial: true}),
         },
       },
