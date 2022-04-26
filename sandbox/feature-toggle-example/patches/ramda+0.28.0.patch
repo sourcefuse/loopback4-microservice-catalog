@@ -1,0 +1,14 @@
+diff --git a/node_modules/ramda/package.json b/node_modules/ramda/package.json
+index 24c9476..b97caa4 100755
+--- a/node_modules/ramda/package.json
++++ b/node_modules/ramda/package.json
+@@ -56,6 +56,9 @@
+       "import": "./es/index.js",
+       "default": "./src/index.js"
+     },
++    "./es/*": "./es/*.js",
++    "./src/*": "./src/*.js",
++    "./dist/*": "./dist/*.js",
+     "./es/": "./es/",
+     "./src/": "./src/",
+     "./dist/": "./dist/"
