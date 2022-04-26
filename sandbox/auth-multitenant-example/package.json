@@ -41,8 +41,8 @@
   "repository": {
     "type": "git"
   },
-  "author": "",
-  "license": "",
+  "author": "Sourcefuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
