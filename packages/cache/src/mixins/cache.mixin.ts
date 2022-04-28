@@ -61,9 +61,8 @@ export function CacheRespositoryMixin<
       return finalResult as M[];
     }
 
-    async searchInCache(key: string) {
+    async searchInCache(key: string): Promise<M | M[]> {
       let result;
-
       try {
         const res = await this.executeRedisCommand('GET', [key]);
         if (res) {
@@ -77,7 +76,7 @@ export function CacheRespositoryMixin<
       return result;
     }
 
-    saveInCache(key: string, value: AnyObject) {
+    saveInCache(key: string, value: AnyObject): void {
       try {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.executeRedisCommand('SET', [
@@ -93,7 +92,11 @@ export function CacheRespositoryMixin<
       }
     }
 
-    getKey(id?: ID, filter?: FilterExcludingWhere<M>, options?: Options) {
+    getKey(
+      id?: ID,
+      filter?: FilterExcludingWhere<M>,
+      options?: Options,
+    ): string {
       let key = cacheOptions.prefix;
       if (id) {
         key += `_${id}`;
@@ -107,7 +110,7 @@ export function CacheRespositoryMixin<
       return key;
     }
 
-    async clearCache() {
+    async clearCache(): Promise<number> {
       this.checkDataSource();
       const script = `
       local cursor = 0
@@ -124,11 +127,11 @@ export function CacheRespositoryMixin<
       until cursor == 0
       return dels`;
       try {
-        return await this.executeRedisCommand(`EVAL`, [
+        return (await this.executeRedisCommand(`EVAL`, [
           script,
           0,
           `${cacheOptions.prefix}*`,
-        ]);
+        ])) as number;
       } catch (err) {
         throw new Error(
           `Unexpected error occured while executing script to empty cache : ${err}`,
@@ -136,21 +139,24 @@ export function CacheRespositoryMixin<
       }
     }
 
-    checkDataSource() {
+    checkDataSource(): void {
       if (!this.cacheDataSource) {
         throw new Error(`Please provide value for cacheDataSource`);
       }
     }
 
     // returns promisified execute function
-    executeRedisCommand(command: string, args: (string | number)[]) {
+    executeRedisCommand(
+      command: string,
+      args: (string | number)[],
+    ): Promise<Buffer | number | undefined> {
       return new Promise((resolve, reject) => {
         if (this.cacheDataSource.connector?.execute) {
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           this.cacheDataSource.connector.execute(
             command,
             args,
-            (err: Error, res: Buffer) => {
+            (err: Error, res: Buffer | number) => {
               if (err) {
                 reject(err);
               }
