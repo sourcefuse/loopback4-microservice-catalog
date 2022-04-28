@@ -26,6 +26,7 @@ import {ToDo, UserLevelResource} from '../models';
 import {ToDoRepository, UserLevelResourceRepository} from '../repositories';
 import {PermissionKey} from '../enums';
 import {bind, BindingScope, inject} from '@loopback/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 
 const BASE_PATH = '/todos';
 
@@ -44,9 +45,9 @@ export class TodoController {
   @authorize({permissions: [PermissionKey.TodoCreator]})
   @post(BASE_PATH, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'ToDo model instance',
-        content: {'application/json': {schema: getModelSchemaRef(ToDo)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(ToDo)}},
       },
     },
   })
@@ -55,7 +56,7 @@ export class TodoController {
     currentUser: IAuthUserWithPermissions,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(ToDo, {
             title: 'NewToDo',
             exclude: ['id'],
@@ -82,9 +83,9 @@ export class TodoController {
   @authorize({permissions: [PermissionKey.TodoOwner]})
   @get(`${BASE_PATH}/count`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'ToDo model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -98,10 +99,10 @@ export class TodoController {
   @authorize({permissions: [PermissionKey.TodoOwner]})
   @get(BASE_PATH, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of ToDo model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(ToDo, {includeRelations: true}),
@@ -121,10 +122,10 @@ export class TodoController {
   @authorize({permissions: [PermissionKey.TodoOwner]})
   @get(`${BASE_PATH}/{id}`, {
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'ToDo model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(ToDo, {includeRelations: true}),
           },
         },
@@ -144,7 +145,7 @@ export class TodoController {
   @authorize({permissions: [PermissionKey.TodoOwner]})
   @patch(`${BASE_PATH}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'ToDo PATCH success',
       },
     },
@@ -153,7 +154,7 @@ export class TodoController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(ToDo, {partial: true}),
         },
       },
@@ -169,7 +170,7 @@ export class TodoController {
   @authorize({permissions: [PermissionKey.TodoOwner]})
   @del(`${BASE_PATH}/{id}`, {
     responses: {
-      '204': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'ToDo DELETE success',
       },
     },
