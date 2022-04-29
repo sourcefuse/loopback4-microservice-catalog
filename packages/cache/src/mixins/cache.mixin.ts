@@ -61,7 +61,7 @@ export function CacheRespositoryMixin<
       return finalResult as M[];
     }
 
-    async searchInCache(key: string): Promise<M | M[]> {
+    async searchInCache(key: string): Promise<M | M[] | undefined> {
       let result;
       try {
         const res = await this.executeRedisCommand('GET', [key]);
@@ -76,7 +76,7 @@ export function CacheRespositoryMixin<
       return result;
     }
 
-    saveInCache(key: string, value: AnyObject): void {
+    saveInCache(key: string, value: M | M[]): void {
       try {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.executeRedisCommand('SET', [
@@ -92,11 +92,7 @@ export function CacheRespositoryMixin<
       }
     }
 
-    getKey(
-      id?: ID,
-      filter?: FilterExcludingWhere<M>,
-      options?: Options,
-    ): string {
+    getKey(id?: ID, filter?: Filter<M>, options?: Options): string {
       let key = cacheOptions.prefix;
       if (id) {
         key += `_${id}`;
