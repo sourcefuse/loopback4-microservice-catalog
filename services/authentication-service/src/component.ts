@@ -22,6 +22,7 @@ import {
   BearerTokenVerifyProvider,
   ClientPasswordVerifyProvider,
   FacebookOauth2VerifyProvider,
+  GoogleAuthenticatorVerifyProvider,
   GoogleOauth2VerifyProvider,
   LocalPasswordVerifyProvider,
   OtpVerifyProvider,
@@ -33,12 +34,12 @@ import {
   ApplePostVerifyProvider,
   ApplePreVerifyProvider,
   AuthCodeBindings,
-  AuthenticatorVerifyProvider,
   CodeWriterProvider,
   FacebookOauth2SignupProvider,
   FacebookPostVerifyProvider,
   FacebookPreVerifyProvider,
   ForgotPasswordProvider,
+  GoogleAuthenticatorProvider,
   GoogleOauth2SignupProvider,
   GooglePostVerifyProvider,
   GooglePreVerifyProvider,
@@ -49,6 +50,7 @@ import {
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
   OtpGenerateProvider,
+  OtpProvider,
   OtpSenderProvider,
   SignUpBindings,
   SignupTokenHandlerProvider,
@@ -62,12 +64,14 @@ import {LocalSignupProvider} from './providers/local-signup.provider';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpSenderService} from './services';
-import {IAuthServiceConfig} from './types';
+import {IAuthServiceConfig, IOtpAuthConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(AuthServiceBindings.OtpConfig, {optional: true})
+    private readonly otpAuthConfig: IOtpAuthConfig,
     @inject(AuthServiceBindings.Config, {optional: true})
     private readonly authConfig?: IAuthServiceConfig,
   ) {
@@ -152,7 +156,6 @@ export class AuthenticationServiceComponent implements Component {
       ClientPasswordVerifyProvider;
     this.providers[Strategies.Passport.LOCAL_PASSWORD_VERIFIER.key] =
       LocalPasswordVerifyProvider;
-    this.providers[Strategies.Passport.OTP_VERIFIER.key] = OtpVerifyProvider;
     this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
       BearerTokenVerifyProvider;
     this.providers[Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key] =
@@ -165,6 +168,7 @@ export class AuthenticationServiceComponent implements Component {
       FacebookOauth2VerifyProvider;
     this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
       KeycloakVerifyProvider;
+    this.providers[Strategies.Passport.OTP_VERIFIER.key] = OtpVerifyProvider;
     this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
       KeyCloakSignupProvider;
     this.providers[SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key] =
@@ -203,11 +207,17 @@ export class AuthenticationServiceComponent implements Component {
       FacebookPostVerifyProvider;
     this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
       SignupBearerVerifyProvider;
+    this.providers[VerifyBindings.OTP_PROVIDER.key] = OtpProvider;
     this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
       OtpGenerateProvider;
     this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] = OtpSenderProvider;
-    this.providers[VerifyBindings.GOOGLE_AUTHENTICATOR_VERIFY_PROVIDER.key] =
-      AuthenticatorVerifyProvider;
+
+    if (this.otpAuthConfig?.useGoogleAuthenticator) {
+      this.providers[VerifyBindings.OTP_PROVIDER.key] =
+        GoogleAuthenticatorProvider;
+      this.providers[Strategies.Passport.OTP_VERIFIER.key] =
+        GoogleAuthenticatorVerifyProvider;
+    }
 
     this.providers[AuthCodeBindings.CODEREADER_PROVIDER.key] =
       OauthCodeReaderProvider;

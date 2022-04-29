@@ -37,14 +37,8 @@ import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {AuthClient, OtpCache, RefreshToken, User} from '../../models';
-import {
-  AuthCodeBindings,
-  CodeReaderFn,
-  CodeWriterFn,
-  JwtPayloadFn,
-  VerifyBindings,
-} from '../../providers';
+import {AuthClient, RefreshToken, User} from '../../models';
+import {AuthCodeBindings, CodeReaderFn, JwtPayloadFn} from '../../providers';
 import {
   AuthClientRepository,
   OtpCacheRepository,
@@ -62,7 +56,6 @@ import {
   AuthRefreshTokenRequest,
   AuthTokenRequest,
   CodeResponse,
-  GoogleAuthenticatorResponse,
   LoginRequest,
   OtpLoginRequest,
   OtpResponse,
@@ -71,7 +64,7 @@ import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
 import {OtpSenderService} from '../../services/otp-sender.service';
-const {generateSecret} = require('2fa-util');
+import {OtpSendRequest} from './models/otp-send-request.dto';
 
 const userAgentKey = 'user-agent';
 
@@ -457,11 +450,13 @@ export class LoginController {
     return new AuthUser(this.user);
   }
 
-  // OTP APIs
+  // OTP,Google Authenticator APIs
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.LOCAL)
+  @authenticate(STRATEGY.OTP, {
+    otp: process.env.OTP_SENDER_FUNCTION,
+  })
   @authorize({permissions: ['*']})
-  @post('/auth/login-otp', {
+  @post('/auth/send-otp', {
     description: 'Sends OTP',
     responses: {
       [STATUS_CODE.OK]: {
@@ -475,16 +470,13 @@ export class LoginController {
   })
   async sendOtp(
     @requestBody()
-    req: LoginRequest,
+    req: OtpSendRequest,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
-    client: AuthClient | undefined,
+    client: AuthClient,
     @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser | undefined,
-  ): Promise<OtpResponse> {
-    const key = await this.otpSenderService.sendOtp(client, user);
-    return {
-      key,
-    };
+    user: AuthUser,
+  ): Promise<OtpResponse | void> {
+    return this.otpSenderService.sendOtp(client, user);
   }
 
   @authenticate(STRATEGY.OTP)
@@ -506,101 +498,26 @@ export class LoginController {
   async verifyOtp(
     @requestBody()
     req: OtpLoginRequest,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    codeWriter: CodeWriterFn,
-  ): Promise<CodeResponse> {
-    const otpCache = await this.otpCacheRepo.get(req.key);
-    const token = await codeWriter(this.createCode(otpCache));
-    return {
-      code: token,
-    };
-  }
-
-  // Google-Authenticator-APIs
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.LOCAL)
-  @authorize({permissions: ['*']})
-  @post('/auth/login-qr', {
-    description: 'Generates a QR code',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Scan the QR using Google or Microsoft Authenticator',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async sendQr(
-    @requestBody()
-    req: LoginRequest,
-    @inject(AuthenticationBindings.CURRENT_CLIENT)
-    client: AuthClient | undefined,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
-  ): Promise<GoogleAuthenticatorResponse> {
-    const qr = await generateSecret(user?.firstName, user?.username);
-    await this.otpCacheRepo.set(
-      qr.secret,
-      {
-        userId: user?.id,
-        clientId: client?.clientId,
-        clientSecret: client?.secret,
-      },
-      {ttl: 60000},
-    );
-    return {
-      key: qr.secret,
-      qrCode: qr.qrcode,
-    };
-  }
-
-  @authenticate(
-    STRATEGY.OTP,
-    {},
-    req => req,
-    VerifyBindings.GOOGLE_AUTHENTICATOR_VERIFY_PROVIDER,
-  )
-  @authorize({permissions: ['*']})
-  @post('/auth/verify-qr', {
-    description:
-      'Gets you the code that will be used for getting token (webapps)',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description:
-          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async verifyQr(
-    @requestBody()
-    req: OtpLoginRequest,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
     const otpCache = await this.otpCacheRepo.get(req.key);
-    const token = await codeWriter(this.createCode(otpCache));
-    return {
-      code: token,
-    };
-  }
-
-  private createCode(otpCache: OtpCache): string {
+    if (user?.id) {
+      otpCache.userId = user.id;
+    }
     const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
       clientId: otpCache.clientId,
       userId: otpCache.userId,
     };
-    return jwt.sign(codePayload, otpCache.clientSecret, {
+    const token = jwt.sign(codePayload, otpCache.clientSecret, {
       expiresIn: 180,
       audience: otpCache.clientId,
       issuer: process.env.JWT_ISSUER,
       algorithm: 'HS256',
     });
+    return {
+      code: token,
+    };
   }
 
   private async createJWT(

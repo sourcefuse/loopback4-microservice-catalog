@@ -6,46 +6,48 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {AuthClient} from '../models';
 import {AuthUser} from '../modules/auth/models/auth-user.model';
-import {OtpGenerateFn, OtpSenderFn, VerifyBindings} from '../providers';
-import {OtpCacheRepository} from '../repositories';
-
-const otpCacheTtl = 60000;
+import {OtpResponse} from '../modules/auth';
+import {OtpFn, VerifyBindings} from '../providers';
+import {OtpCacheRepository, UserRepository} from '../repositories';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class OtpSenderService {
   constructor(
     @repository(OtpCacheRepository)
     private readonly otpCacheRepo: OtpCacheRepository,
+    @repository(UserRepository)
+    public userRepository: UserRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
-    @inject(VerifyBindings.OTP_GENERATE_PROVIDER)
-    private readonly generateOtp: OtpGenerateFn,
-    @inject(VerifyBindings.OTP_SENDER_PROVIDER)
-    private readonly sendOtpToUser: OtpSenderFn,
+    @inject(VerifyBindings.OTP_PROVIDER)
+    private readonly otpSender: OtpFn,
   ) {}
 
-  async sendOtp(client?: AuthClient, user?: AuthUser): Promise<string> {
+  async sendOtp(
+    client: AuthClient,
+    user: AuthUser,
+  ): Promise<OtpResponse | void> {
     if (!client) {
       this.logger.error('Auth client not found or invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     if (!user) {
-      this.logger.error('Auth user not found or invalid');
+      this.logger.error('User not found or invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     }
-    const email = user.email ?? user.username;
-    const otp = await this.generateOtp();
-    await this.sendOtpToUser(otp, user);
 
-    await this.otpCacheRepo.set(
-      email,
-      {
-        otp: otp,
-        userId: user.id,
-        clientId: client.clientId,
-        clientSecret: client.secret,
-      },
-      {ttl: otpCacheTtl},
-    );
-    return email;
+    const res: OtpResponse = await this.otpSender(user.username);
+
+    await this.otpCacheRepo.delete(user.username);
+    await this.otpCacheRepo.set(user.username, {
+      otpSecret: res.key,
+      clientId: client.clientId,
+      clientSecret: client.secret,
+    });
+
+    if (res.qrCode) {
+      return {
+        qrCode: res.qrCode,
+      };
+    }
   }
 }

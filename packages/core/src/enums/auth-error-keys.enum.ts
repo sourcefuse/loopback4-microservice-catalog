@@ -8,6 +8,4 @@ export const enum AuthenticateErrorKeys {
   PasswordInvalid = 'PasswordInvalid',
   UnprocessableData = 'UnprocessableData',
   PasswordExpiryError = 'PasswordExpiryError',
-  InvalidKey = 'InvalidKey',
-  InvalidOtp = 'InvalidOtp',
 }

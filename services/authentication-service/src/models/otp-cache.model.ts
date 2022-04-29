@@ -10,7 +10,12 @@ export class OtpCache extends Entity {
   @property({
     type: 'string',
   })
-  userId: string;
+  userId?: string;
+
+  @property({
+    type: 'string',
+  })
+  otpSecret?: string;
 
   @property({
     type: 'string',

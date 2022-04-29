@@ -4,9 +4,11 @@ import {HttpErrors} from '@loopback/rest';
 import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
 import {OtpCacheRepository, UserRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {totp} from 'otplib';
+import {authenticator} from 'otplib';
 
-export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
+export class GoogleAuthenticatorVerifyProvider
+  implements Provider<VerifyFunction.OtpAuthFn>
+{
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
@@ -37,13 +39,15 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
 
       let isValid = false;
       try {
-        isValid = totp.check(otp, otpCache.otpSecret!);
+        isValid = authenticator
+          .create({...authenticator.allOptions()})
+          .verify({token: otp, secret: otpCache.otpSecret!});
       } catch (err) {
         this.logger.error(err);
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
       if (!isValid) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.OtpInvalid);
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.OtpExpired);
       }
       return user;
     };

@@ -23,6 +23,7 @@ import {
   CodeWriterFn,
   OtpGenerateFn,
   OtpSenderFn,
+  OtpFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -75,16 +76,14 @@ export namespace VerifyBindings {
     BindingKey.create<KeyCloakPreVerifyFn>('sf.keycloak.preverify.provider');
   export const KEYCLOAK_POST_VERIFY_PROVIDER =
     BindingKey.create<KeyCloakPostVerifyFn>('sf.keycloak.postverify.provider');
+
+  export const OTP_PROVIDER = BindingKey.create<OtpFn>('sf.otp.provider');
   export const OTP_GENERATE_PROVIDER = BindingKey.create<OtpGenerateFn>(
     'sf.otp.generate.provider',
   );
   export const OTP_SENDER_PROVIDER = BindingKey.create<OtpSenderFn>(
     'sf.otp.sender.provider',
   );
-  export const GOOGLE_AUTHENTICATOR_VERIFY_PROVIDER =
-    BindingKey.create<VerifyFunction.OtpAuthFn>(
-      'sf.google.authenticator.verify.provider',
-    );
 
   export const BEARER_SIGNUP_VERIFY_PROVIDER =
     BindingKey.create<VerifyFunction.GenericAuthFn>(
