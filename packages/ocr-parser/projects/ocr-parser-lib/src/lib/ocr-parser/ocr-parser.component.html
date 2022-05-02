@@ -1,0 +1,33 @@
+<div class="row wrapper">
+    <div class="col-md-5 no-padding-right">
+        <div class="fieldViewer">
+            <sourceloop-tabs [data]="fieldConfig" [viewTemplate]="fielViewer">
+            </sourceloop-tabs>
+        </div>
+
+    </div>
+
+    <div class="col-md-7 no-padding-left">
+        <sourceloop-tabs [data]="documentConfig" [viewTemplate]="htmlViewer">
+        </sourceloop-tabs>
+    </div>
+    <div class="row">
+        <div class="footer">
+            <button type="button" (click)="onCancelContract()">Cancel</button>
+            <div class="btn-right">
+                <button type="button" (click)="onApproveContract()">Approve</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #fielViewer let-tab>
+    <sourceloop-field-viewer [data]="tab"></sourceloop-field-viewer>
+</ng-template>
+<ng-template #htmlViewer let-tab>
+    <div class="htmlViewer">
+        <sourceloop-html-viewer [data]="tab"></sourceloop-html-viewer>
+    </div>
+</ng-template>

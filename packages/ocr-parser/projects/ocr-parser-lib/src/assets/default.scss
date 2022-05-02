@@ -1,0 +1,49 @@
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    background-color: #F2F2F2 !important;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+
+  mark, .mark {
+    padding: 0px !important;
+  }
+  
+  .mat-ink-bar {
+    background-color: #8C0000 !important;
+
+  }
+
+  .mat-tab-label {
+    min-width: 60px !important
+  }
+
+  .mat-tab-label-content {
+    font-size: 13px;
+  }
+
+  .mat-tab-label-active {
+    color: #8C0000;
+  }
+
+  .mat-tab-body-content, .mat-tab-labels {
+    background: #fff;
+  }
+
+  .mat-card {
+    height: 471px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .mat-card::-webkit-scrollbar,.mat-tab-body-content::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+
+  .mat-tab-body-wrapper {
+    height: 512px;
+  }

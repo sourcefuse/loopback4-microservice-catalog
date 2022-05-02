@@ -1,0 +1,15 @@
+<div class="field_block col-md-12" *ngFor="let field of data?.fieldData">
+
+    <label>{{field.label}}</label>
+    <div class="row box" [class.active]="field?.isSelected" (click)="onEmitFieldData(field)">
+        <div class="col-md-12">
+            {{field.value}}
+        </div>
+        <div class="score" *ngIf="field.score > 0">
+            <circle-progress [percent]="field.score" [maxPercent]="100" [radius]="8" [outerStrokeWidth]="2"
+                [innerStrokeWidth]="2" [outerStrokeColor]="field.color" [innerStrokeColor]="'#D1D1D1'"
+                [animation]="true" [showInnerStroke]="false" [space]="4" [animationDuration]="300" titleFontSize="7"
+                [showSubtitle]="false" [showUnits]="false"></circle-progress>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<mat-card>
+    <div class="content_wrapper" [markjsHighlight]="fieldValue" [markjsConfig]="searchConfig" [scrollToFirstMarked]="true"
+      (mouseup)="getSelectedText()">
+      <div *ngFor="let item of data.document">
+        <p [innerHTML]="item | noSanitize"></p>
+      </div>
+    </div>
+    </mat-card>
