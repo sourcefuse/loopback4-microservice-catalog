@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.10 (2022-04-20)</small>
+
+* chore(deps): bump moment in /sandbox/audit-ms-example (#659) ([3177d54](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/3177d54)), closes [#659](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/659)
+
+
+
+
+
 ## <small>0.3.9 (2022-03-30)</small>
 
 * chore(deps): bump swagger-ui-dist in /sandbox/audit-ms-example (#607) ([a89997c](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/a89997c)), closes [#607](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/607)

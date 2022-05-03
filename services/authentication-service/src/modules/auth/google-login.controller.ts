@@ -12,7 +12,13 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
-import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  ILogger,
+  LOGGER,
+  STATUS_CODE,
+  X_TS_TYPE,
+} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
@@ -69,7 +75,7 @@ export class GoogleLoginController {
           'Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -106,7 +112,7 @@ export class GoogleLoginController {
         description: 'POST Call for Google based login',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -115,7 +121,7 @@ export class GoogleLoginController {
   async postLoginViaGoogle(
     @requestBody({
       content: {
-        'application/x-www-form-urlencoded': {
+        [CONTENT_TYPE.FORM_URLENCODED]: {
           schema: getModelSchemaRef(ClientAuthRequest),
         },
       },
@@ -143,7 +149,7 @@ export class GoogleLoginController {
         description: 'Google Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },

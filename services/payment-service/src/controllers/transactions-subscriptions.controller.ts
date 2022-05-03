@@ -5,6 +5,7 @@ import {get, param, Response, RestBindings} from '@loopback/rest';
 import {GatewayBindings, IGateway} from '../providers';
 import {TemplatesRepository, SubscriptionsRepository} from '../repositories';
 import {TemplateName, TemplateType} from '../enums';
+import {CONTENT_TYPE} from '@sourceloop/core';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
@@ -31,7 +32,7 @@ export class TransactionSubscriptionsController {
       [redirectStatusCode]: {
         description: 'Array of Transactions model instances',
         content: {
-          'text/html': {
+          [CONTENT_TYPE.TEXT_HTML]: {
             schema: {
               type: 'object',
             },

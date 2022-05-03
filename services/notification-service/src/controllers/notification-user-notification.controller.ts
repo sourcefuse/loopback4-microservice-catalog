@@ -6,7 +6,11 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Notification, NotificationUser} from '../models';
 import {NotificationUserRepository} from '../repositories';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 export class NotificationUserNotificationController {
   constructor(
     @repository(NotificationUserRepository)
@@ -18,10 +22,10 @@ export class NotificationUserNotificationController {
   @get('/notification-users/{id}/notification', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Notification belonging to NotificationUser',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Notification),

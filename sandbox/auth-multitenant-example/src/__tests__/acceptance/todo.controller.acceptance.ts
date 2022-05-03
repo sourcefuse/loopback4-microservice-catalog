@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/naming-convention*/
 import {Client, expect} from '@loopback/testlab';
 import {AuthMultitenantExampleApplication} from '../..';
 import {setupApplication} from './test-helper';

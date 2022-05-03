@@ -20,7 +20,11 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Notification, NotificationUser} from '../models';
 import {NotificationRepository} from '../repositories';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 const basePath = '/notifications/{id}/notification-users';
 
 export class NotificationNotificationUserController {
@@ -34,10 +38,10 @@ export class NotificationNotificationUserController {
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Notification has many NotificationUser',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(NotificationUser),
@@ -59,10 +63,10 @@ export class NotificationNotificationUserController {
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Notification model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(NotificationUser),
           },
         },
@@ -73,7 +77,7 @@ export class NotificationNotificationUserController {
     @param.path.string('id') id: typeof Notification.prototype.id,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(NotificationUser, {
             title: 'NewNotificationUserInNotification',
             exclude: ['id'],
@@ -94,9 +98,9 @@ export class NotificationNotificationUserController {
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Notification.NotificationUser PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -104,7 +108,7 @@ export class NotificationNotificationUserController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(NotificationUser, {partial: true}),
         },
       },
@@ -123,9 +127,9 @@ export class NotificationNotificationUserController {
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Notification.NotificationUser DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })

@@ -12,7 +12,13 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
-import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  ILogger,
+  LOGGER,
+  STATUS_CODE,
+  X_TS_TYPE,
+} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
@@ -70,7 +76,7 @@ export class KeycloakLoginController {
         description: 'Keycloak Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -79,7 +85,7 @@ export class KeycloakLoginController {
   async postLoginViaKeycloak(
     @requestBody({
       content: {
-        'application/x-www-form-urlencoded': {
+        [CONTENT_TYPE.FORM_URLENCODED]: {
           schema: getModelSchemaRef(ClientAuthRequest),
         },
       },
@@ -111,7 +117,7 @@ export class KeycloakLoginController {
           'Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -145,7 +151,7 @@ export class KeycloakLoginController {
         description: 'Keycloak Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },

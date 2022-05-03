@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.8 (2022-04-20)</small>
+
+* chore(deps): bump minimist in /services/search-service (#629) ([08b90ba](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/08b90ba)), closes [#629](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/629)
+* chore(deps): bump moment in /services/search-service (#665) ([feab299](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/feab299)), closes [#665](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/665)
+* chore(deps): bump urijs in /services/search-service (#681) ([4a07cc0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a07cc0)), closes [#681](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/681)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>0.5.7 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service

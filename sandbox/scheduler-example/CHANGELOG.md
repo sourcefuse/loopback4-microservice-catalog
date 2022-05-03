@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.10 (2022-04-20)</small>
+
+* chore(deps): bump moment in /sandbox/scheduler-example (#657) ([ca11f57](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/ca11f57)), closes [#657](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/657)
+
+
+
+
+
 ## <small>1.0.9 (2022-03-30)</small>
 
 * chore(deps): bump swagger-ui-dist in /sandbox/scheduler-example (#610) ([3dc40fb](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/3dc40fb)), closes [#610](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/610)

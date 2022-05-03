@@ -99,10 +99,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     const user = await super.create(entity, options);
     try {
       // Add temporary password for first time
-      const password = await bcrypt.hash(
-        process.env.USER_TEMP_PASSWORD,
+      const password = (await bcrypt.hash(
+        process.env.USER_TEMP_PASSWORD as string,
         saltRounds,
-      );
+      )) as string;
       const creds = new UserCredentials({
         authProvider: 'internal',
         password,

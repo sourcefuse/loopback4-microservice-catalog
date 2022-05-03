@@ -18,6 +18,7 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   SuccessResponse,
+  X_TS_TYPE,
 } from '@sourceloop/core';
 import {encode} from 'base-64';
 import {HttpsProxyAgent} from 'https-proxy-agent';
@@ -62,7 +63,7 @@ export class LogoutController {
         description: 'Success Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': SuccessResponse},
+            schema: {[X_TS_TYPE]: SuccessResponse},
           },
         },
       },
@@ -126,7 +127,7 @@ export class LogoutController {
         description: 'Success Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {'x-ts-type': SuccessResponse},
+            schema: {[X_TS_TYPE]: SuccessResponse},
           },
         },
       },

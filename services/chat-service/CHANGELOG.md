@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.8 (2022-04-20)</small>
+
+* chore(deps): bump minimist from 1.2.5 to 1.2.6 in /services/chat-service (#641) ([a62506d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a62506d)), closes [#641](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/641)
+* chore(deps): bump moment from 2.29.1 to 2.29.2 in /services/chat-service (#662) ([2f0ef73](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2f0ef73)), closes [#662](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/662)
+* chore(deps): bump urijs in /services/chat-service (#679) ([55f776c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55f776c)), closes [#679](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/679)
+* chore(deps): update all deps to latest version and solve security vulnerabilities (#689) ([30ee331](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/30ee331)), closes [#689](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/689)
+
+
+
+
+
 ## <small>3.0.7 (2022-03-30)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-service

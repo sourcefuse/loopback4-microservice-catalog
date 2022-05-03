@@ -25,6 +25,7 @@ const types = [
 
 const scopes = [
   {name: 'chore'},
+  {name: 'deps'},
   {name: 'core'},
   {name: 'cli'},
   {name: 'search-client'},
