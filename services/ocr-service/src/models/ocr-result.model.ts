@@ -1,5 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
-import {v4 as uuid} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 
 @model({
@@ -13,7 +13,7 @@ export class OcrResults extends Entity {
   @property({
     type: 'string',
     id: true,
-    default: () => uuid()
+    default: () => uuidv4()
   })
   id?: string;
 
@@ -21,12 +21,12 @@ export class OcrResults extends Entity {
     type: 'string',
     required: true,
   })
-  contract_name: string;
+  contract_name?: string;
 
   @property({
     type: 'string',
   })
-  clause_type: string;
+  clause_type?: string;
 
   @property({
     type: 'number',

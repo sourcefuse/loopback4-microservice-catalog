@@ -6,19 +6,26 @@ export interface IRequestServiceConfig extends IServiceConfig {
 
 export type ClauseProps = {
   contractFileName: string,
-  extractedData: {
-          Column: string,
-          columnData: {
-              value: string | any,
-              PageNum: number | any,
-              coordinates: Object | any,
-              confidenceScore: number | any
+  extractedData?: {
+          column?: string,
+          columnData?: {
+              value?: string | any,
+              pageNum?: number | any,
+              coordinates?: Object | any,
+              confidenceScore?: number | any
           }
       }
 }
 
 export type OcrClause = {
   [key: string]: ClauseProps
+}
+
+export type OcrObject = {
+  id: string,
+  text: string,
+  confidence_level: number,
+  modified_by: string
 }
 
 

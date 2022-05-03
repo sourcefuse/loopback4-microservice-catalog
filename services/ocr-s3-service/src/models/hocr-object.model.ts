@@ -1,19 +1,19 @@
 import {Entity, model, property} from '@loopback/repository';
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 
 @model({
   settings: {
     mysql: {
-      table: "contracts"
+      table: "hocr_results"
     }
   }
 })
-export class Contracts extends Entity {
+export class HocrObject extends Entity {
   @property({
     type: 'string',
     id: true,
-    default: () => uuidv4()
+    default: () => uuid()
   })
   id?: string;
 
@@ -24,28 +24,26 @@ export class Contracts extends Entity {
   contract_name: string;
 
   @property({
-    type: 'boolean',
-    default: false,
+    type: 'string',
+    required: true,
   })
-  contract_uploaded?: boolean;
+  type: string;
 
   @property({
-    type: 'boolean',
-    default: false,
+    type: 'number',
+    required: true,
   })
-  image_converted?: boolean;
+  page_no: number;
 
   @property({
-    type: 'boolean',
-    default: false,
+    type: 'string',
   })
-  ocr_converted?: boolean;
+  hocr_data?: string;
 
   @property({
-    type: 'boolean',
-    default: false,
+    type: 'string',
   })
-  hocr_converted?: boolean;
+  img_data?: string;
 
   @property({
     type: 'string',
@@ -71,6 +69,7 @@ export class Contracts extends Entity {
   })
   modified_on?: string;
 
+
   @property({
     type: 'boolean',
     default: false,
@@ -88,14 +87,13 @@ export class Contracts extends Entity {
   deleted_on?: string;
 
 
-
-  constructor(data?: Partial<Contracts>) {
+  constructor(data?: Partial<HocrObject>) {
     super(data);
   }
 }
 
-export interface ContractsRelations {
+export interface HocrObjectRelations {
   // describe navigational properties here
 }
 
-export type ContractsWithRelations = Contracts & ContractsRelations;
+export type HocrObjectWithRelations = HocrObject & HocrObjectRelations;

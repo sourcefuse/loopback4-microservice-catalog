@@ -20,7 +20,9 @@ import multiparty from 'multiparty';
 import {
   IRequest,
   RequestBindings
-} from '@sourceloop/loopback4-fetch-client';
+} from '../../../lb4-request/dist';
+import FormData from 'form-data';
+import * as fs from 'fs';
 import {
   Contracts,
   HocrResults
@@ -32,7 +34,7 @@ import {
 
 export class ContractController {
   constructor(
-    @inject.getter(RequestBindings.FetchProvider) private readonly requestProvider: Getter<IRequest>,
+    @inject.getter(RequestBindings.FetchProvider) private readonly requestProvider: Getter < IRequest > ,
     @repository(ContractRepository) public contractRepository: ContractRepository,
     @repository(HocrResultRepository) public hocrResultRepository: HocrResultRepository,
     @inject(RestBindings.Http.RESPONSE) private response: Response
@@ -46,7 +48,7 @@ export class ContractController {
   })
   async getContractHOCR(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
     await provider.send(`/contract-parser/hocr-converter?contract_name=${contract_name}`, {
       method: 'POST'
@@ -63,7 +65,7 @@ export class ContractController {
   })
   async convertContractImg(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
     await provider.send(`/contract-parser/img-converter?contract_name=${contract_name}`, {
       method: 'POST'
@@ -82,7 +84,7 @@ export class ContractController {
   })
   async convertContractOcr(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
     await provider.send(`/contract-parser/ocr-converter?contract_name=${contract_name}`, {
       method: 'POST'
@@ -99,7 +101,7 @@ export class ContractController {
   })
   async getAllHOCRByContractName(
     @param.path.string('contract_name') contract_name: string
-  ): Promise<HocrResults[]> {
+  ): Promise < any > {
     const hocr: any = await this.hocrResultRepository.find({
       where: {
         contract_name: contract_name
@@ -113,8 +115,8 @@ export class ContractController {
     description: 'all contract files'
   })
   async getAllContracts(
-    @param.filter(Contracts) filter?: Filter<Contracts>,
-  ): Promise<Contracts[]> {
+    @param.filter(Contracts) filter ? : Filter < Contracts > ,
+  ): Promise < Contracts[] > {
     return this.contractRepository.find(filter);
 
   }
@@ -124,27 +126,35 @@ export class ContractController {
     description: 'contract file upload'
   })
   async uploadContract(
-    @requestBody({
-      content: {
-        'multipart/form-data': {
-          'x-parser': 'stream',
-          schema: {
-            type: 'object'
-          },
-        },
-      },
-    }) request: Request,
+    @requestBody.file() request: Request,
     @inject(RestBindings.Http.RESPONSE) response: Response,
-  ): Promise<object> {
+  ): Promise <any> {
+    const provider = await this.requestProvider();
+
     const form = new multiparty.Form();
-    form.parse(request, (err, fields, files) => {
+    form.parse(request, async (err, fields, files) => {
       if (err) {
         console.log(err)
       }
 
-      console.log(fields)
-      console.log(files)
+      const file = files['file'][0];
+      console.log(file);
+      var formdata = new FormData();
+      formdata.append("file", fs.createReadStream(file.path), {
+        filename: file.originalFilename,
+        contentType: 'application/pdf'
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        body: formdata
+      };
+
+
+
+      const zz = await provider.send(`/contract-parser/upload-contract`, requestOptions);
+      //console.log(zz);
+      return zz;
     });
-    return {}
   }
 }

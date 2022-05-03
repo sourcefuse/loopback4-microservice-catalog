@@ -1,5 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
-import {v4 as uuid} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 
 @model({
@@ -13,7 +13,7 @@ export class HocrResults extends Entity {
   @property({
     type: 'string',
     id: true,
-    defaultFn: () => uuid()
+    defaultFn: () => uuidv4()
   })
   id?: string;
 
@@ -24,6 +24,12 @@ export class HocrResults extends Entity {
   contract_name: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  type: string;
+
+  @property({
     type: 'number',
     required: true,
   })
@@ -32,7 +38,8 @@ export class HocrResults extends Entity {
   @property({
     type: 'string',
   })
-  hocr_data?: Array<string>;
+  hocr_data?: string;
+  
 
   @property({
     type: 'string',

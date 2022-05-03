@@ -1,0 +1,83 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "clm-s3-service-clm-s3-service",
+    "version": "0.0.1",
+    "description": "clm-s3-service",
+    "contact": {
+      "name": "kundan-sf",
+      "email": "kundan.kumar@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/contract-images/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrObjectController",
+        "x-operation-name": "getImgFiles",
+        "tags": [
+          "OcrObjectController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "User model instance"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrObjectController.getImgFiles"
+      }
+    },
+    "/get-contract-hocr/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrObjectController",
+        "x-operation-name": "getHocrFiles",
+        "tags": [
+          "OcrObjectController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "User model instance"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrObjectController.getHocrFiles"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

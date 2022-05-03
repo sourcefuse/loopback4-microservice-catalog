@@ -10,27 +10,70 @@ import {
   response
 } from '@loopback/rest';
 import {
-  ResponseFormatBindings
-} from '../keys';
-import {
+  Contracts,
   OcrResults
 } from '../models';
 import {
-  OcrResultRepository
+  OcrResultRepository,
+  ContractRepository
 } from '../repositories';
+import { OcrObjectFormatterService } from '../services';
 import {
   OcrClause
 } from '../types';
-import {
-  ResponseFormat
-} from '../utils/response.fomatter';
 
 
 export class OcrHooksController {
   constructor(
     @repository(OcrResultRepository) public ocrResultRepository: OcrResultRepository,
-    @inject(ResponseFormatBindings.FORMAT_RESPONSE) public formatter: ResponseFormat,
+    @repository(ContractRepository) public contractRepository: ContractRepository,
+    @inject('services.OcrObjectFormatterService') public ocrObjectFormatter: OcrObjectFormatterService,
   ) {}
+
+  @post('/webhook/contract-upload')
+  @response(200, {
+    description: 'Upload contract document'
+  })
+  async uploadContractFile(
+    @requestBody() contract: Contracts
+  ): Promise <any> {
+    contract.contract_uploaded = true;
+    return this.contractRepository.create(contract);
+  }
+
+  @post('/webhook/img-convert')
+  @response(200, {
+    description: 'Convert contract document to image'
+  })
+  async convertContractImages(
+    @requestBody() contract: Contracts
+  ): Promise <any> {
+    contract.image_converted = true;
+    return this.contractRepository.updateById(contract.id, contract);
+  }
+
+  @post('/webhook/ocr-convert')
+  @response(200, {
+    description: 'Convert contract ocr'
+  })
+  async convertContractOcr(
+    @requestBody() contract: Contracts
+  ): Promise <any> {
+    contract.ocr_converted = true;
+    return this.contractRepository.updateById(contract.id, contract);
+  }
+
+  @post('/webhook/hocr-convert')
+  @response(200, {
+    description: 'Convert contract hocr'
+  })
+  async convertContractHocr(
+    @requestBody() contract: Contracts
+  ): Promise <any> {
+    contract.hocr_converted = true;
+    return this.contractRepository.updateById(contract.id, contract);
+  }
+
 
   @post('/webhook/document-type')
   @response(200, {
@@ -40,7 +83,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -53,7 +96,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -66,7 +109,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -79,7 +122,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -92,7 +135,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -104,7 +147,7 @@ export class OcrHooksController {
   async getContractGoverningLaw(
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -116,7 +159,7 @@ export class OcrHooksController {
   async getContractValidityTerms(
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -127,7 +170,7 @@ export class OcrHooksController {
   async getContractLiquidityDamages(
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -139,7 +182,7 @@ export class OcrHooksController {
   async getContractLimitedLiability(
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -152,7 +195,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -165,7 +208,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -178,7 +221,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -191,7 +234,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -204,7 +247,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -217,7 +260,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -229,7 +272,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -241,7 +284,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -253,7 +296,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -266,7 +309,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -278,7 +321,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -290,7 +333,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -302,7 +345,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 
@@ -314,7 +357,7 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise < OcrResults > {
-    const ocrObject = await this.formatter.format(req);
+    const ocrObject = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }
 }

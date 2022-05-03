@@ -74,6 +74,118 @@
         "operationId": "OcrController.getContractAutoRenewal"
       }
     },
+    "/clauses/{id}": {
+      "put": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "replaceClauseById",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses PUT success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcrResults"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "OcrController.replaceClauseById"
+      },
+      "patch": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "updateClauseById",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses PATCH success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcrResultsPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "OcrController.updateClauseById"
+      },
+      "delete": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "deleteClauseById",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses DELETE success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.deleteClauseById"
+      }
+    },
     "/clauses/{contract_name}": {
       "get": {
         "x-controller-name": "OcrController",
@@ -104,6 +216,40 @@
           }
         ],
         "operationId": "OcrController.getContractClauses"
+      }
+    },
+    "/clauses": {
+      "patch": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses PATCH success count"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Clauses"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "OcrController.updateAll"
       }
     },
     "/contract-amount/{contract_name}": {
@@ -162,10 +308,18 @@
             "multipart/form-data": {
               "x-parser": "stream",
               "schema": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
               }
             }
-          }
+          },
+          "description": "Request body for multipart/form-data based file upload",
+          "required": true
         },
         "operationId": "ContractController.uploadContract"
       }
@@ -1066,6 +1220,37 @@
         "operationId": "OcrHooksController.getContractContractAmount"
       }
     },
+    "/webhook/contract-upload": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "uploadContractFile",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract document type"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.uploadContractFile"
+      }
+    },
     "/webhook/currency": {
       "post": {
         "x-controller-name": "OcrHooksController",
@@ -1188,6 +1373,68 @@
           }
         },
         "operationId": "OcrHooksController.getContractGoverningLaw"
+      }
+    },
+    "/webhook/hocr-convert": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "convertContractHocr",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract document type"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.convertContractHocr"
+      }
+    },
+    "/webhook/img-convert": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "convertContractImages",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract document type"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.convertContractImages"
       }
     },
     "/webhook/indemnity-clause": {
@@ -1343,6 +1590,37 @@
           }
         },
         "operationId": "OcrHooksController.getContractLiquidityDamages"
+      }
+    },
+    "/webhook/ocr-convert": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "convertContractOcr",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract document type"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.convertContractOcr"
       }
     },
     "/webhook/payment-terms": {
@@ -1694,6 +1972,172 @@
   ],
   "components": {
     "schemas": {
+      "Clauses": {
+        "title": "Clauses",
+        "type": "object",
+        "description": "(tsType: OcrResults, schemaOptions: { title: 'Clauses' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contract_name": {
+            "type": "string"
+          },
+          "clause_type": {
+            "type": "string"
+          },
+          "page_number": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "string"
+          },
+          "confidence_level": {
+            "type": "number"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "modified_by": {
+            "type": "string"
+          },
+          "created_on": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified_on": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "deleted_by": {
+            "type": "string"
+          },
+          "deleted_on": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "contract_name"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "OcrResults"
+      },
+      "OcrResultsPartial": {
+        "title": "OcrResultsPartial",
+        "type": "object",
+        "description": "(tsType: Partial<OcrResults>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contract_name": {
+            "type": "string"
+          },
+          "clause_type": {
+            "type": "string"
+          },
+          "page_number": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "string"
+          },
+          "confidence_level": {
+            "type": "number"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "modified_by": {
+            "type": "string"
+          },
+          "created_on": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified_on": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "deleted_by": {
+            "type": "string"
+          },
+          "deleted_on": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<OcrResults>"
+      },
+      "OcrResults": {
+        "title": "OcrResults",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contract_name": {
+            "type": "string"
+          },
+          "clause_type": {
+            "type": "string"
+          },
+          "page_number": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "string"
+          },
+          "confidence_level": {
+            "type": "number"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "modified_by": {
+            "type": "string"
+          },
+          "created_on": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified_on": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "deleted_by": {
+            "type": "string"
+          },
+          "deleted_on": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "contract_name"
+        ],
+        "additionalProperties": false
+      },
       "Contracts.Filter": {
         "type": "object",
         "title": "Contracts.Filter",

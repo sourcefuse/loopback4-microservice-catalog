@@ -3,7 +3,10 @@ import {
   inject
 } from '@loopback/context';
 import {
-  repository
+  Count,
+  CountSchema,
+  repository,
+  Where
 } from '@loopback/repository';
 import {
   param,
@@ -11,29 +14,27 @@ import {
   response,
   Response,
   RestBindings,
+  patch,
+  requestBody,
+  getModelSchemaRef,
+  del,
+  put,
 } from '@loopback/rest';
 import {
   IRequest,
   RequestBindings
-} from '@sourceloop/loopback4-fetch-client';
-import {
-  ResponseFormatBindings
-} from '../keys';
+} from '../../../lb4-request/dist';
 import {
   OcrResults
 } from '../models';
 import {
   OcrResultRepository
 } from '../repositories';
-import {
-  ResponseFormat
-} from '../utils/response.fomatter';
-
+import { OcrObject } from '../types';
 export class OcrController {
   constructor(
     @repository(OcrResultRepository) public ocrResultRepository: OcrResultRepository,
-    @inject.getter(RequestBindings.FetchProvider) private readonly requestProvider: Getter<IRequest>,
-    @inject(ResponseFormatBindings.FORMAT_RESPONSE) public formatter: ResponseFormat,
+    @inject.getter(RequestBindings.FetchProvider) private readonly requestProvider: Getter < IRequest > ,
     @inject(RestBindings.Http.RESPONSE) private response: Response
   ) {
     (this.response as any).setTimeout(1000 * 60 * 20);
@@ -45,7 +46,7 @@ export class OcrController {
   })
   async getContractDocumentType(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/document-type?contract_name=${contract_name}`, {
@@ -65,7 +66,7 @@ export class OcrController {
   })
   async getContractTerminationClause(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/termination-clause?contract_name=${contract_name}`, {
@@ -85,7 +86,7 @@ export class OcrController {
   })
   async getContractIprOwnershipClause(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/ipr-ownership-clause?contract_name=${contract_name}`, {
@@ -105,7 +106,7 @@ export class OcrController {
   })
   async getContractWarrantyClause(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     const resp: any = await provider.send(`/contract-parser/warranty-clause?contract_name=${contract_name}`, {
@@ -125,17 +126,13 @@ export class OcrController {
   })
   async getContractThirdPartyBeneficiary(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/third-party-beneficiary?contract_name=${contract_name}`, {
       method: 'POST'
     })
 
-    return {
-      status: 200,
-      message: 'SUCCESS'
-    }
     return {
       status: 200,
       message: 'SUCCESS'
@@ -149,7 +146,7 @@ export class OcrController {
   })
   async getContractGoverningLaw(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/governing-law?contract_name=${contract_name}`, {
@@ -169,7 +166,7 @@ export class OcrController {
   })
   async getContractValidityTerms(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/validity-terms?contract_name=${contract_name}`, {
@@ -188,7 +185,7 @@ export class OcrController {
   })
   async getContractLiquidityDamages(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/liquidity-damages?contract_name=${contract_name}`, {
@@ -208,7 +205,7 @@ export class OcrController {
   })
   async getContractLimitedLiability(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/limited-liability?contract_name=${contract_name}`, {
@@ -228,7 +225,7 @@ export class OcrController {
   })
   async getContractLegalId(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/legal_id?contract_name=${contract_name}`, {
@@ -249,7 +246,7 @@ export class OcrController {
   })
   async getContractSignatoryDetails(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/signatory_details?contract_name=${contract_name}`, {
@@ -270,7 +267,7 @@ export class OcrController {
   })
   async getContractVendor(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/vendor?contract_name=${contract_name}`, {
@@ -291,7 +288,7 @@ export class OcrController {
   })
   async getContractPaymentTerms(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/payment_terms?contract_name=${contract_name}`, {
@@ -312,7 +309,7 @@ export class OcrController {
   })
   async getContractForceMajeure(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/force-majeure?contract_name=${contract_name}`, {
@@ -333,7 +330,7 @@ export class OcrController {
   })
   async getContractIndemnityClause(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/indemnity-clause?contract_name=${contract_name}`, {
@@ -353,7 +350,7 @@ export class OcrController {
   })
   async getContractAutoRenewal(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/auto-renewal?contract_name=${contract_name}`, {
@@ -373,7 +370,7 @@ export class OcrController {
   })
   async getContractCurrency(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/currency?contract_name=${contract_name}`, {
@@ -393,7 +390,7 @@ export class OcrController {
   })
   async getContractPublicAnnouncement(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/public-announcement?contract_name=${contract_name}`, {
@@ -414,7 +411,7 @@ export class OcrController {
   })
   async getContractAssignment(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/assignment?contract_name=${contract_name}`, {
@@ -434,7 +431,7 @@ export class OcrController {
   })
   async getContractSupport(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/support?contract_name=${contract_name}`, {
@@ -454,7 +451,7 @@ export class OcrController {
   })
   async getContractContractAmount(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/contract-amount?contract_name=${contract_name}`, {
@@ -474,7 +471,7 @@ export class OcrController {
   })
   async getContractSlaClause(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/sla-clause?contract_name=${contract_name}`, {
@@ -494,7 +491,7 @@ export class OcrController {
   })
   async getContractSlaDashboard(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<object> {
+  ): Promise < object > {
     const provider = await this.requestProvider();
 
     await provider.send(`/contract-parser/sla-dashboard?contract_name=${contract_name}`, {
@@ -515,12 +512,75 @@ export class OcrController {
   })
   async getContractClauses(
     @param.path.string('contract_name') contract_name: string,
-  ): Promise<OcrResults[]> {
+  ): Promise < OcrResults[] > {
     return this.ocrResultRepository.find({
       where: {
         contract_name: contract_name
       }
     });
+  }
+
+  @patch('/clauses')
+  @response(200, {
+    description: 'Clauses PATCH success count'
+  })
+  async updateAll(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'array',
+            items: getModelSchemaRef(OcrResults, {
+              title: 'Clauses'
+            }),
+          }
+        },
+      },
+    })
+    clauses: [Pick<OcrResults, 'id' | 'text' | 'confidence_level' | 'modified_by'>]
+  ): Promise<any> {
+      const result = await Promise.all(clauses.map((item) => this.ocrResultRepository.updateById(item.id, item)));
+      return result;
+  }
+
+
+  @patch('/clauses/{id}')
+  @response(204, {
+    description: 'Clauses PATCH success',
+  })
+  async updateClauseById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(OcrResults, {partial: true}),
+        },
+      },
+    })
+    clause: Pick<OcrResults, 'text' | 'confidence_level' | 'modified_by'>,
+  ): Promise<void> {
+    return this.ocrResultRepository.updateById(id, clause);
+  }
+
+  @put('/clauses/{id}')
+  @response(204, {
+    description: 'Clauses PUT success',
+  })
+  async replaceClauseById(
+    @param.path.string('id') id: string,
+    @requestBody() clause: OcrResults,
+  ): Promise<void> {
+    return this.ocrResultRepository.replaceById(id, clause);
+  }
+
+  @del('/clauses/{id}')
+  @response(204, {
+    description: 'Clauses DELETE success',
+  })
+  async deleteClauseById(
+    @param.path.string('id') id: string,
+  ): Promise<void> {
+    return this.ocrResultRepository.deleteById(id);
   }
 
 }

@@ -28,16 +28,16 @@ import {
 } from "../../types";
 import { RequestBindings } from '../../keys';
 
-export class fetchClient implements Provider <FetchHttpRequest> {
+export class fetchClient implements Provider<FetchHttpRequest> {
     readonly baseUrl: string;
-    readonly baseHeaders: Record < string,
-    string > ;
-    readonly baseOptions: Omit < RequestInit,
-    "headers" > ;
+    readonly baseHeaders: Record<string,
+        string>;
+    readonly baseOptions: Omit<RequestInit,
+        "headers">;
     readonly useJson: boolean;
 
     protected transformResponse: ResponseTransformer;
-    protected willSendRequest ? : RequestInterceptor;
+    protected willSendRequest?: RequestInterceptor;
 
     constructor(
         @inject(RequestBindings.Config, {
@@ -65,9 +65,9 @@ export class fetchClient implements Provider <FetchHttpRequest> {
         };
 
         const jsonHeaders = useJson ? {
-                [Header.Accept]: "application/json",
-                [Header.ContentType]: "application/json",
-            } :
+            [Header.Accept]: "application/json",
+            [Header.ContentType]: "application/json",
+        } :
             undefined;
 
         this.baseUrl = baseUrl;
@@ -88,17 +88,33 @@ export class fetchClient implements Provider <FetchHttpRequest> {
 
         this.useJson = useJson;
     }
-    value(): ValueOrPromise < FetchHttpRequest > {
+    value(): ValueOrPromise<FetchHttpRequest> {
         return {
             send: async (url: string, req: RequestInit) => {
                 if (req.method?.toUpperCase() === 'POST') {
                     return this.post(url, req)
                 }
+
+                if (req.method?.toUpperCase() === 'PUT') {
+                    return this.put(url, req)
+                }
+
+                if (req.method?.toUpperCase() === 'GET') {
+                    return this.get(url, req)
+                }
+
+                if (req.method?.toUpperCase() === 'PATCH') {
+                    return this.patch(url, req)
+                }
+
+                if (req.method?.toUpperCase() === 'DELETE') {
+                    return this.delete(url, req)
+                }
             }
         };
     }
 
-    async get < T > (url: string, req: RequestInit = {}): Promise < T > {
+    async get<T>(url: string, req: RequestInit = {}): Promise<T> {
         const {
             transformResponse,
             willSendRequest
@@ -115,17 +131,15 @@ export class fetchClient implements Provider <FetchHttpRequest> {
         return transformResponse(response);
     };
 
-    async post < T > (
+    async post<T>(
         url: string,
-        body ? : any,
+        body?: any,
         req: RequestInit = {},
-    ): Promise < T > {
+    ): Promise<T> {
         const {
             transformResponse,
             willSendRequest
         } = this;
-
-        console.log(body)
 
         const args = await this.buildRequestArgs(url, HttpMethod.Post, body, req);
 
@@ -138,11 +152,11 @@ export class fetchClient implements Provider <FetchHttpRequest> {
         return transformResponse(response);
     };
 
-    async put < T > (
+    async put<T>(
         url: string,
-        body ? : any,
+        body?: any,
         req: RequestInit = {},
-    ): Promise < T > {
+    ): Promise<T> {
         const {
             transformResponse,
             willSendRequest
@@ -159,11 +173,11 @@ export class fetchClient implements Provider <FetchHttpRequest> {
         return transformResponse(response);
     };
 
-    async patch < T > (
+    async patch<T>(
         url: string,
-        body ? : any,
+        body?: any,
         req: RequestInit = {},
-    ): Promise < T > {
+    ): Promise<T> {
         const {
             transformResponse,
             willSendRequest
@@ -180,7 +194,7 @@ export class fetchClient implements Provider <FetchHttpRequest> {
         return transformResponse(response);
     };
 
-    async delete < T > (url: string, req: RequestInit = {}): Promise < T > {
+    async delete<T>(url: string, req: RequestInit = {}): Promise<T> {
         const {
             transformResponse,
             willSendRequest
@@ -202,9 +216,9 @@ export class fetchClient implements Provider <FetchHttpRequest> {
         method: HttpMethod,
         body: any,
         opts: RequestInit,
-    ): Promise < {
-        url: string;request: RequestInit
-    } > {
+    ): Promise<{
+        url: string; request: RequestInit
+    }> {
         const args = {
             url: urlJoin(this.baseUrl, url),
             request: {
