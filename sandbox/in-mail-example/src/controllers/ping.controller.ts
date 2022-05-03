@@ -1,13 +1,14 @@
 import {inject} from '@loopback/core';
 import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
-
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 /**
  * OpenAPI response for ping()
  */
+const contentType = 'Content-Type';
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',
   content: {
-    'application/json': {
+    [CONTENT_TYPE.JSON]: {
       schema: {
         type: 'object',
         title: 'PingResponse',
@@ -18,7 +19,7 @@ const PING_RESPONSE: ResponseObject = {
           headers: {
             type: 'object',
             properties: {
-              'Content-Type': {type: 'string'},
+              [contentType]: {type: 'string'},
             },
             additionalProperties: true,
           },
@@ -39,7 +40,7 @@ export class PingController {
   // Map to `GET /ping`
   @get('/ping', {
     responses: {
-      '200': PING_RESPONSE,
+      [STATUS_CODE.OK]: PING_RESPONSE,
     },
   })
   ping(): object {

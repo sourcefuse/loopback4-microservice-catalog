@@ -71,8 +71,8 @@ export class AuthMultitenantExampleApplication extends BootMixin(
 
     this.bind(RateLimitSecurityBindings.CONFIG).to({
       name: 'redis',
-      max: process.env.RATE_LIMITER_MAX_REQS,
-      windowsMs: process.env.RATE_LIMITER_WINDOW_MS,
+      max: parseInt(process.env.RATE_LIMITER_MAX_REQS as string),
+      windowMs: parseInt(process.env.RATE_LIMITER_WINDOW_MS as string),
       keyGenerator: function (req: Request) {
         return req.ip;
       },

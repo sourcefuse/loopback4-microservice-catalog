@@ -22,6 +22,7 @@ import {
   STATUS_CODE,
   SuccessResponse,
   UserStatus,
+  X_TS_TYPE,
 } from '@sourceloop/core';
 import {randomBytes} from 'crypto';
 import * as jwt from 'jsonwebtoken';
@@ -158,8 +159,7 @@ export class LoginController {
         description: 'Token Response Model',
         content: {
           [CONTENT_TYPE.JSON]: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -215,8 +215,7 @@ export class LoginController {
         description: 'Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -278,8 +277,7 @@ export class LoginController {
         description: 'New Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },

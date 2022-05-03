@@ -35,13 +35,14 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git"
   },
-  "author": "",
-  "license": "",
+  "author": "Sourcefuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
@@ -49,42 +50,54 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^4.0.0",
-    "@loopback/context": "^4.0.0",
-    "@loopback/core": "^3.0.0",
-    "@loopback/openapi-v3": "^7.0.0",
-    "@loopback/repository": "^4.0.0",
-    "@loopback/rest": "^11.0.0",
-    "@loopback/rest-explorer": "^4.0.0",
-    "@loopback/service-proxy": "^4.0.0",
-    "@sourceloop/authentication-service": "^3.0.1",
-    "@sourceloop/core": "^5.0.1",
-    "ajv": "^8.8.2",
-    "ajv-errors": "^1.0.1",
+    "@loopback/boot": "^4.1.2",
+    "@loopback/context": "^4.1.2",
+    "@loopback/core": "^3.1.2",
+    "@loopback/openapi-v3": "^7.1.2",
+    "@loopback/repository": "^4.1.2",
+    "@loopback/rest": "^11.1.2",
+    "@loopback/rest-explorer": "^4.1.2",
+    "@loopback/service-proxy": "^4.1.2",
+    "@sourceloop/authentication-service": "^4.0.7",
+    "@sourceloop/core": "^6.1.4",
+    "ajv": "^8.11.0",
+    "ajv-errors": "^3.0.0",
     "bcrypt": "^5.0.1",
-    "casbin": "^5.11.5",
-    "db-migrate": "^0.11.13",
+    "casbin": "^5.15.0",
+    "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^4.0.0",
-    "loopback-connector-postgresql": "^5.4.0",
-    "loopback4-authentication": "^6.0.0",
-    "loopback4-authorization": "^5.0.0",
-    "loopback4-helmet": "^4.0.0",
-    "loopback4-ratelimiter": "^4.0.0",
-    "loopback4-soft-delete": "^5.0.1",
+    "loopback-connector-postgresql": "^5.5.0",
+    "loopback4-authentication": "^6.0.3",
+    "loopback4-authorization": "^5.0.3",
+    "loopback4-helmet": "^4.0.2",
+    "loopback4-ratelimiter": "^4.0.3",
+    "loopback4-soft-delete": "^5.0.4",
     "prom-client": "^14.0.1",
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@loopback/build": "^8.0.0",
-    "@loopback/eslint-config": "^12.0.0",
-    "@loopback/testlab": "^4.0.0",
+    "@loopback/build": "^8.1.2",
+    "@loopback/eslint-config": "^12.0.4",
+    "@loopback/testlab": "^4.1.2",
     "@types/bcrypt": "^5.0.0",
-    "@types/node": "^10.17.60",
-    "eslint": "^7.32.0",
-    "source-map-support": "^0.5.20",
-    "typescript": "~4.5.2"
+    "@types/node": "^12.20.47",
+    "eslint": "^8.10.0",
+    "patch-package": "^6.4.7",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.6.3"
+  },
+  "overrides": {
+    "passport-azure-ad": {
+      "async": "^3.2.3"
+    },
+    "cache-manager": {
+      "async": "^3.2.3"
+    },
+    "check-code-coverage": {
+      "lodash": "^4.17.21"
+    }
   }
 }
