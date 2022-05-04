@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "workflow-ui": {
+      "projectType": "library",
+      "root": "projects/workflow-ui",
+      "sourceRoot": "projects/workflow-ui/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/workflow-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/workflow-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/workflow-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/workflow-ui/src/test.ts",
+            "tsConfig": "projects/workflow-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/workflow-ui/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "workflow-ui"
+}

@@ -30,6 +30,7 @@ const scopes = [
   {name: 'cli'},
   {name: 'search-client'},
   {name: 'user-onboarding'},
+  {name: 'workflow-ui'},
   {name: 'authentication-service'},
   {name: 'in-mail-service'},
   {name: 'notification-service'},
