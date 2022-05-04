@@ -1,0 +1,152 @@
+<div class="container">
+  <span
+    class="input-text"
+    *ngIf="selectedEvents.length === 0"
+    [popper]="nodePopup"
+    [popperShowOnStart]="false"
+    [popperHideOnClickOutside]="true"
+    [popperHideOnScroll]="true"
+    [popperTrigger]="'click'"
+    [popperPlacement]="'bottom'"
+    (click)="openPopup(types.EVENT)"
+  >
+    If this
+  </span>
+  <span *ngFor="let event of selectedEvents; let i = index">
+    <workflow-node
+      [node]="event"
+      [isLast]="i === selectedEvents.length - 1"
+      [isFirst]="i === 0"
+      [inputTemplate]="inputs"
+      [popupTemplate]="nodePopup"
+      (add)="openPopup(types.EVENT)"
+      (remove)="onNodeRemove(types.EVENT, i)"
+    ></workflow-node>
+  </span>
+  <br />
+  then
+  <br />
+  <span
+    class="input-text"
+    *ngIf="selectedActions.length === 0"
+    [popper]="nodePopup"
+    [popperShowOnStart]="false"
+    [popperHideOnClickOutside]="true"
+    [popperHideOnScroll]="true"
+    [popperTrigger]="'click'"
+    [popperPlacement]="'bottom'"
+    (click)="openPopup(types.ACTION)"
+  >
+    do this
+  </span>
+  <span *ngFor="let action of selectedActions; let i = index">
+    <workflow-node
+      [node]="action"
+      [isLast]="i === selectedActions.length - 1"
+      [isFirst]="i === 0"
+      [inputTemplate]="inputs"
+      [popupTemplate]="nodePopup"
+      (add)="openPopup(types.ACTION)"
+      (remove)="onNodeRemove(types.ACTION, i)"
+    ></workflow-node>
+  </span>
+</div>
+
+<popper-content #nodePopup>
+  <div
+    class="option-div"
+    (click)="onNodeAdd(node); nodePopup.hide()"
+    *ngFor="let node of nodeList"
+  >
+    {{ node.name }}
+  </div>
+</popper-content>
+
+<ng-template #inputs let-nodeWithInput="node">
+  <ng-container *ngFor="let input of nodeWithInput.inputs || []">
+    {{
+      (input.prefix.state
+        ? nodeWithInput.node.state.get(input.prefix.state)
+        : input.prefix) || ''
+    }}
+    <div
+      class="input-text"
+      [popper]="inputPopper"
+      [popperShowOnStart]="false"
+      [popperHideOnClickOutside]="true"
+      [popperHideOnScroll]="true"
+      [popperTrigger]="'click'"
+      [popperPlacement]="'bottom'"
+    >
+      <span
+        class="value-text"
+        *ngIf="input.getValueName(nodeWithInput.node.state)"
+        >{{ input.getValueName(nodeWithInput.node.state) }}</span
+      >
+      <span
+        class="placeholder-text"
+        *ngIf="!input.getValueName(nodeWithInput.node.state)"
+      >
+        {{ input.placeholder }}</span
+      >
+    </div>
+    {{
+      (input.suffix?.state
+        ? nodeWithInput.node.state.get(input.suffix?.state)
+        : input.suffix) || ''
+    }}
+    <popper-content #inputPopper>
+      <ng-container
+        *ngIf="
+          templateMap &&
+          templateMap[input.typeFunction(nodeWithInput.node.state)]
+        "
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            templateMap[input.typeFunction(nodeWithInput.node.state)] ||
+              listTemplate;
+            context: {
+              list: input.options
+                ? input.options(nodeWithInput.node.state)
+                : [],
+              callback: createCallback(nodeWithInput, input, inputPopper),
+              input: input
+            }
+          "
+        ></ng-container>
+      </ng-container>
+    </popper-content>
+  </ng-container>
+</ng-template>
+
+<ng-template
+  #listTemplate
+  let-list="list"
+  let-callback="callback"
+  let-input="input"
+>
+  <div
+    class="option-div"
+    (click)="callback(option)"
+    *ngFor="let option of list"
+  >
+    {{ option[input.listNameField] }}
+  </div>
+</ng-template>
+
+<ng-template #textTemplate let-callback="callback" let-input="input">
+  <input
+    type="text"
+    autofocus
+    (keyup.enter)="callback(getInputValue($event.target))"
+  />
+</ng-template>
+
+<ng-template #numberTemplate let-callback="callback" let-input="input">
+  <input
+    type="number"
+    autofocus
+    (keyup.enter)="callback(getInputValue($event.target))"
+  />
+</ng-template>
