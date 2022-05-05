@@ -1,25 +1,23 @@
-import {injectable, BindingScope} from '@loopback/core';
-import { v4 as uuidv4 } from 'uuid';
+import { injectable, BindingScope } from '@loopback/core';
 import { OcrClause } from '../types';
 
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({ scope: BindingScope.TRANSIENT })
 export class OcrObjectFormatterService {
-  constructor() {}
+  constructor() { }
 
-  async format(res: any) {
+  async format(res: OcrClause) {
     const resp: OcrClause = res;
-    const clause_type: string = Object.keys(resp)[0];
+    const clauseTypeData: string = Object.keys(resp)[0];
     const formattedObject = {
-        contract_name: resp[clause_type].contractFileName,
-        clause_type: resp[clause_type]?.extractedData?.column,
-        page_number: resp[clause_type]?.extractedData?.columnData?.pageNum,
-        text: resp[clause_type]?.extractedData?.columnData?.value,
-        coordinates: resp[clause_type]?.extractedData?.columnData?.coordinates ? JSON.stringify(resp[clause_type]?.extractedData?.columnData?.coordinates): null,
-        confidence_level: resp[clause_type]?.extractedData?.columnData?.confidenceScore,
-        created_by: uuidv4(),
-        modified_by: uuidv4()
+      contractName: resp[clauseTypeData].contractFileName,
+      clauseType: resp[clauseTypeData]?.extractedData?.column,
+      pageNumber: resp[clauseTypeData]?.extractedData?.columnData?.pageNum,
+      text: resp[clauseTypeData]?.extractedData?.columnData?.value,
+      supportedText: resp[clauseTypeData]?.extractedData?.columnData?.supportedValue,
+      coordinates: resp[clauseTypeData]?.extractedData?.columnData?.coordinates ? JSON.stringify(resp[clauseTypeData]?.extractedData?.columnData?.coordinates) : null,
+      confidenceLevel: resp[clauseTypeData]?.extractedData?.columnData?.confidenceScore
     }
 
     return formattedObject
-}
+  }
 }

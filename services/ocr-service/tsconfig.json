@@ -4,6 +4,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "outDir": "dist",
+    "lib": ["es2018", "dom"],
     "rootDir": "src"
   },
   "include": ["src"]

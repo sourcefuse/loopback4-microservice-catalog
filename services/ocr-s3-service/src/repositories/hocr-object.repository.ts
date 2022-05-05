@@ -1,7 +1,7 @@
 import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
-import {DbDataSource} from '../datasources';
+import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {HocrObject, HocrObjectRelations} from '../models';
+import {OcrS3DbSourceName} from '../types';
 
 export class HocrObjectRepository extends DefaultCrudRepository<
   HocrObject,
@@ -9,7 +9,8 @@ export class HocrObjectRepository extends DefaultCrudRepository<
   HocrObjectRelations
 > {
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource,
+    @inject(`datasources.${OcrS3DbSourceName}`)
+    dataSource: juggler.DataSource,
   ) {
     super(HocrObject, dataSource);
   }

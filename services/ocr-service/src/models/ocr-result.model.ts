@@ -1,91 +1,60 @@
-import {Entity, model, property} from '@loopback/repository';
-import {v4 as uuidv4} from 'uuid';
-
-
+import { model, property } from '@loopback/repository';
+import { BaseEntity } from '@sourceloop/core';
 @model({
+  name: 'ocr_results',
   settings: {
-    mysql: {
-      table: "ocr_results"
-    }
-  }
+    strict: false,
+  },
 })
-export class OcrResults extends Entity {
+export class OcrResults extends BaseEntity {
   @property({
     type: 'string',
     id: true,
-    default: () => uuidv4()
   })
   id?: string;
 
   @property({
     type: 'string',
     required: true,
+    name: 'contract_name',
   })
-  contract_name?: string;
+  contractName?: string;
 
   @property({
     type: 'string',
+    name: 'clause_type',
   })
-  clause_type?: string;
+  clauseType?: string;
 
   @property({
     type: 'number',
+    name: 'page_no',
   })
-  page_number?: number | any;
+  pageNo?: number;
 
   @property({
     type: 'string',
+    name: 'text',
   })
   text?: string;
 
   @property({
     type: 'string',
+    name: 'supported_text',
   })
-  coordinates?: string | any;
+  supportedText?: string;
+
+  @property({
+    type: 'string',
+    name: 'coordinates',
+  })
+  coordinates?: string;
 
   @property({
     type: 'number',
+    name: 'confidence_level',
   })
-  confidence_level?: number;
-
-  @property({
-    type: 'string',
-  })
-  created_by?: string;
-
-  @property({
-    type: 'string',
-  })
-  modified_by?: string;
-
-  @property({
-    type: 'date',
-    default: new Date(),
-  })
-  created_on?: string;
-
-  @property({
-    type: 'date',
-    default: new Date(),
-  })
-  modified_on?: string;
-
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  deleted?: boolean;
-
-  @property({
-    type: 'string',
-  })
-  deleted_by?: string;
-
-  @property({
-    type: 'date'
-  })
-  deleted_on?: string;
+  confidenceLevel?: number;
 
 
   constructor(data?: Partial<OcrResults>) {

@@ -10,5 +10,5 @@
 
 ## Overview
 
-Microservice for handling contract ocr data.
+Microservice for uploading contract document and getting OCR and HOCR data from CLM ML API.
 

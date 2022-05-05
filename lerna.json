@@ -5,6 +5,7 @@
     "packages/custom-sf-changelog/",
     "packages/user-onboarding/projects/user-onboarding-lib/",
     "packages/search/projects/search-lib/",
+    "packages/search/projects/fetch-client/",
     "services/*",
     "facades/*",
     "sandbox/**"

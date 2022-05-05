@@ -1,91 +1,52 @@
-import {Entity, model, property} from '@loopback/repository';
-import {v4 as uuidv4} from 'uuid';
-
-
+import { model, property } from '@loopback/repository';
+import { BaseEntity } from '@sourceloop/core';
 @model({
+  name: 'ocr_contracts',
   settings: {
-    mysql: {
-      table: "contracts"
-    }
-  }
+    strict: false,
+  },
 })
-export class Contracts extends Entity {
+export class Contracts extends BaseEntity {
   @property({
     type: 'string',
     id: true,
-    default: () => uuidv4()
   })
   id?: string;
 
   @property({
     type: 'string',
     required: true,
+    name: 'contract_name',
   })
-  contract_name: string;
+  contractName: string;
 
   @property({
     type: 'boolean',
     default: false,
+    name: 'contract_uploaded',
   })
-  contract_uploaded?: boolean;
+  contractUploaded?: boolean;
 
   @property({
     type: 'boolean',
     default: false,
+    name: 'image_converted',
   })
-  image_converted?: boolean;
+  imageConverted?: boolean;
 
   @property({
     type: 'boolean',
     default: false,
+    name: 'ocr_converted',
   })
-  ocr_converted?: boolean;
+  ocrConverted?: boolean;
 
   @property({
     type: 'boolean',
     default: false,
+    name: 'hocr_converted',
   })
-  hocr_converted?: boolean;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  created_by: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  modified_by: string;
-
-  @property({
-    type: 'date',
-    default: new Date(),
-  })
-  created_on?: string;
-
-  @property({
-    type: 'date',
-    default: new Date(),
-  })
-  modified_on?: string;
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  deleted?: boolean;
-
-  @property({
-    type: 'string',
-  })
-  deleted_by?: string;
-
-  @property({
-    type: 'date'
-  })
-  deleted_on?: string;
+  hocrConverted?: boolean;
 
 
 

@@ -1,12 +1,11 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "ocr-service-clm-service",
-    "version": "0.0.1",
-    "description": "clm-service",
+    "title": "Ocr Service",
+    "version": "1.0.0",
+    "description": "services",
     "contact": {
-      "name": "kundan-sf",
-      "email": "kundan.kumar@sourcefuse.com"
+      "name": "Sourcefuse"
     }
   },
   "paths": {
@@ -284,46 +283,6 @@
         "operationId": "OcrController.getContractContractAmount"
       }
     },
-    "/contract-file": {
-      "post": {
-        "x-controller-name": "ContractController",
-        "x-operation-name": "uploadContract",
-        "tags": [
-          "ContractController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "contract file upload"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "x-parser": "stream",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Request body for multipart/form-data based file upload",
-          "required": true
-        },
-        "operationId": "ContractController.uploadContract"
-      }
-    },
     "/contracts": {
       "get": {
         "x-controller-name": "ContractController",
@@ -350,7 +309,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Contracts.Filter"
+                  "$ref": "#/components/schemas/ocr_contracts.Filter"
                 }
               }
             }
@@ -1233,7 +1192,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "Get contract document type"
+                  "description": "Upload contract document"
                 }
               }
             }
@@ -1243,7 +1202,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/Contracts"
               }
             }
           }
@@ -1388,7 +1347,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "Get contract document type"
+                  "description": "Convert contract hocr"
                 }
               }
             }
@@ -1398,7 +1357,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/Contracts"
               }
             }
           }
@@ -1419,7 +1378,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "Get contract document type"
+                  "description": "Convert contract document to image"
                 }
               }
             }
@@ -1429,7 +1388,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/Contracts"
               }
             }
           }
@@ -1605,7 +1564,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "Get contract document type"
+                  "description": "Convert contract ocr"
                 }
               }
             }
@@ -1615,7 +1574,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/Contracts"
               }
             }
           }
@@ -1965,68 +1924,69 @@
       }
     }
   },
-  "servers": [
-    {
-      "url": "/"
-    }
-  ],
   "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Clauses": {
         "title": "Clauses",
         "type": "object",
         "description": "(tsType: OcrResults, schemaOptions: { title: 'Clauses' })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
           "id": {
             "type": "string"
           },
-          "contract_name": {
+          "contractName": {
             "type": "string"
           },
-          "clause_type": {
+          "clauseType": {
             "type": "string"
           },
-          "page_number": {
+          "pageNo": {
             "type": "number"
           },
           "text": {
             "type": "string"
           },
+          "supportedText": {
+            "type": "string"
+          },
           "coordinates": {
             "type": "string"
           },
-          "confidence_level": {
+          "confidenceLevel": {
             "type": "number"
-          },
-          "created_by": {
-            "type": "string"
-          },
-          "modified_by": {
-            "type": "string"
-          },
-          "created_on": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modified_on": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted": {
-            "type": "boolean"
-          },
-          "deleted_by": {
-            "type": "string"
-          },
-          "deleted_on": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "required": [
-          "contract_name"
+          "contractName"
         ],
-        "additionalProperties": false,
+        "additionalProperties": true,
         "x-typescript-type": "OcrResults"
       },
       "OcrResultsPartial": {
@@ -2034,113 +1994,159 @@
         "type": "object",
         "description": "(tsType: Partial<OcrResults>, schemaOptions: { partial: true })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
           "id": {
             "type": "string"
           },
-          "contract_name": {
+          "contractName": {
             "type": "string"
           },
-          "clause_type": {
+          "clauseType": {
             "type": "string"
           },
-          "page_number": {
+          "pageNo": {
             "type": "number"
           },
           "text": {
             "type": "string"
           },
+          "supportedText": {
+            "type": "string"
+          },
           "coordinates": {
             "type": "string"
           },
-          "confidence_level": {
+          "confidenceLevel": {
             "type": "number"
-          },
-          "created_by": {
-            "type": "string"
-          },
-          "modified_by": {
-            "type": "string"
-          },
-          "created_on": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modified_on": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted": {
-            "type": "boolean"
-          },
-          "deleted_by": {
-            "type": "string"
-          },
-          "deleted_on": {
-            "type": "string",
-            "format": "date-time"
           }
         },
-        "additionalProperties": false,
+        "additionalProperties": true,
         "x-typescript-type": "Partial<OcrResults>"
       },
       "OcrResults": {
         "title": "OcrResults",
         "type": "object",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
           "id": {
             "type": "string"
           },
-          "contract_name": {
+          "contractName": {
             "type": "string"
           },
-          "clause_type": {
+          "clauseType": {
             "type": "string"
           },
-          "page_number": {
+          "pageNo": {
             "type": "number"
           },
           "text": {
             "type": "string"
           },
+          "supportedText": {
+            "type": "string"
+          },
           "coordinates": {
             "type": "string"
           },
-          "confidence_level": {
+          "confidenceLevel": {
             "type": "number"
-          },
-          "created_by": {
-            "type": "string"
-          },
-          "modified_by": {
-            "type": "string"
-          },
-          "created_on": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modified_on": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted": {
-            "type": "boolean"
-          },
-          "deleted_by": {
-            "type": "string"
-          },
-          "deleted_on": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "required": [
-          "contract_name"
+          "contractName"
         ],
-        "additionalProperties": false
+        "additionalProperties": true
       },
-      "Contracts.Filter": {
+      "Contracts": {
+        "title": "Contracts",
         "type": "object",
-        "title": "Contracts.Filter",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "contractName": {
+            "type": "string"
+          },
+          "contractUploaded": {
+            "type": "boolean"
+          },
+          "imageConverted": {
+            "type": "boolean"
+          },
+          "ocrConverted": {
+            "type": "boolean"
+          },
+          "hocrConverted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contractName"
+        ],
+        "additionalProperties": true
+      },
+      "ocr_contracts.Filter": {
+        "type": "object",
+        "title": "ocr_contracts.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2169,7 +2175,7 @@
             ]
           },
           "where": {
-            "title": "Contracts.WhereFilter",
+            "title": "ocr_contracts.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -2178,78 +2184,62 @@
               {
                 "type": "object",
                 "properties": {
-                  "id": {
-                    "type": "boolean"
-                  },
-                  "contract_name": {
-                    "type": "boolean"
-                  },
-                  "contract_uploaded": {
-                    "type": "boolean"
-                  },
-                  "image_converted": {
-                    "type": "boolean"
-                  },
-                  "ocr_converted": {
-                    "type": "boolean"
-                  },
-                  "hocr_converted": {
-                    "type": "boolean"
-                  },
-                  "created_by": {
-                    "type": "boolean"
-                  },
-                  "modified_by": {
-                    "type": "boolean"
-                  },
-                  "created_on": {
-                    "type": "boolean"
-                  },
-                  "modified_on": {
-                    "type": "boolean"
-                  },
                   "deleted": {
                     "type": "boolean"
                   },
-                  "deleted_by": {
+                  "deletedOn": {
                     "type": "boolean"
                   },
-                  "deleted_on": {
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "contractName": {
+                    "type": "boolean"
+                  },
+                  "contractUploaded": {
+                    "type": "boolean"
+                  },
+                  "imageConverted": {
+                    "type": "boolean"
+                  },
+                  "ocrConverted": {
+                    "type": "boolean"
+                  },
+                  "hocrConverted": {
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": false
+                "additionalProperties": true
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
-                  "enum": [
-                    "id",
-                    "contract_name",
-                    "contract_uploaded",
-                    "image_converted",
-                    "ocr_converted",
-                    "hocr_converted",
-                    "created_by",
-                    "modified_by",
-                    "created_on",
-                    "modified_on",
-                    "deleted",
-                    "deleted_by",
-                    "deleted_on"
-                  ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Contracts.Fields"
+            "title": "ocr_contracts.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Contracts>"
       }
     }
-  }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
 }

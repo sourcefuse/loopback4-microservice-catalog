@@ -1,15 +1,16 @@
-import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
-import {dbDataSource} from '../datasources';
-import {HocrResults, HocrResultsRelations} from '../models';
+import { inject } from '@loopback/core';
+import { juggler } from '@loopback/repository';
+import { DefaultSoftCrudRepository } from '@sourceloop/core';
+import { HocrResults, HocrResultsRelations } from '../models';
+import { OcrDbSourceName } from '../types';
 
-export class HocrResultRepository extends DefaultCrudRepository<
+export class HocrResultRepository extends DefaultSoftCrudRepository<
   HocrResults,
-  typeof HocrResults.prototype.contract_name,
+  typeof HocrResults.prototype.id,
   HocrResultsRelations
 > {
   constructor(
-    @inject('datasources.db') dataSource: dbDataSource,
+    @inject(`datasources.${OcrDbSourceName}`) dataSource: juggler.DataSource,
   ) {
     super(HocrResults, dataSource);
   }

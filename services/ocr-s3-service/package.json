@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "services",
     "keywords": [
-        "loopback-microservice",
+        "loopback-extension",
         "loopback"
     ],
     "main": "dist/index.js",
@@ -12,7 +12,7 @@
         "node": ">=10.16"
     },
     "scripts": {
-        "build": "npm run clean && lb-tsc && npm run openapi-spec && npm run apidocs",
+        "build": "npm run clean && lb-tsc",
         "build:watch": "lb-tsc --watch",
         "lint": "npm run prettier:check && npm run eslint",
         "lint:fix": "npm run eslint:fix && npm run prettier:fix",
@@ -21,20 +21,17 @@
         "prettier:fix": "npm run prettier:cli -- --write",
         "eslint": "lb-eslint --report-unused-disable-directives .",
         "eslint:fix": "npm run eslint -- --fix",
-        "openapi-spec": "node ./dist/openapi-spec",
-        "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
         "pretest": "npm run build",
         "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
         "posttest": "npm run lint",
         "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
         "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "coverage": "nyc npm run test",
-        "prepublishOnly": "npm run test",
-        "postinstall": "node migration.js"
+        "coverage": "nyc npm run test"
     },
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+        "directory": "services/ocr-s3-service"
     },
     "author": "Sourcefuse",
     "license": "MIT",
@@ -83,6 +80,23 @@
         "eslint": "^8.10.0",
         "nyc": "^15.1.0",
         "source-map-support": "^0.5.21",
-        "typescript": "~4.6.3"
+        "typescript": "~4.6.3",
+        "widdershins": "^4.0.1"
+    },
+    "overrides": {
+        "jake": {
+            "async": "^3.2.3"
+        },
+        "passport-azure-ad": {
+            "async": "^3.2.3"
+        },
+        "cache-manager": {
+            "async": "^3.2.3"
+        },
+        "widdershins": {
+            "swagger2openapi": "^7.0.8",
+            "markdown-it": "^12.3.2",
+            "yargs": "^17.4.1"
+        }
     }
 }

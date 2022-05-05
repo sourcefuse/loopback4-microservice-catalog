@@ -1,0 +1,37 @@
+import { Contracts, OcrResults } from '../models';
+import { OcrResultRepository, ContractRepository } from '../repositories';
+import { OcrObjectFormatterService } from '../services';
+import { OcrClause } from '../types';
+export declare class OcrHooksController {
+    ocrResultRepository: OcrResultRepository;
+    contractRepository: ContractRepository;
+    ocrObjectFormatter: OcrObjectFormatterService;
+    constructor(ocrResultRepository: OcrResultRepository, contractRepository: ContractRepository, ocrObjectFormatter: OcrObjectFormatterService);
+    uploadContractFile(contract: Contracts): Promise<object>;
+    convertContractImages(contract: Contracts): Promise<any>;
+    convertContractOcr(contract: Contracts): Promise<any>;
+    convertContractHocr(contract: Contracts): Promise<any>;
+    getContractDocumentType(req: OcrClause): Promise<OcrResults>;
+    getContractTerminationClause(req: OcrClause): Promise<OcrResults>;
+    getContractIprOwnershipClause(req: OcrClause): Promise<OcrResults>;
+    getContractWarrantyClause(req: OcrClause): Promise<OcrResults>;
+    getContractThirdPartyBeneficiary(req: OcrClause): Promise<OcrResults>;
+    getContractGoverningLaw(req: OcrClause): Promise<OcrResults>;
+    getContractValidityTerms(req: OcrClause): Promise<OcrResults>;
+    getContractLiquidityDamages(req: OcrClause): Promise<OcrResults>;
+    getContractLimitedLiability(req: OcrClause): Promise<OcrResults>;
+    getContractLegalId(req: OcrClause): Promise<OcrResults>;
+    getContractSignatoryDetails(req: OcrClause): Promise<OcrResults>;
+    getContractVendor(req: OcrClause): Promise<OcrResults>;
+    getContractPaymentTerms(req: OcrClause): Promise<OcrResults>;
+    getContractForceMajeure(req: OcrClause): Promise<OcrResults>;
+    getContractIndemnityClause(req: OcrClause): Promise<OcrResults>;
+    getContractAutoRenewal(req: OcrClause): Promise<OcrResults>;
+    getContractCurrency(req: OcrClause): Promise<OcrResults>;
+    getContractPublicAnnouncement(req: OcrClause): Promise<OcrResults>;
+    getContractAssignment(req: OcrClause): Promise<OcrResults>;
+    getContractSupport(req: OcrClause): Promise<OcrResults>;
+    getContractContractAmount(req: OcrClause): Promise<OcrResults>;
+    getContractSlaClause(req: OcrClause): Promise<OcrResults>;
+    getContractSlaDashboard(req: OcrClause): Promise<OcrResults>;
+}

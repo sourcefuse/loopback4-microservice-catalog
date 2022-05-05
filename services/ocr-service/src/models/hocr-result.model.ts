@@ -1,86 +1,50 @@
-import {Entity, model, property} from '@loopback/repository';
-import {v4 as uuidv4} from 'uuid';
-
-
+import { model, property } from '@loopback/repository';
+import { BaseEntity } from '@sourceloop/core';
 @model({
+  name: 'hocr_results',
   settings: {
-    mysql: {
-      table: "hocr_results"
-    }
-  }
+    strict: false,
+  },
 })
-export class HocrResults extends Entity {
+export class HocrResults extends BaseEntity {
   @property({
     type: 'string',
     id: true,
-    defaultFn: () => uuidv4()
   })
   id?: string;
 
   @property({
     type: 'string',
     required: true,
+    name: 'contract_name',
   })
-  contract_name: string;
+  contractName: string;
 
   @property({
     type: 'string',
     required: true,
+    name: 'type',
   })
   type: string;
 
   @property({
     type: 'number',
     required: true,
+    name: 'page_no',
   })
-  page_no: number;
+  pageNo: number;
 
   @property({
     type: 'string',
+    name: 'hocr_data',
   })
-  hocr_data?: string;
-  
+  hocrData?: string;
 
   @property({
     type: 'string',
-    required: true,
+    name: 'img_data',
   })
-  created_by: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  modified_by: string;
-
-  @property({
-    type: 'date',
-    default: new Date(),
-  })
-  created_on?: string;
-
-  @property({
-    type: 'date',
-    default: new Date(),
-  })
-  modified_on?: string;
-
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  deleted?: boolean;
-
-  @property({
-    type: 'string',
-  })
-  deleted_by?: string;
-
-  @property({
-    type: 'date'
-  })
-  deleted_on?: string;
+  imgData?: string;
 
 
   constructor(data?: Partial<HocrResults>) {
