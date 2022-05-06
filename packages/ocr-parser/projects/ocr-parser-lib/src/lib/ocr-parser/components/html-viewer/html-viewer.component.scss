@@ -1,8 +1,60 @@
 mat-card {
     margin: 12px;
-}
-
-.mat-card:not([class*=mat-elevation-z]) {
+  }
+  
+  .mat-card:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
     border-radius: 5px 5px 0px 0px;
-}
+  }
+  
+  div.content_wrapper {
+      position: relative ;
+  }
+  
+  .indicator {
+      background-color: fade( gold, 10% ) ;
+      position: absolute ;
+      z-index: 2 ;
+  
+      &__cta {
+          left: 50% ;
+          position: absolute ;
+      top: -10px;
+      }
+  
+      &__cta-link {
+          background-color: #333333;
+      border-radius: 5px 5px 5px 5px;
+      bottom: 0px;
+      box-shadow: 2px 2px 5px fade(#000000, 30%);
+      color: #FFFFFF;
+      cursor: pointer;
+      left: 0px;
+      padding: 4px 8px 4px 8px;
+      position: absolute;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 11px;
+      text-decoration: none;
+  
+          &:after {
+              bottom: -11px ;
+              font-size: 15px ;
+              left: 50% ;
+              line-height: 15px ;
+              content: "▼" ;
+              color: #333333 ;
+              position: absolute ;
+              transform: translateX( -50% ) ;
+          }
+  
+          &:hover {
+              background-color: gold ;
+              color: #000000 ;
+  
+              &:after {
+                  color: gold ;
+              }
+          }
+      }
+  }

@@ -18,7 +18,6 @@ export class FieldViewerComponent implements OnInit, OnDestroy {
   constructor(private readonly dataService: OcrDataService) { }
 
 
-
   ngOnInit(): void {
     this.subscription.add(this.dataService.$getUpdatedClauseValue.subscribe((text: any) => {
       const field = this.data.fieldData?.find((item: any) => item.isSelected);
@@ -30,6 +29,11 @@ export class FieldViewerComponent implements OnInit, OnDestroy {
     }))
   }
 
+  getUpdatedValue(value: string, clause: FieldData) {
+    clause.value = value;
+    this.onEmitFieldData(clause);
+  }
+
 
   onEmitFieldData(data: FieldData) {
     const field = this.data.fieldData?.find((item: any) => item.isSelected);
@@ -38,7 +42,6 @@ export class FieldViewerComponent implements OnInit, OnDestroy {
     data.isSelected = true;
     this.dataService.setSelectedClause(data);
   }
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

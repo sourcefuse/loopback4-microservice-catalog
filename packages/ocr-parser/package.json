@@ -1,5 +1,5 @@
 {
-  "name": "ocr-parser",
+  "name": "@sourceloop/ocr-parser",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

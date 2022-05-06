@@ -11,6 +11,7 @@ import { NoSanitizePipe } from './ocr-parser/pipes/dom-sanitizer.pipe';
 import { OcrDataService } from './ocr-parser/services/ocrData.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TextSelectDirective } from './ocr-parser/directives/text-select.directive';
 
 
 
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     TabsComponent,
     FieldViewerComponent,
     HtmlViewerComponent,
-    NoSanitizePipe
+    NoSanitizePipe,
+    TextSelectDirective
   ],
   imports: [
     CommonModule,

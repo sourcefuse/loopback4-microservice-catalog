@@ -15,7 +15,7 @@ export class OcrDataService {
   $getUpdatedClauseData = this._updatedClauseData.asObservable();
 
 
-  setUpdatedClauseDatavalue(data: string) {
+  setUpdatedClauseValue(data: string) {
     this._updatedClauseValue.next(data);
   }
 

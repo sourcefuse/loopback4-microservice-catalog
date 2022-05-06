@@ -4,17 +4,18 @@ import { DocumentConfig, FieldConfig, FieldData } from './models/ocr.model';
 import { OcrDataService } from './services/ocrData.service';
 
 @Component({
-  selector: 'sourceloop-ocrParser',
+  selector: 'sourceloop-ocr-parser',
   templateUrl: './ocr-parser.component.html',
   styleUrls: ['./ocr-parser.component.scss']
 })
 export class OcrParserComponent implements OnInit, OnDestroy {
   @Input() documentConfig: DocumentConfig[] = [];
   @Input() fieldConfig: FieldConfig[] = [];
-  @Output() emitUpdatedClause = new EventEmitter();
+  @Output() updatedClauseEvent = new EventEmitter();
+
   private subscription: Subscription = new Subscription();
   private clausesData: FieldData[] = [];
-  private selectedClause: FieldData = new FieldData();
+  private selectedClauses: FieldData[] = [];
 
 
   constructor(private readonly dataService: OcrDataService) {
@@ -23,14 +24,30 @@ export class OcrParserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(this.dataService.$getUpdatedClauseData.subscribe(resp => {
       if (resp.id) {
-        this.clausesData.push(resp);
+        if (!this.checkAlreadyExistClause(this.clausesData, resp.id)) {
+          this.clausesData.push(resp);
+        } else {
+          const index = this.clausesData.findIndex(data => data.id === resp.id);
+          this.clausesData.splice(index, 1);
+          this.clausesData.push(resp);
+        }
+        const slectedClauseIndex = this.selectedClauses.findIndex(data => data.id === resp.id);
+        if (slectedClauseIndex >= 0) {
+          this.selectedClauses.splice(slectedClauseIndex, 1);
+        }
       }
     }));
     this.subscription.add(this.dataService.$getSelectedClauseData.subscribe(resp => {
-      if (resp.id) {
-        this.selectedClause = resp;
+      if (resp.id && resp.isSelected) {
+        if (!this.checkAlreadyExistClause(this.selectedClauses, resp.id))
+          this.selectedClauses.push(resp);
       }
     }))
+  }
+
+  checkAlreadyExistClause(clauses: FieldData[], clauseId: string): boolean {
+    const clause = clauses.find(data => data.id === clauseId);
+    return clause ? true : false
   }
 
   onCancelContract() {
@@ -41,16 +58,22 @@ export class OcrParserComponent implements OnInit, OnDestroy {
   }
 
   onApproveContract() {
-    const updatedSelecedField = this.clausesData.find(field => field.isSelected);
-    let data: FieldData;
-    if (updatedSelecedField) {
-      data = updatedSelecedField;
-    } else {
-      data = this.selectedClause;
+    let selecedField: FieldData | undefined;
+    if (this.clausesData.length) {
+      selecedField = this.clausesData.find(field => field.isSelected);
     }
-    data.isSelected = false;
-    this.dataService.setSelectedClause({ ...data, value: '' })
-    this.emitUpdatedClause.emit(this.clausesData);
+    if (!selecedField) {
+      selecedField = this.selectedClauses.find(field => field.isSelected);
+    }
+
+    if (selecedField) {
+      selecedField.isSelected = false;
+      this.dataService.setSelectedClause({ ...selecedField, value: '' });
+      this.clausesData.push(...this.selectedClauses);
+      this.updatedClauseEvent.emit(this.clausesData);
+      this.clausesData = [];
+      this.selectedClauses = [];
+    }
   }
 
   ngOnDestroy(): void {

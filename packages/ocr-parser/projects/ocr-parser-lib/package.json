@@ -1,5 +1,5 @@
 {
-  "name": "ocr-parser-lib",
+  "name": "@sourceloop/ocr-parser",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^13.1.0",

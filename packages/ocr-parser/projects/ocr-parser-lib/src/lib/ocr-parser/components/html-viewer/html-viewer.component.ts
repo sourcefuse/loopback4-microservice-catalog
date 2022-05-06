@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
+import { SelectionRectangle, TextSelectEvent } from '../../directives/text-select.directive';
 import { DocumentConfig, FieldData } from '../../models/ocr.model';
 import { OcrDataService } from '../../services/ocrData.service';
 
@@ -16,6 +17,8 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
   @Input()
   data!: DocumentConfig;
   fieldValue: string = '';
+  isSelectedClause = false;
+  public hostRectangle!: SelectionRectangle | null;
   searchConfig = { separateWordSearch: false, accuracy: 'partially', acrossElements: true };
   private subscription: Subscription = new Subscription();
 
@@ -26,34 +29,57 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.dataService.$getSelectedClauseData.subscribe((data: FieldData) => {
-      if (data.value) {
+      this.isSelectedClause = data.isSelected || false;
+      if(data.supported_text) {
+        this.fieldValue = data.supported_text;
+        this.scrollToHighlightedText();
+      } else if(data.value) {
         this.fieldValue = data.value;
-        clearTimeout(timerId);
-        timerId = setTimeout(() => {
-          this.scrollToFirstMarkedText();
-        }, 0);
+        this.scrollToHighlightedText();
       } else {
         this.fieldValue = ""
       }
     })
   }
 
-  getSelectedText() {
-    const selectedText = window.getSelection()?.toString().replace(/\s\s+/g, ' ').replace(/\n/g, ' ');
-    if (selectedText) {
-      this.fieldValue = selectedText;
-      this.dataService.setUpdatedClauseDatavalue(this.fieldValue);
-    }
+
+  scrollToHighlightedText() {
+    this.subscription.add(timer(0).subscribe(() => {
+      this.scrollToFirstMarkedText();
+    }));
   }
 
+  	// I render the rectangles emitted by the [textSelect] directive.
+	public renderRectangles( event: TextSelectEvent ) : void {
+		// If a new selection has been created, the viewport and host rectangles will
+		// exist. Or, if a selection is being removed, the rectangles will be null.
+    if(!this.isSelectedClause) {
+      return
+    }
+    if(event.text) {
+      this.fieldValue = event.text;
+    }
+		if ( event.hostRectangle ) {
+ 
+			this.hostRectangle = event.hostRectangle;
+ 
+		} else {
+			this.hostRectangle = null;
+		}
+ 
+	}
 
-
+  onUpdateClauseValue() {
+    this.dataService.setUpdatedClauseValue(this.fieldValue);
+  }
 
   scrollToFirstMarkedText() {
     const markedElements = this.document.getElementsByTagName('mark'); // it will return the array of marked
+    console.log(markedElements);
     if (markedElements.length) {
-      markedElements[0].scrollIntoView({ // scroll to first mark text
-        behavior: 'smooth'
+      markedElements[markedElements.length-1].scrollIntoView({ // scroll to first mark text
+        behavior: 'smooth',
+        block: 'end'
       });
     }
   }
