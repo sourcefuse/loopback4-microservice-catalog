@@ -31,17 +31,22 @@ export class FieldViewerComponent implements OnInit, OnDestroy {
 
   getUpdatedValue(value: string, clause: FieldData) {
     clause.value = value;
-    this.onEmitFieldData(clause);
+    this.onEmitFieldData(clause, false);
   }
 
 
-  onEmitFieldData(data: FieldData) {
+  onEmitFieldData(data: FieldData, isScroll = false) {
+
     const field = this.data.fieldData?.find((item: any) => item.isSelected);
     if (field)
       field.isSelected = false;
     data.isSelected = true;
-    this.dataService.setSelectedClause(data);
+    this.dataService.setSelectedClause({
+      isScroll: isScroll,
+      fieldData: data
+    });
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

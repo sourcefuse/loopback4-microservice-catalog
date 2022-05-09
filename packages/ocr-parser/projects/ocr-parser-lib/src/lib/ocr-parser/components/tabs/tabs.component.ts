@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
 import { FieldData } from '../../models/ocr.model';
 import { OcrDataService } from '../../services/ocrData.service';
@@ -15,12 +16,18 @@ export class TabsComponent implements OnInit, OnDestroy {
   viewTemplate!: TemplateRef<any>;
   selectedField: FieldData | undefined;
   textSubscription!: Subscription;
+  @Output() tabChangeEvent = new EventEmitter();
+
   constructor(private readonly dataService: OcrDataService) { }
 
   ngOnInit(): void {
     this.textSubscription = this.dataService.$getSelectedClauseData.subscribe(resp => {
-      this.selectedField = resp;
+      this.selectedField = resp.fieldData;
     })
+  }
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent) {
+    this.tabChangeEvent.emit(tabChangeEvent.index);
   }
 
   ngOnDestroy(): void {

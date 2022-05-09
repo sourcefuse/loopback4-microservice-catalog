@@ -1,7 +1,7 @@
 <div class="row wrapper">
     <div class="col-md-5 no-padding-right">
         <div class="fieldViewer">
-            <sourceloop-tabs [data]="fieldConfig" [viewTemplate]="fielViewer">
+            <sourceloop-tabs [data]="fieldConfig" [viewTemplate]="fielViewer" (tabChangeEvent)="getCurrentTabIndex($event)">
             </sourceloop-tabs>
         </div>
 

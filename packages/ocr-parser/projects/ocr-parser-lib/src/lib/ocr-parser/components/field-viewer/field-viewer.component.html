@@ -1,10 +1,11 @@
 <div class="field_block col-md-12" *ngFor="let field of data?.fieldData">
 
     <label>{{field.label}}</label>
-    <div class="row box" [class.active]="field?.isSelected" (click)="onEmitFieldData(field)">
-        <textarea [value]="field.value" #clause (input)="getUpdatedValue(clause.value, field)" rows="5" [disabled]="!field.supported_text">
+    <div class="row box" [class.active]="field?.isSelected" (click)="onEmitFieldData(field,true)">
+        <textarea [value]="field.value" #clause (blur)="getUpdatedValue(clause.value, field)" rows="5"
+            [disabled]="!field.supported_text">
             </textarea>
-            
+
         <div class="score" *ngIf="field.score > 0">
             <circle-progress [percent]="field.score" [maxPercent]="100" [radius]="8" [outerStrokeWidth]="2"
                 [innerStrokeWidth]="2" [outerStrokeColor]="field.color" [innerStrokeColor]="'#D1D1D1'"

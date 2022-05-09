@@ -16,6 +16,7 @@ export class OcrParserComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   private clausesData: FieldData[] = [];
   private selectedClauses: FieldData[] = [];
+  currentTabIndex!: number;
 
 
   constructor(private readonly dataService: OcrDataService) {
@@ -38,9 +39,9 @@ export class OcrParserComponent implements OnInit, OnDestroy {
       }
     }));
     this.subscription.add(this.dataService.$getSelectedClauseData.subscribe(resp => {
-      if (resp.id && resp.isSelected) {
-        if (!this.checkAlreadyExistClause(this.selectedClauses, resp.id))
-          this.selectedClauses.push(resp);
+      if (resp.fieldData.id && resp.fieldData.isSelected) {
+        if (!this.checkAlreadyExistClause(this.selectedClauses, resp.fieldData.id))
+          this.selectedClauses.push(resp.fieldData);
       }
     }))
   }
@@ -68,12 +69,18 @@ export class OcrParserComponent implements OnInit, OnDestroy {
 
     if (selecedField) {
       selecedField.isSelected = false;
-      this.dataService.setSelectedClause({ ...selecedField, value: '' });
+      this.dataService.setSelectedClause({ isScroll: false, fieldData: { ...selecedField, value: '' } });
       this.clausesData.push(...this.selectedClauses);
       this.updatedClauseEvent.emit(this.clausesData);
       this.clausesData = [];
       this.selectedClauses = [];
+    } else {
+      this.updatedClauseEvent.emit(this.fieldConfig[this.currentTabIndex].fieldData);
     }
+  }
+
+  getCurrentTabIndex(index: number) {
+    this.currentTabIndex = index;
   }
 
   ngOnDestroy(): void {

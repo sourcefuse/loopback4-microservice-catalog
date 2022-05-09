@@ -2,10 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { SelectionRectangle, TextSelectEvent } from '../../directives/text-select.directive';
-import { DocumentConfig, FieldData } from '../../models/ocr.model';
+import { DocumentConfig, SelectedClause } from '../../models/ocr.model';
 import { OcrDataService } from '../../services/ocrData.service';
-
-let timerId: any;
 
 @Component({
   selector: 'sourceloop-html-viewer',
@@ -18,6 +16,7 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
   data!: DocumentConfig;
   fieldValue: string = '';
   isSelectedClause = false;
+  updateIconUrl = '../../../../assets/icons/update.svg'
   public hostRectangle!: SelectionRectangle | null;
   searchConfig = { separateWordSearch: false, accuracy: 'partially', acrossElements: true };
   private subscription: Subscription = new Subscription();
@@ -28,13 +27,16 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.dataService.$getSelectedClauseData.subscribe((data: FieldData) => {
-      this.isSelectedClause = data.isSelected || false;
-      if(data.supported_text) {
-        this.fieldValue = data.supported_text;
+    this.subscription = this.dataService.$getSelectedClauseData.subscribe((resp: SelectedClause) => {
+      this.isSelectedClause = resp.fieldData.isSelected || false;
+      if(!resp.isScroll) {
+        return
+      }
+      if(resp.fieldData.supported_text) {
+        this.fieldValue = resp.fieldData.supported_text;
         this.scrollToHighlightedText();
-      } else if(data.value) {
-        this.fieldValue = data.value;
+      } else if(resp.fieldData.value) {
+        this.fieldValue = resp.fieldData.value;
         this.scrollToHighlightedText();
       } else {
         this.fieldValue = ""
@@ -75,7 +77,6 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
 
   scrollToFirstMarkedText() {
     const markedElements = this.document.getElementsByTagName('mark'); // it will return the array of marked
-    console.log(markedElements);
     if (markedElements.length) {
       markedElements[markedElements.length-1].scrollIntoView({ // scroll to first mark text
         behavior: 'smooth',

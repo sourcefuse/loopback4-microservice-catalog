@@ -137,3 +137,12 @@ Description for various things is as follows:
 You can also get the selected clause and updated clauses by listen the event updatedClauseEvent in the template.
 
 ``` <sourceloop-ocr-parser [documentConfig] = "documentConfig" [fieldConfig] = "fieldConfig" (updatedClauseEvent)="onApproveClauseData($event)"></sourceloop-ocr-parser>```
+
+For load the library assets in your application you will need to update assets array in angular.json file like.
+
+```{
+    "glob": "**/*",
+    "input": "./node_modules/@sourceloop/ocr-parser/assets",
+    "output": "./assets/"
+  }
+```
