@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.10 (2022-05-09)</small>
+
+* chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
+
+
+
+
+
 ## <small>0.4.9 (2022-04-20)</small>
 
 * chore(deps): bump moment in /sandbox/workflow-ms-example (#655) ([2ca4fe1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/2ca4fe1)), closes [#655](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/655)

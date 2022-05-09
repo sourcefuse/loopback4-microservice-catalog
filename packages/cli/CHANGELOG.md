@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.2 (2022-05-09)</small>
+
+* solve the version upgrade issues in cli (#769) ([619582a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/619582a)), closes [#769](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/769)
+* chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.2.1 (2022-04-20)</small>
 
 * chore(deps): bump moment from 2.29.1 to 2.29.2 in /packages/cli (#667) ([12bb9d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12bb9d9)), closes [#667](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/667)

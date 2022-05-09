@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.9 (2022-05-09)</small>
+
+* chore(deps): bump ejs from 3.1.6 to 3.1.7 in /services/audit-service (#763) ([64e24e9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/64e24e9)), closes [#763](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/763)
+* chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>4.0.8 (2022-04-20)</small>
 
 * chore(deps): bump moment in /services/audit-service (#660) ([9c9c400](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9c9c400)), closes [#660](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/660)

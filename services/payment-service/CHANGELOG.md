@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.2.6 (2022-05-09)</small>
+
+* chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(deps): upgrade ejs to latest version v3.1.7 (#758) ([cdddb4a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cdddb4a)), closes [#758](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/758) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* style(authentication-service): remove eslint disable naming convention and repalce with constants (# ([a87b5b2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a87b5b2)), closes [#730](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/730) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>3.2.5 (2022-04-20)</small>
 
 * chore(deps): bump minimist in /services/payment-service (#640) ([39a6302](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39a6302)), closes [#640](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/640)
