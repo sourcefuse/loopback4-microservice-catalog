@@ -86,7 +86,6 @@ export class OcrHooksController {
 
     @requestBody() req: OcrClause
   ): Promise<OcrResults> {
-    // eslint-disable-next-line
     const ocrObject: any = await this.ocrObjectFormatter.format(req);
     return this.ocrResultRepository.create(ocrObject);
   }

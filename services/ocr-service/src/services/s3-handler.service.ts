@@ -37,11 +37,9 @@ export class S3HandlerService {
     return Body;
   }
 
-  // eslint-disable-next-line
   async streamToString(stream: any): Promise<string> {
     return new Promise((resolve, reject) => {
       const chunks: Uint8Array[] = [];
-      // eslint-disable-next-line
       stream.on('data', (chunk: any) => chunks.push(chunk));
       stream.on('error', reject);
       stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));

@@ -33,6 +33,6 @@ export type OcrObject = {
   modifiedBy: string
 }
 
-export const OcrDbSourceName = 'OcrDb';
+export const OcrDbSourceName = 'OcrDbSourceName';
 
 
