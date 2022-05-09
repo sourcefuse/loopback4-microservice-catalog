@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.1.5 (2022-05-09)</small>
+
+* chore(deps): bump ejs from 3.1.6 to 3.1.7 in /packages/core (#760) ([0c80a67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0c80a67)), closes [#760](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/760)
+* chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* style(authentication-service): remove eslint disable naming convention and repalce with constants (# ([a87b5b2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a87b5b2)), closes [#730](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/730) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(authentication-service): fix error messages in providers (#732) ([96cb609](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/96cb609)), closes [#732](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/732) [#688](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/688)
+
+
+
+
+
 ## <small>6.1.4 (2022-04-20)</small>
 
 * chore(deps): bump moment from 2.29.1 to 2.29.2 in /packages/core (#648) ([8fb5e34](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8fb5e34)), closes [#648](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/648)

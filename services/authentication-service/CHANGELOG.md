@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.8 (2022-05-09)</small>
+
+* chore(deps): bump ejs in /services/authentication-service (#762) ([c1dd334](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c1dd334)), closes [#762](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/762)
+* chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* style(authentication-service): remove eslint disable naming convention and repalce with constants (# ([a87b5b2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a87b5b2)), closes [#730](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/730) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(authentication-service): fix error messages in providers (#732) ([96cb609](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/96cb609)), closes [#732](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/732) [#688](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/688)
+
+
+
+
+
 ## <small>4.0.7 (2022-04-20)</small>
 
 * chore(deps): bump moment in /services/authentication-service (#652) ([e85c1c6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e85c1c6)), closes [#652](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/652)

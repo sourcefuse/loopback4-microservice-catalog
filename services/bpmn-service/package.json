@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/bpmn-service",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -61,7 +61,7 @@
     "@loopback/openapi-v3": "^7.1.2",
     "@loopback/repository": "^4.1.2",
     "@loopback/rest": "^11.1.2",
-    "@sourceloop/core": "^6.1.4",
+    "@sourceloop/core": "^6.1.5",
     "ajv": "^8.11.0",
     "camunda-external-task-client-js": "^2.2.0",
     "dotenv": "^16.0.0",
