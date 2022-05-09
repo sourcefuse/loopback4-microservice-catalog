@@ -24,6 +24,14 @@ const DATASOURCE_TEMPLATE = join(
   'name.datasource.ts.tpl',
 );
 
+const REDIS_DATASOURCE = join(
+  '..',
+  '..',
+  'datasource',
+  'templates',
+  'redis.datasource.ts.tpl',
+);
+
 const DATASOURCE_INDEX = join(
   '..',
   '..',
@@ -275,6 +283,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   writing() {
     if (!this.shouldExit()) {
       if (this.options.datasourceName) {
+        const nameArr = [this.options.datasourceName];
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_TEMPLATE),
           this.destinationPath(
@@ -288,11 +297,20 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             project: this.projectInfo,
           },
         );
+        if (this.options.baseService === 'authentication-service') {
+          this.fs.copyTpl(
+            this.templatePath(REDIS_DATASOURCE),
+            this.destinationPath(
+              join('src', 'datasources', 'redis.datasource.ts'),
+            ),
+          );
+          nameArr.push('redis');
+        }
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_INDEX),
           this.destinationPath(join('src', 'datasources', `index.ts`)),
           {
-            name: this.options.datasourceName,
+            nameArr: nameArr,
           },
         );
       }
