@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import {Model, model, property} from '@loopback/repository';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
@@ -12,6 +10,7 @@ export class OtpSendRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   client_id: string;
 
   @property({
@@ -19,6 +18,7 @@ export class OtpSendRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   client_secret: string;
 
   @property({

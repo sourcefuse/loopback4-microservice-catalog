@@ -1,10 +1,16 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {
+  AuthenticationBindings,
+  AuthErrorKeys,
+  VerifyFunction,
+} from 'loopback4-authentication';
 import {OtpCacheRepository, UserRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {authenticator} from 'otplib';
+import {AuthClient} from '../../../models';
+import {OtpSenderService} from '../../../services';
 
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
@@ -15,6 +21,10 @@ export class GoogleAuthenticatorVerifyProvider
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(AuthenticationBindings.CURRENT_CLIENT)
+    private readonly client: AuthClient,
+    @inject('services.OtpSenderService')
+    private readonly otpSenderService: OtpSenderService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {
@@ -26,7 +36,8 @@ export class GoogleAuthenticatorVerifyProvider
       });
 
       //sender
-      if (!otp || otp === process.env.OTP_SENDER_FUNCTION) {
+      if (!otp) {
+        await this.otpSenderService.sendOtp(this.client, username);
         return user;
       }
 
@@ -40,7 +51,7 @@ export class GoogleAuthenticatorVerifyProvider
       let isValid = false;
       try {
         isValid = authenticator
-          .create({...authenticator.allOptions()})
+          .create(authenticator.allOptions())
           .verify({token: otp, secret: otpCache.otpSecret!});
       } catch (err) {
         this.logger.error(err);

@@ -1,11 +1,10 @@
 import {inject} from '@loopback/context';
 import {BindingScope, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
+import {HttpErrors, Response, RestBindings} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {AuthClient} from '../models';
-import {AuthUser} from '../modules/auth/models/auth-user.model';
 import {OtpResponse} from '../modules/auth';
 import {OtpFn, VerifyBindings} from '../providers';
 import {OtpCacheRepository, UserRepository} from '../repositories';
@@ -20,34 +19,31 @@ export class OtpSenderService {
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(VerifyBindings.OTP_PROVIDER)
     private readonly otpSender: OtpFn,
+    @inject(RestBindings.Http.RESPONSE) private response: Response,
   ) {}
 
   async sendOtp(
     client: AuthClient,
-    user: AuthUser,
+    username: string,
   ): Promise<OtpResponse | void> {
     if (!client) {
       this.logger.error('Auth client not found or invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
-    if (!user) {
-      this.logger.error('User not found or invalid');
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-    }
 
-    const res: OtpResponse = await this.otpSender(user.username);
+    const res: OtpResponse = await this.otpSender(username);
 
-    await this.otpCacheRepo.delete(user.username);
-    await this.otpCacheRepo.set(user.username, {
+    await this.otpCacheRepo.delete(username);
+    await this.otpCacheRepo.set(username, {
       otpSecret: res.key,
       clientId: client.clientId,
       clientSecret: client.secret,
     });
 
     if (res.qrCode) {
-      return {
+      this.response.send({
         qrCode: res.qrCode,
-      };
+      });
     }
   }
 }

@@ -38,7 +38,12 @@ import moment from 'moment-timezone';
 import {ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
-import {AuthCodeBindings, CodeReaderFn, JwtPayloadFn} from '../../providers';
+import {
+  AuthCodeBindings,
+  CodeReaderFn,
+  CodeWriterFn,
+  JwtPayloadFn,
+} from '../../providers';
 import {
   AuthClientRepository,
   OtpCacheRepository,
@@ -101,8 +106,6 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
-    @inject('services.OtpSenderService')
-    private readonly otpSenderService: OtpSenderService,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -452,9 +455,7 @@ export class LoginController {
 
   // OTP,Google Authenticator APIs
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.OTP, {
-    otp: process.env.OTP_SENDER_FUNCTION,
-  })
+  @authenticate(STRATEGY.OTP)
   @authorize({permissions: ['*']})
   @post('/auth/send-otp', {
     description: 'Sends OTP',
@@ -475,9 +476,7 @@ export class LoginController {
     client: AuthClient,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser,
-  ): Promise<OtpResponse | void> {
-    return this.otpSenderService.sendOtp(client, user);
-  }
+  ): Promise<OtpResponse | void> {}
 
   @authenticate(STRATEGY.OTP)
   @authorize({permissions: ['*']})
@@ -500,6 +499,8 @@ export class LoginController {
     req: OtpLoginRequest,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
     const otpCache = await this.otpCacheRepo.get(req.key);
     if (user?.id) {
@@ -509,12 +510,14 @@ export class LoginController {
       clientId: otpCache.clientId,
       userId: otpCache.userId,
     };
-    const token = jwt.sign(codePayload, otpCache.clientSecret, {
-      expiresIn: 180,
-      audience: otpCache.clientId,
-      issuer: process.env.JWT_ISSUER,
-      algorithm: 'HS256',
-    });
+    const token = await codeWriter(
+      jwt.sign(codePayload, otpCache.clientSecret, {
+        expiresIn: 180,
+        audience: otpCache.clientId,
+        issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
+      }),
+    );
     return {
       code: token,
     };
