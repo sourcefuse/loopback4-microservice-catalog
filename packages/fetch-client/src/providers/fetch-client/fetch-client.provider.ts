@@ -143,8 +143,6 @@ export class fetchClient implements Provider<FetchHttpRequest> {
             willSendRequest
         } = this;
 
-        console.log(body)
-
         const args = await this.buildRequestArgs(url, HttpMethod.Post, body, req);
 
         if (willSendRequest) {
@@ -152,8 +150,6 @@ export class fetchClient implements Provider<FetchHttpRequest> {
         }
 
         const response = await fetch(args.url, args.request);
-
-        console.log(JSON.stringify(response))
 
         return transformResponse(response);
     };
