@@ -355,6 +355,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         } else {
           // do nothing
         }
+        this._addMigrationScripts();
       }
       return true;
     } else {
@@ -431,6 +432,31 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     return this.fs.exists(
       this.destinationPath(join('packages', 'migrations', 'package.json')),
     );
+  }
+
+  private _addMigrationScripts() {
+    try {
+      const packageJsFile = 'packages/migrations/package.json';
+      const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
+      const script = packageJs.scripts;
+      script[
+        `db:migrate:${this.options.name}`
+      ] = `./node_modules/.bin/db-migrate up --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[
+        `db:migrate-down:${this.options.name}`
+      ] = `./node_modules/.bin/db-migrate down --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[
+        `db:migrate-reset:${this.options.name}`
+      ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+
+      packageJs.scripts = script;
+      writeFileSync(
+        packageJsFile,
+        JSON.stringify(packageJs, undefined, JSON_SPACING),
+      );
+    } catch {
+      //do nothing
+    }
   }
 
   async end() {
