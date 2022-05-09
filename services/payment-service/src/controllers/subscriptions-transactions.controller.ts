@@ -44,8 +44,7 @@ export class SubscriptionTransactionsController {
       [redirectStatusCode]: {
         description: 'Subscription model instance',
         content: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'text/html': {},
+          [CONTENT_TYPE.TEXT_HTML]: {},
         },
       },
     },
@@ -103,8 +102,7 @@ export class SubscriptionTransactionsController {
   async subscriptionTransactionscharge(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/x-www-form-urlencoded': {
+        [CONTENT_TYPE.FORM_URLENCODED]: {
           schema: {
             type: 'object',
           },
