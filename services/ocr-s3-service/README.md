@@ -24,7 +24,7 @@ npm i @sourceloop/ocr-s3-service
 
 - Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
-- Install the ocr service
+- Install the ocr s3 service.
   `npm i @sourceloop/ocr-s3-service`
 - Set the [environment variables](#environment-variables).
 - Add the `OcrS3ServiceComponent` to your Loopback4 Application (in `application.ts`).

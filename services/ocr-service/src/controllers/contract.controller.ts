@@ -1,5 +1,4 @@
 import {
-  Getter,
   inject
 } from '@loopback/context';
 import {
@@ -10,8 +9,6 @@ import {
   param,
   get,
   response,
-  Request,
-  RestBindings
 } from '@loopback/rest';
 import { RequestServiceBindings } from '../keys';
 import {
@@ -27,34 +24,34 @@ export class ContractController {
   constructor(
     @inject.getter(RequestServiceBindings.FetchProvider) private readonly requestProvider: FetchClientProvider,
     @repository(ContractRepository) public contractRepository: ContractRepository,
-    @repository(HocrResultRepository) public hocrResultRepository: HocrResultRepository,
-    @inject(RestBindings.Http.REQUEST) private request: Request
+    @repository(HocrResultRepository) public hocrResultRepository: HocrResultRepository
   ) {
   }
 
-  @get('/hocr-convert/{contract_name}')
+  @get('/hocr-convert/{id}')
   @response(200, {
     description: 'hcr file converter'
   })
   async getContractHOCR(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    await this.requestProvider.post(`/contract-parser/hocr-converter?contract_name=${contractName}`)
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/hocr-converter?contract_name=${contract.contractName}`)
     return {
       status: 200,
       message: 'SUCCESS'
     };
   }
 
-  @get('/img-convert/{contract_name}')
+  @get('/img-convert/{id}')
   @response(200, {
     description: 'image file converter'
   })
   async convertContractImg(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-
-    await this.requestProvider.post(`/contract-parser/img-converter?contract_name=${contractName}`)
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/img-converter?contract_name=${contract.contractName}`)
     return {
       status: 200,
       message: 'SUCCESS'
@@ -63,31 +60,32 @@ export class ContractController {
 
 
 
-  @get('/ocr-convert/{contract_name}')
+  @get('/ocr-convert/{id}')
   @response(200, {
     description: 'ocr file converter'
   })
   async convertContractOcr(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-
-    await this.requestProvider.post(`/contract-parser/ocr-converter?contract_name=${contractName}`)
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/ocr-converter?contract_name=${contract.contractName}`)
     return {
       status: 200,
       message: 'SUCCESS'
     };
   }
 
-  @get('/hocr-file/{contract_name}')
+  @get('/hocr-file/{id}')
   @response(200, {
     description: 'hocr file converter'
   })
   async getAllHOCRByContractName(
-    @param.path.string('contract_name') contractName: string
+    @param.path.string('id') id: string
   ): Promise<HocrResults[]> {
+    const contract = await this.contractRepository.findById(id);
     const hocr: HocrResults[] = await this.hocrResultRepository.find({
       where: {
-        contractName: contractName
+        contractName: contract.contractName
       }
     });
     return hocr;

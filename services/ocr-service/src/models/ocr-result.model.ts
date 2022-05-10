@@ -29,12 +29,6 @@ export class OcrResults extends BaseEntity {
       required: true,
     },
   )
-
-  @property({
-    type: 'string',
-    required: true,
-    name: 'contract_id',
-  })
   contractId?: string;
 
   @property({
@@ -65,7 +59,7 @@ export class OcrResults extends BaseEntity {
     type: 'string',
     name: 'coordinates',
   })
-  coordinates?: string;
+  coordinates?: string | any;
 
   @property({
     type: 'number',
