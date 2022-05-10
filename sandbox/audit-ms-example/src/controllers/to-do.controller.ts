@@ -16,7 +16,7 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permissions.enum';
@@ -36,14 +36,14 @@ export class ToDoController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'ToDo model instance',
-        content: {'application/json': {schema: getModelSchemaRef(ToDo)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(ToDo)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(ToDo, {
             title: 'NewToDo',
             exclude: ['id'],
@@ -62,7 +62,7 @@ export class ToDoController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'ToDo model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -77,7 +77,7 @@ export class ToDoController {
       [STATUS_CODE.OK]: {
         description: 'Array of ToDo model instances',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
               items: getModelSchemaRef(ToDo, {includeRelations: true}),
@@ -97,14 +97,14 @@ export class ToDoController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'ToDo PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(ToDo, {partial: true}),
         },
       },
@@ -122,7 +122,7 @@ export class ToDoController {
       [STATUS_CODE.OK]: {
         description: 'ToDo model instance',
         content: {
-          'application/json': {
+          [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(ToDo, {includeRelations: true}),
           },
         },
@@ -149,7 +149,7 @@ export class ToDoController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(ToDo, {partial: true}),
         },
       },

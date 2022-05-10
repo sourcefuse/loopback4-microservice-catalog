@@ -6,6 +6,10 @@ import {SignupRequestDto} from './models/signup-request-dto.model';
 
 export interface IAuthServiceConfig extends IServiceConfig {}
 
+export interface IOtpAuthConfig {
+  useGoogleAuthenticator: boolean;
+}
+
 export const AuthDbSourceName = 'AuthDB';
 export const AuthCacheSourceName = 'AuthCache';
 

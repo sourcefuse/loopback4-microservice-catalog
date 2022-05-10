@@ -28,10 +28,10 @@ describe('Keycloak Oauth Signup Service', () => {
       expect(result).to.be.Function();
     });
 
-    it('checks if provider function returns a promise and throws invalid credentials', async () => {
+    it('checks if provider function returns a promise and throws not implemented', async () => {
       const func = keycloakOauth2SignupProvider.value();
       const result = await func(profile).catch(err => err.message);
-      expect(result).to.be.eql('Invalid Credentials');
+      expect(result).to.be.eql('KeyCloakSignupProvider not implemented');
     });
   });
 

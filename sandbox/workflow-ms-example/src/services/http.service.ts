@@ -25,11 +25,12 @@ export class HttpClientService {
 
   post<T>(url: string, body: AnyObject, options?: HttpOptions) {
     const processed = this.processOptions(url, options);
+    const contentTypeHeader = 'content-type';
     return fetch(processed.url, {
       method: 'post',
       body: JSON.stringify(body),
       headers: {
-        'content-type': 'application/json',
+        [contentTypeHeader]: 'application/json',
         ...processed.headers,
       },
     }).then(res => this.handleRes<T>(res));

@@ -1,4 +1,5 @@
 import {AuthClientRepository} from './auth-client.repository';
+import {OtpCacheRepository} from './otp-cache.repository';
 import {OtpRepository} from './otp.repository';
 import {RefreshTokenRepository} from './refresh-token.repository';
 import {RevokedTokenRepository} from './revoked-token.repository';
@@ -19,6 +20,7 @@ export * from './refresh-token.repository';
 export * from './auth-client.repository';
 export * from './revoked-token.repository';
 export * from './user-credentials.repository';
+export * from './otp-cache.repository';
 export * from './otp.repository';
 export * from './tenant-config.repository';
 export * from './user-tenant.repository';
@@ -33,6 +35,7 @@ export const repositories = [
   AuthClientRepository,
   UserCredentialsRepository,
   OtpRepository,
+  OtpCacheRepository,
   TenantConfigRepository,
   UserTenantRepository,
   TenantRepository,

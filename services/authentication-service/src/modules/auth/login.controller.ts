@@ -22,6 +22,7 @@ import {
   STATUS_CODE,
   SuccessResponse,
   UserStatus,
+  X_TS_TYPE,
 } from '@sourceloop/core';
 import {randomBytes} from 'crypto';
 import * as jwt from 'jsonwebtoken';
@@ -38,9 +39,15 @@ import moment from 'moment-timezone';
 import {ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
-import {AuthCodeBindings, CodeReaderFn, JwtPayloadFn} from '../../providers';
+import {
+  AuthCodeBindings,
+  CodeReaderFn,
+  CodeWriterFn,
+  JwtPayloadFn,
+} from '../../providers';
 import {
   AuthClientRepository,
+  OtpCacheRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
   RoleRepository,
@@ -51,10 +58,19 @@ import {
 } from '../../repositories';
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {LoginHelperService} from '../../services';
-import {AuthRefreshTokenRequest, AuthTokenRequest, LoginRequest} from './';
+import {
+  AuthRefreshTokenRequest,
+  AuthTokenRequest,
+  CodeResponse,
+  LoginRequest,
+  OtpLoginRequest,
+  OtpResponse,
+} from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
+import {OtpSenderService} from '../../services/otp-sender.service';
+import {OtpSendRequest} from './models/otp-send-request.dto';
 
 const userAgentKey = 'user-agent';
 
@@ -68,6 +84,8 @@ export class LoginController {
     public authClientRepository: AuthClientRepository,
     @repository(UserRepository)
     public userRepo: UserRepository,
+    @repository(OtpCacheRepository)
+    public otpCacheRepo: OtpCacheRepository,
     @repository(RoleRepository)
     public roleRepo: RoleRepository,
     @repository(UserLevelPermissionRepository)
@@ -115,9 +133,7 @@ export class LoginController {
     client: AuthClient | undefined,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
-  ): Promise<{
-    code: string;
-  }> {
+  ): Promise<CodeResponse> {
     await this.loginHelperService.verifyClientUserLogin(req, client, user);
 
     try {
@@ -158,8 +174,7 @@ export class LoginController {
         description: 'Token Response Model',
         content: {
           [CONTENT_TYPE.JSON]: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -215,8 +230,7 @@ export class LoginController {
         description: 'Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -278,8 +292,7 @@ export class LoginController {
         description: 'New Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            schema: {'x-ts-type': TokenResponse},
+            schema: {[X_TS_TYPE]: TokenResponse},
           },
         },
       },
@@ -436,6 +449,76 @@ export class LoginController {
     }
     delete this.user.deviceInfo;
     return new AuthUser(this.user);
+  }
+
+  // OTP,Google Authenticator APIs
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(STRATEGY.OTP)
+  @authorize({permissions: ['*']})
+  @post('/auth/send-otp', {
+    description: 'Sends OTP',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Sends otp to user',
+        content: {
+          [CONTENT_TYPE.JSON]: Object,
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async sendOtp(
+    @requestBody()
+    req: OtpSendRequest,
+    @inject(AuthenticationBindings.CURRENT_CLIENT)
+    client: AuthClient,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    user: AuthUser,
+  ): Promise<OtpResponse | void> {}
+
+  @authenticate(STRATEGY.OTP)
+  @authorize({permissions: ['*']})
+  @post('/auth/verify-otp', {
+    description:
+      'Gets you the code that will be used for getting token (webapps)',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
+        content: {
+          [CONTENT_TYPE.JSON]: Object,
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async verifyOtp(
+    @requestBody()
+    req: OtpLoginRequest,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    user: AuthUser | undefined,
+    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
+    codeWriter: CodeWriterFn,
+  ): Promise<CodeResponse> {
+    const otpCache = await this.otpCacheRepo.get(req.key);
+    if (user?.id) {
+      otpCache.userId = user.id;
+    }
+    const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
+      clientId: otpCache.clientId,
+      userId: otpCache.userId,
+    };
+    const token = await codeWriter(
+      jwt.sign(codePayload, otpCache.clientSecret, {
+        expiresIn: 180,
+        audience: otpCache.clientId,
+        issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
+      }),
+    );
+    return {
+      code: token,
+    };
   }
 
   private async createJWT(
