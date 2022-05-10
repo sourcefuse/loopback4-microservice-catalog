@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.11 (2022-05-09)</small>
+
+* chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
+
+
+
+
+
 ## <small>1.0.10 (2022-04-20)</small>
 
 * chore(deps): bump moment in /sandbox/video-conferencing-ms-example (#658) ([aef2f55](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/aef2f55)), closes [#658](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/658)

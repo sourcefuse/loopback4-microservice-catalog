@@ -9,7 +9,7 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sourcefuse_loopback4-microservice-catalog)](https://sonarcloud.io/summary/new_code?id=sourcefuse_loopback4-microservice-catalog)
 
-The `Sourceloop` is a collection of pre-built microservices that aim to reduce time to market for Enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack applications or use the [LoopBack Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker.
+The `Sourceloop` is a collection of pre-built microservices that aim to reduce time to market for enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack applications or use the [LoopBack Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker.
 
 The current catalog consists of the following services:
 
@@ -21,6 +21,9 @@ The current catalog consists of the following services:
 - [video-conferencing-service](services/video-conferencing-service)
 - [bpmn-service](services/bpmn-service)
 - [chat-service](services/chat-service)
+- [feature-toggle-service](services/feature-toggle-service)
+- [payment-service](services/payment-service)
+- [search-service](services/search-service)
 
 This repository also contains a set of example projects in the [sandbox](sandbox) directory that can be run from `docker-compose`.
 
@@ -33,6 +36,12 @@ This repository also contains a set of example projects in the [sandbox](sandbox
 - [in-mail-example](sandbox/in-mail-example)
 - [scheduler-example](sandbox/scheduler-example)
 - [video-conferencing-ms-example](sandbox/video-conferencing-ms-example)
+- [chat-notification-pubnub-example](sandbox/chat-notification-pubnub-example)
+- [feature-toggle-example](sandbox/feature-toggle-example)
+- [payment-example](sandbox/payment-example)
+- [search-client-example](sandbox/search-client-example)
+- [search-ms-example](sandbox/search-ms-example)
+- [user-onboarding-example](sandbox/user-onboarding-example)
 
 ## Table of Contents
 
@@ -267,9 +276,9 @@ export class ExampleApplicationApplication extends BootMixin(
 
 ### DataSources and Migrations
 
-The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSource`s, it is not mandatory to use them.
+The `Sourceloop` can support any Loopback 4 [DataSource](https://loopback.io/doc/en/lb4/DataSource.html). While you may see existing `DataSources`, it is not mandatory to use them.
 
-The migrations required for this service are processed during the installation automatically if you set the `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### Production Deployment
 
@@ -278,6 +287,10 @@ Inside of the `sandbox` folder, you will find example applications and Dockerfil
 ## Sandbox
 
 `sandbox` folder contains example applications and docker files that can be run independently to see the services in action. You can use [Docker Compose](https://docs.docker.com/compose/) to run the sandbox applications.
+
+## Sourceloop CLI
+
+The Sourceloop CLI is a command-line interface tool that one use to initialize, develop, scaffold, and maintain sourceloop applications directly from a command shell. Learn more about [Sourceloop CLI](packages/cli/README.md).
 
 ### Related Projects
 
