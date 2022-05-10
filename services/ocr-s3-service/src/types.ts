@@ -1,1 +1,1 @@
-export const OcrS3DbSourceName = 'OcrS3Db';
+export const OcrS3DbSourceName = 'OcrS3DbSourceName';

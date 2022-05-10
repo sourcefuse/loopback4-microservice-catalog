@@ -54,7 +54,7 @@ export class FetchServiceComponent implements Component {
             servers: [{ url: '/' }],
         });
 
-        // Mount OCR component
+        // Mount Request component
         this.application.component(RequestComponent);
         this.bindings.push(
             Binding.bind(RequestBindings.Config).to({
