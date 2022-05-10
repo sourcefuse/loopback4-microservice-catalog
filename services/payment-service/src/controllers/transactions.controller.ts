@@ -214,8 +214,7 @@ export class TransactionsController {
       [redirectStatusCode]: {
         description: 'Order model instance',
         content: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'text/html': {},
+          [CONTENT_TYPE.TEXT_HTML]: {},
         },
       },
     },
@@ -255,8 +254,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'HTML response for payment gateway interface.',
         content: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'text/html': {
+          [CONTENT_TYPE.TEXT_HTML]: {
             schema: {
               type: 'object',
             },
@@ -293,8 +291,7 @@ export class TransactionsController {
   async transactionscharge(
     @requestBody({
       content: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'application/x-www-form-urlencoded': {
+        [CONTENT_TYPE.FORM_URLENCODED]: {
           schema: {
             type: 'object',
           },

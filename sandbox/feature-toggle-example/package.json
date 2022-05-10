@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/feature-toggle-example",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An example for feature toggle service",
   "keywords": [
     "loopback-application",
@@ -38,7 +38,8 @@
     "rebuild": "npm run clean && npm run build",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -53,29 +54,38 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^4.1.1",
-    "@loopback/core": "^3.1.1",
-    "@loopback/repository": "^4.1.1",
-    "@loopback/rest": "^11.1.1",
-    "@loopback/rest-explorer": "^4.1.1",
-    "@loopback/service-proxy": "^4.1.1",
-    "@sourceloop/core": "^6.1.4",
-    "@sourceloop/feature-toggle-service": "^0.5.2",
-    "db-migrate": "^0.11.13",
+    "@loopback/boot": "^4.1.2",
+    "@loopback/core": "^3.1.2",
+    "@loopback/repository": "^4.1.2",
+    "@loopback/rest": "^11.1.2",
+    "@loopback/rest-explorer": "^4.1.2",
+    "@loopback/service-proxy": "^4.1.2",
+    "@sourceloop/core": "^6.1.5",
+    "@sourceloop/feature-toggle-service": "^0.5.3",
+    "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
-    "loopback-connector-kv-redis": "^3.0.3",
+    "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^5.5.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@loopback/build": "^8.1.1",
-    "@loopback/eslint-config": "^12.0.3",
-    "@loopback/testlab": "^4.1.1",
-    "@types/node": "^12.20.46",
-    "eslint": "^8.10.0",
+    "@loopback/build": "^8.1.2",
+    "@loopback/eslint-config": "^12.0.4",
+    "@loopback/testlab": "^4.1.2",
+    "@types/node": "^12.20.47",
+    "eslint": "^8.13.0",
+    "patch-package": "^6.4.7",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.5.5"
+    "typescript": "~4.6.3"
+  },
+  "overrides": {
+    "passport-azure-ad": {
+      "async": "^3.2.3"
+    },
+    "cache-manager": {
+      "async": "^3.2.3"
+    }
   }
 }

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.6 (2022-05-09)</small>
+
+* fix(sandbox): fix build failing in search-client-example and fix vulnerability issues in in-mail-exa ([db2638e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/db2638e)), closes [#744](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/744) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
+
+
+
+
+
 ## <small>0.5.5 (2022-04-20)</small>
 
 **Note:** Version bump only for package @sourceloop/in-mail-example
