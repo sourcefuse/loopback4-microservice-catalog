@@ -1,8 +1,8 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-<% if (project.serviceDependency === 'authentication-service') { -%>
-    import {AuthDbSourceName} from '@sourceloop/authentication-service';
-    <% } -%>
+<% if (project.serviceDependency && project.serviceDependency!== 'chat-service') { -%>
+import {<%= project.baseServiceDbName %>} from '@sourceloop/<%= project.serviceDependency -%>'
+<% } -%>
 
 const config = {
   name: '<%= project.datasourceName  %>',
@@ -21,12 +21,14 @@ const config = {
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
 export class <%= project.datasourceClassName %>DataSource extends juggler.DataSource
-  implements LifeCycleObserver {
-    <% if (project.serviceDependency === 'authentication-service') { -%>
-    static dataSourceName = AuthDbSourceName;
+  implements LifeCycleObserver { 
+  
+  <% if (project.serviceDependency && project.serviceDependency!== 'chat-service' ) { -%>
+    static dataSourceName = <%= project.baseServiceDbName %>;
     <% }else{ -%>
   static dataSourceName = '<%= project.datasourceName %>';
-  <% } -%>
+  <% } -%>	
+
   static readonly defaultConfig = config;
 
   constructor(

@@ -8,6 +8,7 @@ import {
   MIGRATIONS,
   MIGRATION_CONNECTORS,
   SERVICES,
+  DATASOURCENAME,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -217,6 +218,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ...this.options,
         ...answers,
       };
+
+      if (this.options.datasourceName && this.options.baseService) {
+        this.projectInfo.baseServiceDbName =
+          DATASOURCENAME[this.options.baseService];
+      }
 
       this.projectInfo.datasourceName = this.options.datasourceName;
       this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(

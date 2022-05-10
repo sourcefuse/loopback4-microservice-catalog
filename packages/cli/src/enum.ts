@@ -37,3 +37,18 @@ export enum MIGRATIONS {
   CUSTOM = 'Setup custom migrations',
   INCLUDED = 'Include migrations provided by base service',
 }
+
+export const DATASOURCENAME: {
+  [key in string]: string;
+} = {
+  'authentication-service': 'AuthDbSourceName',
+  'audit-service': 'AuditSourceName',
+  'notification-service': 'NotifDbSourceName',
+  'bpmn-service': 'WorkflowCacheSourceName',
+  'feature-toggle-service': 'FeatureToggleDbName',
+  'in-mail-service': 'InMailDatasourceName',
+  'payment-service': 'PaymentDatasourceName',
+  'scheduler-service': 'SchedulerDatasourceName',
+  'search-service': 'DATASOURCE_NAME',
+  'video-conferencing-service': 'VideoConfDatasource',
+};
