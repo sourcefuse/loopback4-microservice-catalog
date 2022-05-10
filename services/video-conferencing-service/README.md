@@ -10,7 +10,7 @@
 
 Various features of Video Conferencing Services:
 
-1. Schedule Meetings and Generate Token
+1. Schedule Meetings and Generate a Token
    Book on demand meetings or schedule meetings and generate token which is required for connection to a session/room on the client side.
 
 2. List Archives
@@ -20,8 +20,8 @@ Various features of Video Conferencing Services:
    Set Storage settings to store archives to custom s3 bucket or Microsoft Azure Storage.
 
 4. Webhook Events
-   Webhook Events (such as session or webhook) when configured receive events from third party. These events are used to store session attendees or store archive information.
-   For Vonage, you need to add this microserivce server url in your current vonage project
+   Webhook Events (such as session or webhook) when configured receive events from a third party. These events are used to store session attendees or store archive information.
+   For Vonage, you need to add this microservice server url in your current vonage project
    so it will receive webhook events. See [Vonage Documentation](https://developer.nexmo.com/documentation) for more information.
 
 You can see the database schema [here](#database-schema).
@@ -149,7 +149,7 @@ export class VideoDbDataSource
 
 ## Migrations
 
-The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ## API's Details
 

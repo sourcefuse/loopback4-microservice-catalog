@@ -76,7 +76,7 @@ export class InmailDataSource
 
 ### Migration
 
-The migrations required for this service are processed during the installation automatically if you set the `INMAIL_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `INMAIL_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `INMAIL_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `INMAIL_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 #### Database Model
 
@@ -147,7 +147,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 ```javascript
 {
   "threadId": "string", // Optional, add if you want the messages in a same thread
-  "groups": [ // You can define one or more receipients in a group array.
+  "groups": [ // You can define one or more recipients in a group array.
     {
       "party": "string", // email of the recipient
       "type": "to", // type can be to | cc | bcc
@@ -180,13 +180,13 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 ```javascript
 {
   "id": "string", // id of the message
-  "version": "string" // API vewrsion
+  "version": "string" // API version
 }
 ```
 
 ##### PUT /mails/{messageId}
 
-**Description:** Update Drafted Messages such as modifying attachment, receipients, message body, subject etc.
+**Description:** Update Drafted Messages such as modifying attachment, recipients, message body, subject etc.
 
 **Request path Parameters:**
 
@@ -196,7 +196,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 ```javascript
 {
-  "groups": [ // You can define one or more receipients in a group array.
+  "groups": [ // You can define one or more recipients in a group array.
     {
       "party": "string", // email of the recipient
       "type": "to", // type can be to | cc | bcc
@@ -229,7 +229,7 @@ Success Response:
 ```javascript
 {
   "id": "string", // id of the message
-  "version": "string" // API vewrsion
+  "version": "string" // API version
 }
 ```
 
@@ -309,13 +309,13 @@ Success Response:
 ```javascript
 {
   "version": "string", // the API version
-  "items": "Array<object>" // receipient/sender details which was restored from trash
+  "items": "Array<object>" // recipient/sender details which was restored from trash
 }
 ```
 
 ##### PATCH /mails/{messageId}/forward
 
-**Description:** Forward the mail to another receipient
+**Description:** Forward the mail to another recipient
 
 **Request path Parameter:**
 
@@ -328,7 +328,7 @@ Success Response:
   "groups": [ // you can specify more recipients in groups array for forwarding the mail to multiple recipients
     {
       "party": "string", // email of the recipient
-      "type": "to" | "bcc" | "cc", // receipient type
+      "type": "to" | "bcc" | "cc", // recipient type
     }
   ]
 }
@@ -345,7 +345,7 @@ Success Response:
 
 ##### PATCH /mails/{messageId}/send
 
-**Description:** Send the drafted mail to the receipent
+**Description:** Send the drafted mail to the recipient
 
 **Request path Parameter:**
 
@@ -391,7 +391,7 @@ filter: Object which contains attribute(s) key value pairs of thread model which
 ```javascript
 {
   "version": "string", // the API version
-  "item": "object" // item containg the thread and the related message, attachment and/or meta-data details
+  "item": "object" // item containing the thread and the related message, attachment and/or meta-data details
 }
 ```
 
