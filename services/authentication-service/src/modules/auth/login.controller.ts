@@ -69,7 +69,6 @@ import {
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-import {OtpSenderService} from '../../services/otp-sender.service';
 import {OtpSendRequest} from './models/otp-send-request.dto';
 
 const userAgentKey = 'user-agent';
