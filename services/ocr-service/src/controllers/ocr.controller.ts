@@ -1,5 +1,4 @@
 import {
-  Getter,
   inject
 } from '@loopback/context';
 import {
@@ -13,37 +12,36 @@ import {
   requestBody,
   getModelSchemaRef,
   del,
-  put,
+  put
 } from '@loopback/rest';
-import {
-  IRequest,
-  RequestBindings
-} from '@sourceloop/fetch-client';
+import { RequestServiceBindings } from '../keys';
 import {
   OcrResults
 } from '../models';
+import { FetchClientProvider } from '../providers';
 import {
+  ContractRepository,
   OcrResultRepository
 } from '../repositories';
+
 export class OcrController {
   constructor(
     @repository(OcrResultRepository) public ocrResultRepository: OcrResultRepository,
-    @inject.getter(RequestBindings.FetchProvider) private readonly getRequestProvider: Getter<IRequest>,
+    @repository(ContractRepository) public contractRepository: ContractRepository,
+    @inject.getter(RequestServiceBindings.FetchProvider) private readonly requestProvider: FetchClientProvider,
   ) {
   }
 
-  @get('/document-type/{contract_name}')
+  @get('/document-type/{id}')
   @response(200, {
     description: 'Get contract document type'
   })
   async getContractDocumentType(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/document-type?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/document-type?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -52,18 +50,16 @@ export class OcrController {
   }
 
 
-  @get('/termination-clause/{contract_name}')
+  @get('/termination-clause/{id}')
   @response(200, {
     description: 'Get contract termination clause'
   })
   async getContractTerminationClause(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/termination-clause?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/termination-clause?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -72,18 +68,16 @@ export class OcrController {
   }
 
 
-  @get('/ipr-ownership-clause/{contract_name}')
+  @get('/ipr-ownership-clause/{id}')
   @response(200, {
     description: 'Get contract ipr ownership clause'
   })
   async getContractIprOwnershipClause(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/ipr-ownership-clause?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/ipr-ownership-clause?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -92,18 +86,16 @@ export class OcrController {
   }
 
 
-  @get('/warranty-clause/{contract_name}')
+  @get('/warranty-clause/{id}')
   @response(200, {
     description: 'Get contract warranty clause'
   })
   async getContractWarrantyClause(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/warranty-clause?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/warranty-clause?contract_name=${contract.contractName}`);
 
     return {
       status: 200,
@@ -112,18 +104,16 @@ export class OcrController {
   }
 
 
-  @get('/third-party-beneficiary/{contract_name}')
+  @get('/third-party-beneficiary/{id}')
   @response(200, {
     description: 'Get contract third party beneficiary'
   })
   async getContractThirdPartyBeneficiary(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/third-party-beneficiary?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/third-party-beneficiary?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -132,18 +122,16 @@ export class OcrController {
   }
 
 
-  @get('/governing-law/{contract_name}')
+  @get('/governing-law/{id}')
   @response(200, {
     description: 'Get contract governing law'
   })
   async getContractGoverningLaw(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/governing-law?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/governing-law?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -152,18 +140,16 @@ export class OcrController {
   }
 
 
-  @get('/validity-terms/{contract_name}')
+  @get('/validity-terms/{id}')
   @response(200, {
     description: 'Get contract validity terms'
   })
   async getContractValidityTerms(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/validity-terms?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/validity-terms?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -171,18 +157,16 @@ export class OcrController {
     }
   }
 
-  @get('/liquidity-damages/{contract_name}')
+  @get('/liquidity-damages/{id}')
   @response(200, {
     description: 'Get contract liquidity damages'
   })
   async getContractLiquidityDamages(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/liquidity-damages?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/liquidity-damages?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -191,18 +175,16 @@ export class OcrController {
   }
 
 
-  @get('/limited-liability/{contract_name}')
+  @get('/limited-liability/{id}')
   @response(200, {
     description: 'Get contract limited liability'
   })
   async getContractLimitedLiability(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/limited-liability?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/limited-liability?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -211,19 +193,16 @@ export class OcrController {
   }
 
 
-  @get('/legal-id/{contract_name}')
+  @get('/legal-id/{id}')
   @response(200, {
     description: 'Get contract legal id'
   })
   async getContractLegalId(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/legal_id?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/legal_id?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -232,19 +211,16 @@ export class OcrController {
   }
 
 
-  @get('/signatory-details/{contract_name}')
+  @get('/signatory-details/{id}')
   @response(200, {
     description: 'Get contract signatory details'
   })
   async getContractSignatoryDetails(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/signatory_details?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/signatory_details?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -253,19 +229,16 @@ export class OcrController {
   }
 
 
-  @get('/vendor/{contract_name}')
+  @get('/vendor/{id}')
   @response(200, {
     description: 'Get contract vendor info'
   })
   async getContractVendor(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/vendor?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/vendor?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -274,19 +247,16 @@ export class OcrController {
   }
 
 
-  @get('/payment-terms/{contract_name}')
+  @get('/payment-terms/{id}')
   @response(200, {
     description: 'Get contract payment terms'
   })
   async getContractPaymentTerms(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/payment_terms?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/payment_terms?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -295,19 +265,16 @@ export class OcrController {
   }
 
 
-  @get('/force-majeure/{contract_name}')
+  @get('/force-majeure/{id}')
   @response(200, {
     description: 'Get contract force majeure'
   })
   async getContractForceMajeure(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/force-majeure?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/force-majeure?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -316,19 +283,16 @@ export class OcrController {
   }
 
 
-  @get('/indemnity-clause/{contract_name}')
+  @get('/indemnity-clause/{id}')
   @response(200, {
     description: 'Get contract indemnity clause'
   })
   async getContractIndemnityClause(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/indemnity-clause?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/indemnity-clause?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -336,19 +300,16 @@ export class OcrController {
     }
   }
 
-  @get('/auto-renewal/{contract_name}')
+  @get('/auto-renewal/{id}')
   @response(200, {
     description: 'Get contract auto renewal'
   })
   async getContractAutoRenewal(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/auto-renewal?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/auto-renewal?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -356,19 +317,16 @@ export class OcrController {
     }
   }
 
-  @get('/currency/{contract_name}')
+  @get('/currency/{id}')
   @response(200, {
     description: 'Get contract currency'
   })
   async getContractCurrency(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/currency?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/currency?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -376,19 +334,16 @@ export class OcrController {
     }
   }
 
-  @get('/public-announcement/{contract_name}')
+  @get('/public-announcement/{id}')
   @response(200, {
     description: 'Get contract public announcement'
   })
   async getContractPublicAnnouncement(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/public-announcement?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/public-announcement?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -397,19 +352,16 @@ export class OcrController {
   }
 
 
-  @get('/assignment/{contract_name}')
+  @get('/assignment/{id}')
   @response(200, {
     description: 'Get contract assignment'
   })
   async getContractAssignment(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/assignment?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/assignment?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -417,19 +369,16 @@ export class OcrController {
     }
   }
 
-  @get('/support/{contract_name}')
+  @get('/support/{id}')
   @response(200, {
     description: 'Get contract support'
   })
   async getContractSupport(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/support?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/support?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -437,19 +386,16 @@ export class OcrController {
     }
   }
 
-  @get('/contract-amount/{contract_name}')
+  @get('/contract-amount/{id}')
   @response(200, {
     description: 'Get contract contract_amount'
   })
   async getContractContractAmount(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/contract-amount?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/contract-amount?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -457,19 +403,16 @@ export class OcrController {
     }
   }
 
-  @get('/sla-clause/{contract_name}')
+  @get('/sla-clause/{id}')
   @response(200, {
     description: 'Get contract sla clause'
   })
   async getContractSlaClause(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/sla-clause?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/sla-clause?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -477,19 +420,16 @@ export class OcrController {
     }
   }
 
-  @get('/sla-dashboard/{contract_name}')
+  @get('/sla-dashboard/{id}')
   @response(200, {
     description: 'Get contract sla dashboard'
   })
   async getContractSlaDashboard(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('id') id: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
 
-    await requestProvider.send(`/contract-parser/sla-dashboard?contract_name=${contractName}`, {
-      method: 'POST',
-
-    })
+    const contract = await this.contractRepository.findById(id);
+    await this.requestProvider.post(`/contract-parser/sla-dashboard?contract_name=${contract.contractName}`)
 
     return {
       status: 200,
@@ -498,16 +438,16 @@ export class OcrController {
   }
 
 
-  @get('/clauses/{contract_name}')
+  @get('/clauses/{contract_id}')
   @response(200, {
     description: 'Get all contract clauses'
   })
   async getContractClauses(
-    @param.path.string('contract_name') contractName: string,
+    @param.path.string('contract_id') contractId: string,
   ): Promise<OcrResults[]> {
     return this.ocrResultRepository.find({
       where: {
-        contractName: contractName
+        contractId: contractId
       }
     });
   }

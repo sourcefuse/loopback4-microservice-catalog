@@ -1,8 +1,4 @@
-import {
-    inject,
-    Provider,
-    ValueOrPromise
-} from '@loopback/core';
+import { injectable, inject, BindingScope } from '@loopback/core';
 import {
     Agent as HttpAgent
 } from "http";
@@ -14,35 +10,30 @@ import fetch, {
 } from "node-fetch";
 import urlJoin from "url-join";
 import {
-    FetchHttpRequest,
     identityResponseTransformer,
-    jsonResponseTransformer
-} from "./types";
-
-import {
+    jsonResponseTransformer,
     Header,
     HttpClientInitOpts,
     HttpMethod,
     RequestInterceptor,
-    ResponseTransformer,
-} from "../../types";
+    ResponseTransformer
+} from "../types";
 import {
-    RequestBindings
-} from '../../keys';
+    RequestServiceBindings
+} from '../keys';
 
-export class fetchClient implements Provider<FetchHttpRequest> {
+@injectable({ scope: BindingScope.TRANSIENT })
+export class FetchClientProvider {
     readonly baseUrl: string;
-    readonly baseHeaders: Record<string,
-        string>;
-    readonly baseOptions: Omit<RequestInit,
-        "headers">;
+    readonly baseHeaders: Record<string, string>;
+    readonly baseOptions: Omit<RequestInit, "headers">;
     readonly useJson: boolean;
 
     protected transformResponse: ResponseTransformer;
     protected willSendRequest?: RequestInterceptor;
 
     constructor(
-        @inject(RequestBindings.Config, {
+        @inject(RequestServiceBindings.Config, {
             optional: false,
         }) private readonly fetchConfig: HttpClientInitOpts,
     ) {
@@ -89,31 +80,6 @@ export class fetchClient implements Provider<FetchHttpRequest> {
             identityResponseTransformer;
 
         this.useJson = useJson;
-    }
-    value(): ValueOrPromise<FetchHttpRequest> {
-        return {
-            send: async (url: string, req: RequestInit) => {
-                if (req.method?.toUpperCase() === 'POST') {
-                    return this.post(url, req)
-                }
-
-                if (req.method?.toUpperCase() === 'GET') {
-                    return this.get(url, req);
-                }
-
-                if (req.method?.toUpperCase() === 'PUT') {
-                    return this.put(url, req);
-                }
-
-                if (req.method?.toUpperCase() === 'PATCH') {
-                    return this.patch(url, req);
-                }
-
-                if (req.method?.toUpperCase() === 'DELETE') {
-                    return this.delete(url, req);
-                }
-            }
-        };
     }
 
     async get<T>(url: string, req: RequestInit = {}): Promise<T> {

@@ -1,5 +1,6 @@
-import { model, property } from '@loopback/repository';
+import { hasMany, model, property } from '@loopback/repository';
 import { BaseEntity } from '@sourceloop/core';
+import { OcrResults } from './ocr-result.model';
 @model({
   name: 'ocr_contracts',
   settings: {
@@ -49,6 +50,8 @@ export class Contracts extends BaseEntity {
   hocrConverted?: boolean;
 
 
+  @hasMany(() => OcrResults, { keyTo: 'contractId' })
+  ocrResults: OcrResults[];
 
   constructor(data?: Partial<Contracts>) {
     super(data);
@@ -56,7 +59,7 @@ export class Contracts extends BaseEntity {
 }
 
 export interface ContractsRelations {
-  // describe navigational properties here
+  ocrResults: OcrResults[];
 }
 
 export type ContractsWithRelations = Contracts & ContractsRelations;

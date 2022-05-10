@@ -28,7 +28,6 @@ npm i @sourceloop/ocr-service
 - Install the ocr service
   `npm i @sourceloop/ocr-service`
 - Set the [environment variables](#environment-variables).
-- Run the [migrations](#migrations).
 - Add the `OcrServiceComponent` to your Loopback4 Application (in `application.ts`).
   ```typescript
   // import the OcrServiceComponent

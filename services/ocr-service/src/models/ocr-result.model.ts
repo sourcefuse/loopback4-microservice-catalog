@@ -1,5 +1,6 @@
-import { model, property } from '@loopback/repository';
+import { belongsTo, model, property } from '@loopback/repository';
 import { BaseEntity } from '@sourceloop/core';
+import { Contracts } from './contract.model';
 @model({
   name: 'ocr_results',
   settings: {
@@ -19,6 +20,22 @@ export class OcrResults extends BaseEntity {
     name: 'contract_name',
   })
   contractName?: string;
+
+  @belongsTo(
+    () => Contracts,
+    { name: 'contracts' },
+    {
+      name: 'contract_id',
+      required: true,
+    },
+  )
+
+  @property({
+    type: 'string',
+    required: true,
+    name: 'contract_id',
+  })
+  contractId?: string;
 
   @property({
     type: 'string',
@@ -57,13 +74,14 @@ export class OcrResults extends BaseEntity {
   confidenceLevel?: number;
 
 
+
   constructor(data?: Partial<OcrResults>) {
     super(data);
   }
 }
 
 export interface OcrResultsRelations {
-  // describe navigational properties here
+  contracts: Contracts;
 }
 
 export type OcrResultsWithRelations = OcrResults & OcrResultsRelations;

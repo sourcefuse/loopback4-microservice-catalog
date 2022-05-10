@@ -67,9 +67,11 @@
         "loopback4-authorization": "^5.0.1",
         "loopback4-s3": "^5.1.0",
         "multiparty": "^4.2.3",
+        "node-fetch": "^3.2.4",
         "swagger-stats": "^0.99.2",
         "symlink-resolver": "",
         "tslib": "^2.0.0",
+        "url-join": "^5.0.0",
         "uuid": "^8.3.2"
     },
     "devDependencies": {

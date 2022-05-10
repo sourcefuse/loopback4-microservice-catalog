@@ -9,15 +9,15 @@ import {
 import {
   param,
   get,
-  response
+  response,
+  Request,
+  RestBindings
 } from '@loopback/rest';
-import {
-  IRequest,
-  RequestBindings
-} from '@sourceloop/fetch-client';
+import { RequestServiceBindings } from '../keys';
 import {
   Contracts, HocrResults
 } from '../models';
+import { FetchClientProvider } from '../providers';
 import {
   ContractRepository,
   HocrResultRepository
@@ -25,9 +25,10 @@ import {
 
 export class ContractController {
   constructor(
-    @inject.getter(RequestBindings.FetchProvider) private readonly getRequestProvider: Getter<IRequest>,
+    @inject.getter(RequestServiceBindings.FetchProvider) private readonly requestProvider: FetchClientProvider,
     @repository(ContractRepository) public contractRepository: ContractRepository,
-    @repository(HocrResultRepository) public hocrResultRepository: HocrResultRepository
+    @repository(HocrResultRepository) public hocrResultRepository: HocrResultRepository,
+    @inject(RestBindings.Http.REQUEST) private request: Request
   ) {
   }
 
@@ -38,10 +39,7 @@ export class ContractController {
   async getContractHOCR(
     @param.path.string('contract_name') contractName: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
-    await requestProvider.send(`/contract-parser/hocr-converter?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+    await this.requestProvider.post(`/contract-parser/hocr-converter?contract_name=${contractName}`)
     return {
       status: 200,
       message: 'SUCCESS'
@@ -55,10 +53,8 @@ export class ContractController {
   async convertContractImg(
     @param.path.string('contract_name') contractName: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
-    await requestProvider.send(`/contract-parser/img-converter?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+
+    await this.requestProvider.post(`/contract-parser/img-converter?contract_name=${contractName}`)
     return {
       status: 200,
       message: 'SUCCESS'
@@ -74,10 +70,8 @@ export class ContractController {
   async convertContractOcr(
     @param.path.string('contract_name') contractName: string,
   ): Promise<object> {
-    const requestProvider = await this.getRequestProvider();
-    await requestProvider.send(`/contract-parser/ocr-converter?contract_name=${contractName}`, {
-      method: 'POST'
-    })
+
+    await this.requestProvider.post(`/contract-parser/ocr-converter?contract_name=${contractName}`)
     return {
       status: 200,
       message: 'SUCCESS'

@@ -14,10 +14,8 @@ import {
     ServiceSequence,
 } from '@sourceloop/core';
 import {
-    RequestBindings,
-    RequestComponent,
-    fetchClient
-} from '../../../packages/fetch-client/dist';
+    RequestServiceBindings
+} from './keys';
 import {
     ContractController,
     OcrController,
@@ -29,11 +27,14 @@ import {
     OcrResultRepository,
     HocrResultRepository
 } from './repositories';
+import { IRequestServiceConfig } from './types';
 
 export class FetchServiceComponent implements Component {
     constructor(
         @inject(CoreBindings.APPLICATION_INSTANCE)
         private readonly application: RestApplication,
+        @inject(RequestServiceBindings.Config, { optional: true })
+        private readonly requestConfig?: IRequestServiceConfig,
     ) {
         this.bindings = [];
         this.providers = {};
@@ -54,19 +55,20 @@ export class FetchServiceComponent implements Component {
             servers: [{ url: '/' }],
         });
 
-        // Mount Request component
-        this.application.component(RequestComponent);
+
         this.bindings.push(
-            Binding.bind(RequestBindings.Config).to({
+            Binding.bind(RequestServiceBindings.Config).to({
                 baseUrl: process.env.CLM_ML_BASEURL ?? '',
-                json: true
-            }),
-            Binding.bind(RequestBindings.FetchProvider).toProvider(
-                fetchClient
-            ),
+                json: true,
+                useRequestProvider: true,
+                useCustomSequence: true
+            })
         );
 
-        this.setupSequence();
+        if (!this.requestConfig?.useCustomSequence) {
+            // Mount default sequence if needed
+            this.setupSequence();
+        }
 
         this.repositories = [
             ContractRepository,
