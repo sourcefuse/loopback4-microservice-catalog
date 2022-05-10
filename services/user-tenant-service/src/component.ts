@@ -48,7 +48,6 @@ import {
   UserSignupController,
   UserTenantPrefsController,
   UserTenantController,
-  UserController,  
 } from './controllers';
 import {
   AuthClientRepository,
@@ -126,7 +125,6 @@ export class UserTenantServiceComponent implements Component {
       UserSignupController,
       UserTenantPrefsController,
       UserTenantController,
-      UserController,  
     ];
     this.repositories = [
       AuthClientRepository,
