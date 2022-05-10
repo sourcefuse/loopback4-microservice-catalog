@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.1 (2022-05-10)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_facade
+
+
+
+
+
 ## 0.1.0 (2022-05-09)
 
 * chore(deps): bump minimist (#634) ([703c021](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703c021)), closes [#634](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/634)

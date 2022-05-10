@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "4.0.8",
+  "version": "4.1.0",
   "description": "services",
   "keywords": [
     "loopback-extension",

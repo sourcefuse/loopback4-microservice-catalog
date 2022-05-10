@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.7 (2022-05-10)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
 ## <small>0.4.6 (2022-05-09)</small>
 
 * chore(deps): bump moment in /sandbox/auth-ms-basic-example (#656) ([e30cde6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30cde6)), closes [#656](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/656)
