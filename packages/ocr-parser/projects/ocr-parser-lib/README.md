@@ -13,6 +13,8 @@ npm i @sourceloop/ocr-parser
 ## Usage
 
 Create a new Application using Angular CLI and import the OcrParserModule and add it to the imports array of the @NgModule decorator.
+Make sure you fulfil all the peer dependencies ( you can check the package.json file in ocr-parser-lib folder for the same)
+
 ```ts
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';

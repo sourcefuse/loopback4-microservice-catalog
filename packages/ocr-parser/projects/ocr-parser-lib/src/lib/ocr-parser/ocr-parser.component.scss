@@ -1,5 +1,6 @@
 .wrapper {
     padding: 16px;
+    position: relative;
     ::ng-deep mark,
     .mark {
         padding: 0px !important;
@@ -71,18 +72,16 @@
 }
 
 .footer {
-    border-top: 2px #E5E5E5;
-    ;
-    margin-top: 15px;
+    border-top: 2px #E5E5E5;;
     position: absolute;
     width: 100%;
     padding: 14px 15px;
     left: 0;
     display: flex;
+    top: 590px;
     justify-content: space-between;
     align-items: center;
     background: #fff;
-
     button {
         outline: none;
         border: 1px solid #000;
@@ -103,8 +102,3 @@
         color: #fff;
     }
 }
-
-
-
-
-
