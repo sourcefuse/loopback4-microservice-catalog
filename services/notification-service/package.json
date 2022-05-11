@@ -66,7 +66,7 @@
     "@loopback/rest-explorer": "^4.1.2",
     "@loopback/service-proxy": "^4.1.2",
     "@sourceloop/core": "^6.1.5",
-    "aws-sdk": "^2.1116.0",
+    "aws-sdk": "^2.1118.0",
     "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
     "firebase-admin": "^10.0.2",
