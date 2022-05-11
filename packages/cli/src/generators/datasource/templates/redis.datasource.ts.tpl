@@ -1,7 +1,10 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {AnyObject, juggler} from '@loopback/repository';
-import {AuthCacheSourceName} from '@sourceloop/authentication-service';
 import {readFileSync} from 'fs';
+
+<% if (project.serviceDependency && project.baseServiceCacheName) { -%>
+import {<%= project.baseServiceCacheName %>} from '@sourceloop/<%= project.serviceDependency -%>'
+<% } -%>
 
 const config = {
   name: process.env.REDIS_NAME,
@@ -40,7 +43,9 @@ export class RedisDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = AuthCacheSourceName;
+   <% if (project.serviceDependency && project.baseServiceCacheName ) { -%>
+    static dataSourceName = <%= project.baseServiceCacheName %>;
+    <% } -%>
   static readonly defaultConfig = config;
 
   constructor(

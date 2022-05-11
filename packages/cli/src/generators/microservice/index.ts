@@ -8,7 +8,7 @@ import {
   MIGRATIONS,
   MIGRATION_CONNECTORS,
   SERVICES,
-  DATASOURCENAME,
+  BASESERVICEDSLIST,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -219,11 +219,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ...answers,
       };
 
-      if (this.options.datasourceName && this.options.baseService) {
-        this.projectInfo.baseServiceDbName =
-          DATASOURCENAME[this.options.baseService];
-      }
-
       this.projectInfo.datasourceName = this.options.datasourceName;
       this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
         this.options.datasourceName,
@@ -290,6 +285,16 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (!this.shouldExit()) {
       if (this.options.datasourceName) {
         const nameArr = [this.options.datasourceName];
+        if (this.options.datasourceName && this.options.baseService) {
+          const datasourceList = BASESERVICEDSLIST[this.options.baseService];
+          datasourceList.forEach(ds => {
+            if (ds.type === 'store') {
+              this.projectInfo.baseServiceStoreName = ds.name;
+            } else {
+              this.projectInfo.baseServiceCacheName = ds.name;
+            }
+          });
+        }
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_TEMPLATE),
           this.destinationPath(
@@ -303,12 +308,15 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             project: this.projectInfo,
           },
         );
-        if (this.options.baseService === 'authentication-service') {
+        if (this.projectInfo.baseServiceCacheName) {
           this.fs.copyTpl(
             this.templatePath(REDIS_DATASOURCE),
             this.destinationPath(
               join('src', 'datasources', 'redis.datasource.ts'),
             ),
+            {
+              project: this.projectInfo,
+            },
           );
           nameArr.push('redis');
         }

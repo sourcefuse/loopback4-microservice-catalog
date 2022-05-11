@@ -1,6 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-<% if (project.serviceDependency && project.serviceDependency!== 'chat-service') { -%>
+<% if (project.serviceDependency && project.baseServiceStoreName) { -%>
 import {<%= project.baseServiceDbName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } -%>
 
@@ -23,7 +23,7 @@ const config = {
 export class <%= project.datasourceClassName %>DataSource extends juggler.DataSource
   implements LifeCycleObserver { 
   
-  <% if (project.serviceDependency && project.serviceDependency!== 'chat-service' ) { -%>
+  <% if (project.serviceDependency && project.baseServiceStoreName ) { -%>
     static dataSourceName = <%= project.baseServiceDbName %>;
     <% }else{ -%>
   static dataSourceName = '<%= project.datasourceName %>';
