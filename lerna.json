@@ -67,7 +67,9 @@
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
-        "@sourceloop/user-onboarding-example"
+        "@sourceloop/user-onboarding-example",
+        "@sourceloop/ocr-s3-service",
+        "@sourceloop/ocr-service"
       ]
     },
     "clean": {
@@ -82,7 +84,9 @@
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**"
+    "packages/core/locales/**",
+    "@sourceloop/ocr-s3-service",
+    "@sourceloop/ocr-service"
   ],
   "version": "independent"
 }
