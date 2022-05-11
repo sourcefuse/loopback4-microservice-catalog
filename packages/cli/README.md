@@ -1,6 +1,7 @@
 # sourceloop-cli
 
-This is a POC of a CLI that will work similarly to the `lb4` cli. The `sourceloop-cli` will perform similar scaffolding functions for `Sourceloop` based projects.
+This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensiona, facades and microservices to it.
+
 
 ## Building
 
