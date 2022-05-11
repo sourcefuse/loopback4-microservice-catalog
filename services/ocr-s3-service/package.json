@@ -35,6 +35,7 @@
     },
     "author": "Sourcefuse",
     "license": "MIT",
+    "private": true,
     "files": [
         "README.md",
         "dist",
