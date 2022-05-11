@@ -1,0 +1,2245 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ocr Service",
+    "version": "1.0.0",
+    "description": "services",
+    "contact": {
+      "name": "Sourcefuse"
+    }
+  },
+  "paths": {
+    "/assignment/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractAssignment",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract assignment"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractAssignment"
+      }
+    },
+    "/auto-renewal/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractAutoRenewal",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract auto renewal"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractAutoRenewal"
+      }
+    },
+    "/clauses/{id}": {
+      "put": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "replaceClauseById",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses PUT success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcrResults"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "OcrController.replaceClauseById"
+      },
+      "patch": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "updateClauseById",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses PATCH success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcrResultsPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "OcrController.updateClauseById"
+      },
+      "delete": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "deleteClauseById",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses DELETE success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.deleteClauseById"
+      }
+    },
+    "/clauses/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractClauses",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get all contract clauses"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractClauses"
+      }
+    },
+    "/clauses": {
+      "patch": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Clauses PATCH success count"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Clauses"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "OcrController.updateAll"
+      }
+    },
+    "/contract-amount/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractContractAmount",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract contract_amount"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractContractAmount"
+      }
+    },
+    "/contracts": {
+      "get": {
+        "x-controller-name": "ContractController",
+        "x-operation-name": "getAllContracts",
+        "tags": [
+          "ContractController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "all contract files"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ocr_contracts.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ContractController.getAllContracts"
+      }
+    },
+    "/currency/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractCurrency",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract currency"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractCurrency"
+      }
+    },
+    "/document-type/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractDocumentType",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract document type"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractDocumentType"
+      }
+    },
+    "/force-majeure/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractForceMajeure",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract force majeure"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractForceMajeure"
+      }
+    },
+    "/governing-law/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractGoverningLaw",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract governing law"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractGoverningLaw"
+      }
+    },
+    "/hocr-convert/{contract_name}": {
+      "get": {
+        "x-controller-name": "ContractController",
+        "x-operation-name": "getContractHOCR",
+        "tags": [
+          "ContractController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "hcr file converter"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ContractController.getContractHOCR"
+      }
+    },
+    "/hocr-file/{contract_name}": {
+      "get": {
+        "x-controller-name": "ContractController",
+        "x-operation-name": "getAllHOCRByContractName",
+        "tags": [
+          "ContractController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "hcr file converter"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ContractController.getAllHOCRByContractName"
+      }
+    },
+    "/img-convert/{contract_name}": {
+      "get": {
+        "x-controller-name": "ContractController",
+        "x-operation-name": "convertContractImg",
+        "tags": [
+          "ContractController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "image file converter"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ContractController.convertContractImg"
+      }
+    },
+    "/indemnity-clause/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractIndemnityClause",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract indemnity clause"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractIndemnityClause"
+      }
+    },
+    "/ipr-ownership-clause/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractIprOwnershipClause",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract ipr ownership clause"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractIprOwnershipClause"
+      }
+    },
+    "/legal-id/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractLegalId",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract legal id"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractLegalId"
+      }
+    },
+    "/limited-liability/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractLimitedLiability",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract limited liability"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractLimitedLiability"
+      }
+    },
+    "/liquidity-damages/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractLiquidityDamages",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract liquidity damages"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractLiquidityDamages"
+      }
+    },
+    "/ocr-convert/{contract_name}": {
+      "get": {
+        "x-controller-name": "ContractController",
+        "x-operation-name": "convertContractOcr",
+        "tags": [
+          "ContractController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "ocr file converter"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ContractController.convertContractOcr"
+      }
+    },
+    "/payment-terms/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractPaymentTerms",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract payment terms"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractPaymentTerms"
+      }
+    },
+    "/public-announcement/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractPublicAnnouncement",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract public announcement"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractPublicAnnouncement"
+      }
+    },
+    "/signatory-details/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractSignatoryDetails",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract signatory details"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractSignatoryDetails"
+      }
+    },
+    "/sla-clause/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractSlaClause",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract sla clause"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractSlaClause"
+      }
+    },
+    "/sla-dashboard/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractSlaDashboard",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract sla dashboard"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractSlaDashboard"
+      }
+    },
+    "/support/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractSupport",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract support"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractSupport"
+      }
+    },
+    "/termination-clause/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractTerminationClause",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract termination clause"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractTerminationClause"
+      }
+    },
+    "/third-party-beneficiary/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractThirdPartyBeneficiary",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract third party beneficiary"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractThirdPartyBeneficiary"
+      }
+    },
+    "/validity-terms/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractValidityTerms",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract validity terms"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractValidityTerms"
+      }
+    },
+    "/vendor/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractVendor",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract vendor info"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractVendor"
+      }
+    },
+    "/warranty-clause/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrController",
+        "x-operation-name": "getContractWarrantyClause",
+        "tags": [
+          "OcrController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract warranty clause"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrController.getContractWarrantyClause"
+      }
+    },
+    "/webhook/assignment": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractAssignment",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract assignment"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractAssignment"
+      }
+    },
+    "/webhook/auto-renewal": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractAutoRenewal",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract auto renewal"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractAutoRenewal"
+      }
+    },
+    "/webhook/contract-amount": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractContractAmount",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract contract_amount"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractContractAmount"
+      }
+    },
+    "/webhook/contract-upload": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "uploadContractFile",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Upload contract document"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contracts"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.uploadContractFile"
+      }
+    },
+    "/webhook/currency": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractCurrency",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract currency"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractCurrency"
+      }
+    },
+    "/webhook/document-type": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractDocumentType",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract document type"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractDocumentType"
+      }
+    },
+    "/webhook/force-majeure": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractForceMajeure",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract force majeure"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractForceMajeure"
+      }
+    },
+    "/webhook/governing-law": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractGoverningLaw",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract governing law"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractGoverningLaw"
+      }
+    },
+    "/webhook/hocr-convert": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "convertContractHocr",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Convert contract hocr"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contracts"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.convertContractHocr"
+      }
+    },
+    "/webhook/img-convert": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "convertContractImages",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Convert contract document to image"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contracts"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.convertContractImages"
+      }
+    },
+    "/webhook/indemnity-clause": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractIndemnityClause",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract indemnity clause"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractIndemnityClause"
+      }
+    },
+    "/webhook/ipr-ownership-clause": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractIprOwnershipClause",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract ipr ownership clause"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractIprOwnershipClause"
+      }
+    },
+    "/webhook/legal-id": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractLegalId",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract legal id"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractLegalId"
+      }
+    },
+    "/webhook/limited-liability": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractLimitedLiability",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract limited liability"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractLimitedLiability"
+      }
+    },
+    "/webhook/liquidity-damages": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractLiquidityDamages",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract liquidity damages"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractLiquidityDamages"
+      }
+    },
+    "/webhook/ocr-convert": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "convertContractOcr",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Convert contract ocr"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contracts"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.convertContractOcr"
+      }
+    },
+    "/webhook/payment-terms": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractPaymentTerms",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract payment terms"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractPaymentTerms"
+      }
+    },
+    "/webhook/public-announcement": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractPublicAnnouncement",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract public announcement"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractPublicAnnouncement"
+      }
+    },
+    "/webhook/signatory-details": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractSignatoryDetails",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract signatory details"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractSignatoryDetails"
+      }
+    },
+    "/webhook/sla-clause": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractSlaClause",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract sla clause"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractSlaClause"
+      }
+    },
+    "/webhook/sla-dashboard": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractSlaDashboard",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract sla dashboard"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractSlaDashboard"
+      }
+    },
+    "/webhook/support": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractSupport",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract support"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractSupport"
+      }
+    },
+    "/webhook/termination-clause": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractTerminationClause",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract termination clause"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractTerminationClause"
+      }
+    },
+    "/webhook/third-party-beneficiary": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractThirdPartyBeneficiary",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract third party beneficiary"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractThirdPartyBeneficiary"
+      }
+    },
+    "/webhook/validity-terms": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractValidityTerms",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract validity terms"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractValidityTerms"
+      }
+    },
+    "/webhook/vendor": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractVendor",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract vendor info"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractVendor"
+      }
+    },
+    "/webhook/warranty-clause": {
+      "post": {
+        "x-controller-name": "OcrHooksController",
+        "x-operation-name": "getContractWarrantyClause",
+        "tags": [
+          "OcrHooksController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Get contract warranty clause"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OcrHooksController.getContractWarrantyClause"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Clauses": {
+        "title": "Clauses",
+        "type": "object",
+        "description": "(tsType: OcrResults, schemaOptions: { title: 'Clauses' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "contractName": {
+            "type": "string"
+          },
+          "clauseType": {
+            "type": "string"
+          },
+          "pageNo": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          },
+          "supportedText": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "string"
+          },
+          "confidenceLevel": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "contractName"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "OcrResults"
+      },
+      "OcrResultsPartial": {
+        "title": "OcrResultsPartial",
+        "type": "object",
+        "description": "(tsType: Partial<OcrResults>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "contractName": {
+            "type": "string"
+          },
+          "clauseType": {
+            "type": "string"
+          },
+          "pageNo": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          },
+          "supportedText": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "string"
+          },
+          "confidenceLevel": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<OcrResults>"
+      },
+      "OcrResults": {
+        "title": "OcrResults",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "contractName": {
+            "type": "string"
+          },
+          "clauseType": {
+            "type": "string"
+          },
+          "pageNo": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          },
+          "supportedText": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "string"
+          },
+          "confidenceLevel": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "contractName"
+        ],
+        "additionalProperties": true
+      },
+      "Contracts": {
+        "title": "Contracts",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "contractName": {
+            "type": "string"
+          },
+          "contractUploaded": {
+            "type": "boolean"
+          },
+          "imageConverted": {
+            "type": "boolean"
+          },
+          "ocrConverted": {
+            "type": "boolean"
+          },
+          "hocrConverted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "contractName"
+        ],
+        "additionalProperties": true
+      },
+      "ocr_contracts.Filter": {
+        "type": "object",
+        "title": "ocr_contracts.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "ocr_contracts.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "contractName": {
+                    "type": "boolean"
+                  },
+                  "contractUploaded": {
+                    "type": "boolean"
+                  },
+                  "imageConverted": {
+                    "type": "boolean"
+                  },
+                  "ocrConverted": {
+                    "type": "boolean"
+                  },
+                  "hocrConverted": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "ocr_contracts.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Contracts>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
