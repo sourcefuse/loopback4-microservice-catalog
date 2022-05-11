@@ -1,9 +1,9 @@
-import { injectable, BindingScope } from '@loopback/core';
-import { OcrClause } from '../types';
+import {injectable, BindingScope} from '@loopback/core';
+import {OcrClause} from '../types';
 
-@injectable({ scope: BindingScope.TRANSIENT })
+@injectable({scope: BindingScope.TRANSIENT})
 export class OcrObjectFormatterService {
-  constructor() { }
+  constructor() {}
 
   async format(res: OcrClause) {
     const resp: OcrClause = res;
@@ -13,11 +13,17 @@ export class OcrObjectFormatterService {
       clauseType: resp[clauseTypeData]?.extractedData?.column,
       pageNumber: resp[clauseTypeData]?.extractedData?.columnData?.pageNum,
       text: resp[clauseTypeData]?.extractedData?.columnData?.value,
-      supportedText: resp[clauseTypeData]?.extractedData?.columnData?.supportedValue,
-      coordinates: resp[clauseTypeData]?.extractedData?.columnData?.coordinates ? JSON.stringify(resp[clauseTypeData]?.extractedData?.columnData?.coordinates) : null,
-      confidenceLevel: resp[clauseTypeData]?.extractedData?.columnData?.confidenceScore
-    }
+      supportedText:
+        resp[clauseTypeData]?.extractedData?.columnData?.supportedValue,
+      coordinates: resp[clauseTypeData]?.extractedData?.columnData?.coordinates
+        ? JSON.stringify(
+            resp[clauseTypeData]?.extractedData?.columnData?.coordinates,
+          )
+        : null,
+      confidenceLevel:
+        resp[clauseTypeData]?.extractedData?.columnData?.confidenceScore,
+    };
 
-    return formattedObject
+    return formattedObject;
   }
 }

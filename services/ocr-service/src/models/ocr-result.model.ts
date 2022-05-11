@@ -59,6 +59,7 @@ export class OcrResults extends BaseEntity {
     type: 'string',
     name: 'coordinates',
   })
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   coordinates?: string | any;
 
   @property({
@@ -66,8 +67,6 @@ export class OcrResults extends BaseEntity {
     name: 'confidence_level',
   })
   confidenceLevel?: number;
-
-
 
   constructor(data?: Partial<OcrResults>) {
     super(data);
