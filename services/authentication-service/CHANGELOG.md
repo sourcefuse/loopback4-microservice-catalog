@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.1.0 (2022-05-10)
+
+* fix(authentication-service): remove unused imports (#771) ([fb3b681](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fb3b681)), closes [#771](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/771)
+* docs(README): updating readme file for services (#613) ([b761645](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b761645)), closes [#613](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/613)
+* feat(authentication-service): implement 2-factor-authentication (#686) ([ea571ac](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ea571ac)), closes [#686](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/686) [#453](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/453)
+
+
+
+
+
 ## <small>4.0.8 (2022-05-09)</small>
 
 * chore(deps): bump ejs in /services/authentication-service (#762) ([c1dd334](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c1dd334)), closes [#762](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/762)

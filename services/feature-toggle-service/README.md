@@ -64,7 +64,6 @@ npm i @sourceloop/feature-toggle-service
   ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `FeatureToggleDbName`. You can see an example datasource [here](#setting-up-a-datasource).
-
 - Start the application
   `npm start`
 

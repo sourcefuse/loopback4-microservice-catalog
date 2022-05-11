@@ -11,3 +11,7 @@ export * from './providers/instagram-oauth2-verify.provider';
 export * from './providers/facebook-oauth-verify.provider';
 export * from './models/auth-user.model';
 export * from './providers/apple-oauth2-verify.provider';
+export * from './providers/otp-verify.provider';
+export * from './providers/google-authenticator-verify.provider';
+export * from './models/otp-login-request.dto';
+export * from './types';

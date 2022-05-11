@@ -95,7 +95,7 @@ export class InmailDataSource
 
 ### Migration
 
-The migrations required for this service are processed during the installation automatically if you set the `PAYMENT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `PAYMENT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `PAYMENT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `PAYMENT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### Setting Environment Variables
 
@@ -175,19 +175,19 @@ Pass transactions ID in {id} to initiate a refund.
 
 ##### GET /orders
 
-Get list of all orders.
+Get a list of all orders.
 
 ##### GET /transactions
 
-Get list of all transactions.
+Get a list of all transactions.
 
 ##### GET /transactions/{id}
 
-Get details of particular transaction.
+Get details of a particular transaction.
 
 ##### GET /orders/{id}
 
-Get details of particular order.
+Get details of a particular order.
 
 ##### POST /templates
 
