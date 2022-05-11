@@ -285,16 +285,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (!this.shouldExit()) {
       if (this.options.datasourceName) {
         const nameArr = [this.options.datasourceName];
-        if (this.options.datasourceName && this.options.baseService) {
-          const datasourceList = BASESERVICEDSLIST[this.options.baseService];
-          datasourceList.forEach(ds => {
-            if (ds.type === 'store') {
-              this.projectInfo.baseServiceStoreName = ds.name;
-            } else {
-              this.projectInfo.baseServiceCacheName = ds.name;
-            }
-          });
-        }
+
+        this._setDataSourceName();
+
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_TEMPLATE),
           this.destinationPath(
@@ -392,6 +385,19 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       return true;
     } else {
       return false;
+    }
+  }
+
+  private _setDataSourceName() {
+    if (this.options.datasourceName && this.options.baseService) {
+      const datasourceList = BASESERVICEDSLIST[this.options.baseService];
+      datasourceList.forEach(ds => {
+        if (ds.type === 'store') {
+          this.projectInfo.baseServiceStoreName = ds.name;
+        } else {
+          this.projectInfo.baseServiceCacheName = ds.name;
+        }
+      });
     }
   }
 
