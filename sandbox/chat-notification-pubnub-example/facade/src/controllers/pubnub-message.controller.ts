@@ -86,7 +86,7 @@ export class PubnubMessageController {
     @param.header.string('Authorization') token: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(PubnubMessage, {
             title: 'Message',
             exclude: ['id'],
@@ -138,7 +138,7 @@ export class PubnubMessageController {
     @param.path.string('messageid') msgId: string,
     @requestBody({
       content: {
-        'application/json': {
+        [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(PubnubMessageRecipient, {partial: true}),
         },
       },

@@ -128,7 +128,7 @@ export class ChatDataSource
 
 ### Migrations
 
-The migrations required for this service are processed during the installation automatically if you set the `CHAT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `CHAT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+The migrations required for this service are processed during the installation automatically if you set the `CHAT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databasea, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `CHAT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### API Documentation
 
@@ -150,4 +150,6 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
 
-#### API Details
+## API Details
+
+Visit the [OpenAPI spec docs](./openapi.md)

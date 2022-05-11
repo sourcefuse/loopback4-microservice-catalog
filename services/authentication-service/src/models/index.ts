@@ -3,6 +3,7 @@ import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';
 import {LocalUserProfileDto} from './local-user-profile';
 import {Otp} from './otp.model';
+import {OtpCache} from './otp-cache.model';
 import {RefreshTokenRequest} from './refresh-token-request.model';
 import {RefreshToken} from './refresh-token.model';
 import {ResetPasswordWithClient} from './reset-password-with-client.model';
@@ -25,6 +26,7 @@ export * from './auth-client.model';
 export * from './forget-password-dto.model';
 export * from './forget-password-response-dto.model';
 export * from './local-user-profile';
+export * from './otp-cache.model';
 export * from './otp.model';
 export * from './refresh-token-request.model';
 export * from './refresh-token.model';
@@ -54,6 +56,7 @@ export const models = [
   RevokedToken,
   UserCredentials,
   Otp,
+  OtpCache,
   TenantConfig,
   UserTenant,
   RefreshTokenRequest,

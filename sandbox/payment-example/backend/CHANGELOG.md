@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.6 (2022-05-09)</small>
+
+* chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
+
+
+
+
+
 ## <small>0.1.5 (2022-04-20)</small>
 
 * chore(deps): bump minimist in /sandbox/payment-example/backend (#633) ([621ddc2](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/621ddc2)), closes [#633](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/633)
