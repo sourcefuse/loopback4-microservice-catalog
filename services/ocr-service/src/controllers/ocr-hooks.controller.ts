@@ -33,7 +33,7 @@ export class OcrHooksController {
   })
   async convertContractImages(
     @requestBody() contract: Contracts,
-    // eslint-disable-next-line
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
   ): Promise<any> {
     contract.imageConverted = true;
     return this.contractRepository.updateById(contract.id, contract);
@@ -45,7 +45,7 @@ export class OcrHooksController {
   })
   async convertContractOcr(
     @requestBody() contract: Contracts,
-    // eslint-disable-next-line
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
   ): Promise<any> {
     contract.ocrConverted = true;
     return this.contractRepository.updateById(contract.id, contract);
@@ -57,7 +57,7 @@ export class OcrHooksController {
   })
   async convertContractHocr(
     @requestBody() contract: Contracts,
-    // eslint-disable-next-line
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
   ): Promise<any> {
     contract.hocrConverted = true;
     return this.contractRepository.updateById(contract.id, contract);
