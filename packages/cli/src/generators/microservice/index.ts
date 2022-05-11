@@ -8,6 +8,7 @@ import {
   MIGRATIONS,
   MIGRATION_CONNECTORS,
   SERVICES,
+  BASESERVICEDSLIST,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -22,6 +23,14 @@ const DATASOURCE_TEMPLATE = join(
   'datasource',
   'templates',
   'name.datasource.ts.tpl',
+);
+
+const REDIS_DATASOURCE = join(
+  '..',
+  '..',
+  'datasource',
+  'templates',
+  'redis.datasource.ts.tpl',
 );
 
 const DATASOURCE_INDEX = join(
@@ -275,6 +284,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   writing() {
     if (!this.shouldExit()) {
       if (this.options.datasourceName) {
+        const nameArr = [this.options.datasourceName];
+
+        this._setDataSourceName();
+
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_TEMPLATE),
           this.destinationPath(
@@ -288,11 +301,23 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             project: this.projectInfo,
           },
         );
+        if (this.projectInfo.baseServiceCacheName) {
+          this.fs.copyTpl(
+            this.templatePath(REDIS_DATASOURCE),
+            this.destinationPath(
+              join('src', 'datasources', 'redis.datasource.ts'),
+            ),
+            {
+              project: this.projectInfo,
+            },
+          );
+          nameArr.push('redis');
+        }
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_INDEX),
           this.destinationPath(join('src', 'datasources', `index.ts`)),
           {
-            name: this.options.datasourceName,
+            nameArr: nameArr,
           },
         );
       }
@@ -360,6 +385,19 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       return true;
     } else {
       return false;
+    }
+  }
+
+  private _setDataSourceName() {
+    if (this.options.datasourceName && this.options.baseService) {
+      const datasourceList = BASESERVICEDSLIST[this.options.baseService];
+      datasourceList.forEach(ds => {
+        if (ds.type === 'store') {
+          this.projectInfo.baseServiceStoreName = ds.name;
+        } else {
+          this.projectInfo.baseServiceCacheName = ds.name;
+        }
+      });
     }
   }
 
