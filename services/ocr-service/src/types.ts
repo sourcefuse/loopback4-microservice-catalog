@@ -13,15 +13,15 @@ export type ClauseProps = {
   extractedData?: {
     column?: string,
     columnData?: {
-      // eslint-disable-next-line
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       supportedValue: Array<string> | any,
-      // eslint-disable-next-line
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       value?: string | any,
-      // eslint-disable-next-line 
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       pageNum?: number | any,
-      // eslint-disable-next-line
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       coordinates?: Object | any,
-      // eslint-disable-next-line
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       confidenceScore?: number | any
     }
   }
@@ -71,11 +71,11 @@ export enum HttpMethod {
 }
 
 export interface IRequest {
-  sendRequest(url: string, request: RequestInit): Promise<void>;
+  sendRequest(url: string, method: string): Promise<void>;
 }
 
 export interface FetchHttpRequest {
-  sendRequest(url: string, request: RequestInit): Promise<void>;
+  sendRequest(url: string, method: string): Promise<void>;
 }
 
 export const identityResponseTransformer: ResponseTransformer = (response: Response) => response;

@@ -1,4 +1,4 @@
-import { injectable, inject, BindingScope } from '@loopback/core';
+import { injectable, inject, BindingScope, Provider, ValueOrPromise } from '@loopback/core';
 import {
     Agent as HttpAgent
 } from "http";
@@ -16,14 +16,15 @@ import {
     HttpClientInitOpts,
     HttpMethod,
     RequestInterceptor,
-    ResponseTransformer
+    ResponseTransformer,
+    IRequestServiceConfig
 } from "../types";
 import {
     RequestServiceBindings
 } from '../keys';
 
 @injectable({ scope: BindingScope.TRANSIENT })
-export class FetchClientProvider {
+export class FetchClientProvider implements Provider<IRequestServiceConfig> {
     readonly baseUrl: string;
     readonly baseHeaders: Record<string, string>;
     readonly baseOptions: Omit<RequestInit, "headers">;
@@ -81,6 +82,35 @@ export class FetchClientProvider {
 
         this.useJson = useJson;
     }
+    value(): ValueOrPromise<any> {
+        return {
+            sendRequest: async (url: string, method: string) => this.sendRequest(url, method)
+        };
+    }
+
+    sendRequest(url: string, method: string) {
+        if (method?.toUpperCase() === 'POST') {
+            return this.post(url)
+        }
+
+        if (method?.toUpperCase() === 'GET') {
+            return this.get(url)
+        }
+
+        if (method?.toUpperCase() === 'PUT') {
+            return this.put(url)
+        }
+
+        if (method?.toUpperCase() === 'PATCH') {
+            return this.patch(url)
+        }
+
+        if (method?.toUpperCase() === 'DELETE') {
+            return this.delete(url)
+        }
+    };
+
+
 
     async get<T>(url: string, req: RequestInit = {}): Promise<T> {
         const {

@@ -41,7 +41,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/document-type?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/document-type?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -59,7 +59,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/termination-clause?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/termination-clause?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -77,7 +77,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/ipr-ownership-clause?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/ipr-ownership-clause?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -95,7 +95,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/warranty-clause?contract_name=${contract.contractName}`);
+    await this.requestProvider.sendRequest(`/contract-parser/warranty-clause?contract_name=${contract.contractName}`, 'POST');
 
     return {
       status: 200,
@@ -113,7 +113,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/third-party-beneficiary?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/third-party-beneficiary?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -131,7 +131,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/governing-law?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/governing-law?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -149,7 +149,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/validity-terms?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/validity-terms?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -166,7 +166,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/liquidity-damages?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/liquidity-damages?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -184,7 +184,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/limited-liability?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/limited-liability?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -202,7 +202,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/legal_id?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/legal_id?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -220,7 +220,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/signatory_details?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/signatory_details?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -238,7 +238,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/vendor?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/vendor?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -256,7 +256,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/payment_terms?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/payment_terms?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -274,7 +274,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/force-majeure?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/force-majeure?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -292,7 +292,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/indemnity-clause?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/indemnity-clause?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -309,7 +309,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/auto-renewal?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/auto-renewal?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -326,7 +326,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/currency?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/currency?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -343,7 +343,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/public-announcement?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/public-announcement?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -361,7 +361,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/assignment?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/assignment?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -378,7 +378,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/support?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/support?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -395,7 +395,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/contract-amount?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/contract-amount?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -412,7 +412,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/sla-clause?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/sla-clause?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,
@@ -429,7 +429,7 @@ export class OcrController {
   ): Promise<object> {
 
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.post(`/contract-parser/sla-dashboard?contract_name=${contract.contractName}`)
+    await this.requestProvider.sendRequest(`/contract-parser/sla-dashboard?contract_name=${contract.contractName}`, 'POST')
 
     return {
       status: 200,

@@ -28,6 +28,7 @@ import {
     HocrResultRepository
 } from './repositories';
 import { IRequestServiceConfig } from './types';
+import { FetchClientProvider } from './providers';
 
 export class FetchServiceComponent implements Component {
     constructor(
@@ -55,14 +56,8 @@ export class FetchServiceComponent implements Component {
             servers: [{ url: '/' }],
         });
 
-
         this.bindings.push(
-            Binding.bind(RequestServiceBindings.Config).to({
-                baseUrl: process.env.CLM_ML_BASEURL ?? '',
-                json: true,
-                useRequestProvider: true,
-                useCustomSequence: true
-            })
+            Binding.bind(RequestServiceBindings.Config).toProvider(FetchClientProvider),
         );
 
         if (!this.requestConfig?.useCustomSequence) {

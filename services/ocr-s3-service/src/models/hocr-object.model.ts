@@ -1,5 +1,5 @@
-import { model, property } from '@loopback/repository';
-import { BaseEntity } from '@sourceloop/core';
+import {model, property} from '@loopback/repository';
+import {BaseEntity} from '@sourceloop/core';
 @model({
   name: 'hocr_results',
   settings: {

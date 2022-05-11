@@ -6,10 +6,10 @@ import {
 } from './types';
 
 export namespace RequestServiceBindings {
-  export const Config = BindingKey.create<IRequestServiceConfig | null>(
+  export const Config = BindingKey.create<IRequestServiceConfig>(
     `${BINDING_PREFIX}.request.config`,
   );
-  export const FetchProvider = BindingKey.create<IRequest | null>(
+  export const FetchProvider = BindingKey.create<IRequest>(
     `${BINDING_PREFIX}.request.fetch`,
   );
 }
