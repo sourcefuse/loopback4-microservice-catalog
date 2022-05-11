@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.7 (2022-05-11)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_chat-service
+
+
+
+
+
+## <small>0.1.6 (2022-05-10)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_chat-service
+
+
+
+
+
+## <small>0.1.5 (2022-05-09)</small>
+
+* chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
+
+
+
+
+
 ## <small>0.1.4 (2022-04-20)</small>
 
 * chore(deps): bump minimist (#635) ([d032b77](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/d032b77)), closes [#635](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/635)

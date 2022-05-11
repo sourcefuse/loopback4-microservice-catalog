@@ -8,6 +8,7 @@ import {
   MIGRATIONS,
   MIGRATION_CONNECTORS,
   SERVICES,
+  BASESERVICEDSLIST,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -22,6 +23,14 @@ const DATASOURCE_TEMPLATE = join(
   'datasource',
   'templates',
   'name.datasource.ts.tpl',
+);
+
+const REDIS_DATASOURCE = join(
+  '..',
+  '..',
+  'datasource',
+  'templates',
+  'redis.datasource.ts.tpl',
 );
 
 const DATASOURCE_INDEX = join(
@@ -275,6 +284,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   writing() {
     if (!this.shouldExit()) {
       if (this.options.datasourceName) {
+        const nameArr = [this.options.datasourceName];
+
+        this._setDataSourceName();
+
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_TEMPLATE),
           this.destinationPath(
@@ -288,11 +301,23 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             project: this.projectInfo,
           },
         );
+        if (this.projectInfo.baseServiceCacheName) {
+          this.fs.copyTpl(
+            this.templatePath(REDIS_DATASOURCE),
+            this.destinationPath(
+              join('src', 'datasources', 'redis.datasource.ts'),
+            ),
+            {
+              project: this.projectInfo,
+            },
+          );
+          nameArr.push('redis');
+        }
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_INDEX),
           this.destinationPath(join('src', 'datasources', `index.ts`)),
           {
-            name: this.options.datasourceName,
+            nameArr: nameArr,
           },
         );
       }
@@ -355,10 +380,24 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         } else {
           // do nothing
         }
+        this._addMigrationScripts();
       }
       return true;
     } else {
       return false;
+    }
+  }
+
+  private _setDataSourceName() {
+    if (this.options.datasourceName && this.options.baseService) {
+      const datasourceList = BASESERVICEDSLIST[this.options.baseService];
+      datasourceList.forEach(ds => {
+        if (ds.type === 'store') {
+          this.projectInfo.baseServiceStoreName = ds.name;
+        } else {
+          this.projectInfo.baseServiceCacheName = ds.name;
+        }
+      });
     }
   }
 
@@ -431,6 +470,31 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     return this.fs.exists(
       this.destinationPath(join('packages', 'migrations', 'package.json')),
     );
+  }
+
+  private _addMigrationScripts() {
+    try {
+      const packageJsFile = 'packages/migrations/package.json';
+      const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
+      const script = packageJs.scripts;
+      script[
+        `db:migrate:${this.options.name}`
+      ] = `./node_modules/.bin/db-migrate up --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[
+        `db:migrate-down:${this.options.name}`
+      ] = `./node_modules/.bin/db-migrate down --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[
+        `db:migrate-reset:${this.options.name}`
+      ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+
+      packageJs.scripts = script;
+      writeFileSync(
+        packageJsFile,
+        JSON.stringify(packageJs, undefined, JSON_SPACING),
+      );
+    } catch {
+      //do nothing
+    }
   }
 
   async end() {

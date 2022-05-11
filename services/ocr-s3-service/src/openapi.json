@@ -1,0 +1,91 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ocr S3 Service",
+    "version": "1.0.0",
+    "description": "services",
+    "contact": {
+      "name": "Sourcefuse"
+    }
+  },
+  "paths": {
+    "/contract-images/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrObjectController",
+        "x-operation-name": "getImgFiles",
+        "tags": [
+          "OcrObjectController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "User model instance"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrObjectController.getImgFiles"
+      }
+    },
+    "/get-contract-hocr/{contract_name}": {
+      "get": {
+        "x-controller-name": "OcrObjectController",
+        "x-operation-name": "getHocrFiles",
+        "tags": [
+          "OcrObjectController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "User model instance"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "contract_name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "OcrObjectController.getHocrFiles"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.1 (2022-05-09)</small>
+
+* chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(deps): upgrade ejs to latest version v3.1.7 (#758) ([cdddb4a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cdddb4a)), closes [#758](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/758) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 0.1.0 (2022-04-20)
 
 * chore(deps): bump minimist in /services/reporting-service (#628) ([d74114a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d74114a)), closes [#628](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/628)

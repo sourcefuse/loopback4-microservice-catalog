@@ -1,0 +1,16 @@
+{
+  "name": "@sourceloop/ocr-parser",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^13.1.0",
+    "@angular/core": "^13.1.0",
+    "@angular/material": "^13.3.5",
+    "mark.js": "^8.11.1",
+    "ng-circle-progress": "^1.6.0",
+    "ngx-markjs": "^0.1.2",
+    "@angular/flex-layout": "^13.0.0-beta.38"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

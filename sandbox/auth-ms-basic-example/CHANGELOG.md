@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.8 (2022-05-11)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.4.7 (2022-05-10)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.4.6 (2022-05-09)</small>
+
+* chore(deps): bump moment in /sandbox/auth-ms-basic-example (#656) ([e30cde6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e30cde6)), closes [#656](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/656)
+* chore(deps): bump swagger-ui-dist in /sandbox/auth-ms-basic-example (#608) ([a578d57](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a578d57)), closes [#608](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/608)
+* chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
+* fix(core): fix versions in package locks and update references in tsconfig ([36b563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/36b563e)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+* fix(version): microservice-catalog sandbox examples latest version (#452) ([6866f89](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6866f89)), closes [#452](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/452)
+
+
+
+
+
 ## <small>0.4.5 (2021-12-17)</small>
 
 * fix(core): upgrade all deps (#438) ([c52b7f1](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/c52b7f1)), closes [#438](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/438)

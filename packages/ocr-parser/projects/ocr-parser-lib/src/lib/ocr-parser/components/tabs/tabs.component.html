@@ -1,0 +1,6 @@
+<mat-tab-group [disableRipple]="true">
+    <mat-tab [label]="tab.tabName" *ngFor="let tab of data"
+        [disabled]="tab.tabName !==  selectedField?.tabName && selectedField?.isSelected && !tab.docType">
+        <ng-container *ngTemplateOutlet="viewTemplate; context: { $implicit: tab  }"></ng-container>
+    </mat-tab>
+</mat-tab-group>

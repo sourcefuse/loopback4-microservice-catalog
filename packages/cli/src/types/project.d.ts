@@ -31,6 +31,8 @@ declare module '@loopback/cli/lib/project-generator' {
       datasourceConnectorName?: string;
       datasourceType?: string;
       facade?: boolean;
+      baseServiceStoreName?: string;
+      baseServiceCacheName?: string;
     };
     projectOptions: string[];
     promptProjectName(): Promise<void>;

@@ -1,0 +1,44 @@
+.box {
+    height: 126px;
+    position: relative;
+    cursor: pointer;
+    textarea {
+        padding: 12px 20px;
+        width: 100%;
+        font-size: 13px;
+        background: #fff;
+    } 
+}
+
+.box div:nth-child(1) {
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    border: 1px solid;
+    height: 126px;
+    overflow: auto;
+}
+
+.box div:nth-child(2) {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.field_block {
+    padding: 20px 30px 0px 30px;
+    label {
+        margin-bottom: 8px;
+    }
+}
+
+.score {
+    position: absolute;
+    bottom: 0px;
+    text-align: right;
+    padding: 0;
+}
+
+.active textarea{
+    border: 2px solid #8C0000;
+    outline: none;
+}

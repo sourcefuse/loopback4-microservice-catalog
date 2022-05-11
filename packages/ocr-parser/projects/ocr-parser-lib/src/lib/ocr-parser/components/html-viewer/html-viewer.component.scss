@@ -1,0 +1,49 @@
+mat-card {
+	margin: 12px;
+  }
+  
+  .mat-card:not([class*=mat-elevation-z]) {
+	box-shadow: none !important;
+	border-radius: 5px 5px 0px 0px;
+  }
+  
+  div.content_wrapper {
+	  position: relative ;
+  }
+  
+  .indicator {
+	  background-color: fade( gold, 10% ) ;
+	  position: absolute ;
+	  z-index: 2 ;
+  
+	  &__cta {
+		  left: 50% ;
+		  position: absolute ;
+	  top: -10px;
+	  }
+  
+	  &__cta-link {
+		  background-color: #FFFFFF;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  width: 210px;
+		  height: 48px;
+		  border-radius: 4px;
+		  bottom: 0px;
+		  box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
+		  color: #000000;
+		  cursor: pointer;
+		  left: 0px;
+		  position: absolute;
+		  transform: translateX(-50%);
+		  white-space: nowrap;
+		  font-size: 13px;
+		  text-decoration: none;
+		  img {
+			  width: 15px;
+			  height: 17px;
+			  margin-right: 5px;
+		  }
+	  }
+  }

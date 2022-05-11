@@ -1,0 +1,104 @@
+.wrapper {
+    padding: 16px;
+    position: relative;
+    ::ng-deep mark,
+    .mark {
+        padding: 0px !important;
+    }
+    ::ng-deep .mat-ink-bar {
+        background-color: #8C0000 !important;
+    
+    }
+    
+    ::ng-deep .mat-tab-label {
+        min-width: 60px !important
+    }
+    
+    ::ng-deep .mat-tab-label-content {
+        font-size: 13px;
+    }
+    ::ng-deep .mat-tab-label-active {
+        color: #8C0000;
+    }
+    
+    ::ng-deep {
+    
+        .mat-tab-body-content,
+        .mat-tab-labels {
+            background: #fff;
+        }
+    }
+    
+    ::ng-deep .mat-card {
+        height: 471px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    ::ng-deep {
+    
+        .mat-card::-webkit-scrollbar,
+        .mat-tab-body-content::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome */
+        }
+    }
+    
+    ::ng-deep .mat-tab-body-wrapper {
+        height: 512px;
+    }
+}
+
+.no-padding-right {
+    padding-right: 0px;
+}
+
+.no-padding-left {
+    padding-left: 0px;
+}
+
+.htmlViewer {
+    padding: 1px 1px 0 0;
+    background: #f2f2f2;
+    margin: 16px 10px 5px 0;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.fieldViewer {
+    padding: 0;
+    border-top-right-radius: 0;
+    box-shadow: none !important;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.footer {
+    border-top: 2px #E5E5E5;;
+    position: absolute;
+    width: 100%;
+    padding: 14px 15px;
+    left: 0;
+    display: flex;
+    top: 590px;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    button {
+        outline: none;
+        border: 1px solid #000;
+        background: transparent;
+        padding: 5px 17px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24px;
+    }
+
+    .btn-right button:first-child {
+        margin-right: 16px;
+    }
+
+    .btn-right button:last-child {
+        background: #000;
+        color: #fff;
+    }
+}
