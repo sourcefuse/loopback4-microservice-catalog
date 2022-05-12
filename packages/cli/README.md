@@ -1,7 +1,10 @@
 # sourceloop-cli
-This is a POC of a CLI that will work similarly to the `lb4` cli. The `sourceloop-cli` will perform similar scaffolding functions for `Sourceloop` based projects.
+
+This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensiona, facades and microservices to it.
+
 
 ## Building
+
 To install sourceloop-cli, run
 
 ```shell
@@ -9,13 +12,14 @@ npm install @sourceloop/cli
 ```
 
 ## Usage
+
 <!-- usage -->
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/1.2.2 linux-x64 node-v16.13.0
+@sourceloop/cli/1.2.4 linux-x64 node-v16.13.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -24,6 +28,7 @@ USAGE
 <!-- usagestop -->
 
 ## Commands
+
 <!-- commands -->
 * [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
 * [`sl extension [NAME]`](#sl-extension-name)
@@ -51,7 +56,7 @@ EXAMPLES
   $ sl autocomplete --refresh-cache
 ```
 
-_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.2.0/src/commands/autocomplete/index.ts)_
+_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.3.0/src/commands/autocomplete/index.ts)_
 
 ## `sl extension [NAME]`
 
@@ -68,7 +73,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.2/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.4/src/commands/extension.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -108,7 +113,7 @@ OPTIONS
       include base microservice migrations
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.2/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.4/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -125,5 +130,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.2/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v1.2.4/src/commands/scaffold.ts)_
 <!-- commandsstop -->

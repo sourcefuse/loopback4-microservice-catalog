@@ -1,0 +1,33 @@
+<mat-card>
+  <div class="content_wrapper" [markjsHighlight]="fieldValue" [markjsConfig]="searchConfig" [scrollToFirstMarked]="true"
+    (textSelect)="renderRectangles( $event )">
+    <!--
+				The host rectangle has to be contained WITHIN the element that has the
+				[textSelect] directive because the rectangle will be absolutely
+				positioned relative to said element.
+			-->
+    <div *ngIf="hostRectangle" class="indicator" [style.left.px]="hostRectangle.left" [style.top.px]="hostRectangle.top"
+      [style.width.px]="hostRectangle.width" [style.height.px]="0">
+
+      <div class="indicator__cta">
+        <!--
+          NOTE: Because we DON'T WANT the selected text to get deselected
+          when we click on the call-to-action, we have to PREVENT THE
+          DEFAULT BEHAVIOR and STOP PROPAGATION on some of the events. The
+          byproduct of this is that the (click) event won't fire. As such,
+          we then have to consume the click-intent by way of the (mouseup)
+          event.
+        -->
+        <div (mousedown)="$event.preventDefault()" (mouseup)="$event.stopPropagation(); onUpdateClauseValue()"
+          class="indicator__cta-link">
+          <img src="../../../assets/update.svg">
+          <span>Update this text in clause</span>
+      </div>
+      </div>
+
+    </div>
+    <div *ngFor="let item of data.document">
+      <p [innerHTML]="item | noSanitize"></p>
+    </div>
+  </div>
+</mat-card>

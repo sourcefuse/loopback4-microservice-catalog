@@ -37,3 +37,24 @@ export enum MIGRATIONS {
   CUSTOM = 'Setup custom migrations',
   INCLUDED = 'Include migrations provided by base service',
 }
+
+export type DataSourceMap = {type: 'cache' | 'store'; name: string};
+
+export const BASESERVICEDSLIST: {
+  [key in SERVICES]: Array<DataSourceMap>;
+} = {
+  'authentication-service': [
+    {type: 'store', name: 'AuthDbSourceName'},
+    {type: 'cache', name: 'AuthCacheSourceName'},
+  ],
+  'audit-service': [{type: 'store', name: 'AuditSourceName'}],
+  'notification-service': [{type: 'store', name: 'NotifDbSourceName'}],
+  'bpmn-service': [{type: 'store', name: 'WorkflowCacheSourceName'}],
+  'feature-toggle-service': [{type: 'store', name: 'FeatureToggleDbName'}],
+  'in-mail-service': [{type: 'store', name: 'InMailDatasourceName'}],
+  'payment-service': [{type: 'store', name: 'PaymentDatasourceName'}],
+  'scheduler-service': [{type: 'store', name: 'SchedulerDatasourceName'}],
+  'search-service': [{type: 'store', name: 'DATASOURCE_NAME'}],
+  'video-conferencing-service': [{type: 'store', name: 'VideoConfDatasource'}],
+  'chat-service': [],
+};

@@ -1,7 +1,7 @@
 const types = [
-  {value: 'feat', name: 'feat:     A new feature'},
-  {value: 'fix', name: 'fix:      A bug fix'},
-  {value: 'docs', name: 'docs:     Documentation only changes'},
+  { value: 'feat', name: 'feat:     A new feature' },
+  { value: 'fix', name: 'fix:      A bug fix' },
+  { value: 'docs', name: 'docs:     Documentation only changes' },
   {
     value: 'style',
     name: 'style:    Changes that do not affect the meaning of the code\n            (white-space, formatting, missing semi-colons, etc)',
@@ -14,33 +14,36 @@ const types = [
     value: 'perf',
     name: 'perf:     A code change that improves performance',
   },
-  {value: 'test', name: 'test:     Adding missing tests'},
+  { value: 'test', name: 'test:     Adding missing tests' },
   {
     value: 'chore',
     name: 'chore:    Changes to the build process or auxiliary tools\n            and libraries such as documentation generation',
   },
-  {value: 'revert', name: 'revert:   Revert to a commit'},
-  {value: 'WIP', name: 'WIP:      Work in progress'},
+  { value: 'revert', name: 'revert:   Revert to a commit' },
+  { value: 'WIP', name: 'WIP:      Work in progress' },
 ];
 
 const scopes = [
-  {name: 'chore'},
-  {name: 'deps'},
-  {name: 'core'},
-  {name: 'cli'},
-  {name: 'search-client'},
-  {name: 'user-onboarding'},
-  {name: 'authentication-service'},
-  {name: 'in-mail-service'},
-  {name: 'notification-service'},
-  {name: 'scheduler-service'},
-  {name: 'video-conferencing-service'},
-  {name: 'audit-service'},
-  {name: 'bpmn-service'},
-  {name: 'search-service'},
-  {name: 'chat-service'},
-  {name: 'feature-toggle-service'},
-  {name: 'sandbox'},
+  { name: 'chore' },
+  { name: 'deps' },
+  { name: 'core' },
+  { name: 'cli' },
+  { name: 'search-client' },
+  { name: 'user-onboarding' },
+  { name: 'ocr-service' },
+  { name: 'ocr-s3-service' },
+  { name: 'authentication-service' },
+  { name: 'in-mail-service' },
+  { name: 'notification-service' },
+  { name: 'scheduler-service' },
+  { name: 'video-conferencing-service' },
+  { name: 'audit-service' },
+  { name: 'bpmn-service' },
+  { name: 'search-service' },
+  { name: 'chat-service' },
+  { name: 'feature-toggle-service' },
+  { name: 'sandbox' },
+  { name: 'ocr-parser' }
 ];
 
 /**
@@ -49,7 +52,7 @@ const scopes = [
 
 /** @type import('cz-format-extension').Config<Answers> */
 module.exports = {
-  questions({inquirer, gitInfo}) {
+  questions({ inquirer, gitInfo }) {
     let migrationQuestions = getMigrationChanges(gitInfo.staged);
     return [
       {
@@ -96,29 +99,29 @@ module.exports = {
         type: 'expand',
         name: 'confirmCommit',
         choices: [
-          {key: 'y', name: 'Yes', value: 'yes'},
-          {key: 'n', name: 'Abort commit', value: 'no'},
+          { key: 'y', name: 'Yes', value: 'yes' },
+          { key: 'n', name: 'Abort commit', value: 'no' },
         ],
         default: 0,
         message(answers) {
           const SEP =
             '###--------------------------------------------------------###';
-          console.log(`\n${SEP}\n${buildCommit({answers, gitInfo})}\n${SEP}\n`);
+          console.log(`\n${SEP}\n${buildCommit({ answers, gitInfo })}\n${SEP}\n`);
           return 'Are you sure you want to proceed with the commit above?';
         },
       },
     ];
   },
-  commitMessage({answers, gitInfo}) {
+  commitMessage({ answers, gitInfo }) {
     if (answers.confirmCommit === 'yes') {
-      return buildCommit({answers, gitInfo});
+      return buildCommit({ answers, gitInfo });
     } else {
       throw Error('Commit cancelled.');
     }
   },
 };
 
-function buildCommit({answers, gitInfo}) {
+function buildCommit({ answers, gitInfo }) {
   const migrationKeys = Object.keys(answers).filter(q =>
     q.includes('migration-'),
   );
