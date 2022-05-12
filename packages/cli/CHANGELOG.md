@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.4 (2022-05-12)</small>
+
+* fix(cli): rectify the variable name (#779) ([0fccf34](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fccf34)), closes [#779](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/779) [#626](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/626)
+* docs(cli): description change (#777) ([c2b87de](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c2b87de)), closes [#777](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/777) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>1.2.3 (2022-05-11)</small>
 
 * fix(cli):set datasource name based on base service (#770) ([5865158](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5865158)), closes [#770](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/770)
