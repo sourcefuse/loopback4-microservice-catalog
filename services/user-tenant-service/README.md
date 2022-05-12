@@ -1,4 +1,4 @@
-# @sourceloop/payment-service
+# @sourceloop/user-tenant-service
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
@@ -11,10 +11,14 @@
 A Loopback Microservice primarily used for payment implementation to charge the payments for
 any client application.
 
+## Prerequiste
+
+Authenication service as it uses the same database tables and no new migration is needed for this service.
+
 ## Installation
 
 ```bash
-   npm i @sourceloop/payment-service
+   npm i @sourceloop/user-tenant-service
 ```
 
 ## Usage
@@ -22,80 +26,19 @@ any client application.
 - Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
 - Install the in mail service
-  `npm i @sourceloop/payment-service`
+  `npm i @sourceloop/user-tenant-service`
 - Set the [environment variables](#environment-variables).
-- Run the [migrations](#migrations).
-- Add the `PaymentServiceComponent` to your Loopback4 Application (in `application.ts`).
+- Add the `UserTenantServiceComponent` to your Loopback4 Application (in `application.ts`).
+
   ```typescript
-  // import the PaymentServiceComponent
-  import {PaymentServiceComponent} from '@sourceloop/payment-service';
-  // add Component for PaymentServiceComponent
-  this.component(PaymentServiceComponent);
+  // import the UserTenantServiceComponent
+  import {UserTenantServiceComponent} from '@sourceloop/payment-service';
+  // add Component for UserTenantServiceComponent
+  this.component(UserTenantServiceComponent);
   ```
-  **Binding the Providers**
 
-```typescript
-//import Providers
-import {
-  GatewayBindings,
-  GatewayProvider,
-  RazorpayBindings,
-  RazorpayProvider,
-  StripeBindings,
-  StripeProvider,
-} from 'payment-service/dist/providers';
-//Bind the providers
-this.bind(StripeBindings.Config).to({dataKey: '', publishKey: ''});
-this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
-this.bind(RazorpayBindings.RazorpayConfig).to({dataKey: '', publishKey: ''});
-this.bind(RazorpayBindings.RazorpayHelper).toProvider(RazorpayProvider);
-this.bind(GatewayBindings.GatewayHelper).toProvider(GatewayProvider);
-```
-
-- Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `PaymentDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
-
-### Setting up a `DataSource`
-
-Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
-
-```typescript
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-import {PaymentDatasourceName} from '@sourceloop/payment-service';
-
-const config = {
-  name: PaymentDatasourceName,
-  connector: 'postgresql',
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  schema: process.env.DB_SCHEMA,
-};
-
-@lifeCycleObserver('datasource')
-export class InmailDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static dataSourceName = PaymentDatasourceName;
-  static readonly defaultConfig = config;
-
-  constructor(
-    @inject(`datasources.config.${PaymentDatasourceName}`, {optional: true})
-    dsConfig: object = config,
-  ) {
-    super(dsConfig);
-  }
-}
-```
-
-### Migration
-
-The migrations required for this service are processed during the installation automatically if you set the `PAYMENT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `PAYMENT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 ### Setting Environment Variables
 
@@ -110,7 +53,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USER=pg_service_user
 DB_PASSWORD=pg_service_user_password
-DB_DATABASE=payment_db
+DB_DATABASE=AuthDB
 DB_SCHEMA=public
 JWT_SECRET=super_secret_string
 JWT_ISSUER=https://authentication.service
@@ -150,45 +93,3 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 404: Entity Not Found
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
-
-#### API Details
-
-##### POST /payment-gateways
-
-Create a payment gateway.
-
-##### POST /place-order-and-pay
-
-Create an order and initiate transaction for the selected payment gateway, this will create order and initiate payment process.
-
-##### POST /orders
-
-Creating orders manually.
-
-##### GET /transactions/orderid/{id}
-
-Pass order id in {id} for manually created orders or retry the payment in case of failure.
-
-##### POST /transactions/refund/{id}
-
-Pass transactions ID in {id} to initiate a refund.
-
-##### GET /orders
-
-Get list of all orders.
-
-##### GET /transactions
-
-Get list of all transactions.
-
-##### GET /transactions/{id}
-
-Get details of particular transaction.
-
-##### GET /orders/{id}
-
-Get details of particular order.
-
-##### POST /templates
-
-Create a template to overwrite the existing default Gateway Templates if needed.

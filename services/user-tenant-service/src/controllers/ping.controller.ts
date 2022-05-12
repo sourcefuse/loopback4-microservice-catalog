@@ -48,25 +48,4 @@ export class PingController {
       date: new Date(),
     };
   }
-
-  @authorize({permissions: ['*']})
-  @get('/health', {
-    responses: {
-      [STATUS_CODE.OK]: PING_RESPONSE,
-    },
-  })
-  async health(): Promise<object> {
-    // try {
-    //   // await this.dataSource.ping();
-    // } catch (error) {
-    //   this.logger.error(`Health check failed. Error :: ${error}`);
-    //   throw new HttpErrors.InternalServerError('Health check failed');
-    // }
-
-    // Reply with a greeting, the current time, the url, and request headers
-    return {
-      greeting: 'pong',
-      date: new Date(),
-    };
-  }
 }
