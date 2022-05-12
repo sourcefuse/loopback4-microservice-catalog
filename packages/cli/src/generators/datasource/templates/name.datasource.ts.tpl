@@ -24,7 +24,7 @@ export class <%= project.datasourceClassName %>DataSource extends juggler.DataSo
   implements LifeCycleObserver { 
   
   <% if (project.serviceDependency && project.baseServiceStoreName ) { -%>
-    static dataSourceName = <%= project.baseServiceDbName %>;
+    static dataSourceName = <%= project.baseServiceStoreName %>;
     <% }else{ -%>
   static dataSourceName = '<%= project.datasourceName %>';
   <% } -%>	
