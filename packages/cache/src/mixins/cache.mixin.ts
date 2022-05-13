@@ -8,10 +8,13 @@ import {
   JugglerDataSource,
   Options,
 } from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {TextDecoder} from 'util';
 import {CacheOptions} from '../types';
+const bcrypt = require('bcrypt');
 
 const decoder = new TextDecoder('utf-8');
+const salt = '$2b$10$Pdp69XWPJjQ8iFcum6GHEe';
 
 export function CacheRespositoryMixin<
   M extends Entity,
@@ -20,7 +23,7 @@ export function CacheRespositoryMixin<
   R extends MixinTarget<DefaultCrudRepository<M, ID, Relations>>,
 >(baseClass: R, cacheOptions: CacheOptions) {
   class MixedRepository extends baseClass {
-    cacheDataSource: JugglerDataSource;
+    getCacheDataSource: () => Promise<JugglerDataSource>;
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
@@ -30,16 +33,18 @@ export function CacheRespositoryMixin<
       options?: Options,
     ): Promise<M> {
       this.checkDataSource();
-      const key = this.getKey(id, filter, options);
-      const result = await this.searchInCache(key);
-      let finalResult;
+      const key = await this.generateKey(id, filter);
+      const result = (await this.searchInCache(key)) as M;
+      let finalResult: M;
       if (result) {
         finalResult = result;
       } else {
         finalResult = await super.findById(id, filter, options);
-        this.saveInCache(key, finalResult);
+        this.saveInCache(key, finalResult).catch((err: Error) =>
+          console.error(err),
+        );
       }
-      return finalResult as M;
+      return finalResult;
     }
 
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
@@ -49,61 +54,63 @@ export function CacheRespositoryMixin<
       options?: AnyObject | undefined,
     ): Promise<M[]> {
       this.checkDataSource();
-      const key = this.getKey(undefined, filter, options);
-      const result = await this.searchInCache(key);
-      let finalResult;
+      const key = await this.generateKey(undefined, filter);
+      const result = (await this.searchInCache(key)) as M[];
+      let finalResult: M[];
       if (result) {
         finalResult = result;
       } else {
         finalResult = await super.find(filter, options);
-        this.saveInCache(key, finalResult);
+        this.saveInCache(key, finalResult).catch((err: Error) =>
+          console.error(err),
+        );
       }
-      return finalResult as M[];
+      return finalResult;
     }
 
     async searchInCache(key: string): Promise<M | M[] | undefined> {
-      let result;
+      let result: M | M[] | undefined;
       try {
-        const res = await this.executeRedisCommand('GET', [key]);
+        const res = (await this.executeRedisCommand('GET', [key])) as Buffer;
         if (res) {
-          result = JSON.parse(decoder.decode(res as ArrayBuffer));
+          result = JSON.parse(decoder.decode(res));
         }
       } catch (err) {
-        throw new Error(
+        throw new HttpErrors.UnprocessableEntity(
           `Unexpected error occured while searching in cache : ${err}`,
         );
       }
       return result;
     }
 
-    saveInCache(key: string, value: M | M[]): void {
+    async saveInCache(key: string, value: M | M[]): Promise<void> {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        this.executeRedisCommand('SET', [
+        await this.executeRedisCommand('SET', [
           key,
           JSON.stringify(value),
           `PX`,
           cacheOptions.ttl ?? 60000,
         ]);
       } catch (err) {
-        throw new Error(
+        throw new HttpErrors.UnprocessableEntity(
           `Unexpected error occured while saving in cache : ${err}`,
         );
       }
     }
 
-    getKey(id?: ID, filter?: Filter<M>, options?: Options): string {
-      let key = cacheOptions.prefix;
+    async generateKey(id?: ID, filter?: Filter<M>): Promise<string> {
+      let key = '';
       if (id) {
         key += `_${id}`;
       }
       if (filter) {
         key += `_${JSON.stringify(filter)}`;
       }
-      if (options) {
-        key += `_${JSON.stringify(options)}`;
-      }
-      return key;
+      // hash to reduce key length
+      return (
+        cacheOptions.prefix +
+        (await bcrypt.hash(key, cacheOptions.salt ?? salt))
+      );
     }
 
     async clearCache(): Promise<number> {
@@ -129,27 +136,28 @@ export function CacheRespositoryMixin<
           `${cacheOptions.prefix}*`,
         ])) as number;
       } catch (err) {
-        throw new Error(
+        throw new HttpErrors.UnprocessableEntity(
           `Unexpected error occured while executing script to empty cache : ${err}`,
         );
       }
     }
 
     checkDataSource(): void {
-      if (!this.cacheDataSource) {
-        throw new Error(`Please provide value for cacheDataSource`);
+      if (!this.getCacheDataSource) {
+        throw new Error(`Please provide value for getCacheDataSource`);
       }
     }
 
     // returns promisified execute function
-    executeRedisCommand(
+    async executeRedisCommand(
       command: string,
       args: (string | number)[],
     ): Promise<Buffer | number | undefined> {
+      const cacheDataSource = await this.getCacheDataSource();
       return new Promise((resolve, reject) => {
-        if (this.cacheDataSource.connector?.execute) {
+        if (cacheDataSource.connector?.execute) {
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          this.cacheDataSource.connector.execute(
+          cacheDataSource.connector.execute(
             command,
             args,
             (err: Error, res: Buffer | number) => {

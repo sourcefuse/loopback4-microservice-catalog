@@ -1,4 +1,4 @@
-import {Constructor} from '@loopback/core';
+import {Constructor, Getter} from '@loopback/core';
 import {DefaultCrudRepository} from '@loopback/repository';
 import {CacheRespositoryMixin} from '../../..';
 import {Product, ProductRelations} from './product.model';
@@ -19,7 +19,7 @@ export class ProductRepository extends CacheRespositoryMixin<
 >(DefaultCrudRepository, {prefix: 'product', ttl: 5000}) {
   constructor(
     dataSource: TestDataSource,
-    public cacheDataSource: RedisDataSource,
+    public getCacheDataSource: Getter<RedisDataSource>,
   ) {
     super(Product, dataSource);
   }

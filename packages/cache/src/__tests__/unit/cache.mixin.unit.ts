@@ -17,7 +17,7 @@ describe('Unit Test Cases for Cache Mixin', () => {
   });
   const cacheRepo = new mixedClass(MockModel, new TestDataSource());
   const redisDataSourceStub = sinon.createStubInstance(TestRedisDataSource);
-  cacheRepo.cacheDataSource = redisDataSourceStub;
+  cacheRepo.getCacheDataSource = sinon.stub().resolves(redisDataSourceStub);
   let redisExecuteStub: sinon.SinonStub;
   let searchStub: sinon.SinonStub;
 
@@ -47,7 +47,7 @@ describe('Unit Test Cases for Cache Mixin', () => {
       .stub(cacheRepo, 'executeRedisCommand')
       .resolves(Buffer.from(JSON.stringify('OK')));
 
-    cacheRepo.saveInCache(mockKey, mockData);
+    await cacheRepo.saveInCache(mockKey, mockData);
     expect(redisExecuteStub.calledOnce).to.be.true();
     expect(
       redisExecuteStub.calledWith('SET', [
@@ -93,11 +93,15 @@ describe('Unit Test Cases for Cache Mixin', () => {
     expect(superFindAllCalled).to.be.true();
   });
 
-  it('should throw error if unable to save in cache due to any reason', () => {
+  it('should throw error if unable to save in cache due to any reason', async () => {
     redisExecuteStub = sinon.stub(cacheRepo, 'executeRedisCommand').throws();
-    expect(() => {
-      cacheRepo.saveInCache(mockKey, mockData);
-    }).to.throwError();
+    let errorThrown = false;
+    try {
+      await cacheRepo.saveInCache(mockKey, mockData);
+    } catch {
+      errorThrown = true;
+    }
+    expect(errorThrown).to.be.true();
     expect(redisExecuteStub.calledOnce).to.be.true();
   });
 
@@ -123,19 +127,6 @@ describe('Unit Test Cases for Cache Mixin', () => {
     }
     expect(errorThrown).to.be.true();
     expect(redisExecuteStub.calledOnce).to.be.true();
-  });
-
-  it('should generate key in correct format', () => {
-    const id = 1;
-    const filter = {limit: 10};
-    const options = {
-      returns: {arg: 'greeting', type: 'string'},
-    };
-    const key = cacheRepo.getKey(id, filter, options);
-
-    expect(key).to.equal(
-      `testPrefix_${id}_${JSON.stringify(filter)}_${JSON.stringify(options)}`,
-    );
   });
 
   it('should clear cache', async () => {

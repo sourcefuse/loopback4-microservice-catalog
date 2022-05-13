@@ -1,5 +1,6 @@
 import {expect} from '@loopback/testlab';
 import * as dotenv from 'dotenv';
+import sinon from 'sinon';
 import {TextDecoder} from 'util';
 import {mockDataArray} from './fixtures/data';
 import {ProductErrorRepository} from './fixtures/product-error.repository';
@@ -15,9 +16,10 @@ const redisHost = process.env.REDIS_HOST;
 
 describe('Acceptance Test Cases for Cache Mixin', function () {
   const redisDataSource = new RedisDataSource();
+  const getRedisDataSource = sinon.stub().resolves(redisDataSource);
   const repositroy = new ProductRepository(
     new TestDataSource(),
-    redisDataSource,
+    getRedisDataSource,
   );
   before(async function () {
     if (!redisHost || !redisPort) {
@@ -53,20 +55,26 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
 
     await new Promise(resolve => setTimeout(resolve, 5000));
 
-    const result = await executeRedisCommand('GET', [repositroy.getKey()]);
+    const result = await executeRedisCommand('GET', [
+      await repositroy.getKey(),
+    ]);
     expect(result).to.be.undefined();
   });
 
   it('should save data in cache on calling find and findById', async () => {
     //extra call to store data in cache
     await repositroy.find();
-    const result1 = await executeRedisCommand('GET', [repositroy.getKey()]);
+    const result1 = await executeRedisCommand('GET', [
+      await repositroy.getKey(),
+    ]);
     expect(JSON.parse(decoder.decode(result1 as Buffer))).to.match(
       mockDataArray,
     );
 
     await repositroy.findById(mockDataArray[0].id);
-    const result2 = await executeRedisCommand('GET', [repositroy.getKey(1)]);
+    const result2 = await executeRedisCommand('GET', [
+      await repositroy.getKey(1),
+    ]);
     expect(JSON.parse(decoder.decode(result2 as Buffer))).to.match(
       mockDataArray[0],
     );

@@ -57,6 +57,7 @@
     "@loopback/rest": "^11.1.2",
     "@loopback/rest-explorer": "^4.1.2",
     "@loopback/service-proxy": "^4.1.2",
+    "bcrypt": "^5.0.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
