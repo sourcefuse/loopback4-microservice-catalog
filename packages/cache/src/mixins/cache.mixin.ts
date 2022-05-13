@@ -1,27 +1,24 @@
 import {MixinTarget} from '@loopback/core';
 import {
-  AnyObject,
   DefaultCrudRepository,
   Entity,
   Filter,
   FilterExcludingWhere,
   JugglerDataSource,
-  Options,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {TextDecoder} from 'util';
-import {CacheOptions} from '../types';
+import {CacheMixinOptions, CacheOptions} from '../types';
 const bcrypt = require('bcrypt');
 
 const decoder = new TextDecoder('utf-8');
-const salt = '$2b$10$Pdp69XWPJjQ8iFcum6GHEe';
 
 export function CacheRespositoryMixin<
   M extends Entity,
   ID,
   Relations extends object,
   R extends MixinTarget<DefaultCrudRepository<M, ID, Relations>>,
->(baseClass: R, cacheOptions: CacheOptions) {
+>(baseClass: R, cacheOptions: CacheMixinOptions) {
   class MixedRepository extends baseClass {
     getCacheDataSource: () => Promise<JugglerDataSource>;
 
@@ -30,20 +27,24 @@ export function CacheRespositoryMixin<
     async findById(
       id: ID,
       filter?: FilterExcludingWhere<M>,
-      options?: Options,
+      options?: CacheOptions,
     ): Promise<M> {
       this.checkDataSource();
       const key = await this.generateKey(id, filter);
-      const result = (await this.searchInCache(key)) as M;
       let finalResult: M;
-      if (result) {
-        finalResult = result;
-      } else {
+      if (options?.forceUpdate) {
         finalResult = await super.findById(id, filter, options);
-        this.saveInCache(key, finalResult).catch((err: Error) =>
-          console.error(err),
-        );
+        this.saveInCache(key, finalResult).catch(err => console.error(err));
+      } else {
+        const result = (await this.searchInCache(key)) as M;
+        if (result) {
+          finalResult = result;
+        } else {
+          finalResult = await super.findById(id, filter, options);
+          this.saveInCache(key, finalResult).catch(err => console.error(err));
+        }
       }
+
       return finalResult;
     }
 
@@ -51,20 +52,24 @@ export function CacheRespositoryMixin<
     // @ts-ignore
     async find(
       filter?: Filter<M> | undefined,
-      options?: AnyObject | undefined,
+      options?: CacheOptions,
     ): Promise<M[]> {
       this.checkDataSource();
       const key = await this.generateKey(undefined, filter);
-      const result = (await this.searchInCache(key)) as M[];
       let finalResult: M[];
-      if (result) {
-        finalResult = result;
-      } else {
+      if (options?.forceUpdate) {
         finalResult = await super.find(filter, options);
-        this.saveInCache(key, finalResult).catch((err: Error) =>
-          console.error(err),
-        );
+        this.saveInCache(key, finalResult).catch(err => console.error(err));
+      } else {
+        const result = (await this.searchInCache(key)) as M[];
+        if (result) {
+          finalResult = result;
+        } else {
+          finalResult = await super.find(filter, options);
+          this.saveInCache(key, finalResult).catch(err => console.error(err));
+        }
       }
+
       return finalResult;
     }
 
@@ -107,10 +112,7 @@ export function CacheRespositoryMixin<
         key += `_${JSON.stringify(filter)}`;
       }
       // hash to reduce key length
-      return (
-        cacheOptions.prefix +
-        (await bcrypt.hash(key, cacheOptions.salt ?? salt))
-      );
+      return cacheOptions.prefix + (await bcrypt.hash(key, cacheOptions.salt));
     }
 
     async clearCache(): Promise<number> {

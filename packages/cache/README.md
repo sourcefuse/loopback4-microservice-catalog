@@ -21,6 +21,14 @@ You simply need to extend your repository with the CacheRespositoryMixin provide
 
 If you want to delete all cache entries, you can use the clearCache() function provided. This will delete all cache entries with the given prefix. It also returns the number of matching entries deleted from cache.
 
+If you want entries in the cache to be forcefully updated, you can set forceUpdate true in options while invoking find/findById:
+
+```
+this.productRepository.findById(3,{},{forceUpdate:true})
+```
+
+On updating forcefully the ttl gets reset.
+
 ### Configuring Datasource
 
 The redis datasource can be bound to any key. However, it is required that you inject the getter of the datasource into the repository on which mixin is to be applied. For this, you must provide getCacheDataSource as variable name for the injected getter for the datasource.

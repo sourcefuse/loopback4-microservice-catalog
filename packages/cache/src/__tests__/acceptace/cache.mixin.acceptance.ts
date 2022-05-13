@@ -56,7 +56,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     await new Promise(resolve => setTimeout(resolve, 5000));
 
     const result = await executeRedisCommand('GET', [
-      await repositroy.getKey(),
+      await repositroy.generateKey(),
     ]);
     expect(result).to.be.undefined();
   });
@@ -65,7 +65,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     //extra call to store data in cache
     await repositroy.find();
     const result1 = await executeRedisCommand('GET', [
-      await repositroy.getKey(),
+      await repositroy.generateKey(),
     ]);
     expect(JSON.parse(decoder.decode(result1 as Buffer))).to.match(
       mockDataArray,
@@ -73,7 +73,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
 
     await repositroy.findById(mockDataArray[0].id);
     const result2 = await executeRedisCommand('GET', [
-      await repositroy.getKey(1),
+      await repositroy.generateKey(1),
     ]);
     expect(JSON.parse(decoder.decode(result2 as Buffer))).to.match(
       mockDataArray[0],
