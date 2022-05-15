@@ -65,7 +65,7 @@
     "loopback4-soft-delete": "^5.0.4",
     "nodemailer": "^6.7.3",
     "prom-client": "^14.0.1",
-    "socket.io-client": "^4.4.1",
+    "socket.io-client": "^4.5.0",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
