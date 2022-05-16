@@ -29,6 +29,15 @@ export class S3HandlerService {
     return Body;
   }
 
+  async get(bucketName: string | undefined, key: string | undefined) {
+    const data = await this.s3Client.getObject({
+      Bucket: bucketName,
+      Key: key,
+    });
+    const {Body} = data;
+    return Body;
+  }
+
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async streamToString(stream: any): Promise<string> {
     return new Promise((resolve, reject) => {

@@ -1,40 +1,28 @@
-import {
-  inject
-} from '@loopback/context';
-import {
-  Filter,
-  repository
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  response,
-  post,
-  requestBody,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import { CONTENT_TYPE } from '@sourceloop/core';
-import { RequestServiceBindings } from '../keys';
-import {
-  Contracts, HocrResults
-} from '../models';
-import { FetchClientProvider } from '../providers';
-import {
-  ContractRepository,
-  HocrResultRepository
-} from '../repositories';
+import {inject} from '@loopback/context';
+import {Filter, repository} from '@loopback/repository';
+import {param, get, post, requestBody, getModelSchemaRef} from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {RequestServiceBindings} from '../keys';
+import {Contracts, HocrResults} from '../models';
+import {FetchClientProvider} from '../providers';
+import {ContractRepository, HocrResultRepository} from '../repositories';
 
 export class ContractController {
   constructor(
-    @inject.getter(RequestServiceBindings.FetchProvider) private readonly requestProvider: FetchClientProvider,
-    @repository(ContractRepository) public contractRepository: ContractRepository,
-    @repository(HocrResultRepository) public hocrResultRepository: HocrResultRepository
-  ) {
-  }
+    @inject(RequestServiceBindings.FetchProvider)
+    public requestProvider: FetchClientProvider,
+    @repository(ContractRepository)
+    public contractRepository: ContractRepository,
+    @repository(HocrResultRepository)
+    public hocrResultRepository: HocrResultRepository,
+  ) {}
 
-  @post('/contract-upload')
-  @response(200, {
-    description: 'contract file uploaded'
+  @post('/contract-upload', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Create Contract',
+      },
+    },
   })
   async uploadContract(
     @requestBody({
@@ -51,77 +39,90 @@ export class ContractController {
     return this.contractRepository.create(contract);
   }
 
-  @get('/hocr-convert/{id}')
-  @response(200, {
-    description: 'hocr file converter'
+  @get('/hocr-convert/{id}', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Convert Contract to HOCR',
+      },
+    },
   })
-  async getContractHOCR(
-    @param.path.string('id') id: string,
-  ): Promise<object> {
+  async getContractHOCR(@param.path.string('id') id: string): Promise<void> {
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.sendRequest(`/contract-parser/hocr-converter?contract_name=${contract.contractName}`, 'POST')
-    return {
-      status: 200,
-      message: 'SUCCESS'
-    };
+    await this.requestProvider.sendRequest(
+      `/contract-parser/hocr-converter?contract_name=${contract.contractName}`,
+      'POST',
+    );
   }
 
-  @get('/img-convert/{id}')
-  @response(200, {
-    description: 'image file converter'
+  @get('/img-convert/{id}', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Convert Contract to Image',
+      },
+    },
   })
-  async convertContractImg(
-    @param.path.string('id') id: string,
-  ): Promise<object> {
+  async convertContractImg(@param.path.string('id') id: string): Promise<void> {
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.sendRequest(`/contract-parser/img-converter?contract_name=${contract.contractName}`, 'POST')
-    return {
-      status: 200,
-      message: 'SUCCESS'
-    };
+    await this.requestProvider.sendRequest(
+      `/contract-parser/img-converter?contract_name=${contract.contractName}`,
+      'POST',
+    );
   }
 
-
-
-  @get('/ocr-convert/{id}')
-  @response(200, {
-    description: 'ocr file converter'
+  @get('/ocr-convert/{id}', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Convert Contract to OCR',
+      },
+    },
   })
-  async convertContractOcr(
-    @param.path.string('id') id: string,
-  ): Promise<object> {
+  async convertContractOcr(@param.path.string('id') id: string): Promise<void> {
     const contract = await this.contractRepository.findById(id);
-    await this.requestProvider.sendRequest(`/contract-parser/ocr-converter?contract_name=${contract.contractName}`, 'POST')
-    return {
-      status: 200,
-      message: 'SUCCESS'
-    };
+    await this.requestProvider.sendRequest(
+      `/contract-parser/ocr-converter?contract_name=${contract.contractName}`,
+      'POST',
+    );
   }
 
-  @get('/hocr-file/{id}')
-  @response(200, {
-    description: 'hocr file converter'
+  @get('/hocr-file/{id}', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Get and create Clause',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {type: 'array', items: getModelSchemaRef(HocrResults)},
+          },
+        },
+      },
+    },
   })
   async getAllHOCRByContractName(
-    @param.path.string('id') id: string
+    @param.path.string('id') id: string,
   ): Promise<HocrResults[]> {
     const contract = await this.contractRepository.findById(id);
     const hocr: HocrResults[] = await this.hocrResultRepository.find({
       where: {
-        contractName: contract.contractName
-      }
+        contractName: contract.contractName,
+      },
     });
     return hocr;
   }
 
-  @get('/contracts')
-  @response(200, {
-    description: 'all contract files'
+  @get('/contracts', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Get and create Clause',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {type: 'array', items: getModelSchemaRef(Contracts)},
+          },
+        },
+      },
+    },
   })
   async getAllContracts(
     @param.filter(Contracts) filter?: Filter<Contracts>,
   ): Promise<Contracts[]> {
     return this.contractRepository.find(filter);
-
   }
 }

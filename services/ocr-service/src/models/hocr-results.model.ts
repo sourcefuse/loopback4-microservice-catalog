@@ -1,5 +1,6 @@
-import { model, property } from '@loopback/repository';
+import { belongsTo, model, property } from '@loopback/repository';
 import { BaseEntity } from '@sourceloop/core';
+import { Contracts } from './contracts.model';
 @model({
   name: 'hocr_results',
   settings: {
@@ -12,6 +13,16 @@ export class HocrResults extends BaseEntity {
     id: true,
   })
   id?: string;
+
+  @belongsTo(
+    () => Contracts,
+    { name: 'contracts' },
+    {
+      name: 'contract_id',
+      required: true,
+    },
+  )
+  contractId: string;
 
   @property({
     type: 'string',
@@ -45,7 +56,6 @@ export class HocrResults extends BaseEntity {
     name: 'img_data',
   })
   imgData?: string;
-
 
   constructor(data?: Partial<HocrResults>) {
     super(data);

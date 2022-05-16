@@ -1,6 +1,6 @@
 import { hasMany, model, property } from '@loopback/repository';
 import { BaseEntity } from '@sourceloop/core';
-import { OcrResults } from './ocr-result.model';
+import { OcrResults } from './ocr-results.model';
 @model({
   name: 'ocr_contracts',
   settings: {
@@ -48,7 +48,6 @@ export class Contracts extends BaseEntity {
     name: 'hocr_converted',
   })
   hocrConverted?: boolean;
-
 
   @hasMany(() => OcrResults, { keyTo: 'contractId' })
   ocrResults: OcrResults[];

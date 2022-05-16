@@ -1,32 +1,29 @@
 import { Getter, inject } from '@loopback/core';
 import { BelongsToAccessor, juggler, repository } from '@loopback/repository';
 import { DefaultSoftCrudRepository } from '@sourceloop/core';
+import { Contracts, HocrResults, HocrResultsRelations } from '../models';
 import { OcrDbSourceName } from '../types';
-import { Contracts, OcrResults } from '../models';
-import { ContractRepository } from './contract.repository';
+import { ContractRepository } from './contracts.repository';
 
-export class OcrResultRepository extends DefaultSoftCrudRepository<
-  OcrResults,
-  typeof OcrResults.prototype.id
->{
+export class HocrResultRepository extends DefaultSoftCrudRepository<
+  HocrResults,
+  typeof HocrResults.prototype.id,
+  HocrResultsRelations
+> {
   public readonly contracts: BelongsToAccessor<
     Contracts,
-    typeof OcrResults.prototype.id
+    typeof HocrResults.prototype.id
   >;
+
   constructor(
     @inject(`datasources.${OcrDbSourceName}`) dataSource: juggler.DataSource,
     @repository.getter('ContractsRepository')
-    protected contractsRepositoryGetter: Getter<ContractRepository>,
+    protected contractRepositoryGetter: Getter<ContractRepository>,
   ) {
-    super(OcrResults, dataSource);
+    super(HocrResults, dataSource);
     this.contracts = this.createBelongsToAccessorFor(
       'contracts',
-      contractsRepositoryGetter,
-    );
-    this.registerInclusionResolver(
-      'contracts',
-      this.contracts.inclusionResolver,
+      contractRepositoryGetter,
     );
   }
 }
-

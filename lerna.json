@@ -67,9 +67,7 @@
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
-        "@sourceloop/user-onboarding-example",
-        "@sourceloop/ocr-s3-service",
-        "@sourceloop/ocr-service"
+        "@sourceloop/user-onboarding-example"
       ]
     },
     "clean": {
