@@ -14,6 +14,7 @@ import {TestRedisDataSource} from './fixtures/redis.datasource';
 describe('Unit Test Cases for Cache Mixin', () => {
   const mixedClass = CacheRespositoryMixin(MockDefaultCrudRepository, {
     prefix: 'testPrefix',
+    salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',
   });
   const cacheRepo = new mixedClass(MockModel, new TestDataSource());
   const redisDataSourceStub = sinon.createStubInstance(TestRedisDataSource);

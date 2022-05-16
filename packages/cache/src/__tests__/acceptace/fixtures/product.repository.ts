@@ -16,7 +16,11 @@ export class ProductRepository extends CacheRespositoryMixin<
       ProductRelations
     >
   >
->(DefaultCrudRepository, {prefix: 'product', ttl: 5000}) {
+>(DefaultCrudRepository, {
+  prefix: 'product',
+  ttl: 5000,
+  salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',
+}) {
   constructor(
     dataSource: TestDataSource,
     public getCacheDataSource: Getter<RedisDataSource>,
