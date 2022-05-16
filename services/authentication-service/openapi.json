@@ -668,6 +668,44 @@
         "operationId": "ForgetPasswordController.resetPassword"
       }
     },
+    "/auth/send-otp": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "sendOtp",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Sends OTP",
+        "responses": {
+          "200": {
+            "description": "Sends otp to user",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpSendRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.sendOtp"
+      }
+    },
     "/auth/sign-up/create-token": {
       "post": {
         "x-controller-name": "SignupRequestController",
@@ -903,6 +941,44 @@
           }
         },
         "operationId": "LoginController.exchangeToken"
+      }
+    },
+    "/auth/verify-otp": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "verifyOtp",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Gets you the code that will be used for getting token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpLoginRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.verifyOtp"
       }
     },
     "/auth/verify-reset-password-link": {
@@ -1290,6 +1366,251 @@
         ],
         "additionalProperties": false
       },
+      "OtpSendRequest": {
+        "title": "OtpSendRequest",
+        "type": "object",
+        "description": "This is the signature for OTP login request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "key": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "AuthClient": {
+        "title": "AuthClient",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "number"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string"
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "clientId",
+          "clientSecret",
+          "secret",
+          "accessTokenExpiration",
+          "refreshTokenExpiration",
+          "authCodeExpiration"
+        ],
+        "additionalProperties": false
+      },
+      "AuthUser": {
+        "title": "AuthUser",
+        "type": "object",
+        "description": "This is the signature for authenticated user which holds permissions and role.",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^\\+?[1-9]\\d{1,14}$"
+          },
+          "authClientIds": {
+            "type": "string"
+          },
+          "lastLogin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "type": "string",
+            "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
+            "enum": [
+              "M",
+              "F",
+              "O"
+            ]
+          },
+          "defaultTenantId": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "role": {
+            "type": "string"
+          },
+          "externalAuthToken": {
+            "type": "string"
+          },
+          "age": {
+            "type": "number"
+          },
+          "externalRefreshToken": {
+            "type": "string"
+          },
+          "authClientId": {
+            "type": "number"
+          },
+          "deviceInfo": {
+            "type": "object",
+            "description": "This property consists of two optional fields.\n    1. userAgent\n    2. deviceId "
+          },
+          "pubnubToken": {
+            "type": "string"
+          },
+          "userPreferences": {
+            "type": "object"
+          },
+          "tenantId": {
+            "type": "string"
+          },
+          "userTenantId": {
+            "type": "string"
+          },
+          "passwordExpiryTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "allowedResources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "number",
+            "enum": [
+              1,
+              2,
+              3,
+              0,
+              4
+            ]
+          }
+        },
+        "required": [
+          "firstName",
+          "username",
+          "role"
+        ],
+        "additionalProperties": false
+      },
+      "OtpLoginRequest": {
+        "title": "OtpLoginRequest",
+        "type": "object",
+        "description": "This is the signature for OTP login request.",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "otp": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "key",
+          "otp"
+        ],
+        "additionalProperties": false
+      },
       "ClientAuthRequest": {
         "title": "ClientAuthRequest",
         "type": "object",
@@ -1380,65 +1701,6 @@
           "username",
           "client_id",
           "client_secret"
-        ],
-        "additionalProperties": false
-      },
-      "AuthClient": {
-        "title": "AuthClient",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "number"
-          },
-          "clientId": {
-            "type": "string"
-          },
-          "clientSecret": {
-            "type": "string"
-          },
-          "secret": {
-            "type": "string"
-          },
-          "redirectUrl": {
-            "type": "string"
-          },
-          "accessTokenExpiration": {
-            "type": "number"
-          },
-          "refreshTokenExpiration": {
-            "type": "number"
-          },
-          "authCodeExpiration": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "clientId",
-          "clientSecret",
-          "secret",
-          "accessTokenExpiration",
-          "refreshTokenExpiration",
-          "authCodeExpiration"
         ],
         "additionalProperties": false
       },
