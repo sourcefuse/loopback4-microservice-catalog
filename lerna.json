@@ -2,6 +2,7 @@
   "packages": [
     "packages/core/",
     "packages/cli/",
+    "packages/cache",
     "packages/custom-sf-changelog/",
     "packages/user-onboarding/projects/user-onboarding-lib/",
     "packages/search/projects/search-lib/",
