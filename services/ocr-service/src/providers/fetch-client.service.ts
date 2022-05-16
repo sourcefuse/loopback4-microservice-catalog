@@ -5,9 +5,9 @@ import {
   Provider,
   ValueOrPromise,
 } from '@loopback/core';
-import {Agent as HttpAgent} from 'http';
-import {Agent as HttpsAgent} from 'https';
-import fetch, {RequestInit} from 'node-fetch';
+import { Agent as HttpAgent } from 'http';
+import { Agent as HttpsAgent } from 'https';
+import fetch, { RequestInit } from 'node-fetch';
 import urlJoin from 'url-join';
 import {
   identityResponseTransformer,
@@ -19,9 +19,9 @@ import {
   ResponseTransformer,
   IRequestServiceConfig,
 } from '../types';
-import {RequestServiceBindings} from '../keys';
+import { RequestServiceBindings } from '../keys';
 
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({ scope: BindingScope.TRANSIENT })
 export class FetchClientProvider implements Provider<IRequestServiceConfig> {
   readonly baseUrl: string;
   readonly baseHeaders: Record<string, string>;
@@ -37,10 +37,10 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
     })
     private readonly fetchConfig: HttpClientInitOpts,
   ) {
-    const {baseUrl, baseHeaders, baseOptions, json} = this
+    const { baseUrl, baseHeaders, baseOptions, json } = this
       .fetchConfig as HttpClientInitOpts;
 
-    const {protocol} = new URL(baseUrl);
+    const { protocol } = new URL(baseUrl);
 
     const isHttps = protocol.startsWith('https');
     const useJson = Boolean(json);
@@ -53,9 +53,9 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     const jsonHeaders = useJson
       ? {
-          [Header.Accept]: 'application/json',
-          [Header.ContentType]: 'application/json',
-        }
+        [Header.Accept]: 'application/json',
+        [Header.ContentType]: 'application/json',
+      }
       : undefined;
 
     this.baseUrl = baseUrl;
@@ -108,7 +108,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
   }
 
   async get<T>(url: string, req: RequestInit = {}): Promise<T> {
-    const {transformResponse, willSendRequest} = this;
+    const { transformResponse, willSendRequest } = this;
 
     const args = await this.buildRequestArgs(
       url,
@@ -128,7 +128,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async post<T>(url: string, body?: any, req: RequestInit = {}): Promise<T> {
-    const {transformResponse, willSendRequest} = this;
+    const { transformResponse, willSendRequest } = this;
 
     const args = await this.buildRequestArgs(url, HttpMethod.Post, body, req);
 
@@ -143,7 +143,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async put<T>(url: string, body?: any, req: RequestInit = {}): Promise<T> {
-    const {transformResponse, willSendRequest} = this;
+    const { transformResponse, willSendRequest } = this;
 
     const args = await this.buildRequestArgs(url, HttpMethod.Put, body, req);
 
@@ -158,7 +158,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async patch<T>(url: string, body?: any, req: RequestInit = {}): Promise<T> {
-    const {transformResponse, willSendRequest} = this;
+    const { transformResponse, willSendRequest } = this;
 
     const args = await this.buildRequestArgs(url, HttpMethod.Patch, body, req);
 
@@ -172,7 +172,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
   }
 
   async delete<T>(url: string, req: RequestInit = {}): Promise<T> {
-    const {transformResponse, willSendRequest} = this;
+    const { transformResponse, willSendRequest } = this;
 
     const args = await this.buildRequestArgs(
       url,
@@ -196,7 +196,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
     method: HttpMethod,
     body: any,
     opts: RequestInit,
-  ): Promise<{url: string; request: RequestInit}> {
+  ): Promise<{ url: string; request: RequestInit }> {
     const args = {
       url: urlJoin(this.baseUrl, url),
       request: {

@@ -1,4 +1,4 @@
-import {Readable} from 'stream';
+import { Readable } from 'stream';
 export const OcrS3DbSourceName = 'OcrS3DbSourceName';
 
 export declare type ObjectStorageClass =

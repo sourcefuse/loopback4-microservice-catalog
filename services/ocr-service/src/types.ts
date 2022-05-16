@@ -1,5 +1,5 @@
-import {IServiceConfig} from '@sourceloop/core';
-import {RequestInit, Response} from 'node-fetch';
+import { IServiceConfig } from '@sourceloop/core';
+import { RequestInit, Response } from 'node-fetch';
 export interface IRequestServiceConfig extends IServiceConfig {
   useRequestProvider: boolean;
   baseUrl: string;
@@ -85,7 +85,7 @@ export const identityResponseTransformer: ResponseTransformer = (
   response: Response,
 ) => response;
 
-export interface IRequestServiceConfig extends IServiceConfig {}
+export interface IRequestServiceConfig extends IServiceConfig { }
 
 export const jsonResponseTransformer: ResponseTransformer = (
   response: Response,

@@ -1,11 +1,11 @@
-import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
-import {getModelSchemaRef, param, post, requestBody} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {Contracts, OcrResults} from '../models';
-import {OcrResultRepository, ContractRepository} from '../repositories';
-import {OcrObjectFormatterService} from '../services';
-import {OcrClause} from '../types';
+import { inject } from '@loopback/context';
+import { repository } from '@loopback/repository';
+import { getModelSchemaRef, param, post, requestBody } from '@loopback/rest';
+import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
+import { Contracts, OcrResults } from '../models';
+import { OcrResultRepository, ContractRepository } from '../repositories';
+import { OcrObjectFormatterService } from '../services';
+import { OcrClause } from '../types';
 
 export class OcrHooksController {
   constructor(
@@ -15,14 +15,14 @@ export class OcrHooksController {
     public contractRepository: ContractRepository,
     @inject('services.OcrObjectFormatterService')
     public ocrObjectFormatter: OcrObjectFormatterService,
-  ) {}
+  ) { }
 
   @post('/webhook/contract-upload', {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Contracts Model Instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Contracts)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Contracts) },
         },
       },
     },
@@ -31,7 +31,7 @@ export class OcrHooksController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contracts, {exclude: ['id']}),
+          schema: getModelSchemaRef(Contracts, { exclude: ['id'] }),
         },
       },
     })
@@ -52,7 +52,7 @@ export class OcrHooksController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contracts, {exclude: ['id']}),
+          schema: getModelSchemaRef(Contracts, { exclude: ['id'] }),
         },
       },
     })
@@ -73,7 +73,7 @@ export class OcrHooksController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contracts, {exclude: ['id']}),
+          schema: getModelSchemaRef(Contracts, { exclude: ['id'] }),
         },
       },
     })
@@ -94,7 +94,7 @@ export class OcrHooksController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Contracts, {exclude: ['id']}),
+          schema: getModelSchemaRef(Contracts, { exclude: ['id'] }),
         },
       },
     })
@@ -109,7 +109,7 @@ export class OcrHooksController {
       [STATUS_CODE.OK]: {
         description: 'OcrResults Model Instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(OcrResults)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(OcrResults) },
         },
       },
     },

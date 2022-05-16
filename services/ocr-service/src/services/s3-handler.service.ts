@@ -9,10 +9,7 @@ export class S3HandlerService {
     @inject(AWSS3Bindings.AwsS3Provider) public s3Client: S3WithSigner,
   ) { }
 
-  async listObjects(
-    bucketName: string | undefined,
-    contractName: string | undefined,
-  ) {
+  async listObjects(bucketName: string, contractName: string) {
     const { Contents } = await this.s3Client.listObjectsV2({
       Bucket: bucketName,
       Prefix: contractName,
@@ -20,16 +17,7 @@ export class S3HandlerService {
     return Contents;
   }
 
-  async getObject(bucketName: string | undefined, key: string | undefined) {
-    const data = await this.s3Client.getObject({
-      Bucket: bucketName,
-      Key: key,
-    });
-    const { Body } = data;
-    return Body;
-  }
-
-  async get(bucketName: string | undefined, key: string | undefined) {
+  async getObject(bucketName: string, key: string | undefined) {
     const data = await this.s3Client.getObject({
       Bucket: bucketName,
       Key: key,

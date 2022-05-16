@@ -1,10 +1,10 @@
-import {inject} from '@loopback/core';
-import {repository} from '@loopback/repository';
-import {get, param, response} from '@loopback/rest';
-import {HocrObject} from '../models';
-import {HocrObjectRepository} from '../repositories';
-import {IteratorService, S3HandlerService} from '../services';
-import {GetObjectOutput, IListObject} from '../types';
+import { inject } from '@loopback/core';
+import { repository } from '@loopback/repository';
+import { get, param, response } from '@loopback/rest';
+import { HocrObject } from '../models';
+import { HocrObjectRepository } from '../repositories';
+import { IteratorService, S3HandlerService } from '../services';
+import { GetObjectOutput, IListObject } from '../types';
 
 export class OcrObjectController {
   constructor(
@@ -12,7 +12,7 @@ export class OcrObjectController {
     public hocrObjectRepository: HocrObjectRepository,
     @inject('services.S3HandlerService') public s3Handler: S3HandlerService,
     @inject('services.IteratorService') public iteratorService: IteratorService,
-  ) {}
+  ) { }
 
   @get('/get-contract-hocr/{contract_name}')
   @response(200, {
