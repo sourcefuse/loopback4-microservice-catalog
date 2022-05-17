@@ -1,3 +1,3 @@
-export * from './contract.model';
-export * from './ocr-result.model';
-export * from './hocr-result.model';
+export * from './contracts.model';
+export * from './ocr-results.model';
+export * from './hocr-results.model';

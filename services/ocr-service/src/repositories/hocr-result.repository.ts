@@ -1,8 +1,8 @@
-import { inject } from '@loopback/core';
-import { juggler } from '@loopback/repository';
-import { DefaultSoftCrudRepository } from '@sourceloop/core';
-import { HocrResults, HocrResultsRelations } from '../models';
-import { OcrDbSourceName } from '../types';
+import {inject} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {HocrResults, HocrResultsRelations} from '../models';
+import {OcrDbSourceName} from '../types';
 
 export class HocrResultRepository extends DefaultSoftCrudRepository<
   HocrResults,

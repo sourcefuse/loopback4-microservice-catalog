@@ -1,6 +1,6 @@
 import { belongsTo, model, property } from '@loopback/repository';
 import { BaseEntity } from '@sourceloop/core';
-import { Contracts } from './contract.model';
+import { Contracts } from './contracts.model';
 @model({
   name: 'ocr_results',
   settings: {
@@ -29,7 +29,7 @@ export class OcrResults extends BaseEntity {
       required: true,
     },
   )
-  contractId?: string;
+  contractId: string;
 
   @property({
     type: 'string',
@@ -53,14 +53,13 @@ export class OcrResults extends BaseEntity {
     type: 'string',
     name: 'supported_text',
   })
-  supportedText?: string;
+  supportedText?: string | null;
 
   @property({
     type: 'string',
     name: 'coordinates',
   })
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  coordinates?: string | any;
+  coordinates?: string | null;
 
   @property({
     type: 'number',
