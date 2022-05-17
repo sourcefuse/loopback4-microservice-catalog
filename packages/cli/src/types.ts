@@ -28,6 +28,7 @@ export interface ExtensionOptions extends Generator.GeneratorOptions {
 export interface ScaffoldOptions extends Generator.GeneratorOptions {
   name?: string;
   help?: boolean;
+  cwd?: string;
 }
 
 export interface MigrationOptions extends Generator.GeneratorOptions {

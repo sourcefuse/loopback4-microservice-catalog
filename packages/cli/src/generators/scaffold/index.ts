@@ -1,6 +1,7 @@
 import {BaseGenerator} from '../../base-generator';
 import {ScaffoldOptions} from '../../types';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
+  cwd?: string;
   constructor(public args: string[], public opts: ScaffoldOptions) {
     super(args, opts);
   }
@@ -19,12 +20,12 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   }
 
   async configuring() {
-    this.destinationRoot(this.options.name);
+    this._setRoot();
     this.spawnCommandSync('git', ['init']);
   }
 
   async writing() {
-    this.destinationRoot(this.options.name);
+    this._setRoot();
     await this.createFolders([]);
     this.copyTemplates();
     await this.createFolders(['facades', 'services', 'packages']);
@@ -32,5 +33,13 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
 
   async install() {
     this.spawnCommandSync('npm', ['i']);
+  }
+
+  private _setRoot() {
+    if (this.options.cwd) {
+      this.destinationRoot(this.options.cwd);
+    } else {
+      this.destinationRoot(this.options.name);
+    }
   }
 }
