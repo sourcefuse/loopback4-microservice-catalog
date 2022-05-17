@@ -1,11 +1,11 @@
-import { BootMixin } from '@loopback/boot';
-import { ApplicationConfig } from '@loopback/core';
-import { RepositoryMixin } from '@loopback/repository';
-import { RestApplication } from '@loopback/rest';
+import {BootMixin} from '@loopback/boot';
+import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
-import { FetchServiceComponent } from './component';
+import {FetchServiceComponent} from './component';
 
-export { ApplicationConfig };
+export {ApplicationConfig};
 
 export class OcrServiceApplication extends BootMixin(
   RepositoryMixin(RestApplication),

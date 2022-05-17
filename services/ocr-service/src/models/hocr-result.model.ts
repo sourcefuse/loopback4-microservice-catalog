@@ -1,5 +1,5 @@
-import { model, property } from '@loopback/repository';
-import { BaseEntity } from '@sourceloop/core';
+import {model, property} from '@loopback/repository';
+import {BaseEntity} from '@sourceloop/core';
 @model({
   name: 'hocr_results',
   settings: {
@@ -45,7 +45,6 @@ export class HocrResults extends BaseEntity {
     name: 'img_data',
   })
   imgData?: string;
-
 
   constructor(data?: Partial<HocrResults>) {
     super(data);
