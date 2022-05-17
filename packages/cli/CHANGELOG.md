@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.5 (2022-05-17)</small>
+
+* fix(cli): include migrations option in microservice command (#787) ([af1f892](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/af1f892)), closes [#787](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/787) [#786](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/786)
+
+
+
+
+
 ## <small>1.2.4 (2022-05-12)</small>
 
 * fix(cli): rectify the variable name (#779) ([0fccf34](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fccf34)), closes [#779](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/779) [#626](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/626)
