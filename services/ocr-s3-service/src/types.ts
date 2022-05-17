@@ -34,11 +34,6 @@ export interface IListObject {
   Owner?: Owner;
 }
 
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-type Blob = any;
-
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-type ReadableStream = any;
 
 export declare type ServerSideEncryption = 'AES256' | 'aws:kms';
 
@@ -55,7 +50,8 @@ export declare type ObjectLockLegalHoldStatus = 'OFF' | 'ON';
 export declare type ObjectLockMode = 'COMPLIANCE' | 'GOVERNANCE';
 
 export interface GetObjectOutput {
-  Body?: Readable | ReadableStream | Blob;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  Body?: Readable | any;
   DeleteMarker?: boolean;
   AcceptRanges?: string;
   Expiration?: string;
