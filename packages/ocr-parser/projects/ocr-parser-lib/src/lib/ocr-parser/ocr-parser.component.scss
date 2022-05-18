@@ -27,21 +27,18 @@
         .mat-tab-labels {
             background: #fff;
         }
+
+        .mat-card::-webkit-scrollbar,
+        .mat-tab-body-content::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome */
+        }
     }
     
     ::ng-deep .mat-card {
         height: 471px;
         overflow-y: auto;
         overflow-x: hidden;
-    }
-    
-    ::ng-deep {
-    
-        .mat-card::-webkit-scrollbar,
-        .mat-tab-body-content::-webkit-scrollbar {
-            display: none;
-            /* Safari and Chrome */
-        }
     }
     
     ::ng-deep .mat-tab-body-wrapper {
@@ -72,7 +69,7 @@
 }
 
 .footer {
-    border-top: 2px #E5E5E5;;
+    border-top: 2px #E5E5E5;
     position: absolute;
     width: 100%;
     padding: 14px 15px;

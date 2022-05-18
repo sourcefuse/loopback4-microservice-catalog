@@ -12,6 +12,7 @@ import { OcrDataService } from './ocr-parser/services/ocrData.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TextSelectDirective } from './ocr-parser/directives/text-select.directive';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -31,6 +32,7 @@ import { TextSelectDirective } from './ocr-parser/directives/text-select.directi
     MatTabsModule,
     MatCardModule,
     NgxMarkjsModule,
+    FlexLayoutModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
