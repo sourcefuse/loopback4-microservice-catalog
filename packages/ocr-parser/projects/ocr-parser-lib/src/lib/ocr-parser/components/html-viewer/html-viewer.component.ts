@@ -14,15 +14,15 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
 
   @Input()
   data!: DocumentConfig;
-  fieldValue: string = '';
+  fieldValue = '';
   isSelectedClause = false;
-  updateIconUrl = '../../../../assets/icons/update.svg'
+  updateIconUrl = '../../../../assets/icons/update.svg';
   public hostRectangle!: SelectionRectangle | null;
   searchConfig = { separateWordSearch: false, accuracy: 'partially', acrossElements: true };
   private subscription: Subscription = new Subscription();
 
 
-  constructor(private readonly dataService: OcrDataService, @Inject(DOCUMENT) private document: Document) {
+  constructor(private readonly dataService: OcrDataService, @Inject(DOCUMENT) private readonly document: Document) {
 
   }
 
@@ -30,18 +30,18 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
     this.subscription = this.dataService.$getSelectedClauseData.subscribe((resp: SelectedClause) => {
       this.isSelectedClause = resp.fieldData.isSelected || false;
       if(!resp.isScroll) {
-        return
+        return;
       }
-      if(resp.fieldData.supported_text) {
-        this.fieldValue = resp.fieldData.supported_text;
+      if(resp.fieldData.supportedText) {
+        this.fieldValue = resp.fieldData.supportedText;
         this.scrollToHighlightedText();
       } else if(resp.fieldData.value) {
         this.fieldValue = resp.fieldData.value;
         this.scrollToHighlightedText();
       } else {
-        this.fieldValue = ""
+        this.fieldValue = "";
       }
-    })
+    });
   }
 
 
@@ -56,19 +56,16 @@ export class HtmlViewerComponent implements OnInit, OnDestroy {
 		// If a new selection has been created, the viewport and host rectangles will
 		// exist. Or, if a selection is being removed, the rectangles will be null.
     if(!this.isSelectedClause) {
-      return
+      return;
     }
     if(event.text) {
       this.fieldValue = event.text;
     }
 		if ( event.hostRectangle ) {
- 
 			this.hostRectangle = event.hostRectangle;
- 
 		} else {
 			this.hostRectangle = null;
 		}
- 
 	}
 
   onUpdateClauseValue() {

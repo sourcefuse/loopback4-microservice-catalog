@@ -13,7 +13,7 @@ export class OcrParserComponent implements OnInit, OnDestroy {
   @Input() fieldConfig: FieldConfig[] = [];
   @Output() updatedClauseEvent = new EventEmitter();
 
-  private subscription: Subscription = new Subscription();
+  private readonly subscription: Subscription = new Subscription();
   private clausesData: FieldData[] = [];
   private selectedClauses: FieldData[] = [];
   currentTabIndex!: number;
@@ -43,12 +43,12 @@ export class OcrParserComponent implements OnInit, OnDestroy {
         if (!this.checkAlreadyExistClause(this.selectedClauses, resp.fieldData.id))
           this.selectedClauses.push(resp.fieldData);
       }
-    }))
+    }));
   }
 
   checkAlreadyExistClause(clauses: FieldData[], clauseId: string): boolean {
     const clause = clauses.find(data => data.id === clauseId);
-    return clause ? true : false
+    return clause ? true : false;
   }
 
   onCancelContract() {

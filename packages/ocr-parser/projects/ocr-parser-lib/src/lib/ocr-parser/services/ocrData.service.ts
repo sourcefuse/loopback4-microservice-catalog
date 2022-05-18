@@ -4,9 +4,7 @@ import { FieldData, SelectedClause } from '../models/ocr.model';
 
 @Injectable()
 export class OcrDataService {
-  constructor() { }
-
-  private readonly _selectedClauseData = new BehaviorSubject<SelectedClause>({ isScroll: false, fieldData: new FieldData() })
+  private readonly _selectedClauseData = new BehaviorSubject<SelectedClause>({ isScroll: false, fieldData: new FieldData() });
   private readonly _updatedClauseValue: BehaviorSubject<string> = new BehaviorSubject('');
   private readonly _updatedClauseData: BehaviorSubject<FieldData> = new BehaviorSubject(new FieldData());
 

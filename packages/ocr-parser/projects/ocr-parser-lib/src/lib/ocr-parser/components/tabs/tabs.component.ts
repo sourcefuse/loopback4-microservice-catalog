@@ -7,13 +7,12 @@ import { OcrDataService } from '../../services/ocrData.service';
 @Component({
   selector: 'sourceloop-tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent implements OnInit, OnDestroy {
   @Input()
-  data: any;
+  data: any; //NOSONAR
   @Input()
-  viewTemplate!: TemplateRef<any>;
+  viewTemplate!: TemplateRef<HTMLElement>;
   selectedField: FieldData | undefined;
   textSubscription!: Subscription;
   @Output() tabChangeEvent = new EventEmitter();
@@ -23,7 +22,7 @@ export class TabsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.textSubscription = this.dataService.$getSelectedClauseData.subscribe(resp => {
       this.selectedField = resp.fieldData;
-    })
+    });
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
