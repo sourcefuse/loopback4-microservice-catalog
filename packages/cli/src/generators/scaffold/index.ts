@@ -19,6 +19,19 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
     }
   }
 
+  async ticketNumberPrompt() {
+    if (!this.options.ticketPrefix) {
+      const {ticketPrefix} = await this.prompt([
+        {
+          type: 'input',
+          name: 'ticketPrefix',
+          message: 'Prefix while commiting changes to git:',
+        },
+      ]);
+      this.options.ticketPrefix = ticketPrefix;
+    }
+  }
+
   async configuring() {
     this._setRoot();
     this.spawnCommandSync('git', ['init']);
