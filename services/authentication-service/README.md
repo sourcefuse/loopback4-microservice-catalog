@@ -167,6 +167,29 @@ export class AuthenticationDbDataSource
 }
 ```
 
+### RateLimiting
+
+Ratelimiting can be enabled in this service through the `rateLimit` option - 
+
+```
+    this.bind(AuthServiceBindings.Config).to({
+      rateLimit: true, // to enable ratelimiting
+      useCustomSequence: false,
+    });
+```
+
+This uses the `RateLimiterComponent` from `loopback4-ratelimiter`, so you must provide configuration for this component - 
+
+```
+this.bind(RateLimitSecurityBindings.CONFIG).to({
+  name: 'redis',
+  type:'RedisStore'
+});
+```
+
+You can refer the [documentation](https://github.com/sourcefuse/loopback4-ratelimiter) for `loopback4-ratelimiter` to see all the available options.
+
+
 ### Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `AUTH_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.

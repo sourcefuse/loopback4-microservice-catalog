@@ -8,7 +8,11 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {CoreComponent, SECURITY_SCHEME_SPEC} from '@sourceloop/core';
+import {
+  CoreComponent,
+  SecureSequence,
+  SECURITY_SCHEME_SPEC,
+} from '@sourceloop/core';
 import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -145,7 +149,11 @@ export class AuthenticationServiceComponent implements Component {
    * @param bindings Binding array
    */
   setupSequence() {
-    this.application.sequence(MySequence);
+    if (this.authConfig?.rateLimit) {
+      this.application.sequence(SecureSequence);
+    } else {
+      this.application.sequence(MySequence);
+    }
   }
 
   setupAuthenticationComponent() {

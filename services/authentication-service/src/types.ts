@@ -4,7 +4,9 @@ import {IServiceConfig} from '@sourceloop/core';
 import {LocalUserProfileDto} from './models';
 import {SignupRequestDto} from './models/signup-request-dto.model';
 
-export interface IAuthServiceConfig extends IServiceConfig {}
+export interface IAuthServiceConfig extends IServiceConfig {
+  rateLimit?: boolean;
+}
 
 export interface IOtpAuthConfig {
   useGoogleAuthenticator: boolean;
