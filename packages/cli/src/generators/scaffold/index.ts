@@ -25,7 +25,7 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
         {
           type: 'input',
           name: 'ticketPrefix',
-          message: 'Prefix while commiting changes to git:',
+          message: 'Enter the issue Prefix:',
         },
       ]);
       this.options.ticketPrefix = ticketPrefix;
