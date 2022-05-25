@@ -118,7 +118,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   async promptFacade() {
     if (!this.shouldExit()) {
-      if (this.options.facade !== null && this.options.facade !== undefined) {
+      if (this.options.facade === null || this.options.facade === undefined) {
         const {isFacade} = await this.prompt([
           {
             name: 'isFacade',
