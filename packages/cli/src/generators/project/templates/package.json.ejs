@@ -175,6 +175,8 @@
       "@opentelemetry/plugin-pg-pool": "<%= project.dependencies['@opentelemetry/plugin-pg-pool'] -%>",
       "@opentelemetry/tracing": "<%= project.dependencies['@opentelemetry/tracing'] -%>",
       "symlink-resolver": "<%= project.dependencies['symlink-resolver'] -%>",
+      "dotenv": "<%= project.dependencies['dotenv'] -%>",
+      "dotenv-extended": "<%= project.dependencies['dotenv-extended'] -%>",
 <% if (project.datasourceType === 'postgres') { -%>
       "loopback-connector-postgresql": "<%= project.dependencies["loopback-connector-postgresql"]%>",
 <% } else if (project.datasourceType === 'mysql') { -%>
@@ -191,8 +193,6 @@
 <% } -%>
 <% if (project.projectType === 'microservice') { -%>
       "nodemon": "<%= project.dependencies['nodemon'] -%>",
-      "dotenv": "<%= project.dependencies['dotenv'] -%>",
-      "dotenv-extended": "<%= project.dependencies['dotenv-extended'] -%>",
       "nyc": "<%= project.dependencies['nyc'] -%>",
       "@istanbuljs/nyc-config-typescript": "<%= project.dependencies['@istanbuljs/nyc-config-typescript'] -%>",
 <% } -%>
