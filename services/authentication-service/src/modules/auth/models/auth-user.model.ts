@@ -11,9 +11,9 @@ export class DeviceInfo {
   userAgent?: string;
   deviceId?: string;
 }
-
 @model({
   description: `This is the signature for authenticated user which holds permissions and role.`,
+  settings: {strict: false},
 })
 export class AuthUser extends User implements IAuthUserWithPermissions {
   @property({
