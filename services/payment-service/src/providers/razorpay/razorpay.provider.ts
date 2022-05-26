@@ -235,7 +235,6 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
       ) => {
         const order = await this.ordersRepository.find({
           where: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             'metaData.razorpayOrderID': `${chargeResponse.razorpay_order_id}`,
           },
         });
