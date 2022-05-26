@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.2 (2022-05-26)</small>
+
+* fix(authentication-service): change response of forgot password when user is invalid (#799) ([0a939f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a939f8)), closes [#799](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/799) [#798](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/798)
+
+
+
+
+
 ## <small>4.2.1 (2022-05-17)</small>
 
 * fix(ocr-service): prettier and lint issue (#775) ([4a79629](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a79629)), closes [#775](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/775) [#774](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/774)

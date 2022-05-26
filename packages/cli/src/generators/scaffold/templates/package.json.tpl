@@ -1,5 +1,6 @@
 {
   "name": "<%= name %>",
+  "description": "This is the root package and will never be served via a web server",
   "private": true,
   "scripts": {
     "prepare": "husky install",
@@ -17,7 +18,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "cz-format-extension"
+      "path": "./node_modules/cz-customizable"
     }
   }
 }

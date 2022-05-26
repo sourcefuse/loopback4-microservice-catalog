@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.2.6 (2022-05-26)</small>
+
+* fix(cli): add commit config to cli (#795) ([1fe0e16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1fe0e16)), closes [#795](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/795) [#790](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/790) [#790](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/790)
+
+
+
+
+
 ## <small>1.2.5 (2022-05-17)</small>
 
 * fix(cli): include migrations option in microservice command (#787) ([af1f892](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/af1f892)), closes [#787](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/787) [#786](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/786)
