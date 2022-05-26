@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.10 (2022-05-26)</small>
+
+* docs(README): updating readme file for services (#613) ([b761645](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b761645)), closes [#613](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/613)
+
+
+
+
+
 ## <small>5.0.9 (2022-05-09)</small>
 
 * chore(deps): bump ejs from 3.1.6 to 3.1.7 in /services/bpmn-service (#761) ([7fadb96](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7fadb96)), closes [#761](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/761)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.3 (2022-05-26)</small>
+
+* chore(chore): add missing config files in ocr services ([9a0c4b7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a0c4b7)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>0.1.2 (2022-05-17)</small>
 
 * fix(ocr-service): prettier and lint issue (#775) ([4a79629](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a79629)), closes [#775](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/775) [#774](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/774)

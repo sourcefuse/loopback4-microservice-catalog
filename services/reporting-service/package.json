@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -66,7 +66,7 @@
     "@loopback/rest": "^11.1.2",
     "@loopback/rest-explorer": "^4.1.2",
     "@loopback/service-proxy": "^4.1.2",
-    "@sourceloop/core": "^6.1.5",
+    "@sourceloop/core": "^6.1.6",
     "axios": "^0.26.1",
     "circular-json": "^0.5.9",
     "dotenv": "^16.0.0",

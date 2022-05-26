@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.1.6 (2022-05-26)</small>
+
+* fix(core): fix swagger auth verifier key (#803) ([60a2559](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/60a2559)), closes [#803](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/803)
+
+
+
+
+
 ## <small>6.1.5 (2022-05-09)</small>
 
 * chore(deps): bump ejs from 3.1.6 to 3.1.7 in /packages/core (#760) ([0c80a67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0c80a67)), closes [#760](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/760)

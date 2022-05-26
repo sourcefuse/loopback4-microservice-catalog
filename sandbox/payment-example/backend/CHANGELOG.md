@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.7 (2022-05-26)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
 ## <small>0.1.6 (2022-05-09)</small>
 
 * chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)
