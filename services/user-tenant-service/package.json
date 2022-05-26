@@ -48,8 +48,6 @@
     "README.md",
     "dist",
     "src",
-    "migration.js",
-    "migrations",
     "database.json",
     "!*/__tests__"
   ],
