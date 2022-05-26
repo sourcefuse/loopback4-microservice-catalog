@@ -35,6 +35,5 @@ export const enum PermissionKey {
   RemoveMemberFromUserGroup = 'RemoveMemberFromUserGroup',
   LeaveUserGroup = 'LeaveUserGroup',
   UpdateUserTenantPreference = 'UpdateUserTenantPreference',
-  ViewUserTenantPreference = 'ViewUserTenantPreference',
-  
+  ViewUserTenantPreference = 'ViewUserTenantPreference', 
 }

@@ -1,12 +1,7 @@
-// import {
-//   PermissionKey,
-//   RoleTypeMap,
-//   RoleTypeMapValue,
-// } from '@local/rakuten-core';
 import {
   PermissionKey,
-  // RoleTypeMap,
-  // RoleTypeMapValue,
+  RoleTypeMap,
+  RoleTypeMapValue,
 } from '../enums';
 import {bind, BindingScope} from '@loopback/core';
 import {Options, repository, Where, WhereBuilder} from '@loopback/repository';
@@ -53,8 +48,8 @@ export class UserOperationsService {
     this.validateUserCreation(user, userData, currentUser, options);
 
     const role: Role = await this.roleRepo.findById(userData.roleId);
-    // const roleType = (RoleTypeMap[role.roleType] as RoleTypeMapValue)
-    //   .permissionKey;
+    const roleType = (RoleTypeMap[role.roleType] as RoleTypeMapValue)
+      .permissionKey;
 
     const userExists = await this.userRepository.findOne({
       where: {
@@ -74,15 +69,15 @@ export class UserOperationsService {
       if (userTenantExists) {
         throw new HttpErrors.BadRequest('User already exists');
       } else {
-        // if (
-        //   currentUser.tenantId === userData.tenantId &&
-        //   currentUser.permissions.indexOf(
-        //     PermissionKey.CreateTenantUserRestricted,
-        //   ) >= 0 &&
-        //   currentUser.permissions.indexOf(`CreateTenant${roleType}`) < 0
-        // ) {
-        //   throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-        // }
+        if (
+          currentUser.tenantId === userData.tenantId &&
+          currentUser.permissions.indexOf(
+            PermissionKey.CreateTenantUserRestricted,
+          ) >= 0 &&
+          currentUser.permissions.indexOf(`CreateTenant${roleType}`) < 0
+        ) {
+          throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+        }
         const userTenant: UserTenant = await this.createUserTenantData(
           userData,
           UserStatus.REGISTERED,
@@ -100,15 +95,15 @@ export class UserOperationsService {
       }
     }
 
-    // if (
-    //   currentUser.tenantId === userData.tenantId &&
-    //   currentUser.permissions.indexOf(
-    //     PermissionKey.CreateTenantUserRestricted,
-    //   ) >= 0 &&
-    //   currentUser.permissions.indexOf(`CreateTenant${roleType}`) < 0
-    // ) {
-    //   throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    // }
+    if (
+      currentUser.tenantId === userData.tenantId &&
+      currentUser.permissions.indexOf(
+        PermissionKey.CreateTenantUserRestricted,
+      ) >= 0 &&
+      currentUser.permissions.indexOf(`CreateTenant${roleType}`) < 0
+    ) {
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
     const authClients = await this.authClientsRepo.find({
       where: {
         clientId: {
@@ -303,19 +298,18 @@ export class UserOperationsService {
     const whereBuilder = new WhereBuilder<UserView>();
     const role = await this.roleRepo.find();
     const allowedRoles: string[] = [];
-    console.log(role);
-    // role.forEach(r => {
-    //   if (
-    //     r.id &&
-    //     currentUser.permissions.indexOf(
-    //       `ViewTenant${
-    //         (RoleTypeMap[r.roleType] as RoleTypeMapValue).permissionKey
-    //       }`,
-    //     ) >= 0
-    //   ) {
-    //     allowedRoles.push(r.id);
-    //   }
-    // });
+    role.forEach(r => {
+      if (
+        r.id &&
+        currentUser.permissions.indexOf(
+          `ViewTenant${
+            (RoleTypeMap[r.roleType] as RoleTypeMapValue).permissionKey
+          }`,
+        ) >= 0
+      ) {
+        allowedRoles.push(r.id);
+      }
+    });
 
     if (where) {
       whereBuilder.and(
@@ -352,18 +346,17 @@ export class UserOperationsService {
           },
         ],
       })) as UserTenantWithRelations;
-      console.log(userTenant);
-      // if (
-      //   !userTenant ||
-      //   currentUser.permissions.indexOf(
-      //     `DeleteTenant${
-      //       (RoleTypeMap[userTenant.role.roleType] as RoleTypeMapValue)
-      //         .permissionKey
-      //     }`,
-      //   ) < 0
-      // ) {
-      //   throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-      // }
+      if (
+        !userTenant ||
+        currentUser.permissions.indexOf(
+          `DeleteTenant${
+            (RoleTypeMap[userTenant.role.roleType] as RoleTypeMapValue)
+              .permissionKey
+          }`,
+        ) < 0
+      ) {
+        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+      }
     }
   }
 
@@ -426,18 +419,17 @@ export class UserOperationsService {
           },
         ],
       })) as UserTenantWithRelations;
-      console.log(userTenant);
-      // if (
-      //   !userTenant ||
-      //   currentUser.permissions.indexOf(
-      //     `UpdateTenant${
-      //       (RoleTypeMap[userTenant.role.roleType] as RoleTypeMapValue)
-      //         .permissionKey
-      //     }`,
-      //   ) < 0
-      // ) {
-      //   throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-      // }
+      if (
+        !userTenant ||
+        currentUser.permissions.indexOf(
+          `UpdateTenant${
+            (RoleTypeMap[userTenant.role.roleType] as RoleTypeMapValue)
+              .permissionKey
+          }`,
+        ) < 0
+      ) {
+        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+      }
     }
 
     if (currentUser.permissions.indexOf(PermissionKey.UpdateTenantUser) >= 0) {
