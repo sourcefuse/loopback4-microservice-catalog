@@ -34,6 +34,14 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
   externalAuthToken?: string;
 
   @property({
+    type: 'object',
+    description: `This property consists of two optional fields.
+    1. userAgent
+    2. deviceId `,
+  })
+  deviceInfo?: DeviceInfo;
+
+  @property({
     type: 'number',
   })
   age?: number;

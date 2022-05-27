@@ -15,7 +15,7 @@ jobs:
   # This workflow contains a single job called "build"
   npm_audit:
     # The type of runner that the job will run on
-    runs-on: my-custom-runner
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -26,7 +26,7 @@ jobs:
         uses: m19c/action-lerna@1.0.0
         with:
           args: 'bootstrap'
-          
+
       - name: lerna-lint
         uses: m19c/action-lerna@1.0.0
         with:
