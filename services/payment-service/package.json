@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/payment-service",
   "version": "5.0.0",
-  "description": "services",
+  "description": "payment microservice",
   "keywords": [
     "loopback-extension",
     "loopback"

@@ -3,7 +3,7 @@
   "info": {
     "title": "Scheduler Service",
     "version": "1.0.0",
-    "description": "services",
+    "description": "Scheduler Microservice",
     "contact": {
       "name": "Sourcefuse"
     }

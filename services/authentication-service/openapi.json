@@ -3,7 +3,7 @@
   "info": {
     "title": "Authentication Service",
     "version": "1.0.0",
-    "description": "services",
+    "description": "Authentication microservice",
     "contact": {}
   },
   "paths": {
@@ -1538,6 +1538,10 @@
           "externalAuthToken": {
             "type": "string"
           },
+          "deviceInfo": {
+            "type": "object",
+            "description": "This property consists of two optional fields.\n    1. userAgent\n    2. deviceId "
+          },
           "age": {
             "type": "number"
           },
@@ -1546,13 +1550,6 @@
           },
           "authClientId": {
             "type": "number"
-          },
-          "deviceInfo": {
-            "type": "object",
-            "description": "This property consists of two optional fields.\n    1. userAgent\n    2. deviceId "
-          },
-          "pubnubToken": {
-            "type": "string"
           },
           "userPreferences": {
             "type": "object"
@@ -1566,12 +1563,6 @@
           "passwordExpiryTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "allowedResources": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "status": {
             "type": "number",
@@ -1589,7 +1580,7 @@
           "username",
           "role"
         ],
-        "additionalProperties": false
+        "additionalProperties": true
       },
       "OtpLoginRequest": {
         "title": "OtpLoginRequest",
