@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2022-05-27)
+
+* feat(authentication-service): rerstore device info in auth user (#807) ([f7fe285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7fe285)), closes [#807](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/807) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
+
+
+### BREAKING CHANGE
+
+* restore deviceinfo in auth user
+
+
+
+
 ## 5.0.0 (2022-05-27)
 
 * feat(authentication-service): set auth user strict=false (#804) ([a64a8d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a64a8d9)), closes [#804](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/804) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)

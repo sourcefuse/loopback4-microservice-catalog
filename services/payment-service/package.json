@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "services",
   "keywords": [
     "loopback-extension",
