@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2022-05-27)
+
+* chore(deps): update all lb4 dependencies (#805) ([572f7ae](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/572f7ae)), closes [#805](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/805) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+### BREAKING CHANGE
+
+* 
+
+
+
+
 ## <small>0.5.10 (2022-05-26)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service

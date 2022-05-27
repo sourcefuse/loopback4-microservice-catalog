@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2022-05-27)
+
+* chore(deps): update all lb4 dependencies (#805) ([572f7ae](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/572f7ae)), closes [#805](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/805) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+### BREAKING CHANGE
+
+* 
+
+
+
+
 ## <small>5.0.10 (2022-05-26)</small>
 
 * docs(README): updating readme file for services (#613) ([b761645](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b761645)), closes [#613](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/613)

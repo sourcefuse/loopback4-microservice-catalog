@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.0 (2022-05-27)
+
+* feat(authentication-service): set auth user strict=false (#804) ([a64a8d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a64a8d9)), closes [#804](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/804) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
+* chore(deps): update all lb4 dependencies (#805) ([572f7ae](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/572f7ae)), closes [#805](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/805) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+### BREAKING CHANGE
+
+* 
+* remove unwanted properties
+
+
+
+
 ## <small>4.2.2 (2022-05-26)</small>
 
 * fix(authentication-service): change response of forgot password when user is invalid (#799) ([0a939f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a939f8)), closes [#799](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/799) [#798](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/798)
