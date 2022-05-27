@@ -50,19 +50,6 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
 
   @property({
     type: 'object',
-    description: `This property consists of two optional fields.
-    1. userAgent
-    2. deviceId `,
-  })
-  deviceInfo?: DeviceInfo;
-
-  @property({
-    type: 'string',
-  })
-  pubnubToken?: string;
-
-  @property({
-    type: 'object',
   })
   userPreferences?: IUserPrefs;
 
@@ -80,12 +67,6 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
     type: 'date',
   })
   passwordExpiryTime?: Date;
-
-  @property({
-    type: 'array',
-    itemType: 'string',
-  })
-  allowedResources?: string[];
 
   @property({
     type: 'number',
