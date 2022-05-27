@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "a package to for caching",
   "keywords": [
     "loopback-application",

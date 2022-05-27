@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "payment microservice",
   "keywords": [
     "loopback-extension",
@@ -67,7 +67,7 @@
     "@loopback/rest": "^12.0.0",
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/core": "^7.0.0",
+    "@sourceloop/core": "^7.0.1",
     "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",
