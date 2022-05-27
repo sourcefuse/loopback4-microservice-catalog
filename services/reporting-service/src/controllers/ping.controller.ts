@@ -19,7 +19,6 @@ const PING_RESPONSE: ResponseObject = {
           headers: {
             type: 'object',
             properties: {
-              //eslint-disable-next-line @typescript-eslint/naming-convention
               'Content-Type': {type: 'string'},
             },
             additionalProperties: true,

@@ -3,7 +3,7 @@
     <label>{{field.label}}</label>
     <div fxLayout="row" class="box" [class.active]="field?.isSelected" (click)="onEmitFieldData(field,true)">
         <textarea [value]="field.value" #clause (blur)="getUpdatedValue(clause.value, field)" rows="5"
-            [disabled]="!field.supported_text">
+            [disabled]="!field.supportedText">
             </textarea>
 
         <div class="score" *ngIf="field.score > 0">

@@ -15,17 +15,20 @@ const redisPort = process.env.REDIS_PORT;
 const redisHost = process.env.REDIS_HOST;
 
 describe('Acceptance Test Cases for Cache Mixin', function () {
-  const redisDataSource = new RedisDataSource();
-  const getRedisDataSource = sinon.stub().resolves(redisDataSource);
-  const repositroy = new ProductRepository(
-    new TestDataSource(),
-    getRedisDataSource,
-  );
+  let redisDataSource: RedisDataSource;
+  let getRedisDataSource;
+  let repositroy: ProductRepository;
   before(async function () {
     if (!redisHost || !redisPort) {
       // eslint-disable-next-line @typescript-eslint/no-invalid-this
       this.skip();
     }
+    redisDataSource = new RedisDataSource();
+    getRedisDataSource = sinon.stub().resolves(redisDataSource);
+    repositroy = new ProductRepository(
+      new TestDataSource(),
+      getRedisDataSource,
+    );
     await repositroy.createAll(mockDataArray);
   });
 

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -35,8 +35,7 @@
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build",
-    "postinstall": "patch-package"
+    "rebuild": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -54,59 +53,46 @@
   ],
   "peerDependencies": {
     "db-migrate": "^1.0.0-beta.18",
-    "db-migrate-pg": "^1.2.2",
-    "patch-package": "^6.4.7"
+    "db-migrate-pg": "^1.2.2"
   },
   "dependencies": {
-    "@loopback/boot": "^4.1.2",
-    "@loopback/context": "^4.1.2",
-    "@loopback/core": "^3.1.2",
-    "@loopback/openapi-v3": "^7.1.2",
-    "@loopback/repository": "^4.1.2",
-    "@loopback/rest": "^11.1.2",
-    "@loopback/rest-explorer": "^4.1.2",
-    "@loopback/service-proxy": "^4.1.2",
-    "@sourceloop/core": "^6.1.5",
+    "@loopback/boot": "^5.0.0",
+    "@loopback/context": "^5.0.0",
+    "@loopback/core": "^4.0.0",
+    "@loopback/openapi-v3": "^8.0.0",
+    "@loopback/repository": "^5.0.0",
+    "@loopback/rest": "^12.0.0",
+    "@loopback/rest-explorer": "^5.0.0",
+    "@loopback/service-proxy": "^5.0.0",
+    "@sourceloop/core": "^7.0.0",
     "axios": "^0.26.1",
     "circular-json": "^0.5.9",
     "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",
-    "loopback4-authentication": "^6.0.3",
-    "loopback4-authorization": "^5.0.3",
-    "loopback4-soft-delete": "^5.0.4",
+    "loopback4-authentication": "^6.1.2",
+    "loopback4-authorization": "^5.0.4",
+    "loopback4-soft-delete": "^5.1.0",
     "moment": "^2.29.3",
-    "razorpay": "^2.8.1",
-    "stripe": "^8.218.0",
-    "tslib": "^2.3.1",
+    "tslib": "^2.4.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@loopback/build": "^8.1.2",
-    "@loopback/eslint-config": "^12.0.4",
-    "@loopback/testlab": "^4.1.2",
+    "@loopback/build": "^9.0.0",
+    "@loopback/eslint-config": "^13.0.0",
+    "@loopback/testlab": "^5.0.0",
     "@types/circular-json": "^0.4.0",
     "@types/lodash": "^4.14.182",
-    "@types/node": "^17.0.25",
+    "@types/node": "^12.20.50",
     "@types/uuid": "^8.3.4",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "1.2.2",
-    "eslint": "^8.13.0",
-    "patch-package": "^6.4.7",
+    "eslint": "^8.14.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.6.3",
+    "typescript": "~4.6.4",
     "widdershins": "^4.0.1"
   },
   "overrides": {
-    "jake": {
-      "async": "^3.2.3"
-    },
-    "passport-azure-ad": {
-      "async": "^3.2.3"
-    },
-    "cache-manager": {
-      "async": "^3.2.3"
-    },
     "widdershins": {
       "swagger2openapi": "^7.0.8",
       "markdown-it": "^12.3.2",

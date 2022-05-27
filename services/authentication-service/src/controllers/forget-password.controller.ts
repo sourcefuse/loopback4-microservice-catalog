@@ -5,6 +5,8 @@ import {
   AuthenticateErrorKeys,
   AuthProvider,
   ErrorCodes,
+  ILogger,
+  LOGGER,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   SuccessResponse,
@@ -38,6 +40,7 @@ export class ForgetPasswordController {
     private readonly revokedTokensRepo: RevokedTokenRepository,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -67,13 +70,13 @@ export class ForgetPasswordController {
     });
     await this.loginHelperService.verifyClientUserLogin(req, client, user);
     if (!user || !user.id) {
-      throw new HttpErrors.NotFound('User not found !');
+      this.logger.info(`Forget password attempted for invalid user`);
+      return;
     }
 
     if (!user.email) {
-      throw new HttpErrors.UnprocessableEntity(
-        'No email exists for the user !',
-      );
+      this.logger.info(`Forget password attempted for user without email`);
+      return;
     }
 
     const codePayload: ClientAuthCode<User> = {

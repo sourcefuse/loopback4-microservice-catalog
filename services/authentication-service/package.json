@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -31,7 +31,7 @@
     "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "postinstall": "node migration.js && patch-package"
+    "postinstall": "node migration.js"
   },
   "repository": {
     "type": "git",
@@ -51,19 +51,18 @@
   ],
   "peerDependencies": {
     "db-migrate": "^1.0.0-beta.18",
-    "db-migrate-pg": "^1.2.2",
-    "patch-package": "^6.4.7"
+    "db-migrate-pg": "^1.2.2"
   },
   "dependencies": {
-    "@loopback/boot": "^4.1.2",
-    "@loopback/context": "^4.1.2",
-    "@loopback/core": "^3.1.2",
-    "@loopback/openapi-v3": "^7.1.2",
-    "@loopback/repository": "^4.1.2",
-    "@loopback/rest": "^11.1.2",
-    "@loopback/rest-explorer": "^4.1.2",
-    "@loopback/service-proxy": "^4.1.2",
-    "@sourceloop/core": "^6.1.5",
+    "@loopback/boot": "^5.0.0",
+    "@loopback/context": "^5.0.0",
+    "@loopback/core": "^4.0.0",
+    "@loopback/openapi-v3": "^8.0.0",
+    "@loopback/repository": "^5.0.0",
+    "@loopback/rest": "^12.0.0",
+    "@loopback/rest-explorer": "^5.0.0",
+    "@loopback/service-proxy": "^5.0.0",
+    "@sourceloop/core": "^7.0.0",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "check-code-coverage": "^1.10.0",
@@ -72,9 +71,9 @@
     "https-proxy-agent": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^6.1.1",
-    "loopback4-authorization": "^5.0.3",
-    "loopback4-soft-delete": "^5.0.4",
+    "loopback4-authentication": "^6.1.2",
+    "loopback4-authorization": "^5.0.4",
+    "loopback4-soft-delete": "^5.1.0",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
     "node-fetch": "^2.6.6",
@@ -84,20 +83,20 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-instagram": "^1.0.0",
     "qrcode": "^1.5.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@loopback/build": "^8.1.2",
-    "@loopback/eslint-config": "^12.0.4",
-    "@loopback/testlab": "^4.1.2",
+    "@loopback/build": "^9.0.0",
+    "@loopback/eslint-config": "^13.0.0",
+    "@loopback/testlab": "^5.0.0",
     "@types/base-64": "^1.0.0",
     "@types/bcrypt": "^5.0.0",
     "@types/i18n": "^0.13.2",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.182",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^17.0.25",
+    "@types/node": "^12.20.50",
     "@types/node-fetch": "^2.6.1",
     "@types/passport-apple": "^1.1.1",
     "@types/passport-facebook": "^2.1.11",
@@ -107,24 +106,14 @@
     "@types/sinon": "^10.0.11",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
-    "eslint": "^8.13.0",
+    "eslint": "^8.14.0",
     "nyc": "^15.1.0",
-    "patch-package": "^6.4.7",
     "sinon": "^13.0.2",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.6.3",
+    "typescript": "~4.6.4",
     "widdershins": "^4.0.1"
   },
   "overrides": {
-    "jake": {
-      "async": "^3.2.3"
-    },
-    "passport-azure-ad": {
-      "async": "^3.2.3"
-    },
-    "cache-manager": {
-      "async": "^3.2.3"
-    },
     "check-code-coverage": {
       "lodash": "^4.17.21"
     },

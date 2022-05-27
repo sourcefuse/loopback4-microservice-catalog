@@ -106,7 +106,7 @@ export class SubscriptionController {
     passReqToCallback: true,
   })
   @authorize({permissions: [PermissionKey.ViewSubscription]})
-  @get('calendars/subscriptions/me', {
+  @get('/calendars/subscriptions/me', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
