@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.2 (2022-05-30)</small>
+
+* chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+* fix(authentication-service): handle error thrown from helper service in forgot pwd (#810) ([7c9f0cd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7c9f0cd)), closes [#810](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/810) [#798](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/798)
+
+
+
+
+
 ## <small>6.0.1 (2022-05-27)</small>
 
 * chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)
