@@ -20,15 +20,15 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   }
 
   async ticketNumberPrompt() {
-    if (!this.options.ticketPrefix) {
-      const {ticketPrefix} = await this.prompt([
+    if (!this.options.issuePrefix) {
+      const {issuePrefix} = await this.prompt([
         {
           type: 'input',
-          name: 'ticketPrefix',
+          name: 'issuePrefix',
           message: 'Enter the issue Prefix:',
         },
       ]);
-      this.options.ticketPrefix = ticketPrefix;
+      this.options.issuePrefix = issuePrefix;
     }
   }
 
