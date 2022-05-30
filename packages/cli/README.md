@@ -19,7 +19,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.0.1 linux-x64 node-v16.13.0
+@sourceloop/cli/2.0.1 darwin-arm64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -127,8 +127,9 @@ ARGUMENTS
   NAME  name of the project
 
 OPTIONS
-  --cwd=cwd  directory where project will be scaffolded, instead of the project name
-  --help     show manual pages
+  --cwd=cwd                  directory where project will be scaffolded, instead of the project name
+  --help                     show manual pages
+  --issuePrefix=issuePrefix  prefix to be used for issues(e.g. GH-)
 ```
 
 _See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.1/src/commands/scaffold.ts)_
