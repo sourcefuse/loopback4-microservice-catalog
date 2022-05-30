@@ -72,7 +72,7 @@
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",
     "loopback4-authentication": "^6.1.2",
-    "loopback4-authorization": "^5.0.4",
+    "loopback4-authorization": "^5.0.5",
     "loopback4-soft-delete": "^5.1.0",
     "razorpay": "^2.8.1",
     "stripe": "^8.218.0",
