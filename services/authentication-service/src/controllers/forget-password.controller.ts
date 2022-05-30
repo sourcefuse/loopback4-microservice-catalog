@@ -68,7 +68,11 @@ export class ForgetPasswordController {
       },
       include: ['credentials'],
     });
-    await this.loginHelperService.verifyClientUserLogin(req, client, user);
+    try {
+      await this.loginHelperService.verifyClientUserLogin(req, client, user);
+    } catch (e) {
+      return;
+    }
     if (!user || !user.id) {
       this.logger.info(`Forget password attempted for invalid user`);
       return;
