@@ -9,7 +9,7 @@ import {
 import {OtpCacheRepository, UserRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {totp} from 'otplib';
-import {OtpSenderService} from '../../../services';
+import {OtpService} from '../../../services';
 import {AuthClient} from '../../../models';
 
 export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
@@ -21,8 +21,8 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
     private readonly client: AuthClient,
-    @inject('services.OtpSenderService')
-    private readonly otpSenderService: OtpSenderService,
+    @inject('services.otpService')
+    private readonly otpService: OtpService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {
@@ -35,7 +35,7 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
 
       //sender
       if (!otp) {
-        await this.otpSenderService.sendOtp(this.client, username);
+        await this.otpService.sendOtp(this.client, user);
         return user;
       }
 

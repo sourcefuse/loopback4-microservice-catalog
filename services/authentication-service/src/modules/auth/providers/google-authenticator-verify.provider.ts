@@ -10,7 +10,7 @@ import {OtpCacheRepository, UserRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {authenticator} from 'otplib';
 import {AuthClient} from '../../../models';
-import {OtpSenderService} from '../../../services';
+import {OtpService} from '../../../services';
 
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
@@ -23,13 +23,13 @@ export class GoogleAuthenticatorVerifyProvider
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
     private readonly client: AuthClient,
-    @inject('services.OtpSenderService')
-    private readonly otpSenderService: OtpSenderService,
+    @inject('services.otpService')
+    private readonly otpService: OtpService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {
     return async (username: string, otp: string) => {
-      const user = this.userRepository.findOne({
+      const user = await this.userRepository.findOne({
         where: {
           username: username,
         },
@@ -37,7 +37,7 @@ export class GoogleAuthenticatorVerifyProvider
 
       //sender
       if (!otp) {
-        await this.otpSenderService.sendOtp(this.client, username);
+        await this.otpService.sendOtp(this.client, user);
         return user;
       }
 

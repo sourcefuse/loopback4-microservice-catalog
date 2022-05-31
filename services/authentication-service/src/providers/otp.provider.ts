@@ -1,6 +1,8 @@
 import {inject, Provider} from '@loopback/context';
 import {OtpFn} from './types';
 import {OtpGenerateFn, OtpSenderFn, VerifyBindings} from '../providers';
+import {authenticator} from 'otplib';
+import {User} from '../models';
 
 export class OtpProvider implements Provider<OtpFn> {
   constructor(
@@ -11,11 +13,12 @@ export class OtpProvider implements Provider<OtpFn> {
   ) {}
 
   value(): OtpFn {
-    return async (username: string) => {
-      const otp = await this.generateOtp();
-      await this.sendOtp(otp, username);
+    return async (user: User) => {
+      const secret = authenticator.generateSecret();
+      const otp = await this.generateOtp(secret);
+      await this.sendOtp(otp, user.username);
       return {
-        key: process.env.OTP_SECRET,
+        key: secret,
       };
     };
   }

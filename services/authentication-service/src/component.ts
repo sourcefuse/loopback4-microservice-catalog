@@ -56,14 +56,16 @@ import {
   SignupTokenHandlerProvider,
   VerifyBindings,
 } from './providers';
+import {AuthCodeGeneratorProvider} from './providers/auth-code-generator.provider';
 import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
 import {OauthCodeReaderProvider} from './providers/code-reader.provider';
 import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
+import {MfaProvider} from './providers/mfa.provider';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
-import {LoginHelperService, OtpSenderService} from './services';
+import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IOtpAuthConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
@@ -110,9 +112,7 @@ export class AuthenticationServiceComponent implements Component {
     this.application
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
-    this.application
-      .bind('services.OtpSenderService')
-      .toClass(OtpSenderService);
+    this.application.bind('services.otpService').toClass(OtpService);
     this.models = models;
 
     this.controllers = controllers;
@@ -207,6 +207,7 @@ export class AuthenticationServiceComponent implements Component {
       FacebookPostVerifyProvider;
     this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
       SignupBearerVerifyProvider;
+    this.providers[VerifyBindings.MFA_PROVIDER.key] = MfaProvider;
     this.providers[VerifyBindings.OTP_PROVIDER.key] = OtpProvider;
     this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
       OtpGenerateProvider;
@@ -223,6 +224,8 @@ export class AuthenticationServiceComponent implements Component {
       OauthCodeReaderProvider;
     this.providers[AuthCodeBindings.CODEWRITER_PROVIDER.key] =
       CodeWriterProvider;
+    this.providers[AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER.key] =
+      AuthCodeGeneratorProvider;
 
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;

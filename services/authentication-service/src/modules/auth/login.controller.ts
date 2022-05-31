@@ -41,6 +41,7 @@ import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
+  AuthCodeGeneratorFn,
   CodeReaderFn,
   CodeWriterFn,
   JwtPayloadFn,
@@ -106,6 +107,8 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
+    private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -143,16 +146,7 @@ export class LoginController {
         );
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }
-      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId: req.client_id,
-        userId: this.user.id,
-      };
-      const token = jwt.sign(codePayload, this.client.secret, {
-        expiresIn: this.client.authCodeExpiration,
-        audience: req.client_id,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      });
+      const token = await this.getAuthCode(this.client, this.user);
       return {
         code: token,
       };
@@ -257,6 +251,10 @@ export class LoginController {
         issuer: process.env.JWT_ISSUER,
         algorithms: ['HS256'],
       }) as ClientAuthCode<User, typeof User.prototype.id>;
+
+      if (payload.mfa) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
+      }
 
       if (
         payload.userId &&
