@@ -2,6 +2,7 @@ import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   DataObject,
+  Entity,
   HasOneRepositoryFactory,
   Options,
   repository,
@@ -60,8 +61,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     protected userCredentialsRepositoryGetter: Getter<UserCredentialsRepository>,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @inject('models.User')
+    private user:typeof Entity & { prototype: User; }
   ) {
-    super(User, dataSource, getCurrentUser);
+    super(user, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
       'userTenants',
       userTenantRepositoryGetter,
