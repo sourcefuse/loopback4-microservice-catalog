@@ -3,7 +3,7 @@
   "info": {
     "title": "Audit Service",
     "version": "1.0.0",
-    "description": "A microservice for audit logging",
+    "description": "Audit logging microservice",
     "contact": {
       "name": "Sourcefuse"
     }

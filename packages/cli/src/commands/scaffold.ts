@@ -11,6 +11,10 @@ export class Scaffold extends Base<ScaffoldOptions> {
       description: 'show manual pages',
       type: 'boolean',
     }),
+    issuePrefix: flags.string({
+      name: 'issuePrefix',
+      description: 'prefix to be used for issues(e.g. GH-)',
+    }),
     cwd: flags.string({
       name: 'working-directory',
       description:
@@ -27,6 +31,7 @@ export class Scaffold extends Base<ScaffoldOptions> {
       name: input.args.name,
       help: input.flags.help,
       cwd: input.flags.cwd,
+      issuePrefix: input.flags.issuePrefix,
     });
   }
 }

@@ -8,7 +8,7 @@ module.exports = {
   },
   parserPreset: {
     parserOpts: {
-      issuePrefixes: ['<%= ticketPrefix %>-'],
+      issuePrefixes: ['<%= issuePrefix %>-'],
     },
   },
 };

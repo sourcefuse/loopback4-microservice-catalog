@@ -12,10 +12,10 @@ class BaseGenerator extends yeoman_generator_1.default {
         this.root = '';
     }
     copyTemplates() {
-        fs_1.readdirSync(this.templatePath()).forEach(file => {
+        (0, fs_1.readdirSync)(this.templatePath()).forEach(file => {
             const targetFileName = file.replace('.tpl', '');
             const sourcePath = this.templatePath(file);
-            const destinationPath = path_1.join(this.destinationRoot(), targetFileName);
+            const destinationPath = (0, path_1.join)(this.destinationRoot(), targetFileName);
             this.fs.copyTpl(sourcePath, destinationPath, this.options);
         });
     }
@@ -38,7 +38,7 @@ class BaseGenerator extends yeoman_generator_1.default {
     }
     async createFolders(names, force = false) {
         for (const name of names) {
-            await promises_1.mkdir(`${path_1.join(this.destinationRoot(), name)}`, {
+            await (0, promises_1.mkdir)(`${(0, path_1.join)(this.destinationRoot(), name)}`, {
                 recursive: force,
             });
         }

@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-services
+Authentication microservice
 
 Base URLs:
 
@@ -3007,18 +3007,14 @@ AuthClient
   ],
   "role": "string",
   "externalAuthToken": "string",
+  "deviceInfo": {},
   "age": 0,
   "externalRefreshToken": "string",
   "authClientId": 0,
-  "deviceInfo": {},
-  "pubnubToken": "string",
   "userPreferences": {},
   "tenantId": "string",
   "userTenantId": "string",
   "passwordExpiryTime": "2019-08-24T14:15:22Z",
-  "allowedResources": [
-    "string"
-  ],
   "status": 1
 }
 
@@ -3052,16 +3048,14 @@ AuthUser
 |permissions|[string]|false|none|none|
 |role|string|true|none|none|
 |externalAuthToken|string|false|none|none|
+|deviceInfo|object|false|none|This property consists of two optional fields.<br>    1. userAgent<br>    2. deviceId|
 |age|number|false|none|none|
 |externalRefreshToken|string|false|none|none|
 |authClientId|number|false|none|none|
-|deviceInfo|object|false|none|This property consists of two optional fields.<br>    1. userAgent<br>    2. deviceId|
-|pubnubToken|string|false|none|none|
 |userPreferences|object|false|none|none|
 |tenantId|string|false|none|none|
 |userTenantId|string|false|none|none|
 |passwordExpiryTime|string(date-time)|false|none|none|
-|allowedResources|[string]|false|none|none|
 |status|number|false|none|none|
 
 #### Enumerated Values

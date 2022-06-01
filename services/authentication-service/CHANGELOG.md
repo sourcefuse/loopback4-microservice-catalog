@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.2 (2022-05-30)</small>
+
+* chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+* fix(authentication-service): handle error thrown from helper service in forgot pwd (#810) ([7c9f0cd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7c9f0cd)), closes [#810](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/810) [#798](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/798)
+
+
+
+
+
+## <small>6.0.1 (2022-05-27)</small>
+
+* chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)
+
+
+
+
+
+## 6.0.0 (2022-05-27)
+
+* feat(authentication-service): rerstore device info in auth user (#807) ([f7fe285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7fe285)), closes [#807](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/807) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
+
+
+### BREAKING CHANGE
+
+* restore deviceinfo in auth user
+
+
+
+
 ## 5.0.0 (2022-05-27)
 
 * feat(authentication-service): set auth user strict=false (#804) ([a64a8d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a64a8d9)), closes [#804](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/804) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
