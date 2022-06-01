@@ -2,10 +2,13 @@ import {Constructor} from '@loopback/context';
 import {Entity, property} from '@loopback/repository';
 import {AbstractConstructor, IBaseEntityConfig, IBaseEntity} from './types';
 
-export function BaseEntityMixin<T extends Entity>(
-  base: Constructor<T> | AbstractConstructor<T>,
+export function BaseEntityMixin<
+  T extends Entity,
+  S extends Constructor<T> | AbstractConstructor<T>,
+>(
+  base: S,
   config?: IBaseEntityConfig,
-): typeof Entity & AbstractConstructor<IBaseEntity> {
+): typeof base & AbstractConstructor<IBaseEntity> {
   abstract class BaseEntity extends base {
     @property({
       type: 'date',
@@ -23,5 +26,5 @@ export function BaseEntityMixin<T extends Entity>(
     })
     modifiedOn?: Date;
   }
-  return BaseEntity as typeof Entity & AbstractConstructor<IBaseEntity>;
+  return BaseEntity as typeof base & AbstractConstructor<IBaseEntity>;
 }

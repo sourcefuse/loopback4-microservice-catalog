@@ -7,10 +7,13 @@ import {
   IUserModifiableEntityConfig,
 } from './types';
 
-export function UserModifiableEntityMixin<T extends Entity>(
-  base: Constructor<T> | AbstractConstructor<T>,
+export function UserModifiableEntityMixin<
+  T extends Entity,
+  S extends Constructor<T> | AbstractConstructor<T>,
+>(
+  base: S,
   config?: IUserModifiableEntityConfig,
-): typeof Entity & AbstractConstructor<IUserModifiableEntity> {
+): typeof base & AbstractConstructor<IUserModifiableEntity> {
   abstract class UserModifiableEntity extends BaseEntityMixin(base, {
     createdOn: config?.createdOn,
     modifiedOn: config?.modifiedOn,
@@ -30,6 +33,6 @@ export function UserModifiableEntityMixin<T extends Entity>(
     modifiedBy?: string;
   }
 
-  return UserModifiableEntity as typeof Entity &
+  return UserModifiableEntity as typeof base &
     AbstractConstructor<IUserModifiableEntity>;
 }
