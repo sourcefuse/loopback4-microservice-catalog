@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/chat-notif-example_chat-service",
-  "version": "0.1.7",
+  "version": "0.1.13",
   "description": "sourceloop chat service",
   "keywords": [
     "loopback-application",
@@ -60,9 +60,9 @@
     "@loopback/rest": "^11.1.2",
     "@loopback/rest-explorer": "^4.1.2",
     "@loopback/service-proxy": "^4.1.2",
-    "@sourceloop/authentication-service": "^4.2.0",
-    "@sourceloop/chat-service": "^3.0.9",
-    "@sourceloop/core": "^6.1.5",
+    "@sourceloop/authentication-service": "^6.0.2",
+    "@sourceloop/chat-service": "^4.0.2",
+    "@sourceloop/core": "^7.0.2",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.0",

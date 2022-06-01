@@ -16,6 +16,7 @@ export class Microservice extends Base<MicroserviceOptions> {
       name: 'facade',
       description: 'create a microservice facade',
       type: 'boolean',
+      allowNo: true,
     }),
     baseService: flags.enum({
       name: 'service',

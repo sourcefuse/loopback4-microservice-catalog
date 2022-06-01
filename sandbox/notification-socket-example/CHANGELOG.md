@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.16 (2022-05-30)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>2.1.15 (2022-05-27)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>2.1.14 (2022-05-27)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>2.1.13 (2022-05-26)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>2.1.12 (2022-05-09)</small>
 
 * chore(deps): update deps for sandbox (#731) ([c4a5ee5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c4a5ee5)), closes [#731](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/731)

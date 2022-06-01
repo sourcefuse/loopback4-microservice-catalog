@@ -1,3 +1,3 @@
-export * from './contract.repository';
-export * from './ocr-result.repository';
-export * from './hocr-result.repository';
+export * from './contracts.repository';
+export * from './ocr-results.repository';
+export * from './hocr-results.repository';

@@ -40,9 +40,13 @@ npm i @sourceloop/ocr-service
 
   ```typescript
   this.bind(RequestServiceBindings.Config).to({
-      baseUrl: process.env.CLM_ML_BASEURL,
-      json: process.env.IS_JSON
-  });
+      useCustomSequence: false,
+      useRequestProvider: true,
+      baseUrl: process.env.CLM_ML_BASEURL ?? '',
+      json: true
+    });
+
+  this.bind(RequestServiceBindings.FetchProvider).toProvider(FetchClientProvider);
   ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `OcrDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).

@@ -2,6 +2,7 @@
   "packages": [
     "packages/core/",
     "packages/cli/",
+    "packages/cache",
     "packages/custom-sf-changelog/",
     "packages/user-onboarding/projects/user-onboarding-lib/",
     "packages/search/projects/search-lib/",
@@ -67,9 +68,7 @@
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
-        "@sourceloop/user-onboarding-example",
-        "@sourceloop/ocr-s3-service",
-        "@sourceloop/ocr-service"
+        "@sourceloop/user-onboarding-example"
       ]
     },
     "clean": {
@@ -84,9 +83,7 @@
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**",
-    "@sourceloop/ocr-s3-service",
-    "@sourceloop/ocr-service"
+    "packages/core/locales/**"
   ],
   "version": "independent"
 }

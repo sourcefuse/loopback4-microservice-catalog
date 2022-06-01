@@ -103,14 +103,6 @@ describe('Notification Controller', () => {
     expect(response).to.have.properties(['res', 'req']);
   });
 
-  it('return forbidden for unknown user', async () => {
-    const reqToAddNotificationUser = await addUser();
-    await client
-      .del(`${basePath}/${reqToAddNotificationUser.body.id}`)
-      .set('authorization', `Bearer ${token}`)
-      .expect(403);
-  });
-
   it('deletes all notification successfully', async () => {
     await client
       .del(`${basePath}`)

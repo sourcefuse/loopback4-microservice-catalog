@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-services
+Authentication microservice
 
 Base URLs:
 
@@ -562,6 +562,99 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## LoginController.sendOtp
+
+<a id="opIdLoginController.sendOtp"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string",
+  "key": "string"
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/auth/send-otp',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string",
+  "key": "string"
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/auth/send-otp',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/send-otp`
+
+Sends OTP
+
+> Body parameter
+
+```json
+{
+  "client_id": "string",
+  "client_secret": "string",
+  "key": "string"
+}
+```
+
+<h3 id="logincontroller.sendotp-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[OtpSendRequest](#schemaotpsendrequest)|false|none|
+
+> Example responses
+
+<h3 id="logincontroller.sendotp-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Sends otp to user|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<h3 id="logincontroller.sendotp-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 ## LoginController.getToken
 
 <a id="opIdLoginController.getToken"></a>
@@ -769,6 +862,96 @@ Gets you a new access and refresh token once your access token is expired. (both
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
+</aside>
+
+## LoginController.verifyOtp
+
+<a id="opIdLoginController.verifyOtp"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "key": "string",
+  "otp": "string"
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/auth/verify-otp',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "key": "string",
+  "otp": "string"
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/auth/verify-otp',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/verify-otp`
+
+Gets you the code that will be used for getting token (webapps)
+
+> Body parameter
+
+```json
+{
+  "key": "string",
+  "otp": "string"
+}
+```
+
+<h3 id="logincontroller.verifyotp-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[OtpLoginRequest](#schemaotploginrequest)|false|none|
+
+> Example responses
+
+<h3 id="logincontroller.verifyotp-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<h3 id="logincontroller.verifyotp-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 <h1 id="authentication-service-facebooklogincontroller">FacebookLoginController</h1>
@@ -2719,6 +2902,199 @@ ResetPassword
 |password|string|true|none|This property is supposed to be a string and is a required field|
 |oldPassword|string|false|none|This property is supposed to be a string and is a required field|
 
+<h2 id="tocS_OtpSendRequest">OtpSendRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemaotpsendrequest"></a>
+<a id="schema_OtpSendRequest"></a>
+<a id="tocSotpsendrequest"></a>
+<a id="tocsotpsendrequest"></a>
+
+```json
+{
+  "client_id": "string",
+  "client_secret": "string",
+  "key": "string"
+}
+
+```
+
+OtpSendRequest
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|true|none|This property is supposed to be a string and is a required field|
+|key|string|true|none|This property is supposed to be a string and is a required field|
+
+<h2 id="tocS_AuthClient">AuthClient</h2>
+<!-- backwards compatibility -->
+<a id="schemaauthclient"></a>
+<a id="schema_AuthClient"></a>
+<a id="tocSauthclient"></a>
+<a id="tocsauthclient"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": 0,
+  "clientId": "string",
+  "clientSecret": "string",
+  "secret": "string",
+  "redirectUrl": "string",
+  "accessTokenExpiration": 0,
+  "refreshTokenExpiration": 0,
+  "authCodeExpiration": 0
+}
+
+```
+
+AuthClient
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|number|false|none|none|
+|clientId|string|true|none|none|
+|clientSecret|string|true|none|none|
+|secret|string|true|none|none|
+|redirectUrl|string|false|none|none|
+|accessTokenExpiration|number|true|none|none|
+|refreshTokenExpiration|number|true|none|none|
+|authCodeExpiration|number|true|none|none|
+
+<h2 id="tocS_AuthUser">AuthUser</h2>
+<!-- backwards compatibility -->
+<a id="schemaauthuser"></a>
+<a id="schema_AuthUser"></a>
+<a id="tocSauthuser"></a>
+<a id="tocsauthuser"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "dob": "2019-08-24T14:15:22Z",
+  "gender": "M",
+  "defaultTenantId": "string",
+  "permissions": [
+    "string"
+  ],
+  "role": "string",
+  "externalAuthToken": "string",
+  "deviceInfo": {},
+  "age": 0,
+  "externalRefreshToken": "string",
+  "authClientId": 0,
+  "userPreferences": {},
+  "tenantId": "string",
+  "userTenantId": "string",
+  "passwordExpiryTime": "2019-08-24T14:15:22Z",
+  "status": 1
+}
+
+```
+
+AuthUser
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|dob|string(date-time)|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|defaultTenantId|string|false|none|none|
+|permissions|[string]|false|none|none|
+|role|string|true|none|none|
+|externalAuthToken|string|false|none|none|
+|deviceInfo|object|false|none|This property consists of two optional fields.<br>    1. userAgent<br>    2. deviceId|
+|age|number|false|none|none|
+|externalRefreshToken|string|false|none|none|
+|authClientId|number|false|none|none|
+|userPreferences|object|false|none|none|
+|tenantId|string|false|none|none|
+|userTenantId|string|false|none|none|
+|passwordExpiryTime|string(date-time)|false|none|none|
+|status|number|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+|status|1|
+|status|2|
+|status|3|
+|status|0|
+|status|4|
+
+<h2 id="tocS_OtpLoginRequest">OtpLoginRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemaotploginrequest"></a>
+<a id="schema_OtpLoginRequest"></a>
+<a id="tocSotploginrequest"></a>
+<a id="tocsotploginrequest"></a>
+
+```json
+{
+  "key": "string",
+  "otp": "string"
+}
+
+```
+
+OtpLoginRequest
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|key|string|true|none|This property is supposed to be a string and is a required field|
+|otp|string|true|none|This property is supposed to be a string and is a required field|
+
 <h2 id="tocS_ClientAuthRequest">ClientAuthRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemaclientauthrequest"></a>
@@ -2858,52 +3234,6 @@ ForgetPasswordDto
 |username|string|true|none|none|
 |client_id|string|true|none|none|
 |client_secret|string|true|none|none|
-
-<h2 id="tocS_AuthClient">AuthClient</h2>
-<!-- backwards compatibility -->
-<a id="schemaauthclient"></a>
-<a id="schema_AuthClient"></a>
-<a id="tocSauthclient"></a>
-<a id="tocsauthclient"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": 0,
-  "clientId": "string",
-  "clientSecret": "string",
-  "secret": "string",
-  "redirectUrl": "string",
-  "accessTokenExpiration": 0,
-  "refreshTokenExpiration": 0,
-  "authCodeExpiration": 0
-}
-
-```
-
-AuthClient
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|number|false|none|none|
-|clientId|string|true|none|none|
-|clientSecret|string|true|none|none|
-|secret|string|true|none|none|
-|redirectUrl|string|false|none|none|
-|accessTokenExpiration|number|true|none|none|
-|refreshTokenExpiration|number|true|none|none|
-|authCodeExpiration|number|true|none|none|
 
 <h2 id="tocS_ResetPasswordWithClient">ResetPasswordWithClient</h2>
 <!-- backwards compatibility -->

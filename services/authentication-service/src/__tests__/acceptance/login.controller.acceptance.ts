@@ -401,7 +401,7 @@ describe('Authentication microservice', () => {
     );
   });
 
-  it('should return error user does not exist for invalid user in forget password', async () => {
+  it('should return empty response even if the user does not exist', async () => {
     const reqData = {
       // eslint-disable-next-line
       client_id: 'web', // eslint-disable-next-line
@@ -411,10 +411,8 @@ describe('Authentication microservice', () => {
     const response = await client
       .post(`/auth/forget-password`)
       .send(reqData)
-      .expect(401);
-    expect(response.body.error.message).to.be.equal(
-      AuthErrorKeys.InvalidCredentials,
-    );
+      .expect(204);
+    expect(response.body).to.be.empty();
   });
   it('should verify reset password token successfully', async () => {
     const reqData = {

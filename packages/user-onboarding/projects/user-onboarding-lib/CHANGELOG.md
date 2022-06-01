@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.18 (2022-05-27)</small>
+
+* chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)
+
+
+
+
+
 ## <small>3.0.17 (2022-05-10)</small>
 
 * fix(user-onboarding): resolve dependency conflict on npm install with node v16 (#766) ([378df37](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/378df37)), closes [#766](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/766) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

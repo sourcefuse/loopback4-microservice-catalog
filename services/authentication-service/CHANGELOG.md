@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.2 (2022-05-30)</small>
+
+* chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+* fix(authentication-service): handle error thrown from helper service in forgot pwd (#810) ([7c9f0cd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7c9f0cd)), closes [#810](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/810) [#798](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/798)
+
+
+
+
+
+## <small>6.0.1 (2022-05-27)</small>
+
+* chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)
+
+
+
+
+
+## 6.0.0 (2022-05-27)
+
+* feat(authentication-service): rerstore device info in auth user (#807) ([f7fe285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7fe285)), closes [#807](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/807) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
+
+
+### BREAKING CHANGE
+
+* restore deviceinfo in auth user
+
+
+
+
+## 5.0.0 (2022-05-27)
+
+* feat(authentication-service): set auth user strict=false (#804) ([a64a8d9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a64a8d9)), closes [#804](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/804) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
+* chore(deps): update all lb4 dependencies (#805) ([572f7ae](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/572f7ae)), closes [#805](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/805) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+### BREAKING CHANGE
+
+* 
+* remove unwanted properties
+
+
+
+
+## <small>4.2.2 (2022-05-26)</small>
+
+* fix(authentication-service): change response of forgot password when user is invalid (#799) ([0a939f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a939f8)), closes [#799](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/799) [#798](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/798)
+
+
+
+
+
+## <small>4.2.1 (2022-05-17)</small>
+
+* fix(ocr-service): prettier and lint issue (#775) ([4a79629](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a79629)), closes [#775](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/775) [#774](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/774)
+
+
+
+
+
 ## 4.2.0 (2022-05-11)
 
 * feat(ocr-service): Add ocr-service and ocr-s3-service (#767) ([f0de12d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f0de12d)), closes [#767](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/767)

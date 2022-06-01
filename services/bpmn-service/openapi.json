@@ -3,7 +3,7 @@
   "info": {
     "title": "Bpmn Service",
     "version": "1.0.0",
-    "description": "services",
+    "description": "BPMN microservice",
     "contact": {
       "name": "Sourcefuse"
     }

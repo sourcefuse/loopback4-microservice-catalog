@@ -3,7 +3,7 @@
   "info": {
     "title": "Notification Service",
     "version": "1.0.0",
-    "description": "services",
+    "description": "notification microservice",
     "contact": {
       "name": "Sourcefuse"
     }

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.5 (2022-05-30)</small>
+
+**Note:** Version bump only for package @sourceloop/search-ms-example
+
+
+
+
+
+## <small>0.3.4 (2022-05-27)</small>
+
+**Note:** Version bump only for package @sourceloop/search-ms-example
+
+
+
+
+
+## <small>0.3.3 (2022-05-27)</small>
+
+**Note:** Version bump only for package @sourceloop/search-ms-example
+
+
+
+
+
+## <small>0.3.2 (2022-05-26)</small>
+
+**Note:** Version bump only for package @sourceloop/search-ms-example
+
+
+
+
+
 ## <small>0.3.1 (2022-05-09)</small>
 
 * chore(deps): bump moment in /sandbox/search-ms-example (#670) ([7615573](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7615573)), closes [#670](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/670)

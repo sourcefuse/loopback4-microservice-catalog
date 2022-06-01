@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.2 (2022-05-30)</small>
+
+* chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
+## <small>5.0.1 (2022-05-27)</small>
+
+* chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)
+
+
+
+
+
+## 5.0.0 (2022-05-27)
+
+* feat(authentication-service): rerstore device info in auth user (#807) ([f7fe285](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7fe285)), closes [#807](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/807) [#800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/800)
+
+
+### BREAKING CHANGE
+
+* restore deviceinfo in auth user
+
+
+
+
+## 4.0.0 (2022-05-27)
+
+* chore(deps): update all lb4 dependencies (#805) ([572f7ae](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/572f7ae)), closes [#805](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/805) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+### BREAKING CHANGE
+
+* 
+
+
+
+
+## <small>3.2.7 (2022-05-26)</small>
+
+* docs(README): updating readme file for services (#613) ([b761645](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b761645)), closes [#613](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/613)
+
+
+
+
+
 ## <small>3.2.6 (2022-05-09)</small>
 
 * chore(deps): package lock update after sourceloop core release ([897af0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/897af0a)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

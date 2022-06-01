@@ -118,7 +118,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   async promptFacade() {
     if (!this.shouldExit()) {
-      if (!this.options.facade) {
+      if (this.options.facade === null || this.options.facade === undefined) {
         const {isFacade} = await this.prompt([
           {
             name: 'isFacade',
@@ -204,11 +204,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         });
       }
 
-      if (!this.options.customMigrations || !this.options.includeMigrations) {
+      if (!(this.options.customMigrations || this.options.includeMigrations)) {
         prompts.push({
           type: 'confirm',
           name: 'migrations',
-          message: 'Do you want to add migration?',
+          message: 'Do you want to add migrations?',
           default: false,
         });
       }
@@ -263,6 +263,16 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         this.projectInfo.migrationType === MIGRATIONS.CUSTOM;
       this.options.includeMigrations =
         this.projectInfo.migrationType === MIGRATIONS.INCLUDED;
+    } else {
+      if (this.options.customMigrations) {
+        this.options.migrations = true;
+        this.projectInfo.migrationType = MIGRATIONS.CUSTOM;
+      } else if (this.options.includeMigrations) {
+        this.options.migrations = true;
+        this.projectInfo.migrationType = MIGRATIONS.INCLUDED;
+      } else {
+        // do nothing
+      }
     }
   }
 
@@ -341,15 +351,13 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
       scripts[
         'docker:build'
-      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/
-      ${this.options.uniquePrefix}-$npm_package_name:$npm_package_version .`;
+      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$npm_package_version .`;
       scripts[
         'docker:push'
       ] = `sudo docker push $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$npm_package_version`;
       scripts[
         'docker:build:dev'
-      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/
-      ${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION .`;
+      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION .`;
       scripts[
         'docker:push:dev'
       ] = `sudo docker push $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION`;
@@ -367,7 +375,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
       this.spawnCommandSync('npm', ['i']);
-      this.spawnCommand('npm', ['run', 'prettier:fix']);
+      this.spawnCommandSync('npm', ['run', 'prettier:fix']);
       this.destinationRoot(BACK_TO_ROOT);
       if (this.options.migrations) {
         if (!this._migrationExists()) {

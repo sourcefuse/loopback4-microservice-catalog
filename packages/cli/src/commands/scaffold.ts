@@ -11,6 +11,15 @@ export class Scaffold extends Base<ScaffoldOptions> {
       description: 'show manual pages',
       type: 'boolean',
     }),
+    issuePrefix: flags.string({
+      name: 'issuePrefix',
+      description: 'prefix to be used for issues(e.g. GH-)',
+    }),
+    cwd: flags.string({
+      name: 'working-directory',
+      description:
+        'directory where project will be scaffolded, instead of the project name',
+    }),
   };
   static args = [
     {name: 'name', description: 'name of the project', required: false},
@@ -21,6 +30,8 @@ export class Scaffold extends Base<ScaffoldOptions> {
     await super.generate('scaffold', {
       name: input.args.name,
       help: input.flags.help,
+      cwd: input.flags.cwd,
+      issuePrefix: input.flags.issuePrefix,
     });
   }
 }
