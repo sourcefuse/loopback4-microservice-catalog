@@ -1,5 +1,4 @@
 export const enum TenantStatus {
-    ACTIVE = 'ACTIVE',
-    INACTIVE = 'INACTIVE'
-  }
-  
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}

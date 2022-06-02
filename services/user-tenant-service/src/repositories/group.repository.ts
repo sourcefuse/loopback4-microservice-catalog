@@ -1,5 +1,9 @@
 import {Getter, inject} from '@loopback/core';
-import {HasManyRepositoryFactory, repository, juggler} from '@loopback/repository';
+import {
+  HasManyRepositoryFactory,
+  repository,
+  juggler,
+} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,

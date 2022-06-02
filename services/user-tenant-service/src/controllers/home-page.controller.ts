@@ -28,7 +28,6 @@ export class HomePageController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Home Page',
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         content: {'text/html': {schema: {type: 'string'}}},
       },
     },

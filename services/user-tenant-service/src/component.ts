@@ -33,7 +33,7 @@ import {
   UserTenantPrefs,
   UserTenant,
   UserView,
-  User
+  User,
 } from './models';
 import {
   GroupController,
@@ -64,7 +64,7 @@ import {
   UserTenantPrefsRepository,
   UserTenantRepository,
   UserViewRepository,
-  UserRepository,  
+  UserRepository,
 } from './repositories';
 
 // Configure the binding for UserTenantServiceComponent
@@ -110,7 +110,7 @@ export class UserTenantServiceComponent implements Component {
       UserTenantPrefs,
       UserTenant,
       UserView,
-      User
+      User,
     ];
     this.controllers = [
       GroupController,

@@ -8,6 +8,7 @@ export interface UserTenantServiceComponentOptions {
 /**
  * Default options for the component
  */
-export const DEFAULT_USER_TENANT_SERVICE_OPTIONS: UserTenantServiceComponentOptions = {
-  // Specify the values here
-};
+export const DEFAULT_USER_TENANT_SERVICE_OPTIONS: UserTenantServiceComponentOptions =
+  {
+    // Specify the values here
+  };

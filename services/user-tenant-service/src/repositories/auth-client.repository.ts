@@ -10,7 +10,7 @@ export class AuthClientRepository extends DefaultCrudRepository<
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
-   ) {
+  ) {
     super(AuthClient, dataSource);
   }
 }

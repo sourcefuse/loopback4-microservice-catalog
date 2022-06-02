@@ -106,7 +106,7 @@ export class User extends UserModifiableEntity implements IAuthUser {
   })
   dob?: Date;
 
-   //Indexer property to allow additional data
+  //Indexer property to allow additional data
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 

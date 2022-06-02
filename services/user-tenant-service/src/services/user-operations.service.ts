@@ -1,8 +1,4 @@
-import {
-  PermissionKey,
-  RoleTypeMap,
-  RoleTypeMapValue,
-} from '../enums';
+import {PermissionKey, RoleTypeMap, RoleTypeMapValue} from '../enums';
 import {bind, BindingScope} from '@loopback/core';
 import {Options, repository, Where, WhereBuilder} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
