@@ -230,6 +230,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this.projectInfo.datasourceConnectorName =
         this.projectInfo.datasourceConnector;
       this.projectInfo.datasourceType = this.options.datasourceType;
+      this._setDataSourceName();
     }
   }
 
@@ -295,8 +296,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (!this.shouldExit()) {
       if (this.options.datasourceName) {
         const nameArr = [this.options.datasourceName];
-
-        this._setDataSourceName();
 
         this.fs.copyTpl(
           this.templatePath(DATASOURCE_TEMPLATE),
