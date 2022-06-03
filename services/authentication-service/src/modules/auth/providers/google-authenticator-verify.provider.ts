@@ -37,7 +37,7 @@ export class GoogleAuthenticatorVerifyProvider
 
       //sender
       if (!otp) {
-        await this.otpService.sendOtp(this.client, user);
+        await this.otpService.sendOtp(user, this.client);
         return user;
       }
 

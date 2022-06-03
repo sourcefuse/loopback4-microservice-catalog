@@ -28,7 +28,7 @@ export class AuthCodeGeneratorProvider
       const isMfaEnabled = await this.checkMfa(user);
       if (isMfaEnabled) {
         codePayload.mfa = true;
-        await this.otpService.sendOtp(client, user);
+        await this.otpService.sendOtp(user, client);
       }
       return this.codeWriter(
         jwt.sign(codePayload, client.secret, {

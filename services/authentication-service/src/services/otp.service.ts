@@ -22,8 +22,8 @@ export class OtpService {
   ) {}
 
   async sendOtp(
-    client: AuthClient | undefined,
     user: User | null,
+    client?: AuthClient,
   ): Promise<OtpResponse | void> {
     if (!client) {
       this.logger.error('Auth client not found or invalid');

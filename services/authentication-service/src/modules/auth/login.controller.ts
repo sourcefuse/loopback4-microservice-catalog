@@ -253,7 +253,7 @@ export class LoginController {
       }) as ClientAuthCode<User, typeof User.prototype.id>;
 
       if (payload.mfa) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
       }
 
       if (

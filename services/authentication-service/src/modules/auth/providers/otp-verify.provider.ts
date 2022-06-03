@@ -35,7 +35,7 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
 
       //sender
       if (!otp) {
-        await this.otpService.sendOtp(this.client, user);
+        await this.otpService.sendOtp(user, this.client);
         return user;
       }
 
