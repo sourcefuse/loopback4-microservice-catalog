@@ -38,8 +38,7 @@
     "rebuild": "npm run clean && npm run build",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
-    "postinstall": "patch-package"
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
   },
   "repository": {
     "type": "git",
@@ -54,42 +53,33 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^4.1.2",
-    "@loopback/core": "^3.1.2",
-    "@loopback/repository": "^4.1.2",
-    "@loopback/rest": "^11.1.2",
-    "@loopback/rest-explorer": "^4.1.2",
-    "@loopback/service-proxy": "^4.1.2",
-    "@sourceloop/authentication-service": "^6.0.2",
+    "@loopback/boot": "^5.0.0",
+    "@loopback/core": "^4.0.0",
+    "@loopback/repository": "^5.0.0",
+    "@loopback/rest": "^12.0.0",
+    "@loopback/rest-explorer": "^5.0.0",
+    "@loopback/service-proxy": "^5.0.0",
     "@sourceloop/chat-service": "^4.0.2",
     "@sourceloop/core": "^7.0.2",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^5.5.0",
-    "npm": "^8.7.0",
     "prom-client": "^14.0.1",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@loopback/build": "^8.1.2",
-    "@loopback/eslint-config": "^12.0.4",
-    "@loopback/testlab": "^4.1.2",
-    "@types/node": "^12.20.47",
-    "eslint": "^8.10.0",
-    "patch-package": "^6.4.7",
+    "@loopback/build": "^9.0.0",
+    "@loopback/eslint-config": "^13.0.0",
+    "@loopback/testlab": "^5.0.0",
+    "@types/node": "^12.20.50",
+    "eslint": "^8.14.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.6.3"
+    "typescript": "~4.6.4"
   },
   "overrides": {
-    "passport-azure-ad": {
-      "async": "^3.2.3"
-    },
-    "cache-manager": {
-      "async": "^3.2.3"
-    },
     "check-code-coverage": {
       "lodash": "^4.17.21"
     }
