@@ -16,7 +16,7 @@ export class OtpProvider implements Provider<OtpFn> {
     return async (user: User) => {
       const secret = authenticator.generateSecret();
       const otp = await this.generateOtp(secret);
-      await this.sendOtp(otp, user.username);
+      await this.sendOtp(otp, user);
       return {
         key: secret,
       };

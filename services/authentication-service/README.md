@@ -25,6 +25,8 @@ A Loopback Microservice for handling authentications. It provides -
 - Instagram OAuth using [passport-instagram](http://www.passportjs.org/packages/passport-instagram/).
 - Facebook OAuth using [passport-facebook](http://www.passportjs.org/packages/passport-facebook/).
 - Apple OAuth using [passport-apple](https://www.npmjs.com/package/passport-apple).
+- OTP Auth using custom passport otp strategy.
+- Two-Factor Authentication.
 
 To get started with a basic implementation of this service, see `/sandbox/auth-basic-example`.
 
@@ -63,6 +65,38 @@ npm i @sourceloop/authentication-service
   `AuthDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Set up a Loopback4 Datasource for caching tokens with `dataSourceName` property set to `AuthCacheSourceName`.
 - Bind any of the custom [providers](#providers) you need.
+- **OTP** -
+  - Implement OtpSenderProvider(refer [this](./src/providers/otp-sender.provider.ts)) in your application and bind it to its respective key in application.ts
+  ```typescript
+  import {VerifyBindings} from '@sourceloop/authentication-service';
+  this.bind(VerifyBindings.OTP_SENDER_PROVIDER).toProvider(OtpSenderProvider);
+  ```
+  - This provider is responsible for sending OTP to user.
+  - By default OTP is valid for 5 minutes. To change it, set OTP_STEP and OTP_WINDOW (refer [otp-options](https://www.npmjs.com/package/otplib#totp-options)) as per your need in .env.
+- **Google Authenticator** -
+  - To use google Authenticator instead of OTP in your application, add following to application.ts
+  ```typescript
+  import {AuthServiceBindings} from '@sourceloop/authentication-service';
+  this.bind(AuthServiceBindings.OtpConfig).to({
+    useGoogleAuthenticator: true,
+  });
+  ```
+- To authenticate using only OTP or Authenticator app, use the following APIs:
+  - `/send-otp`
+  - `/verify-otp`
+- **Two-Factor-Authentication** -
+
+  - 2nd Factor will always be either OTP or Google Authenticator.
+  - Implement MfaProvider(refer [this](./src/providers/mfa.provider.ts)) in your application and bind it to its respective key in application.ts
+
+  ```typescript
+  import {VerifyBindings} from '@sourceloop/authentication-service';
+  this.bind(VerifyBindings.MFA_PROVIDER).toProvider(MfaProvider);
+  ```
+
+  - It works for almost all authentication methods provided by this service.
+  - Use `/verify-otp` to enter otp or code from authenticator app.
+
 - Start the application
   `npm start`
 

@@ -79,7 +79,6 @@ CREATE TABLE main.user_credentials (
 	auth_id              varchar(100)   ,
 	auth_token           varchar(100)   ,
 	"password"           varchar(60)   ,
-	secret_key					 varchar(100)  ,
 	created_on           timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
 	modified_on          timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL ,
 	deleted              bool DEFAULT false NOT NULL ,

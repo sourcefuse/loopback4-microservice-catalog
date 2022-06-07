@@ -155,7 +155,7 @@ export interface OtpFn {
 }
 
 export interface OtpSenderFn {
-  (otp: string, email: string): Promise<void>;
+  (otp: string, user: User): Promise<void>;
 }
 
 export interface SignupTokenHandlerFn {
