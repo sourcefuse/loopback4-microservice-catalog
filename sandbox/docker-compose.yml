@@ -622,6 +622,7 @@ services:
     depends_on:
       - postgres
       - postgres_orchestrator
+      - payment-backend-migration
     restart: on-failure
 
   payment-backend-migration:
@@ -697,7 +698,8 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'&&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database payment_db'"
 
   pgadmin:
     container_name: pgadmin_container
