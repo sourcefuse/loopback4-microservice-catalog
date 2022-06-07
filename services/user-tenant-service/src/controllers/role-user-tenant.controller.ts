@@ -23,7 +23,6 @@ import {
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-// import {PermissionKey} from '@local/rakuten-core';
 import {PermissionKey} from '../enums';
 
 import {Role, UserTenant} from '../models';

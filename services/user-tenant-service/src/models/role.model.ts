@@ -1,6 +1,5 @@
 import {hasMany, model, property, hasOne} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-// import {RoleType} from '@local/rakuten-core';
 import {RoleType} from '../enums';
 
 import {UserTenant, UserTenantRelations} from './user-tenant.model';

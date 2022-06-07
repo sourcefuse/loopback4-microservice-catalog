@@ -1,9 +1,7 @@
 import {inject} from '@loopback/core';
-// import {get, HttpErrors, ResponseObject} from '@loopback/rest';
 import {get, ResponseObject} from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
-// import {PgdbDataSource} from '../datasources';
 
 /**
  * OpenAPI response for ping()
@@ -29,7 +27,6 @@ const PING_RESPONSE: ResponseObject = {
  */
 export class PingController {
   constructor(
-    // @inject('datasources.pgdb') private readonly dataSource: PgdbDataSource,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
   ) {}
