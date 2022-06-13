@@ -19,7 +19,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.0.2 linux-x64 node-v16.13.0
+@sourceloop/cli/2.0.2 darwin-arm64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -94,6 +94,9 @@ OPTIONS
   service|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service)
       base sourceloop microservice
 
+  --[no-]baseOnService
+      base on sourceloop microservice or not
+
   --customMigrations
       setup custom migration for this microservice
 
@@ -104,7 +107,7 @@ OPTIONS
       type of the datasource
 
   --[no-]facade
-      create a microservice facade
+      create as facade
 
   --help
       show manual pages

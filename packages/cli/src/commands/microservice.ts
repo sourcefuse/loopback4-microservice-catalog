@@ -10,12 +10,16 @@ export class Microservice extends Base<MicroserviceOptions> {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
-      type: 'boolean',
     }),
     facade: flags.boolean({
       name: 'facade',
-      description: 'create a microservice facade',
-      type: 'boolean',
+      description: 'create as facade',
+      allowNo: true,
+    }),
+    baseOnService: flags.boolean({
+      name: 'baseOnService',
+      exclusive: ['facade'],
+      description: 'base on sourceloop microservice or not',
       allowNo: true,
     }),
     baseService: flags.enum({
@@ -24,6 +28,8 @@ export class Microservice extends Base<MicroserviceOptions> {
       description: 'base sourceloop microservice',
       options: Object.values(SERVICES),
       required: false,
+      exclusive: ['facade'],
+      dependsOn: ['baseOnService'],
     }),
     uniquePrefix: flags.string({
       name: 'unique-prefix',
@@ -32,23 +38,29 @@ export class Microservice extends Base<MicroserviceOptions> {
       required: false,
     }),
     datasourceName: flags.string({
-      name: 'datasource-name',
+      name: 'datasourceName',
       description: 'name of the datasource to generate',
       required: false,
+      exclusive: ['facade'],
     }),
     datasourceType: flags.enum({
-      name: 'datasource-type',
+      name: 'datasourceType',
       description: 'type of the datasource',
       required: false,
       options: Object.values(DATASOURCES),
+      exclusive: ['facade'],
     }),
     includeMigrations: flags.boolean({
-      name: 'include-migrations',
+      name: 'includeMigrations',
       description: 'include base microservice migrations',
+      exclusive: ['facade', 'customMigrations'],
+      dependsOn: ['baseService', 'datasourceName', 'datasourceType'],
     }),
     customMigrations: flags.boolean({
-      name: 'generate-migrations',
+      name: 'generateMigrations',
       description: 'setup custom migration for this microservice',
+      exclusive: ['facade', 'includeMigrations'],
+      dependsOn: ['datasourceName', 'datasourceType'],
     }),
   };
   static args = [
@@ -56,10 +68,6 @@ export class Microservice extends Base<MicroserviceOptions> {
   ];
 
   async run() {
-    const inputs = this.parse(Microservice);
-    await super.generate('microservice', {
-      name: inputs.args.name,
-      ...inputs.flags,
-    });
+    await super.generate('microservice', Microservice);
   }
 }
