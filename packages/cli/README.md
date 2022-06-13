@@ -95,6 +95,9 @@ OPTIONS
   ice|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service|user-tenant-service)
       base sourceloop microservice
 
+  --[no-]baseOnService
+      base on sourceloop microservice or not
+
   --customMigrations
       setup custom migration for this microservice
 
@@ -105,7 +108,7 @@ OPTIONS
       type of the datasource
 
   --[no-]facade
-      create a microservice facade
+      create as facade
 
   --help
       show manual pages
