@@ -23,12 +23,12 @@ export class Scaffold extends Base<ScaffoldOptions> {
     }),
     issuePrefix: flags.string({
       name: 'issuePrefix',
-      description: 'prefix to be used for issues(e.g. GH-)',
+      description: 'Prefix to be used for issues(e.g. GH-)',
     }),
     cwd: flags.string({
       name: 'working-directory',
       description:
-        'directory where project will be scaffolded, instead of the project name',
+        'Directory where project will be scaffolded, instead of the project name',
     }),
   };
   static args = [
