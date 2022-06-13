@@ -17,7 +17,7 @@ export class Extension extends Base<ExtensionOptions> {
     }),
   };
   static args = [
-    {name: 'name', description: 'name of the extension', required: false},
+    {name: 'name', description: 'Name of the extension', required: false},
   ];
 
   async run() {
