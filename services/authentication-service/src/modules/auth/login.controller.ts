@@ -38,7 +38,7 @@ import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {AuthClient, RefreshToken, User} from '../../models';
+import {AuthClient, RefreshToken, User, UserCredentials} from '../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
@@ -52,6 +52,7 @@ import {
   RefreshTokenRepository,
   RevokedTokenRepository,
   RoleRepository,
+  UserCredentialsRepository,
   UserLevelPermissionRepository,
   UserLevelResourceRepository,
   UserRepository,
@@ -66,11 +67,14 @@ import {
   LoginRequest,
   OtpLoginRequest,
   OtpResponse,
+  QrCodeResponse,
 } from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
 import {OtpSendRequest} from './models/otp-send-request.dto';
+import {authenticator} from 'otplib';
+import qrcode from 'qrcode';
 
 const userAgentKey = 'user-agent';
 
@@ -100,6 +104,8 @@ export class LoginController {
     public revokedTokensRepo: RevokedTokenRepository,
     @repository(TenantConfigRepository)
     public tenantConfigRepo: TenantConfigRepository,
+    @repository(UserCredentialsRepository)
+    public userCredsRepository: UserCredentialsRepository,
     @inject(RestBindings.Http.REQUEST)
     private readonly req: Request,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
@@ -518,6 +524,90 @@ export class LoginController {
     return {
       code: token,
     };
+  }
+
+  @authorize({permissions: ['*']})
+  @post('/auth/qrcode', {
+    description:
+      'Gets you the qrCode that will be used for generating code in Authenticator App',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'qrCode that you can use to generate codes in Authenticator App',
+        content: {
+          [CONTENT_TYPE.JSON]: Object,
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async generateQr(
+    @requestBody() req: AuthTokenRequest,
+    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
+    codeReader: CodeReaderFn,
+  ): Promise<QrCodeResponse> {
+    const authClient = await this.authClientRepository.findOne({
+      where: {
+        clientId: req.clientId,
+      },
+    });
+    if (!authClient) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    try {
+      const code = await codeReader(req.code);
+      const payload = jwt.verify(code, authClient.secret, {
+        audience: req.clientId,
+        issuer: process.env.JWT_ISSUER,
+        algorithms: ['HS256'],
+      }) as ClientAuthCode<User, typeof User.prototype.id>;
+
+      const userId = payload.userId ?? payload.user?.id;
+
+      const authenticatorSecret: Pick<
+        UserCredentials,
+        'secretKey' | 'id'
+      > | null = await this.userCredsRepository.findOne({
+        where: {
+          userId: userId,
+        },
+        fields: {
+          secretKey: true,
+          id: true,
+        },
+      });
+
+      if (authenticatorSecret?.secretKey) {
+        return {};
+      }
+
+      const secretKey = authenticator.generateSecret();
+      await this.userCredsRepository.updateById(authenticatorSecret?.id, {
+        secretKey: secretKey,
+      });
+
+      const serviceName = process.env.SERVICE_NAME ?? 'auth-service';
+      let username = payload.user?.username;
+      if (!username) {
+        const user = await this.userRepo.findById(userId);
+        username = user.username;
+      }
+
+      const otpauth = authenticator.keyuri(username, serviceName, secretKey);
+      const qrCode = await qrcode.toDataURL(otpauth);
+      return {
+        qrCode,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      if (error.name === 'TokenExpiredError') {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
+      } else if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
+        throw error;
+      } else {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      }
+    }
   }
 
   private async createJWT(

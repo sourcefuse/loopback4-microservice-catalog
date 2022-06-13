@@ -5,3 +5,7 @@ export interface OtpResponse {
 export interface CodeResponse {
   code: string;
 }
+
+export interface QrCodeResponse {
+  qrCode?: string;
+}

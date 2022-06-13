@@ -17,7 +17,7 @@ export class OtpService {
     @repository(UserRepository)
     public userRepository: UserRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
-    @inject(VerifyBindings.OTP_PROVIDER)
+    @inject(VerifyBindings.OTP_PROVIDER, {optional: true})
     private readonly otpSender: OtpFn,
   ) {}
 

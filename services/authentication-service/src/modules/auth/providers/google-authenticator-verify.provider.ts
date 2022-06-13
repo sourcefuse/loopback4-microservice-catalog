@@ -1,16 +1,15 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
 import {
-  AuthenticationBindings,
-  AuthErrorKeys,
-  VerifyFunction,
-} from 'loopback4-authentication';
-import {OtpCacheRepository, UserRepository} from '../../../repositories';
+  OtpCacheRepository,
+  UserCredentialsRepository,
+  UserRepository,
+} from '../../../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {authenticator} from 'otplib';
-import {AuthClient} from '../../../models';
-import {OtpService} from '../../../services';
+import {UserCredentials} from '../../../models';
 
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
@@ -18,13 +17,11 @@ export class GoogleAuthenticatorVerifyProvider
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
+    @repository(UserCredentialsRepository)
+    public userCredsRepository: UserCredentialsRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
-    @inject(AuthenticationBindings.CURRENT_CLIENT)
-    private readonly client: AuthClient,
-    @inject('services.otpService')
-    private readonly otpService: OtpService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {
@@ -34,17 +31,22 @@ export class GoogleAuthenticatorVerifyProvider
           username: username,
         },
       });
-
-      //sender
-      if (!otp) {
-        await this.otpService.sendOtp(user, this.client);
-        return user;
+      if (!user) {
+        this.logger.error('Invalid Username');
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 
-      //verifier
-      const otpCache = await this.otpCacheRepo.get(username);
-      if (!otpCache) {
-        this.logger.error('Invalid Username');
+      const authenticatorSecret: Pick<UserCredentials, 'secretKey'> | null =
+        await this.userCredsRepository.findOne({
+          where: {
+            userId: user.id,
+          },
+          fields: {
+            secretKey: true,
+          },
+        });
+
+      if (!authenticatorSecret?.secretKey) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 
@@ -52,7 +54,7 @@ export class GoogleAuthenticatorVerifyProvider
       try {
         isValid = authenticator
           .create(authenticator.allOptions())
-          .verify({token: otp, secret: otpCache.otpSecret!});
+          .verify({token: otp, secret: authenticatorSecret.secretKey});
       } catch (err) {
         this.logger.error(err);
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
