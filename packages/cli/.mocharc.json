@@ -1,4 +1,6 @@
 {
   "require": "ts-node/register",
-  "spec": ["src/__tests__/**/*.ts"]
+  "spec": [
+    "src/__tests__/**/*.ts"
+  ]
 }
