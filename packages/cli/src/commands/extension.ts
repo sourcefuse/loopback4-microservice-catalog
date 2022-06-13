@@ -21,10 +21,6 @@ export class Extension extends Base<ExtensionOptions> {
   ];
 
   async run() {
-    const inputs = this.parse(Extension);
-    await super.generate('extension', {
-      name: inputs.args.name,
-      help: inputs.flags.help,
-    });
+    await super.generate('extension', Extension);
   }
 }

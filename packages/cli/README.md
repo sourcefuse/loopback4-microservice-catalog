@@ -13,27 +13,30 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.4.3 linux-x64 node-v16.13.0
+@sourceloop/cli/2.0.2 darwin-arm64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -95,6 +98,9 @@ OPTIONS
   ice|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service|user-tenant-service)
       base sourceloop microservice
 
+  --[no-]baseOnService
+      base on sourceloop microservice or not
+
   --customMigrations
       setup custom migration for this microservice
 
@@ -105,7 +111,7 @@ OPTIONS
       type of the datasource
 
   --[no-]facade
-      create a microservice facade
+      create as facade
 
   --help
       show manual pages
@@ -150,4 +156,5 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.3/src/commands/update.ts)_
+
 <!-- commandsstop -->

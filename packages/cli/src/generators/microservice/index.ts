@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
 import {join} from 'path';
-import {Question} from 'yeoman-generator';
 import AppGenerator from '../../app-generator';
 import {
   DATASOURCES,
@@ -83,20 +82,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     return super._setupGenerator();
   }
 
-  async promptName() {
-    if (!this.shouldExit() && !this.options.name) {
-      const {name} = await this.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'Name of the microservice:',
-          required: true,
-        },
-      ]);
-      this.options.name = name;
-    }
-  }
-
   async setOptions() {
     return super.setOptions();
   }
@@ -105,72 +90,13 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     return super.promptProjectName();
   }
 
-  async promptUniquePrefix() {
-    if (!this.shouldExit()) {
-      if (!this.options.uniquePrefix) {
-        const {uniquePrefix} = await this.prompt([
-          {
-            type: 'string',
-            name: 'uniquePrefix',
-            message: 'Unique prefix for the docker image:',
-            default: this.options.name,
-          },
-        ]);
-        this.options.uniquePrefix = uniquePrefix;
-      }
-    }
-  }
-
   async promptFacade() {
-    if (!this.shouldExit()) {
-      if (this.options.facade === null || this.options.facade === undefined) {
-        const {isFacade} = await this.prompt([
-          {
-            name: 'isFacade',
-            type: 'confirm',
-            message: 'Is this a facade?',
-            default: false,
-          },
-        ]);
-        this.options.facade = isFacade;
-        this.projectInfo.facade = isFacade;
-      } else {
-        this.projectInfo.facade = this.options.facade;
-      }
-    }
+    this.projectInfo.facade = this.options.facade;
   }
 
   async promptBaseService() {
-    if (!this.shouldExit() && !this.options.facade) {
-      if (!this.options.baseService) {
-        const {baseOnService} = await this.prompt([
-          {
-            type: 'confirm',
-            name: 'baseOnService',
-            message: 'Do you want to base this on a sourceloop microservice?',
-            default: false,
-          },
-        ]);
-        if (baseOnService) {
-          const {baseService} = await this.prompt([
-            {
-              name: 'baseService',
-              type: 'list',
-              choices: Object.values(SERVICES),
-              message: 'Select the service you want to use:',
-              required: true,
-            },
-          ]);
-          this.options.baseService = baseService;
-          this.projectInfo.serviceDependency = baseService;
-        } else if (this.options.includeMigrations) {
-          this.exit('--include-migrations option requires a base service');
-        } else {
-          // do nothing
-        }
-      } else {
-        this.projectInfo.serviceDependency = this.options.baseService;
-      }
+    if (this.options.baseService) {
+      this.projectInfo.serviceDependency = this.options.baseService;
     }
   }
 
@@ -186,105 +112,29 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     return super.buildAppClassMixins();
   }
 
-  async promptDatasource() {
-    if (!this.shouldExit() && !this.options.facade) {
-      const prompts = [];
-
-      if (!this.options.datasourceName) {
-        const {extraDataSource} = await this.prompt([
-          {
-            type: 'confirm',
-            name: 'extraDataSource',
-            message:
-              'Do you want to add additional datasource apart from the one in base service',
-            default: false,
-          },
-        ]);
-
-        if (extraDataSource) {
-          prompts.push({
-            type: 'input',
-            name: 'datasourceName',
-            message: 'Datasource name: ',
-            default: 'db',
-          });
-        }
-      }
-
-      if (!this.options.datasourceType) {
-        prompts.push({
-          type: 'list',
-          name: 'datasourceType',
-          message: 'Select the connector:',
-          choices: Object.values(DATASOURCES),
-          required: true,
-        });
-      }
-
-      if (!(this.options.customMigrations || this.options.includeMigrations)) {
-        prompts.push({
-          type: 'confirm',
-          name: 'migrations',
-          message: 'Do you want to add migrations?',
-          default: false,
-        });
-      }
-
-      const answers = await this.prompt(prompts);
-      this.options = {
-        ...this.options,
-        ...answers,
-      };
-      this.projectInfo.datasourceConnector =
-        DATASOURCE_CONNECTORS[
-          this.options.datasourceType ?? DATASOURCES.POSTGRES
-        ];
-      this.projectInfo.datasourceConnectorName =
-        this.projectInfo.datasourceConnector;
-      this.projectInfo.datasourceType = this.options.datasourceType;
-    }
+  async setDatasource() {
+    this.projectInfo.datasourceName = this.options.datasourceName;
+    this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
+      this.options.datasourceName,
+    );
+    this.projectInfo.datasourceConnector =
+      DATASOURCE_CONNECTORS[
+        this.options.datasourceType ?? DATASOURCES.POSTGRES
+      ];
+    this.projectInfo.datasourceConnectorName =
+      this.projectInfo.datasourceConnector;
+    this.projectInfo.datasourceType = this.options.datasourceType;
   }
 
-  async promptMigrationType() {
-    if (
-      !this.shouldExit() &&
-      this.options.migrations &&
-      !(this.options.customMigrations && this.options.includeMigrations) &&
-      this.options.baseService
-    ) {
-      const prompts: Array<Question> = [
-        {
-          type: 'list',
-          name: 'migrationType',
-          choices: Object.values(MIGRATIONS),
-          message: 'How do you want to setup the migrations?',
-          default: MIGRATIONS.CUSTOM,
-        },
-      ];
-      if (!this.options.datasourceType) {
-        prompts.push({
-          type: 'list',
-          name: 'datasourceType',
-          message: 'Select the connector:',
-          choices: Object.values(DATASOURCES),
-        });
-      }
-      const {migrationType} = await this.prompt(prompts);
-      this.projectInfo.migrationType = migrationType;
-      this.options.customMigrations =
-        this.projectInfo.migrationType === MIGRATIONS.CUSTOM;
-      this.options.includeMigrations =
-        this.projectInfo.migrationType === MIGRATIONS.INCLUDED;
+  async setMigrationType() {
+    if (this.options.customMigrations) {
+      this.options.migrations = true;
+      this.projectInfo.migrationType = MIGRATIONS.CUSTOM;
+    } else if (this.options.includeMigrations) {
+      this.options.migrations = true;
+      this.projectInfo.migrationType = MIGRATIONS.INCLUDED;
     } else {
-      if (this.options.customMigrations) {
-        this.options.migrations = true;
-        this.projectInfo.migrationType = MIGRATIONS.CUSTOM;
-      } else if (this.options.includeMigrations) {
-        this.options.migrations = true;
-        this.projectInfo.migrationType = MIGRATIONS.INCLUDED;
-      } else {
-        // do nothing
-      }
+      // do nothing
     }
   }
 
