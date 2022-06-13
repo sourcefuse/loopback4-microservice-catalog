@@ -18,7 +18,7 @@
       "args": [
         {
           "name": "name",
-          "description": "name of the extension",
+          "description": "Name of the extension",
           "required": false
         }
       ]
@@ -39,20 +39,20 @@
         "facade": {
           "name": "facade",
           "type": "boolean",
-          "description": "create as facade",
+          "description": "Create as facade",
           "allowNo": true
         },
         "baseOnService": {
           "name": "baseOnService",
           "type": "boolean",
-          "description": "base on sourceloop microservice or not",
+          "description": "Base on sourceloop microservice or not",
           "allowNo": true
         },
         "baseService": {
           "name": "baseService",
           "type": "option",
           "char": "s",
-          "description": "base sourceloop microservice",
+          "description": "Base sourceloop microservice",
           "required": false,
           "helpValue": "(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-service|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service)",
           "options": [
@@ -73,19 +73,19 @@
           "name": "uniquePrefix",
           "type": "option",
           "char": "p",
-          "description": "unique prefix to be used for docker images",
+          "description": "Unique prefix to be used for docker images",
           "required": false
         },
         "datasourceName": {
           "name": "datasourceName",
           "type": "option",
-          "description": "name of the datasource to generate",
+          "description": "Name of the datasource to generate",
           "required": false
         },
         "datasourceType": {
           "name": "datasourceType",
           "type": "option",
-          "description": "type of the datasource",
+          "description": "Type of the datasource",
           "required": false,
           "helpValue": "(postgres|mysql)",
           "options": [
@@ -96,20 +96,20 @@
         "includeMigrations": {
           "name": "includeMigrations",
           "type": "boolean",
-          "description": "include base microservice migrations",
+          "description": "Include base microservice migrations",
           "allowNo": false
         },
         "customMigrations": {
           "name": "customMigrations",
           "type": "boolean",
-          "description": "setup custom migration for this microservice",
+          "description": "Setup custom migration for this microservice",
           "allowNo": false
         }
       },
       "args": [
         {
           "name": "name",
-          "description": "name of the microservice",
+          "description": "Name of the microservice",
           "required": false
         }
       ]
@@ -130,12 +130,12 @@
         "issuePrefix": {
           "name": "issuePrefix",
           "type": "option",
-          "description": "prefix to be used for issues(e.g. GH-)"
+          "description": "Prefix to be used for issues(e.g. GH-)"
         },
         "cwd": {
           "name": "cwd",
           "type": "option",
-          "description": "directory where project will be scaffolded, instead of the project name"
+          "description": "Directory where project will be scaffolded, instead of the project name"
         }
       },
       "args": [
