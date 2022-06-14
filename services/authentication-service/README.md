@@ -68,25 +68,32 @@ npm i @sourceloop/authentication-service
 - **OTP** -
   - Implement OtpSenderProvider(refer [this](./src/providers/otp-sender.provider.ts)) in your application and bind it to its respective key in application.ts
   ```typescript
-  import {VerifyBindings} from '@sourceloop/authentication-service';
+  import {
+    VerifyBindings,
+    AuthServiceBindings,
+  } from '@sourceloop/authentication-service';
   this.bind(VerifyBindings.OTP_SENDER_PROVIDER).toProvider(OtpSenderProvider);
+  this.bind(AuthServiceBindings.MfaConfig).to({
+    secondFactor: SecondFactor.OTP,
+  });
   ```
   - This provider is responsible for sending OTP to user.
   - By default OTP is valid for 5 minutes. To change it, set OTP_STEP and OTP_WINDOW (refer [otp-options](https://www.npmjs.com/package/otplib#totp-options)) as per your need in .env.
 - **Google Authenticator** -
-  - To use google Authenticator instead of OTP in your application, add following to application.ts
+  - To use google Authenticator in your application, add following to application.ts
   ```typescript
   import {AuthServiceBindings} from '@sourceloop/authentication-service';
-  this.bind(AuthServiceBindings.OtpConfig).to({
-    useGoogleAuthenticator: true,
+  this.bind(AuthServiceBindings.MfaConfig).to({
+    secondFactor: SecondFactor.GOOGLE_AUTHENTICATOR,
   });
   ```
 - To authenticate using only OTP or Authenticator app, use the following APIs:
   - `/send-otp`
+  - `/auth/qrcode`
   - `/verify-otp`
 - **Two-Factor-Authentication** -
 
-  - 2nd Factor will always be either OTP or Google Authenticator.
+  - As of now, 2nd Factor will always be either OTP or Google Authenticator.
   - Implement MfaProvider(refer [this](./src/providers/mfa.provider.ts)) in your application and bind it to its respective key in application.ts
 
   ```typescript
