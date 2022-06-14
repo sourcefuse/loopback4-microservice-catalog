@@ -7,6 +7,10 @@ export interface ProjectInfo {
     [key: string]: string;
   };
 }
+
+export interface dependencyType {
+  [key: string]: string;
+}
 export interface MicroserviceOptions extends Generator.GeneratorOptions {
   name?: string;
   baseService?: SERVICES;
@@ -22,6 +26,9 @@ export interface MicroserviceOptions extends Generator.GeneratorOptions {
 
 export interface ExtensionOptions extends Generator.GeneratorOptions {
   name?: string;
+  help?: boolean;
+}
+export interface UpdateOptions extends Generator.GeneratorOptions {
   help?: boolean;
 }
 
