@@ -94,15 +94,6 @@
     "widdershins": "^4.0.1"
   },
   "overrides": {
-    "jake": {
-      "async": "^3.2.3"
-    },
-    "passport-azure-ad": {
-      "async": "^3.2.3"
-    },
-    "cache-manager": {
-      "async": "^3.2.3"
-    },
     "widdershins": {
       "swagger2openapi": "^7.0.8",
       "markdown-it": "^12.3.2",
