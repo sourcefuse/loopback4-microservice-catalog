@@ -1,4 +1,9 @@
-import {AnyObject, DependencyType, UpdateOptions} from '../../types';
+import {
+  AnyObject,
+  DependencyType,
+  PackageDependencies,
+  UpdateOptions,
+} from '../../types';
 import BaseUpdateGenerator from '../../update-generator';
 import {join} from 'path';
 import {readdirSync} from 'fs';
@@ -85,11 +90,10 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       ];
       const answer = await this.prompt(prompts);
       if (answer && answer.decision === 'continue') {
-        return false;
+        return;
       }
       if (answer && answer.decision === 'upgrade') {
         await this._updateDependencies();
-        return true;
       }
     }
   }
@@ -103,33 +107,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
   }
 
   private async _checkDependencies() {
-    const packageJson = this.fs.readJSON(
-      this.destinationPath(packageJsonFile),
-    ) as AnyObject;
-
-    // const pkgDeps: {
-    //   dependencies: DependencyType;
-    //   devDependencies: DependencyType;
-    //   peerDependencies: DependencyType;
-    // } = packageJson
-    //   ? {
-    //       dependencies: {...packageJson.dependencies},
-    //       devDependencies: {...packageJson.devDependencies},
-    //       peerDependencies: {...packageJson.peerDependencies},
-    //     }
-    //   : {dependencies: {}, devDependencies: {}, peerDependencies: {}};
-
-    // const depsToUpdate: {
-    //   dependencies: DependencyType;
-    //   devDependencies: DependencyType;
-    //   peerDependencies: DependencyType;
-    // } = {
-    //   dependencies: {},
-    //   devDependencies: {},
-    //   peerDependencies: {},
-    // };
-
-    const {pkgDeps, depsToUpdate} = this._intialliseDependencies();
+    const {pkgDeps, depsToUpdate} = await this._initialiseDependencies();
 
     let found = false;
     // find the incompatable dependencies
@@ -163,54 +141,58 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       );
       return false;
     } else {
-      // print the incompatible dependencies
-
-      this.log(
-        chalk.red(
-          `${packageJson.name} contains the following sourceloop dependencies that are incompatible with @sourceloop/cli@${configJsonFile.version}`,
-        ),
-      );
-      this.log('dependencies');
-      for (const s in depsToUpdate.dependencies) {
-        this.log(
-          chalk.yellow('- %s: %s (sl cli %s)'),
-          s,
-          pkgDeps.dependencies[s],
-          depsToUpdate.dependencies[s],
-        );
-      }
-      this.log('devDependencies');
-      for (const s in depsToUpdate.devDependencies) {
-        this.log(
-          chalk.yellow('- %s: %s (cli %s)'),
-          s,
-          pkgDeps.devDependencies[s],
-          depsToUpdate.devDependencies[s],
-        );
-      }
-      this.log('peerDependencies');
-      for (const s in depsToUpdate.peerDependencies) {
-        this.log(
-          chalk.yellow('- %s: %s (cli %s)'),
-          s,
-          pkgDeps.peerDependencies[s],
-          depsToUpdate.peerDependencies[s],
-        );
-      }
-      return true;
+      return this._printDepsToUpdate(depsToUpdate, pkgDeps);
     }
   }
 
-  private _intialliseDependencies() {
+  private async _printDepsToUpdate(
+    depsToUpdate: PackageDependencies,
+    pkgDeps: PackageDependencies,
+  ) {
+    const packageJson = this.fs.readJSON(
+      this.destinationPath(packageJsonFile),
+    ) as AnyObject;
+    this.log(
+      chalk.red(
+        `${packageJson.name} contains the following sourceloop dependencies that are incompatible with @sourceloop/cli@${configJsonFile.version}`,
+      ),
+    );
+    this.log('dependencies');
+    for (const s in depsToUpdate.dependencies) {
+      this.log(
+        chalk.yellow('- %s: %s (sl cli %s)'),
+        s,
+        pkgDeps.dependencies[s],
+        depsToUpdate.dependencies[s],
+      );
+    }
+    this.log('devDependencies');
+    for (const s in depsToUpdate.devDependencies) {
+      this.log(
+        chalk.yellow('- %s: %s (cli %s)'),
+        s,
+        pkgDeps.devDependencies[s],
+        depsToUpdate.devDependencies[s],
+      );
+    }
+    this.log('peerDependencies');
+    for (const s in depsToUpdate.peerDependencies) {
+      this.log(
+        chalk.yellow('- %s: %s (cli %s)'),
+        s,
+        pkgDeps.peerDependencies[s],
+        depsToUpdate.peerDependencies[s],
+      );
+    }
+    return true;
+  }
+
+  private async _initialiseDependencies() {
     const packageJson = this.fs.readJSON(
       this.destinationPath(packageJsonFile),
     ) as AnyObject;
 
-    const pkgDeps: {
-      dependencies: DependencyType;
-      devDependencies: DependencyType;
-      peerDependencies: DependencyType;
-    } = packageJson
+    const pkgDeps: PackageDependencies = packageJson
       ? {
           dependencies: {...packageJson.dependencies},
           devDependencies: {...packageJson.devDependencies},
@@ -218,16 +200,11 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
         }
       : {dependencies: {}, devDependencies: {}, peerDependencies: {}};
 
-    const depsToUpdate: {
-      dependencies: DependencyType;
-      devDependencies: DependencyType;
-      peerDependencies: DependencyType;
-    } = {
+    const depsToUpdate: PackageDependencies = {
       dependencies: {},
       devDependencies: {},
       peerDependencies: {},
     };
-
     return {pkgDeps, depsToUpdate};
   }
 
@@ -236,7 +213,6 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       this.destinationPath(packageJsonFile),
     ) as AnyObject;
 
-    const updates = [];
     for (const d in tempDeps) {
       if (
         packageJs.dependencies &&

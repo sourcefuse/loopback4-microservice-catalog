@@ -12,6 +12,12 @@ export interface ProjectInfo {
 export interface DependencyType {
   [key: string]: string;
 }
+
+export interface PackageDependencies {
+  dependencies: DependencyType;
+  devDependencies: DependencyType;
+  peerDependencies: DependencyType;
+}
 // sonarignore:end
 export interface MicroserviceOptions extends Generator.GeneratorOptions {
   name?: string;
