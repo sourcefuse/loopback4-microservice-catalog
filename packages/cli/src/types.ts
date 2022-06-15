@@ -8,9 +8,11 @@ export interface ProjectInfo {
   };
 }
 
-export interface dependencyType {
+// sonarignore:start
+export interface DependencyType {
   [key: string]: string;
 }
+// sonarignore:end
 export interface MicroserviceOptions extends Generator.GeneratorOptions {
   name?: string;
   baseService?: SERVICES;
