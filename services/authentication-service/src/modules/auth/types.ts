@@ -7,5 +7,6 @@ export interface CodeResponse {
 }
 
 export interface QrCodeResponse {
+  userId?: string;
   qrCode?: string;
 }

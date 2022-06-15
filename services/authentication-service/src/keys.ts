@@ -1,7 +1,7 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {ForgotPasswordHandlerFn, JwtPayloadFn} from './providers';
-import {IAuthServiceConfig, IMfaConfig} from './types';
+import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export namespace AuthServiceBindings {
   export const Config = BindingKey.create<IAuthServiceConfig | null>(
@@ -10,6 +10,10 @@ export namespace AuthServiceBindings {
 
   export const MfaConfig = BindingKey.create<IMfaConfig | null>(
     `${BINDING_PREFIX}.auth.mfa.config`,
+  );
+
+  export const OtpConfig = BindingKey.create<IOtpConfig | null>(
+    `${BINDING_PREFIX}.auth.mfa.otp.config`,
   );
 
   export const JWTPayloadProvider = BindingKey.create<JwtPayloadFn>(

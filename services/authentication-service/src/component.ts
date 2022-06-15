@@ -9,13 +9,17 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {CoreComponent, SECURITY_SCHEME_SPEC} from '@sourceloop/core';
-import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  AuthenticationComponent,
+  Strategies,
+  STRATEGY,
+} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {controllers} from './controllers';
-import {SecondFactor} from './enums';
+import {OtpMethodType} from './enums';
 import {AuthServiceBindings} from './keys';
 import {models} from './models';
 import {
@@ -66,7 +70,7 @@ import {MfaProvider} from './providers/mfa.provider';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
-import {IAuthServiceConfig, IMfaConfig} from './types';
+import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
@@ -74,6 +78,8 @@ export class AuthenticationServiceComponent implements Component {
     private readonly application: RestApplication,
     @inject(AuthServiceBindings.MfaConfig, {optional: true})
     private readonly mfaConfig: IMfaConfig,
+    @inject(AuthServiceBindings.OtpConfig, {optional: true})
+    private readonly otpConfig: IOtpConfig,
     @inject(AuthServiceBindings.Config, {optional: true})
     private readonly authConfig?: IAuthServiceConfig,
   ) {
@@ -231,18 +237,21 @@ export class AuthenticationServiceComponent implements Component {
   setupMultiFactorAuthentication() {
     this.providers[VerifyBindings.MFA_PROVIDER.key] = MfaProvider;
 
-    if (this.mfaConfig?.secondFactor === SecondFactor.OTP) {
-      this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
-        OtpGenerateProvider;
-      this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] =
-        OtpSenderProvider;
-      this.providers[VerifyBindings.OTP_PROVIDER.key] = OtpProvider;
-      this.providers[Strategies.Passport.OTP_VERIFIER.key] = OtpVerifyProvider;
-    } else if (
-      this.mfaConfig?.secondFactor === SecondFactor.GOOGLE_AUTHENTICATOR
-    ) {
-      this.providers[Strategies.Passport.OTP_VERIFIER.key] =
-        GoogleAuthenticatorVerifyProvider;
+    if (this.mfaConfig?.secondFactor === STRATEGY.OTP) {
+      if (this.otpConfig?.method === OtpMethodType.OTP) {
+        this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
+          OtpGenerateProvider;
+        this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] =
+          OtpSenderProvider;
+        this.providers[VerifyBindings.OTP_PROVIDER.key] = OtpProvider;
+        this.providers[Strategies.Passport.OTP_VERIFIER.key] =
+          OtpVerifyProvider;
+      } else if (
+        this.otpConfig?.method === OtpMethodType.GOOGLE_AUTHENTICATOR
+      ) {
+        this.providers[Strategies.Passport.OTP_VERIFIER.key] =
+          GoogleAuthenticatorVerifyProvider;
+      }
     }
   }
 }

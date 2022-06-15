@@ -1,5 +1,5 @@
 import {inject, Provider} from '@loopback/context';
-import {ClientAuthCode} from 'loopback4-authentication';
+import {ClientAuthCode, STRATEGY} from 'loopback4-authentication';
 import {AuthClient, User} from '../models';
 import {AuthCodeGeneratorFn, CodeWriterFn, MfaCheckFn} from './types';
 import * as jwt from 'jsonwebtoken';
@@ -7,8 +7,8 @@ import {AuthUser} from '../modules/auth';
 import {AuthCodeBindings, VerifyBindings} from './keys';
 import {OtpService} from '../services';
 import {AuthServiceBindings} from '../keys';
-import {IMfaConfig} from '../types';
-import {SecondFactor} from '../enums';
+import {IMfaConfig, IOtpConfig} from '../types';
+import {OtpMethodType} from '../enums';
 
 export class AuthCodeGeneratorProvider
   implements Provider<AuthCodeGeneratorFn>
@@ -22,6 +22,8 @@ export class AuthCodeGeneratorProvider
     private readonly codeWriter: CodeWriterFn,
     @inject(AuthServiceBindings.MfaConfig, {optional: true})
     private readonly mfaConfig: IMfaConfig,
+    @inject(AuthServiceBindings.OtpConfig, {optional: true})
+    private readonly otpConfig: IOtpConfig,
   ) {}
 
   value(): AuthCodeGeneratorFn {
@@ -33,7 +35,10 @@ export class AuthCodeGeneratorProvider
       const isMfaEnabled = await this.checkMfa(user);
       if (isMfaEnabled) {
         codePayload.mfa = true;
-        if (this.mfaConfig.secondFactor === SecondFactor.OTP) {
+        if (
+          this.mfaConfig.secondFactor === STRATEGY.OTP &&
+          this.otpConfig.method === OtpMethodType.OTP
+        ) {
           await this.otpService.sendOtp(user, client);
         }
       }

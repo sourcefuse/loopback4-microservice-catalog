@@ -38,12 +38,11 @@ import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {AuthClient, RefreshToken, User, UserCredentials} from '../../models';
+import {AuthClient, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
   CodeReaderFn,
-  CodeWriterFn,
   JwtPayloadFn,
 } from '../../providers';
 import {
@@ -65,16 +64,10 @@ import {
   AuthTokenRequest,
   CodeResponse,
   LoginRequest,
-  OtpLoginRequest,
-  OtpResponse,
-  QrCodeResponse,
 } from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-import {OtpSendRequest} from './models/otp-send-request.dto';
-import {authenticator} from 'otplib';
-import qrcode from 'qrcode';
 
 const userAgentKey = 'user-agent';
 
@@ -452,162 +445,6 @@ export class LoginController {
     }
     delete this.user.deviceInfo;
     return new AuthUser(this.user);
-  }
-
-  // OTP,Google Authenticator APIs
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.OTP)
-  @authorize({permissions: ['*']})
-  @post('/auth/send-otp', {
-    description: 'Sends OTP',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Sends otp to user',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async sendOtp(
-    @requestBody()
-    req: OtpSendRequest, //NOSONAR
-    @inject(AuthenticationBindings.CURRENT_CLIENT)
-    client: AuthClient, //NOSONAR
-    @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser, //NOSONAR
-  ): Promise<OtpResponse | void> {
-    //do nothing
-  }
-
-  @authenticate(STRATEGY.OTP)
-  @authorize({permissions: ['*']})
-  @post('/auth/verify-otp', {
-    description:
-      'Gets you the code that will be used for getting token (webapps)',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description:
-          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async verifyOtp(
-    @requestBody()
-    req: OtpLoginRequest,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser | undefined,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    codeWriter: CodeWriterFn,
-  ): Promise<CodeResponse> {
-    const otpCache = await this.otpCacheRepo.get(req.key);
-    if (user?.id) {
-      otpCache.userId = user.id;
-    }
-    const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-      clientId: otpCache.clientId,
-      userId: otpCache.userId,
-    };
-    const token = await codeWriter(
-      jwt.sign(codePayload, otpCache.clientSecret, {
-        expiresIn: 180,
-        audience: otpCache.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      }),
-    );
-    return {
-      code: token,
-    };
-  }
-
-  @authorize({permissions: ['*']})
-  @post('/auth/qrcode', {
-    description:
-      'Gets you the qrCode that will be used for generating code in Authenticator App',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description:
-          'qrCode that you can use to generate codes in Authenticator App',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async generateQr(
-    @requestBody() req: AuthTokenRequest,
-    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
-    codeReader: CodeReaderFn,
-  ): Promise<QrCodeResponse> {
-    const authClient = await this.authClientRepository.findOne({
-      where: {
-        clientId: req.clientId,
-      },
-    });
-    if (!authClient) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    }
-    try {
-      const code = await codeReader(req.code);
-      const payload = jwt.verify(code, authClient.secret, {
-        audience: req.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
-
-      const userId = payload.userId ?? payload.user?.id;
-
-      const authenticatorSecret: Pick<
-        UserCredentials,
-        'secretKey' | 'id'
-      > | null = await this.userCredsRepository.findOne({
-        where: {
-          userId: userId,
-        },
-        fields: {
-          secretKey: true,
-          id: true,
-        },
-      });
-
-      if (authenticatorSecret?.secretKey) {
-        return {};
-      }
-
-      const secretKey = authenticator.generateSecret();
-      await this.userCredsRepository.updateById(authenticatorSecret?.id, {
-        secretKey: secretKey,
-      });
-
-      const serviceName = process.env.SERVICE_NAME ?? 'auth-service';
-      let username = payload.user?.username;
-      if (!username) {
-        const user = await this.userRepo.findById(userId);
-        username = user.username;
-      }
-
-      const otpauth = authenticator.keyuri(username, serviceName, secretKey);
-      const qrCode = await qrcode.toDataURL(otpauth);
-      return {
-        qrCode,
-      };
-    } catch (error) {
-      this.logger.error(error);
-      if (error.name === 'TokenExpiredError') {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
-      } else if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
-        throw error;
-      } else {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-      }
-    }
   }
 
   private async createJWT(
