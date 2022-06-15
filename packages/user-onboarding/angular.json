@@ -35,21 +35,8 @@
             "tsConfig": "projects/user-onboarding-lib/tsconfig.spec.json",
             "karmaConfig": "projects/user-onboarding-lib/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/user-onboarding-lib/tsconfig.lib.json",
-              "projects/user-onboarding-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
-  },
-  "defaultProject": "userOnboardingLib"
+  }
 }
