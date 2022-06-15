@@ -1,9 +1,4 @@
-import {
-  AnyObject,
-  DependencyType,
-  PackageDependencies,
-  UpdateOptions,
-} from '../../types';
+import {AnyObject, PackageDependencies, UpdateOptions} from '../../types';
 import BaseUpdateGenerator from '../../update-generator';
 import {join} from 'path';
 import {readdirSync} from 'fs';
