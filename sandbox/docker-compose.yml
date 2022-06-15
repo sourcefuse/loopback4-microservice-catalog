@@ -84,27 +84,8 @@ x-feature-toggle-variables: &feature-toggle-variables
   DB_USER: ${POSTGRES_USER:-postgres}
   DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
   DB_DATABASE: feature_toggle_db
-  REDIS_HOST: redis
-  REDIS_PORT: 6379
-  REDIS_URL:
-  REDIS_PASSWORD:
-  REDIS_DB: 0
-  UNLEASH_USERNAME: admin
-  UNLEASH_PASSWORD: unleash4all
-  UNLEASH_URL: http://localhost:4242/api
-  APP_NAME: app_name
-  APP_ENV: production
-  UNLEASH_AUTH: enter_your_auth_token_here
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
-
-x-unleash-variables: &unleash-variables
-  DATABASE_HOST: postgres
-  DATABASE_PORT: 5432
-  DATABASE_USERNAME: ${POSTGRES_USER:-postgres}
-  DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-  DATABASE_NAME: feature_toggle_db
-  DATABASE_SSL: "false"
 
 x-scheduler-variables: &scheduler-variables
   NODE_ENV: dev
@@ -531,19 +512,6 @@ services:
       dockerfile: Dockerfile
     environment: *feature-toggle-variables
     depends_on:
-      - unleash-service
-      - postgres
-      - postgres_orchestrator
-    networks:
-      - sandbox
-    restart: on-failure
-
-  unleash-service:
-    image: unleashorg/unleash-server:4.0.10
-    ports:
-      - '4242:4242'
-    environment: *unleash-variables
-    depends_on:
       - postgres
       - postgres_orchestrator
     networks:
@@ -622,6 +590,7 @@ services:
     depends_on:
       - postgres
       - postgres_orchestrator
+      - payment-backend-migration
     restart: on-failure
 
   payment-backend-migration:
@@ -697,6 +666,7 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'&&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database payment_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb'"
 
   pgadmin:

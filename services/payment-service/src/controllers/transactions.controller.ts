@@ -32,14 +32,6 @@ import {
 } from '../repositories';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {ResponseMessage, TemplateName, TemplateType} from '../enums';
-const dotenvExt = require('dotenv-extended');
-const path = require('path');
-dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
-  errorOnMissing: false,
-  includeProcessEnv: true,
-});
 const transactionsRoutePath = '/transactions';
 const tranasactionsIdRoutePath = '/transactions/{id}';
 const redirectStatusCode = 302;
