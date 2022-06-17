@@ -1,6 +1,6 @@
 import {flags} from '@oclif/command';
 import Base from '../command-base';
-import {UpdateOptions} from '../types';
+import {UpdateOptions} from '../generators/update/types/types';
 
 export class Update extends Base<UpdateOptions> {
   static description = 'update the dependencies of a loopback project';

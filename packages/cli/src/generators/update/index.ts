@@ -1,7 +1,8 @@
-import {AnyObject, PackageDependencies, UpdateOptions} from '../../types';
+import {AnyObject} from '../../types';
 import BaseUpdateGenerator from '../../update-generator';
 import {join} from 'path';
 import {readdirSync} from 'fs';
+import {PackageDependencies, UpdateOptions} from './types/types';
 const chalk = require('chalk'); //NOSONAR
 const fse = require('fs-extra'); //NOSONAR
 
@@ -113,15 +114,15 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       if (!dep && !devDep && !peerDep) continue;
 
       const tempDependency = tempDeps[d];
-      if (dep && this._compare(tempDependency, dep)) {
+      if (dep && tempDependency !== dep) {
         depsToUpdate.dependencies[d] = tempDependency;
         found = true;
       }
-      if (devDep && this._compare(tempDependency, devDep)) {
+      if (devDep && tempDependency !== devDep) {
         found = true;
         depsToUpdate.devDependencies[d] = tempDependency;
       }
-      if (peerDep && this._compare(tempDependency, peerDep)) {
+      if (peerDep && tempDependency !== peerDep) {
         found = true;
         depsToUpdate.peerDependencies[d] = tempDependency;
       }

@@ -7,18 +7,6 @@ export interface ProjectInfo {
     [key: string]: string;
   };
 }
-
-// sonarignore:start
-export interface DependencyType {
-  [key: string]: string;
-}
-
-export interface PackageDependencies {
-  dependencies: DependencyType;
-  devDependencies: DependencyType;
-  peerDependencies: DependencyType;
-}
-// sonarignore:end
 export interface MicroserviceOptions extends Generator.GeneratorOptions {
   name?: string;
   baseService?: SERVICES;
@@ -34,9 +22,6 @@ export interface MicroserviceOptions extends Generator.GeneratorOptions {
 
 export interface ExtensionOptions extends Generator.GeneratorOptions {
   name?: string;
-  help?: boolean;
-}
-export interface UpdateOptions extends Generator.GeneratorOptions {
   help?: boolean;
 }
 
