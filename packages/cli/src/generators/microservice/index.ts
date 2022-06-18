@@ -421,7 +421,13 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           project: this.projectInfo,
         },
       );
-      nameArr;
+      this.fs.copyTpl(
+        this.templatePath(DATASOURCE_INDEX),
+        this.destinationPath(join('src', 'datasources', `index.ts`)),
+        {
+          nameArr: nameArr,
+        },
+      );
     }
   }
 
