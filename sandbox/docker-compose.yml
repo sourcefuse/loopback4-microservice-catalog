@@ -208,6 +208,21 @@ x-chat-notif-facade-notif-variables: &chat-notif-facade-notif-variables
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
+x-cache-variables: &cache-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: cache_db
+  DB_SCHEMA: main
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+
 services:
   chat-notification-pubnub-example:
     image: ${REGISTRY:-localhost:32000}/chat-notification-pubnub-example
@@ -607,6 +622,37 @@ services:
       - sandbox
     restart: on-failure
 
+  cache-example:
+    image: ${REGISTRY:-localhost:32000}/cache-example
+    build:
+      context: ./cache-example
+      dockerfile: Dockerfile
+    ports:
+      - '3041:3000'
+    networks:
+      - sandbox
+    environment: *cache-variables
+    depends_on:
+      - cache-migration
+      - postgres
+      - redis
+      - postgres_orchestrator
+    restart: on-failure
+
+  cache-migration:
+    image: ${REGISTRY:-localhost:32000}/cache-example
+    build:
+      context: ./cache-example
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
+    environment: *cache-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
+
   redis:
     image: 'redis:alpine'
     ports:
@@ -667,7 +713,8 @@ services:
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
                psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database payment_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb' &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database cache_db'"
 
   pgadmin:
     container_name: pgadmin_container
