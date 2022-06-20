@@ -120,8 +120,8 @@ export class OtpController {
 
   // Google Authenticator
   @authorize({permissions: ['*']})
-  @get('/auth/qrcode', {
-    description: 'Returns userId if secret_key already exist',
+  @get('/auth/check-qr-code', {
+    description: 'Gives success response (200) if secret_key already exist',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'secret_key already exists',
@@ -132,12 +132,12 @@ export class OtpController {
       ...ErrorCodes,
     },
   })
-  async getQr(
+  async checkQr(
     @param.header.string('code') code: string,
     @param.header.string('clientId') clientId: string,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     codeReader: CodeReaderFn,
-  ): Promise<QrCodeResponse> {
+  ): Promise<void> {
     if (!clientId) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
@@ -177,10 +177,8 @@ export class OtpController {
         );
       }
 
-      if (userCreds.secretKey) {
-        return {userId};
-      } else {
-        throw new HttpErrors.NotFound(AuthErrorKeys.KeyInvalid);
+      if (!userCreds.secretKey) {
+        throw new HttpErrors.NotFound();
       }
     } catch (error) {
       this.logger.error(error);
@@ -195,7 +193,7 @@ export class OtpController {
   }
 
   @authorize({permissions: ['*']})
-  @post('/auth/qrcode', {
+  @post('/auth/create-qr-code', {
     description: 'Generates a new qrCode for Authenticator App',
     responses: {
       [STATUS_CODE.OK]: {
@@ -208,7 +206,7 @@ export class OtpController {
       ...ErrorCodes,
     },
   })
-  async postQr(
+  async createQr(
     @requestBody() req: AuthTokenRequest,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     codeReader: CodeReaderFn,
@@ -252,13 +250,13 @@ export class OtpController {
         secretKey: secretKey,
       });
 
-      const serviceName = process.env.SERVICE_NAME ?? 'auth-service';
+      const appName = process.env.APP_NAME ?? 'auth-service';
       let username = payload.user?.username;
       if (!username) {
         const user = await this.userRepo.findById(userId);
         username = user.username;
       }
-      const otpauth = authenticator.keyuri(username, serviceName, secretKey);
+      const otpauth = authenticator.keyuri(username, appName, secretKey);
       const qrCode = await qrcode.toDataURL(otpauth);
       return {qrCode};
     } catch (error) {

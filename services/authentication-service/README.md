@@ -74,7 +74,10 @@ npm i @sourceloop/authentication-service
   } from '@sourceloop/authentication-service';
   this.bind(VerifyBindings.OTP_SENDER_PROVIDER).toProvider(OtpSenderProvider);
   this.bind(AuthServiceBindings.MfaConfig).to({
-    secondFactor: SecondFactor.OTP,
+    secondFactor: STRATEGY.OTP,
+  });
+  this.bind(AuthServiceBindings.OtpConfig).to({
+    method: OtpMethodType.OTP,
   });
   ```
   - This provider is responsible for sending OTP to user.
@@ -84,12 +87,16 @@ npm i @sourceloop/authentication-service
   ```typescript
   import {AuthServiceBindings} from '@sourceloop/authentication-service';
   this.bind(AuthServiceBindings.MfaConfig).to({
-    secondFactor: SecondFactor.GOOGLE_AUTHENTICATOR,
+    secondFactor: STRATEGY.OTP,
+  });
+  this.bind(AuthServiceBindings.OtpConfig).to({
+    method: OtpMethodType.GOOGLE_AUTHENTICATOR,
   });
   ```
 - To authenticate using only OTP or Authenticator app, use the following APIs:
   - `/send-otp`
-  - `/auth/qrcode`
+  - `/auth/check-qr-code`
+  - `/auth/create-qr-code`
   - `/verify-otp`
 - **Two-Factor-Authentication** -
 
