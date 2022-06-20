@@ -412,7 +412,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   private _createFacadeRedisDatasource() {
-    if (this.projectInfo.facade) {
+    if (this.options.facade) {
       const nameArr = ['redis'];
       this.fs.copyTpl(
         this.templatePath(REDIS_DATASOURCE),
