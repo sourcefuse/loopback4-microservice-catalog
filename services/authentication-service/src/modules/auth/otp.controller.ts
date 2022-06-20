@@ -31,8 +31,8 @@ import {
   AuthTokenRequest,
   CodeResponse,
   OtpLoginRequest,
-  OtpResponse,
-  QrCodeResponse,
+  QrCodeCheckResponse,
+  QrCodeCreateResponse,
 } from './';
 import {AuthUser} from './models/auth-user.model';
 import {OtpSendRequest} from './models/otp-send-request.dto';
@@ -71,7 +71,7 @@ export class OtpController {
   async sendOtp(
     @requestBody()
     req: OtpSendRequest,
-  ): Promise<OtpResponse | void> {}
+  ): Promise<void> {}
 
   @authenticate(STRATEGY.OTP)
   @authorize({permissions: ['*']})
@@ -121,7 +121,7 @@ export class OtpController {
   // Google Authenticator
   @authorize({permissions: ['*']})
   @get('/auth/check-qr-code', {
-    description: 'Gives success response (200) if secret_key already exist',
+    description: 'Returns isGenerated:true if secret_key already exist',
     responses: {
       [STATUS_CODE.OK]: {
         description: 'secret_key already exists',
@@ -137,7 +137,7 @@ export class OtpController {
     @param.header.string('clientId') clientId: string,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     codeReader: CodeReaderFn,
-  ): Promise<void> {
+  ): Promise<QrCodeCheckResponse> {
     if (!clientId) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
@@ -176,10 +176,9 @@ export class OtpController {
           AuthenticateErrorKeys.UserDoesNotExist,
         );
       }
-
-      if (!userCreds.secretKey) {
-        throw new HttpErrors.NotFound();
-      }
+      return {
+        isGenerated: userCreds.secretKey ? true : false,
+      };
     } catch (error) {
       this.logger.error(error);
       if (error.name === 'TokenExpiredError') {
@@ -210,7 +209,7 @@ export class OtpController {
     @requestBody() req: AuthTokenRequest,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     codeReader: CodeReaderFn,
-  ): Promise<QrCodeResponse> {
+  ): Promise<QrCodeCreateResponse> {
     const authClient = await this.authClientRepository.findOne({
       where: {
         clientId: req.clientId,
@@ -258,7 +257,9 @@ export class OtpController {
       }
       const otpauth = authenticator.keyuri(username, appName, secretKey);
       const qrCode = await qrcode.toDataURL(otpauth);
-      return {qrCode};
+      return {
+        qrCode,
+      };
     } catch (error) {
       this.logger.error(error);
       if (error.name === 'TokenExpiredError') {

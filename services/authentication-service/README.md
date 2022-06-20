@@ -93,6 +93,7 @@ npm i @sourceloop/authentication-service
     method: OtpMethodType.GOOGLE_AUTHENTICATOR,
   });
   ```
+- Set APP_NAME in .env.
 - To authenticate using only OTP or Authenticator app, use the following APIs:
   - `/send-otp`
   - `/auth/check-qr-code`
