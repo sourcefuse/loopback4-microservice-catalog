@@ -1,4 +1,4 @@
-import { Readable } from 'stream';
+import {Readable} from 'stream';
 export const OcrS3DbSourceName = 'OcrS3DbSourceName';
 
 export declare type ObjectStorageClass =
@@ -33,7 +33,6 @@ export interface IListObject {
   StorageClass?: ObjectStorageClass | string;
   Owner?: Owner;
 }
-
 
 export declare type ServerSideEncryption = 'AES256' | 'aws:kms';
 

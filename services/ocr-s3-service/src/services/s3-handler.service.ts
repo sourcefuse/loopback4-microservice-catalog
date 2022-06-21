@@ -1,5 +1,5 @@
-import { injectable, BindingScope, inject } from '@loopback/core';
-import { AWSS3Bindings, S3WithSigner } from 'loopback4-s3';
+import {injectable, BindingScope, inject} from '@loopback/core';
+import {AWSS3Bindings, S3WithSigner} from 'loopback4-s3';
 
 @injectable({
   scope: BindingScope.TRANSIENT,
@@ -7,13 +7,13 @@ import { AWSS3Bindings, S3WithSigner } from 'loopback4-s3';
 export class S3HandlerService {
   constructor(
     @inject(AWSS3Bindings.AwsS3Provider) public s3Client: S3WithSigner,
-  ) { }
+  ) {}
 
   async listObjects(
     bucketName: string | undefined,
     contractName: string | undefined,
   ) {
-    const { Contents } = await this.s3Client.listObjectsV2({
+    const {Contents} = await this.s3Client.listObjectsV2({
       Bucket: bucketName,
       Prefix: contractName,
     });
@@ -25,7 +25,7 @@ export class S3HandlerService {
       Bucket: bucketName,
       Key: key,
     });
-    const { Body } = data;
+    const {Body} = data;
     return Body;
   }
 
@@ -34,7 +34,7 @@ export class S3HandlerService {
       Bucket: bucketName,
       Key: key,
     });
-    const { Body } = data;
+    const {Body} = data;
     return Body;
   }
 

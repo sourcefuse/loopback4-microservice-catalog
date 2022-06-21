@@ -1,11 +1,11 @@
-import { inject } from '@loopback/context';
-import { Filter, repository } from '@loopback/repository';
-import { param, get, post, requestBody, getModelSchemaRef } from '@loopback/rest';
-import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
-import { RequestServiceBindings } from '../keys';
-import { Contracts, HocrResults } from '../models';
-import { FetchClientProvider } from '../providers';
-import { ContractRepository, HocrResultRepository } from '../repositories';
+import {inject} from '@loopback/context';
+import {Filter, repository} from '@loopback/repository';
+import {param, get, post, requestBody, getModelSchemaRef} from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {RequestServiceBindings} from '../keys';
+import {Contracts, HocrResults} from '../models';
+import {FetchClientProvider} from '../providers';
+import {ContractRepository, HocrResultRepository} from '../repositories';
 
 export class ContractController {
   constructor(
@@ -15,7 +15,7 @@ export class ContractController {
     public contractRepository: ContractRepository,
     @repository(HocrResultRepository)
     public hocrResultRepository: HocrResultRepository,
-  ) { }
+  ) {}
 
   @post('/contract-upload', {
     responses: {
@@ -90,7 +90,7 @@ export class ContractController {
         description: 'Get and create Clause',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: { type: 'array', items: getModelSchemaRef(HocrResults) },
+            schema: {type: 'array', items: getModelSchemaRef(HocrResults)},
           },
         },
       },
@@ -114,7 +114,7 @@ export class ContractController {
         description: 'Get and create Clause',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: { type: 'array', items: getModelSchemaRef(Contracts) },
+            schema: {type: 'array', items: getModelSchemaRef(Contracts)},
           },
         },
       },
