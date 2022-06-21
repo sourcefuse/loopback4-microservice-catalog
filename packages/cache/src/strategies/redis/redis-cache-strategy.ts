@@ -10,6 +10,8 @@ import {ICacheStrategy} from '../cache-strategy';
 import {RedisCacheMixinOptions} from './types';
 
 const decoder = new TextDecoder('utf-8');
+const defaultTTL = 60000;
+const defaultScanCount = 50;
 
 export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
   getCacheDataSource: () => Promise<JugglerDataSource>;
@@ -50,7 +52,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
         key,
         JSON.stringify(value),
         `PX`,
-        cacheOptions.ttl ?? 60000,
+        cacheOptions.ttl ?? defaultTTL,
       ]);
     } catch (err) {
       throw new HttpErrors.UnprocessableEntity(
@@ -66,7 +68,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
       local dels = 0
       repeat
           local result = redis.call('SCAN', cursor, 'MATCH', ARGV[1], 'COUNT', '${
-            cacheOptions.scanCount ?? 50
+            cacheOptions.scanCount ?? defaultScanCount
           }')
           for _,key in ipairs(result[2]) do
               redis.call('DEL', key)
@@ -108,7 +110,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
             if (res) {
               resolve(res);
             } else {
-              return resolve(undefined);
+              resolve(undefined);
             }
           },
         );

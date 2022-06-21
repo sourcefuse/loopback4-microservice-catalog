@@ -19,9 +19,9 @@ import {
 export class CachePluginComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: Application,
+    private readonly application: Application,
     @config()
-    private options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS,
+    private readonly options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS,
   ) {
     CacheManager.options = options;
   }
