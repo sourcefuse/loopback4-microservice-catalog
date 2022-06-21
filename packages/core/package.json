@@ -50,7 +50,7 @@
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
     "casbin": "^5.15.0",
-    "i18n": "^0.14.2",
+    "i18n": "^0.15.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "logform": "^2.4.0",
