@@ -1,5 +1,5 @@
-import { inject } from '@loopback/context';
-import { repository } from '@loopback/repository';
+import {inject} from '@loopback/context';
+import {repository} from '@loopback/repository';
 import {
   param,
   get,
@@ -10,12 +10,12 @@ import {
   put,
   post,
 } from '@loopback/rest';
-import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
-import { RequestServiceBindings } from '../keys';
-import { OcrResults } from '../models';
-import { FetchClientProvider } from '../providers';
-import { ContractRepository, OcrResultRepository } from '../repositories';
-import { CreateClauseData } from '../types';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {RequestServiceBindings} from '../keys';
+import {OcrResults} from '../models';
+import {FetchClientProvider} from '../providers';
+import {ContractRepository, OcrResultRepository} from '../repositories';
+import {CreateClauseData} from '../types';
 
 export class OcrController {
   constructor(
@@ -25,7 +25,7 @@ export class OcrController {
     public contractRepository: ContractRepository,
     @inject.getter(RequestServiceBindings.FetchProvider)
     private readonly requestProvider: FetchClientProvider,
-  ) { }
+  ) {}
 
   @post('/get-clause-data', {
     responses: {
@@ -49,7 +49,7 @@ export class OcrController {
         description: 'Array of OcrResults model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: { type: 'array', items: getModelSchemaRef(OcrResults) },
+            schema: {type: 'array', items: getModelSchemaRef(OcrResults)},
           },
         },
       },
@@ -78,7 +78,7 @@ export class OcrController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(OcrResults, { partial: true }),
+            items: getModelSchemaRef(OcrResults, {partial: true}),
           },
         },
       },
@@ -102,7 +102,7 @@ export class OcrController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(OcrResults, { partial: true }),
+          schema: getModelSchemaRef(OcrResults, {partial: true}),
         },
       },
     })

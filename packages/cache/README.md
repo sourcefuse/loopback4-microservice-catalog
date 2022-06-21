@@ -1,5 +1,7 @@
 # @sourceloop/cache
 
+[![LoopBack](<https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
 Caching can prove to be quite beneficial in improving application efficency and performance by storing a subset of data in high speed data storage layer. Caching allows you to efficiently reuse previously retrieved or computed data. It reduces latency and at the same time avoids network congestion. Also, in the event of outages, caching can save the day by serving end users with the cached content.
 
 However, caching will only prove to be beneficial if same data is frequently requested. You must consider this as a prime factor before you dive into caching. A successful cache results in a high hit rate. If same data is not requested mutliple times then it will just prove to be an overhead for your application. Also, if data does not remain static (i.e. it is edited several times) it might be a little tricky to use cache in those cases. In such cases the user must consider to maintain an effective balance between stale and new data by configuring the ttl (time to live) according to the application acceptance standards.
@@ -8,11 +10,32 @@ This package provides a configurable way in which you can apply caching. The pac
 
 ## Installation
 
-```
+```sh
 npm i @sourceloop/cache
 ```
 
 Note: This package has loopback-connector-kv-redis as a peer dependency and only works with Redis for now
+
+## Basic Use
+
+Configure and load CachePluginComponent in the application constructor
+as shown below.
+
+```ts
+import {CachePluginComponent, CachePluginComponentOptions, DEFAULT_CACHE_PLUGIN_OPTIONS} from '@sourceloop/cache';
+// ...
+export class MyApplication extends BootMixin(ServiceMixin(RepositoryMixin(RestApplication))) {
+  constructor(options: ApplicationConfig = {}) {
+    const opts: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS;
+    this.configure(CachePluginComponentBindings.COMPONENT).to(opts);
+      // Put the configuration options here
+    });
+    this.component(CachePluginComponent);
+    // ...
+  }
+  // ...
+}
+```
 
 ## Usage
 
