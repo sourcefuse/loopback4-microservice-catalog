@@ -17,14 +17,14 @@ export interface CachePluginComponentOptions {
 export const DEFAULT_CACHE_PLUGIN_OPTIONS: CachePluginComponentOptions = {
   cacheProvider: CacheStrategyTypes.Redis,
   prefix: 'sl',
-  salt: '8m*b.p*x?9FJ', // For security, this should come from env or secrets manager
+  salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe', // For security, this should come from env or secrets manager
 };
 
 export interface CacheMixinOptions {
   ttl?: number;
 }
 
-export interface CacheFindOptions extends CacheMixinOptions {
+export interface CacheFindOptions {
   forceUpdate: boolean;
 }
 

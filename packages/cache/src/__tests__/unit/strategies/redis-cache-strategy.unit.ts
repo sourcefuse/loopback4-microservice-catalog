@@ -5,7 +5,7 @@ import {mockData, mockKey} from '../fixtures/data';
 import {resetCalls} from '../fixtures/default-crud.repository';
 import {TestRedisDataSource} from '../fixtures/redis.datasource';
 
-describe('Unit Test Cases for Cache Mixin', () => {
+describe('Unit Test Cases for Redis Strategy', () => {
   const redisStrategy = new RedisCacheStrategy({
     prefix: 'testPrefix',
     salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',

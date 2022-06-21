@@ -83,14 +83,62 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     );
   });
 
+  it('should always update cache if forceUpdate is true for find', async () => {
+    //extra call to store data in cache
+    await repositroy.find({});
+
+    //update data in db now
+    const mockDataArrayCopy = mockDataArray;
+    mockDataArrayCopy[0].name = 'product_Update';
+    await repositroy.updateAll({name: 'product_Update'}, {name: 'product_X'});
+
+    // now check if data is coming from db and updated in cache as well
+    const res = await repositroy.find({}, {forceUpdate: true});
+    expect(res).to.match(mockDataArrayCopy);
+
+    const resCache = await executeRedisCommand('GET', [
+      await repositroy.generateKey(undefined, {}),
+    ]);
+
+    expect(JSON.parse(decoder.decode(resCache as Buffer))).to.match(
+      mockDataArrayCopy,
+    );
+
+    //restore db to previous state
+    await repositroy.updateAll({name: 'product_X'}, {name: 'product_Update'});
+  });
+
+  it('should always update cache if forceUpdate is true for findById', async () => {
+    //extra call to store data in cache
+    await repositroy.findById(1, {});
+
+    //update data in db now
+    const mockDataCopy = mockDataArray[0];
+    mockDataCopy.name = 'product_Update';
+    await repositroy.updateAll({name: 'product_Update'}, {name: 'product_X'});
+
+    // now check if data is coming from db and updated in cache as well
+    const res = await repositroy.findById(1, {}, {forceUpdate: true});
+    expect(res).to.match(mockDataCopy);
+
+    const resCache = await executeRedisCommand('GET', [
+      await repositroy.generateKey(1, {}),
+    ]);
+
+    expect(JSON.parse(decoder.decode(resCache as Buffer))).to.match(
+      mockDataCopy,
+    );
+
+    //restore db to previous state
+    await repositroy.updateAll({name: 'product_X'}, {name: 'product_Update'});
+  });
+
   it('should delete all entries from cache', async () => {
     //extra call to store data in cache
     await repositroy.find();
     await repositroy.findById(mockDataArray[0].id);
-    const calls = 2;
 
-    const numberOfEntries = await repositroy.clearCache();
-    expect(numberOfEntries).to.be.equal(calls);
+    await repositroy.clearCache();
     const result = await executeRedisCommand('KEYS', ['product*']);
     expect(result).to.be.empty();
   });
