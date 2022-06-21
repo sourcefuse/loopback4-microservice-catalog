@@ -1,10 +1,11 @@
-import {Constructor} from '@loopback/core';
+import {Constructor, Getter} from '@loopback/core';
 import {DefaultCrudRepository} from '@loopback/repository';
-import {CacheRespositoryMixin} from '../../..';
+import {CacheManager} from '../../..';
 import {Product, ProductRelations} from './product.model';
+import {RedisDataSource} from './redis.datasource';
 import {TestDataSource} from './test.datasource';
 
-export class ProductErrorRepository extends CacheRespositoryMixin<
+export class ProductRepository extends CacheManager.CacheRepositoryMixin<
   Product,
   typeof Product.prototype.id,
   ProductRelations,
@@ -20,7 +21,10 @@ export class ProductErrorRepository extends CacheRespositoryMixin<
   ttl: 5000,
   salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',
 }) {
-  constructor(dataSource: TestDataSource) {
+  constructor(
+    dataSource: TestDataSource,
+    public getCacheDataSource: Getter<RedisDataSource>,
+  ) {
     super(Product, dataSource);
   }
 }

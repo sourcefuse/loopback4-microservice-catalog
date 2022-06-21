@@ -1,14 +1,37 @@
 # @sourceloop/cache
 
+[![LoopBack](<https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
 This package provides a mixin which works with redis to cache GET request responses.
 
 ## Installation
 
-```
+```sh
 npm i @sourceloop/cache
 ```
 
 This package has loopback-connector-kv-redis as a peer dependency.
+
+## Basic Use
+
+Configure and load CachePluginComponent in the application constructor
+as shown below.
+
+```ts
+import {CachePluginComponent, CachePluginComponentOptions, DEFAULT_CACHE_PLUGIN_OPTIONS} from '@sourceloop/cache';
+// ...
+export class MyApplication extends BootMixin(ServiceMixin(RepositoryMixin(RestApplication))) {
+  constructor(options: ApplicationConfig = {}) {
+    const opts: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS;
+    this.configure(CachePluginComponentBindings.COMPONENT).to(opts);
+      // Put the configuration options here
+    });
+    this.component(CachePluginComponent);
+    // ...
+  }
+  // ...
+}
+```
 
 ## Usage
 
@@ -23,8 +46,8 @@ If you want to delete all cache entries, you can use the clearCache() function p
 
 If you want entries in the cache to be forcefully updated, you can set forceUpdate true in options while invoking find/findById:
 
-```
-this.productRepository.findById(3,{},{forceUpdate:true})
+```ts
+this.productRepository.findById(3, {}, {forceUpdate: true});
 ```
 
 On updating forcefully the ttl gets reset.
@@ -35,8 +58,8 @@ The redis datasource can be bound to any key. However, it is required that you i
 
 An example of using the cache mixin:
 
-```
-export class ProductRepository extends CacheRespositoryMixin<
+```ts
+export class ProductRepository extends CacheManager.CacheRespositoryMixin<
   Product,
   typeof Product.prototype.id,
   ProductRelations,
