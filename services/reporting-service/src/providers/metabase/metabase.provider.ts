@@ -91,33 +91,33 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
         }
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['X-Metabase-Session'] = tokenValue ?? '';
-        const result = axios({
-          method: 'post',
-          url: `${metabaseBaseUrl}/api/dataset`,
-          data: findQuery.query,
-        })
-          //sonarignore:start
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .then((res: any) => {
-            //sonarignore:end
-            const newJson = CircularJSON.stringify(res);
-            const returnObjectUpdated = JSON.parse(newJson);
-            return returnObjectUpdated?.data?.data;
+        return (
+          axios({
+            method: 'post',
+            url: `${metabaseBaseUrl}/api/dataset`,
+            data: findQuery.query,
           })
-          //sonarignore:start
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .catch((err: any) => {
-            this.logger.error(
-              ` The error occurred while get Metabase JSON response :  ${err}`,
-            );
-          })
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .catch(function (error: any) {
-            console.log(error);
-          });
-        //sonarignore:end
-
-        return result;
+            //sonarignore:start
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            .then((res: any) => {
+              //sonarignore:end
+              const newJson = CircularJSON.stringify(res);
+              const returnObjectUpdated = JSON.parse(newJson);
+              return returnObjectUpdated?.data?.data;
+            })
+            //sonarignore:start
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            .catch((err: any) => {
+              this.logger.error(
+                ` The error occurred while get Metabase JSON response :  ${err}`,
+              );
+            })
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            .catch(function (error: any) {
+              console.log(error);
+            })
+          //sonarignore:end
+        );
       },
     };
   }
