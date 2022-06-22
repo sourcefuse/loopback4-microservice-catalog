@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-client-example",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~12.1.0-",
     "@angular/platform-browser-dynamic": "~12.1.0-",
     "@angular/router": "~12.1.0-",
-    "@sourceloop/search-client": "^4.3.2",
+    "@sourceloop/search-client": "^5.0.0",
     "ajv": "^8.8.2",
     "ajv-errors": "^1.0.1",
     "rxjs": "~6.6.0",

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.0 (2022-06-22)
+
+* chore(user-onboarding): update deps versions and solve vulnerabilities. (#833) ([7f1bf82](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7f1bf82)), closes [#833](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/833) [#829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/829)
+
+
+### BREAKING CHANGE
+
+* update versions for angular, shepherd.js, @videogular/ngx-videogular, ngx-webstorage-service and rxjs
+
+
+
+
 ## <small>3.0.18 (2022-05-27)</small>
 
 * chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)

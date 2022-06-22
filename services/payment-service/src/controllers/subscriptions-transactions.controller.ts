@@ -16,14 +16,6 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {ResponseMessage} from '../enums';
-const dotenvExt = require('dotenv-extended');
-const path = require('path');
-dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
-  errorOnMissing: false,
-  includeProcessEnv: true,
-});
 const redirectStatusCode = 302;
 const permRedirectStatusCode = 302;
 

@@ -1,6 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {AuthCacheSourceName} from '@sourceloop/authentication-service';
+import {AuthCacheSourceName} from '@sourceloop/core';
 
 const config = {
   name: AuthCacheSourceName,

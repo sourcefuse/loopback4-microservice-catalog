@@ -43,6 +43,7 @@ const scopes = [
   { name: 'search-service' },
   { name: 'chat-service' },
   { name: 'feature-toggle-service' },
+  { name: 'payment-service' },
   { name: 'sandbox' },
   { name: 'ocr-parser' }
 ];

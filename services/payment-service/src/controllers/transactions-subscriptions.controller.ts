@@ -6,14 +6,6 @@ import {GatewayBindings, IGateway} from '../providers';
 import {TemplatesRepository, SubscriptionsRepository} from '../repositories';
 import {TemplateName, TemplateType} from '../enums';
 import {CONTENT_TYPE} from '@sourceloop/core';
-const dotenvExt = require('dotenv-extended');
-const path = require('path');
-dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
-  errorOnMissing: false,
-  includeProcessEnv: true,
-});
 const redirectStatusCode = 302;
 
 export class TransactionSubscriptionsController {
