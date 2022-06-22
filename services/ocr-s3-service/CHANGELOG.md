@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.3.0 (2022-06-22)
+
+* refactor(cache): make cache as an extension and add strategy pattern (#841) ([7495ad4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7495ad4)), closes [#841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/841)
+
+
+### BREAKING CHANGE
+
+* access mixin via CacheManager now
+
+
+
+
 ## <small>0.2.2 (2022-05-30)</small>
 
 * chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

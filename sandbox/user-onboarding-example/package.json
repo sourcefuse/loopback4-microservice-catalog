@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-example",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
-    "@sourceloop/user-onboarding-client": "^3.0.18",
+    "@sourceloop/user-onboarding-client": "^4.0.0",
     "@videogular/ngx-videogular": "^3.0.1",
     "angular-in-memory-web-api": "^0.11.0",
     "ngx-webstorage-service": "^4.1.0",
