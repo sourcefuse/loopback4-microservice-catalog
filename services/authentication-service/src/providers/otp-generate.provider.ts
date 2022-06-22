@@ -5,8 +5,8 @@ import {HttpErrors} from '@loopback/rest';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {totp} from 'otplib';
 
-const otpStep = 120;
-const otpWindow = 1;
+const otpStep = 300;
+const otpWindow = 0;
 
 export class OtpGenerateProvider implements Provider<OtpGenerateFn> {
   constructor(@inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger) {}

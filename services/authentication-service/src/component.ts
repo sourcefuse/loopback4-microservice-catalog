@@ -251,6 +251,8 @@ export class AuthenticationServiceComponent implements Component {
       ) {
         this.providers[Strategies.Passport.OTP_VERIFIER.key] =
           GoogleAuthenticatorVerifyProvider;
+      } else {
+        // do nothing
       }
     }
   }

@@ -71,7 +71,9 @@ export class OtpController {
   async sendOtp(
     @requestBody()
     req: OtpSendRequest,
-  ): Promise<void> {}
+  ): Promise<void> {
+    // This is intentional
+  }
 
   @authenticate(STRATEGY.OTP)
   @authorize({permissions: ['*']})

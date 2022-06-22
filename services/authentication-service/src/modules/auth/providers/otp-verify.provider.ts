@@ -32,6 +32,10 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
           username: username,
         },
       });
+      if (!user) {
+        this.logger.error('Invalid Username');
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      }
 
       //sender
       if (!otp) {
@@ -43,7 +47,7 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
       const otpCache = await this.otpCacheRepo.get(username);
       if (!otpCache) {
         this.logger.error('Invalid Username');
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.OtpExpired);
       }
 
       let isValid = false;
