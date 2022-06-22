@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ocr-service",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "services",
   "keywords": [
     "loopback-extension",

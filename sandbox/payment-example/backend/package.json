@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-example-backend",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "backend of payment example",
   "keywords": [
     "loopback-application",
@@ -60,7 +60,7 @@
     "@loopback/rest": "^12.0.0",
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/payment-service": "^5.0.2",
+    "@sourceloop/payment-service": "^6.0.0",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
