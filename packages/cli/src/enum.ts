@@ -10,6 +10,7 @@ export enum SERVICES {
   SCHEDULER = 'scheduler-service',
   SEARCH = 'search-service',
   VIDEO_CONF = 'video-conferencing-service',
+  REPORTING = 'reporting-service',
 }
 
 export enum DATASOURCES {
@@ -57,4 +58,5 @@ export const BASESERVICEDSLIST: {
   'search-service': [{type: 'store', name: 'DATASOURCE_NAME'}],
   'video-conferencing-service': [{type: 'store', name: 'VideoConfDatasource'}],
   'chat-service': [],
+  'reporting-service': [{type: 'store', name: 'ReportingDatasourceName'}],
 };
