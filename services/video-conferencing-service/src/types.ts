@@ -108,10 +108,6 @@ export interface ExternalStorageOptions {
  * @param config object containing azure/s3 details
  * @param bucket s3 bucket name
  */
-// export interface S3TargetOptions extends ExternalStorageOptions {
-//   region: string;
-//   bucket: string;
-// }
 
 export enum ExternalStorageName {
   AWSS3 = 'AWSS3',

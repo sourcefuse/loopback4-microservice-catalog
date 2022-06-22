@@ -28,7 +28,7 @@ export class Queries extends Entity {
     required: true,
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query: any;
+  query: any; //NOSONAR
 
   @property({
     type: 'array',
@@ -41,15 +41,11 @@ export class Queries extends Entity {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<Queries>) {
     super(data);
   }
 }
 
-export interface QueriesRelations {
-  // describe navigational properties here
-}
-
-export type QueriesWithRelations = Queries & QueriesRelations;
+export type QueriesWithRelations = Queries;

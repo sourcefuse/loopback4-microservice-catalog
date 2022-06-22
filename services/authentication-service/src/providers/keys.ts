@@ -43,11 +43,11 @@ export namespace SignUpBindings {
   );
   export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    PreSignupFn<any, any>
+    PreSignupFn<any, any> //NOSONAR
   >(`sf.local.presignup.provider`);
   export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    UserSignupFn<any, any>
+    UserSignupFn<any, any> //NOSONAR
   >(`sf.local.signup.provider`);
 
   export const SIGNUP_HANDLER_PROVIDER =

@@ -20,6 +20,6 @@ async function exportOpenApiSpec(): Promise<void> {
 }
 
 exportOpenApiSpec().catch(err => {
-  console.error('Fail to export OpenAPI spec from the application.', err);
+  console.error('Fail to export OpenAPI spec from the application.', err); //NOSONAR
   process.exit(1);
 });

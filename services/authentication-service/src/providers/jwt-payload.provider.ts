@@ -48,7 +48,7 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       const user = authUserData as User;
       const userTenant = await this.userTenantRepo.findOne({
         where: {
-          userId: (user as User).id,
+          userId: (user as User).id, //NOSONAR
           tenantId: user.defaultTenantId,
         },
       });

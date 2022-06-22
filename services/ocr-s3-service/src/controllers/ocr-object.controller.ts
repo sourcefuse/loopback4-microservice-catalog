@@ -1,6 +1,7 @@
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {get, param, response} from '@loopback/rest';
+import {STATUS_CODE} from '@sourceloop/core';
 import {HocrObject} from '../models';
 import {HocrObjectRepository} from '../repositories';
 import {IteratorService, S3HandlerService} from '../services';
@@ -15,7 +16,7 @@ export class OcrObjectController {
   ) {}
 
   @get('/get-contract-hocr/{contract_name}')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'User model instance',
   })
   async getHocrFiles(
@@ -52,7 +53,7 @@ export class OcrObjectController {
   }
 
   @get('/contract-images/{contract_name}')
-  @response(200, {
+  @response(STATUS_CODE.OK, {
     description: 'User model instance',
   })
   async getImgFiles(
@@ -74,7 +75,9 @@ export class OcrObjectController {
           );
 
           const imgContent: string = await this.s3Handler.streamToString(data);
+          // sonarignore:start
           const contractData: any = {
+            // sonarignore:end
             contractName: contractName,
             type: 'IMG',
             imgData: imgContent,

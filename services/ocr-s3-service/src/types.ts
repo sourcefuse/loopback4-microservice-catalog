@@ -50,7 +50,7 @@ export declare type ObjectLockMode = 'COMPLIANCE' | 'GOVERNANCE';
 
 export interface GetObjectOutput {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  Body?: Readable | any;
+  Body?: Readable | any; //NOSONAR
   DeleteMarker?: boolean;
   AcceptRanges?: string;
   Expiration?: string;

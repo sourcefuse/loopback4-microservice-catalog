@@ -41,15 +41,11 @@ export class MetabaseToken extends Entity {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<MetabaseToken>) {
     super(data);
   }
 }
 
-export interface MetabaseTokenRelations {
-  // describe navigational properties here
-}
-
-export type MetabaseTokenWithRelations = MetabaseToken & MetabaseTokenRelations;
+export type MetabaseTokenWithRelations = MetabaseToken;

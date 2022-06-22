@@ -2,13 +2,14 @@ import {ApplicationConfig} from '@loopback/core';
 import {OcrServiceApplication} from './application';
 
 const ARGV_INDEX = 2;
+const port = 3000;
 /**
  * Export the OpenAPI spec from the application
  */
 async function exportOpenApiSpec(): Promise<void> {
   const config: ApplicationConfig = {
     rest: {
-      port: +(process.env.PORT ?? 3000),
+      port: +(process.env.PORT ?? port),
       host: process.env.HOST ?? 'localhost',
     },
   };
@@ -23,6 +24,6 @@ exportOpenApiSpec()
     process.exit(0);
   })
   .catch(err => {
-    console.error('Fail to export OpenAPI spec from the application.', err);
+    console.error('Fail to export OpenAPI spec from the application.', err); //NOSONAR
     process.exit(1);
   });

@@ -51,13 +51,13 @@ export class Transactions extends Entity {
     type: 'Object',
   })
   // eslint-disable-next-line
-  res: any;
+  res: any; //NOSONAR
 
   // Define well-known properties here
 
   // Indexer property to allow additional data
   // eslint-disable-next-line
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<Transactions>) {
     super(data);

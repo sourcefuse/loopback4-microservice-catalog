@@ -5,8 +5,6 @@ import * as GoogleStrategy from 'passport-google-oauth20';
 import {GooglePreVerifyFn} from './types';
 
 export class GooglePreVerifyProvider implements Provider<GooglePreVerifyFn> {
-  constructor() {}
-
   value(): GooglePreVerifyFn {
     return async (
       accessToken: string,

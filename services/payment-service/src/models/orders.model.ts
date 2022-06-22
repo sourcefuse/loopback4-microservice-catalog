@@ -46,7 +46,7 @@ export class Orders extends Entity {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<Orders>) {
     super(data);

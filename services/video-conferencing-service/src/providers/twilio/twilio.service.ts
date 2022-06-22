@@ -202,6 +202,8 @@ export class TwilioService {
           sessionAttendessDetail!.id,
           updatedAttendee,
         );
+      } else {
+        // do nothing
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError(
