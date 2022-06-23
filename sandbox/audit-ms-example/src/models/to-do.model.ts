@@ -32,8 +32,4 @@ export class ToDo extends Entity {
   }
 }
 
-export interface ToDoRelations {
-  // describe navigational properties here
-}
-
-export type ToDoWithRelations = ToDo & ToDoRelations;
+export type ToDoWithRelations = ToDo;

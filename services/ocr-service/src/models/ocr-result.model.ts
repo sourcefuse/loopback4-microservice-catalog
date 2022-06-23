@@ -60,7 +60,7 @@ export class OcrResults extends BaseEntity {
     name: 'coordinates',
   })
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  coordinates?: string | any;
+  coordinates?: string | any; //NOSONAR
 
   @property({
     type: 'number',

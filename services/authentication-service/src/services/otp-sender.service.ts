@@ -19,7 +19,7 @@ export class OtpSenderService {
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(VerifyBindings.OTP_PROVIDER)
     private readonly otpSender: OtpFn,
-    @inject(RestBindings.Http.RESPONSE) private response: Response,
+    @inject(RestBindings.Http.RESPONSE) private readonly response: Response,
   ) {}
 
   async sendOtp(

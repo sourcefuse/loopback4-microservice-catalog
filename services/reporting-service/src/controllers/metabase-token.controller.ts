@@ -17,18 +17,19 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {MetabaseToken} from '../models';
 import {MetabaseTokenRepository} from '../repositories';
 
+const basepath = '/metabase-tokens';
 export class MetabaseTokenController {
   constructor(
     @repository(MetabaseTokenRepository)
     public metabaseTokenRepository: MetabaseTokenRepository,
   ) {}
 
-  @post('/metabase-tokens')
-  @response(200, {
+  @post(basepath)
+  @response(STATUS_CODE.OK, {
     description: 'MetabaseToken model instance',
     content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(MetabaseToken)}},
   })
@@ -47,8 +48,8 @@ export class MetabaseTokenController {
     return this.metabaseTokenRepository.create(metabaseToken);
   }
 
-  @get('/metabase-tokens/count')
-  @response(200, {
+  @get(`${basepath}/count`)
+  @response(STATUS_CODE.OK, {
     description: 'MetabaseToken model count',
     content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
@@ -58,8 +59,8 @@ export class MetabaseTokenController {
     return this.metabaseTokenRepository.count(where);
   }
 
-  @get('/metabase-tokens')
-  @response(200, {
+  @get(basepath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of MetabaseToken model instances',
     content: {
       [CONTENT_TYPE.JSON]: {
@@ -76,8 +77,8 @@ export class MetabaseTokenController {
     return this.metabaseTokenRepository.find(filter);
   }
 
-  @patch('/metabase-tokens')
-  @response(200, {
+  @patch(basepath)
+  @response(STATUS_CODE.OK, {
     description: 'MetabaseToken PATCH success count',
     content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
@@ -95,8 +96,8 @@ export class MetabaseTokenController {
     return this.metabaseTokenRepository.updateAll(metabaseToken, where);
   }
 
-  @get('/metabase-tokens/{id}')
-  @response(200, {
+  @get(`${basepath}/{id}`)
+  @response(STATUS_CODE.OK, {
     description: 'MetabaseToken model instance',
     content: {
       [CONTENT_TYPE.JSON]: {
@@ -112,8 +113,8 @@ export class MetabaseTokenController {
     return this.metabaseTokenRepository.findById(id, filter);
   }
 
-  @patch('/metabase-tokens/{id}')
-  @response(204, {
+  @patch(`${basepath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'MetabaseToken PATCH success',
   })
   async updateById(
@@ -130,8 +131,8 @@ export class MetabaseTokenController {
     await this.metabaseTokenRepository.updateById(id, metabaseToken);
   }
 
-  @put('/metabase-tokens/{id}')
-  @response(204, {
+  @put(`${basepath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'MetabaseToken PUT success',
   })
   async replaceById(
@@ -141,8 +142,8 @@ export class MetabaseTokenController {
     await this.metabaseTokenRepository.replaceById(id, metabaseToken);
   }
 
-  @del('/metabase-tokens/{id}')
-  @response(204, {
+  @del(`${basepath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'MetabaseToken DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

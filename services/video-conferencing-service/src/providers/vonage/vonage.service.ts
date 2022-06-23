@@ -110,8 +110,6 @@ export class VonageService implements VonageVideoChat {
     };
   }
   getFeatures(): VideoChatFeatures {
-    console.log('get features called');
-
     return {
       archive: true,
       schedule: true,
@@ -203,6 +201,8 @@ export class VonageService implements VonageVideoChat {
           domain,
         });
       }
+    } else {
+      //do nothing
     }
     await axios({
       url: `https://api.opentok.com/v2/project/${this.vonageConfig.apiKey}/archive/storage`,
@@ -251,8 +251,6 @@ export class VonageService implements VonageVideoChat {
           isDeleted: sessionAttendeeDetail.isDeleted,
           extMetadata: {webhookPayload: webhookPayload},
         };
-        console.log('event is ');
-
         if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
           updatedAttendee.isDeleted = false;
           await this.sessionAttendeesRepository.updateById(

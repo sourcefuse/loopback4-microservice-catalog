@@ -87,7 +87,9 @@ export class InstagramLoginController {
       },
     })
     clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.INSTAGRAM_OAUTH2,

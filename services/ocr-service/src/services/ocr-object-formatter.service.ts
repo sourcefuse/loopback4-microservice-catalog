@@ -3,12 +3,10 @@ import {OcrClause} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class OcrObjectFormatterService {
-  constructor() {}
-
   async format(res: OcrClause) {
     const resp: OcrClause = res;
     const clauseTypeData: string = Object.keys(resp)[0];
-    const formattedObject = {
+    return {
       contractName: resp[clauseTypeData].contractFileName,
       clauseType: resp[clauseTypeData].extractedData.column,
       pageNumber: resp[clauseTypeData].extractedData.columnData.pageNum,
@@ -27,7 +25,5 @@ export class OcrObjectFormatterService {
       confidenceLevel:
         resp[clauseTypeData].extractedData.columnData.confidenceScore,
     };
-
-    return formattedObject;
   }
 }
