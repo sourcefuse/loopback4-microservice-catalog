@@ -90,7 +90,7 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     dotenv.config();
     dotenvExt.load({
       schema: '.env.example',
-      errorOnMissing: true,
+      errorOnMissing: process.env.NODE_ENV !== 'test',
       includeProcessEnv: true,
     });
     options.rest = options.rest ?? {};

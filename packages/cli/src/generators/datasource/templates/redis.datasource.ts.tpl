@@ -4,6 +4,8 @@ import {readFileSync} from 'fs';
 
 <% if (project.serviceDependency && project.baseServiceCacheName) { -%>
 import {<%= project.baseServiceCacheName %>} from '@sourceloop/<%= project.serviceDependency -%>'
+<% } else if (project.facade) { -%>
+import {AuthCacheSourceName} from '@sourceloop/core';
 <% } -%>
 
 const config = {
@@ -45,6 +47,8 @@ export class RedisDataSource
 {
    <% if (project.serviceDependency && project.baseServiceCacheName ) { -%>
     static dataSourceName = <%= project.baseServiceCacheName %>;
+    <% } else if (project.facade) { -%>
+    static dataSourceName = AuthCacheSourceName;
     <% } -%>
   static readonly defaultConfig = config;
 
