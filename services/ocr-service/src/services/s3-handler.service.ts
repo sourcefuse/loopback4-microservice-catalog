@@ -25,7 +25,7 @@ export class S3HandlerService {
     const {Body} = data;
     return Body;
   }
-
+  // sonarignore:start
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async streamToString(stream: any): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -36,4 +36,5 @@ export class S3HandlerService {
       stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
     });
   }
+  // sonarignore:end
 }

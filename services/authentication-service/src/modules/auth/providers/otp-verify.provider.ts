@@ -48,7 +48,7 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
 
       let isValid = false;
       try {
-        isValid = totp.check(otp, otpCache.otpSecret!);
+        if (otpCache.otpSecret) isValid = totp.check(otp, otpCache.otpSecret);
       } catch (err) {
         this.logger.error(err);
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

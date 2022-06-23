@@ -37,8 +37,10 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
     })
     private readonly fetchConfig: HttpClientInitOpts,
   ) {
+    // sonarignore:start
     const {baseUrl, baseHeaders, baseOptions, json} = this
       .fetchConfig as HttpClientInitOpts;
+    // sonarignore:end
 
     const {protocol} = new URL(baseUrl);
 
@@ -76,9 +78,11 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     this.useJson = useJson;
   }
-
+  // sonarignore:start
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   value(): ValueOrPromise<any> {
+    // sonarignore:end
+
     return {
       sendRequest: async (url: string, method: string) =>
         this.sendRequest(url, method),
@@ -125,9 +129,10 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     return transformResponse(response);
   }
-
+  // sonarignore:start
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async post<T>(url: string, body?: any, req: RequestInit = {}): Promise<T> {
+    // sonarignore:end
     const {transformResponse, willSendRequest} = this;
 
     const args = await this.buildRequestArgs(url, HttpMethod.Post, body, req);
@@ -140,9 +145,10 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     return transformResponse(response);
   }
-
+  // sonarignore:start
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async put<T>(url: string, body?: any, req: RequestInit = {}): Promise<T> {
+    // sonarignore:end
     const {transformResponse, willSendRequest} = this;
 
     const args = await this.buildRequestArgs(url, HttpMethod.Put, body, req);
@@ -155,9 +161,10 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     return transformResponse(response);
   }
-
+  // sonarignore:start
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async patch<T>(url: string, body?: any, req: RequestInit = {}): Promise<T> {
+    // sonarignore:end
     const {transformResponse, willSendRequest} = this;
 
     const args = await this.buildRequestArgs(url, HttpMethod.Patch, body, req);
@@ -189,14 +196,15 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     return transformResponse(response);
   }
-
+  // sonarignore:start
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   private async buildRequestArgs(
     url: string,
     method: HttpMethod,
     body: any,
     opts: RequestInit,
-  ): Promise<{url: string; request: RequestInit}> {
+  ): // sonarignore:end
+  Promise<{url: string; request: RequestInit}> {
     const args = {
       url: urlJoin(this.baseUrl, url),
       request: {

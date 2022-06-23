@@ -87,7 +87,9 @@ export class FacebookLoginController {
       },
     })
     clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.FACEBOOK_OAUTH2,

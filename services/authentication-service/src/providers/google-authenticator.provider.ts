@@ -4,8 +4,6 @@ import qrcode from 'qrcode';
 import {authenticator} from 'otplib';
 
 export class GoogleAuthenticatorProvider implements Provider<OtpFn> {
-  constructor() {}
-
   value(): OtpFn {
     return async (username: string) => {
       const secret = authenticator.generateSecret();

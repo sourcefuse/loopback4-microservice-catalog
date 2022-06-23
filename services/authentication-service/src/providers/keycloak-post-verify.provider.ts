@@ -6,8 +6,6 @@ import {KeyCloakPostVerifyFn} from './types';
 export class KeyCloakPostVerifyProvider
   implements Provider<KeyCloakPostVerifyFn>
 {
-  constructor() {}
-
   value(): KeyCloakPostVerifyFn {
     return async (profile: Keycloak.Profile, user: IAuthUser | null) => user;
   }

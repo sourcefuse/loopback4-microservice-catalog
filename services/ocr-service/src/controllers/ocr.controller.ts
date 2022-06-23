@@ -17,6 +17,7 @@ import {FetchClientProvider} from '../providers';
 import {ContractRepository, OcrResultRepository} from '../repositories';
 import {CreateClauseData} from '../types';
 
+const basePath = '/clauses/{id}';
 export class OcrController {
   constructor(
     @repository(OcrResultRepository)
@@ -90,7 +91,7 @@ export class OcrController {
     );
   }
 
-  @patch('/clauses/{id}', {
+  @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'OcrResults PATCH success',
@@ -111,7 +112,7 @@ export class OcrController {
     return this.ocrResultRepository.updateById(id, clause);
   }
 
-  @put('/clauses/{id}', {
+  @put(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'OcrResults PUT success',
@@ -125,7 +126,7 @@ export class OcrController {
     return this.ocrResultRepository.replaceById(id, clause);
   }
 
-  @del('/clauses/{id}', {
+  @del(basePath, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'OcrResults DELETE success',

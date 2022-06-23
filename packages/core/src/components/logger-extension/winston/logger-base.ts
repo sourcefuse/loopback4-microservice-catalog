@@ -4,8 +4,6 @@ import {LogMessage} from '../types';
 import {LOGGER} from '../keys';
 
 export class WinstonLoggerBase implements ILogger {
-  constructor() {}
-
   logger: WinstonLogger;
 
   log(info: LogMessage): void {

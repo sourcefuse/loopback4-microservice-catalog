@@ -7,7 +7,7 @@ export class TestForgotPasswordTokenHandlerProvider
 {
   constructor(
     @service(TestHelperService)
-    private helper: TestHelperService,
+    private readonly helper: TestHelperService,
   ) {}
   value(): ForgotPasswordHandlerFn {
     return async dto => {

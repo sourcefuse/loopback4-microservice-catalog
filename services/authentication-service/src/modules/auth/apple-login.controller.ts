@@ -84,7 +84,9 @@ export class AppleLoginController {
       },
     })
     clientCreds: ClientAuthRequest,
-  ): void {}
+  ): void {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.APPLE_OAUTH2,

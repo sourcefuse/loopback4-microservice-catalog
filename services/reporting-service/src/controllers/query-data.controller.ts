@@ -16,7 +16,7 @@ import {MetabaseTokenRepository, QueriesRepository} from '../repositories';
 export class QueryDataController {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
-    private user: DataObject<{role: string}>,
+    private readonly user: DataObject<{role: string}>,
     @repository(QueriesRepository)
     public queriesRepository: QueriesRepository,
     @repository(MetabaseTokenRepository)
@@ -50,19 +50,17 @@ export class QueryDataController {
       },
     })
     requestObject: DataObject<{queryId: string}>,
+    // sonarignore:start
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   ): Promise<any> {
+    // sonarignore:end
     const user = this.user;
     const userRole = user?.role ?? '';
 
     if (requestObject?.hasOwnProperty('queryId') === false) {
       return 'queryId is mandatory';
     } else {
-      const data = await this.reportingHelper.getQueryData(
-        requestObject.queryId,
-        userRole,
-      );
-      return data;
+      return this.reportingHelper.getQueryData(requestObject.queryId, userRole);
     }
   }
 }
