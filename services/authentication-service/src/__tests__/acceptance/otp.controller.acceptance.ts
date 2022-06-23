@@ -1,6 +1,7 @@
 'use strict';
 import {Client, expect} from '@loopback/testlab';
 import {RoleTypes} from '@sourceloop/core';
+import {AuthErrorKeys} from 'loopback4-authentication';
 import {
   AuthClientRepository,
   RoleRepository,
@@ -37,6 +38,35 @@ describe('OTP Controller', () => {
     delete process.env.JWT_ISSUER;
     delete process.env.JWT_SECRET;
   });
+  it('should give status 401 for get qrCode request without client_id', async () => {
+    const response = await client
+      .get(`/auth/check-qr-code`)
+      .set('code', 'test_code')
+      .expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message).to.be.equal(
+      AuthErrorKeys.ClientInvalid,
+    );
+  });
+  it('should give status 401 for get qrCode request without code', async () => {
+    const response = await client
+      .get(`/auth/check-qr-code`)
+      .set('clientId', 'web')
+      .expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message).to.be.equal(AuthErrorKeys.TokenInvalid);
+  });
+  it('should give status 401 for get qrCode request with wrong client_id', async () => {
+    const response = await client
+      .get(`/auth/check-qr-code`)
+      .set('code', 'test_code')
+      .set('clientId', 'wrong_id')
+      .expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message).to.be.equal(
+      AuthErrorKeys.ClientInvalid,
+    );
+  });
   it('should have property isGenerated', async () => {
     const reqData = {
       // eslint-disable-next-line
@@ -58,6 +88,32 @@ describe('OTP Controller', () => {
     expect(response.body).to.have.property('isGenerated');
   });
 
+  it('should give status 401 for post qrCode request with wrong clientId', async () => {
+    const response = await client
+      .post(`/auth/create-qr-code`)
+      .send({
+        clientId: 'wrong client id',
+        code: 'test_code',
+      })
+      .expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message).to.be.equal(
+      AuthErrorKeys.ClientInvalid,
+    );
+  });
+  it('should give status 401 for post qrCode request with incorrect code', async () => {
+    const response = await client
+      .post(`/auth/create-qr-code`)
+      .send({
+        clientId: 'web',
+        code: 'incorrect_code',
+      })
+      .expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message).to.be.equal(
+      AuthErrorKeys.InvalidCredentials,
+    );
+  });
   it('should have property qrCode', async () => {
     const reqData = {
       // eslint-disable-next-line
@@ -77,6 +133,31 @@ describe('OTP Controller', () => {
       code: reqForCode.body.code,
     });
     expect(response.body).to.have.property('qrCode');
+  });
+
+  it('should give status 204 for send-otp request with incorrect code', async () => {
+    const reqData = {
+      // eslint-disable-next-line
+      client_id: 'web', // eslint-disable-next-line
+      client_secret: 'test',
+      key: 'test_user',
+    };
+    await client.post(`/auth/send-otp`).send(reqData).expect(204);
+  });
+
+  it('should give status 401 when otp is incorrect', async () => {
+    const reqData = {
+      key: 'test_user',
+      otp: '000000',
+    };
+    const response = await client
+      .post(`/auth/verify-otp`)
+      .send(reqData)
+      .expect(401);
+    expect(response).to.have.property('error');
+    expect(response.body.error.message.message).to.be.equal(
+      AuthErrorKeys.OtpInvalid,
+    );
   });
 
   async function givenUserRepository() {
