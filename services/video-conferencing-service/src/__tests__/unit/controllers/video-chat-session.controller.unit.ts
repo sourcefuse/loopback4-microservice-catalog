@@ -8,7 +8,11 @@ import {
 import Sinon from 'sinon';
 
 import {VideoChatSessionController} from '../../../controllers';
-import {VonageConfig, VonageProvider} from '../../../providers/vonage';
+import {
+  VonageConfig,
+  VonageProvider,
+  VonageVideoChat,
+} from '../../../providers/vonage';
 import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   SessionAttendeesRepository,
@@ -31,7 +35,6 @@ import {
   setUpMockProvider,
   stream,
 } from '../../helpers';
-import {VonageVideoChat} from '../../../providers/vonage';
 
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
@@ -490,9 +493,6 @@ describe('Session APIs', () => {
     };
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
-
-    // chatSessionService = createStubInstance(ChatSessionService);
-
     sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);

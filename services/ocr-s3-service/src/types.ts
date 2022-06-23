@@ -1,4 +1,4 @@
-import { Readable } from 'stream';
+import {Readable} from 'stream';
 export const OcrS3DbSourceName = 'OcrS3DbSourceName';
 
 export declare type ObjectStorageClass =
@@ -34,7 +34,6 @@ export interface IListObject {
   Owner?: Owner;
 }
 
-
 export declare type ServerSideEncryption = 'AES256' | 'aws:kms';
 
 export declare type RequestCharged = 'requester';
@@ -51,7 +50,7 @@ export declare type ObjectLockMode = 'COMPLIANCE' | 'GOVERNANCE';
 
 export interface GetObjectOutput {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  Body?: Readable | any;
+  Body?: Readable | any; //NOSONAR
   DeleteMarker?: boolean;
   AcceptRanges?: string;
   Expiration?: string;

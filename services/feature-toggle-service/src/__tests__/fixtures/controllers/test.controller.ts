@@ -10,7 +10,9 @@ import {authorize} from 'loopback4-authorization';
 import {featuresFlag, StrategyBindings} from '../../..';
 
 export class TestController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.0 (2022-06-22)
+
+* chore(search-client): update angular to version 13 to solve vulnerabilities (#834) ([530f6e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/530f6e3)), closes [#834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/834) [#829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/829)
+
+
+### BREAKING CHANGE
+
+* update versions of angular packages and rxjs
+
+
+
+
 ## <small>4.3.2 (2022-05-27)</small>
 
 * chore(deps): changes for release (#809) ([e1a3490](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1a3490)), closes [#809](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/809) [#808](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/808)

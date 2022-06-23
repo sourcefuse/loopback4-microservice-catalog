@@ -1,5 +1,5 @@
-import { IServiceConfig } from '@sourceloop/core';
-import { RequestInit, Response } from 'node-fetch';
+import {IServiceConfig, STATUS_CODE} from '@sourceloop/core';
+import {RequestInit, Response} from 'node-fetch';
 export interface IRequestServiceConfig extends IServiceConfig {
   useRequestProvider: boolean;
   baseUrl: string;
@@ -44,9 +44,10 @@ export type RequestInterceptor = (
   url: string,
   request: RequestInit,
 ) => void | Promise<void>;
-
+// sonarignore:start
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export type ResponseTransformer = (res: Response) => any;
+// sonarignore:end
 
 export interface HttpClientInitOpts {
   baseUrl: string;
@@ -84,8 +85,9 @@ export interface FetchHttpRequest {
 export const identityResponseTransformer: ResponseTransformer = (
   response: Response,
 ) => response;
-
-export interface IRequestServiceConfig extends IServiceConfig { }
+//sonarignore:start
+export interface IRequestServiceConfig extends IServiceConfig {}
+//sonarignore:end
 
 export const jsonResponseTransformer: ResponseTransformer = (
   response: Response,
@@ -95,7 +97,7 @@ export const jsonResponseTransformer: ResponseTransformer = (
 
   if (
     contentType?.startsWith('application/json') &&
-    response.status !== 204 &&
+    response.status !== STATUS_CODE.NO_CONTENT &&
     contentLength !== '0'
   ) {
     return response.clone().json();

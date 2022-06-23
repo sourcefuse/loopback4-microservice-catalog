@@ -1,5 +1,5 @@
-import { inject } from '@loopback/context';
-import { repository } from '@loopback/repository';
+import {inject} from '@loopback/context';
+import {repository} from '@loopback/repository';
 import {
   param,
   get,
@@ -10,13 +10,14 @@ import {
   put,
   post,
 } from '@loopback/rest';
-import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
-import { RequestServiceBindings } from '../keys';
-import { OcrResults } from '../models';
-import { FetchClientProvider } from '../providers';
-import { ContractRepository, OcrResultRepository } from '../repositories';
-import { CreateClauseData } from '../types';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {RequestServiceBindings} from '../keys';
+import {OcrResults} from '../models';
+import {FetchClientProvider} from '../providers';
+import {ContractRepository, OcrResultRepository} from '../repositories';
+import {CreateClauseData} from '../types';
 
+const basePath = '/clauses/{id}';
 export class OcrController {
   constructor(
     @repository(OcrResultRepository)
@@ -25,7 +26,7 @@ export class OcrController {
     public contractRepository: ContractRepository,
     @inject.getter(RequestServiceBindings.FetchProvider)
     private readonly requestProvider: FetchClientProvider,
-  ) { }
+  ) {}
 
   @post('/get-clause-data', {
     responses: {
@@ -49,7 +50,7 @@ export class OcrController {
         description: 'Array of OcrResults model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: { type: 'array', items: getModelSchemaRef(OcrResults) },
+            schema: {type: 'array', items: getModelSchemaRef(OcrResults)},
           },
         },
       },
@@ -78,7 +79,7 @@ export class OcrController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(OcrResults, { partial: true }),
+            items: getModelSchemaRef(OcrResults, {partial: true}),
           },
         },
       },
@@ -90,7 +91,7 @@ export class OcrController {
     );
   }
 
-  @patch('/clauses/{id}', {
+  @patch(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'OcrResults PATCH success',
@@ -102,7 +103,7 @@ export class OcrController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(OcrResults, { partial: true }),
+          schema: getModelSchemaRef(OcrResults, {partial: true}),
         },
       },
     })
@@ -111,7 +112,7 @@ export class OcrController {
     return this.ocrResultRepository.updateById(id, clause);
   }
 
-  @put('/clauses/{id}', {
+  @put(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'OcrResults PUT success',
@@ -125,7 +126,7 @@ export class OcrController {
     return this.ocrResultRepository.replaceById(id, clause);
   }
 
-  @del('/clauses/{id}', {
+  @del(basePath, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'OcrResults DELETE success',

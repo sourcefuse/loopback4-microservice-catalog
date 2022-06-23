@@ -1,5 +1,5 @@
-import { model, property } from '@loopback/repository';
-import { BaseEntity } from '@sourceloop/core';
+import {model, property} from '@loopback/repository';
+import {BaseEntity} from '@sourceloop/core';
 @model({
   name: 'hocr_results',
   settings: {
@@ -51,8 +51,4 @@ export class HocrObject extends BaseEntity {
   }
 }
 
-export interface HocrObjectRelations {
-  // describe navigational properties here
-}
-
-export type HocrObjectWithRelations = HocrObject & HocrObjectRelations;
+export type HocrObjectWithRelations = HocrObject;

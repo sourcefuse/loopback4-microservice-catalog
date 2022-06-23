@@ -89,7 +89,9 @@ export class GoogleLoginController {
     clientId?: string,
     @param.query.string('client_secret')
     clientSecret?: string,
-  ): Promise<void> {}
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
@@ -127,7 +129,9 @@ export class GoogleLoginController {
       },
     })
     clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.GOOGLE_OAUTH2,

@@ -14,6 +14,7 @@ import {
 import {MiddlewareContext, Middleware} from '@loopback/express';
 import {SwaggerAuthenticationBindings} from '../keys';
 import {HttpAuthenticationVerifier} from '../types';
+import {STATUS_CODE} from '../../../enums';
 
 @globalInterceptor('auth', {tags: {name: 'AuthenticateSwaggerMiddleware'}})
 export class AuthenticateSwaggerMiddlewareInterceptor
@@ -43,7 +44,7 @@ export class AuthenticateSwaggerMiddlewareInterceptor
       const verified = this.verifier(username, password);
       if (!verified) {
         response
-          .status(401)
+          .status(STATUS_CODE.UNAUTHORISED)
           .setHeader('WWW-Authenticate', 'Basic realm="Node"');
         response.end('Unauthorized');
         return null;

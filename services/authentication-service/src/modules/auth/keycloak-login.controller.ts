@@ -90,8 +90,10 @@ export class KeycloakLoginController {
         },
       },
     })
-    clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+    clientCreds?: ClientAuthRequest, //NOSONAR
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
@@ -125,10 +127,12 @@ export class KeycloakLoginController {
   })
   async loginViaKeycloak(
     @param.query.string('client_id')
-    clientId?: string,
+    clientId?: string, //NOSONAR
     @param.query.string('client_secret')
-    clientSecret?: string,
-  ): Promise<void> {}
+    clientSecret?: string, //NOSONAR
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.KEYCLOAK,

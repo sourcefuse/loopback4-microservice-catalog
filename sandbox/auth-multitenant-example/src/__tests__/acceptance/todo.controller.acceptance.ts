@@ -12,8 +12,8 @@ describe('PingController', () => {
     sarah: null,
   };
 
-  const client_id = 'temp_client';
-  const client_secret = 'temp_secret';
+  const clientId = 'temp_client';
+  const clientSecret = 'temp_secret';
   const todo = {
     title: 'Testing',
     description: 'Test description',
@@ -26,14 +26,14 @@ describe('PingController', () => {
 
   before('get auth tokens', async () => {
     const johnAuthRes = await client.post('/auth/login-token').send({
-      client_id,
-      client_secret,
+      client_id: clientId,
+      client_secret: clientSecret,
       username: 'john.doe@example.com',
       password: 'test123!@#',
     });
     const sarahAuthRes = await client.post('/auth/login-token').send({
-      client_id,
-      client_secret,
+      client_id: clientId,
+      client_secret: clientSecret,
       username: 'sarah.rafferty@example.com',
       password: 'test123!@#',
     });

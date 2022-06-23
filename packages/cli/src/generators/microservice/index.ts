@@ -187,6 +187,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             nameArr: nameArr,
           },
         );
+      } else {
+        this._createFacadeRedisDatasource();
       }
     }
   }
@@ -263,6 +265,26 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           this.projectInfo.baseServiceCacheName = ds.name;
         }
       });
+    }
+  }
+
+  private _createFacadeRedisDatasource() {
+    if (this.options.facade) {
+      const nameArr = ['redis'];
+      this.fs.copyTpl(
+        this.templatePath(REDIS_DATASOURCE),
+        this.destinationPath(join('src', 'datasources', 'redis.datasource.ts')),
+        {
+          project: this.projectInfo,
+        },
+      );
+      this.fs.copyTpl(
+        this.templatePath(DATASOURCE_INDEX),
+        this.destinationPath(join('src', 'datasources', `index.ts`)),
+        {
+          nameArr: nameArr,
+        },
+      );
     }
   }
 
