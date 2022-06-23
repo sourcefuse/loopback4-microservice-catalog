@@ -1,6 +1,6 @@
 import {inject} from '@loopback/core';
 import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core'; //NOSONAR
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 /**
  * OpenAPI response for ping()
  */
