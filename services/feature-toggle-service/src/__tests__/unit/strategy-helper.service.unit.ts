@@ -52,7 +52,7 @@ describe('Strategy helper service', () => {
       },
     };
 
-    it('return true if Feature Toggle is not set', async () => {
+    it('return true if Feature Toggle is not set for System Strategy', async () => {
       const findFeature = featureRepo.stubs.findOne;
       findFeature.resolves(feature);
 
@@ -69,7 +69,7 @@ describe('Strategy helper service', () => {
       sinon.assert.calledWith(findFeatureToggle, featureToggleFilter);
     });
 
-    it('return false if Feature Toggle Status is false', async () => {
+    it('return false if Feature Toggle Status is false for System Strategy', async () => {
       const findFeature = featureRepo.stubs.findOne;
       findFeature.resolves(feature);
 
@@ -99,7 +99,7 @@ describe('Strategy helper service', () => {
       },
     };
 
-    it('return true if Feature Toggle is not set', async () => {
+    it('return true if Feature Toggle is not set for Tenant Strategy', async () => {
       const findFeatureToggle = featureToggleRepo.stubs.findOne;
       findFeatureToggle.resolves(undefined);
 
@@ -111,7 +111,7 @@ describe('Strategy helper service', () => {
       sinon.assert.calledWith(findFeatureToggle, featureToggleFilter);
     });
 
-    it('return false if Feature Toggle Status is false', async () => {
+    it('return false if Feature Toggle Status is false for Tenant Strategy', async () => {
       const findFeatureToggle = featureToggleRepo.stubs.findOne;
       findFeatureToggle.resolves(featureToggle);
 
@@ -136,7 +136,7 @@ describe('Strategy helper service', () => {
       },
     };
 
-    it('return true if Feature Toggle is not set', async () => {
+    it('return true if Feature Toggle is not set for User Strategy', async () => {
       const findFeatureToggle = featureToggleRepo.stubs.findOne;
       findFeatureToggle.resolves(undefined);
 
@@ -148,7 +148,7 @@ describe('Strategy helper service', () => {
       sinon.assert.calledWith(findFeatureToggle, featureToggleFilter);
     });
 
-    it('return false if Feature Toggle Status is false', async () => {
+    it('return false if Feature Toggle Status is false for User Strategy', async () => {
       const findFeatureToggle = featureToggleRepo.stubs.findOne;
       findFeatureToggle.resolves(featureToggle);
 
@@ -166,7 +166,9 @@ describe('Strategy helper service', () => {
     metadataGetterStub = sinon.stub().resolves({
       featureKey: 'test',
     });
+    // sonarignore:start
     user = <IAuthUserWithPermissions>{
+      // sonarignore:end
       permissions: ['*'],
       authClientId: 123,
       role: 'test_role',
@@ -181,10 +183,10 @@ describe('Strategy helper service', () => {
     featureToggleRepo = createStubInstance(FeatureToggleRepository);
     logger = {
       log(info: LogMessage): void {},
-      info(msg: string, key?: string): void {},
-      warn(msg: string, key?: string): void {},
-      error(msg: string, key?: string): void {},
-      debug(msg: string, key?: string): void {},
+      info(msg: string, key?: string): void {}, //NOSONAR
+      warn(msg: string, key?: string): void {}, //NOSONAR
+      error(msg: string, key?: string): void {}, //NOSONAR
+      debug(msg: string, key?: string): void {}, //NOSONAR
     };
 
     strategyHelperService = new StrategyHelperService(

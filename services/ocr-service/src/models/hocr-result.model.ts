@@ -51,8 +51,4 @@ export class HocrResults extends BaseEntity {
   }
 }
 
-export interface HocrResultsRelations {
-  // describe navigational properties here
-}
-
-export type HocrResultsWithRelations = HocrResults & HocrResultsRelations;
+export type HocrResultsWithRelations = HocrResults;

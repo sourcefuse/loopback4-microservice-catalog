@@ -51,10 +51,10 @@ describe('User Strategy provider', () => {
     featureToggleRepo = createStubInstance(FeatureToggleRepository);
     logger = {
       log(info: LogMessage): void {},
-      info(msg: string, key?: string): void {},
-      warn(msg: string, key?: string): void {},
-      error(msg: string, key?: string): void {},
-      debug(msg: string, key?: string): void {},
+      info(msg: string, key?: string): void {}, //NOSONAR
+      warn(msg: string, key?: string): void {}, //NOSONAR
+      error(msg: string, key?: string): void {}, //NOSONAR
+      debug(msg: string, key?: string): void {}, //NOSONAR
     };
 
     strategyHelperService = new StrategyHelperService(

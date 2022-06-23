@@ -9,7 +9,7 @@ export class SuccessResponse extends Model {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<SuccessResponse>) {
     super(data);

@@ -468,12 +468,14 @@ export class LoginController {
   })
   async sendOtp(
     @requestBody()
-    req: OtpSendRequest,
+    req: OtpSendRequest, //NOSONAR
     @inject(AuthenticationBindings.CURRENT_CLIENT)
-    client: AuthClient,
+    client: AuthClient, //NOSONAR
     @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser,
-  ): Promise<OtpResponse | void> {}
+    user: AuthUser, //NOSONAR
+  ): Promise<OtpResponse | void> {
+    //do nothing
+  }
 
   @authenticate(STRATEGY.OTP)
   @authorize({permissions: ['*']})

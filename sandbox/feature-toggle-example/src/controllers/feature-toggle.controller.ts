@@ -12,8 +12,11 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
+const desp = 'Array of Feature model instances';
 export class FeatureToggleExampleController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
   @featuresFlag({
@@ -29,7 +32,7 @@ export class FeatureToggleExampleController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -54,7 +57,7 @@ export class FeatureToggleExampleController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -79,7 +82,7 @@ export class FeatureToggleExampleController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -104,7 +107,7 @@ export class FeatureToggleExampleController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -129,7 +132,7 @@ export class FeatureToggleExampleController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {

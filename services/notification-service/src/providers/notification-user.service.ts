@@ -6,8 +6,6 @@ import {INotificationUserManager} from '../types';
 export class NotificationUserProvider
   implements Provider<INotificationUserManager>
 {
-  constructor() {}
-
   value() {
     return {
       getNotifUsers: async (notif: Notification) => {

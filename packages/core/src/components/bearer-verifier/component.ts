@@ -1,6 +1,7 @@
 import {Binding, Component, inject, ProviderMap} from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {Strategies} from 'loopback4-authentication';
+import {ILogger, LOGGER} from '../logger-extension';
 
 import {
   BearerVerifierBindings,
@@ -16,6 +17,7 @@ export class BearerVerifierComponent implements Component {
   constructor(
     @inject(BearerVerifierBindings.Config)
     private readonly config: BearerVerifierConfig,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {
     this.providers = {};
     this.repositories = [RevokedTokenRepository];
@@ -29,7 +31,7 @@ export class BearerVerifierComponent implements Component {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
         FacadesBearerTokenVerifyProvider;
     } else {
-      console.error('Invalid BearerVerifierType specified !');
+      this.logger.error('Invalid BearerVerifierType specified !');
     }
   }
   providers?: ProviderMap;

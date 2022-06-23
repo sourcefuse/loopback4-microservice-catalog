@@ -14,7 +14,7 @@ describe('Feature flag action provider', () => {
 
   before('setupApplication', async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({app, client} = await setupApplication());
+    ({app, client} = await setupApplication()); //NOSONAR
   });
   after(async () => app.stop());
 
