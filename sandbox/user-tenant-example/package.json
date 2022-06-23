@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/user-tenant-example",
   "version": "0.1.6",
-  "description": "backend of payment example",
+  "description": "user-tenant-example",
   "keywords": [
     "loopback-application",
     "loopback"
