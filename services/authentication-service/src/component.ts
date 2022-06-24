@@ -9,12 +9,17 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {CoreComponent, SECURITY_SCHEME_SPEC} from '@sourceloop/core';
-import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  AuthenticationComponent,
+  Strategies,
+  STRATEGY,
+} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {controllers} from './controllers';
+import {OtpMethodType} from './enums';
 import {AuthServiceBindings} from './keys';
 import {models} from './models';
 import {
@@ -39,7 +44,6 @@ import {
   FacebookPostVerifyProvider,
   FacebookPreVerifyProvider,
   ForgotPasswordProvider,
-  GoogleAuthenticatorProvider,
   GoogleOauth2SignupProvider,
   GooglePostVerifyProvider,
   GooglePreVerifyProvider,
@@ -56,22 +60,26 @@ import {
   SignupTokenHandlerProvider,
   VerifyBindings,
 } from './providers';
+import {AuthCodeGeneratorProvider} from './providers/auth-code-generator.provider';
 import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
 import {OauthCodeReaderProvider} from './providers/code-reader.provider';
 import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
+import {MfaProvider} from './providers/mfa.provider';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
-import {LoginHelperService, OtpSenderService} from './services';
-import {IAuthServiceConfig, IOtpAuthConfig} from './types';
+import {LoginHelperService, OtpService} from './services';
+import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(AuthServiceBindings.MfaConfig, {optional: true})
+    private readonly mfaConfig: IMfaConfig,
     @inject(AuthServiceBindings.OtpConfig, {optional: true})
-    private readonly otpAuthConfig: IOtpAuthConfig,
+    private readonly otpConfig: IOtpConfig,
     @inject(AuthServiceBindings.Config, {optional: true})
     private readonly authConfig?: IAuthServiceConfig,
   ) {
@@ -83,6 +91,7 @@ export class AuthenticationServiceComponent implements Component {
 
     // Mount authentication component
     this.setupAuthenticationComponent();
+    this.setupMultiFactorAuthentication();
 
     // Mount authorization component
     this.setupAuthorizationComponent();
@@ -110,9 +119,7 @@ export class AuthenticationServiceComponent implements Component {
     this.application
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
-    this.application
-      .bind('services.OtpSenderService')
-      .toClass(OtpSenderService);
+    this.application.bind('services.otpService').toClass(OtpService);
     this.models = models;
 
     this.controllers = controllers;
@@ -168,7 +175,6 @@ export class AuthenticationServiceComponent implements Component {
       FacebookOauth2VerifyProvider;
     this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
       KeycloakVerifyProvider;
-    this.providers[Strategies.Passport.OTP_VERIFIER.key] = OtpVerifyProvider;
     this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
       KeyCloakSignupProvider;
     this.providers[SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key] =
@@ -207,22 +213,12 @@ export class AuthenticationServiceComponent implements Component {
       FacebookPostVerifyProvider;
     this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
       SignupBearerVerifyProvider;
-    this.providers[VerifyBindings.OTP_PROVIDER.key] = OtpProvider;
-    this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
-      OtpGenerateProvider;
-    this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] = OtpSenderProvider;
-
-    if (this.otpAuthConfig?.useGoogleAuthenticator) {
-      this.providers[VerifyBindings.OTP_PROVIDER.key] =
-        GoogleAuthenticatorProvider;
-      this.providers[Strategies.Passport.OTP_VERIFIER.key] =
-        GoogleAuthenticatorVerifyProvider;
-    }
-
     this.providers[AuthCodeBindings.CODEREADER_PROVIDER.key] =
       OauthCodeReaderProvider;
     this.providers[AuthCodeBindings.CODEWRITER_PROVIDER.key] =
       CodeWriterProvider;
+    this.providers[AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER.key] =
+      AuthCodeGeneratorProvider;
 
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;
@@ -236,5 +232,28 @@ export class AuthenticationServiceComponent implements Component {
       allowAlwaysPaths: ['/explorer'],
     });
     this.application.component(AuthorizationComponent);
+  }
+
+  setupMultiFactorAuthentication() {
+    this.providers[VerifyBindings.MFA_PROVIDER.key] = MfaProvider;
+
+    if (this.mfaConfig?.secondFactor === STRATEGY.OTP) {
+      if (this.otpConfig?.method === OtpMethodType.OTP) {
+        this.providers[VerifyBindings.OTP_GENERATE_PROVIDER.key] =
+          OtpGenerateProvider;
+        this.providers[VerifyBindings.OTP_SENDER_PROVIDER.key] =
+          OtpSenderProvider;
+        this.providers[VerifyBindings.OTP_PROVIDER.key] = OtpProvider;
+        this.providers[Strategies.Passport.OTP_VERIFIER.key] =
+          OtpVerifyProvider;
+      } else if (
+        this.otpConfig?.method === OtpMethodType.GOOGLE_AUTHENTICATOR
+      ) {
+        this.providers[Strategies.Passport.OTP_VERIFIER.key] =
+          GoogleAuthenticatorVerifyProvider;
+      } else {
+        // do nothing
+      }
+    }
   }
 }

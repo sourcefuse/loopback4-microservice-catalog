@@ -9,7 +9,7 @@ import {
 import {OtpCacheRepository, UserRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {totp} from 'otplib';
-import {OtpSenderService} from '../../../services';
+import {OtpService} from '../../../services';
 import {AuthClient} from '../../../models';
 
 export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
@@ -21,8 +21,8 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
     private readonly client: AuthClient,
-    @inject('services.OtpSenderService')
-    private readonly otpSenderService: OtpSenderService,
+    @inject('services.otpService')
+    private readonly otpService: OtpService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {
@@ -32,10 +32,14 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
           username: username,
         },
       });
+      if (!user) {
+        this.logger.error('Invalid Username');
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      }
 
       //sender
       if (!otp) {
-        await this.otpSenderService.sendOtp(this.client, username);
+        await this.otpService.sendOtp(user, this.client);
         return user;
       }
 
@@ -43,7 +47,7 @@ export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
       const otpCache = await this.otpCacheRepo.get(username);
       if (!otpCache) {
         this.logger.error('Invalid Username');
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.OtpExpired);
       }
 
       let isValid = false;

@@ -5,12 +5,13 @@ import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
 import {
+  AuthClient,
   ForgetPasswordResponseDto,
   SignupRequestResponseDto,
   User,
   UserRelations,
 } from '../models';
-import {OtpResponse} from '../modules/auth';
+import {AuthUser, OtpResponse} from '../modules/auth';
 
 export interface GoogleSignUpFn {
   (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
@@ -137,16 +138,24 @@ export interface ForgotPasswordHandlerFn {
   (dto: DataObject<ForgetPasswordResponseDto>): Promise<unknown>;
 }
 
+export interface AuthCodeGeneratorFn {
+  (client: AuthClient, user: AuthUser): Promise<string>;
+}
+
+export interface MfaCheckFn {
+  (user: AuthUser): Promise<boolean>;
+}
+
 export interface OtpGenerateFn {
-  (): Promise<string>;
+  (secret: string): Promise<string>;
 }
 
 export interface OtpFn {
-  (username: string): Promise<OtpResponse>;
+  (user: User): Promise<OtpResponse>;
 }
 
 export interface OtpSenderFn {
-  (otp: string, email: string): Promise<void>;
+  (otp: string, user: User): Promise<void>;
 }
 
 export interface SignupTokenHandlerFn {
