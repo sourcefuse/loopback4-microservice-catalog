@@ -62,7 +62,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @inject('models.User')
-    private user: typeof Entity & {prototype: User},
+    private readonly user: typeof Entity & {prototype: User},
   ) {
     super(user, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(

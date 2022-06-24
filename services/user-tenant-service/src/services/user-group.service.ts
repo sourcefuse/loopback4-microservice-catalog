@@ -24,8 +24,7 @@ export class UserGroupService {
   ) {}
 
   async create(userGroupToCreate: Partial<UserGroup>) {
-    const userGroup = await this.userGroupRepository.create(userGroupToCreate);
-    return userGroup;
+    return this.userGroupRepository.create(userGroupToCreate);
   }
 
   async updateById(userGroupId: string, userGroupToUpdate: Partial<UserGroup>) {

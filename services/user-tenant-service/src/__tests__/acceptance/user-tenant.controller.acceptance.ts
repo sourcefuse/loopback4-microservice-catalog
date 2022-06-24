@@ -12,7 +12,7 @@ import {
   UserTenantRepository,
 } from '../../repositories';
 import {setupApplication} from './test-helper';
-import { UserOperationsService } from '../../services';
+import {UserOperationsService} from '../../services';
 
 interface USER {
   id: string | undefined;
@@ -43,10 +43,10 @@ describe('UserTenant Controller', function () {
     tenantId: undefined,
     password: pass,
     permissions: [
-        PermissionKey.ViewAnyUser,
-        PermissionKey.ViewOwnUser,
-        PermissionKey.ViewTenantUser,
-        PermissionKey.ViewTenantUserRestricted,
+      PermissionKey.ViewAnyUser,
+      PermissionKey.ViewOwnUser,
+      PermissionKey.ViewTenantUser,
+      PermissionKey.ViewTenantUserRestricted,
     ],
   };
 

@@ -1,8 +1,8 @@
 import {Client, expect} from '@loopback/testlab';
-import { AuthenticationBindings } from 'loopback4-authentication';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../enums';
-import { UserGroupService, UserGroupHelperService } from '../../services';
+import {UserGroupService, UserGroupHelperService} from '../../services';
 import {UserTenantServiceApplication} from '../application';
 import {setupApplication} from './test-helper';
 
@@ -21,11 +21,9 @@ describe('UserGroups Controller', function () {
     username: 'test_user',
     tenantId: id,
     password: pass,
-    permissions: [
-        PermissionKey.ViewUserGroupList,
-    ],
+    permissions: [PermissionKey.ViewUserGroupList],
   };
- 
+
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
   });

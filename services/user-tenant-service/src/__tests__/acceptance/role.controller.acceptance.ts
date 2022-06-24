@@ -1,6 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import { AuthenticationBindings } from 'loopback4-authentication';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {PermissionKey} from '../../enums';
 import {Role} from '../../models';
 import {RoleRepository} from '../../repositories';

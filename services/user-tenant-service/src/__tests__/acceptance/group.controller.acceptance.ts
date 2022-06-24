@@ -3,7 +3,10 @@ import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {PermissionKey} from '../../enums';
 import {Group, GroupUserCountView} from '../../models';
-import {GroupRepository, UserGroupCountViewRepository} from '../../repositories';
+import {
+  GroupRepository,
+  UserGroupCountViewRepository,
+} from '../../repositories';
 import {UserGroupHelperService, UserGroupService} from '../../services';
 import {UserTenantServiceApplication} from '../application';
 import {setupApplication} from './test-helper';
@@ -41,7 +44,6 @@ describe('Group Controller', function () {
     await app.stop();
   });
 
-
   before(givenRepositories);
   before(setCurrentUser);
 
@@ -59,8 +61,8 @@ describe('Group Controller', function () {
 
   it('gives status 422 when request body is invalid', async () => {
     const group = {
-        name: 12,
-      };
+      name: 12,
+    };
     await client
       .post(basePath)
       .set('authorization', `Bearer ${token}`)
@@ -93,10 +95,10 @@ describe('Group Controller', function () {
 
   it('return a group object when id is sent', async () => {
     const userGroup = await userGroupCountRepo.create(
-        new GroupUserCountView({
-            userCount:3
-        })
-      );
+      new GroupUserCountView({
+        userCount: 3,
+      }),
+    );
     const response = await client
       .get(`${basePath}/${userGroup.id}`)
       .set('authorization', `Bearer ${token}`)
@@ -156,7 +158,6 @@ describe('Group Controller', function () {
   }
 
   function setCurrentUser() {
-
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
     app.bind('service.sfUserService').toClass(UserGroupService);
     app.bind('service.sfUserService1').toClass(UserGroupHelperService);

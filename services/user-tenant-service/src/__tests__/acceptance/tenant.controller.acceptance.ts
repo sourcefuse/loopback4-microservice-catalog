@@ -141,7 +141,7 @@ describe('Tenant Controller', function () {
       password: pass,
       permissions: [],
     };
-    
+
     const newToken = jwt.sign(newTestUser, 'kdskssdkdfs', {
       expiresIn: 180000,
       issuer: 'sf',

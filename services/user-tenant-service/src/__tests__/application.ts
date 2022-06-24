@@ -4,13 +4,13 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
-  RestExplorerComponent
+  RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
-  AuthorizationComponent
+  AuthorizationComponent,
 } from 'loopback4-authorization';
 import * as path from 'path';
 import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';

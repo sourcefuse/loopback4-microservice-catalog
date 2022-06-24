@@ -1,11 +1,10 @@
 import {Client, expect} from '@loopback/testlab';
-import { AuthenticationBindings } from 'loopback4-authentication';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../enums';
-import {UserOperationsService } from '../../services';
+import {UserOperationsService} from '../../services';
 import {UserTenantServiceApplication} from '../application';
 import {setupApplication} from './test-helper';
-
 
 describe('TenantUser Controller', function () {
   /* eslint-disable @typescript-eslint/no-invalid-this */
@@ -22,7 +21,7 @@ describe('TenantUser Controller', function () {
     username: 'test_user',
     tenantId: id,
     password: pass,
-    roleId:id,
+    roleId: id,
     permissions: [
       PermissionKey.ViewAnyUser,
       PermissionKey.ViewTenantUser,
@@ -38,7 +37,7 @@ describe('TenantUser Controller', function () {
       PermissionKey.DeleteAnyUser,
       PermissionKey.DeleteTenantUser,
       PermissionKey.DeleteTenantUserRestricted,
-      PermissionKey.ViewAllUser
+      PermissionKey.ViewAllUser,
     ],
   };
 
@@ -86,15 +85,15 @@ describe('TenantUser Controller', function () {
 
   it('gives status 404 when entity not found', async () => {
     const newUser = {
-        roleId:'1',
-        userTenantId:'1',
-        tenantId:'1',
-        userDetails:{
-            email:'test@example.com',
-            username:'testuser',
-            firstName: 'test_user',
-        }
-    }
+      roleId: '1',
+      userTenantId: '1',
+      tenantId: '1',
+      userDetails: {
+        email: 'test@example.com',
+        username: 'testuser',
+        firstName: 'test_user',
+      },
+    };
     await client
       .post(`${basePath}/${id}/users`)
       .set('authorization', `Bearer ${token}`)

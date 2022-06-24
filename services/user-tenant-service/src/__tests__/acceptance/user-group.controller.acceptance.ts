@@ -1,10 +1,10 @@
 import {Client, expect} from '@loopback/testlab';
-import { AuthenticationBindings } from 'loopback4-authentication';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../enums';
 import {UserGroup} from '../../models';
 import {UserGroupRepository} from '../../repositories';
-import { UserGroupService, UserGroupHelperService } from '../../services';
+import {UserGroupService, UserGroupHelperService} from '../../services';
 import {UserTenantServiceApplication} from '../application';
 import {setupApplication} from './test-helper';
 
@@ -25,11 +25,11 @@ describe('UserGroup Controller', function () {
     tenantId: id,
     password: pass,
     permissions: [
-        PermissionKey.ViewUserGroupList,
-        PermissionKey.UpdateMemberInUserGroup,
-        PermissionKey.RemoveMemberFromUserGroup,
-        PermissionKey.LeaveUserGroup,
-        PermissionKey.AddMemberToUserGroup,
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.UpdateMemberInUserGroup,
+      PermissionKey.RemoveMemberFromUserGroup,
+      PermissionKey.LeaveUserGroup,
+      PermissionKey.AddMemberToUserGroup,
     ],
   };
 
@@ -46,21 +46,23 @@ describe('UserGroup Controller', function () {
   it('gives status 401 when no token is passed', async () => {
     const userGroup = await userGroupRepo.create(
       new UserGroup({
-        groupId:'3',
-        userTenantId:id
-      })
+        groupId: '3',
+        userTenantId: id,
+      }),
     );
-    const response = await client.get(`${basePath}/${userGroup.id}/user-groups`).expect(401);
+    const response = await client
+      .get(`${basePath}/${userGroup.id}/user-groups`)
+      .expect(401);
     expect(response).to.have.property('error');
   });
 
   it('gives status 200 when token is passed ', async () => {
     const userGroup = await userGroupRepo.create(
-        new UserGroup({
-          groupId:'3',
-          userTenantId:id
-        })
-      );
+      new UserGroup({
+        groupId: '3',
+        userTenantId: id,
+      }),
+    );
     await client
       .get(`${basePath}/${userGroup.id}/user-groups`)
       .set('authorization', `Bearer ${token}`)
@@ -69,11 +71,11 @@ describe('UserGroup Controller', function () {
 
   it('gives status 422 when request body is invalid', async () => {
     const userGroup = await userGroupRepo.create(
-        new UserGroup({
-          groupId:'3',
-          userTenantId:id
-        })
-      );
+      new UserGroup({
+        groupId: '3',
+        userTenantId: id,
+      }),
+    );
     await client
       .post(`${basePath}/${userGroup.id}/user-groups`)
       .set('authorization', `Bearer ${token}`)
@@ -83,13 +85,13 @@ describe('UserGroup Controller', function () {
 
   it('gives status 200 when a new usergroup is created', async () => {
     const userGroup = await userGroupRepo.create(
-        new UserGroup({
-          groupId:'3',
-          userTenantId:id
-        })
-      );
-      const payload = userGroup;
-      delete payload.id;
+      new UserGroup({
+        groupId: '3',
+        userTenantId: id,
+      }),
+    );
+    const payload = userGroup;
+    delete payload.id;
     await client
       .post(`${basePath}/${userGroup.id}/user-groups`)
       .set('authorization', `Bearer ${token}`)
