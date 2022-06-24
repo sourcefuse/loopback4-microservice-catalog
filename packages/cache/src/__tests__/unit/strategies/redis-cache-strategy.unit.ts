@@ -1,6 +1,6 @@
 import {expect, sinon} from '@loopback/testlab';
 import {RedisCacheStrategy} from '../../../strategies';
-import {CacheMixinOptions} from '../../../types';
+import {ICacheMixinOptions} from '../../../types';
 import {mockData, mockKey} from '../fixtures/data';
 import {resetCalls} from '../fixtures/default-crud.repository';
 import {TestRedisDataSource} from '../fixtures/redis.datasource';
@@ -14,7 +14,7 @@ describe('Unit Test Cases for Redis Strategy', () => {
   redisStrategy.getCacheDataSource = sinon.stub().resolves(redisDataSourceStub);
   let redisExecuteStub: sinon.SinonStub;
   let searchStub: sinon.SinonStub;
-  const mixinOpts: CacheMixinOptions = {
+  const mixinOpts: ICacheMixinOptions = {
     ttl: 60000,
   };
 

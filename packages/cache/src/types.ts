@@ -1,4 +1,5 @@
-import {Options} from '@loopback/repository';
+import {Entity, Filter, JugglerDataSource, Options} from '@loopback/repository';
+import {ICacheStrategy} from './strategies';
 import {CacheStrategyTypes} from './strategy-types.enum';
 
 /**
@@ -20,12 +21,19 @@ export const DEFAULT_CACHE_PLUGIN_OPTIONS: CachePluginComponentOptions = {
   salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe', // For security, this should come from env or secrets manager
 };
 
-export interface CacheMixinOptions {
+export interface ICacheMixin<M extends Entity, ID> {
+  getCacheDataSource: () => Promise<JugglerDataSource>;
+  strategy: ICacheStrategy<M>;
+  clearCache(): Promise<void>;
+  generateKey(id?: ID, filter?: Filter<M>): Promise<string>;
+}
+
+export interface ICacheMixinOptions {
   ttl?: number;
 }
 
-export interface CacheFindOptions {
+export interface ICacheFindOptions {
   forceUpdate: boolean;
 }
 
-export type CacheOptions = Options & CacheFindOptions;
+export type CacheOptions = Options & ICacheFindOptions;

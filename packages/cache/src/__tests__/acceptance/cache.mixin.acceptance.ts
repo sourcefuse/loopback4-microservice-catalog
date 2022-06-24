@@ -17,7 +17,7 @@ const redisHost = process.env.REDIS_HOST;
 describe('Acceptance Test Cases for Cache Mixin', function () {
   let redisDataSource: RedisDataSource;
   let getRedisDataSource;
-  let repositroy: ProductRepository;
+  let repository: ProductRepository;
   before(async function () {
     if (!redisHost || !redisPort) {
       // eslint-disable-next-line @typescript-eslint/no-invalid-this
@@ -25,11 +25,11 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     }
     redisDataSource = new RedisDataSource();
     getRedisDataSource = sinon.stub().resolves(redisDataSource);
-    repositroy = new ProductRepository(
+    repository = new ProductRepository(
       new TestDataSource(),
       getRedisDataSource,
     );
-    await repositroy.createAll(mockDataArray);
+    await repository.createAll(mockDataArray);
   });
 
   beforeEach(async () => {
@@ -37,46 +37,46 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
   });
 
   it('should return data if not present in cache', async () => {
-    const result1 = await repositroy.find();
+    const result1 = await repository.find();
     expect(result1).to.match(mockDataArray);
-    const result2 = await repositroy.findById(mockDataArray[0].id);
+    const result2 = await repository.findById(mockDataArray[0].id);
     expect(result2).to.match(mockDataArray[0]);
   });
 
   it('should return data if present in cache', async () => {
     //extra call to store data in cache
-    await repositroy.find();
-    const result1 = await repositroy.find();
+    await repository.find();
+    const result1 = await repository.find();
     expect(result1).to.match(mockDataArray);
-    const result2 = await repositroy.findById(mockDataArray[0].id);
+    const result2 = await repository.findById(mockDataArray[0].id);
     expect(result2).to.match(mockDataArray[0]);
   });
 
   it('should delete from cache after ttl expires', async () => {
     //extra call to store data in cache
-    await repositroy.find();
+    await repository.find();
 
     await new Promise(resolve => setTimeout(resolve, 5000));
 
     const result = await executeRedisCommand('GET', [
-      await repositroy.generateKey(),
+      await repository.generateKey(),
     ]);
     expect(result).to.be.undefined();
   });
 
   it('should save data in cache on calling find and findById', async () => {
     //extra call to store data in cache
-    await repositroy.find();
+    await repository.find();
     const result1 = await executeRedisCommand('GET', [
-      await repositroy.generateKey(),
+      await repository.generateKey(),
     ]);
     expect(JSON.parse(decoder.decode(result1 as Buffer))).to.match(
       mockDataArray,
     );
 
-    await repositroy.findById(mockDataArray[0].id);
+    await repository.findById(mockDataArray[0].id);
     const result2 = await executeRedisCommand('GET', [
-      await repositroy.generateKey(1),
+      await repository.generateKey(1),
     ]);
     expect(JSON.parse(decoder.decode(result2 as Buffer))).to.match(
       mockDataArray[0],
@@ -85,19 +85,19 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
 
   it('should always update cache if forceUpdate is true for find', async () => {
     //extra call to store data in cache
-    await repositroy.find({});
+    await repository.find({});
 
     //update data in db now
     const mockDataArrayCopy = mockDataArray;
     mockDataArrayCopy[0].name = 'product_Update';
-    await repositroy.updateAll({name: 'product_Update'}, {name: 'product_X'});
+    await repository.updateAll({name: 'product_Update'}, {name: 'product_X'});
 
     // now check if data is coming from db and updated in cache as well
-    const res = await repositroy.find({}, {forceUpdate: true});
+    const res = await repository.find({}, {forceUpdate: true});
     expect(res).to.match(mockDataArrayCopy);
 
     const resCache = await executeRedisCommand('GET', [
-      await repositroy.generateKey(undefined, {}),
+      await repository.generateKey(undefined, {}),
     ]);
 
     expect(JSON.parse(decoder.decode(resCache as Buffer))).to.match(
@@ -105,24 +105,24 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     );
 
     //restore db to previous state
-    await repositroy.updateAll({name: 'product_X'}, {name: 'product_Update'});
+    await repository.updateAll({name: 'product_X'}, {name: 'product_Update'});
   });
 
   it('should always update cache if forceUpdate is true for findById', async () => {
     //extra call to store data in cache
-    await repositroy.findById(1, {});
+    await repository.findById(1, {});
 
     //update data in db now
     const mockDataCopy = mockDataArray[0];
     mockDataCopy.name = 'product_Update';
-    await repositroy.updateAll({name: 'product_Update'}, {name: 'product_X'});
+    await repository.updateAll({name: 'product_Update'}, {name: 'product_X'});
 
     // now check if data is coming from db and updated in cache as well
-    const res = await repositroy.findById(1, {}, {forceUpdate: true});
+    const res = await repository.findById(1, {}, {forceUpdate: true});
     expect(res).to.match(mockDataCopy);
 
     const resCache = await executeRedisCommand('GET', [
-      await repositroy.generateKey(1, {}),
+      await repository.generateKey(1, {}),
     ]);
 
     expect(JSON.parse(decoder.decode(resCache as Buffer))).to.match(
@@ -130,15 +130,15 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     );
 
     //restore db to previous state
-    await repositroy.updateAll({name: 'product_X'}, {name: 'product_Update'});
+    await repository.updateAll({name: 'product_X'}, {name: 'product_Update'});
   });
 
   it('should delete all entries from cache', async () => {
     //extra call to store data in cache
-    await repositroy.find();
-    await repositroy.findById(mockDataArray[0].id);
+    await repository.find();
+    await repository.findById(mockDataArray[0].id);
 
-    await repositroy.clearCache();
+    await repository.clearCache();
     const result = await executeRedisCommand('KEYS', ['product*']);
     expect(result).to.be.empty();
   });

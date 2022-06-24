@@ -7,7 +7,7 @@ import {
   DEFAULT_CACHE_PLUGIN_OPTIONS,
 } from '../../types';
 import {ICacheStrategy} from '../cache-strategy';
-import {RedisCacheMixinOptions} from './types';
+import {IRedisCacheMixinOptions} from './types';
 
 const decoder = new TextDecoder('utf-8');
 const defaultTTL = 60000;
@@ -26,7 +26,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
 
   async searchInCache(
     key: string,
-    cacheOptions: RedisCacheMixinOptions,
+    cacheOptions: IRedisCacheMixinOptions,
   ): Promise<M | M[] | undefined> {
     let result: M | M[] | undefined;
     try {
@@ -45,7 +45,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
   async saveInCache(
     key: string,
     value: M | M[],
-    cacheOptions: RedisCacheMixinOptions,
+    cacheOptions: IRedisCacheMixinOptions,
   ): Promise<void> {
     try {
       await this.executeRedisCommand('SET', [
@@ -61,7 +61,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
     }
   }
 
-  async clearCache(cacheOptions: RedisCacheMixinOptions): Promise<void> {
+  async clearCache(cacheOptions: IRedisCacheMixinOptions): Promise<void> {
     this.checkDataSource();
     const script = `
       local cursor = 0
