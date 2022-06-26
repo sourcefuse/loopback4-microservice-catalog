@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.2 (2022-06-26)</small>
+
+* fix(cache): change lb4 package versions for lower version support ([320e1b9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e1b9)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>0.3.1 (2022-06-24)</small>
 
 * fix(cache): missing return type for mixin ([f685126](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f685126)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
