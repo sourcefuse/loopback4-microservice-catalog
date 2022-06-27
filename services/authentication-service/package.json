@@ -115,7 +115,8 @@
   },
   "overrides": {
     "check-code-coverage": {
-      "lodash": "^4.17.21"
+      "lodash": "^4.17.21",
+			"got": "^11.8.5"
     },
     "widdershins": {
       "swagger2openapi": "^7.0.8",
