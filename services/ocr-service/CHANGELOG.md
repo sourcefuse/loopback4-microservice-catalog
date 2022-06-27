@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.1 (2022-06-24)</small>
+
+* perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)
+
+
+
+
+
 ## 0.3.0 (2022-06-22)
 
 * refactor(cache): make cache as an extension and add strategy pattern (#841) ([7495ad4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7495ad4)), closes [#841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/841)

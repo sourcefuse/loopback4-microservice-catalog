@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-socket-example",
-  "version": "2.1.16",
+  "version": "3.0.0",
   "description": "sandbox",
   "keywords": [
     "loopback-application",
@@ -55,8 +55,8 @@
     "@loopback/rest": "^12.0.0",
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/core": "^7.0.2",
-    "@sourceloop/notification-service": "^5.0.2",
+    "@sourceloop/core": "^7.0.3",
+    "@sourceloop/notification-service": "^5.0.3",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "firebase-admin": "^10.2.0",

@@ -41,8 +41,8 @@ import {AuthServiceBindings} from '../../keys';
 import {AuthClient, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
+  AuthCodeGeneratorFn,
   CodeReaderFn,
-  CodeWriterFn,
   JwtPayloadFn,
 } from '../../providers';
 import {
@@ -51,6 +51,7 @@ import {
   RefreshTokenRepository,
   RevokedTokenRepository,
   RoleRepository,
+  UserCredentialsRepository,
   UserLevelPermissionRepository,
   UserLevelResourceRepository,
   UserRepository,
@@ -63,13 +64,10 @@ import {
   AuthTokenRequest,
   CodeResponse,
   LoginRequest,
-  OtpLoginRequest,
-  OtpResponse,
 } from './';
 import {AuthUser, DeviceInfo} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-import {OtpSendRequest} from './models/otp-send-request.dto';
 
 const userAgentKey = 'user-agent';
 
@@ -99,6 +97,8 @@ export class LoginController {
     public revokedTokensRepo: RevokedTokenRepository,
     @repository(TenantConfigRepository)
     public tenantConfigRepo: TenantConfigRepository,
+    @repository(UserCredentialsRepository)
+    public userCredsRepository: UserCredentialsRepository,
     @inject(RestBindings.Http.REQUEST)
     private readonly req: Request,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
@@ -106,6 +106,8 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
+    private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -143,16 +145,7 @@ export class LoginController {
         );
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }
-      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId: req.client_id,
-        userId: this.user.id,
-      };
-      const token = jwt.sign(codePayload, this.client.secret, {
-        expiresIn: this.client.authCodeExpiration,
-        audience: req.client_id,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      });
+      const token = await this.getAuthCode(this.client, this.user);
       return {
         code: token,
       };
@@ -257,6 +250,10 @@ export class LoginController {
         issuer: process.env.JWT_ISSUER,
         algorithms: ['HS256'],
       }) as ClientAuthCode<User, typeof User.prototype.id>;
+
+      if (payload.mfa) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
+      }
 
       if (
         payload.userId &&
@@ -448,78 +445,6 @@ export class LoginController {
     }
     delete this.user.deviceInfo;
     return new AuthUser(this.user);
-  }
-
-  // OTP,Google Authenticator APIs
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.OTP)
-  @authorize({permissions: ['*']})
-  @post('/auth/send-otp', {
-    description: 'Sends OTP',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Sends otp to user',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async sendOtp(
-    @requestBody()
-    req: OtpSendRequest, //NOSONAR
-    @inject(AuthenticationBindings.CURRENT_CLIENT)
-    client: AuthClient, //NOSONAR
-    @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser, //NOSONAR
-  ): Promise<OtpResponse | void> {
-    //do nothing
-  }
-
-  @authenticate(STRATEGY.OTP)
-  @authorize({permissions: ['*']})
-  @post('/auth/verify-otp', {
-    description:
-      'Gets you the code that will be used for getting token (webapps)',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description:
-          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async verifyOtp(
-    @requestBody()
-    req: OtpLoginRequest,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser | undefined,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    codeWriter: CodeWriterFn,
-  ): Promise<CodeResponse> {
-    const otpCache = await this.otpCacheRepo.get(req.key);
-    if (user?.id) {
-      otpCache.userId = user.id;
-    }
-    const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-      clientId: otpCache.clientId,
-      userId: otpCache.userId,
-    };
-    const token = await codeWriter(
-      jwt.sign(codePayload, otpCache.clientSecret, {
-        expiresIn: 180,
-        audience: otpCache.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      }),
-    );
-    return {
-      code: token,
-    };
   }
 
   private async createJWT(

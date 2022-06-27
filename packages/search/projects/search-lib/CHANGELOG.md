@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.1 (2022-06-24)</small>
+
+* perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)
+
+
+
+
+
 ## 5.0.0 (2022-06-22)
 
 * chore(search-client): update angular to version 13 to solve vulnerabilities (#834) ([530f6e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/530f6e3)), closes [#834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/834) [#829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/829)

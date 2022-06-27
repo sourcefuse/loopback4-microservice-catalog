@@ -6,12 +6,12 @@ import {KeycloakLoginController} from '../modules/auth/keycloak-login.controller
 import {LoginController} from '../modules/auth/login.controller';
 import {LogoutController} from '../modules/auth/logout.controller';
 import {ForgetPasswordController} from './forget-password.controller';
-import {OtpController} from './otp.controller';
+import {OtpController} from '../modules/auth/otp.controller';
 import {SignupRequestController} from './signup-request.controller';
 
 export * from '../modules/auth/login.controller';
 export * from '../modules/auth/logout.controller';
-export * from './otp.controller';
+export * from '../modules/auth/otp.controller';
 export * from './forget-password.controller';
 export * from './signup-request.controller';
 

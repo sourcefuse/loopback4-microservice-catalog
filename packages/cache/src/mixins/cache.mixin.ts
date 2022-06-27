@@ -1,4 +1,4 @@
-import {MixinTarget} from '@loopback/core';
+import {Constructor, MixinTarget} from '@loopback/core';
 import {
   DefaultCrudRepository,
   Entity,
@@ -10,10 +10,11 @@ import {HttpErrors} from '@loopback/rest';
 import {ICacheStrategy, RedisCacheStrategy} from '../strategies';
 import {CacheStrategyTypes} from '../strategy-types.enum';
 import {
-  CacheMixinOptions,
   CacheOptions,
   CachePluginComponentOptions,
   DEFAULT_CACHE_PLUGIN_OPTIONS,
+  ICacheMixin,
+  ICacheMixinOptions,
 } from '../types';
 
 const bcrypt = require('bcrypt');
@@ -29,8 +30,8 @@ export class CacheManager {
     R extends MixinTarget<DefaultCrudRepository<M, ID, Relations>>,
   >(
     baseClass: R,
-    cacheOptions: CacheMixinOptions & Partial<CachePluginComponentOptions>,
-  ) {
+    cacheOptions: ICacheMixinOptions & Partial<CachePluginComponentOptions>,
+  ): R & Constructor<ICacheMixin<M, ID>> {
     class MixedRepository extends baseClass {
       getCacheDataSource: () => Promise<JugglerDataSource>;
       strategy: ICacheStrategy<M>;

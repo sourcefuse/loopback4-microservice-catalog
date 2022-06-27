@@ -44,6 +44,13 @@ export class UserCredentials extends BaseEntity {
 
   @property({
     type: 'string',
+    name: 'secret_key',
+    description: 'Secret for Authenticator app',
+  })
+  secretKey?: string;
+
+  @property({
+    type: 'string',
   })
   password?: string;
 

@@ -1,49 +1,46 @@
 import {inject} from '@loopback/context';
 import {BindingScope, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {HttpErrors, Response, RestBindings} from '@loopback/rest';
+import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
-import {AuthClient} from '../models';
+import {AuthClient, User} from '../models';
 import {OtpResponse} from '../modules/auth';
 import {OtpFn, VerifyBindings} from '../providers';
 import {OtpCacheRepository, UserRepository} from '../repositories';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class OtpSenderService {
+export class OtpService {
   constructor(
     @repository(OtpCacheRepository)
     private readonly otpCacheRepo: OtpCacheRepository,
     @repository(UserRepository)
     public userRepository: UserRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
-    @inject(VerifyBindings.OTP_PROVIDER)
+    @inject(VerifyBindings.OTP_PROVIDER, {optional: true})
     private readonly otpSender: OtpFn,
-    @inject(RestBindings.Http.RESPONSE) private readonly response: Response,
   ) {}
 
   async sendOtp(
-    client: AuthClient,
-    username: string,
+    user: User | null,
+    client?: AuthClient,
   ): Promise<OtpResponse | void> {
     if (!client) {
       this.logger.error('Auth client not found or invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
+    if (!user) {
+      this.logger.error('Auth user not found or invalid');
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
 
-    const res: OtpResponse = await this.otpSender(username);
+    const res: OtpResponse = await this.otpSender(user);
 
-    await this.otpCacheRepo.delete(username);
-    await this.otpCacheRepo.set(username, {
+    await this.otpCacheRepo.delete(user.username);
+    await this.otpCacheRepo.set(user.username, {
       otpSecret: res.key,
       clientId: client.clientId,
       clientSecret: client.secret,
     });
-
-    if (res.qrCode) {
-      this.response.send({
-        qrCode: res.qrCode,
-      });
-    }
   }
 }

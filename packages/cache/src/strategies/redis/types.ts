@@ -1,5 +1,5 @@
-import {CacheMixinOptions} from '../../types';
+import {ICacheMixinOptions} from '../../types';
 
-export interface RedisCacheMixinOptions extends CacheMixinOptions {
+export interface IRedisCacheMixinOptions extends ICacheMixinOptions {
   scanCount?: number;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "6.0.2",
+  "version": "7.0.0",
   "description": "Authentication microservice",
   "keywords": [
     "loopback-extension",
@@ -62,7 +62,7 @@
     "@loopback/rest": "^12.0.0",
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/core": "^7.0.2",
+    "@sourceloop/core": "^7.0.3",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "check-code-coverage": "^1.10.0",

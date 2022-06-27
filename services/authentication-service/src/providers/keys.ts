@@ -2,6 +2,7 @@ import {BindingKey} from '@loopback/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import {SignupTokenHandlerFn} from '.';
 import {PreSignupFn, UserSignupFn} from '../types';
+import {AuthCodeGeneratorProvider} from './auth-code-generator.provider';
 
 import {
   GooglePostVerifyFn,
@@ -24,6 +25,7 @@ import {
   OtpGenerateFn,
   OtpSenderFn,
   OtpFn,
+  MfaCheckFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -84,6 +86,9 @@ export namespace VerifyBindings {
   export const OTP_SENDER_PROVIDER = BindingKey.create<OtpSenderFn>(
     'sf.otp.sender.provider',
   );
+  export const MFA_PROVIDER = BindingKey.create<MfaCheckFn>(
+    'sf.mfa.check.provider',
+  );
 
   export const BEARER_SIGNUP_VERIFY_PROVIDER =
     BindingKey.create<VerifyFunction.GenericAuthFn>(
@@ -99,4 +104,9 @@ export namespace AuthCodeBindings {
   export const CODEREADER_PROVIDER = BindingKey.create<CodeReaderFn>(
     'sf.auth.codereader.provider',
   );
+
+  export const AUTH_CODE_GENERATOR_PROVIDER =
+    BindingKey.create<AuthCodeGeneratorProvider>(
+      'sf.auth-code.generator.provider',
+    );
 }
