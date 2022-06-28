@@ -108,6 +108,9 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
 
     if (method?.toUpperCase() === 'DELETE') {
       return this.delete(url);
+    } else {
+      //do nothing
+      return;
     }
   }
 
@@ -205,7 +208,7 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
     opts: RequestInit,
   ): // sonarignore:end
   Promise<{url: string; request: RequestInit}> {
-    const args = {
+    return {
       url: urlJoin(this.baseUrl, url),
       request: {
         ...this.baseOptions,
@@ -218,7 +221,5 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
         },
       },
     };
-
-    return args;
   }
 }

@@ -8,6 +8,6 @@ export function getOnCondition(
   if (condition) {
     return get(path, spec);
   } else {
-    return () => {};
+    return () => {}; //NOSONAR
   }
 }

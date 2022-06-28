@@ -1,14 +1,13 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 import {DefaultSoftCrudRepository} from '@sourceloop/core';
-import {Contracts, HocrResults, HocrResultsRelations} from '../models';
+import {Contracts, HocrResults} from '../models';
 import {OcrDbSourceName} from '../types';
 import {ContractRepository} from './contracts.repository';
 
 export class HocrResultRepository extends DefaultSoftCrudRepository<
   HocrResults,
-  typeof HocrResults.prototype.id,
-  HocrResultsRelations
+  typeof HocrResults.prototype.id
 > {
   public readonly contracts: BelongsToAccessor<
     Contracts,
