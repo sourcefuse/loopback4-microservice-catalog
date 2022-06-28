@@ -18,9 +18,6 @@ import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
 import {FeatureToggleMockDataSource} from './datasources/feature-toggle-mock.datasource';
 import {MySequence} from './sequence';
 export {ApplicationConfig};
-
-//require('dotenv').config();
-
 export class TestingApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
