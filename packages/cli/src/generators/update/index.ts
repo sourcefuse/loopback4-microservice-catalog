@@ -213,25 +213,22 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
     for (const d in tempDeps) {
       if (
-        packageJs.dependencies &&
-        packageJs.dependencies[d] &&
-        packageJs.dependencies[d] !== tempDeps[d]
+        packageJs.dependencies?.[d] &&
+        packageJs.dependencies?.[d] !== tempDeps[d]
       ) {
         packageJs.dependencies[d] = tempDeps[d];
       }
 
       if (
-        packageJs.peerDependencies &&
-        packageJs.peerDependencies[d] &&
-        packageJs.peerDependencies[d] !== tempDeps[d]
+        packageJs.peerDependencies?.[d] &&
+        packageJs.peerDependencies?.[d] !== tempDeps[d]
       ) {
         packageJs.peerDependencies[d] = tempDeps[d];
       }
 
       if (
-        packageJs.devDependencies &&
-        packageJs.devDependencies[d] &&
-        packageJs.devDependencies[d] !== tempDeps[d]
+        packageJs.devDependencies?.[d] &&
+        packageJs.devDependencies?.[d] !== tempDeps[d]
       ) {
         packageJs.devDependencies[d] = tempDeps[d];
       }
