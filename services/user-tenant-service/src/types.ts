@@ -1,7 +1,8 @@
 /**
  * Interface defining the component's options object
  */
-export interface UserTenantServiceComponentOptions {  //NOSONAR
+export interface UserTenantServiceComponentOptions {
+  //NOSONAR
   // Add the definitions here
 }
 
