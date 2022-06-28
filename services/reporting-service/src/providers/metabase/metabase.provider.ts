@@ -97,15 +97,14 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
             url: `${metabaseBaseUrl}/api/dataset`,
             data: findQuery.query,
           })
-            //sonarignore:start
+            // sonarignore:start
             // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             .then((res: any) => {
-              //sonarignore:end
               const newJson = CircularJSON.stringify(res);
               const returnObjectUpdated = JSON.parse(newJson);
               return returnObjectUpdated?.data?.data;
             })
-            //sonarignore:start
+
             // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             .catch((err: any) => {
               this.logger.error(
@@ -113,8 +112,8 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
               );
             })
             // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-            .catch(function (error: any) {
-              console.log(error);
+            .catch((error: any) => {
+              this.logger.error(error);
             })
           //sonarignore:end
         );

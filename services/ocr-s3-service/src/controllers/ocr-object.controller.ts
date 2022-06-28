@@ -28,28 +28,34 @@ export class OcrObjectController {
         process.env.BUCKET,
         process.env.BUCKET_PREFIX,
       );
+    if (s3ObjectList) {
+      await this.iteratorService.asyncForEach(
+        s3ObjectList,
+        async (value: IListObject) => {
+          if (value.Key) {
+            const data: GetObjectOutput = await this.s3Handler.getObject(
+              process.env.BUCKET,
+              value.Key,
+            );
+            const hocrContent: string = await this.s3Handler.streamToString(
+              data,
+            );
+            if (value.Key.split('/').length > 0) {
+              const contractData: Partial<HocrObject> = {
+                contractName: contractName,
+                type: 'HOCR',
+                pageNo: Number(
+                  value.Key.split('/').pop()?.split('.').slice(0, 1).join(''),
+                ),
+                hocrData: hocrContent,
+              };
 
-    await this.iteratorService.asyncForEach(
-      s3ObjectList!,
-      async (value: IListObject) => {
-        if (value.Key) {
-          const data: GetObjectOutput = await this.s3Handler.getObject(
-            process.env.BUCKET,
-            value.Key,
-          );
-          const hocrContent: string = await this.s3Handler.streamToString(data);
-          const contractData: Partial<HocrObject> = {
-            contractName: contractName,
-            type: 'HOCR',
-            pageNo: Number(
-              value.Key.split('/').pop()!.split('.').slice(0, 1).join(''),
-            ),
-            hocrData: hocrContent,
-          };
-          await this.hocrObjectRepository.create(contractData);
-        }
-      },
-    );
+              await this.hocrObjectRepository.create(contractData);
+            }
+          }
+        },
+      );
+    }
   }
 
   @get('/contract-images/{contract_name}')
@@ -64,30 +70,35 @@ export class OcrObjectController {
         process.env.BUCKET,
         process.env.BUCKET_PREFIX,
       );
+    if (s3ObjectList) {
+      await this.iteratorService.asyncForEach(
+        s3ObjectList,
+        async (value: IListObject) => {
+          if (value.Key) {
+            const data: GetObjectOutput = await this.s3Handler.getObject(
+              process.env.BUCKET,
+              value.Key,
+            );
 
-    await this.iteratorService.asyncForEach(
-      s3ObjectList!,
-      async (value: IListObject) => {
-        if (value.Key) {
-          const data: GetObjectOutput = await this.s3Handler.getObject(
-            process.env.BUCKET,
-            value.Key,
-          );
-
-          const imgContent: string = await this.s3Handler.streamToString(data);
-          // sonarignore:start
-          const contractData: any = {
-            // sonarignore:end
-            contractName: contractName,
-            type: 'IMG',
-            imgData: imgContent,
-            pageNo: Number(
-              value.Key.split('/').pop()!.split('.').slice(0, 1).join(''),
-            ),
-          };
-          await this.hocrObjectRepository.create(contractData);
-        }
-      },
-    );
+            const imgContent: string = await this.s3Handler.streamToString(
+              data,
+            );
+            if (value.Key.split('/').length > 0) {
+              // sonarignore:start
+              const contractData: any = {
+                // sonarignore:end
+                contractName: contractName,
+                type: 'IMG',
+                imgData: imgContent,
+                pageNo: Number(
+                  value.Key.split('/').pop()?.split('.').slice(0, 1).join(''),
+                ),
+              };
+              await this.hocrObjectRepository.create(contractData);
+            }
+          }
+        },
+      );
+    }
   }
 }

@@ -85,9 +85,7 @@ export interface FetchHttpRequest {
 export const identityResponseTransformer: ResponseTransformer = (
   response: Response,
 ) => response;
-//sonarignore:start
 export interface IRequestServiceConfig extends IServiceConfig {}
-//sonarignore:end
 
 export const jsonResponseTransformer: ResponseTransformer = (
   response: Response,

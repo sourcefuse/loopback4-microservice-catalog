@@ -67,6 +67,8 @@
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^5.5.0",
+    "loopback4-authentication": "^6.1.4",
+    "loopback4-authorization": "^5.0.6",
     "tslib": "^2.4.0"
   },
   "devDependencies": {

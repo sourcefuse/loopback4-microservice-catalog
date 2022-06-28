@@ -3,6 +3,6 @@ export function authenticateOnCondition(condition = false) {
   if (condition) {
     return authenticate(STRATEGY.BEARER);
   } else {
-    return () => {};
+    return () => {}; //NOSONAR
   }
 }
