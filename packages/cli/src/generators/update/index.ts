@@ -34,6 +34,16 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       for (const folder of folders) {
         this.destinationRoot(join(monoRepo, type, folder));
 
+        const pkgJs = this.fs.readJSON(
+          this.destinationPath(packageJsonFile),
+        ) as AnyObject;
+
+        this.log(
+          chalk.cyan(
+            `Updating dependencies in the following project- ${pkgJs.name}`,
+          ),
+        );
+
         await super.checkLoopBackProject();
         if (
           this.shouldExit() &&
@@ -91,14 +101,6 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       if (answer && answer.decision === 'upgrade') {
         await this._updateDependencies();
       }
-    }
-  }
-
-  private _compare(tempDependency: string, dependency: string) {
-    if (dependency !== tempDependency) {
-      return true;
-    } else {
-      return false;
     }
   }
 
