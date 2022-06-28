@@ -146,70 +146,66 @@ export class TwilioService {
   ): Promise<void> {
     try {
       const event = webhookPayload.statusCallbackEvent;
-      if (webhookPayload.roomSid) {
-        const sessionDetail = await this.videoChatSessionRepository.findOne({
-          where: {
-            meetingLink: webhookPayload.roomSid,
-          },
+      //if (webhookPayload.roomSid) {
+      const sessionDetail = await this.videoChatSessionRepository.findOne({
+        where: {
+          meetingLink: webhookPayload.roomSid ? webhookPayload.roomSid : '',
+        },
+      });
+      //update archive Id
+      if (event === TwilioStatusCallbackEvents.RecordingStarted) {
+        await this.videoChatSessionRepository.updateById(sessionDetail?.id, {
+          archiveId: webhookPayload.recordingSid,
         });
-        //update archive Id
-        if (event === TwilioStatusCallbackEvents.RecordingStarted) {
-          await this.videoChatSessionRepository.updateById(sessionDetail?.id, {
-            archiveId: webhookPayload.recordingSid,
-          });
-        } else if (event === TwilioStatusCallbackEvents.ParticipantConnected) {
-          const sessionAttendessDetail =
-            await this.sessionAttendeesRepository.findOne({
-              where: {
-                sessionId: webhookPayload.roomSid,
-                attendee: webhookPayload.participantSid,
-              },
-            });
-
-          if (!sessionAttendessDetail) {
-            await this.sessionAttendeesRepository.create({
+      } else if (event === TwilioStatusCallbackEvents.ParticipantConnected) {
+        const sessionAttendessDetail =
+          await this.sessionAttendeesRepository.findOne({
+            where: {
               sessionId: webhookPayload.roomSid,
               attendee: webhookPayload.participantSid,
-              createdOn: new Date(),
-              isDeleted: false,
-              extMetadata: {webhookPayload},
-            });
-          } else {
-            const updatedAttendee = {
-              modifiedOn: new Date(),
-              extMetadata: {webhookPayload},
-            };
+            },
+          });
 
-            await this.sessionAttendeesRepository.updateById(
-              sessionAttendessDetail.id,
-              updatedAttendee,
-            );
-          }
-        } else if (
-          event === TwilioStatusCallbackEvents.ParticipantDisconnected
-        ) {
-          const sessionAttendessDetail =
-            await this.sessionAttendeesRepository.findOne({
-              where: {
-                sessionId: webhookPayload.roomSid,
-                attendee: webhookPayload.participantSid,
-              },
-            });
+        if (!sessionAttendessDetail) {
+          await this.sessionAttendeesRepository.create({
+            sessionId: webhookPayload.roomSid,
+            attendee: webhookPayload.participantSid,
+            createdOn: new Date(),
+            isDeleted: false,
+            extMetadata: {webhookPayload},
+          });
+        } else {
           const updatedAttendee = {
             modifiedOn: new Date(),
-            isDeleted: true,
             extMetadata: {webhookPayload},
           };
-          if (sessionAttendessDetail) {
-            await this.sessionAttendeesRepository.updateById(
-              sessionAttendessDetail.id,
-              updatedAttendee,
-            );
-          }
-        } else {
-          // do nothing
+
+          await this.sessionAttendeesRepository.updateById(
+            sessionAttendessDetail.id,
+            updatedAttendee,
+          );
         }
+      } else if (event === TwilioStatusCallbackEvents.ParticipantDisconnected) {
+        const sessionAttendessDetail =
+          await this.sessionAttendeesRepository.findOne({
+            where: {
+              sessionId: webhookPayload.roomSid,
+              attendee: webhookPayload.participantSid,
+            },
+          });
+        const updatedAttendee = {
+          modifiedOn: new Date(),
+          isDeleted: true,
+          extMetadata: {webhookPayload},
+        };
+        await this.sessionAttendeesRepository.updateById(
+          sessionAttendessDetail?.id,
+          updatedAttendee,
+        );
+      } else {
+        // do nothing
       }
+      //}
     } catch (error) {
       throw new HttpErrors.InternalServerError(
         'Error occured while handling webhook event',

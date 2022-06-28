@@ -19,9 +19,7 @@ describe('PostgreSQL QueryBuilder', () => {
             " from public.TestSearched where to_tsvector(public.f_concat_ws(' ', description, name)) @@ to_tsquery($1))" +
             ' UNION ALL ' +
             "(SELECT about as description, identifier as name, 'TestSearchedCustom' as source, ts_rank_cd(to_tsvector(public.f_concat_ws(' ', about, identifier))," +
-            ' to_tsquery($1)) as rank    ' +
-            queryPart +
-            //" from public.TestSearchedCustom where to_tsvector(public.f_concat_ws(' ', about, identifier)) @@ to_tsquery($1))" +
+            ` to_tsquery($1)) as rank    ${queryPart}` +
             ' ORDER BY rank DESC',
         },
       ],
@@ -44,12 +42,10 @@ describe('PostgreSQL QueryBuilder', () => {
             " from public.TestSearched where to_tsvector(public.f_concat_ws(' ', description, name)) @@ to_tsquery($1))" +
             ' UNION ALL ' +
             "(SELECT about as description, identifier as name, 'TestSearchedCustom' as source, ts_rank_cd(to_tsvector(public.f_concat_ws(' ', about, identifier))," +
-             " to_tsquery($1)) as rank    " +
-            queryPart +
+            ` to_tsquery($1)) as rank    ${queryPart}` +
             ' UNION ALL ' +
             "(SELECT about as description, identifier as name, 'CustomIdentifier' as source," +
-            " ts_rank_cd(to_tsvector(public.f_concat_ws(' ', about, identifier)), to_tsquery($1)) as rank    " +
-            queryPart +
+            ` ts_rank_cd(to_tsvector(public.f_concat_ws(' ', about, identifier)), to_tsquery($1)) as rank    ${queryPart}` +
             ' ORDER BY rank DESC',
         },
       ],
