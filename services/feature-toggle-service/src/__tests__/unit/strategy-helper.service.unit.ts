@@ -182,7 +182,7 @@ describe('Strategy helper service', () => {
     strategyRepo = createStubInstance(StrategyRepository);
     featureToggleRepo = createStubInstance(FeatureToggleRepository);
     logger = {
-      log(info: LogMessage): void {},
+      log(info: LogMessage): void {}, //NOSONAR
       info(msg: string, key?: string): void {}, //NOSONAR
       warn(msg: string, key?: string): void {}, //NOSONAR
       error(msg: string, key?: string): void {}, //NOSONAR
