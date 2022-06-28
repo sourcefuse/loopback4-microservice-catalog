@@ -146,7 +146,6 @@ export class TwilioService {
   ): Promise<void> {
     try {
       const event = webhookPayload.statusCallbackEvent;
-      //if (webhookPayload.roomSid) {
       const sessionDetail = await this.videoChatSessionRepository.findOne({
         where: {
           meetingLink: webhookPayload.roomSid ? webhookPayload.roomSid : '',
@@ -205,7 +204,6 @@ export class TwilioService {
       } else {
         // do nothing
       }
-      //}
     } catch (error) {
       throw new HttpErrors.InternalServerError(
         'Error occured while handling webhook event',
