@@ -188,7 +188,7 @@ export class CollectorController {
       ],
       order: ['createdOn DESC'],
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
