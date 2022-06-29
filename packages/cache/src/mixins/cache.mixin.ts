@@ -7,8 +7,7 @@ import {
   JugglerDataSource,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import * as bcrypt from 'bcrypt';
-
+import * as crypto from 'crypto';
 import {ICacheStrategy, RedisCacheStrategy} from '../strategies';
 import {CacheStrategyTypes} from '../strategy-types.enum';
 import {
@@ -18,8 +17,6 @@ import {
   ICacheMixin,
   ICacheMixinOptions,
 } from '../types';
-
-const saltRounds = 10;
 
 export class CacheManager {
   static options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS;
@@ -133,7 +130,10 @@ export class CacheManager {
           key += `_${JSON.stringify(filter)}`;
         }
         // hash to reduce key length
-        return cacheOptions.prefix + (await bcrypt.hash(key, saltRounds));
+        return (
+          cacheOptions.prefix +
+          crypto.createHash('sha256').update(key).digest('hex')
+        );
       }
 
       checkDataSource(): void {
