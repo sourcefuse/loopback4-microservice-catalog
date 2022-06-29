@@ -31,7 +31,7 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "prepublishOnly": "npm run test",
-    "postinstall": "node migration.js"
+    "postinstall": "node migration.js && patch-package"
   },
   "repository": {
     "type": "git",
@@ -51,7 +51,8 @@
   ],
   "peerDependencies": {
     "db-migrate": "^1.0.0-beta.18",
-    "db-migrate-pg": "^1.2.2"
+    "db-migrate-pg": "^1.2.2",
+    "patch-package": "^6.4.7"
   },
   "dependencies": {
     "@loopback/boot": "^5.0.1",
@@ -83,6 +84,7 @@
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "1.2.2",
     "eslint": "^8.17.0",
+    "patch-package": "^6.4.7",
     "source-map-support": "^0.5.21",
     "typescript": "~4.7.3",
     "widdershins": "^4.0.1"
