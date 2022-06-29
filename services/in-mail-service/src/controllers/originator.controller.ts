@@ -447,7 +447,7 @@ export class OriginatorController {
         id: messageId,
       },
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
@@ -500,7 +500,7 @@ export class OriginatorController {
         id: messageId,
       },
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
@@ -687,7 +687,7 @@ export class OriginatorController {
         status: StorageMarker.draft,
       },
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
