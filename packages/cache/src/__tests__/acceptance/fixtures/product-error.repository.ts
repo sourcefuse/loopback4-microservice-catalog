@@ -18,7 +18,6 @@ export class ProductErrorRepository extends CacheManager.CacheRepositoryMixin<
 >(DefaultCrudRepository, {
   prefix: 'product',
   ttl: 5000,
-  salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',
 }) {
   constructor(dataSource: TestDataSource) {
     super(Product, dataSource);

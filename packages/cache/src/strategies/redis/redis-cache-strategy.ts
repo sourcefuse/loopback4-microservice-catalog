@@ -17,11 +17,9 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
   getCacheDataSource: () => Promise<JugglerDataSource>;
   cacheProvider = CacheStrategyTypes.Redis;
   prefix: string;
-  salt: string;
 
   constructor(opts: Partial<CachePluginComponentOptions>) {
     this.prefix = opts.prefix ?? DEFAULT_CACHE_PLUGIN_OPTIONS.prefix;
-    this.salt = opts.salt ?? DEFAULT_CACHE_PLUGIN_OPTIONS.salt;
   }
 
   async searchInCache(
