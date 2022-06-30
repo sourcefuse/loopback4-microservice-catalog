@@ -6,7 +6,7 @@ import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {UserSignupCheckDto} from '../models';
 import {UserCredentialsRepository, UserRepository} from '../repositories';
-export const PMS_SIGN_UP_RESPONSE_DESCRIPTION = 'Success Response.';
+export const USER_SIGN_UP_RESPONSE_DESCRIPTION = 'Success Response.';
 
 export class UserSignupController {
   constructor(
@@ -25,7 +25,7 @@ export class UserSignupController {
   @get('/check-signup/{email}', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: PMS_SIGN_UP_RESPONSE_DESCRIPTION,
+        description: USER_SIGN_UP_RESPONSE_DESCRIPTION,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: getModelSchemaRef(UserSignupCheckDto),
