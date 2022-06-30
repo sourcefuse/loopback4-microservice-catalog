@@ -58,6 +58,7 @@
     "@loopback/rest": "^11.1.2",
     "@loopback/rest-explorer": "^4.1.2",
     "@loopback/service-proxy": "^4.1.2",
+    "@sourceloop/core": "^7.0.2",
     "@sourceloop/authentication-service": "^4.2.1",
     "@sourceloop/user-tenant-service": "file:sourceloop-user-tenant-service-0.0.1.tgz",
     "dotenv": "^16.0.0",
