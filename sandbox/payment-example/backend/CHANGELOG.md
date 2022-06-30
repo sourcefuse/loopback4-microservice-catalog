@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.2 (2022-06-30)</small>
+
+* perf(chore): sonar issues fix (#859) ([9adb36d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9adb36d)), closes [#859](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/859) [#856](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/856) [#856](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/856) [#856](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/856)
+
+
+
+
+
 ## <small>0.2.1 (2022-06-24)</small>
 
 * perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.3 (2022-06-30)</small>
+
+* fix(cache): remove salt from bcrypt (#860) ([98705f4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/98705f4)), closes [#860](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/860) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/841)
+
+
+
+
+
 ## <small>0.3.2 (2022-06-26)</small>
 
 * fix(cache): change lb4 package versions for lower version support ([320e1b9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/320e1b9)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

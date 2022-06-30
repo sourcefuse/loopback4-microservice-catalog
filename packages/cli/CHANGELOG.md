@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.4 (2022-06-30)</small>
+
+* chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)
+
+
+
+
+
 ## <small>2.0.3 (2022-06-24)</small>
 
 * fix(cli): add redis to facade (#836) ([9b1e221](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b1e221)), closes [#836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/836) [#792](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/792)

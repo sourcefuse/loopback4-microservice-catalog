@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Audit logging microservice",
   "keywords": [
     "loopback-extension",
@@ -59,7 +59,7 @@
     "@loopback/repository": "^5.0.1",
     "@loopback/rest": "^12.0.1",
     "@sourceloop/audit-log": "^3.1.1",
-    "@sourceloop/core": "^7.0.3",
+    "@sourceloop/core": "^7.0.4",
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^6.1.4",

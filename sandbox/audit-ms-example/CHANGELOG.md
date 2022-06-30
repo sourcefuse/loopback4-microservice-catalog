@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2022-06-30)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
 ## 0.4.0 (2022-06-24)
 
 * perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)
