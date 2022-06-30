@@ -50,7 +50,6 @@
     "loopback-connector-kv-redis": "^4.0.0"
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
