@@ -2,11 +2,27 @@
 
 [![LoopBack](<https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
-Caching can prove to be quite beneficial in improving application efficency and performance by storing a subset of data in high speed data storage layer. Caching allows you to efficiently reuse previously retrieved or computed data. It reduces latency and at the same time avoids network congestion. Also, in the event of outages, caching can save the day by serving end users with the cached content.
+![npm](https://img.shields.io/npm/dm/@sourceloop/cache)
 
-However, caching will only prove to be beneficial if same data is frequently requested. You must consider this as a prime factor before you dive into caching. A successful cache results in a high hit rate. If same data is not requested mutliple times then it will just prove to be an overhead for your application. Also, if data does not remain static (i.e. it is edited several times) it might be a little tricky to use cache in those cases. In such cases the user must consider to maintain an effective balance between stale and new data by configuring the ttl (time to live) according to the application acceptance standards.
+![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/cache)
 
-This package provides a configurable way in which you can apply caching. The package exposes a mixin for loopback's DefaultCrudRepository. The provided mixins overrides the find and findById methods for the DefaultCrudRepository. The added functionality helps in caching GET request responses using Redis.
+![npm dev dependency version](https://img.shields.io/npm/dependency-version/@sourceloop/cache/dev/@loopback/core)
+
+## Overview
+
+Caching can prove to be quite beneficial in improving application efficency and performance by storing a subset of data in high speed data storage layer. Some benefits that cache can provide:
+
+- It allows you to efficiently reuse previously retrieved or computed data.
+- It reduces latency.
+- It helps to avoids network congestion.
+- In the event of outages, it can save the day by serving end users with the cached content.
+
+However, cache can't be used anywhere. You must consider the following:
+
+- It is only beneficial in case same data is frequently requested (i.e. cache hit rate should be high). If this is not the case then caching will prove to be an overhead for your application
+- In case of caching editable data, you must be prepared to receive stale data from cache. However, you can configure the ttl according to whatever is acceptable for your application.
+
+`@sourceloop/cache` provides a configurable way in which you can apply caching in loopback. The package exposes a mixin for loopback's DefaultCrudRepository. The mixin overrides the find and findById methods for the DefaultCrudRepository. The added functionality helps in caching GET request responses using Redis.
 
 ## Installation
 
@@ -26,6 +42,7 @@ import {
   CachePluginComponent,
   CachePluginComponentOptions,
   DEFAULT_CACHE_PLUGIN_OPTIONS,
+  CachePluginComponentBindings,
 } from '@sourceloop/cache';
 // ...
 export class MyApplication extends BootMixin(
@@ -36,7 +53,6 @@ export class MyApplication extends BootMixin(
     const opts: CachePluginComponentOptions = {
       cacheProvider: CacheStrategyTypes.Redis,
       prefix: process.env.CACHE_PREFIX ?? DEFAULT_CACHE_PLUGIN_OPTIONS.prefix,
-      salt: process.env.CACHE_SALT ?? DEFAULT_CACHE_PLUGIN_OPTIONS.salt,
     };
     this.configure(CachePluginComponentBindings.COMPONENT).to(opts);
     this.component(CachePluginComponent);
@@ -46,38 +62,19 @@ export class MyApplication extends BootMixin(
 }
 ```
 
-## Usage
+As shown above, you can configure the cache properties at a Global level. You can also provide these properties at the repository level. Options passed at the repository level will override the global options.
 
-The caching is implemented in redis as a key value pair. The key is of the form `prefix_id_filter`. To shorten the key length it is then hashed.
-The format of the key plays a very important role in the cache hit ratio. Consider a situation in which you are sending user id in filter with every request. This will generate a new key for every user. So even if same data is returned to all users, caching will not be beneficial until and unless the same user makes the same request multiple times. So it is very important that you consider this format while using this package.
+The following cache options can be passed:
 
-To use the caching functionality, you simply need to extend your repository with the CacheRespositoryMixin provided. While extending you can provide the following options:
+| Property                   | Default Value | Description                                                                                                                                                                                                                                                                                                                                                      |
+| -------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| prefix                     | "sl"          | every cached entry is required to have a prefix in its key. Each repository should have their own unique prefix.                                                                                                                                                                                                                                                 |
+| ttl                        | 60000         | this is the maximum time in milliseconds for which data will remain cached in redis. In other words this can be called the amount of time for which stale data is acceptable.                                                                                                                                                                                    |
+| scanCount (only for redis) | 50            | while clearing the cache using clearCache() function provided, all the keys beginning with the prefix are searched for using the SCAN command. This command can take an additoinal paramter COUNT (here refered to as scanCount) - this is the number of elements returned/deleted at a time. As it is only for redis you can't pass this at the component level |
 
-- prefix - every cached entry is required to have a prefix in its key. Each repository should have their own unique prefix.
+<br>
 
-- ttl - this is the maximum time in milliseconds for which data will remain cached in redis. In other words this can be called the amount of time for which stale data is acceptable. Default value is 60000.
-
-- scanCount - while clearing the cache using clearCache() function provided, all the keys beginning with the prefix are searched for using the SCAN command. This command can take an additoinal paramter COUNT (here refered to as scanCount) - this is the number of elements returned/deleted at a time. Default value is 50.
-
-- salt - the key which is used in redis is hashed to make it small in length. For that purpose you can provide your own salt string using this. Be sure that the salt you provide is acceptable to the bcrypt library hash function.
-
-All the above properties are optional. However, it is recommended that you atleast provide prefix, ttl and salt.
-There is also an option to delete all cache entries for a repository. For doing this you can use the clearCache() function. This will delete all cache entries for that repository. It uses the repository prefix to find matching entries to delete. The function also returns the number of matching entries deleted from cache.
-
-If you want entries in the cache to be forcefully updated, you can set forceUpdate true in options while invoking find/findById.
-Forcefully update will always return data from the original source and update the cache with the new data.
-
-```ts
-this.productRepository.findById(3, {}, {forceUpdate: true});
-```
-
-On updating forcefully the ttl gets reset.
-
-### Configuring Datasource
-
-The redis datasource can be bound to any key. However, it is required that you inject the getter of the datasource into the repository on which mixin is to be applied. For this, you must provide getCacheDataSource as variable name for the injected getter for the datasource.
-
-An example of using the cache mixin:
+To use the caching functionality, you simply need to extend your repository with the CacheRespositoryMixin provided. You must inject the getter of the cache datasource with variable name getCacheDataSource.
 
 ```ts
 export class ProductRepository extends CacheManager.CacheRepositoryMixin<
@@ -105,3 +102,21 @@ export class ProductRepository extends CacheManager.CacheRepositoryMixin<
   }
 }
 ```
+
+- If you want entries in the cache to be forcefully updated, you can set forceUpdate true in options while invoking find/findById. Forcefully update will always return data from the original source and update the cache with the new data.
+
+  ```ts
+  this.productRepository.findById(3, {}, {forceUpdate: true});
+  ```
+
+  On updating forcefully the ttl gets reset.
+
+- There is also a way to delete all cache entries for a repository. To do so you can use the clear cache function:
+  ```ts
+  this.productRepository.clearCache();
+  ```
+  It uses the repository prefix to find matching entries to delete.
+  <br>
+  <br>
+
+> _NOTE : The caching is implemented as a key value pair. The key is of the form `prefix_id_filter`. The format of the key plays a very important role in the cache hit ratio. For example: Consider a situation in which you are sending user id in filter with every request. This will generate a new key for every user. So even if same data is returned to all users, caching will not be beneficial until and unless the same user makes the same request multiple times._

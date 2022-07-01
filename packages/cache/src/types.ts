@@ -28,6 +28,7 @@ export interface ICacheMixin<M extends Entity, ID> {
 
 export interface ICacheMixinOptions {
   ttl?: number;
+  scanCount?: number;
 }
 
 export interface ICacheFindOptions {
