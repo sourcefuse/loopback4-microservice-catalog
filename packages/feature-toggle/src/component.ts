@@ -14,8 +14,6 @@ import {
   FeatureFlagMetadataProvider,
 } from './providers';
 
-// Configure the binding for FeatureToggleComponent
-//@injectable({tags: {[ContextTags.KEY]: FeatureToggleComponentBindings.COMPONENT}})
 export class FeatureToggleComponent implements Component {
   providers?: ProviderMap;
   bindings?: Binding[];
@@ -23,8 +21,6 @@ export class FeatureToggleComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
   ) {
-    //this.bindings = [];
-
     // Mount core component
     this.application.component(CoreComponent);
 

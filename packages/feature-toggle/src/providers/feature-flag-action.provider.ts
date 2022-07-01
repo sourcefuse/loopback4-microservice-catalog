@@ -1,9 +1,4 @@
 import {Getter, inject, Provider} from '@loopback/core';
-// import {
-//   FeatureFlagFn,
-//   FeatureFlagMetadata,
-//   StrategyBindings,
-// } from '@sourceloop/feature-toggle-service';
 import {intersection} from 'lodash';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {StrategyBindings} from '../keys';
@@ -19,7 +14,7 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
     @inject.getter(StrategyBindings.METADATA)
     private readonly getMetadata: Getter<FeatureFlagMetadata>,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private user?: IAuthUserWithDisabledFeat,
+    private readonly user?: IAuthUserWithDisabledFeat,
   ) {}
   value(): FeatureFlagFn {
     return () => this.action();
@@ -39,8 +34,7 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
           'List of disabled features not passed to user',
         );
       }
-
-      return !(intersection(featureToCheck, disabledFeatures).length > 0);
+      return intersection(featureToCheck, disabledFeatures).length <= 0;
     } else {
       return false; // need to pass metadata to decorator
     }
