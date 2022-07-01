@@ -1,15 +1,6 @@
 import {BindingKey, MetadataAccessor} from '@loopback/core';
 import {FeatureFlagFn, FeatureFlagMetadata} from './types';
 
-/**
- * Binding keys used by this component.
- */
-// export namespace FeatureToggleComponentBindings {
-//   export const COMPONENT = BindingKey.create<FeatureToggleComponent>(
-//     `${CoreBindings.COMPONENTS}.FeatureToggleComponent`,
-//   );
-// }
-
 export const FEATURE_FLAG_METADATA_ACCESSOR = MetadataAccessor.create<
   FeatureFlagMetadata,
   MethodDecorator
