@@ -24,7 +24,6 @@ import {
 
 describe('TwilioProvider (unit)', () => {
   const sessionId = 'RM-dummy-meeting-id';
-  // const meetingId = 'RM-dummy-meeting-id';
   const twilioFailureError = new Error('Twilio failure');
   const archiveId = 'RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
   const jwtToken = 'dummy-jwt-token';

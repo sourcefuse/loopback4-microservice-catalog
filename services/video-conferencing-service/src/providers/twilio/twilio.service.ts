@@ -148,7 +148,7 @@ export class TwilioService {
       const event = webhookPayload.statusCallbackEvent;
       const sessionDetail = await this.videoChatSessionRepository.findOne({
         where: {
-          meetingLink: webhookPayload.roomSid!,
+          meetingLink: webhookPayload.roomSid ? webhookPayload.roomSid : '',
         },
       });
       //update archive Id
@@ -197,11 +197,12 @@ export class TwilioService {
           isDeleted: true,
           extMetadata: {webhookPayload},
         };
-
         await this.sessionAttendeesRepository.updateById(
-          sessionAttendessDetail!.id,
+          sessionAttendessDetail?.id,
           updatedAttendee,
         );
+      } else {
+        // do nothing
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError(

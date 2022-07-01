@@ -1,6 +1,8 @@
 import {expect, sinon} from '@loopback/testlab';
-import {CacheRespositoryMixin} from '../..';
-import {mockData, mockKey} from './fixtures/data';
+import {CacheManager} from '../../mixins/cache.mixin';
+import {CacheStrategyTypes} from '../../strategy-types.enum';
+import {DEFAULT_CACHE_PLUGIN_OPTIONS} from '../../types';
+import {mockData} from './fixtures/data';
 import {
   MockDefaultCrudRepository,
   resetCalls,
@@ -12,11 +14,15 @@ import {MockModel} from './fixtures/model';
 import {TestRedisDataSource} from './fixtures/redis.datasource';
 
 describe('Unit Test Cases for Cache Mixin', () => {
-  const mixedClass = CacheRespositoryMixin(MockDefaultCrudRepository, {
-    prefix: 'testPrefix',
-    salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',
-  });
-  const cacheRepo = new mixedClass(MockModel, new TestDataSource());
+  const mixedClass = CacheManager.CacheRepositoryMixin(
+    MockDefaultCrudRepository,
+    {
+      cacheProvider: CacheStrategyTypes.Redis,
+      prefix: 'testPrefix',
+    },
+  );
+  const testDataSource = new TestDataSource();
+  const cacheRepo = new mixedClass(MockModel, testDataSource);
   const redisDataSourceStub = sinon.createStubInstance(TestRedisDataSource);
   cacheRepo.getCacheDataSource = sinon.stub().resolves(redisDataSourceStub);
   let redisExecuteStub: sinon.SinonStub;
@@ -32,36 +38,10 @@ describe('Unit Test Cases for Cache Mixin', () => {
     resetCalls();
   });
 
-  it('should search and return data if present in cache', async () => {
-    redisExecuteStub = sinon
-      .stub(cacheRepo, 'executeRedisCommand')
-      .resolves(Buffer.from(JSON.stringify(mockData)));
-
-    const result = await cacheRepo.searchInCache(mockKey);
-    expect(mockData).to.match(result);
-    expect(redisExecuteStub.calledOnce).to.be.true();
-    expect(redisExecuteStub.calledWith('GET', [mockKey])).to.be.true();
-  });
-
-  it('should save data in cache', async () => {
-    redisExecuteStub = sinon
-      .stub(cacheRepo, 'executeRedisCommand')
-      .resolves(Buffer.from(JSON.stringify('OK')));
-
-    await cacheRepo.saveInCache(mockKey, mockData);
-    expect(redisExecuteStub.calledOnce).to.be.true();
-    expect(
-      redisExecuteStub.calledWith('SET', [
-        mockKey,
-        JSON.stringify(mockData),
-        'PX',
-        60000,
-      ]),
-    ).to.be.true();
-  });
-
-  it('findById should return data from cahce if present', async () => {
-    searchStub = sinon.stub(cacheRepo, 'searchInCache').resolves(mockData);
+  it('findById should return data from cache if present', async () => {
+    searchStub = sinon
+      .stub(cacheRepo.strategy, 'searchInCache')
+      .resolves(mockData);
     const result = await cacheRepo.findById('0');
     expect(result).to.eql(mockData);
     expect(searchStub.calledOnce).to.be.true();
@@ -69,7 +49,9 @@ describe('Unit Test Cases for Cache Mixin', () => {
   });
 
   it('findById should return data from db if not present in cache', async () => {
-    searchStub = sinon.stub(cacheRepo, 'searchInCache').resolves(undefined);
+    searchStub = sinon
+      .stub(cacheRepo.strategy, 'searchInCache')
+      .resolves(undefined);
 
     const result = await cacheRepo.findById('0');
     expect(result).to.eql(mockData);
@@ -77,8 +59,10 @@ describe('Unit Test Cases for Cache Mixin', () => {
     expect(superFindCalled).to.be.true();
   });
 
-  it('find should return data from cahce if present', async () => {
-    searchStub = sinon.stub(cacheRepo, 'searchInCache').resolves([mockData]);
+  it('find should return data from cache if present', async () => {
+    searchStub = sinon
+      .stub(cacheRepo.strategy, 'searchInCache')
+      .resolves([mockData]);
     const result = await cacheRepo.find();
     expect(result).to.eql([mockData]);
     expect(searchStub.calledOnce).to.be.true();
@@ -86,7 +70,9 @@ describe('Unit Test Cases for Cache Mixin', () => {
   });
 
   it('find should return data from db if not present in cache', async () => {
-    searchStub = sinon.stub(cacheRepo, 'searchInCache').resolves(undefined);
+    searchStub = sinon
+      .stub(cacheRepo.strategy, 'searchInCache')
+      .resolves(undefined);
 
     const result = await cacheRepo.find();
     expect(result).to.eql([mockData]);
@@ -94,50 +80,47 @@ describe('Unit Test Cases for Cache Mixin', () => {
     expect(superFindAllCalled).to.be.true();
   });
 
-  it('should throw error if unable to save in cache due to any reason', async () => {
-    redisExecuteStub = sinon.stub(cacheRepo, 'executeRedisCommand').throws();
-    let errorThrown = false;
-    try {
-      await cacheRepo.saveInCache(mockKey, mockData);
-    } catch {
-      errorThrown = true;
-    }
-    expect(errorThrown).to.be.true();
-    expect(redisExecuteStub.calledOnce).to.be.true();
+  it('should use default prefix and salt if not provided', () => {
+    const mixedClassDefault = CacheManager.CacheRepositoryMixin(
+      MockDefaultCrudRepository,
+      {
+        cacheProvider: CacheStrategyTypes.Redis,
+      },
+    );
+    const strategy = new mixedClassDefault(MockModel, testDataSource).strategy;
+    expect(strategy.prefix).to.equal(DEFAULT_CACHE_PLUGIN_OPTIONS.prefix);
   });
 
-  it('should throw error if unable to search in cache due to any reason', async () => {
-    let errorThrown = false;
-    redisExecuteStub = sinon.stub(cacheRepo, 'executeRedisCommand').rejects();
-    try {
-      await cacheRepo.searchInCache(mockKey);
-    } catch {
-      errorThrown = true;
-    }
-    expect(errorThrown).to.be.true();
-    expect(redisExecuteStub.calledOnce).to.be.true();
+  it('should use custom prefix and salt if provided', async () => {
+    const prefix = 'testPrefix';
+    const mixedClassCustom = CacheManager.CacheRepositoryMixin(
+      MockDefaultCrudRepository,
+      {
+        cacheProvider: CacheStrategyTypes.Redis,
+        prefix,
+      },
+    );
+    const strategy = new mixedClassCustom(MockModel, testDataSource).strategy;
+    expect(strategy.prefix).to.equal(prefix);
   });
 
-  it('should throw error if unable to clear cache due to any reason', async () => {
-    let errorThrown = false;
-    redisExecuteStub = sinon.stub(cacheRepo, 'executeRedisCommand').rejects();
-    try {
-      await cacheRepo.clearCache();
-    } catch {
-      errorThrown = true;
-    }
-    expect(errorThrown).to.be.true();
-    expect(redisExecuteStub.calledOnce).to.be.true();
+  it('should always return data from db if forceUpdate is true for findById', async () => {
+    searchStub = sinon
+      .stub(cacheRepo.strategy, 'searchInCache')
+      .resolves(mockData);
+
+    await cacheRepo.findById('0', {}, {forceUpdate: true});
+    expect(superFindCalled).to.be.true();
+    expect(searchStub.notCalled).to.be.true();
   });
 
-  it('should clear cache', async () => {
-    const cacheEntries = 5;
-    redisExecuteStub = sinon
-      .stub(cacheRepo, 'executeRedisCommand')
-      .resolves(cacheEntries);
-    const result = await cacheRepo.clearCache();
-    expect(result).to.equal(cacheEntries);
-    expect(redisExecuteStub.calledOnce).to.be.true();
-    expect(redisExecuteStub.getCall(0).args[0]).to.equal('EVAL');
+  it('should always return data from db if forceUpdate is true for find', async () => {
+    searchStub = sinon
+      .stub(cacheRepo.strategy, 'searchInCache')
+      .resolves([mockData]);
+
+    await cacheRepo.find({}, {forceUpdate: true});
+    expect(superFindAllCalled).to.be.true();
+    expect(searchStub.notCalled).to.be.true();
   });
 });

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.2 (2022-06-24)</small>
+
+* chore(sandbox): update angular package examples to newer angular versions (#846) ([0e7e819](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e7e819)), closes [#846](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/846) [#829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/829)
+* chore(sandbox): version fix (#857) ([f7d2501](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7d2501)), closes [#857](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/857) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 0.1.0 (2022-05-27)
 
 * chore(deps-dev): bump karma in /sandbox/search-client-example (#556) ([aec0bd9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aec0bd9)), closes [#556](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/556)

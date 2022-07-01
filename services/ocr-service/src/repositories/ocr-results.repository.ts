@@ -1,9 +1,9 @@
-import { Getter, inject } from '@loopback/core';
-import { BelongsToAccessor, juggler, repository } from '@loopback/repository';
-import { DefaultSoftCrudRepository } from '@sourceloop/core';
-import { OcrDbSourceName } from '../types';
-import { Contracts, OcrResults } from '../models';
-import { ContractRepository } from './contracts.repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {OcrDbSourceName} from '../types';
+import {Contracts, OcrResults} from '../models';
+import {ContractRepository} from './contracts.repository';
 
 export class OcrResultRepository extends DefaultSoftCrudRepository<
   OcrResults,

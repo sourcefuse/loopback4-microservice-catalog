@@ -7,27 +7,29 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Product} from '../models';
 import {ProductRepository} from '../repositories';
+import {STATUS_CODE} from '../types';
 
+const basePath = '/products';
 export class ProductController {
   constructor(
     @repository(ProductRepository)
-    public productRepository : ProductRepository,
+    public readonly productRepository: ProductRepository,
   ) {}
 
-  @post('/products')
-  @response(200, {
+  @post(basePath)
+  @response(STATUS_CODE.OK, {
     description: 'Product model instance',
     content: {'application/json': {schema: getModelSchemaRef(Product)}},
   })
@@ -47,19 +49,17 @@ export class ProductController {
     return this.productRepository.create(product);
   }
 
-  @get('/products/count')
-  @response(200, {
+  @get(`${basePath}/count`)
+  @response(STATUS_CODE.OK, {
     description: 'Product model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Product) where?: Where<Product>,
-  ): Promise<Count> {
+  async count(@param.where(Product) where?: Where<Product>): Promise<Count> {
     return this.productRepository.count(where);
   }
 
-  @get('/products')
-  @response(200, {
+  @get(basePath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of Product model instances',
     content: {
       'application/json': {
@@ -76,8 +76,8 @@ export class ProductController {
     return this.productRepository.find(filter);
   }
 
-  @patch('/products')
-  @response(200, {
+  @patch(basePath)
+  @response(STATUS_CODE.OK, {
     description: 'Product PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -95,8 +95,8 @@ export class ProductController {
     return this.productRepository.updateAll(product, where);
   }
 
-  @get('/products/{id}')
-  @response(200, {
+  @get(`${basePath}/{id}`)
+  @response(STATUS_CODE.OK, {
     description: 'Product model instance',
     content: {
       'application/json': {
@@ -106,13 +106,14 @@ export class ProductController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Product, {exclude: 'where'}) filter?: FilterExcludingWhere<Product>
+    @param.filter(Product, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Product>,
   ): Promise<Product> {
     return this.productRepository.findById(id, filter);
   }
 
-  @patch('/products/{id}')
-  @response(204, {
+  @patch(`${basePath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Product PATCH success',
   })
   async updateById(
@@ -129,8 +130,8 @@ export class ProductController {
     await this.productRepository.updateById(id, product);
   }
 
-  @put('/products/{id}')
-  @response(204, {
+  @put(`${basePath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Product PUT success',
   })
   async replaceById(
@@ -140,8 +141,8 @@ export class ProductController {
     await this.productRepository.replaceById(id, product);
   }
 
-  @del('/products/{id}')
-  @response(204, {
+  @del(`${basePath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Product DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {

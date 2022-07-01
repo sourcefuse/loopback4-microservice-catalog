@@ -2,6 +2,7 @@ import {BindingKey} from '@loopback/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import {SignupTokenHandlerFn} from '.';
 import {PreSignupFn, UserSignupFn} from '../types';
+import {AuthCodeGeneratorProvider} from './auth-code-generator.provider';
 
 import {
   GooglePostVerifyFn,
@@ -24,6 +25,7 @@ import {
   OtpGenerateFn,
   OtpSenderFn,
   OtpFn,
+  MfaCheckFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -43,11 +45,11 @@ export namespace SignUpBindings {
   );
   export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    PreSignupFn<any, any>
+    PreSignupFn<any, any> //NOSONAR
   >(`sf.local.presignup.provider`);
   export const LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    UserSignupFn<any, any>
+    UserSignupFn<any, any> //NOSONAR
   >(`sf.local.signup.provider`);
 
   export const SIGNUP_HANDLER_PROVIDER =
@@ -84,6 +86,9 @@ export namespace VerifyBindings {
   export const OTP_SENDER_PROVIDER = BindingKey.create<OtpSenderFn>(
     'sf.otp.sender.provider',
   );
+  export const MFA_PROVIDER = BindingKey.create<MfaCheckFn>(
+    'sf.mfa.check.provider',
+  );
 
   export const BEARER_SIGNUP_VERIFY_PROVIDER =
     BindingKey.create<VerifyFunction.GenericAuthFn>(
@@ -99,4 +104,9 @@ export namespace AuthCodeBindings {
   export const CODEREADER_PROVIDER = BindingKey.create<CodeReaderFn>(
     'sf.auth.codereader.provider',
   );
+
+  export const AUTH_CODE_GENERATOR_PROVIDER =
+    BindingKey.create<AuthCodeGeneratorProvider>(
+      'sf.auth-code.generator.provider',
+    );
 }

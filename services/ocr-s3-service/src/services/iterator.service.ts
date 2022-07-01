@@ -4,8 +4,6 @@ import {injectable, BindingScope} from '@loopback/core';
   scope: BindingScope.TRANSIENT,
 })
 export class IteratorService {
-  constructor() {}
-
   async asyncForEach<T>(
     array: Array<T>,
     callback: (item: T, index: number) => Promise<void>,

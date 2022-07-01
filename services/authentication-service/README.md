@@ -8,7 +8,7 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/authentication-service/@loopback/core)
 
-![check-code-coverage](https://img.shields.io/badge/code--coverage-76.27%25-yellow)
+![check-code-coverage](https://img.shields.io/badge/code--coverage-75.01%25-yellow)
 
 ## Overview
 
@@ -25,6 +25,8 @@ A Loopback Microservice for handling authentications. It provides -
 - Instagram OAuth using [passport-instagram](http://www.passportjs.org/packages/passport-instagram/).
 - Facebook OAuth using [passport-facebook](http://www.passportjs.org/packages/passport-facebook/).
 - Apple OAuth using [passport-apple](https://www.npmjs.com/package/passport-apple).
+- OTP Auth using custom passport otp strategy.
+- Two-Factor Authentication.
 
 To get started with a basic implementation of this service, see `/sandbox/auth-basic-example`.
 
@@ -63,6 +65,53 @@ npm i @sourceloop/authentication-service
   `AuthDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Set up a Loopback4 Datasource for caching tokens with `dataSourceName` property set to `AuthCacheSourceName`.
 - Bind any of the custom [providers](#providers) you need.
+- **OTP** -
+  - Implement OtpSenderProvider(refer [this](./src/providers/otp-sender.provider.ts)) in your application and bind it to its respective key in application.ts
+  ```typescript
+  import {
+    VerifyBindings,
+    AuthServiceBindings,
+  } from '@sourceloop/authentication-service';
+  this.bind(VerifyBindings.OTP_SENDER_PROVIDER).toProvider(OtpSenderProvider);
+  this.bind(AuthServiceBindings.MfaConfig).to({
+    secondFactor: STRATEGY.OTP,
+  });
+  this.bind(AuthServiceBindings.OtpConfig).to({
+    method: OtpMethodType.OTP,
+  });
+  ```
+  - This provider is responsible for sending OTP to user.
+  - By default OTP is valid for 5 minutes. To change it, set OTP_STEP and OTP_WINDOW (refer [otp-options](https://www.npmjs.com/package/otplib#totp-options)) as per your need in .env.
+- **Google Authenticator** -
+  - To use google Authenticator in your application, add following to application.ts
+  ```typescript
+  import {AuthServiceBindings} from '@sourceloop/authentication-service';
+  this.bind(AuthServiceBindings.MfaConfig).to({
+    secondFactor: STRATEGY.OTP,
+  });
+  this.bind(AuthServiceBindings.OtpConfig).to({
+    method: OtpMethodType.GOOGLE_AUTHENTICATOR,
+  });
+  ```
+- Set APP_NAME in .env.
+- To authenticate using only OTP or Authenticator app, use the following APIs:
+  - `/send-otp`
+  - `/auth/check-qr-code`
+  - `/auth/create-qr-code`
+  - `/verify-otp`
+- **Two-Factor-Authentication** -
+
+  - As of now, 2nd Factor will always be either OTP or Google Authenticator.
+  - Implement MfaProvider(refer [this](./src/providers/mfa.provider.ts)) in your application and bind it to its respective key in application.ts
+
+  ```typescript
+  import {VerifyBindings} from '@sourceloop/authentication-service';
+  this.bind(VerifyBindings.MFA_PROVIDER).toProvider(MfaProvider);
+  ```
+
+  - It works for almost all authentication methods provided by this service.
+  - Use `/verify-otp` to enter otp or code from authenticator app.
+
 - Start the application
   `npm start`
 

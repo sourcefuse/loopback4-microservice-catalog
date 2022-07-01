@@ -18,20 +18,16 @@ import {
   STATUS_CODE,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
   authenticateClient,
   AuthenticationBindings,
   AuthErrorKeys,
-  ClientAuthCode,
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-
-import {User} from '../../models';
-import {AuthCodeBindings, CodeWriterFn} from '../../providers';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
 import {AuthClientRepository} from '../../repositories';
 import {AuthUser} from './models/auth-user.model';
 import {ClientAuthRequest} from './models/client-auth-request.dto';
@@ -50,6 +46,8 @@ export class InstagramLoginController {
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
+    private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -87,7 +85,9 @@ export class InstagramLoginController {
       },
     })
     clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.INSTAGRAM_OAUTH2,
@@ -118,8 +118,6 @@ export class InstagramLoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    instgaramCodeWriter: CodeWriterFn,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
   ): Promise<void> {
@@ -136,18 +134,7 @@ export class InstagramLoginController {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {
-      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId,
-        user: user,
-      };
-      const token = await instgaramCodeWriter(
-        jwt.sign(codePayload, client.secret, {
-          expiresIn: client.authCodeExpiration,
-          audience: clientId,
-          issuer: process.env.JWT_ISSUER,
-          algorithm: 'HS256',
-        }),
-      );
+      const token = await this.getAuthCode(client, user);
       response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);

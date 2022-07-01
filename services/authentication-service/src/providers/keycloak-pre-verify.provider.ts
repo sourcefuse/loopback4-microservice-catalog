@@ -6,8 +6,6 @@ import {KeyCloakPreVerifyFn} from './types';
 export class KeyCloakPreVerifyProvider
   implements Provider<KeyCloakPreVerifyFn>
 {
-  constructor() {}
-
   value(): KeyCloakPreVerifyFn {
     return async (
       accessToken: string,

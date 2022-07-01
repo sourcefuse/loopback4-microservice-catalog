@@ -1,6 +1,6 @@
-import { belongsTo, model, property } from '@loopback/repository';
-import { BaseEntity } from '@sourceloop/core';
-import { Contracts } from './contracts.model';
+import {belongsTo, model, property} from '@loopback/repository';
+import {BaseEntity} from '@sourceloop/core';
+import {Contracts} from './contracts.model';
 @model({
   name: 'hocr_results',
   settings: {
@@ -16,7 +16,7 @@ export class HocrResults extends BaseEntity {
 
   @belongsTo(
     () => Contracts,
-    { name: 'contracts' },
+    {name: 'contracts'},
     {
       name: 'contract_id',
       required: true,
@@ -62,8 +62,4 @@ export class HocrResults extends BaseEntity {
   }
 }
 
-export interface HocrResultsRelations {
-  // describe navigational properties here
-}
-
-export type HocrResultsWithRelations = HocrResults & HocrResultsRelations;
+export type HocrResultsWithRelations = HocrResults;

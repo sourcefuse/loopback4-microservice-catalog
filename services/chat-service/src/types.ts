@@ -1,3 +1,5 @@
 import {IServiceConfig} from '@sourceloop/core';
 
-export interface IChatServiceConfig extends IServiceConfig {}
+export interface IChatServiceConfig extends IServiceConfig {
+  //do nothing
+}

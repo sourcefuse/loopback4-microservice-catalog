@@ -18,20 +18,16 @@ import {
   STATUS_CODE,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
   authenticateClient,
   AuthenticationBindings,
   AuthErrorKeys,
-  ClientAuthCode,
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-
-import {User} from '../../models';
-import {AuthCodeBindings, CodeWriterFn} from '../../providers';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
 import {AuthClientRepository} from '../../repositories';
 import {AuthUser} from './models/auth-user.model';
 import {ClientAuthRequest} from './models/client-auth-request.dto';
@@ -50,6 +46,8 @@ export class AppleLoginController {
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
+    private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -84,7 +82,9 @@ export class AppleLoginController {
       },
     })
     clientCreds: ClientAuthRequest,
-  ): void {}
+  ): void {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.APPLE_OAUTH2,
@@ -116,8 +116,6 @@ export class AppleLoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    appleCodeWriter: CodeWriterFn,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
   ): Promise<void> {
@@ -135,18 +133,7 @@ export class AppleLoginController {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {
-      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId,
-        user: user,
-      };
-      const token = await appleCodeWriter(
-        jwt.sign(codePayload, client.secret, {
-          expiresIn: client.authCodeExpiration,
-          audience: clientId,
-          issuer: process.env.JWT_ISSUER,
-          algorithm: 'HS256',
-        }),
-      );
+      const token = await this.getAuthCode(client, user);
       const role = user.role;
       response.redirect(
         `${process.env.WEBAPP_URL ?? ''}${

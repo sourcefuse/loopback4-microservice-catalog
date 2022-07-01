@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.1 (2022-06-30)</small>
+
+* chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)
+
+
+
+
+
+## 7.0.0 (2022-06-24)
+
+* fix(cache): missing return type for mixin ([f685126](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f685126)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(authentication-service): add MFA (#782) ([c252b85](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c252b85)), closes [#782](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/782)
+* perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)
+
+
+
+
+
 ## <small>6.0.2 (2022-05-30)</small>
 
 * chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

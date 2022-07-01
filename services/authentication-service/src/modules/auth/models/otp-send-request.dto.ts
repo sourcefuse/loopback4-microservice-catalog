@@ -11,7 +11,7 @@ export class OtpSendRequest extends Model {
     required: true,
   })
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  client_id: string;
+  client_id: string; //NOSONAR
 
   @property({
     type: 'string',
@@ -19,7 +19,7 @@ export class OtpSendRequest extends Model {
     required: true,
   })
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  client_secret: string;
+  client_secret: string; //NOSONAR
 
   @property({
     type: 'string',

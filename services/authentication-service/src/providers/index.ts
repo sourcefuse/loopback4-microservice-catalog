@@ -30,4 +30,3 @@ export * from './otp.provider';
 export * from './otp-sender.provider';
 export * from './otp-generate.provider';
 export * from './keys';
-export * from './google-authenticator.provider';

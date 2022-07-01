@@ -1,6 +1,6 @@
-import { belongsTo, model, property } from '@loopback/repository';
-import { BaseEntity } from '@sourceloop/core';
-import { Contracts } from './contract.model';
+import {belongsTo, model, property} from '@loopback/repository';
+import {BaseEntity} from '@sourceloop/core';
+import {Contracts} from './contract.model';
 @model({
   name: 'ocr_results',
   settings: {
@@ -23,7 +23,7 @@ export class OcrResults extends BaseEntity {
 
   @belongsTo(
     () => Contracts,
-    { name: 'contracts' },
+    {name: 'contracts'},
     {
       name: 'contract_id',
       required: true,
@@ -60,7 +60,7 @@ export class OcrResults extends BaseEntity {
     name: 'coordinates',
   })
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  coordinates?: string | any;
+  coordinates?: string | any; //NOSONAR
 
   @property({
     type: 'number',

@@ -163,7 +163,7 @@ export class ReplyAndForwardController {
         threadId,
       },
     };
-    if (extId) {
+    if (extId && messageFilter.where) {
       Object.assign(messageFilter.where, {
         extId,
       });

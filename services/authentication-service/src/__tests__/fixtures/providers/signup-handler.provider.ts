@@ -7,7 +7,7 @@ export class TestSignupTokenHandlerProvider
 {
   constructor(
     @service(TestHelperService)
-    private helper: TestHelperService,
+    private readonly helper: TestHelperService,
   ) {}
   value(): SignupTokenHandlerFn {
     return async dto => {

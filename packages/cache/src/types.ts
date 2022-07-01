@@ -1,14 +1,37 @@
-import {Options} from '@loopback/repository';
+import {Entity, Filter, JugglerDataSource, Options} from '@loopback/repository';
+import {ICacheStrategy} from './strategies';
+import {CacheStrategyTypes} from './strategy-types.enum';
 
-export interface CacheMixinOptions {
+/**
+ * Interface defining the component's options object
+ */
+export interface CachePluginComponentOptions {
+  // Add the definitions here
+  cacheProvider: CacheStrategyTypes;
   prefix: string;
-  salt: string;
-  ttl?: number;
-  scanCount?: number;
 }
 
-export interface CacheFindOptions {
+/**
+ * Default options for the component
+ */
+export const DEFAULT_CACHE_PLUGIN_OPTIONS: CachePluginComponentOptions = {
+  cacheProvider: CacheStrategyTypes.Redis,
+  prefix: 'sl',
+};
+
+export interface ICacheMixin<M extends Entity, ID> {
+  getCacheDataSource: () => Promise<JugglerDataSource>;
+  strategy: ICacheStrategy<M>;
+  clearCache(): Promise<void>;
+  generateKey(id?: ID, filter?: Filter<M>): Promise<string>;
+}
+
+export interface ICacheMixinOptions {
+  ttl?: number;
+}
+
+export interface ICacheFindOptions {
   forceUpdate: boolean;
 }
 
-export declare type CacheOptions = Options & CacheFindOptions;
+export type CacheOptions = Options & ICacheFindOptions;
