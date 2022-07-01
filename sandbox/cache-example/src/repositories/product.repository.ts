@@ -1,10 +1,10 @@
 import {Constructor, Getter, inject} from '@loopback/core';
 import {DefaultCrudRepository} from '@loopback/repository';
-import {CacheRespositoryMixin} from '@sourceloop/cache';
+import {CacheManager} from '@sourceloop/cache';
 import {CacheDbDataSource, DbDataSource} from '../datasources';
 import {Product, ProductRelations} from '../models';
 
-export class ProductRepository extends CacheRespositoryMixin<
+export class ProductRepository extends CacheManager.CacheRepositoryMixin<
   Product,
   typeof Product.prototype.id,
   ProductRelations,
@@ -18,7 +18,6 @@ export class ProductRepository extends CacheRespositoryMixin<
 >(DefaultCrudRepository, {
   prefix: 'product',
   ttl: 50000,
-  salt: '$2b$10$Pdp69XWPJjQ8iFcum6GHEe',
 }) {
   redisDataSource: CacheDbDataSource;
   constructor(
