@@ -2,7 +2,6 @@
 
 This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensiona, facades and microservices to it.
 
-
 ## Building
 
 To install sourceloop-cli, run
@@ -14,26 +13,30 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.0.4 linux-x64 node-v16.13.0
+@sourceloop/cli/2.0.2 linux-x64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
+
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -132,5 +135,20 @@ OPTIONS
   --issuePrefix=issuePrefix  prefix to be used for issues(e.g. GH-)
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.4/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.2/src/commands/scaffold.ts)_
+
+## `sl update`
+
+update the dependencies of a loopback project
+
+```
+USAGE
+  $ sl update
+
+OPTIONS
+  --help  show manual pages
+```
+
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.2/src/commands/update.ts)_
+
 <!-- commandsstop -->
