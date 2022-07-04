@@ -22,10 +22,13 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run build",
-    "test": "echo \"No tests !\"",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "coverage": "lb-nyc npm run test",
+    "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "prepublishOnly": "npm run build && npm run lint",
     "rebuild": "npm run clean && npm run build"
   },
   "repository": {
@@ -56,6 +59,7 @@
     "@sourceloop/core": "^7.0.2",
     "lodash": "^4.17.21",
     "loopback4-authentication": "^6.1.4",
+    "sinon": "^14.0.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
