@@ -49,11 +49,11 @@ authUser.disabledFeatures = ['1', '3'];
 - Add the `FeatureToggleComponent` to your Loopback4 Application (in `application.ts`) where you need to check the features availability.
 
 ```ts
-// import the FeatureToggleServiceComponent
-import {FeatureToggleServiceComponent} from '@sourceloop/feature-toggle-service';
+// import the FeatureToggleComponent
+import {FeatureToggleComponent} from '@sourceloop/feature-toggle';
 
-// add Component for FeatureToggleService
-this.component(FeatureToggleServiceComponent);
+// add Component for FeatureToggle
+this.component(FeatureToggleComponent);
 ```
 
 - Then add the decorator over all the APIs where feature needs to be checked. As shown above.
