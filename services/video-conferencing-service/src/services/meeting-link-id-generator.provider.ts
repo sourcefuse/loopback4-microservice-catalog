@@ -9,9 +9,7 @@ export class MeetingLinkIdGeneratorProvider
   implements Provider<MeetingLinkIdGenerator>
 {
   async value() {
-    return (): Promise<string> => {
-      return nanoid(nanoId);
-    };
+    return (): Promise<string> => nanoid(nanoId);
   }
 }
 

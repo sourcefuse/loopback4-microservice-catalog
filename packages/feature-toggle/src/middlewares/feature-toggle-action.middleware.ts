@@ -5,8 +5,7 @@ import {
   Provider,
   ValueOrPromise,
 } from '@loopback/core';
-import {HttpErrors} from '@loopback/rest';
-import {MiddlewareContext, Middleware} from '@loopback/express';
+import {HttpErrors, MiddlewareContext, Middleware} from '@loopback/rest';
 import {StrategyBindings} from '../keys';
 import {FeatureFlagFn} from '../types';
 
