@@ -6,6 +6,7 @@
     "loopback-application",
     "loopback"
   ],
+  "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -43,8 +44,8 @@
     "type": "git",
     "url": ""
   },
-  "author": " <barleen.dhaliwal@sourcefuse.com>",
-  "license": "",
+  "author": "Sourcefuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
