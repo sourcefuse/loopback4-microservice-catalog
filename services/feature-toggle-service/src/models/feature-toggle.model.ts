@@ -1,10 +1,11 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({
   name: 'feature_toggles',
   description: 'The feature-toggle table',
 })
-export class FeatureToggle extends Entity {
+export class FeatureToggle extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,

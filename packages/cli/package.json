@@ -111,6 +111,7 @@
       "@sourceloop/scheduler-service": "^5.0.3",
       "@sourceloop/search-service": "^0.6.3",
       "@sourceloop/video-conferencing-service": "^4.0.3",
+      "@sourceloop/user-tenant-service": "^0.1.0",
       "loopback4-authentication": "^6.1.4",
       "loopback4-authorization": "^5.0.6",
       "swagger-stats": "^0.99.2",

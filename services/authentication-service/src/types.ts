@@ -6,9 +6,11 @@ import {OtpMethodType} from './enums';
 import {LocalUserProfileDto} from './models';
 import {SignupRequestDto} from './models/signup-request-dto.model';
 
+// sonarignore:start
 export interface IAuthServiceConfig extends IServiceConfig {
   //do nothing
 }
+// sonarignore:end
 
 export const AuthDbSourceName = 'AuthDB';
 export const AuthCacheSourceName = 'AuthCache';
