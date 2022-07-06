@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/video-conferencing-service",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "Microservice providing Video-Conferencing functionality.",
   "keywords": [
     "loopback-extension",

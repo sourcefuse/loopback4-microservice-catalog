@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.5 (2022-07-06)</small>
+
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+
+
+
+
+
 ## <small>0.2.4 (2022-06-30)</small>
 
 * chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)

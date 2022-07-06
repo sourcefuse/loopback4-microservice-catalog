@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.4 (2022-07-06)</small>
+
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+* docs(cache): restructure README.md and remove salt option (#866) ([d45f778](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d45f778)), closes [#866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/866) [#853](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/853)
+
+
+
+
+
 ## <small>0.3.3 (2022-06-30)</small>
 
 * fix(cache): remove salt from bcrypt (#860) ([98705f4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/98705f4)), closes [#860](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/860) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/841)

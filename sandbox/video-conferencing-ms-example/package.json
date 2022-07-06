@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/video-conferencing-ms-example",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A Video conferencing service example",
   "keywords": [
     "loopback-application",
@@ -61,7 +61,7 @@
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
     "@sourceloop/core": "^7.0.4",
-    "@sourceloop/video-conferencing-service": "^4.0.4",
+    "@sourceloop/video-conferencing-service": "^4.0.5",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "db-migrate": "^1.0.0-beta.18",

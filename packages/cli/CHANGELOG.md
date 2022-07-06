@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.0 (2022-07-06)
+
+* feat(cli): add new update command to cli (#835) ([46aaecd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/46aaecd)), closes [#835](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/835) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528) [#528](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/528)
+* feat(cli): add user-tenant in cli options (#875) ([9ab7487](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ab7487)), closes [#875](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/875) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>2.0.4 (2022-06-30)</small>
 
 * chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)
