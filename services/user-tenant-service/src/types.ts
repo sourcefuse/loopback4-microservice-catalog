@@ -1,10 +1,12 @@
 /**
  * Interface defining the component's options object
  */
+// sonarignore:start
 export interface UserTenantServiceComponentOptions {
   //NOSONAR
   // Add the definitions here
 }
+// sonarignore:end
 
 /**
  * Default options for the component

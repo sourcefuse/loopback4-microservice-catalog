@@ -14,27 +14,8 @@ Microservice that provides functionality to maintain feature flags at various le
 
 ## Working and Flow
 
-This service provides method level decorators - @featuresFlag that takes name of feature and an array of provider keys, i.e., strategies, as metadata and verifies if the feature flags are enabled or disabled, it uses an AND operator to check for multiple strategies. Read more about creating loopback-4 [decorators](https://loopback.io/doc/en/lb4/Creating-decorators.html). To check if a feature is enabled or not add the following decorator over a controller method:
-
-```typescript
- @featuresFlag({
-    featureKey: 'feature_key',
-    strategies: [
-      StrategyBindings.SYSTEM_STRATEGY,
-      StrategyBindings.TENANT_STRATEGY,
-      StrategyBindings.USER_STRATEGY,
-    ],
-  })
-```
-
-and if you want to skip all the feature checks:
-
-```typescript
- @featuresFlag({
-   featureKey: 'feature_key',
-   strategies: [ '*' ],
- })
-```
+This service provides CRUD APIs to insert values into the feature-toggle specific data tables that can be read while making the decision if a particular feature is allowed or not to the user.
+This feature is an extension of the feature-toggle package -- @sourceloop/feature-toggle that provides a method level decorator which will check if that particular API is accessible or not.
 
 Initial implementation for system level, tenant level and user level feature flag is provided.
 
@@ -89,7 +70,7 @@ Here is a sample Implementation `DataSource` implementation using environment va
 ```typescript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {FeatureToggleDbName} from '@sourceloop/authentication-service';
+import {FeatureToggleDbName} from '@sourceloop/feature-toggle-service';
 
 const config = {
   name: FeatureToggleDbName,
@@ -144,6 +125,6 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
 
-## API's Details
+#### API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
