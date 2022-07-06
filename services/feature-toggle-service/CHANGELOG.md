@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.0 (2022-07-06)
+
+* chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+* feat(feature-toggle-service): remove everything except controllers (#858) ([f7802fb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7802fb)), closes [#858](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/858) [#843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/843) [#843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/843) [#843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/843)
+
+
+
+
+
 ## 0.7.0 (2022-07-06)
 
 * refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)

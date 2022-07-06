@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.4 (2022-07-06)</small>
+
+* chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+
+
+
+
+
 ## <small>0.3.3 (2022-07-06)</small>
 
 * refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)

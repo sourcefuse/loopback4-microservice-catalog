@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/feature-toggle-example",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "An example for feature toggle service",
   "keywords": [
     "loopback-application",
@@ -60,7 +60,7 @@
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
     "@sourceloop/core": "^7.0.4",
-    "@sourceloop/feature-toggle-service": "^0.7.0",
+    "@sourceloop/feature-toggle-service": "^0.8.0",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
