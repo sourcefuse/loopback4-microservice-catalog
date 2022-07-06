@@ -13,30 +13,27 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.0.2 linux-x64 node-v16.14.2
+@sourceloop/cli/2.0.4 linux-x64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl update`](#sl-update)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -93,8 +90,9 @@ OPTIONS
   -p, --uniquePrefix=uniquePrefix
       unique prefix to be used for docker images
 
-  -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
-  service|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service)
+  -s,
+  --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-serv
+  ice|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service|user-tenant-service)
       base sourceloop microservice
 
   --customMigrations
@@ -135,7 +133,7 @@ OPTIONS
   --issuePrefix=issuePrefix  prefix to be used for issues(e.g. GH-)
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.2/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.4/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -149,6 +147,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.2/src/commands/update.ts)_
-
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.0.4/src/commands/update.ts)_
 <!-- commandsstop -->
