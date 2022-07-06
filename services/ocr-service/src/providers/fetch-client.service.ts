@@ -92,21 +92,13 @@ export class FetchClientProvider implements Provider<IRequestServiceConfig> {
   sendRequest(url: string, method: string) {
     if (method?.toUpperCase() === 'POST') {
       return this.post(url);
-    }
-
-    if (method?.toUpperCase() === 'GET') {
+    } else if (method?.toUpperCase() === 'GET') {
       return this.get(url);
-    }
-
-    if (method?.toUpperCase() === 'PUT') {
+    } else if (method?.toUpperCase() === 'PUT') {
       return this.put(url);
-    }
-
-    if (method?.toUpperCase() === 'PATCH') {
+    } else if (method?.toUpperCase() === 'PATCH') {
       return this.patch(url);
-    }
-
-    if (method?.toUpperCase() === 'DELETE') {
+    } else if (method?.toUpperCase() === 'DELETE') {
       return this.delete(url);
     } else {
       //do nothing
