@@ -8,8 +8,7 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/payment-service/@loopback/core)
 
-A Loopback Microservice primarily used for payment implementation to charge the payments for
-any client application.
+A Loopback Microservice primarily used for user-tenant implementation along with authenticcation service to set the api's for user-tenants.
 
 ## Prerequiste
 
@@ -32,7 +31,7 @@ Authenication service as it uses the same database tables and no new migration i
 
   ```typescript
   // import the UserTenantServiceComponent
-  import {UserTenantServiceComponent} from '@sourceloop/payment-service';
+  import {UserTenantServiceComponent} from '@sourceloop/user-tenant-service';
   // add Component for UserTenantServiceComponent
   this.component(UserTenantServiceComponent);
   ```
