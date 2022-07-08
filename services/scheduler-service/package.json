@@ -67,7 +67,7 @@
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^8.5.1",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-soft-delete": "^5.1.1",
     "tslib": "^2.4.0"
