@@ -60,7 +60,7 @@
     "loopback4-helmet": "^4.1.1",
     "loopback4-ratelimiter": "^4.1.1",
     "loopback4-soft-delete": "^5.1.1",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
     "openapi3-ts": "^2.0.2",
     "swagger-stats": "^0.99.2",
