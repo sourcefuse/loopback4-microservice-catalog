@@ -51,7 +51,7 @@ describe('UserGroup Controller', function () {
       }),
     );
     const response = await client
-      .get(`${basePath}/${userGroup.id}/user-groups`)
+      .get(`${basePath}/${userGroup.groupId}/user-groups`)
       .expect(401);
     expect(response).to.have.property('error');
   });
@@ -64,7 +64,7 @@ describe('UserGroup Controller', function () {
       }),
     );
     await client
-      .get(`${basePath}/${userGroup.id}/user-groups`)
+      .get(`${basePath}/${userGroup.groupId}/user-groups`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
   });
@@ -77,7 +77,7 @@ describe('UserGroup Controller', function () {
       }),
     );
     await client
-      .post(`${basePath}/${userGroup.id}/user-groups`)
+      .post(`${basePath}/${userGroup.groupId}/user-groups`)
       .set('authorization', `Bearer ${token}`)
       .send(userGroup)
       .expect(422);
@@ -93,7 +93,7 @@ describe('UserGroup Controller', function () {
     const payload = userGroup;
     delete payload.id;
     await client
-      .post(`${basePath}/${userGroup.id}/user-groups`)
+      .post(`${basePath}/${userGroup.groupId}/user-groups`)
       .set('authorization', `Bearer ${token}`)
       .send(payload)
       .expect(200);
