@@ -55,7 +55,7 @@
     "lodash": "^4.17.21",
     "logform": "^2.4.0",
     "loopback-datasource-juggler": "^4.27.1",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-helmet": "^4.1.1",
     "loopback4-ratelimiter": "^4.1.1",
