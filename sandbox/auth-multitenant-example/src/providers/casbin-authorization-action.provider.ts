@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, inject, Getter} from '@loopback/core';
 import {HttpErrors, Request} from '@loopback/rest';
 import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';

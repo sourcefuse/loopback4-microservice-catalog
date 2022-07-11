@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {prefix, suffix, TourStep} from '@sourceloop/user-onboarding-client';
 
 const NEXT_BUTTON_CLASS = 'shepherd-button-next';

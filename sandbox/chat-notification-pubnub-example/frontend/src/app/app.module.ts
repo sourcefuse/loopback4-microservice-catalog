@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {PubNubAngular} from 'pubnub-angular2';

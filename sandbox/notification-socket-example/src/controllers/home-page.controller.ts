@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {get} from '@loopback/openapi-v3';
 import * as fs from 'fs';
 import * as path from 'path';

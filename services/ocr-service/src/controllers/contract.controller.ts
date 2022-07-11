@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {Filter, repository} from '@loopback/repository';
 import {param, get, post, requestBody, getModelSchemaRef} from '@loopback/rest';

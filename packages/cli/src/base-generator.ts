@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {readdirSync} from 'fs';
 import {mkdir} from 'fs/promises';
 import {join} from 'path';

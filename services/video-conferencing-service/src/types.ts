@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {SessionAttendees} from './models/session-attendees.model';
 import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageSessionWebhookPayload} from './providers';

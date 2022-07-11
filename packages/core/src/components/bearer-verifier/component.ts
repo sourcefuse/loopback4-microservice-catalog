@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Binding, Component, inject, ProviderMap} from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {Strategies} from 'loopback4-authentication';

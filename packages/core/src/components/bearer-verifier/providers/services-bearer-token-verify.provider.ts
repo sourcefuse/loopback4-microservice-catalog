@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';

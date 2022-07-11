@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {model, property, belongsTo, AnyObject} from '@loopback/repository';
 import {BaseEntity} from '@sourceloop/core';
 import {Notification} from './notification.model';

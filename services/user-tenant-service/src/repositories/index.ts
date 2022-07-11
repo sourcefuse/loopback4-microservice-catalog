@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export * from './auth-client.repository';
 export * from './group-user-count-view.repository';
 export * from './group.repository';

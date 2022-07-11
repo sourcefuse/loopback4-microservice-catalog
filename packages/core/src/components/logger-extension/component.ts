@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Component, ProviderMap} from '@loopback/core';
 import {LOGGER} from './keys';
 import {LoggerProvider} from './providers/logger.provider';

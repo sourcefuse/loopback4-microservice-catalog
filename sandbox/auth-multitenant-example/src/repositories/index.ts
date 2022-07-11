@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export * from './auth-client-ext.repository';
 export * from './role-ext.repository';
 export * from './tenant-ext.repository';

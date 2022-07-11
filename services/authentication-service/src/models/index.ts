@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AuthClient} from './auth-client.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';

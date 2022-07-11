@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {model, property, belongsTo} from '@loopback/repository';
 import {UserModifiableEntity, ConfigKey} from '@sourceloop/core';
 import {Tenant, TenantWithRelations} from './index';

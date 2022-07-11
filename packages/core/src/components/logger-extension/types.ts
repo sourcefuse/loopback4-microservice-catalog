@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 // Types and interfaces exposed by the extension go here
 
 import {Request, OperationArgs} from '@loopback/rest';

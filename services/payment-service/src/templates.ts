@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export const razorpayCreateTemplate = `<html>
   <head><title>Order in-process. Please wait ...</title><style>.razorpay-payment-button{display:none;}</style></head>
   <body>

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Component, OnInit} from '@angular/core';
 import {NgxNotificationService} from 'ngx-notification';
 import {PubNubAngular} from 'pubnub-angular2';

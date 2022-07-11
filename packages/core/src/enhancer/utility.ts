@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {PathsObject} from 'openapi3-ts';
 import {OasHiddenApi} from '../keys';
 import {HttpMethod, OasKeyMap} from '../enums';

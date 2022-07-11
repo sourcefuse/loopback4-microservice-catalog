@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export * from './models/auth-token-request.dto';
 export * from './models/login-request.dto';
 export * from './models/token-response.dto';

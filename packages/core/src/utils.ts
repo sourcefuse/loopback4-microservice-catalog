@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Request} from '@loopback/rest';
 import {isString} from 'lodash';
 import moment from 'moment';
