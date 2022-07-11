@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "payment microservice",
   "keywords": [
     "loopback-extension",
@@ -67,11 +67,11 @@
     "@loopback/rest": "^12.0.1",
     "@loopback/rest-explorer": "^5.0.1",
     "@loopback/service-proxy": "^5.0.1",
-    "@sourceloop/core": "^7.0.4",
+    "@sourceloop/core": "^7.1.0",
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-soft-delete": "^5.1.1",
     "razorpay": "^2.8.1",
@@ -98,6 +98,9 @@
       "swagger2openapi": "^7.0.8",
       "markdown-it": "^12.3.2",
       "yargs": "^17.4.1"
+    },
+    "passport-azure-ad": {
+      "passport": "^0.6.0"
     }
   },
   "publishConfig": {

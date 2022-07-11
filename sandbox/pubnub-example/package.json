@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/pubnub-example",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A pubnub provider example",
   "keywords": [
     "loopback-application",
@@ -60,7 +60,7 @@
     "@loopback/rest": "^12.0.0",
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/notification-service": "^5.0.4",
+    "@sourceloop/notification-service": "^5.0.5",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "aws-sdk": "^2.1148.0",

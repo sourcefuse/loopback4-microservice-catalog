@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "7.0.4",
+  "version": "7.1.0",
   "description": "Sourceloop core package.",
   "keywords": [
     "loopback-extension",
@@ -55,7 +55,7 @@
     "lodash": "^4.17.21",
     "logform": "^2.4.0",
     "loopback-datasource-juggler": "^4.27.1",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-helmet": "^4.1.1",
     "loopback4-ratelimiter": "^4.1.1",
@@ -86,6 +86,9 @@
     "commitizen": {
       "minimist": "^1.2.6",
       "cz-conventional-changelog": "^3.3.0"
+    },
+    "passport-azure-ad": {
+      "passport": "^0.6.0"
     }
   },
   "publishConfig": {

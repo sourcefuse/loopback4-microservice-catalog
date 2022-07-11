@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.4 (2022-07-11)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
 ## <small>0.4.3 (2022-07-06)</small>
 
 * chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))

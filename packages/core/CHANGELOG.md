@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.1.0 (2022-07-11)
+
+* chore(deps): fix vulnerability (#895) ([53004c0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/53004c0)), closes [#895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(feature-toggle-service): remove everything except controllers (#858) ([f7802fb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7802fb)), closes [#858](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/858) [#843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/843) [#843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/843) [#843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/843)
+
+
+
+
+
 ## <small>7.0.4 (2022-06-30)</small>
 
 * chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)

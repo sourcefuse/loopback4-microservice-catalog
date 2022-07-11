@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.1 (2022-07-11)</small>
+
+* chore(deps): fix vulnerability (#895) ([53004c0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/53004c0)), closes [#895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 0.8.0 (2022-07-06)
 
 * chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))

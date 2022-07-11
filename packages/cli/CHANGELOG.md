@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.2.1 (2022-07-11)</small>
+
+* fix(cli): update versions in template Dependencies (#894) ([898b899](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/898b899)), closes [#894](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/894)
+
+
+
+
+
 ## 2.2.0 (2022-07-06)
 
 * chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))
