@@ -8,7 +8,7 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/payment-service/@loopback/core)
 
-A Loopback Microservice primarily used for user-tenant implementation along with authenticcation service to set the api's for user-tenants.
+A Loopback Microservice primarily used for setting the api's for user-tenants.
 
 ## Prerequiste
 
