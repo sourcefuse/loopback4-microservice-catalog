@@ -58,7 +58,7 @@
     "@loopback/service-proxy": "^5.0.1",
     "@sourceloop/core": "^7.0.2",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "sinon": "^14.0.0",
     "tslib": "^2.0.0"
   },
@@ -76,5 +76,10 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "overrides": {
+    "passport-azure-ad": {
+      "passport": "^0.6.0"
+    }
   }
 }

@@ -69,7 +69,7 @@
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^8.5.1",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-soft-delete": "^5.1.1",
     "nanoid": "^3.1.25",
@@ -92,6 +92,16 @@
     "source-map-support": "^0.5.21",
     "typescript": "~4.7.3",
     "widdershins": "^4.0.1"
+  },
+  "overrides": {
+    "widdershins": {
+      "swagger2openapi": "^7.0.8",
+      "markdown-it": "^12.3.2",
+      "yargs": "^17.4.1"
+    },
+    "passport-azure-ad": {
+      "passport": "^0.6.0"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
