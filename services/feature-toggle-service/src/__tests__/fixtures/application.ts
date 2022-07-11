@@ -16,24 +16,32 @@ import {
 import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
 import {FeatureToggleMockDataSource} from './datasources/feature-toggle-mock.datasource';
+import {MySequence} from './sequence';
 export {ApplicationConfig};
-require('dotenv').config();
-
 export class TestingApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
+    // Set up the custom sequence
+    this.sequence(MySequence);
+
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
 
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
+    // // Customize @loopback/rest-explorer configuration here
+    this.bind(RestExplorerBindings.CONFIG).to({
       path: '/explorer',
     });
+
+    // Customize @loopback/rest-explorer configuration here
+    // this.configure(RestExplorerBindings.COMPONENT).to({
+    //   path: '/explorer',
+    // });
     this.component(RestExplorerComponent);
     this.component(FeatureToggleServiceComponent);
+    this.dataSource(FeatureToggleMockDataSource);
 
     this.component(AuthenticationComponent);
     this.bind(Strategies.Passport.BEARER_TOKEN_VERIFIER).toProvider(
@@ -46,8 +54,6 @@ export class TestingApplication extends BootMixin(
     });
     this.component(AuthorizationComponent);
 
-    this.dataSource(FeatureToggleMockDataSource);
-
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
@@ -55,6 +61,11 @@ export class TestingApplication extends BootMixin(
         // Customize ControllerBooter Conventions here
         dirs: ['controllers'],
         extensions: ['.controller.js'],
+        nested: true,
+      },
+      repositories: {
+        dirs: ['repositories'],
+        extensions: ['.repository.js'],
         nested: true,
       },
     };

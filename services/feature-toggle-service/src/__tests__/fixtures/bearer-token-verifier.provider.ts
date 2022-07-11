@@ -1,4 +1,4 @@
-import {Provider} from '@loopback/context';
+import {Provider} from '@loopback/core';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from '@sourceloop/core';

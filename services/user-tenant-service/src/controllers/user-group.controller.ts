@@ -134,8 +134,7 @@ export class UserGroupController {
     });
     if (!userGroupRecord) {
       userGroupRecord = await this.userGroupService.create(userGroup);
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.groupRepository.updateById(id, {
+      await this.groupRepository.updateById(id, {
         modifiedOn: userGroupRecord.modifiedOn,
       });
     }
@@ -184,9 +183,7 @@ export class UserGroupController {
       }
     }
     await this.userGroupService.updateById(userGroupId, userGroup);
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.groupRepository.updateById(id, {
+    await this.groupRepository.updateById(id, {
       modifiedOn: new Date(),
     });
   }
@@ -258,8 +255,7 @@ export class UserGroupController {
       }
     }
     await this.userGroupService.deleteById(userGroupId);
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.groupRepository.updateById(id, {
+    await this.groupRepository.updateById(id, {
       modifiedOn: new Date(),
     });
   }
