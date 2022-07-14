@@ -34,7 +34,8 @@
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
         "@sourceloop/user-onboarding-example",
-        "@sourceloop/cache-example"
+        "@sourceloop/cache-example",
+        "@sourceloop/user-tenant-example"
       ]
     },
     "version": {
@@ -71,7 +72,8 @@
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
         "@sourceloop/user-onboarding-example",
-        "@sourceloop/cache-example"
+        "@sourceloop/cache-example",
+        "@sourceloop/user-tenant-example"
       ]
     },
     "clean": {
