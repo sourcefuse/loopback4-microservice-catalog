@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {PermissionKey, RoleTypeMap, RoleTypeMapValue} from '../enums';
 import {bind, BindingScope} from '@loopback/core';
 import {Options, repository, Where, WhereBuilder} from '@loopback/repository';

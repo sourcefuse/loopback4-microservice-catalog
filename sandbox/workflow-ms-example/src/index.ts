@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import dotenv from 'dotenv';
 import {ApplicationConfig, WorkflowHelloworldApplication} from './application';
 export * from './application';

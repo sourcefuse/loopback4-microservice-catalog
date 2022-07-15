@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/context';
 import {IWorkflowServiceConfig, WorkerImplementationFn} from '../types';
 import {Client, logger} from 'camunda-external-task-client-js';

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';

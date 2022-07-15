@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 declare module '@loopback/cli/lib/project-generator' {
   import BaseGenerator from '@loopback/cli/lib/base-generator';
   import Generator from 'yeoman-generator';

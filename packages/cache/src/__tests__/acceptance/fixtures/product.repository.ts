@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Constructor, Getter} from '@loopback/core';
 import {DefaultCrudRepository} from '@loopback/repository';
 import {CacheManager} from '../../..';

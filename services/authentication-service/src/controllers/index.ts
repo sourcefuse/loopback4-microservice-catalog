@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AppleLoginController} from '../modules/auth/apple-login.controller';
 import {FacebookLoginController} from '../modules/auth/facebook-login.controller';
 import {GoogleLoginController} from '../modules/auth/google-login.controller';

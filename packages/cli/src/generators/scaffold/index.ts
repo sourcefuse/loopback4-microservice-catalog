@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BaseGenerator} from '../../base-generator';
 import {ScaffoldOptions} from '../../types';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {

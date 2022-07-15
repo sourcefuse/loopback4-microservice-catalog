@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Logger as WinstonLogger} from 'winston';
 import {ILogger} from '../logger.interface';
 import {LogMessage} from '../types';

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {expect, sinon} from '@loopback/testlab';
 import {CacheManager} from '../../mixins/cache.mixin';
 import {CacheStrategyTypes} from '../../strategy-types.enum';

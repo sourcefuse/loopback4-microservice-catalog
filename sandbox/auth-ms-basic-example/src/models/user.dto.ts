@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
 import {Model} from '@loopback/repository-json-schema';
 import {UserStatus} from '@sourceloop/core';

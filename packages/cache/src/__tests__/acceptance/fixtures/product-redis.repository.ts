@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {DefaultKeyValueRepository} from '@loopback/repository';
 import {Product} from './product.model';
 import {RedisDataSource} from './redis.datasource';

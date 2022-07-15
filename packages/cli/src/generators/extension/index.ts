@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AnyObject, ExtensionOptions} from '../../types';
 import BaseExtensionGenerator from '../../extension-generator';
 import {join} from 'path';

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {ApplicationConfig, OcrServiceApplication} from './application';
 export * from './application';
 const PORT = 4000;

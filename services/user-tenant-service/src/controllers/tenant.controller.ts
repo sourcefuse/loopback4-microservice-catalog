@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {PermissionKey, TenantStatus} from '../enums';
 import {inject} from '@loopback/core';
 import {

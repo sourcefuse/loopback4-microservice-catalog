@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IAuthUserWithPermissions, IServiceConfig} from '@sourceloop/core';
 import {Config} from 'loopback4-notifications';
 import {Notification, NotificationUser} from './models';

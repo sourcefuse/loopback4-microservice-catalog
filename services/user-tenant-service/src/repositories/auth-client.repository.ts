@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {AuthClient} from '../models';
 import {UserTenantDataSourceName} from '../keys';

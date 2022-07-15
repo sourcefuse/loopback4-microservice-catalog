@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {SoftDeleteEntity} from 'loopback4-soft-delete';
 import {property} from '@loopback/repository';
 

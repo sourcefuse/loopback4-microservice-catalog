@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {apiHide} from './utility';
 import {inject, injectable} from '@loopback/core';
 import {asSpecEnhancer, OASEnhancer, OpenApiSpec} from '@loopback/rest';

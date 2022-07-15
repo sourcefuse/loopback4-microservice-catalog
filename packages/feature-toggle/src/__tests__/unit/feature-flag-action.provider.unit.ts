@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {FeatureFlagActionProvider} from '../../providers';
 import {FeatureFlagMetadata, IAuthUserWithDisabledFeat} from '../../types';
 import {expect, sinon} from '@loopback/testlab';
