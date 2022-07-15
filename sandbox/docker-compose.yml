@@ -223,6 +223,24 @@ x-cache-variables: &cache-variables
   REDIS_PASSWORD:
   REDIS_DB: 0
 
+x-user-tenant-variables: &user-tenant-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: authentication_db
+  DB_SCHEMA: main
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_URL:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+  USER_TEMP_PASSWORD: tempP@ssw0rd
+
 services:
   chat-notification-pubnub-example:
     image: ${REGISTRY:-localhost:32000}/chat-notification-pubnub-example
@@ -651,6 +669,21 @@ services:
       - postgres_orchestrator
     networks:
       - sandbox
+    restart: on-failure
+
+  user-tenant-example:
+    image: ${REGISTRY:-localhost:32000}/user-tenant-example
+    build:
+      context: ./user-tenant-example
+      dockerfile: Dockerfile
+    ports:
+      - '3043:3000'
+    networks:
+      - sandbox
+    environment: *user-tenant-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
     restart: on-failure
 
   redis:

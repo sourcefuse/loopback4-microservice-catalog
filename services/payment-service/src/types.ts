@@ -1,9 +1,11 @@
 /**
  * Interface defining the component's options object
  */
+// sonarignore:start
 export interface PaymentServiceComponentOptions {
   // Add the definitions here
 }
+// sonarignore:end
 
 /**
  * Default options for the component

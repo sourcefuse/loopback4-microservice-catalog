@@ -22,28 +22,19 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {StrategyBindings, FeatureToggleBindings} from './keys';
+import {FeatureToggleBindings} from './keys';
 import {Feature, FeatureToggle, Strategy} from './models';
 import {
   FeatureRepository,
   FeatureToggleRepository,
   StrategyRepository,
 } from './repositories';
-import {
-  FeatureFlagActionProvider,
-  FeatureFlagMetadataProvider,
-  SystemStrategyProvider,
-  TenantStrategyProvider,
-  UserStrategyProvider,
-} from './providers';
 import {IToggleServiceConfig} from './types';
 import {
   FeatureController,
   FeatureToggleController,
   StrategyController,
 } from './controllers';
-import {FeatureToggleActionMiddlewareInterceptor} from './middlewares';
-import {StrategyHelperService} from './services';
 
 export class FeatureToggleServiceComponent implements Component {
   constructor(
@@ -70,7 +61,6 @@ export class FeatureToggleServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    this.application.middleware(FeatureToggleActionMiddlewareInterceptor);
     // Mount default sequence if needed
     if (!this.config?.useCustomSequence) {
       // Mount default sequence if needed
@@ -81,25 +71,13 @@ export class FeatureToggleServiceComponent implements Component {
       FeatureToggleRepository,
       StrategyRepository,
     ];
-    this.application
-      .bind('services.StrategyHelperService')
-      .toClass(StrategyHelperService);
     this.models = [Feature, FeatureToggle, Strategy];
-    this.providers = {
-      [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
-      [StrategyBindings.METADATA.key]: FeatureFlagMetadataProvider,
-      [StrategyBindings.TENANT_STRATEGY.key]: TenantStrategyProvider,
-      [StrategyBindings.USER_STRATEGY.key]: UserStrategyProvider,
-      [StrategyBindings.SYSTEM_STRATEGY.key]: SystemStrategyProvider,
-    };
 
-    if (this.config?.bindControllers) {
-      this.controllers = [
-        FeatureController,
-        FeatureToggleController,
-        StrategyController,
-      ];
-    }
+    this.controllers = [
+      FeatureController,
+      FeatureToggleController,
+      StrategyController,
+    ];
   }
   providers?: ProviderMap = {};
 

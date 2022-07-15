@@ -33,5 +33,9 @@
 	"PasswordCannotBeChangedForExternalUser": "PasswordCannotBeChangedForExternalUser",
 	"Password cannot be same as previous password!": "Password cannot be same as previous password!",
 	"[{\"instancePath\"": "\"/valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"}]",
-	"Feature is disabled": "Feature is disabled"
+	"Feature is disabled": "Feature is disabled",
+	"API not found !": "API not found !",
+	"Invalid data \"{where": "{\\n        \\\"id\\\":\\\"feature_1\\\"\\n      }}\" for parameter \"filter\".",
+	"Cannot set properties of undefined (setting 'modifiedBy')": "Cannot set properties of undefined (setting 'modifiedBy')",
+	"Entity not found": " strategies with id \"feature_2\""
 }

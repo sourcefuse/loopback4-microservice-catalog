@@ -65,7 +65,7 @@ export class CacheManager {
           finalResult = await super.findById(id, filter, options);
           this.strategy
             .saveInCache(key, finalResult, cacheOptions)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err)); //NOSONAR
         } else {
           const result = (await this.strategy.searchInCache(
             key,
@@ -77,7 +77,7 @@ export class CacheManager {
             finalResult = await super.findById(id, filter, options);
             this.strategy
               .saveInCache(key, finalResult, cacheOptions)
-              .catch(err => console.error(err));
+              .catch(err => console.error(err)); //NOSONAR
           }
         }
 
@@ -97,7 +97,7 @@ export class CacheManager {
           finalResult = await super.find(filter, options);
           this.strategy
             .saveInCache(key, finalResult, cacheOptions)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err)); //NOSONAR
         } else {
           const result = (await this.strategy.searchInCache(
             key,
@@ -109,7 +109,7 @@ export class CacheManager {
             finalResult = await super.find(filter, options);
             this.strategy
               .saveInCache(key, finalResult, cacheOptions)
-              .catch(err => console.error(err));
+              .catch(err => console.error(err)); //NOSONAR
           }
         }
 
