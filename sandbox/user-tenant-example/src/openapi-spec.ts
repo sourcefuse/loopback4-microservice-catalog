@@ -1,0 +1,25 @@
+import {ApplicationConfig} from '@loopback/core';
+import {UserTenantApplication} from './application';
+
+/**
+ * Export the OpenAPI spec from the application
+ */
+const port = 3000;
+const processArgKey = 2;
+async function exportOpenApiSpec(): Promise<void> {
+  const config: ApplicationConfig = {
+    rest: {
+      port: +(process.env.PORT ?? port),
+      host: process.env.HOST ?? 'localhost',
+    },
+  };
+  const outFile = process.argv[processArgKey] ?? '';
+  const app = new UserTenantApplication(config);
+  await app.boot();
+  await app.exportOpenApiSpec(outFile);
+}
+
+exportOpenApiSpec().catch(err => {
+  console.error('Fail to export OpenAPI spec from the application.', err);// NOSONAR
+  process.exit(1);
+});
