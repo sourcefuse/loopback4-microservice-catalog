@@ -11,3 +11,4 @@ export namespace UserTenantServiceComponentBindings {
 }
 
 export const UserTenantDataSourceName = 'AuthDB';
+export const UserTenantCacheSourceName = 'AuthCache';
