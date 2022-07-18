@@ -4,9 +4,12 @@ import {TourServiceService} from './tour-service.service';
 import {TourStoreServiceService} from './tour-store-service.service';
 import {filterFn, newTour} from '../mocks/tourStore.mocks';
 import {of} from 'rxjs';
+import {Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
 describe('TourServiceService', () => {
   let service: TourStoreServiceService;
   let tourService: TourServiceService;
+  let router: Router;
   const valueServiceSpy = jasmine.createSpyObj('TourStoreService', [
     'loadTour',
     'getSessionId',
@@ -14,7 +17,7 @@ describe('TourServiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         TourServiceService,
         TourStoreServiceService,

@@ -1,5 +1,5 @@
 import {TourStep} from '../models';
-export let tourSteps: TourStep[] = [
+export const tourSteps: TourStep[] = [
   {
     id: '1',
     prevStepId: '1',
@@ -27,11 +27,6 @@ export let tourSteps: TourStep[] = [
     prevRoute: '/',
     cancelIcon: {
       enabled: false,
-    },
-    modalOverlayOpeningRadius: 4,
-    arrow: false,
-    popperOptions: {
-      modifiers: [{name: 'offset', options: {offset: [0, 4]}}],
     },
   },
 ];
