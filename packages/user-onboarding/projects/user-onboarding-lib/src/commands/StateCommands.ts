@@ -24,6 +24,7 @@ export class SaveSCommand implements SaveStateCommand {
     return of(newTourState);
   }
 }
+
 export class LoadSCommand implements LoadStateCommand {
   constructor(private readonly storage: StorageService) {}
   public parameters: LoadStateParameters;

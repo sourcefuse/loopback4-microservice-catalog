@@ -51,7 +51,6 @@ export class TourStoreServiceService {
   private readonly defaultDSCommand = new DeleteSCommand(this.storage);
   private readonly defaultDTCommand = new DeleteTCommand(this.storage);
   private sessionGenerator: () => string = () => uuidv4();
-
   constructor(@Inject(LOCAL_STORAGE) private readonly storage: StorageService) {
     this.commandMap.set('SaveTourCommand', this.defaultSTCommand);
     this.commandMap.set('LoadTourCommand', this.defaultLTCommand);
@@ -82,6 +81,7 @@ export class TourStoreServiceService {
   public saveTour(parameters: SaveTourParameters): Observable<Tour> {
     const command = this.commandMap.get('SaveTourCommand') as SaveTourCommand;
     command.parameters = parameters;
+
     return command.execute();
   }
 
