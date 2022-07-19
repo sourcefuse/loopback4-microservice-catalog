@@ -1,7 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {AnyObject, juggler} from '@loopback/repository';
 import {readFileSync} from 'fs';
-
 <% if (project.serviceDependency && project.baseServiceCacheName) { -%>
 import {<%= project.baseServiceCacheName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } else if (project.facade) { -%>
