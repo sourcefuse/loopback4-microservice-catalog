@@ -234,11 +234,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ...this.options,
         ...answers,
       };
-
-      // this.projectInfo.datasourceName = this.options.datasourceName;
-      // this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
-      //   this.options.datasourceName,
-      // );
       this.projectInfo.datasourceConnector =
         DATASOURCE_CONNECTORS[
           this.options.datasourceType ?? DATASOURCES.POSTGRES
