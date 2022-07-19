@@ -319,53 +319,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   writing() {
     if (!this.shouldExit()) {
       if (this.options.baseService || this.options.datasourceName) {
-        const baseServiceDSList = this._setDataSourceName();
-        if (this.options.datasourceName) {
-          baseServiceDSList?.push({
-            type: 'store',
-            name: this.options.datasourceName,
-            fileName: this.options.datasourceName,
-            isNotBase: true,
-          });
-        }
-        baseServiceDSList.forEach(ds => {
-          if (ds.type === 'store') {
-            if (!ds.isNotBase) this.projectInfo.baseServiceStoreName = ds.name;
-            this.projectInfo.datasourceName = ds.fileName;
-            this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
-              ds.fileName,
-            );
-            this.fs.copyTpl(
-              this.templatePath(DATASOURCE_TEMPLATE),
-              this.destinationPath(
-                join('src', 'datasources', `${ds.fileName}.datasource.ts`),
-              ),
-              {
-                project: this.projectInfo,
-              },
-            );
-            this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
-          } else {
-            this.projectInfo.baseServiceCacheName = ds.name;
-            this.fs.copyTpl(
-              this.templatePath(REDIS_DATASOURCE),
-              this.destinationPath(
-                join('src', 'datasources', `${ds.fileName}.datasource.ts`),
-              ),
-              {
-                project: this.projectInfo,
-              },
-            );
-          }
-        });
-
-        this.fs.copyTpl(
-          this.templatePath(DATASOURCE_INDEX),
-          this.destinationPath(join('src', 'datasources', `index.ts`)),
-          {
-            nameArr: baseServiceDSList,
-          },
-        );
+        this._createDataSource();
       } else {
         this._createFacadeRedisDatasource();
       }
@@ -438,6 +392,56 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (this.options.baseService) {
       return BASESERVICEDSLIST[this.options.baseService];
     } else return [];
+  }
+
+  private _createDataSource() {
+    const baseServiceDSList = this._setDataSourceName();
+    if (this.options.datasourceName) {
+      baseServiceDSList?.push({
+        type: 'store',
+        name: this.options.datasourceName,
+        fileName: this.options.datasourceName,
+        isNotBase: true,
+      });
+    }
+    baseServiceDSList.forEach(ds => {
+      if (ds.type === 'store') {
+        if (!ds.isNotBase) this.projectInfo.baseServiceStoreName = ds.name;
+        this.projectInfo.datasourceName = ds.fileName;
+        this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
+          ds.fileName,
+        );
+        this.fs.copyTpl(
+          this.templatePath(DATASOURCE_TEMPLATE),
+          this.destinationPath(
+            join('src', 'datasources', `${ds.fileName}.datasource.ts`),
+          ),
+          {
+            project: this.projectInfo,
+          },
+        );
+        this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
+      } else {
+        this.projectInfo.baseServiceCacheName = ds.name;
+        this.fs.copyTpl(
+          this.templatePath(REDIS_DATASOURCE),
+          this.destinationPath(
+            join('src', 'datasources', `${ds.fileName}.datasource.ts`),
+          ),
+          {
+            project: this.projectInfo,
+          },
+        );
+      }
+    });
+
+    this.fs.copyTpl(
+      this.templatePath(DATASOURCE_INDEX),
+      this.destinationPath(join('src', 'datasources', `index.ts`)),
+      {
+        nameArr: baseServiceDSList,
+      },
+    );
   }
 
   private _createFacadeRedisDatasource() {
