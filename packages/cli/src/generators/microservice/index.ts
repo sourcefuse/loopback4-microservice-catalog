@@ -410,8 +410,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       '[',
       czConfig.lastIndexOf('scopes'),
     );
-    const firstPart = czConfig.slice(0, lastScopeIndex + 2);
-    const secPart = czConfig.slice(lastScopeIndex + 2);
+    const offset = 2;
+    const firstPart = czConfig.slice(0, lastScopeIndex + offset);
+    const secPart = czConfig.slice(lastScopeIndex + offset);
     const suffix = this.options.facade ? 'facade' : 'service';
 
     const stringToAdd =
