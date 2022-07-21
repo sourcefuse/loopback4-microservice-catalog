@@ -190,12 +190,24 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       const prompts = [];
 
       if (!this.options.datasourceName) {
-        prompts.push({
-          type: 'input',
-          name: 'datasourceName',
-          message: 'Datasource name: ',
-          default: 'db',
-        });
+        const {extraDataSource} = await this.prompt([
+          {
+            type: 'confirm',
+            name: 'extraDataSource',
+            message:
+              'Do you want to add additional datasource apart from the one in base service',
+            default: false,
+          },
+        ]);
+
+        if (extraDataSource) {
+          prompts.push({
+            type: 'input',
+            name: 'datasourceName',
+            message: 'Datasource name: ',
+            default: 'db',
+          });
+        }
       }
 
       if (!this.options.datasourceType) {
@@ -222,11 +234,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ...this.options,
         ...answers,
       };
-
-      this.projectInfo.datasourceName = this.options.datasourceName;
-      this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
-        this.options.datasourceName,
-      );
       this.projectInfo.datasourceConnector =
         DATASOURCE_CONNECTORS[
           this.options.datasourceType ?? DATASOURCES.POSTGRES
@@ -283,6 +290,20 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   scaffold() {
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
+      if (type === 'services') {
+        const baseServiceDSList = this._setDataSourceName();
+        this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
+          ds => ds.type === 'store',
+        );
+
+        const redisDsPresent = baseServiceDSList.filter(
+          ds => ds.type === 'cache',
+        );
+
+        this.projectInfo.baseServiceCacheName = redisDsPresent.length
+          ? 'redis'
+          : undefined;
+      }
       this.destinationRoot(join(type, this.options.name ?? DEFAULT_NAME));
       this.projectInfo.dependencies = appendDependencies(
         this.projectInfo.dependencies,
@@ -297,43 +318,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   writing() {
     if (!this.shouldExit()) {
-      if (this.options.datasourceName) {
-        const nameArr = [this.options.datasourceName];
-
-        this._setDataSourceName();
-
-        this.fs.copyTpl(
-          this.templatePath(DATASOURCE_TEMPLATE),
-          this.destinationPath(
-            join(
-              'src',
-              'datasources',
-              `${this.options.datasourceName}.datasource.ts`,
-            ),
-          ),
-          {
-            project: this.projectInfo,
-          },
-        );
-        if (this.projectInfo.baseServiceCacheName) {
-          this.fs.copyTpl(
-            this.templatePath(REDIS_DATASOURCE),
-            this.destinationPath(
-              join('src', 'datasources', 'redis.datasource.ts'),
-            ),
-            {
-              project: this.projectInfo,
-            },
-          );
-          nameArr.push('redis');
-        }
-        this.fs.copyTpl(
-          this.templatePath(DATASOURCE_INDEX),
-          this.destinationPath(join('src', 'datasources', `index.ts`)),
-          {
-            nameArr: nameArr,
-          },
-        );
+      if (this.options.baseService || this.options.datasourceName) {
+        this._createDataSource();
       } else {
         this._createFacadeRedisDatasource();
       }
@@ -426,16 +412,59 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   private _setDataSourceName() {
-    if (this.options.datasourceName && this.options.baseService) {
-      const datasourceList = BASESERVICEDSLIST[this.options.baseService];
-      datasourceList.forEach(ds => {
-        if (ds.type === 'store') {
-          this.projectInfo.baseServiceStoreName = ds.name;
-        } else {
-          this.projectInfo.baseServiceCacheName = ds.name;
-        }
+    if (this.options.baseService) {
+      return BASESERVICEDSLIST[this.options.baseService];
+    } else return [];
+  }
+
+  private _createDataSource() {
+    const baseServiceDSList = this._setDataSourceName();
+    if (this.options.datasourceName) {
+      baseServiceDSList?.push({
+        type: 'store',
+        name: this.options.datasourceName,
+        fileName: this.options.datasourceName,
+        isNotBase: true,
       });
     }
+    baseServiceDSList.forEach(ds => {
+      if (ds.type === 'store') {
+        if (!ds.isNotBase) this.projectInfo.baseServiceStoreName = ds.name;
+        this.projectInfo.datasourceName = ds.fileName;
+        this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
+          ds.fileName,
+        );
+        this.fs.copyTpl(
+          this.templatePath(DATASOURCE_TEMPLATE),
+          this.destinationPath(
+            join('src', 'datasources', `${ds.fileName}.datasource.ts`),
+          ),
+          {
+            project: this.projectInfo,
+          },
+        );
+        this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
+      } else {
+        this.projectInfo.baseServiceCacheName = ds.name;
+        this.fs.copyTpl(
+          this.templatePath(REDIS_DATASOURCE),
+          this.destinationPath(
+            join('src', 'datasources', `${ds.fileName}.datasource.ts`),
+          ),
+          {
+            project: this.projectInfo,
+          },
+        );
+      }
+    });
+
+    this.fs.copyTpl(
+      this.templatePath(DATASOURCE_INDEX),
+      this.destinationPath(join('src', 'datasources', `index.ts`)),
+      {
+        nameArr: baseServiceDSList,
+      },
+    );
   }
 
   private _createFacadeRedisDatasource() {

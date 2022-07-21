@@ -19,7 +19,15 @@ export async function setupApplication(): Promise<AppWithClient> {
     rest: restConfig,
   });
 
-  <% if (project.facade) { -%>
+  <% for(let i=0; i< project.baseServiceDSList.length; i++) {-%>
+    app.bind('datasources.config.<%= project.baseServiceDSList[i].fileName %>').to({
+      name: '<%= project.baseServiceDSList[i].fileName %>',
+      connector: 'memory',
+    });
+    <% } -%>
+
+
+  <% if (project.facade || project.baseServiceCacheName) { -%>
     app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
       name: process.env.REDIS_NAME,
       connector: 'kv-memory',
@@ -38,7 +46,7 @@ function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
-  <% if (project.facade) { -%>
+  <% if (project.facade || project.baseServiceCacheName) { -%>
   process.env.REDIS_NAME = 'redis';
   <% } -%>
 }
