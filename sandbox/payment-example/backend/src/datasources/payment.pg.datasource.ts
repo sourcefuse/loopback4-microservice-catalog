@@ -19,7 +19,7 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class InMailDbDataSource
+export class PaymentDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
