@@ -388,6 +388,29 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
+  addScope() {
+    let czConfig = this.fs.read(
+      join(this.destinationPath(), '../../', '.cz-config.js'),
+    );
+    const lastScopeIndex = czConfig.indexOf(
+      '[',
+      czConfig.lastIndexOf('scopes'),
+    );
+    const offset = 2;
+    const firstPart = czConfig.slice(0, lastScopeIndex + offset);
+    const secPart = czConfig.slice(lastScopeIndex + offset);
+    const suffix = this.options.facade ? 'facade' : 'service';
+
+    const stringToAdd =
+      `{name: \'${this.options.name}` + '-' + `${suffix}\'}, \n`;
+
+    czConfig = firstPart + stringToAdd + secPart;
+    this.fs.write(
+      join(this.destinationPath(), '../../', '.cz-config.js'),
+      czConfig,
+    );
+  }
+
   private _setDataSourceName() {
     if (this.options.baseService) {
       return BASESERVICEDSLIST[this.options.baseService];
