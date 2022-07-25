@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="256px" preserveAspectRatio="none" style="width:250px;height:256px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 256" width="250px" zoomAndPan="magnify"><defs><filter height="300%" id="fnx2g4bsuiksq" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[3c72c9293e3ad510ebfcc470a9a33d06]
+class EmailToInput--><rect codeLine="3" fill="#FEFECE" filter="url(#fnx2g4bsuiksq)" height="151.6406" id="EmailToInput" style="stroke:#A80036;stroke-width:1.5;" width="229" x="7" y="91"/><ellipse cx="79.75" cy="107" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M82.2231,113.1431 Q81.6421,113.4419 81.0029,113.5913 Q80.3638,113.7407 79.6582,113.7407 Q77.1514,113.7407 75.8315,112.0889 Q74.5117,110.437 74.5117,107.3159 Q74.5117,104.1865 75.8315,102.5347 Q77.1514,100.8828 79.6582,100.8828 Q80.3638,100.8828 81.0112,101.0322 Q81.6587,101.1816 82.2231,101.4805 L82.2231,104.2031 Q81.5923,103.6221 80.9988,103.3523 Q80.4053,103.0825 79.7744,103.0825 Q78.4297,103.0825 77.7449,104.1492 Q77.0601,105.2158 77.0601,107.3159 Q77.0601,109.4077 77.7449,110.4744 Q78.4297,111.541 79.7744,111.541 Q80.4053,111.541 80.9988,111.2712 Q81.5923,111.0015 82.2231,110.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="75" x="100.25" y="111.5352">EmailToInput</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="235" y1="123" y2="123"/><ellipse cx="18" cy="134" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="27" y="137.6348">inputKey : string</text><ellipse cx="18" cy="146.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="104" x="27" y="150.5898">placeholder : string</text><ellipse cx="18" cy="159.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="73" x="27" y="163.5449">prefix : string</text><ellipse cx="18" cy="172.8652" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="117" x="27" y="176.5">prevchange : function</text><ellipse cx="18" cy="185.8203" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="72" x="27" y="189.4551">suffix : string</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="235" y1="195.7754" y2="195.7754"/><ellipse cx="18" cy="206.7754" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="46" x="27" y="210.4102">getValue</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="line-through" textLength="62" x="73" y="210.4102">(state: State</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="line-through" textLength="65" x="135" y="210.4102">) : S[keyof S]</text><ellipse cx="18" cy="219.7305" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="76" x="27" y="223.3652">getValueName</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="line-through" textLength="62" x="103" y="223.3652">(state: State</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="line-through" textLength="65" x="165" y="223.3652">) : S[keyof S]</text><ellipse cx="18" cy="232.6855" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="147" x="27" y="236.3203">typeFunction() : InputTypes</text><!--MD5=[9b76d782fd53f1d7bffc4c9bacc4a440]
+class WorkflowPrompt--><rect codeLine="13" fill="#FEFECE" filter="url(#fnx2g4bsuiksq)" height="24.1328" id="WorkflowPrompt" style="stroke:#A80036;stroke-width:1.5;" width="100" x="71.5" y="7"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="94" x="74.5" y="23.6016">WorkflowPrompt</text><!--MD5=[bbbdb42bb470f3a8759ad9b20ea4ebd5]
+reverse link WorkflowPrompt to EmailToInput--><path codeLine="15" d="M121.5,51.78 C121.5,63.41 121.5,77.12 121.5,90.92 " fill="none" id="WorkflowPrompt-backto-EmailToInput" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="114.5,51.46,121.5,31.46,128.5,51.46,114.5,51.46" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[4815bb062107767295d8fc5050327f20]
+@startuml
+hide empty methods
+hide empty fields
+class "EmailToInput" {
+    +inputKey : string
+    +placeholder : string
+    +prefix : string
+    +prevchange : function
+    +suffix : string
+    +getValue<S>(state: State<S>) : S[keyof S]
+    +getValueName<S>(state: State<S>) : S[keyof S]
+    +typeFunction() : InputTypes
+}
+class "WorkflowPrompt"
+hide "WorkflowPrompt" circle
+"WorkflowPrompt" <|- - "EmailToInput"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 22:16:50 IST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: IN
+--></g></svg>

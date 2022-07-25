@@ -2,6 +2,7 @@ import {State, WorkflowPrompt} from '../../../classes';
 import {InputTypes} from '../../../enum';
 import {RecordOfAnyType} from '../../../types';
 
+/* `ColumnInput` is a `WorkflowPrompt` that prompts the user to select a condition from a list of condition */
 export class ConditionInput extends WorkflowPrompt {
   prefix = 'is';
   suffix = {

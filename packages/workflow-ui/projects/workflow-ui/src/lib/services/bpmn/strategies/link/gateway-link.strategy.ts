@@ -20,6 +20,13 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     @Inject(CONDITION_LIST)
     private readonly conditions: Array<ConditionOperatorPair>,
   ) {}
+  /**
+   * It creates a link between the current node and the next node, and then creates a link between the
+   * current node and the end node
+   * @param element - The element that is being converted.
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns An array of ModdleElements.
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,

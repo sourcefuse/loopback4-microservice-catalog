@@ -15,6 +15,13 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
   ) {}
+  /**
+   * It creates a new BPMN element, sets the id, and sets the outgoing flow
+   * @param element - WorkflowElement<ModdleElement>
+   * @param {BpmnStatementNode} node - BpmnStatementNode - this is the node that is being processed.
+   * @param {RecordOfAnyType} attrs - RecordOfAnyType
+   * @returns A ModdleElement
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
@@ -24,8 +31,8 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
     node.outgoing = `Flow_${this.utils.uuid()}`;
     return this.moddle.create(element.tag, {
       id: element.id,
-      name: 'Gateway',
       ...attrs,
+      name: 'Gateway',
     });
   }
 }

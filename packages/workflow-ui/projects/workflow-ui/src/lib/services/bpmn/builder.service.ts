@@ -38,6 +38,12 @@ export class BpmnBuilderService extends BuilderService<
     super();
   }
 
+  /**
+   * It takes a statement, creates a process element, adds the start and end elements, and then iterates
+   * through the statement, creating each element and linking them together
+   * @param statement - Statement<ModdleElement>
+   * @returns The XML of the process
+   */
   async build(statement: Statement<ModdleElement>) {
     const result = await this.moddle.fromXML(this.baseXML);
     this.root = result.rootElement;
@@ -81,6 +87,11 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * It takes an XML string, converts it to a moddle element, and then extracts the process, actions,
+   * events, and state from the moddle element
+   * @param {string} xml - The XML string that you want to restore.
+   */
   async restore(xml: string) {
     const result = await this.moddle.fromXML(xml);
     this.root = result.rootElement;

@@ -1,6 +1,7 @@
 import {WorkflowPrompt} from '../../../classes';
 import {InputTypes} from '../../../enum';
 
+/* `ColumnInput` is a `WorkflowPrompt` that prompts the user to input the `to` field of an email */
 export class EmailToInput extends WorkflowPrompt {
   prefix = 'to';
   suffix = '';
@@ -9,6 +10,7 @@ export class EmailToInput extends WorkflowPrompt {
   placeholder = 'Email Address';
 }
 
+/* `ColumnInput` is a `WorkflowPrompt` that prompts the user to input the `subject` field of an email */
 export class EmailSubjectInput extends WorkflowPrompt {
   prefix = 'with subject: ';
   suffix = 'and';
@@ -17,6 +19,7 @@ export class EmailSubjectInput extends WorkflowPrompt {
   placeholder = 'Subject';
 }
 
+/* `ColumnInput` is a `WorkflowPrompt` that prompts the user to input the `body` field of an email */
 export class EmailBodyInput extends WorkflowPrompt {
   prefix = 'with body: ';
   suffix = '';

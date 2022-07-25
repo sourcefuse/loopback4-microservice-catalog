@@ -23,6 +23,14 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
   ) {}
+  /**
+   * It creates a BPMN element, sets its ID, and adds inputs and outputs to it
+   * @param {BpmnElement} element - BpmnElement,
+   * @param {BpmnStatementNode} node - BpmnStatementNode - the node that is being executed
+   * @param {RecordOfAnyType} attrs - RecordOfAnyType - This is a record of any type. It's used to pass
+   * in any custom attributes that you want to add to the element.
+   * @returns A BPMN element
+   */
   execute(
     element: BpmnElement,
     node: BpmnStatementNode,

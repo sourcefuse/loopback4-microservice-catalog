@@ -1,0 +1,1083 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>BuilderComponent | @sourceloop/workflow-ui</title>
+	<meta name="description" content="Documentation for @sourceloop/workflow-ui">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@sourceloop/workflow-ui</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@sourceloop/workflow-ui</a>
+				</li>
+				<li>
+					<a href="BuilderComponent.html">BuilderComponent</a>
+				</li>
+			</ul>
+			<h1>Class BuilderComponent&lt;E&gt;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>E</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy-diagram">
+                <h3>Hierarchy-Diagram</h3>
+                <a class="diagram" href="../assets/images/BuilderComponent-umlClassDiagram-1143.svg" title="Click to enlarge">
+                    <img src="../assets/images/BuilderComponent-umlClassDiagram-1143.svg"
+                            alt="UML class diagram of BuilderComponent" />
+                </a>
+                <h4>Legend</h4>
+                      <div class="legend"><div>
+                           <span class="dt"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHpvb21BbmRQYW49Im1hZ25pZnkiIHdpZHRoPSIyM3B4IiBoZWlnaHQ9IjIzcHgiIHN0eWxlPSJ3aWR0aDoyM3B4O2hlaWdodDoyM3B4OyIgdmlld0JveD0iMCAwIDIzIDIzIj4NCjxnPg0KPGVsbGlwc2UgY3g9IjExLjUiIGN5PSIxMS41IiByeD0iMTEiIHJ5PSIxMSIgZmlsbD0iI0FERDFCMiIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+DQo8dGV4dCB4PSI3IiB5PSIxMS41IiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9IkNvdXJpZXIiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIj5DPC90ZXh0Pg0KPC9nPg0KPC9zdmc+" alt="icon for a class in the UML class diagram" /></span>
+                           <span class="dd">class</span>
+                       </div><div>
+                               <span class="dt"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHpvb21BbmRQYW49Im1hZ25pZnkiIHdpZHRoPSI3cHgiIGhlaWdodD0iN3B4IiBzdHlsZT0id2lkdGg6N3B4O2hlaWdodDo3cHg7IiB2aWV3Qm94PSIwIDAgNyA3Ij4NCjxnPg0KPGVsbGlwc2UgY3g9IjMuNSIgY3k9IjMuNSIgcng9IjMiIHJ5PSIzIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz4NCjwvZz4NCjwvc3ZnPg==" alt="icon for a public property in the UML class diagram" /></span>
+                               <span class="dd">public property</span>
+                           </div><div>
+                               <span class="dt"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHpvb21BbmRQYW49Im1hZ25pZnkiIHdpZHRoPSI3cHgiIGhlaWdodD0iN3B4IiBzdHlsZT0id2lkdGg6N3B4O2hlaWdodDo3cHg7IiB2aWV3Qm94PSIwIDAgNyA3Ij4NCjxnPg0KPGVsbGlwc2UgY3g9IjMuNSIgY3k9IjMuNSIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODRCRTg0IiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz4NCjwvZz4NCjwvc3ZnPg==" alt="icon for a public method in the UML class diagram" /></span>
+                               <span class="dd">public method</span>
+                           </div><div>
+                               <span class="dt"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHpvb21BbmRQYW49Im1hZ25pZnkiIHdpZHRoPSI3cHgiIGhlaWdodD0iN3B4IiBzdHlsZT0id2lkdGg6N3B4O2hlaWdodDo3cHg7IiB2aWV3Qm94PSIwIDAgNyA3Ij4NCjxnPg0KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSI2IiBoZWlnaHQ9IjYiIGZpbGw9IiNGMjRENUMiIHN0eWxlPSJzdHJva2U6ICNDODI5MzA7IHN0cm9rZS13aWR0aDogMS4wOyIvPg0KPC9nPg0KPC9zdmc+" alt="icon for a private method in the UML class diagram" /></span>
+                               <span class="dd">private method</span>
+                           </div></div>
+            </section>
+<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">BuilderComponent</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">OnInit</span></li>
+					<li><span class="tsd-signature-type">OnChanges</span></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter"><a href="BuilderComponent.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#actionAdded" class="tsd-kind-icon">action<wbr>Added</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#actions" class="tsd-kind-icon">actions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#diagram" class="tsd-kind-icon">diagram</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#diagramChange" class="tsd-kind-icon">diagram<wbr>Change</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#eventAdded" class="tsd-kind-icon">event<wbr>Added</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#events" class="tsd-kind-icon">events</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#itemChanged" class="tsd-kind-icon">item<wbr>Changed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#listTemplate" class="tsd-kind-icon">list<wbr>Template</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#nodeList" class="tsd-kind-icon">node<wbr>List</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#nodePopup" class="tsd-kind-icon">node<wbr>Popup</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#numberTemplate" class="tsd-kind-icon">number<wbr>Template</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#processId" class="tsd-kind-icon">process<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#selectedActions" class="tsd-kind-icon">selected<wbr>Actions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#selectedEvents" class="tsd-kind-icon">selected<wbr>Events</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#state" class="tsd-kind-icon">state</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#stateChange" class="tsd-kind-icon">state<wbr>Change</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#templateMap" class="tsd-kind-icon">template<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#textTemplate" class="tsd-kind-icon">text<wbr>Template</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#triggerEvents" class="tsd-kind-icon">trigger<wbr>Events</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="BuilderComponent.html#types" class="tsd-kind-icon">types</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#addValue" class="tsd-kind-icon">add<wbr>Value</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#build" class="tsd-kind-icon">build</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#createCallback" class="tsd-kind-icon">create<wbr>Callback</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#getInputValue" class="tsd-kind-icon">get<wbr>Input<wbr>Value</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="BuilderComponent.html#handleSubsequentInputs" class="tsd-kind-icon">handle<wbr>Subsequent<wbr>Inputs</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private"><a href="BuilderComponent.html#mergeState" class="tsd-kind-icon">merge<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#ngAfterViewInit" class="tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#ngOnChanges" class="tsd-kind-icon">ng<wbr>OnChanges</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#ngOnInit" class="tsd-kind-icon">ng<wbr>OnInit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#onNodeAdd" class="tsd-kind-icon">on<wbr>Node<wbr>Add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#onNodeRemove" class="tsd-kind-icon">on<wbr>Node<wbr>Remove</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#openPopup" class="tsd-kind-icon">open<wbr>Popup</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="BuilderComponent.html#restoreState" class="tsd-kind-icon">restore<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#updateDiagram" class="tsd-kind-icon">update<wbr>Diagram</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="BuilderComponent.html#updateState" class="tsd-kind-icon">update<wbr>State</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Builder<wbr>Component&lt;E&gt;<span class="tsd-signature-symbol">(</span>builder<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BuilderService</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span>, nodes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeService</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, elements<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ElementService</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="BuilderComponent.html" class="tsd-signature-type" data-tsd-kind="Class">BuilderComponent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L42">projects/workflow-ui/src/lib/builder/builder.component.ts:42</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>E</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>builder: <span class="tsd-signature-type">BuilderService</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>nodes: <span class="tsd-signature-type">NodeService</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>elements: <span class="tsd-signature-type">ElementService</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="BuilderComponent.html" class="tsd-signature-type" data-tsd-kind="Class">BuilderComponent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="actionAdded" class="tsd-anchor"></a>
+					<h3>action<wbr>Added</h3>
+					<div class="tsd-signature tsd-kind-icon">action<wbr>Added<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#ActionAddition" class="tsd-signature-type" data-tsd-kind="Type alias">ActionAddition</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L76">projects/workflow-ui/src/lib/builder/builder.component.ts:76</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="actions" class="tsd-anchor"></a>
+					<h3>actions</h3>
+					<div class="tsd-signature tsd-kind-icon">actions<span class="tsd-signature-symbol">:</span> <a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L95">projects/workflow-ui/src/lib/builder/builder.component.ts:95</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="diagram" class="tsd-anchor"></a>
+					<h3>diagram</h3>
+					<div class="tsd-signature tsd-kind-icon">diagram<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x27;&#x27;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L58">projects/workflow-ui/src/lib/builder/builder.component.ts:58</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="diagramChange" class="tsd-anchor"></a>
+					<h3>diagram<wbr>Change</h3>
+					<div class="tsd-signature tsd-kind-icon">diagram<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L70">projects/workflow-ui/src/lib/builder/builder.component.ts:70</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="eventAdded" class="tsd-anchor"></a>
+					<h3>event<wbr>Added</h3>
+					<div class="tsd-signature tsd-kind-icon">event<wbr>Added<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#EventAddition" class="tsd-signature-type" data-tsd-kind="Type alias">EventAddition</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L73">projects/workflow-ui/src/lib/builder/builder.component.ts:73</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="events" class="tsd-anchor"></a>
+					<h3>events</h3>
+					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L93">projects/workflow-ui/src/lib/builder/builder.component.ts:93</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="itemChanged" class="tsd-anchor"></a>
+					<h3>item<wbr>Changed</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Changed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#InputChanged" class="tsd-signature-type" data-tsd-kind="Type alias">InputChanged</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L79">projects/workflow-ui/src/lib/builder/builder.component.ts:79</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="listTemplate" class="tsd-anchor"></a>
+					<h3>list<wbr>Template</h3>
+					<div class="tsd-signature tsd-kind-icon">list<wbr>Template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TemplateRef</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L85">projects/workflow-ui/src/lib/builder/builder.component.ts:85</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nodeList" class="tsd-anchor"></a>
+					<h3>node<wbr>List</h3>
+					<div class="tsd-signature tsd-kind-icon">node<wbr>List<span class="tsd-signature-symbol">:</span> <a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L100">projects/workflow-ui/src/lib/builder/builder.component.ts:100</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nodePopup" class="tsd-anchor"></a>
+					<h3>node<wbr>Popup</h3>
+					<div class="tsd-signature tsd-kind-icon">node<wbr>Popup<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TemplateRef</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L82">projects/workflow-ui/src/lib/builder/builder.component.ts:82</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="numberTemplate" class="tsd-anchor"></a>
+					<h3>number<wbr>Template</h3>
+					<div class="tsd-signature tsd-kind-icon">number<wbr>Template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TemplateRef</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L88">projects/workflow-ui/src/lib/builder/builder.component.ts:88</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="processId" class="tsd-anchor"></a>
+					<h3>process<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">process<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L50">projects/workflow-ui/src/lib/builder/builder.component.ts:50</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedActions" class="tsd-anchor"></a>
+					<h3>selected<wbr>Actions</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>Actions<span class="tsd-signature-symbol">:</span> <a href="../modules.html#ActionWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">ActionWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L98">projects/workflow-ui/src/lib/builder/builder.component.ts:98</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedEvents" class="tsd-anchor"></a>
+					<h3>selected<wbr>Events</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>Events<span class="tsd-signature-symbol">:</span> <a href="../modules.html#EventWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">EventWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L97">projects/workflow-ui/src/lib/builder/builder.component.ts:97</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="state" class="tsd-anchor"></a>
+					<h3>state</h3>
+					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L54">projects/workflow-ui/src/lib/builder/builder.component.ts:54</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="stateChange" class="tsd-anchor"></a>
+					<h3>state<wbr>Change</h3>
+					<div class="tsd-signature tsd-kind-icon">state<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L67">projects/workflow-ui/src/lib/builder/builder.component.ts:67</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="templateMap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> template<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">template<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L62">projects/workflow-ui/src/lib/builder/builder.component.ts:62</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">TemplateRef</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="textTemplate" class="tsd-anchor"></a>
+					<h3>text<wbr>Template</h3>
+					<div class="tsd-signature tsd-kind-icon">text<wbr>Template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TemplateRef</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L91">projects/workflow-ui/src/lib/builder/builder.component.ts:91</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="triggerEvents" class="tsd-anchor"></a>
+					<h3>trigger<wbr>Events</h3>
+					<div class="tsd-signature tsd-kind-icon">trigger<wbr>Events<span class="tsd-signature-symbol">:</span> <a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L94">projects/workflow-ui/src/lib/builder/builder.component.ts:94</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="types" class="tsd-anchor"></a>
+					<h3>types</h3>
+					<div class="tsd-signature tsd-kind-icon">types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="../enums/NodeTypes.html" class="tsd-signature-type" data-tsd-kind="Enumeration">NodeTypes</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L101">projects/workflow-ui/src/lib/builder/builder.component.ts:101</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addValue" class="tsd-anchor"></a>
+					<h3>add<wbr>Value</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Value<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><a href="../modules.html#NodeWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">NodeWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WorkflowPrompt</span>, value<span class="tsd-signature-symbol">: </span><a href="../modules.html#AllowedValues" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValues</a><span class="tsd-signature-symbol"> | </span><a href="../modules.html#AllowedValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValuesMap</a>, select<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L208">projects/workflow-ui/src/lib/builder/builder.component.ts:208</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It adds a value to a node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>element: <a href="../modules.html#NodeWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">NodeWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>NodeWithInput<E> - this is the node that the input is on</p>
+									</div>
+								</li>
+								<li>
+									<h5>input: <span class="tsd-signature-type">WorkflowPrompt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>WorkflowPrompt - this is the input field that was changed</p>
+									</div>
+								</li>
+								<li>
+									<h5>value: <a href="../modules.html#AllowedValues" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValues</a><span class="tsd-signature-symbol"> | </span><a href="../modules.html#AllowedValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValuesMap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>AllowedValues | AllowedValuesMap</p>
+									</div>
+								</li>
+								<li>
+									<h5>select: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="build" class="tsd-anchor"></a>
+					<h3>build</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">build<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L291">projects/workflow-ui/src/lib/builder/builder.component.ts:291</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It creates a new statement, adds all the selected nodes to it, and then returns the result of the
+									builder&#39;s build function</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A statement object</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createCallback" class="tsd-anchor"></a>
+					<h3>create<wbr>Callback</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Callback<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><a href="../modules.html#NodeWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">NodeWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WorkflowPrompt</span>, popper<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NgxPopperjsContentComponent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><a href="../modules.html#AllowedValues" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValues</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L346">projects/workflow-ui/src/lib/builder/builder.component.ts:346</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It creates a callback function that will be called when the user clicks on a button in the popper</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>element: <a href="../modules.html#NodeWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">NodeWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The element that was clicked on.</p>
+									</div>
+								</li>
+								<li>
+									<h5>input: <span class="tsd-signature-type">WorkflowPrompt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The input object that was clicked on.</p>
+									</div>
+								</li>
+								<li>
+									<h5>popper: <span class="tsd-signature-type">NgxPopperjsContentComponent</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>NgxPopperjsContentComponent</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><a href="../modules.html#AllowedValues" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValues</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
+							<p>A function that takes a value and adds it to the element.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><a href="../modules.html#AllowedValues" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValues</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> value: <a href="../modules.html#AllowedValues" class="tsd-signature-type" data-tsd-kind="Type alias">AllowedValues</a></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getInputValue" class="tsd-anchor"></a>
+					<h3>get<wbr>Input<wbr>Value</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Input<wbr>Value<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">EventTarget</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L395">projects/workflow-ui/src/lib/builder/builder.component.ts:395</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&quot;If the target is not null, return the value of the target as an HTMLInputElement, otherwise throw
+									an InvalidEntityError.&quot;</p>
+								</div>
+								<p>The first thing to notice is that the function takes a parameter of type EventTarget. This is a type
+								that is defined in the DOM API. It is the type of the target property of the Event interface</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>target: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">EventTarget</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>EventTarget | null</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The value of the input element.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="handleSubsequentInputs" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> handle<wbr>Subsequent<wbr>Inputs</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Subsequent<wbr>Inputs<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><a href="../modules.html#NodeWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">NodeWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WorkflowPrompt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L270">projects/workflow-ui/src/lib/builder/builder.component.ts:270</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>element: <a href="../modules.html#NodeWithInput" class="tsd-signature-type" data-tsd-kind="Type alias">NodeWithInput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>input: <span class="tsd-signature-type">WorkflowPrompt</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
+					<a name="mergeState" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> merge<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">merge<wbr>State&lt;S&gt;<span class="tsd-signature-symbol">(</span>stateA<span class="tsd-signature-symbol">: </span><a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span>, stateB<span class="tsd-signature-symbol">: </span><a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L370">projects/workflow-ui/src/lib/builder/builder.component.ts:370</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It takes two objects, and merges the second object into the first object</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>S</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>stateA: <a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The current state of the component.</p>
+									</div>
+								</li>
+								<li>
+									<h5>stateB: <a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The state that you want to merge into stateA.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The state of the store.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="ngAfterViewInit" class="tsd-anchor"></a>
+					<h3>ng<wbr>After<wbr>View<wbr>Init</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L109">projects/workflow-ui/src/lib/builder/builder.component.ts:109</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="ngOnChanges" class="tsd-anchor"></a>
+					<h3>ng<wbr>OnChanges</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">ng<wbr>OnChanges<span class="tsd-signature-symbol">(</span>changes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SimpleChanges</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of OnChanges.ngOnChanges</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L124">projects/workflow-ui/src/lib/builder/builder.component.ts:124</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>changes: <span class="tsd-signature-type">SimpleChanges</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="ngOnInit" class="tsd-anchor"></a>
+					<h3>ng<wbr>OnInit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">ng<wbr>OnInit<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of OnInit.ngOnInit</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L103">projects/workflow-ui/src/lib/builder/builder.component.ts:103</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onNodeAdd" class="tsd-anchor"></a>
+					<h3>on<wbr>Node<wbr>Add</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Node<wbr>Add<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L142">projects/workflow-ui/src/lib/builder/builder.component.ts:142</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It adds a node to the diagram and emits an event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>WorkflowNode<E> - The node that was added</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onNodeRemove" class="tsd-anchor"></a>
+					<h3>on<wbr>Node<wbr>Remove</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Node<wbr>Remove<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><a href="../enums/NodeTypes.html" class="tsd-signature-type" data-tsd-kind="Enumeration">NodeTypes</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L171">projects/workflow-ui/src/lib/builder/builder.component.ts:171</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It removes a node from the selected nodes array and updates the diagram</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <a href="../enums/NodeTypes.html" class="tsd-signature-type" data-tsd-kind="Enumeration">NodeTypes</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>NodeTypes - This is the type of node that was removed.</p>
+									</div>
+								</li>
+								<li>
+									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The index of the node in the array of nodes.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="openPopup" class="tsd-anchor"></a>
+					<h3>open<wbr>Popup</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">open<wbr>Popup<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><a href="../enums/NodeTypes.html" class="tsd-signature-type" data-tsd-kind="Enumeration">NodeTypes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L189">projects/workflow-ui/src/lib/builder/builder.component.ts:189</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>If the type is an action, then set the node list to the actions, otherwise if the type is an event,
+									then set the node list to the events, otherwise throw an error</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <a href="../enums/NodeTypes.html" class="tsd-signature-type" data-tsd-kind="Enumeration">NodeTypes</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>NodeTypes - This is the type of node that we want to add to the graph.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="restoreState" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> restore<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">restore<wbr>State<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L242">projects/workflow-ui/src/lib/builder/builder.component.ts:242</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It takes a state object, and for each node in the state object, it finds the corresponding node in
+									the graph, and then for each input in the node, it adds the value from the state object to the input</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>state: <a href="../modules.html#StateMap" class="tsd-signature-type" data-tsd-kind="Type alias">StateMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#RecordOfAnyType" class="tsd-signature-type" data-tsd-kind="Type alias">RecordOfAnyType</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>StateMap<RecordOfAnyType></p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateDiagram" class="tsd-anchor"></a>
+					<h3>update<wbr>Diagram</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Diagram<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L311">projects/workflow-ui/src/lib/builder/builder.component.ts:311</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It updates the diagram by building it and emitting the diagram change event</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateState" class="tsd-anchor"></a>
+					<h3>update<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>State<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, inputs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WorkflowPrompt</span><span class="tsd-signature-symbol">[]</span>, remove<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/4c2d13ee/packages/workflow-ui/projects/workflow-ui/src/lib/builder/builder.component.ts#L323">projects/workflow-ui/src/lib/builder/builder.component.ts:323</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It takes a node, a list of inputs, and a boolean flag, and then either removes the node&#39;s state from
+									the workflow&#39;s state or adds it to the workflow&#39;s state</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="../modules.html#WorkflowNode" class="tsd-signature-type" data-tsd-kind="Type alias">WorkflowNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>WorkflowNode<E> - The node that is being updated.</p>
+									</div>
+								</li>
+								<li>
+									<h5>inputs: <span class="tsd-signature-type">WorkflowPrompt</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>WorkflowPrompt[]</p>
+									</div>
+								</li>
+								<li>
+									<h5>remove: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-has-type-parameter">
+						<a href="BuilderComponent.html" class="tsd-kind-icon">Builder<wbr>Component</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="BuilderComponent.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#actionAdded" class="tsd-kind-icon">action<wbr>Added</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#actions" class="tsd-kind-icon">actions</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#diagram" class="tsd-kind-icon">diagram</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#diagramChange" class="tsd-kind-icon">diagram<wbr>Change</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#eventAdded" class="tsd-kind-icon">event<wbr>Added</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#events" class="tsd-kind-icon">events</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#itemChanged" class="tsd-kind-icon">item<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#listTemplate" class="tsd-kind-icon">list<wbr>Template</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#nodeList" class="tsd-kind-icon">node<wbr>List</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#nodePopup" class="tsd-kind-icon">node<wbr>Popup</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#numberTemplate" class="tsd-kind-icon">number<wbr>Template</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#processId" class="tsd-kind-icon">process<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#selectedActions" class="tsd-kind-icon">selected<wbr>Actions</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#selectedEvents" class="tsd-kind-icon">selected<wbr>Events</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#state" class="tsd-kind-icon">state</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#stateChange" class="tsd-kind-icon">state<wbr>Change</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#templateMap" class="tsd-kind-icon">template<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#textTemplate" class="tsd-kind-icon">text<wbr>Template</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#triggerEvents" class="tsd-kind-icon">trigger<wbr>Events</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="BuilderComponent.html#types" class="tsd-kind-icon">types</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#addValue" class="tsd-kind-icon">add<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#build" class="tsd-kind-icon">build</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#createCallback" class="tsd-kind-icon">create<wbr>Callback</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#getInputValue" class="tsd-kind-icon">get<wbr>Input<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="BuilderComponent.html#handleSubsequentInputs" class="tsd-kind-icon">handle<wbr>Subsequent<wbr>Inputs</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
+								<a href="BuilderComponent.html#mergeState" class="tsd-kind-icon">merge<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#ngAfterViewInit" class="tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#ngOnChanges" class="tsd-kind-icon">ng<wbr>OnChanges</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#ngOnInit" class="tsd-kind-icon">ng<wbr>OnInit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#onNodeAdd" class="tsd-kind-icon">on<wbr>Node<wbr>Add</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#onNodeRemove" class="tsd-kind-icon">on<wbr>Node<wbr>Remove</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#openPopup" class="tsd-kind-icon">open<wbr>Popup</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="BuilderComponent.html#restoreState" class="tsd-kind-icon">restore<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#updateDiagram" class="tsd-kind-icon">update<wbr>Diagram</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="BuilderComponent.html#updateState" class="tsd-kind-icon">update<wbr>State</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -15,6 +15,13 @@ export class CreateBasicStrategy implements CreateStrategy<ModdleElement> {
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
   ) {}
+  /**
+   * It creates a new BPMN element, assigns it an ID, and returns it
+   * @param element - WorkflowElement<ModdleElement>
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @param {RecordOfAnyType} attrs - RecordOfAnyType
+   * @returns A ModdleElement
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,

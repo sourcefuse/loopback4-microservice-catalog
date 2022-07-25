@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="230px" preserveAspectRatio="none" style="width:437px;height:230px;background:#FFFFFF;" version="1.1" viewBox="0 0 437 230" width="437px" zoomAndPan="magnify"><defs><filter height="300%" id="f43kvlsom9408" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[e9d06cacd9654bf88b582d78a7ae77b1]
+class NotProvided--><rect codeLine="3" fill="#FEFECE" filter="url(#f43kvlsom9408)" height="125.7305" id="NotProvided" style="stroke:#A80036;stroke-width:1.5;" width="416" x="7" y="91"/><ellipse cx="175.25" cy="107" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M177.7231,113.1431 Q177.1421,113.4419 176.5029,113.5913 Q175.8638,113.7407 175.1582,113.7407 Q172.6514,113.7407 171.3315,112.0889 Q170.0117,110.437 170.0117,107.3159 Q170.0117,104.1865 171.3315,102.5347 Q172.6514,100.8828 175.1582,100.8828 Q175.8638,100.8828 176.5112,101.0322 Q177.1587,101.1816 177.7231,101.4805 L177.7231,104.2031 Q177.0923,103.6221 176.4988,103.3523 Q175.9053,103.0825 175.2744,103.0825 Q173.9297,103.0825 173.2449,104.1492 Q172.5601,105.2158 172.5601,107.3159 Q172.5601,109.4077 173.2449,110.4744 Q173.9297,111.541 175.2744,111.541 Q175.9053,111.541 176.4988,111.2712 Q177.0923,111.0015 177.7231,110.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="71" x="195.75" y="111.5352">NotProvided</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="422" y1="123" y2="123"/><ellipse cx="18" cy="134" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="27" y="137.6348">message : string</text><ellipse cx="18" cy="146.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70" x="27" y="150.5898">name : string</text><ellipse cx="18" cy="159.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="underline" textLength="154" x="27" y="163.5449">prepareStackTrace : function</text><ellipse cx="18" cy="172.8652" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="69" x="27" y="176.5">stack : string</text><ellipse cx="18" cy="185.8203" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="underline" textLength="135" x="27" y="189.4551">stackTraceLimit : number</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="422" y1="195.7754" y2="195.7754"/><ellipse cx="18" cy="206.7754" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="underline" textLength="390" x="27" y="210.4102">captureStackTrace(targetObject: Object, constructorOpt: Function) : void</text><!--MD5=[b8cfd8c4119a3b0a7a46bfc5fc780f85]
+class Error--><rect codeLine="11" fill="#FEFECE" filter="url(#f43kvlsom9408)" height="24.1328" id="Error" style="stroke:#A80036;stroke-width:1.5;" width="35" x="197.5" y="7"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="29" x="200.5" y="23.6016">Error</text><!--MD5=[c88c704eafbcd33b1608bed67088bb78]
+reverse link Error to NotProvided--><path codeLine="13" d="M215,51.5 C215,63.36 215,77.31 215,91 " fill="none" id="Error-backto-NotProvided" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="208,51.34,215,31.34,222,51.34,208,51.34" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[eb119e35630d9ac897fb8c1610628d94]
+@startuml
+hide empty methods
+hide empty fields
+class "NotProvided" {
+    +message : string
+    +name : string
+    {static} +prepareStackTrace : function
+    +stack : string
+    {static} +stackTraceLimit : number
+    {static} +captureStackTrace(targetObject: Object, constructorOpt: Function) : void
+}
+class "Error"
+hide "Error" circle
+"Error" <|- - "NotProvided"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 22:16:50 IST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: IN
+--></g></svg>

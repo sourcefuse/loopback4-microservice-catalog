@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["projects/workflow-ui/src/public-api.ts"],
+  "out": "docs",
+  "umlClassDiagram": {
+    "type": "detailed",
+    "location": "local",
+    "format": "svg"
+  }
+}

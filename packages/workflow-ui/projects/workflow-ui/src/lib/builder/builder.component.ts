@@ -45,12 +45,19 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     private readonly elements: ElementService<E>,
   ) {}
 
+  /* A processId that is passed in from the parent component. */
+  @Input()
+  processId: string;
+
+  /* state of the workflow statement */
   @Input()
   state: StateMap<RecordOfAnyType> = {};
 
+  /* the xml diagram */
   @Input()
   diagram = '';
 
+  /* A map of templates that can be used to render the inputs. */
   @Input()
   templateMap?: {
     [key: string]: TemplateRef<RecordOfAnyType>;
@@ -91,7 +98,6 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
   selectedActions: ActionWithInput<E>[] = [];
 
   nodeList: WorkflowNode<E>[] = [];
-  processId: string;
   public types = NodeTypes;
 
   ngOnInit(): void {
@@ -127,6 +133,12 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * It adds a node to the diagram and emits an event
+   * @param node - WorkflowNode<E> - The node that was added
+   * @param {string} [id] - The id of the node to be added. If not provided, a random uuid
+   * will be used.
+   */
   onNodeAdd(node: WorkflowNode<E>, id?: string) {
     const newNode = {
       node: this.nodes.getNodeByName(node.constructor.name, id),
@@ -151,6 +163,11 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.updateState(node, newNode.inputs);
   }
 
+  /**
+   * It removes a node from the selected nodes array and updates the diagram
+   * @param {NodeTypes} type - NodeTypes - This is the type of node that was removed.
+   * @param {number} index - The index of the node in the array of nodes.
+   */
   onNodeRemove(type: NodeTypes, index: number) {
     let node: NodeWithInput<E>;
     if (type === NodeTypes.ACTION) {
@@ -164,6 +181,11 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.updateState(node.node, node.inputs, true);
   }
 
+  /**
+   * If the type is an action, then set the node list to the actions, otherwise if the type is an event,
+   * then set the node list to the events, otherwise throw an error
+   * @param {NodeTypes} type - NodeTypes - This is the type of node that we want to add to the graph.
+   */
   openPopup(type: NodeTypes) {
     if (type === NodeTypes.ACTION) {
       this.nodeList = this.actions;
@@ -175,6 +197,14 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * It adds a value to a node
+   * @param element - NodeWithInput<E> - this is the node that the input is on
+   * @param {WorkflowPrompt} input - WorkflowPrompt - this is the input field that was changed
+   * @param {AllowedValues | AllowedValuesMap} value - AllowedValues | AllowedValuesMap
+   * @param [select=false] - boolean - if true, the value is a map of values, and the value to be set is
+   * the value of the listValueField
+   */
   addValue(
     element: NodeWithInput<E>,
     input: WorkflowPrompt,
@@ -204,6 +234,11 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.updateDiagram();
   }
 
+  /**
+   * It takes a state object, and for each node in the state object, it finds the corresponding node in
+   * the graph, and then for each input in the node, it adds the value from the state object to the input
+   * @param state - StateMap<RecordOfAnyType>
+   */
   private restoreState(state: StateMap<RecordOfAnyType>) {
     state = this.mergeState(this.state, state);
     const allNodes = [...this.selectedEvents, ...this.selectedActions];
@@ -248,6 +283,11 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * It creates a new statement, adds all the selected nodes to it, and then returns the result of the
+   * builder's build function
+   * @returns A statement object
+   */
   build() {
     const statement = new Statement<E>(this.state);
     if (this.processId) {
@@ -264,11 +304,22 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
 
     return this.builder.build(statement);
   }
+
+  /**
+   * It updates the diagram by building it and emitting the diagram change event
+   */
   async updateDiagram() {
     this.diagram = await this.build();
     this.diagramChange.emit(this.diagram);
   }
 
+  /**
+   * It takes a node, a list of inputs, and a boolean flag, and then either removes the node's state from
+   * the workflow's state or adds it to the workflow's state
+   * @param node - WorkflowNode<E> - The node that is being updated.
+   * @param {WorkflowPrompt[]} inputs - WorkflowPrompt[]
+   * @param [remove=false] - boolean - if true, the node's state will be removed from the workflow state.
+   */
   updateState(node: WorkflowNode<E>, inputs: WorkflowPrompt[], remove = false) {
     if (!this.state) {
       this.state = {};
@@ -285,6 +336,13 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.stateChange.emit(this.state);
   }
 
+  /**
+   * It creates a callback function that will be called when the user clicks on a button in the popper
+   * @param element - The element that was clicked on.
+   * @param {WorkflowPrompt} input - The input object that was clicked on.
+   * @param {NgxPopperjsContentComponent} popper - NgxPopperjsContentComponent
+   * @returns A function that takes a value and adds it to the element.
+   */
   createCallback(
     element: NodeWithInput<E>,
     input: WorkflowPrompt,
@@ -303,6 +361,12 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     };
   }
 
+  /**
+   * It takes two objects, and merges the second object into the first object
+   * @param stateA - The current state of the component.
+   * @param stateB - The state that you want to merge into stateA.
+   * @returns The state of the store.
+   */
   private mergeState<S>(stateA: StateMap<S>, stateB: StateMap<S>) {
     stateA = JSON.parse(JSON.stringify(stateA));
     Object.keys(stateB).forEach(id => {
@@ -319,6 +383,15 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     return stateA;
   }
 
+  /**
+   * "If the target is not null, return the value of the target as an HTMLInputElement, otherwise throw
+   * an InvalidEntityError."
+   *
+   * The first thing to notice is that the function takes a parameter of type EventTarget. This is a type
+   * that is defined in the DOM API. It is the type of the target property of the Event interface
+   * @param {EventTarget | null} target - EventTarget | null
+   * @returns The value of the input element.
+   */
   getInputValue(target: EventTarget | null) {
     if (target) {
       return (target as HTMLInputElement).value;

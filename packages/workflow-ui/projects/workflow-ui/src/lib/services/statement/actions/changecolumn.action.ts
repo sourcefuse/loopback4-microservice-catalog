@@ -3,6 +3,7 @@ import {ToColumnInput} from '../inputs/tocolumn.input';
 import {ToValueInput} from '../inputs/tovalue.input';
 import {BpmnAction} from '../../../types/bpmn.types';
 
+/* The ChangeColumnValueAction class is a BpmnAction does changes a column value */
 export class ChangeColumnValueAction extends BpmnAction {
   elements = [ChangeColumnValue];
   name = 'Change Column Value';

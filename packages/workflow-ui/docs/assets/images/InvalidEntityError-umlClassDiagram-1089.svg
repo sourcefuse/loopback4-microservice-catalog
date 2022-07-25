@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="230px" preserveAspectRatio="none" style="width:437px;height:230px;background:#FFFFFF;" version="1.1" viewBox="0 0 437 230" width="437px" zoomAndPan="magnify"><defs><filter height="300%" id="fq6xmo92pros8" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[11eae9320df5120daad5e3b5873be963]
+class InvalidEntityError--><rect codeLine="3" fill="#FEFECE" filter="url(#fq6xmo92pros8)" height="125.7305" id="InvalidEntityError" style="stroke:#A80036;stroke-width:1.5;" width="416" x="7" y="91"/><ellipse cx="162.25" cy="107" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M164.7231,113.1431 Q164.1421,113.4419 163.5029,113.5913 Q162.8638,113.7407 162.1582,113.7407 Q159.6514,113.7407 158.3315,112.0889 Q157.0117,110.437 157.0117,107.3159 Q157.0117,104.1865 158.3315,102.5347 Q159.6514,100.8828 162.1582,100.8828 Q162.8638,100.8828 163.5112,101.0322 Q164.1587,101.1816 164.7231,101.4805 L164.7231,104.2031 Q164.0923,103.6221 163.4988,103.3523 Q162.9053,103.0825 162.2744,103.0825 Q160.9297,103.0825 160.2449,104.1492 Q159.5601,105.2158 159.5601,107.3159 Q159.5601,109.4077 160.2449,110.4744 Q160.9297,111.541 162.2744,111.541 Q162.9053,111.541 163.4988,111.2712 Q164.0923,111.0015 164.7231,110.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="97" x="182.75" y="111.5352">InvalidEntityError</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="422" y1="123" y2="123"/><ellipse cx="18" cy="134" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="27" y="137.6348">message : string</text><ellipse cx="18" cy="146.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70" x="27" y="150.5898">name : string</text><ellipse cx="18" cy="159.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="underline" textLength="154" x="27" y="163.5449">prepareStackTrace : function</text><ellipse cx="18" cy="172.8652" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="69" x="27" y="176.5">stack : string</text><ellipse cx="18" cy="185.8203" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="underline" textLength="135" x="27" y="189.4551">stackTraceLimit : number</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="422" y1="195.7754" y2="195.7754"/><ellipse cx="18" cy="206.7754" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" text-decoration="underline" textLength="390" x="27" y="210.4102">captureStackTrace(targetObject: Object, constructorOpt: Function) : void</text><!--MD5=[b8cfd8c4119a3b0a7a46bfc5fc780f85]
+class Error--><rect codeLine="11" fill="#FEFECE" filter="url(#fq6xmo92pros8)" height="24.1328" id="Error" style="stroke:#A80036;stroke-width:1.5;" width="35" x="197.5" y="7"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="29" x="200.5" y="23.6016">Error</text><!--MD5=[936ba51d82b1d99e3fd018a71e44f94f]
+reverse link Error to InvalidEntityError--><path codeLine="13" d="M215,51.5 C215,63.36 215,77.31 215,91 " fill="none" id="Error-backto-InvalidEntityError" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="208,51.34,215,31.34,222,51.34,208,51.34" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[102e386e77641b33ad3a70df558c1e4d]
+@startuml
+hide empty methods
+hide empty fields
+class "InvalidEntityError" {
+    +message : string
+    +name : string
+    {static} +prepareStackTrace : function
+    +stack : string
+    {static} +stackTraceLimit : number
+    {static} +captureStackTrace(targetObject: Object, constructorOpt: Function) : void
+}
+class "Error"
+hide "Error" circle
+"Error" <|- - "InvalidEntityError"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 22:16:50 IST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: IN
+--></g></svg>

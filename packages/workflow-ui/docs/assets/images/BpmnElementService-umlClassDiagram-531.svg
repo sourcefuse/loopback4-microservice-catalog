@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="209px" preserveAspectRatio="none" style="width:698px;height:209px;background:#FFFFFF;" version="1.1" viewBox="0 0 698 209" width="698px" zoomAndPan="magnify"><defs><filter height="300%" id="f1pgsre22q7902" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[4f5680c920dfeaf2ce0aba4f4df1c6ea]
+class BpmnElementService<E>--><rect codeLine="3" fill="#FEFECE" filter="url(#f1pgsre22q7902)" height="104.7754" id="BpmnElementService&lt;E&gt;" style="stroke:#A80036;stroke-width:1.5;" width="677" x="7" y="91"/><ellipse cx="268.25" cy="107" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M270.7231,113.1431 Q270.1421,113.4419 269.5029,113.5913 Q268.8638,113.7407 268.1582,113.7407 Q265.6514,113.7407 264.3315,112.0889 Q263.0117,110.437 263.0117,107.3159 Q263.0117,104.1865 264.3315,102.5347 Q265.6514,100.8828 268.1582,100.8828 Q268.8638,100.8828 269.5112,101.0322 Q270.1587,101.1816 270.7231,101.4805 L270.7231,104.2031 Q270.0923,103.6221 269.4988,103.3523 Q268.9053,103.0825 268.2744,103.0825 Q266.9297,103.0825 266.2449,104.1492 Q265.5601,105.2158 265.5601,107.3159 Q265.5601,109.4077 266.2449,110.4744 Q266.9297,111.541 268.2744,111.541 Q268.9053,111.541 269.4988,111.2712 Q270.0923,111.0015 270.7231,110.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="146" x="288.75" y="111.5352">BpmnElementService&lt;E&gt;</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="683" y1="123" y2="123"/><ellipse cx="18" cy="134" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="651" x="27" y="137.6348">createElement(element: Constructor&lt;WorkflowElement&lt;E&gt;&gt;, node: StatementNode&lt;E&gt;, attributes: RecordOfAnyType) : E</text><ellipse cx="18" cy="146.9551" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="513" x="27" y="150.5898">createElementByName(name: string, node: StatementNode&lt;E&gt;, attributes: RecordOfAnyType) : E</text><ellipse cx="18" cy="159.9102" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="457" x="27" y="163.5449">createInstance(element: Constructor&lt;WorkflowElement&lt;E&gt;&gt;) : WorkflowElement&lt;E&gt;</text><ellipse cx="18" cy="172.8652" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="332" x="27" y="176.5">createInstanceByName(element: string) : WorkflowElement&lt;E&gt;</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="15" y="182.8203"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="442" x="27" y="189.4551">getConstructorParams(ctor: DecoratedContructor&lt;WorkflowElement&lt;E&gt;&gt;) : any[]</text><!--MD5=[8b8c058113692178f15d6cdd1ddb2341]
+class ElementService<E>--><rect codeLine="10" fill="#FEFECE" filter="url(#f1pgsre22q7902)" height="24.1328" id="ElementService&lt;E&gt;" style="stroke:#A80036;stroke-width:1.5;" width="119" x="286" y="7"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="113" x="289" y="23.6016">ElementService&lt;E&gt;</text><!--MD5=[4f95b11faa73151604a46b8c82d5afe5]
+reverse link ElementService<E> to BpmnElementService<E>--><path codeLine="12" d="M345.5,51.69 C345.5,63.64 345.5,77.56 345.5,90.86 " fill="none" id="ElementService&lt;E&gt;-backto-BpmnElementService&lt;E&gt;" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="338.5,51.3,345.5,31.3,352.5,51.3,338.5,51.3" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[16d4fbca86188d8593cb9775cf86de1e]
+@startuml
+hide empty methods
+hide empty fields
+class "BpmnElementService<E>" {
+    +createElement(element: Constructor<WorkflowElement<E>>, node: StatementNode<E>, attributes: RecordOfAnyType) : E
+    +createElementByName(name: string, node: StatementNode<E>, attributes: RecordOfAnyType) : E
+    +createInstance(element: Constructor<WorkflowElement<E>>) : WorkflowElement<E>
+    +createInstanceByName(element: string) : WorkflowElement<E>
+    -getConstructorParams(ctor: DecoratedContructor<WorkflowElement<E>>) : any[]
+}
+class "ElementService<E>"
+hide "ElementService<E>" circle
+"ElementService<E>" <|.. "BpmnElementService<E>"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 22:16:50 IST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: IN
+--></g></svg>

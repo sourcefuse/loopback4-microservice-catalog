@@ -6,6 +6,7 @@ import {
   EmailToInput,
 } from '../inputs/email.input';
 
+/* The ChangeColumnValueAction class is a BpmnAction that sends an email */
 export class SendEmailAction extends BpmnAction {
   elements = [SendEmail];
   name = 'Send Email';

@@ -6,6 +6,7 @@ import {ColumnInput} from '../inputs/column.input';
 import {ConditionInput} from '../inputs/condition.input';
 import {ValueInput} from '../inputs/value.input';
 
+/* The OnChangeEvent class is a BpmnEvent that is triggered when a column value changes */
 export class OnChangeEvent extends BpmnEvent {
   trigger = true;
   elements = [TriggerWhenColumnChanges, ReadColumnValue, GatewayElement];
