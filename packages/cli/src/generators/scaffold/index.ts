@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {BaseGenerator} from '../../base-generator';
 import {ScaffoldOptions} from '../../types';
+import BackstageIntegrationGenerator from '../backstage-integration';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   cwd?: string;
   constructor(public args: string[], public opts: ScaffoldOptions) {
@@ -46,6 +47,15 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
     await this.createFolders([]);
     this.copyTemplates();
     await this.createFolders(['facades', 'services', 'packages']);
+    if (this.options.integrateWithBackstage) {
+      this.composeWith(
+        {
+          Generator: BackstageIntegrationGenerator,
+          path: require.resolve('../backstage-integration'),
+        },
+        this.options,
+      );
+    }
   }
 
   async install() {

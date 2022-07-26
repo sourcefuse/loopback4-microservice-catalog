@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.2.1 linux-x64 node-v16.14.2
+@sourceloop/cli/2.2.1 darwin-arm64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -130,7 +130,9 @@ ARGUMENTS
 OPTIONS
   --cwd=cwd                  directory where project will be scaffolded, instead of the project name
   --help                     show manual pages
+  --integrateWithBackstage   Do you want to include backstage integration files?
   --issuePrefix=issuePrefix  prefix to be used for issues(e.g. GH-)
+  --owner=owner              owner of the repo
 ```
 
 _See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.2.1/src/commands/scaffold.ts)_
