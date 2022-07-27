@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ocr-service",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "services",
   "keywords": [
     "loopback-extension",
@@ -59,7 +59,7 @@
     "@opentelemetry/plugin-pg": "^0.15.0",
     "@opentelemetry/plugin-pg-pool": "^0.15.0",
     "@opentelemetry/tracing": "^0.24.0",
-    "@sourceloop/core": "^7.1.0",
+    "@sourceloop/core": "^7.1.1",
     "loopback-connector-mysql": "^6.1.0",
     "loopback-connector-postgresql": "^5.5.0",
     "loopback4-authentication": "^6.1.5",

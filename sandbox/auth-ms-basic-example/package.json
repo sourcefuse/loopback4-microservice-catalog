@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/auth-ms-basic-example",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Auth microservice basic example",
   "keywords": [
     "loopback-application",
@@ -61,8 +61,8 @@
     "@loopback/rest": "^12.0.0",
     "@loopback/rest-explorer": "^5.0.0",
     "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/authentication-service": "^7.0.4",
-    "@sourceloop/core": "^7.1.0",
+    "@sourceloop/authentication-service": "^7.0.5",
+    "@sourceloop/core": "^7.1.1",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "bcrypt": "^5.0.1",

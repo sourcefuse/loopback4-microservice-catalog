@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Reporting Microservice",
   "keywords": [
     "loopback-extension",
@@ -64,7 +64,7 @@
     "@loopback/rest": "^12.0.1",
     "@loopback/rest-explorer": "^5.0.1",
     "@loopback/service-proxy": "^5.0.1",
-    "@sourceloop/core": "^7.1.0",
+    "@sourceloop/core": "^7.1.1",
     "axios": "^0.26.1",
     "circular-json": "^0.5.9",
     "dotenv": "^16.0.1",
