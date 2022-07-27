@@ -47,8 +47,8 @@ export const mockConfig: Configuration<MockIReturnType> = {
   categorizeResults: true,
   hideRecentSearch: false,
   hideCategorizeButton: false,
-  saveInRecentsOnlyOnEnter: false,
-  searchOnlyOnEnter: false,
+  saveInRecentsOnlyOnEnter: true,
+  searchOnlyOnEnter: true,
   noResultMessage: '',
   searchIconClass: '',
   crossIconClass: '',
@@ -75,7 +75,7 @@ export function mockFunction(): void {
   // This is intentional
 }
 
-export function mockOnChange(mockValue: string | undefined): void {
+export function mockOnChange(_mockValue: string | undefined): void {
   // This is intentional
 }
 export const mockSuggestionUrl: IReturnType = {
@@ -85,6 +85,10 @@ export const mockSuggestionUrl: IReturnType = {
 export const mockSuggestion: IReturnType = {
   rank: 1,
   source: 'User',
+};
+export const mockSuggestionForModel: IReturnType = {
+  rank: 1,
+  source: '',
 };
 export const mockEvent: TypeEvent = {
   input: 'User',
@@ -96,4 +100,18 @@ export const emittedValue = {
   event: new KeyboardEvent('click', {
     key: 'Enter',
   }),
+};
+export const recentSearch: ISearchQuery = {
+  match: 'user',
+  limit: 10,
+  order: '',
+  limitByType: false,
+  offset: 2,
+  sources: [],
+};
+export function mockDisabledState(_disable: boolean): void {
+  // This is intentional
+}
+export const mockNoEvent: TypeEvent = {
+  input: '',
 };
