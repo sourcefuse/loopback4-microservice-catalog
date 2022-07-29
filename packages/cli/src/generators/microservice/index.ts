@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {writeFileSync} from 'fs';
+import fs from 'fs';
 import {join} from 'path';
 import {Question} from 'yeoman-generator';
 import AppGenerator from '../../app-generator';
@@ -67,7 +67,9 @@ const BACK_TO_ROOT = join('..', '..');
 
 const DEFAULT_NAME = 'microservice';
 
-export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
+export default class MicroserviceGenerator extends AppGenerator<
+  MicroserviceOptions
+> {
   constructor(args: string[], opts: MicroserviceOptions) {
     super(args, opts);
   }
@@ -238,8 +240,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         DATASOURCE_CONNECTORS[
           this.options.datasourceType ?? DATASOURCES.POSTGRES
         ];
-      this.projectInfo.datasourceConnectorName =
-        this.projectInfo.datasourceConnector;
+      this.projectInfo.datasourceConnectorName = this.projectInfo.datasourceConnector;
       this.projectInfo.datasourceType = this.options.datasourceType;
     }
   }
@@ -356,13 +357,14 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts['coverage'] = 'nyc npm run test';
       packageJson.scripts = scripts;
       if (this.options.baseService) {
-        packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
-          getDependencyVersion(
-            this.projectInfo.dependencies,
-            `@sourceloop/${this.options.baseService}`,
-          );
+        packageJson.dependencies[
+          `@sourceloop/${this.options.baseService}`
+        ] = getDependencyVersion(
+          this.projectInfo.dependencies,
+          `@sourceloop/${this.options.baseService}`,
+        );
       }
-      writeFileSync(
+      fs.writeFileSync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
@@ -405,9 +407,15 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       `{name: \'${this.options.name}` + '-' + `${suffix}\'}, \n`;
 
     czConfig = firstPart + stringToAdd + secPart;
-    this.fs.write(
+    fs.writeFile(
       join(this.destinationPath(), '../../', '.cz-config.js'),
       czConfig,
+      {
+        flag: 'w',
+      },
+      function () {
+        //This is intentional.
+      },
     );
   }
 
@@ -574,7 +582,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
 
       packageJs.scripts = script;
-      writeFileSync(
+      fs.writeFileSync(
         packageJsFile,
         JSON.stringify(packageJs, undefined, JSON_SPACING),
       );
