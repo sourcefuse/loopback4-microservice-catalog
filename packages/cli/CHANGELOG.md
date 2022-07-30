@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.3.1 (2022-07-30)</small>
+
+* fix(cli):fixed czconfig file using fs (#927) ([7d2fc5c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7d2fc5c)), closes [#927](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/927) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 2.3.0 (2022-07-27)
 
 * feat(cli): add backstage integration flag for scaffold (#924) ([b2ae1a0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2ae1a0)), closes [#924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/924) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
