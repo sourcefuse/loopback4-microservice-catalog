@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDependencyVersion = exports.appendDependencies = exports.JSON_SPACING = void 0;
+// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 exports.JSON_SPACING = 4;
 function appendDependencies(dependencies) {
     var _a, _b;
