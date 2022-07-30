@@ -67,9 +67,7 @@ const BACK_TO_ROOT = join('..', '..');
 
 const DEFAULT_NAME = 'microservice';
 
-export default class MicroserviceGenerator extends AppGenerator<
-  MicroserviceOptions
-> {
+export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
   constructor(args: string[], opts: MicroserviceOptions) {
     super(args, opts);
   }
@@ -240,7 +238,8 @@ export default class MicroserviceGenerator extends AppGenerator<
         DATASOURCE_CONNECTORS[
           this.options.datasourceType ?? DATASOURCES.POSTGRES
         ];
-      this.projectInfo.datasourceConnectorName = this.projectInfo.datasourceConnector;
+      this.projectInfo.datasourceConnectorName =
+        this.projectInfo.datasourceConnector;
       this.projectInfo.datasourceType = this.options.datasourceType;
     }
   }
@@ -357,12 +356,11 @@ export default class MicroserviceGenerator extends AppGenerator<
       scripts['coverage'] = 'nyc npm run test';
       packageJson.scripts = scripts;
       if (this.options.baseService) {
-        packageJson.dependencies[
-          `@sourceloop/${this.options.baseService}`
-        ] = getDependencyVersion(
-          this.projectInfo.dependencies,
-          `@sourceloop/${this.options.baseService}`,
-        );
+        packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
+          getDependencyVersion(
+            this.projectInfo.dependencies,
+            `@sourceloop/${this.options.baseService}`,
+          );
       }
       fs.writeFileSync(
         packageJsonFile,
@@ -477,7 +475,13 @@ export default class MicroserviceGenerator extends AppGenerator<
 
   private _createFacadeRedisDatasource() {
     if (this.options.facade) {
-      const nameArr = ['redis'];
+      const nameArr = [
+        {
+          type: 'cache',
+          name: 'Redis',
+          fileName: 'redis',
+        },
+      ];
       this.fs.copyTpl(
         this.templatePath(REDIS_DATASOURCE),
         this.destinationPath(join('src', 'datasources', 'redis.datasource.ts')),

@@ -5,7 +5,7 @@ metadata:
   description: <%= description %>
   annotations:
     github.com/project-slug: <%= owner + '/' + name %>
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: dir:../
 spec:
   type: website
   lifecycle: experimental
