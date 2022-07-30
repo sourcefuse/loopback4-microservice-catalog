@@ -19,12 +19,14 @@ export async function setupApplication(): Promise<AppWithClient> {
     rest: restConfig,
   });
 
+  <% if(project.baseServiceDSList) { -%>
   <% for(let i=0; i< project.baseServiceDSList.length; i++) {-%>
     app.bind('datasources.config.<%= project.baseServiceDSList[i].fileName %>').to({
       name: '<%= project.baseServiceDSList[i].fileName %>',
       connector: 'memory',
     });
     <% } -%>
+  <% } -%>
 
 
   <% if (project.facade || project.baseServiceCacheName) { -%>

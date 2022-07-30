@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseGenerator = void 0;
 const tslib_1 = require("tslib");
+// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 const fs_1 = require("fs");
 const promises_1 = require("fs/promises");
 const path_1 = require("path");

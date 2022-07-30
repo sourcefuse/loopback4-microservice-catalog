@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {writeFileSync} from 'fs';
+import fs from 'fs';
 import {join} from 'path';
 import {Question} from 'yeoman-generator';
 import AppGenerator from '../../app-generator';
@@ -362,7 +362,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             `@sourceloop/${this.options.baseService}`,
           );
       }
-      writeFileSync(
+      fs.writeFileSync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
@@ -405,9 +405,15 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       `{name: \'${this.options.name}` + '-' + `${suffix}\'}, \n`;
 
     czConfig = firstPart + stringToAdd + secPart;
-    this.fs.write(
+    fs.writeFile(
       join(this.destinationPath(), '../../', '.cz-config.js'),
       czConfig,
+      {
+        flag: 'w',
+      },
+      function () {
+        //This is intentional.
+      },
     );
   }
 
@@ -469,7 +475,13 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   private _createFacadeRedisDatasource() {
     if (this.options.facade) {
-      const nameArr = ['redis'];
+      const nameArr = [
+        {
+          type: 'cache',
+          name: 'Redis',
+          fileName: 'redis',
+        },
+      ];
       this.fs.copyTpl(
         this.templatePath(REDIS_DATASOURCE),
         this.destinationPath(join('src', 'datasources', 'redis.datasource.ts')),
@@ -574,7 +586,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
 
       packageJs.scripts = script;
-      writeFileSync(
+      fs.writeFileSync(
         packageJsFile,
         JSON.stringify(packageJs, undefined, JSON_SPACING),
       );
