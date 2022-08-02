@@ -51,14 +51,14 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^5.0.1",
-    "@loopback/context": "^5.0.1",
-    "@loopback/core": "^4.0.1",
-    "@loopback/openapi-v3": "^8.0.1",
-    "@loopback/repository": "^5.0.1",
-    "@loopback/rest": "^12.0.1",
-    "@loopback/rest-explorer": "^5.0.1",
-    "@loopback/service-proxy": "^5.0.1",
+    "@loopback/boot": "^5.0.2",
+    "@loopback/context": "^5.0.2",
+    "@loopback/core": "^4.0.2",
+    "@loopback/openapi-v3": "^8.0.2",
+    "@loopback/repository": "^5.0.2",
+    "@loopback/rest": "^12.0.2",
+    "@loopback/rest-explorer": "^5.0.2",
+    "@loopback/service-proxy": "^5.0.2",
     "@sourceloop/authentication-service": "^7.0.5",
     "@sourceloop/core": "^7.1.1",
     "@sourceloop/user-tenant-service": "^0.1.4",
@@ -77,14 +77,14 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@loopback/build": "^8.1.2",
-    "@loopback/eslint-config": "^12.0.4",
-    "@loopback/testlab": "^4.1.2",
-    "@types/node": "^12.20.47",
-    "eslint": "^8.10.0",
+    "@loopback/build": "^9.0.2",
+    "@loopback/eslint-config": "^13.0.2",
+    "@loopback/testlab": "^5.0.2",
+    "@types/node": "^14.18.21",
+    "eslint": "^8.19.0",
     "patch-package": "^6.4.7",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.6.3"
+    "typescript": "~4.7.4"
   },
   "overrides": {
     "passport-azure-ad": {
