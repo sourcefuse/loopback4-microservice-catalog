@@ -92,9 +92,9 @@ export class AzureLoginController {
   })
   async getLoginViaAzure(
     @param.query.string('client_id')
-    clientId?: string,
+    clientId?: string, //NOSONAR
     @param.query.string('client_secret')
-    clientSecret?: string,
+    clientSecret?: string, //NOSONAR
   ): Promise<void> {
     //do nothing
   }
@@ -188,9 +188,9 @@ export class AzureLoginController {
     },
   })
   async azureCallback(
-    @param.query.string('code') code: string,
+    @param.query.string('code') code: string, //NOSONAR
     @param.query.string('state') state: string,
-    @param.query.string('session_state') sessionState: string,
+    @param.query.string('session_state') sessionState: string, //NOSONAR
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
