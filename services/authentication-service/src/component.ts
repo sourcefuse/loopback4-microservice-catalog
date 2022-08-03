@@ -102,13 +102,15 @@ export class AuthenticationServiceComponent implements Component {
     // Mount core component
     this.application.component(CoreComponent);
 
-    const expressMiddlewares =
-      this.application.getSync(SFCoreBindings.EXPRESS_MIDDLEWARES) ?? [];
-    expressMiddlewares.push(cookieParser());
-    expressMiddlewares.push(bodyParser.urlencoded({extended: true}));
-    this.application
-      .bind(SFCoreBindings.EXPRESS_MIDDLEWARES)
-      .to(expressMiddlewares);
+    if (!!process.env.AZURE_AUTH_ENABLED) {
+      const expressMiddlewares =
+        this.application.getSync(SFCoreBindings.EXPRESS_MIDDLEWARES) ?? [];
+      expressMiddlewares.push(cookieParser());
+      expressMiddlewares.push(bodyParser.urlencoded({extended: true}));
+      this.application
+        .bind(SFCoreBindings.EXPRESS_MIDDLEWARES)
+        .to(expressMiddlewares);
+    }
 
     // Mount authentication component
     this.setupAuthenticationComponent();
