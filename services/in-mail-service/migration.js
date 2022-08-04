@@ -8,6 +8,7 @@ dotenvExt.load({
   errorOnMissing: false,
   includeProcessEnv: true,
 });
+console.log('in mail');
 const type = 'INMAIL';
 
 try {
