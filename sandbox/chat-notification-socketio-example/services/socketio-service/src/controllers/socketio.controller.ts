@@ -41,17 +41,6 @@ export class SocketIoController {
    *
    * @param msg - The message sent by client
    */
-  // @socketio.subscribe('subscribe-to-channel')
-  // // @socketio.emit('namespace' | 'requestor' | 'broadcast')
-  // async registerChannel(msg: string[]) {
-  //   debug('Subscribe to channel: %s', msg);
-  //   if (Array.isArray(msg) && msg.length > 0) {
-  //     for (const item of msg) await this.socket.join(item);
-  //   } else {
-  //     throw new Error('Channels data not appropriate');
-  //   }
-  // }
-
   /**
    * Register a handler for 'general-message-forward' events
    *
@@ -69,37 +58,6 @@ export class SocketIoController {
    *
    * @param msg - The message sent by client
    */
-  // @socketio.subscribe('general-message')
-  // @socketio.emit('namespace' | 'requestor' | 'broadcast')
-  // handleGeneralMessage(msg: string) {
-  //   debug('General Message : %s', msg);
-  //   const parsedMsg: {
-  //     subject: string;
-  //     body: string;
-  //     receiver: {
-  //       to: {
-  //         id: string;
-  //         name?: string;
-  //       }[];
-  //     };
-  //     type: string;
-  //     sentDate: Date;
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //     options?: any;
-  //   } = JSON.parse(msg);
-
-  //   if (parsedMsg?.receiver?.to?.length > 0) {
-  //     parsedMsg.receiver.to.forEach(item =>
-  //       this.socket.nsp.to(item.id).emit('message', {
-  //         subject: parsedMsg.subject,
-  //         body: parsedMsg.body,
-  //         options: parsedMsg.options,
-  //       }),
-  //     );
-  //   } else {
-  //     throw new Error('Inappropriate message data');
-  //   }
-  // }
 
   /**
    * Register a handler for all events

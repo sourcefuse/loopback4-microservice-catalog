@@ -5,7 +5,9 @@
 
 import {SocketIoExampleApplication} from './application';
 
+// sonarignore:start
 export async function migrate(args: string[]) {
+  // sonarignore:end
   const app = new SocketIoExampleApplication();
   await app.boot();
 
@@ -16,6 +18,6 @@ export async function migrate(args: string[]) {
 }
 
 migrate(process.argv).catch(err => {
-  console.error('Cannot migrate database schema', err);
+  console.error('Cannot migrate database schema', err); //NOSONAR
   process.exit(1);
 });

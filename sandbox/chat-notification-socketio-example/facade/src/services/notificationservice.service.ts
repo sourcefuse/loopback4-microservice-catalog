@@ -24,7 +24,7 @@ export class NotificationserviceProvider
   constructor(
     // notification must match the name property in the datasource json file
     @inject('datasources.notification')
-    protected dataSource: NotificationDataSource = new NotificationDataSource(),
+    protected dataSource: NotificationDataSource = new NotificationDataSource(), //NOSONAR
   ) {}
 
   value(): Promise<Notificationservice> {

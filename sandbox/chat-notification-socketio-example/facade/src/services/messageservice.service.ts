@@ -38,7 +38,7 @@ export class MessageserviceProvider implements Provider<Messageservice> {
   constructor(
     // message must match the name property in the datasource json file
     @inject('datasources.message')
-    protected dataSource: MessageDataSource = new MessageDataSource(),
+    protected dataSource: MessageDataSource = new MessageDataSource(), //NOSONAR
   ) {}
 
   value(): Promise<Messageservice> {

@@ -59,10 +59,12 @@ export class PubnubMessageController {
     },
   })
   async find(
+    // sonarignore:start
     @inject(AuthenticationBindings.CURRENT_USER) user: IAuthUserWithPermissions,
     @param.header.string('Authorization') token: string,
     @param.query.string('ChannelID') channelID?: string,
     @param.filter(SocketMessage) filter?: Filter<SocketMessage>,
+    // sonarignore:end
   ): Promise<SocketMessage[]> {
     const filter1: Filter<SocketMessage> = {
       where: {
@@ -147,9 +149,9 @@ export class PubnubMessageController {
         },
       },
     })
-    messageRecipient: Partial<SocketMessageRecipient>,
+    messageRecipient: Partial<SocketMessageRecipient>, //NOSONAR
     @param.query.object('where', getWhereSchemaFor(SocketMessageRecipient))
-    where?: Where<SocketMessageRecipient>,
+    where?: Where<SocketMessageRecipient>, //NOSONAR
   ): Promise<SocketMessageRecipient> {
     const patched = {
       isRead: true,
@@ -175,7 +177,7 @@ export class PubnubMessageController {
   })
   async me(
     @inject(AuthenticationBindings.CURRENT_USER) user: IAuthUserWithPermissions,
-    @param.header.string('Authorization') token: string,
+    @param.header.string('Authorization') token: string, //NOSONAR
   ): Promise<string> {
     if (user.userTenantId) {
       return user.userTenantId;

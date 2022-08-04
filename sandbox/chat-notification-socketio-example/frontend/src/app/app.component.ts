@@ -11,6 +11,5 @@ import {Component} from '@angular/core';
   providers: [],
 })
 export class AppComponent {
-  constructor() {}
   title = 'CHAT UI';
 }

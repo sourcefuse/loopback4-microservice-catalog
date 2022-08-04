@@ -6,13 +6,13 @@
 import {ApplicationConfig, SocketIoExampleApplication} from './application';
 
 export * from './application';
-
+const port = 3000;
 export async function main(options: ApplicationConfig = {}) {
   const app = new SocketIoExampleApplication(
     options || {
       httpServerOptions: {
         host: '127.0.0.1',
-        port: 3000,
+        port: port,
       },
     },
   );
