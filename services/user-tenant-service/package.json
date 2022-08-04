@@ -35,7 +35,8 @@
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "postinstall": "node migration.js"
   },
   "repository": {
     "type": "git",
@@ -48,12 +49,14 @@
     "README.md",
     "dist",
     "src",
+    "migration.js",
+    "migrations",
     "database.json",
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "db-migrate": "< 1.0.0 || ^1.0.0",
-    "db-migrate-pg": "^1.0.0"
+    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate-pg": "^1.2.2"
   },
   "dependencies": {
     "@loopback/boot": "^5.0.1",
@@ -86,7 +89,7 @@
     "@types/lodash": "^4.14.169",
     "@types/node": "^14.18.21",
     "@types/uuid": "^8.3.3",
-    "db-migrate": "^0.11.12",
+    "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^8.17.0",
     "source-map-support": "^0.5.21",

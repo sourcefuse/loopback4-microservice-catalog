@@ -61,7 +61,7 @@
     "@loopback/service-proxy": "^5.0.2",
     "@sourceloop/authentication-service": "^7.0.5",
     "@sourceloop/core": "^7.1.1",
-    "@sourceloop/user-tenant-service": "^0.1.4",
+    "@sourceloop/user-tenant-service": "file:sourceloop-user-tenant-service-0.1.4.tgz",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",

@@ -79,6 +79,25 @@ export class Tenant extends UserModifiableEntity {
   })
   country?: string;
 
+  @property({
+    name: 'primary_contact_email',
+    type: 'string',
+  })
+  primaryContactEmail: string;
+
+  @property({
+    name: 'allowed_domain',
+    type: 'string',
+  })
+  allowedDomain: string;
+
+  @property({
+    name: 'tenant_type',
+    type: 'string',
+  })
+  tenantType: string;
+
+
   @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];
 

@@ -1,5 +1,5 @@
 import {model, property} from '@loopback/repository';
-import {User as BaseUser} from '@sourceloop/user-tenant-service/dist/models';
+import {User as BaseUser} from '@sourceloop/user-tenant-service';
 @model({name: 'users', settings: {strict: false}})
 export class User extends BaseUser {
   @property({

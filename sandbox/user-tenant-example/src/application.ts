@@ -11,6 +11,8 @@ import {AuthenticationServiceComponent} from '@sourceloop/authentication-service
 import {UserTenantServiceComponent} from '@sourceloop/user-tenant-service';
 import path from 'path';
 import {MySequence} from './sequence';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
 
 export {ApplicationConfig};
 
@@ -18,6 +20,20 @@ export class UserTenantApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
+    dotenv.config();
+    if (process?.env?.NODE_ENV && process.env.NODE_ENV !== 'test') {
+      dotenvExt.load({
+        schema: '.env.example',
+        errorOnMissing: true,
+        includeProcessEnv: true,
+      });
+    } else {
+      dotenvExt.load({
+        schema: '.env.example',
+        errorOnMissing: false,
+        includeProcessEnv: true,
+      });
+    }
     super(options);
 
     // Set up the custom sequence
