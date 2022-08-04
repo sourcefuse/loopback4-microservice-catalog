@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2022-08-04)</small>
+
+* build(sandbox): upgrade sandbox examples versions (#929) ([2b56e9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2b56e9e)), closes [#929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/929)
+
+
+
+
+
 ## 0.2.0 (2022-07-27)
 
 * feat(sandbox): adds user-tenant-example (#913) ([deb184a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/deb184a)), closes [#913](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/913)
