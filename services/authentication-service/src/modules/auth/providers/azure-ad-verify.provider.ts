@@ -41,7 +41,7 @@ export class AzureAdVerifyProvider
     ) => {
       let user: IAuthUser | null = await this.userRepository.findOne({
         where: {
-          email: profile._json.email,
+          email: profile.upn,
         },
       });
       user = await this.preVerifyProvider(
