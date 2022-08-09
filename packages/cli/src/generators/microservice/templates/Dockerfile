@@ -33,14 +33,18 @@ RUN /usr/local/bin/node-prune
 
 # Workaround for symlinked packages [npm prune for all packages]
 # WORKDIR /tmp/app-packages/core
-RUN npm prune --production
-RUN /usr/local/bin/node-prune
+# RUN npm prune --production
+# RUN /usr/local/bin/node-prune
 
 # Workaround for symlinked packages [reset WORKDIR]
 WORKDIR /home/node/app
 
 FROM node:16-alpine
 WORKDIR /home/node/app
+
+# Fix added so that npm i does not remove the other installed packages
+COPY --from=BUILD_IMAGE /home/node/app/package.json ./package.json
+COPY --from=BUILD_IMAGE /home/node/app/package-lock.json ./package-lock.json
 
 ARG NR_ENABLED
 

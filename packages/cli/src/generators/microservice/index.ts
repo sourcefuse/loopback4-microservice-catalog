@@ -50,6 +50,8 @@ const MIGRATION_PACKAGE_TEMPLATE = join(
   '..',
   'migration-package',
   'templates',
+  'packages',
+  'migrations',
 );
 const MIGRATION_TEMPLATE = join(
   '..',
@@ -369,8 +371,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this.spawnCommandSync('npm', ['i']);
       this.spawnCommandSync('npm', ['run', 'prettier:fix']);
       this.destinationRoot(BACK_TO_ROOT);
+      let firstTimeMig = false;
       if (this.options.migrations) {
         if (!this._migrationExists()) {
+          firstTimeMig = true;
           this._createMigrationPackage();
         }
         if (this.options.customMigrations) {
@@ -380,7 +384,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         } else {
           // do nothing
         }
-        this._addMigrationScripts();
+        this._addMigrationScripts(firstTimeMig);
       }
       return true;
     } else {
@@ -506,18 +510,25 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   private _createMigrationPackage() {
-    this.copyTemplatedFiles(
-      this.templatePath(MIGRATION_PACKAGE_TEMPLATE),
-      this.destinationPath(),
-      {
-        project: this.projectInfo,
-      },
-      {},
-      {
-        processDestinationPath: (destPath: string) =>
-          destPath.replace('.ejs', ''),
+    this.destinationRoot(
+      join(this.destinationPath(), 'packages', 'migrations'),
+    );
+
+    fs.readdirSync(this.templatePath(MIGRATION_PACKAGE_TEMPLATE)).forEach(
+      file => {
+        const targetFileName = file.replace('.tpl', '');
+        const sourcePath = this.templatePath(
+          join(MIGRATION_PACKAGE_TEMPLATE, file),
+        );
+        const destinationPath = join(this.destinationRoot(), targetFileName);
+        this.fs.copyTpl(sourcePath, destinationPath, {
+          project: this.projectInfo,
+          name: this.options.name?.toUpperCase(),
+        });
       },
     );
+
+    this.destinationRoot(BACK_TO_ROOT);
   }
 
   private _createCustomMigration() {
@@ -547,7 +558,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             sourceloopMigrationPath(this.options.baseService),
           ),
         ),
-        this.destinationPath(join(MIGRATION_FOLDER, name)),
+        this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
       if (this.options.datasourceType) {
@@ -570,26 +581,49 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-  private _addMigrationScripts() {
+  private _addMigrationScripts(flag: boolean) {
     try {
-      const packageJsFile = 'packages/migrations/package.json';
-      const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
-      const script = packageJs.scripts;
-      script[
-        `db:migrate:${this.options.name}`
-      ] = `./node_modules/.bin/db-migrate up --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
-      script[
-        `db:migrate-down:${this.options.name}`
-      ] = `./node_modules/.bin/db-migrate down --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
-      script[
-        `db:migrate-reset:${this.options.name}`
-      ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      if (!flag) {
+        const packageJsFile = 'packages/migrations/package.json';
+        const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
+        const script = packageJs.scripts;
+        script[
+          `db:migrate:${this.options.name}`
+        ] = `./node_modules/.bin/db-migrate up --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+        script[
+          `db:migrate-down:${this.options.name}`
+        ] = `./node_modules/.bin/db-migrate down --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+        script[
+          `db:migrate-reset:${this.options.name}`
+        ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
 
-      packageJs.scripts = script;
-      fs.writeFileSync(
-        packageJsFile,
-        JSON.stringify(packageJs, undefined, JSON_SPACING),
-      );
+        packageJs.scripts = script;
+        fs.writeFile(
+          packageJsFile,
+          JSON.stringify(packageJs, undefined, JSON_SPACING),
+          {flag: 'w'},
+          function () {
+            //This is intentional.
+          },
+        );
+
+        // env variables
+        let currEnv = this.fs.read(
+          join(this.destinationPath(), 'packages/migrations/', '.env.example'),
+        );
+        const name = this.options.name?.toUpperCase();
+        const varToAdd = `\n${name}_DB_HOST=\n${name}_DB_PORT=\n${name}_DB_PASSWORD=\n${name}_DB_USER\n${name}_DB_DATABASE=`;
+        currEnv = currEnv + varToAdd;
+        fs.writeFile(
+          join(this.destinationPath(), 'packages/migrations/', '.env.example'),
+          currEnv,
+          {flag: 'w'},
+          function () {
+            //do nothing
+          },
+        );
+      } else {
+      }
     } catch {
       //do nothing
     }
