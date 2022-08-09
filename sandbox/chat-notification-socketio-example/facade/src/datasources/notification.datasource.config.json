@@ -1,0 +1,40 @@
+{
+  "name": "notification",
+  "connector": "rest",
+  "baseURL": "",
+  "crud": false,
+  "options": {
+    "baseUrl": "$NOTIF_SERVICE_URL",
+    "headers": {
+      "accept": "application/json",
+      "content-type": "application/json"
+    }
+  },
+  "operations": [
+    {
+      "template": {
+        "method": "GET",
+        "url": "/notifications",
+        "headers": {
+          "Authorization": "{token}"
+        }
+      },
+      "functions": {
+        "getNotification": ["token"]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "/notifications",
+        "headers": {
+          "Authorization": "{token}"
+        },
+        "body": "{data}"
+      },
+      "functions": {
+        "createNotification": ["data","token"]
+      }
+    }
+  ]
+}

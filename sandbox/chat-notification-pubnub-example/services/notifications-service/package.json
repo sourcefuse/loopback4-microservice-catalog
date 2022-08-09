@@ -64,7 +64,7 @@
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.0",
-    "firebase-admin": "^10.2.0",
+    "firebase-admin": "^10.3.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^5.5.0",
     "loopback4-notifications": "^3.1.0",
