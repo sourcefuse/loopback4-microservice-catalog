@@ -35,7 +35,9 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "repository": {
     "type": "git"
@@ -75,7 +77,8 @@
     "loopback4-ratelimiter": "^4.1.0",
     "loopback4-soft-delete": "5.1.1",
     "prom-client": "^14.0.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@loopback/build": "^9.0.2",
@@ -91,5 +94,6 @@
     "check-code-coverage": {
       "lodash": "^4.17.21"
     }
-  }
+  },
+  "snyk": true
 }
