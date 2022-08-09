@@ -622,7 +622,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             //do nothing
           },
         );
-      } else {
       }
     } catch {
       //do nothing
