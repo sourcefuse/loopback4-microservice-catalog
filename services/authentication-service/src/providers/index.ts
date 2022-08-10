@@ -34,3 +34,6 @@ export * from './otp.provider';
 export * from './otp-sender.provider';
 export * from './otp-generate.provider';
 export * from './keys';
+export * from './azure-ad-signup.provider';
+export * from './azure-post-verify.provider';
+export * from './azure-pre-verify.provider';

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.7 (2022-08-04)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
+## <small>3.0.6 (2022-08-04)</small>
+
+* build(sandbox): upgrade sandbox examples versions (#929) ([2b56e9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2b56e9e)), closes [#929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/929)
+
+
+
+
+
 ## <small>3.0.5 (2022-07-27)</small>
 
 * chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

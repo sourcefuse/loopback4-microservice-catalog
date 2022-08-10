@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.1 (2022-08-04)</small>
+
+* fix(sandbox): email present in upn (#939) ([5a21a95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a21a95)), closes [#939](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/939) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 7.1.0 (2022-08-04)
+
+* feat(authentication-service): provide default implementation for azure ad (#932) ([6c6b488](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6c6b488)), closes [#932](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/932) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931)
+
+
+
+
+
 ## <small>7.0.5 (2022-07-27)</small>
 
 * chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

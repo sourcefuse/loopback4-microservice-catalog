@@ -19,3 +19,4 @@ export * from './providers/otp-verify.provider';
 export * from './providers/google-authenticator-verify.provider';
 export * from './models/otp-login-request.dto';
 export * from './types';
+export * from './providers/azure-ad-verify.provider';

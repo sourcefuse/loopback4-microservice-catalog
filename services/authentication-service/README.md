@@ -115,6 +115,10 @@ npm i @sourceloop/authentication-service
 - Start the application
   `npm start`
 
+  **Using AZURE AD for OAuth**
+  Passport strategy for authenticating via Azure Ad using [passport-azure-ad](https://www.npmjs.com/package/passport-azure-ad). We are using cookie based approach instead of session based, so the library requires a cookie-parser middleware. To bind the middleware to you application set
+  AZURE_AUTH_ENABLED=true in env file so the middleware will be added to the sequence.
+
 ### Environment Variables
 
 | Name | Required | Default Value | Description |
