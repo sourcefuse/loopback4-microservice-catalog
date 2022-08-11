@@ -61,7 +61,7 @@
     "@opentelemetry/tracing": "^0.24.0",
     "@sourceloop/core": "^7.1.1",
     "loopback-connector-mysql": "^6.1.0",
-    "loopback-connector-postgresql": "^5.5.0",
+    "loopback-connector-postgresql": "^5.5.1",
     "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-s3": "^6.0.1",
