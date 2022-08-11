@@ -68,7 +68,7 @@
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
     "form-data": "^4.0.0",
-    "loopback-connector-postgresql": "^5.5.0",
+    "loopback-connector-postgresql": "^5.5.1",
     "loopback4-soft-delete": "^5.1.1",
     "node-fetch": "^2.6.7",
     "prom-client": "^14.0.1",
