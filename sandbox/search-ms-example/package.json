@@ -68,7 +68,7 @@
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-mysql": "^6.1.0",
-    "loopback-connector-postgresql": "^5.5.0",
+    "loopback-connector-postgresql": "^5.5.1",
     "prom-client": "^14.0.1",
     "tslib": "^2.0.0"
   },
