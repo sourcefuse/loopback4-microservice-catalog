@@ -63,7 +63,7 @@
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
-    "loopback-connector-postgresql": "^5.5.0",
+    "loopback-connector-postgresql": "^5.5.1",
     "loopback4-soft-delete": "^5.1.1",
     "prom-client": "^14.0.1",
     "tslib": "^2.0.0"
