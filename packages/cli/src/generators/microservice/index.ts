@@ -581,9 +581,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-  private _addMigrationScripts(flag: boolean) {
+  private _addMigrationScripts(firstTimeMig: boolean) {
     try {
-      if (!flag) {
+      //in case of first time migration scripts added directly
+      if (!firstTimeMig) {
         const packageJsFile = 'packages/migrations/package.json';
         const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
         const script = packageJs.scripts;
