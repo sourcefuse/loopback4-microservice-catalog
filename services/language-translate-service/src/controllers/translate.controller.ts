@@ -32,26 +32,15 @@ export class TranslateController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TranslateModelDto),
+          schema: getModelSchemaRef(TranslateModelDto)
         },
       },
     })
     body: TranslateModelDto,
   ): Promise<string> {
-    if (!body) {
-      throw new HttpErrors.BadRequest(
-        'Request body with targetLanguage, text and type is required',
-      );
-    }
-    const {targetLanguage = '', text = '', type = ''} = body;
-    if (!targetLanguage) {
-      throw new HttpErrors.BadRequest('TargetLanguage is required');
-    }
-    if (!text) {
-      throw new HttpErrors.BadRequest('Text is required');
-    }
-    if (!type) {
-      throw new HttpErrors.BadRequest('Type is required');
+    const {targetLanguage, text, type} = body;
+    if (!(targetLanguage && text && type)) {
+      throw new HttpErrors.BadRequest('Incomplete request parameters!');
     }
     if (![TextType.HTML, TextType.TEXT, TextType.MARKDOWN].includes(type)) {
       throw new HttpErrors.BadRequest(

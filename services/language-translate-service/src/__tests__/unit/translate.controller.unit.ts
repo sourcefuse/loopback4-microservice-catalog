@@ -29,7 +29,6 @@ describe('TranslateController', () => {
     it('throws Bad Request when text is not given', async () => {
       const badRequestError = await translateController
         .makeTranslation({
-          text: '',
           type: TextType.TEXT,
           targetLanguage: 'fr',
         } as TranslateModelDto)
@@ -40,7 +39,6 @@ describe('TranslateController', () => {
       const badRequestError = await translateController
         .makeTranslation({
           text: '<p>Sample Text</p>',
-          type: '' as TextType,
           targetLanguage: 'fr',
         } as TranslateModelDto)
         .catch(error => error);
@@ -51,7 +49,6 @@ describe('TranslateController', () => {
         .makeTranslation({
           text: '<p>Sample Text</p>',
           type: TextType.HTML,
-          targetLanguage: '',
         } as TranslateModelDto)
         .catch(error => error);
       expect(badRequestError).to.be.instanceOf(HttpErrors.BadRequest);
