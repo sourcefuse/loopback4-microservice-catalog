@@ -15,7 +15,9 @@ let Promise;
  */
 exports.setup = function (options, seedLink) {
   dbm = options.dbmigrate;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type = dbm.dataType;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   seed = seedLink;
   Promise = options.Promise;
 };
