@@ -69,7 +69,7 @@
     "axios": "^0.26.1",
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
-    "loopback-connector-postgresql": "^5.5.0",
+    "loopback-connector-postgresql": "^5.5.1",
     "loopback4-authentication": "^6.1.5",
     "loopback4-authorization": "^5.0.6",
     "loopback4-soft-delete": "^5.1.1",
