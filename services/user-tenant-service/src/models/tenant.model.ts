@@ -97,7 +97,6 @@ export class Tenant extends UserModifiableEntity {
   })
   tenantType: string;
 
-
   @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];
 
