@@ -1,0 +1,43 @@
+<div class="container">
+  <span *ngFor="let group of eventGroups; let i = index">
+    <workflow-group
+      [group]="group"
+      [isLast]="i === eventGroups.length - 1"
+      [isFirst]="i === 0"
+      [popupTemplate]="nodePopup"
+      (add)="openPopup(types.GROUP)"
+      (remove)="onGroupRemove(types.EVENT, i)"
+      (eventAdded)="onEventAdded($event)"
+      (actionAdded)="onActionAdded($event)"
+      (itemChanged)="onItemChanged($event)"
+    ></workflow-group>
+  </span>
+
+  <br />
+  then
+  <br />
+
+  <span *ngFor="let group of actionGroups; let i = index">
+    <workflow-group
+      [group]="group"
+      [isLast]="i === actionGroups.length - 1"
+      [isFirst]="i === 0"
+      [popupTemplate]="nodePopup"
+      (add)="openPopup(types.GROUP)"
+      (remove)="onGroupRemove(types.ACTION, i)"
+      (eventAdded)="onEventAdded($event)"
+      (actionAdded)="onActionAdded($event)"
+      (itemChanged)="onItemChanged($event)"
+    ></workflow-group>
+  </span>
+</div>
+
+<popper-content #nodePopup>
+  <div
+    class="option-div"
+    (click)="onGroupAdd(node); nodePopup.hide()"
+    *ngFor="let node of nodeList"
+  >
+    {{ node.name }}
+  </div>
+</popper-content>
