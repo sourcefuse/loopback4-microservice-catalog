@@ -95,6 +95,7 @@
   "changelogPreset": "custom-sf-changelog",
   "ignoreChanges": [
     "sandbox/**",
+    "services/user-tenant-service",
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
