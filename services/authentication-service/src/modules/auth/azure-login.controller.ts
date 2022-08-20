@@ -110,10 +110,11 @@ export class AzureLoginController {
       responseMode: 'query',
       redirectUrl: process.env.AZURE_AUTH_REDIRECT_URL,
       clientSecret: process.env.AZURE_AUTH_CLIENT_SECRET,
-      allowHttpForRedirectUrl: !process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT,
+      allowHttpForRedirectUrl: !!process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT,
       passReqToCallback: !!process.env.AZURE_AUTH_PASS_REQ_CALLBACK,
       validateIssuer: !!process.env.AZURE_AUTH_VALIDATE_ISSUER,
-      useCookieInsteadOfSession: !process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION,
+      useCookieInsteadOfSession:
+        !!process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION,
       cookieEncryptionKeys: [
         {
           key: process.env.AZURE_AUTH_COOKIE_KEY,
