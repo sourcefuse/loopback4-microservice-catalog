@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.3.0 (2022-08-20)
+
+* feat(user-tenant-service): update tenant model and add migrations (#938) ([2a40e1a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2a40e1a)), closes [#938](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/938)
+
+
+
+
+
 ## <small>0.2.2 (2022-08-04)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-example
