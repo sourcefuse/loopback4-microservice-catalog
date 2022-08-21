@@ -15,8 +15,8 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  path: path.join(process.env.INIT_CWD ?? '.', '.env'),
+  defaults: path.join(process.env.INIT_CWD ?? '.', '.env.defaults'),
   errorOnMissing: false,
   includeProcessEnv: true,
 });
