@@ -71,7 +71,7 @@
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^4.0.0",
-    "loopback-connector-postgresql": "^5.5.0",
+    "loopback-connector-postgresql": "^5.5.1",
     "loopback4-authentication": "7.0.0",
     "loopback4-authorization": "5.0.6",
     "loopback4-soft-delete": "5.2.1",
