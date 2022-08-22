@@ -1,15 +1,15 @@
-import {Inject, Injectable} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   WorkflowAction,
   WorkflowEvent,
   WorkflowPrompt,
 } from '../../classes/nodes';
-import {NodeService} from '../../classes/services';
-import {BPMN_INPUTS, BPMN_NODES} from '../../const';
-import {NodeTypes} from '../../enum';
-import {InvalidEntityError} from '../../errors/base.error';
-import {BpmnNodePrompt, Constructor, WorkflowNode} from '../../types';
-import {UtilsService} from '../utils.service';
+import { NodeService } from '../../classes/services';
+import { BPMN_INPUTS, BPMN_NODES } from '../../const';
+import { NodeTypes } from '../../enum';
+import { InvalidEntityError } from '../../errors/base.error';
+import { BaseGroup, BpmnNodePrompt, Constructor, WorkflowNode } from '../../types';
+import { UtilsService } from '../utils.service';
 @Injectable()
 export class BpmnNodesService<E> extends NodeService<E> {
   actions = new Map<string, Constructor<WorkflowAction<E>>>();
@@ -17,6 +17,8 @@ export class BpmnNodesService<E> extends NodeService<E> {
   constructor(
     @Inject(BPMN_NODES)
     private readonly nodes: Constructor<WorkflowNode<E>>[],
+    @Inject(BPMN_NODES)
+    private readonly groups: Constructor<BaseGroup<E>>[],
     @Inject(BPMN_INPUTS)
     private readonly inputs: BpmnNodePrompt[],
     private readonly utils: UtilsService,
@@ -35,6 +37,19 @@ export class BpmnNodesService<E> extends NodeService<E> {
       .map(Node => new Node(this.utils.uuid()))
       .filter(n => n.type === NodeTypes.EVENT)
       .filter(instance => trigger === (instance as WorkflowEvent<E>).trigger);
+  }
+
+  getGroups(trigger = false, type = NodeTypes.EVENT) {
+    if (trigger) {
+      return this.groups
+        .map(Group => new Group(type))
+        .filter(n => n.type === NodeTypes.GROUP)
+        .filter(instance => trigger === instance.trigger);
+    } else {
+      return this.groups
+        .map(Group => new Group(type))
+        .filter(n => n.type === NodeTypes.GROUP);
+    }
   }
 
   getNodeByName(name: string, id?: string) {

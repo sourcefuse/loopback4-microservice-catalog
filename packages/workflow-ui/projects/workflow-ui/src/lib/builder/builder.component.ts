@@ -6,19 +6,17 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  TemplateRef,
-  ViewChild,
 } from '@angular/core';
-import {NgxPopperjsContentComponent} from 'ngx-popperjs';
 import {
   isSelectInput,
   Statement,
   WorkflowEvent,
   WorkflowPrompt,
 } from '../classes';
-import {BuilderService, ElementService, NodeService} from '../classes/services';
-import {InputTypes, NodeTypes} from '../enum';
-import {InvalidEntityError} from '../errors/base.error';
+import { BaseGroup } from '../classes/nodes/abstract-base-group.class';
+import { BuilderService, ElementService, NodeService } from '../classes/services';
+import { NodeTypes } from '../enum';
+import { InvalidEntityError } from '../errors/base.error';
 import {
   ActionAddition,
   ActionWithInput,
@@ -43,7 +41,7 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     private readonly builder: BuilderService<E, RecordOfAnyType>,
     private readonly nodes: NodeService<E>,
     private readonly elements: ElementService<E>,
-  ) {}
+  ) { }
 
   @Input()
   state: StateMap<RecordOfAnyType> = {};
@@ -51,10 +49,10 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
   @Input()
   diagram = '';
 
-  @Input()
-  templateMap?: {
-    [key: string]: TemplateRef<RecordOfAnyType>;
-  };
+  // @Input()
+  // templateMap?: {
+  //   [key: string]: TemplateRef<RecordOfAnyType>;
+  // };
 
   @Output()
   stateChange = new EventEmitter<StateMap<RecordOfAnyType>>();
@@ -71,17 +69,17 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
   @Output()
   itemChanged = new EventEmitter<InputChanged<E>>();
 
-  @ViewChild('nodePopup')
-  nodePopup: TemplateRef<RecordOfAnyType>;
+  // @ViewChild('nodePopup')
+  // nodePopup: TemplateRef<RecordOfAnyType>;
 
-  @ViewChild('listTemplate')
-  listTemplate: TemplateRef<RecordOfAnyType>;
+  // @ViewChild('listTemplate')
+  // listTemplate: TemplateRef<RecordOfAnyType>;
 
-  @ViewChild('numberTemplate')
-  numberTemplate: TemplateRef<RecordOfAnyType>;
+  // @ViewChild('numberTemplate')
+  // numberTemplate: TemplateRef<RecordOfAnyType>;
 
-  @ViewChild('textTemplate')
-  textTemplate: TemplateRef<RecordOfAnyType>;
+  // @ViewChild('textTemplate')
+  // textTemplate: TemplateRef<RecordOfAnyType>;
 
   events: WorkflowNode<E>[] = [];
   triggerEvents: WorkflowNode<E>[] = [];
@@ -90,7 +88,10 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
   selectedEvents: EventWithInput<E>[] = [];
   selectedActions: ActionWithInput<E>[] = [];
 
-  nodeList: WorkflowNode<E>[] = [];
+  eventGroups: BaseGroup<E>[] = [];
+  actionGroups: BaseGroup<E>[] = [];
+
+  nodeList: BaseGroup<E>[] = [];
   processId: string;
   public types = NodeTypes;
 
@@ -98,32 +99,52 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.events = this.nodes.getEvents();
     this.triggerEvents = this.nodes.getEvents(true);
     this.actions = this.nodes.getActions();
+
+    this.nodes.getGroups(true, NodeTypes.EVENT).forEach(group => this.onGroupAdd(group));
+    this.nodes.getGroups(true, NodeTypes.ACTION).forEach(group => this.onGroupAdd(group));
   }
 
-  ngAfterViewInit() {
-    if (!this.templateMap) {
-      this.templateMap = {
-        [InputTypes.Boolean]: this.listTemplate,
-        [InputTypes.List]: this.listTemplate,
-        [InputTypes.Text]: this.textTemplate,
-        [InputTypes.Number]: this.numberTemplate,
-        [InputTypes.Percentage]: this.numberTemplate,
-        [InputTypes.Date]: this.textTemplate,
-        [InputTypes.People]: this.listTemplate,
-        [InputTypes.Interval]: this.listTemplate,
-      };
-    }
-  }
+  // ngAfterViewInit() {
+  //   if (!this.templateMap) {
+  //     this.templateMap = {
+  //       [InputTypes.Boolean]: this.listTemplate,
+  //       [InputTypes.List]: this.listTemplate,
+  //       [InputTypes.Text]: this.textTemplate,
+  //       [InputTypes.Number]: this.numberTemplate,
+  //       [InputTypes.Percentage]: this.numberTemplate,
+  //       [InputTypes.Date]: this.textTemplate,
+  //       [InputTypes.People]: this.listTemplate,
+  //       [InputTypes.Interval]: this.listTemplate,
+  //     };
+  //   }
+  // }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['diagram'] && changes['state'] && this.diagram && this.state) {
-      const {events, actions, process, state} = await this.builder.restore(
+      const { events, actions, process, state } = await this.builder.restore(
         this.diagram,
       );
       this.processId = process.id;
       events.forEach(event => this.onNodeAdd(event, event.id));
       actions.forEach(action => this.onNodeAdd(action, action.id));
       this.restoreState(state);
+    }
+  }
+
+  onGroupAdd(group: BaseGroup<E>) {
+    if (group.nodeType === NodeTypes.ACTION) {
+      this.actionGroups.push(group);
+    } else if (group.nodeType === NodeTypes.EVENT) {
+      this.eventGroups.push(group);
+    }
+  }
+
+  onGroupRemove(type: NodeTypes, index: number) {
+    if (type === NodeTypes.ACTION) {
+      this.actionGroups.splice(index, 1);
+    }
+    if (type === NodeTypes.EVENT) {
+      this.eventGroups.splice(index, 1);
     }
   }
 
@@ -136,19 +157,21 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
       this.selectedEvents.push(newNode as EventWithInput<E>);
       this.eventAdded.emit({
         name: node.constructor.name,
-        event: newNode.node as WorkflowEvent<E>,
+        event: newNode.node as WorkflowEvent<E>
       });
+      this.updateDiagram();
+      this.updateState(node, newNode.inputs);
     } else if (node.type === NodeTypes.ACTION) {
       this.selectedActions.push(newNode);
       this.actionAdded.emit({
         name: node.constructor.name,
         action: newNode.node,
       });
+      this.updateDiagram();
+      this.updateState(node, newNode.inputs);
     } else {
       throw new InvalidEntityError('Node');
     }
-    this.updateDiagram();
-    this.updateState(node, newNode.inputs);
   }
 
   onNodeRemove(type: NodeTypes, index: number) {
@@ -164,14 +187,23 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.updateState(node.node, node.inputs, true);
   }
 
+  onEventAdded(event: EventAddition<E>) {
+    this.eventAdded.emit(event);
+  }
+
+  onActionAdded(action: ActionAddition<E>) {
+    this.actionAdded.emit(action);
+  }
+
+  onItemChanges(item: InputChanged<E>) {
+    this.itemChanged.emit(item);
+  }
+
   openPopup(type: NodeTypes) {
-    if (type === NodeTypes.ACTION) {
-      this.nodeList = this.actions;
-    } else if (type === NodeTypes.EVENT) {
-      this.nodeList =
-        this.selectedEvents.length > 0 ? this.events : this.triggerEvents;
+    if (type === NodeTypes.GROUP) {
+      this.nodeList = this.nodes.getGroups();
     } else {
-      throw new InvalidEntityError(type);
+      throw new InvalidEntityError("" + type);
     }
   }
 
@@ -285,23 +317,6 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.stateChange.emit(this.state);
   }
 
-  createCallback(
-    element: NodeWithInput<E>,
-    input: WorkflowPrompt,
-    popper: NgxPopperjsContentComponent,
-  ) {
-    return (value?: AllowedValues) => {
-      if (value) {
-        this.addValue(
-          element,
-          input,
-          value,
-          input.typeFunction(element.node.state) === InputTypes.List,
-        );
-      }
-      popper.hide();
-    };
-  }
 
   private mergeState<S>(stateA: StateMap<S>, stateB: StateMap<S>) {
     stateA = JSON.parse(JSON.stringify(stateA));
@@ -319,11 +334,11 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     return stateA;
   }
 
-  getInputValue(target: EventTarget | null) {
-    if (target) {
-      return (target as HTMLInputElement).value;
-    } else {
-      throw new InvalidEntityError('Event');
-    }
-  }
+  // getInputValue(target: EventTarget | null) {
+  //   if (target) {
+  //     return (target as HTMLInputElement).value;
+  //   } else {
+  //     throw new InvalidEntityError('Event');
+  //   }
+  // }
 }

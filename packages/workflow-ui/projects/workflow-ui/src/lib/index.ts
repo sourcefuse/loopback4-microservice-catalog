@@ -7,3 +7,4 @@ export * from './errors';
 export * from './workflow-builder.module';
 export * from './builder/builder.component';
 export * from './builder/node/node.component';
+export * from './builder/group/group.component';

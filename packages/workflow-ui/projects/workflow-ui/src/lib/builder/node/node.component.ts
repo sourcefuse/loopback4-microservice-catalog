@@ -5,8 +5,8 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core';
-import {NgxPopperjsContentComponent} from 'ngx-popperjs';
-import {RecordOfAnyType, NodeWithInput} from '../../types';
+import { NgxPopperjsContentComponent } from 'ngx-popperjs';
+import { RecordOfAnyType, NodeWithInput } from '../../types';
 
 @Component({
   selector: 'workflow-node',
@@ -14,7 +14,7 @@ import {RecordOfAnyType, NodeWithInput} from '../../types';
 })
 export class NodeComponent<E> {
   @Input()
-  node?: NodeWithInput<E>;
+  node: NodeWithInput<E>;
 
   @Input()
   isLast = false;
