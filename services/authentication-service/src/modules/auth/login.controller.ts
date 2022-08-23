@@ -454,7 +454,7 @@ export class LoginController {
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
-    deviceInfo: DeviceInfo,
+    deviceInfo: DeviceInfo, //NOSONAR
   ): Promise<TokenResponse> {
     try {
       const size = 32;
@@ -483,7 +483,7 @@ export class LoginController {
           AuthenticateErrorKeys.UserDoesNotExist,
         );
       }
-      const data = await this.getJwtPayload(user, authClient, deviceInfo);
+      const data = await this.getJwtPayload(user, authClient);
       const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
         expiresIn: authClient.accessTokenExpiration,
         issuer: process.env.JWT_ISSUER,
