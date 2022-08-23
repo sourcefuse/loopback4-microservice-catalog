@@ -79,10 +79,10 @@ export class AzureLoginController {
         },
       ],
       isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
-      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew), // in seconds
+      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew),
       loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
       loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
-      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime), // in seconds
+      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime),
       nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? nonceCount),
       issuer: process.env.AZURE_AUTH_ISSUER,
       cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
@@ -139,10 +139,10 @@ export class AzureLoginController {
         },
       ],
       isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
-      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew), // in seconds
+      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew),
       loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
       loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
-      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime), // in seconds
+      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime),
       nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? nonceCount),
       issuer: process.env.AZURE_AUTH_ISSUER,
       cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
@@ -201,10 +201,10 @@ export class AzureLoginController {
         },
       ],
       isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
-      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew), // in seconds
+      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew),
       loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
       loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
-      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime), // in seconds
+      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime),
       nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? nonceCount),
       issuer: process.env.AZURE_AUTH_ISSUER,
       cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
