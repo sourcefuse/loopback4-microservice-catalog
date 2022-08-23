@@ -61,17 +61,28 @@ export class AzureLoginController {
       responseMode: 'query',
       redirectUrl: process.env.AZURE_AUTH_REDIRECT_URL,
       clientSecret: process.env.AZURE_AUTH_CLIENT_SECRET,
-      allowHttpForRedirectUrl: !!process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT,
-      passReqToCallback: !!process.env.AZURE_AUTH_PASS_REQ_CALLBACK,
-      validateIssuer: !!process.env.AZURE_AUTH_VALIDATE_ISSUER,
-      useCookieInsteadOfSession:
-        !!process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION,
+      allowHttpForRedirectUrl: !!+(
+        process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT ?? 1
+      ),
+      passReqToCallback: !!+(process.env.AZURE_AUTH_PASS_REQ_CALLBACK ?? 0),
+      validateIssuer: !!+(process.env.AZURE_AUTH_VALIDATE_ISSUER ?? 1),
+      useCookieInsteadOfSession: !!+(
+        process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION ?? 1
+      ),
       cookieEncryptionKeys: [
         {
           key: process.env.AZURE_AUTH_COOKIE_KEY,
           iv: process.env.AZURE_AUTH_COOKIE_IV,
         },
       ],
+      isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
+      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? 300), // in seconds
+      loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
+      loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
+      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? 3600), // in seconds
+      nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? 10),
+      issuer: process.env.AZURE_AUTH_ISSUER,
+      cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
     },
     queryGen('query'),
   )
@@ -110,17 +121,28 @@ export class AzureLoginController {
       responseMode: 'query',
       redirectUrl: process.env.AZURE_AUTH_REDIRECT_URL,
       clientSecret: process.env.AZURE_AUTH_CLIENT_SECRET,
-      allowHttpForRedirectUrl: !!process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT,
-      passReqToCallback: !!process.env.AZURE_AUTH_PASS_REQ_CALLBACK,
-      validateIssuer: !!process.env.AZURE_AUTH_VALIDATE_ISSUER,
-      useCookieInsteadOfSession:
-        !!process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION,
+      allowHttpForRedirectUrl: !!+(
+        process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT ?? 1
+      ),
+      passReqToCallback: !!+(process.env.AZURE_AUTH_PASS_REQ_CALLBACK ?? 0),
+      validateIssuer: !!+(process.env.AZURE_AUTH_VALIDATE_ISSUER ?? 1),
+      useCookieInsteadOfSession: !!+(
+        process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION ?? 1
+      ),
       cookieEncryptionKeys: [
         {
           key: process.env.AZURE_AUTH_COOKIE_KEY,
           iv: process.env.AZURE_AUTH_COOKIE_IV,
         },
       ],
+      isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
+      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? 300), // in seconds
+      loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
+      loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
+      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? 3600), // in seconds
+      nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? 10),
+      issuer: process.env.AZURE_AUTH_ISSUER,
+      cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
     },
     queryGen('body'),
   )
@@ -161,17 +183,28 @@ export class AzureLoginController {
       responseMode: 'query',
       redirectUrl: process.env.AZURE_AUTH_REDIRECT_URL,
       clientSecret: process.env.AZURE_AUTH_CLIENT_SECRET,
-      allowHttpForRedirectUrl: !!process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT,
-      passReqToCallback: !!process.env.AZURE_AUTH_PASS_REQ_CALLBACK,
-      validateIssuer: !!process.env.AZURE_AUTH_VALIDATE_ISSUER,
-      useCookieInsteadOfSession:
-        !!process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION,
+      allowHttpForRedirectUrl: !!+(
+        process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT ?? 1
+      ),
+      passReqToCallback: !!+(process.env.AZURE_AUTH_PASS_REQ_CALLBACK ?? 0),
+      validateIssuer: !!+(process.env.AZURE_AUTH_VALIDATE_ISSUER ?? 1),
+      useCookieInsteadOfSession: !!+(
+        process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION ?? 1
+      ),
       cookieEncryptionKeys: [
         {
           key: process.env.AZURE_AUTH_COOKIE_KEY,
           iv: process.env.AZURE_AUTH_COOKIE_IV,
         },
       ],
+      isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
+      clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? 300), // in seconds
+      loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
+      loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
+      nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? 3600), // in seconds
+      nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? 10),
+      issuer: process.env.AZURE_AUTH_ISSUER,
+      cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
     },
     queryGen('query'),
   )
