@@ -16,13 +16,11 @@ import {
   NotificationServiceComponent,
   NotifServiceBindings,
 } from '@sourceloop/notification-service';
-import {
-  NotificationBindings,
-  PubnubBindings,
-  PubNubProvider,
-  SESBindings,
-  SNSBindings,
-} from 'loopback4-notifications';
+import {NotificationBindings} from 'loopback4-notifications';
+import { PubnubBindings,
+  PubNubProvider,} from 'loopback4-notifications/pubnub';
+import {SNSBindings} from 'loopback4-notifications/sns';
+import { SESBindings } from 'loopback4-notifications/ses';
 
 export {ApplicationConfig};
 
