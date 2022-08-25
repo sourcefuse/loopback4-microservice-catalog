@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.2 (2022-08-20)</small>
+
+* fix(authentication-service): fix minor issues in azure oauth (#985) ([af272a6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/af272a6)), closes [#985](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/985) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(user-tenant-service): made user-tenant-service private (#986) ([03c5074](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/03c5074)), closes [#986](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/986) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* docs(authentication-service): readme changes for azure ad (#941) ([9dbe41b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9dbe41b)), closes [#941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/941) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>7.1.1 (2022-08-04)</small>
+
+* fix(sandbox): email present in upn (#939) ([5a21a95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a21a95)), closes [#939](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/939) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 7.1.0 (2022-08-04)
+
+* feat(authentication-service): provide default implementation for azure ad (#932) ([6c6b488](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6c6b488)), closes [#932](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/932) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931)
+
+
+
+
+
+## <small>7.0.5 (2022-07-27)</small>
+
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
 ## <small>7.0.4 (2022-07-11)</small>
 
 * chore(deps): fix vulnerability (#895) ([53004c0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/53004c0)), closes [#895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

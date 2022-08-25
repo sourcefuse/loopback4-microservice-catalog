@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.6 (2022-07-27)</small>
+
+* fix(cache): override findOne method and add caching to it (#916) ([b46d6db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b46d6db)), closes [#916](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/916) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
 ## <small>0.3.5 (2022-07-06)</small>
 
 * chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.3.1 (2022-07-30)</small>
+
+* fix(cli):fixed czconfig file using fs (#927) ([7d2fc5c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7d2fc5c)), closes [#927](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/927) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 2.3.0 (2022-07-27)
+
+* feat(cli): add backstage integration flag for scaffold (#924) ([b2ae1a0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2ae1a0)), closes [#924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/924) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(cli): add datasource to test helper (#917) ([fe0f7e6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fe0f7e6)), closes [#917](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/917) [#789](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/789) [#789](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/789) [#789](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/789)
+* fix(cli): cli changes for microservice and facade (#918) ([f79f0d4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f79f0d4)), closes [#918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/918) [#914](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/914) [#914](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/914)
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
 ## <small>2.2.1 (2022-07-11)</small>
 
 * fix(cli): update versions in template Dependencies (#894) ([898b899](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/898b899)), closes [#894](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/894)

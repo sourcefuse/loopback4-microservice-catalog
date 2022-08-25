@@ -46,6 +46,122 @@
         "operationId": "AppleLoginController.appleCallback"
       }
     },
+    "/auth/azure": {
+      "post": {
+        "x-controller-name": "AzureLoginController",
+        "x-operation-name": "postLoginViaAzure",
+        "tags": [
+          "AzureLoginController"
+        ],
+        "description": "POST Call for azure based login",
+        "responses": {
+          "200": {
+            "description": "Azure Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "AzureLoginController.postLoginViaAzure"
+      },
+      "get": {
+        "x-controller-name": "AzureLoginController",
+        "x-operation-name": "getLoginViaAzure",
+        "tags": [
+          "AzureLoginController"
+        ],
+        "description": "POST Call for azure based login",
+        "responses": {
+          "200": {
+            "description": "Azure Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "AzureLoginController.getLoginViaAzure"
+      }
+    },
+    "/auth/azure-oauth-redirect": {
+      "get": {
+        "x-controller-name": "AzureLoginController",
+        "x-operation-name": "azureCallback",
+        "tags": [
+          "AzureLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Azure Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "AzureLoginController.azureCallback"
+      }
+    },
     "/auth/change-password": {
       "patch": {
         "x-controller-name": "LoginController",

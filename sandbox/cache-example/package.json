@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache-example",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "cache example",
   "keywords": [
     "loopback-application",
@@ -53,13 +53,13 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^5.0.1",
-    "@loopback/core": "^4.0.1",
-    "@loopback/repository": "^5.0.1",
-    "@loopback/rest": "^12.0.1",
-    "@loopback/rest-explorer": "^5.0.1",
-    "@loopback/service-proxy": "^5.0.1",
-    "@sourceloop/cache": "^0.3.5",
+    "@loopback/boot": "5.0.2",
+    "@loopback/core": "4.0.2",
+    "@loopback/repository": "5.0.2",
+    "@loopback/rest": "12.0.2",
+    "@loopback/rest-explorer": "5.0.2",
+    "@loopback/service-proxy": "5.0.2",
+    "@sourceloop/cache": "^0.3.6",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
@@ -69,12 +69,12 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.1",
-    "@loopback/eslint-config": "^13.0.1",
-    "@loopback/testlab": "^5.0.1",
-    "@types/node": "^14.18.21",
-    "eslint": "^8.17.0",
+    "@loopback/build": "9.0.2",
+    "@loopback/eslint-config": "13.0.2",
+    "@loopback/testlab": "5.0.2",
+    "@types/node": "18.7.8",
+    "eslint": "8.22.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.7.3"
+    "typescript": "4.7.4"
   }
 }

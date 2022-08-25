@@ -42,7 +42,7 @@ Authenication service as it uses the same database tables and no new migration i
 
 ### Setting Environment Variables
 
-Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
+Do not forget to set Environment variables in .env. The examples below show a common configuration for a PostgreSQL Database running locally.
 
 ```environment
 NODE_ENV=dev

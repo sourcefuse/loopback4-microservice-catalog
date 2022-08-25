@@ -35,7 +35,12 @@
         "@sourceloop/payment-example-frontend",
         "@sourceloop/user-onboarding-example",
         "@sourceloop/cache-example",
-        "@sourceloop/user-tenant-example"
+        "@sourceloop/user-tenant-example",
+        "@sourceloop/chat-notif-example-facade-socket",
+        "@sourceloop/chat-notif-example-ui-socket",
+        "@sourceloop/chat-notif-example-chat-socket",
+        "@sourceloop/chat-notif-example-notif-socket",
+        "@sourceloop/example-socketio"
       ]
     },
     "version": {
@@ -73,7 +78,12 @@
         "@sourceloop/payment-example-frontend",
         "@sourceloop/user-onboarding-example",
         "@sourceloop/cache-example",
-        "@sourceloop/user-tenant-example"
+        "@sourceloop/user-tenant-example",
+        "@sourceloop/chat-notif-example-facade-socket",
+        "@sourceloop/chat-notif-example-ui-socket",
+        "@sourceloop/chat-notif-example-chat-socket",
+        "@sourceloop/chat-notif-example-notif-socket",
+        "@sourceloop/example-socketio"
       ]
     },
     "clean": {
@@ -85,6 +95,7 @@
   "changelogPreset": "custom-sf-changelog",
   "ignoreChanges": [
     "sandbox/**",
+    "services/user-tenant-service",
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",

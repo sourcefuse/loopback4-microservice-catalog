@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "NOTIF_DB_HOST"
+      },
+      "port": {
+        "ENV": "NOTIF_DB_PORT"
+      },
+      "user": {
+        "ENV": "NOTIF_DB_USER"
+      },
+      "password": {
+        "ENV": "NOTIF_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "NOTIF_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+  }

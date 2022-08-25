@@ -14,10 +14,10 @@ import {
 import {repository} from '@loopback/repository';
 import {
   NotificationBindings,
-  PubNubNotification,
   Config,
   MessageType,
 } from 'loopback4-notifications';
+import {PubNubNotification} from 'loopback4-notifications/pubnub';
 import {NotifServiceBindings} from '../keys';
 import {
   authenticate,
