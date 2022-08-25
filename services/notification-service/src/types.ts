@@ -17,11 +17,7 @@ export interface INotificationUserManager {
   getNotifUsers(notif: Notification): Promise<NotificationUser[]>;
 }
 
-export interface INotifServiceConfig extends IServiceConfig {
-  useCustomEmailProvider: boolean;
-  useCustomSMSProvider: boolean;
-  useCustomPushProvider: boolean;
-}
+export interface INotifServiceConfig extends IServiceConfig {}
 
 export type INotificationFilterFunc = (
   notif: Notification,
