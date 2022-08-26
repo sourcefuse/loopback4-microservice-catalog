@@ -10,6 +10,7 @@ import {
 import {
   isSelectInput,
   Statement,
+  StatementNode,
   WorkflowEvent,
   WorkflowPrompt,
 } from '../classes';
@@ -36,7 +37,7 @@ import {
   templateUrl: './builder.component.html',
   styleUrls: ['./builder.component.scss'],
 })
-export class BuilderComponent<E> implements OnInit, OnChanges {
+export class BuilderComponent<E> implements OnInit {
   constructor(
     private readonly builder: BuilderService<E, RecordOfAnyType>,
     private readonly nodes: NodeService<E>,
@@ -103,21 +104,6 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.nodes.getGroups(true, NodeTypes.EVENT).forEach(group => this.onGroupAdd(group));
     this.nodes.getGroups(true, NodeTypes.ACTION).forEach(group => this.onGroupAdd(group));
   }
-
-  // ngAfterViewInit() {
-  //   if (!this.templateMap) {
-  //     this.templateMap = {
-  //       [InputTypes.Boolean]: this.listTemplate,
-  //       [InputTypes.List]: this.listTemplate,
-  //       [InputTypes.Text]: this.textTemplate,
-  //       [InputTypes.Number]: this.numberTemplate,
-  //       [InputTypes.Percentage]: this.numberTemplate,
-  //       [InputTypes.Date]: this.textTemplate,
-  //       [InputTypes.People]: this.listTemplate,
-  //       [InputTypes.Interval]: this.listTemplate,
-  //     };
-  //   }
-  // }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['diagram'] && changes['state'] && this.diagram && this.state) {
@@ -195,7 +181,7 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     this.actionAdded.emit(action);
   }
 
-  onItemChanges(item: InputChanged<E>) {
+  onItemChanged(item: InputChanged<E>) {
     this.itemChanged.emit(item);
   }
 
@@ -285,14 +271,41 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     if (this.processId) {
       statement.processId = this.processId;
     }
-    [...this.selectedEvents, ...this.selectedActions]
-      .map(e => e.node)
-      .forEach(node => {
-        node.elements.forEach(element => {
-          const instance = this.elements.createInstance(element);
-          statement.addNode(instance, node);
-        });
-      });
+    // [...this.selectedEvents, ...this.selectedActions]
+    //   .map(e => e.node)
+    //   .forEach(node => {
+    //     node.elements.forEach(element => {
+    //       const instance = this.elements.createInstance(element);
+    //       statement.addNode(instance, node);
+    //     });
+    //   });
+
+    [...this.eventGroups, ...this.actionGroups]
+      .forEach(group => {
+        if (group.name === 'and') {
+          [...group.children]
+            .map(e => e.node)
+            .forEach(node => {
+              node.elements.forEach(element => {
+                const instance = this.elements.createInstance(element);
+                statement.addNode(instance, node);
+              })
+            })
+        } else if (group.name === 'or') {
+          const statementNodes: StatementNode<E>[] = [];
+          [...group.children]
+            .map(e => e.node)
+            .forEach(node => {
+              node.elements.forEach(element => {
+                const instance = this.elements.createInstance(element);
+                statementNodes.push(new StatementNode(instance, node));
+              })
+            })
+          statement.addNodes(statementNodes);
+        } else {
+          throw new Error('Invalid Node type');
+        }
+      })
 
     return this.builder.build(statement);
   }
@@ -334,11 +347,11 @@ export class BuilderComponent<E> implements OnInit, OnChanges {
     return stateA;
   }
 
-  // getInputValue(target: EventTarget | null) {
-  //   if (target) {
-  //     return (target as HTMLInputElement).value;
-  //   } else {
-  //     throw new InvalidEntityError('Event');
-  //   }
-  // }
+  getInputValue(target: EventTarget | null) {
+    if (target) {
+      return (target as HTMLInputElement).value;
+    } else {
+      throw new InvalidEntityError('Event');
+    }
+  }
 }
