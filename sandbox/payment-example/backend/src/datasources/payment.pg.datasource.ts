@@ -9,7 +9,7 @@ import {PaymentDatasourceName} from '@sourceloop/payment-service';
 const config = {
   name: PaymentDatasourceName,
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,

@@ -9,7 +9,7 @@ import {NotifDbSourceName} from '@sourceloop/notification-service';
 const config = {
   name: NotifDbSourceName,
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.NOTIF_DB_HOST,
   port: process.env.NOTIF_DB_PORT,
   user: process.env.NOTIF_DB_USER,
