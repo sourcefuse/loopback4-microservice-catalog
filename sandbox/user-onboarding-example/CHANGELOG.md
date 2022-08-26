@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.6 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* build(sandbox): update versions in all examples (#996) ([ebafab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebafab0)), closes [#996](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/996)
+
+
+
+
+
 ## <small>0.1.5 (2022-07-27)</small>
 
 * fix(sandbox): revert user-onboarding example version (#926) ([ca6802c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca6802c)), closes [#926](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/926) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

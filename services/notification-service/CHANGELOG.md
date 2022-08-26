@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2022-08-26)
+
+* fix(deps): fix error for aws, pubnub and nodemailer (#989) ([406e26c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/406e26c)), closes [#989](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/989)
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+### BREAKING CHANGE
+
+* changed config type of NotifServiceBindings
+
+Co-authored-by: akshatdubeysf <77672713+akshatdubeysf@users.noreply.github.com>
+
+
+
+
 ## <small>5.0.6 (2022-07-27)</small>
 
 * chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.1 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* build(sandbox): update versions in all examples (#996) ([ebafab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebafab0)), closes [#996](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/996)
+
+
+
+
+
 ## 4.0.0 (2022-08-20)
 
 * feat(sandbox): Example of sending push notification via socketio (#935) ([e08cb71](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e08cb71)), closes [#935](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/935) [#934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/934) [#934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/934) [#9934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/9934) [#934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/934)

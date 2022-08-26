@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.1 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* build(sandbox): update versions in all examples (#996) ([ebafab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebafab0)), closes [#996](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/996)
+
+
+
+
+
 ## 0.3.0 (2022-08-20)
 
 * feat(user-tenant-service): update tenant model and add migrations (#938) ([2a40e1a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2a40e1a)), closes [#938](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/938)

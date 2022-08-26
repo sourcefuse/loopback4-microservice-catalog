@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2022-08-26)
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(core): add support for node.js v17 and upgrade to @loopback/cli v3 ([4115b6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4115b6c)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(docs): add badge for node and npm version ([caaa1bd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/caaa1bd))
+
+
+### BREAKING CHANGE
+
+* drop support for node.js v10
+
+
+
+
 ## <small>1.3.1 (2021-12-17)</small>
 
 * fix(ci-cd): add sandbox to ignore for bootstrap (#442) ([cc8c848](https://github-personal/sourcefuse/loopback4-microservice-catalog/commit/cc8c848)), closes [#442](https://github-personal/sourcefuse/loopback4-microservice-catalog/issues/442)

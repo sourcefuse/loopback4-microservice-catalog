@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 0.2.0 (2022-08-20)
 
 * fix(services): audit fix in user-tenant-service (#982) ([8a38628](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8a38628)), closes [#982](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/982)
