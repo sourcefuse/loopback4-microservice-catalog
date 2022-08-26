@@ -72,7 +72,7 @@ export class User extends UserModifiableEntity implements IAuthUser {
     type: 'string',
     name: 'auth_client_ids',
   })
-  authClientIds: string;
+  authClientIds?: string;
 
   @property({
     type: 'date',

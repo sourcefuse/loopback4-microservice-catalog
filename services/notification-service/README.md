@@ -84,10 +84,8 @@ npm i @sourceloop/notification-service
     ```
     - Implement an SnsProvider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/sms/sns)) or import the default SNS provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.SMSProvider` key -
     ```typescript
-    import {
-      NotificationBindings,
-      SnsProvider // or your own provider
-    } from 'loopback4-notifications';
+    import {NotificationBindings} from 'loopback4-notifications';
+    import {SnsProvider} from 'loopback4-notifications/sns'; // or your own provider
     ...
     this.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider);
     ...
@@ -109,10 +107,8 @@ npm i @sourceloop/notification-service
     ```
     - Implement a Pubnub Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/pubnuba)) or import the default Pubnub provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
     ```typescript
-    import {
-      NotificationBindings,
-      PubNubProvider //or your own provider
-    } from 'loopback4-notifications';
+    import {NotificationBindings} from 'loopback4-notifications';
+    import {PubNubProvider} from 'loopback4-notifications/pubnub';  //or your own provider
     ...
     this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
     ...
@@ -126,10 +122,8 @@ npm i @sourceloop/notification-service
     ```
     - Implement a SocketIO Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/socketio)) or import the default Socket.io provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
     ```typescript
-    import {
-      NotificationBindings,
-      SocketIOProvider // or your own provider
-    } from 'loopback4-notifications';
+    import {NotificationBindings} from 'loopback4-notifications';
+    import {SocketIOProvider} from 'loopback4-notifications/socketio';  //or your own provider
     ...
     this.bind(NotificationBindings.PushProvider).toProvider(SocketIOProvider);
     ...
