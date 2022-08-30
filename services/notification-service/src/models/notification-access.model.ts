@@ -3,9 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {model, property, Entity} from '@loopback/repository';
-import {Config, MessageType, MessageOptions} from 'loopback4-notifications';
-import {PubNubReceiver} from 'loopback4-notifications';
-
+import {
+  Config,
+  MessageType,
+  MessageOptions,
+  PubNubReceiver,
+} from 'loopback4-notifications';
 @model({
   name: 'notification_access',
 })
