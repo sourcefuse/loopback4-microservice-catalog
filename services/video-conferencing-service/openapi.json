@@ -3,7 +3,7 @@
   "info": {
     "title": "Video Conferencing Service",
     "version": "1.0.0",
-    "description": "Microservice providing Video-Conferencing functionality.",
+    "description": "Microservice providing Video-Conferencing functionality",
     "contact": {
       "name": "Sourcefuse"
     }

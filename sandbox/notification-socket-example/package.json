@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/notification-socket-example",
   "version": "4.0.0",
-  "description": "sandbox",
+  "description": "sandbox.",
   "keywords": [
     "loopback-application",
     "loopback"

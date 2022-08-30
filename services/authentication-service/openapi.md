@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Authentication microservice
+Authentication microservice.
 
 Base URLs:
 
@@ -656,8 +656,7 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json',
-  'device_id':'string'
+  'Accept':'application/json'
 };
 
 fetch('/auth/login-token',
@@ -684,8 +683,7 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json',
-  'device_id':'string'
+  'Accept':'application/json'
 };
 
 fetch('/auth/login-token',
@@ -721,7 +719,6 @@ Gets you refresh token and access token in one hit. (mobile app)
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|device_id|header|string|false|none|
 |body|body|[LoginRequest](#schemaloginrequest)|false|none|
 
 > Example responses
@@ -834,8 +831,7 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json',
-  'device_id':'string'
+  'Accept':'application/json'
 };
 
 fetch('/auth/token',
@@ -860,8 +856,7 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json',
-  'device_id':'string'
+  'Accept':'application/json'
 };
 
 fetch('/auth/token',
@@ -895,7 +890,6 @@ Send the code received from the POST /auth/login api and get refresh token and a
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|device_id|header|string|false|none|
 |body|body|[AuthTokenRequest](#schemaauthtokenrequest)|false|none|
 
 > Example responses
