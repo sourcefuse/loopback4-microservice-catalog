@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {model, property, Entity} from '@loopback/repository';
 import {Config, MessageType, MessageOptions} from 'loopback4-notifications';
-import {PubNubReceiver} from 'loopback4-notifications/pubnub';
+import {PubNubReceiver} from 'loopback4-notifications';
 
 @model({
   name: 'notification_access',

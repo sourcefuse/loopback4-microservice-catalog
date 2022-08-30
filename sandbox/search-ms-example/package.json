@@ -59,8 +59,8 @@
     "@loopback/rest": "^12.0.2",
     "@loopback/rest-explorer": "^5.0.2",
     "@loopback/service-proxy": "^5.0.2",
-    "@sourceloop/core": "^7.1.2",
-    "@sourceloop/search-service": "^0.6.7",
+    "@sourceloop/core": "^7.1.1",
+    "@sourceloop/search-service": "^0.6.6",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "db-migrate": "^1.0.0-beta.18",
@@ -74,11 +74,11 @@
   },
   "devDependencies": {
     "@loopback/build": "^9.0.2",
-    "@loopback/eslint-config": "^13.0.2",
+    "@loopback/eslint-config": "13.0.2",
     "@loopback/testlab": "^5.0.2",
-    "@types/node": "18.7.8",
-    "eslint": "^8.21.0",
+    "@types/node": "^18.7.8",
+    "eslint": "8.22.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.7.4"
+    "typescript": "^4.7.4"
   }
 }

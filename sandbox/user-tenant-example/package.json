@@ -59,8 +59,8 @@
     "@loopback/rest": "^12.0.2",
     "@loopback/rest-explorer": "^5.0.2",
     "@loopback/service-proxy": "^5.0.2",
-    "@sourceloop/authentication-service": "^8.0.0",
-    "@sourceloop/core": "^7.1.2",
+    "@sourceloop/authentication-service": "^7.1.2",
+    "@sourceloop/core": "^7.1.1",
     "@sourceloop/user-tenant-service": "^0.1.4",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
@@ -78,13 +78,13 @@
   },
   "devDependencies": {
     "@loopback/build": "^9.0.2",
-    "@loopback/eslint-config": "^13.0.2",
+    "@loopback/eslint-config": "13.0.2",
     "@loopback/testlab": "^5.0.2",
-    "@types/node": "18.7.8",
-    "eslint": "^8.21.0",
+    "@types/node": "^18.7.8",
+    "eslint": "8.22.0",
     "patch-package": "^6.4.7",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.7.4"
+    "typescript": "^4.7.4"
   },
   "overrides": {
     "passport-azure-ad": {

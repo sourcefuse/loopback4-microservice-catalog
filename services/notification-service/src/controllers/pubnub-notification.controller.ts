@@ -17,7 +17,7 @@ import {
   Config,
   MessageType,
 } from 'loopback4-notifications';
-import {PubNubNotification} from 'loopback4-notifications/pubnub';
+import {PubNubNotification} from 'loopback4-notifications';
 import {NotifServiceBindings} from '../keys';
 import {
   authenticate,

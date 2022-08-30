@@ -57,7 +57,7 @@
     "@types/chai": "^4.3.1",
     "@types/lodash": "^4.14.182",
     "@types/mocha": "^9.1.1",
-    "@types/node": "18.7.8",
+    "@types/node": "^18.7.8",
     "@types/yeoman-environment": "^2.10.7",
     "@types/yeoman-generator": "^5.2.10",
     "@types/yosay": "^2.0.1",
@@ -72,7 +72,7 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.7.0",
     "tslint": "^6.1.3",
-    "typescript": "4.7.4"
+    "typescript": "^4.7.4"
   },
   "overrides": {
     "fast-glob": {

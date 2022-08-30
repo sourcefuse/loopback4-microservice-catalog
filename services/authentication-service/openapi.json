@@ -756,15 +756,6 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
-        "parameters": [
-          {
-            "name": "device_id",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1056,15 +1047,6 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
-        "parameters": [
-          {
-            "name": "device_id",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {

@@ -83,7 +83,10 @@
         "@sourceloop/chat-notif-example-ui-socket",
         "@sourceloop/chat-notif-example-chat-socket",
         "@sourceloop/chat-notif-example-notif-socket",
-        "@sourceloop/example-socketio"
+        "@sourceloop/example-socketio",
+        "@sourceloop/chat-service",
+        "@sourceloop/in-mail-service",
+        "@sourceloop/video-conferencing-service"
       ]
     },
     "clean": {
@@ -99,7 +102,10 @@
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**"
+    "packages/core/locales/**",
+    "services/chat-service",
+    "services/in-mail-service",
+    "services/video-conferencing-service"
   ],
   "version": "independent"
 }

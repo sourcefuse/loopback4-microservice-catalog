@@ -8,7 +8,7 @@ import {
   SNSBindings,
   SNSMessage,
   SNSNotification,
-} from 'loopback4-notifications/sns';
+} from 'loopback4-notifications';
 
 export class SnsMockProvider implements Provider<SNSNotification> {
   constructor(
