@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/example-socketio",
-  "description": "This is an example for spinning up socket server.",
+  "description": "This is an example for spinning up socket server",
   "version": "0.6.2",
   "keywords": [
     "loopback-application",
@@ -67,6 +67,6 @@
     "eslint": "^8.21.0",
     "socket.io-client": "^4.5.1",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.7.4" 
+    "typescript": "~4.7.4"
   }
 }

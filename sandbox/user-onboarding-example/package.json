@@ -1,6 +1,7 @@
 {
   "name": "@sourceloop/user-onboarding-example",
   "version": "0.1.6",
+  "description": "user-onboarding-example",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
