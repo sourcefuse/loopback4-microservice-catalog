@@ -1,0 +1,35 @@
+.action-text,
+.input-text {
+  display: inline-block;
+  user-select: none;
+  cursor: pointer;
+  text-decoration: underline;
+  color: grey;
+  p {
+      margin-bottom: 0;
+  }
+}
+.input-text {
+  display: inline;
+  .value-text {
+    color: black;
+    text-decoration: dotted;
+  }
+}
+.container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+}
+.option-div{
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 200px;
+    &:hover {
+        background: rgb(240, 239, 239);
+    }
+}
