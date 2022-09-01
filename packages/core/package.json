@@ -83,10 +83,6 @@
     "typescript": "^4.8.2"
   },
   "overrides": {
-    "commitizen": {
-      "minimist": "^1.2.6",
-      "cz-conventional-changelog": "^3.3.0"
-    },
     "passport-azure-ad": {
       "passport": "^0.6.0"
     }
