@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   WorkflowElement,
   BuilderService,
@@ -9,9 +9,9 @@ import {
   WorkflowAction,
   WorkflowEvent,
 } from '../../classes';
-import {BASE_XML} from '../../const';
-import {NodeTypes} from '../../enum';
-import {AutoLayoutService} from '../../layout/layout.service';
+import { BASE_XML } from '../../const';
+import { NodeTypes } from '../../enum';
+import { AutoLayoutService } from '../../layout/layout.service';
 import {
   BpmnElement,
   CustomBpmnModdle,
@@ -20,7 +20,7 @@ import {
   StateMap,
   WorkflowNode,
 } from '../../types';
-import {ProcessPropertiesElement} from './elements/process/process-properties.element';
+import { ProcessPropertiesElement } from './elements/process/process-properties.element';
 @Injectable()
 export class BpmnBuilderService extends BuilderService<
   ModdleElement,
@@ -38,12 +38,6 @@ export class BpmnBuilderService extends BuilderService<
     super();
   }
 
-  /**
-   * It takes a statement, creates a process element, adds the start and end elements, and then iterates
-   * through the statement, creating each element and linking them together
-   * @param statement - Statement<ModdleElement>
-   * @returns The XML of the process
-   */
   async build(statement: Statement<ModdleElement>) {
     const result = await this.moddle.fromXML(this.baseXML);
     this.root = result.rootElement;
@@ -54,14 +48,14 @@ export class BpmnBuilderService extends BuilderService<
     if (statement.state) {
       attrs['extensionElements'] = this.saveProperties(
         statement.state,
-        statement.head,
+        statement.head[0],
       );
     }
     const start = this.elements.createInstanceByName('StartElement');
     const end = this.elements.createInstanceByName('EndElement');
     const base = this.elements.createElementByName(
       'ProcessElement',
-      statement.head,
+      statement.head[0],
       attrs,
     );
     this.root.get('rootElements').push(base);
@@ -69,17 +63,27 @@ export class BpmnBuilderService extends BuilderService<
     statement.addEnd(end);
     let current = statement.head;
     while (current) {
-      const tag = current.element.create(current);
-      base.get('flowElements').push(tag);
-      current.setTag(tag);
-      if (current.prev) {
-        const prev = current.prev;
-        const link = prev.element.link(prev);
-        base.get('flowElements').push(...link);
+      if (current.length === 1) {
+        const tag = current[0].element.create(current[0]);
+        base.get('flowElements').push(tag);
+        current[0].setTag(tag);
+        if (current[0].prev) {
+          const prev = current[0].prev;
+          if (prev.length === 1) {
+            const link = prev[0].element.link(prev[0]);
+            base.get('flowElements').push(...link);
+          }
+          else {
+            //TODO
+          }
+        }
+        current = current[0].next;
       }
-      current = current.next;
+      else {
+        //TODO
+      }
     }
-    const {xml} = await this.moddle.toXML(this.root);
+    const { xml } = await this.moddle.toXML(this.root);
     try {
       return (await this.layout.layoutProcess(xml)).xml;
     } catch (e) {
@@ -87,11 +91,6 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
-  /**
-   * It takes an XML string, converts it to a moddle element, and then extracts the process, actions,
-   * events, and state from the moddle element
-   * @param {string} xml - The XML string that you want to restore.
-   */
   async restore(xml: string) {
     const result = await this.moddle.fromXML(xml);
     this.root = result.rootElement;

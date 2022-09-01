@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {RecordOfAnyType} from '../../../../types/base.types';
+import { Injectable } from '@angular/core';
+import { RecordOfAnyType } from '../../../../types/base.types';
 import {
   BpmnElement,
   BpmnStatementNode,
   CustomBpmnModdle,
   ModdleElement,
 } from '../../../../types/bpmn.types';
-import {UtilsService} from '../../../utils.service';
+import { UtilsService } from '../../../utils.service';
 import {
   CreateStrategy,
   FromParam,
@@ -14,23 +14,15 @@ import {
   isFromParam,
   isStateParam,
 } from '../../../../interfaces';
-import {WorkflowElement} from '../../../../classes';
-import {InvalidEntityError} from '../../../../errors';
+import { WorkflowElement } from '../../../../classes';
+import { InvalidEntityError } from '../../../../errors';
 
 @Injectable()
 export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
   constructor(
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
-  ) {}
-  /**
-   * It creates a BPMN element, sets its ID, and adds inputs and outputs to it
-   * @param {BpmnElement} element - BpmnElement,
-   * @param {BpmnStatementNode} node - BpmnStatementNode - the node that is being executed
-   * @param {RecordOfAnyType} attrs - RecordOfAnyType - This is a record of any type. It's used to pass
-   * in any custom attributes that you want to add to the element.
-   * @returns A BPMN element
-   */
+  ) { }
   execute(
     element: BpmnElement,
     node: BpmnStatementNode,
@@ -105,8 +97,7 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     const getVariables = froms
       .map(
         p =>
-          `var ${(p as FromParam).from}Local = readObj.${
-            (p as FromParam).from
+          `var ${(p as FromParam).from}Local = readObj.${(p as FromParam).from
           };`,
       )
       .join('\n');
@@ -138,10 +129,10 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
   ) {
-    if (node.prev.element.constructor.name === 'GatewayElement') {
-      return node.prev.outgoing;
+    if (node.prev[0].element.constructor.name === 'GatewayElement') {
+      return node.prev[0].outgoing;
     } else {
-      return node.prev.element.id;
+      return node.prev[0].element.id;
     }
   }
 }

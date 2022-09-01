@@ -1,7 +1,8 @@
-import {WorkflowPrompt} from '../classes/nodes/abstract-prompt.class';
-import {WorkflowAction} from '../classes/nodes/abstract-workflow-action.class';
-import {WorkflowEvent} from '../classes/nodes/abstract-workflow-event.class';
-import {ConditionTypes} from '../enum';
+import { WorkflowPrompt } from '../classes/nodes/abstract-prompt.class';
+import { WorkflowAction } from '../classes/nodes/abstract-workflow-action.class';
+import { WorkflowEvent } from '../classes/nodes/abstract-workflow-event.class';
+import { ConditionTypes } from '../enum';
+import { AndGroup, OrGroup } from '../services/statement/groups';
 
 export type RecordOfAnyType = {
   // sonarignore:start
@@ -27,6 +28,8 @@ export type ConditionOperatorPair = {
 };
 
 export type WorkflowNode<E> = WorkflowAction<E> | WorkflowEvent<E>;
+
+export type BaseGroup<E> = AndGroup<E> | OrGroup<E>;
 
 export type ActionWithInput<E> = {
   node: WorkflowAction<E>;

@@ -1,6 +1,6 @@
-import {WorkflowNode} from '../../types/base.types';
-import {WorkflowElement} from '../element/abstract-element.class';
-import {WorkflowPrompt} from '../nodes';
+import { WorkflowNode } from '../../types/base.types';
+import { WorkflowElement } from '../element/abstract-element.class';
+import { WorkflowPrompt } from '../nodes';
 
 export class StatementNode<E> {
   inputs: WorkflowPrompt;
@@ -9,8 +9,8 @@ export class StatementNode<E> {
   tag: E;
   incoming: string;
   outgoing: string;
-  next: StatementNode<E>;
-  prev: StatementNode<E>;
+  next: StatementNode<E>[];
+  prev: StatementNode<E>[];
   constructor(element: WorkflowElement<E>, node?: WorkflowNode<E>) {
     this.element = element;
     if (node) {

@@ -1,6 +1,6 @@
-import {Inject, Injectable} from '@angular/core';
-import {WorkflowElement} from '../../../../classes';
-import {LinkStrategy} from '../../../../interfaces';
+import { Inject, Injectable } from '@angular/core';
+import { WorkflowElement } from '../../../../classes';
+import { LinkStrategy } from '../../../../interfaces';
 import {
   CustomBpmnModdle,
   ModdleElement,
@@ -8,9 +8,9 @@ import {
   ConditionOperatorPair,
   RecordOfAnyType,
 } from '../../../../types';
-import {CONDITION_LIST} from '../../../../const';
-import {UtilsService} from '../../../utils.service';
-import {InputTypes} from '../../../../enum';
+import { CONDITION_LIST } from '../../../../const';
+import { UtilsService } from '../../../utils.service';
+import { InputTypes } from '../../../../enum';
 
 @Injectable()
 export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
@@ -19,14 +19,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     private readonly utils: UtilsService,
     @Inject(CONDITION_LIST)
     private readonly conditions: Array<ConditionOperatorPair>,
-  ) {}
-  /**
-   * It creates a link between the current node and the next node, and then creates a link between the
-   * current node and the end node
-   * @param element - The element that is being converted.
-   * @param {BpmnStatementNode} node - BpmnStatementNode
-   * @returns An array of ModdleElements.
-   */
+  ) { }
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
@@ -50,11 +43,11 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
 
   private createMainLink(node: BpmnStatementNode) {
     const from = node.tag;
-    const to = node.next.tag;
+    const to = node.next[0].tag;
     const id = node.outgoing ?? `Flow_${this.utils.uuid()}`;
-    node.next.incoming = id;
+    node.next[0].incoming = id;
     const attrs = this.createLinkAttrs(id, from, to);
-    const {script, name} = this.createScript(node, id);
+    const { script, name } = this.createScript(node, id);
     const expression = this.moddle.create('bpmn:FormalExpression', {
       body: script,
       language: 'Javascript',
@@ -114,7 +107,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       if (current.element.outputs) {
         return current;
       }
-      current = current.prev;
+      current = current.prev[0];
     }
     return current;
   }

@@ -30,7 +30,9 @@ export enum ConditionTypes {
   Like = 'like',
 }
 
+
 export enum NodeTypes {
   ACTION,
   EVENT,
+  GROUP
 }

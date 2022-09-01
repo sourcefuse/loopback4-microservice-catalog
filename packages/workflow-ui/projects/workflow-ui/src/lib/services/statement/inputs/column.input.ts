@@ -2,7 +2,6 @@ import {State, WorkflowPrompt} from '../../../classes';
 import {InputTypes} from '../../../enum';
 import {RecordOfAnyType} from '../../../types';
 
-/* `ColumnInput` is a `WorkflowPrompt` that prompts the user to select a column from a list of columns */
 export class ColumnInput extends WorkflowPrompt {
   prefix = '';
   suffix = '';

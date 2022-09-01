@@ -1,11 +1,11 @@
-import {InputChanged} from './event.types';
-import {WorkflowElement} from '../classes/element/abstract-element.class';
-import {WorkflowPrompt} from '../classes/nodes/abstract-prompt.class';
-import {WorkflowAction} from '../classes/nodes/abstract-workflow-action.class';
-import {WorkflowEvent} from '../classes/nodes/abstract-workflow-event.class';
-import {StatementNode} from '../classes/statement/statement-node.class';
-import {State} from '../classes/state';
-import {RecordOfAnyType} from './base.types';
+import { InputChanged } from './event.types';
+import { WorkflowElement } from '../classes/element/abstract-element.class';
+import { WorkflowPrompt } from '../classes/nodes/abstract-prompt.class';
+import { WorkflowAction } from '../classes/nodes/abstract-workflow-action.class';
+import { WorkflowEvent } from '../classes/nodes/abstract-workflow-event.class';
+import { StatementNode } from '../classes/statement/statement-node.class';
+import { State } from '../classes/state';
+import { RecordOfAnyType } from './base.types';
 
 export interface Properties {
   model: CustomBpmnModdle;
@@ -102,7 +102,7 @@ export type ValueCouple = {
   value: string;
 };
 
-export abstract class BpmnElement extends WorkflowElement<ModdleElement> {}
+export abstract class BpmnElement extends WorkflowElement<ModdleElement> { }
 export abstract class BpmnAction extends WorkflowAction<ModdleElement> {
   state: State<RecordOfAnyType>;
   constructor() {

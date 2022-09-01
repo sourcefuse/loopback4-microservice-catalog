@@ -1,10 +1,10 @@
-import {RecordOfAnyType, StateMap, WorkflowNode} from '../../types/base.types';
-import {WorkflowElement} from '../element/abstract-element.class';
-import {StatementNode} from './statement-node.class';
+import { RecordOfAnyType, StateMap, WorkflowNode } from '../../types/base.types';
+import { WorkflowElement } from '../element/abstract-element.class';
+import { StatementNode } from './statement-node.class';
 
 export class Statement<E, S = RecordOfAnyType> {
-  head: StatementNode<E>;
-  tail: StatementNode<E>;
+  head: StatementNode<E>[];
+  tail: StatementNode<E>[];
   state: StateMap<S>;
   constructor(state: StateMap<S>) {
     this.state = state;
@@ -20,10 +20,10 @@ export class Statement<E, S = RecordOfAnyType> {
     const newNode = new StatementNode<E>(element);
     if (this.head) {
       newNode.next = this.head;
-      this.head.prev = newNode;
-      this.head = newNode;
+      this.head[0].prev = [newNode];
+      this.head = [newNode];
     } else {
-      this.head = this.tail = newNode;
+      this.head = this.tail = [newNode];
     }
     return newNode;
   }
@@ -31,11 +31,11 @@ export class Statement<E, S = RecordOfAnyType> {
   addEnd(element: WorkflowElement<E>) {
     const newNode = new StatementNode<E>(element);
     if (this.tail) {
-      this.tail.next = newNode;
+      this.tail[this.tail.length - 1].next = [newNode];
       newNode.prev = this.tail;
-      this.tail = newNode;
+      this.tail = [newNode];
     } else {
-      this.tail = this.head = newNode;
+      this.tail = this.head = [newNode];
     }
     return newNode;
   }
@@ -43,26 +43,45 @@ export class Statement<E, S = RecordOfAnyType> {
   addNode(element: WorkflowElement<E>, node: WorkflowNode<E>) {
     const newNode = new StatementNode<E>(element, node);
     if (this.head) {
-      const lastEvent = this.tail;
-      newNode.next = lastEvent.next;
-      newNode.prev = lastEvent;
-      if (lastEvent.next) {
-        lastEvent.next.prev = newNode;
-      }
-      lastEvent.next = newNode;
-      this.tail = newNode;
+      const lastEvent = this.tail[this.tail.length - 1];
+      // newNode.next = lastEvent.next;
+      newNode.prev = this.tail;
+      // if (lastEvent.next) {
+      //   lastEvent.next[lastEvent.next.length - 1].next = [newNode];
+      // }
+      lastEvent.next = [newNode];
+      this.tail = [newNode];
     } else {
-      this.head = this.tail = newNode;
+      this.head = this.tail = [newNode];
     }
     return newNode;
   }
 
+  addNodes(statementNodes: StatementNode<E>[]) {
+    if (this.head) {
+      const lastEvent = this.tail[this.tail.length - 1];
+      statementNodes[0].prev = this.tail;
+      // if (lastEvent.next) {
+      //   lastEvent.next[lastEvent.next.length - 1].next = statementNodes;
+      // }
+      lastEvent.next = statementNodes;
+      this.tail = statementNodes;
+    }
+    else {
+      this.head = this.tail = statementNodes;
+    }
+    return statementNodes;
+  }
+
   toBaseArray() {
     let current = this.head;
-    const out = [];
+    const out: StatementNode<E>[] = [];
     while (current) {
-      out.push(current.tag);
-      current = current.next;
+
+      current.forEach(node => {
+        out.push(node);
+      });
+      current = current[current.length - 1].next;
     }
     return out;
   }
