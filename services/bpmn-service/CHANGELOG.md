@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.1.1 (2022-09-02)</small>
+
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 6.1.0 (2022-09-02)
 
 * feat(deps): updated for minor update in loopback4 (#1003) ([b04ebad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b04ebad)), closes [#1003](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1003) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
