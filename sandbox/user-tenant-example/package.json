@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-tenant-example",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "user-tenant-example.",
   "keywords": [
     "loopback-application",
@@ -59,8 +59,8 @@
     "@loopback/rest": "^12.0.2",
     "@loopback/rest-explorer": "^5.0.2",
     "@loopback/service-proxy": "^5.0.2",
-    "@sourceloop/authentication-service": "^8.0.1",
-    "@sourceloop/core": "^7.1.3",
+    "@sourceloop/authentication-service": "^8.1.0",
+    "@sourceloop/core": "^7.2.0",
     "@sourceloop/user-tenant-service": "^0.1.4",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "description": "This package provides a mixin which works with redis to cache GET request responses.",
   "keywords": [
     "cache",
