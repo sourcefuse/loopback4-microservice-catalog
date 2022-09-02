@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/reporting-service",
   "version": "0.3.0",
-  "description": "Reporting Microservice.",
+  "description": "Reporting Microservice",
   "keywords": [
     "loopback-extension",
     "loopback"

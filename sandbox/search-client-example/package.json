@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/search-client-example",
   "version": "0.1.4",
-  "description": "search-client-example",
+  "description": "search-client-example.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",

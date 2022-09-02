@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/user-tenant-example",
   "version": "0.3.3",
-  "description": "user-tenant-example.",
+  "description": "user-tenant-example",
   "keywords": [
     "loopback-application",
     "loopback"

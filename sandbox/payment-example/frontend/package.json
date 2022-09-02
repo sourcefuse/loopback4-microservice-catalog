@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/payment-example-frontend",
   "version": "0.1.0",
-  "description": "payment-example-frontend",
+  "description": "payment-example-frontend.",
   "private": true,
   "dependencies": {
     "axios": "^0.24.0",

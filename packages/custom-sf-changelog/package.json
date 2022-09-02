@@ -1,7 +1,7 @@
 {
   "name": "custom-sf-changelog",
   "version": "2.1.0",
-  "description": "conventional-changelog angular preset.",
+  "description": "conventional-changelog angular preset",
   "main": "index.js",
   "private": true,
   "scripts": {
