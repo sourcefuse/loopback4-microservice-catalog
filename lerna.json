@@ -38,7 +38,9 @@
         "@sourceloop/chat-notif-example-ui-socket",
         "@sourceloop/chat-notif-example-chat-socket",
         "@sourceloop/chat-notif-example-notif-socket",
-        "@sourceloop/example-socketio"
+        "@sourceloop/example-socketio",
+        "@sourceloop/oauth-example-api",
+        "@sourceloop/oauth-example-ui"
       ]
     },
     "version": {
@@ -83,7 +85,9 @@
         "@sourceloop/chat-notif-example-notif-socket",
         "@sourceloop/example-socketio",
         "@sourceloop/search-client",
-        "@sourceloop/user-onboarding-client"
+        "@sourceloop/user-onboarding-client",
+        "@sourceloop/oauth-example-api",
+        "@sourceloop/oauth-example-ui"
       ]
     },
     "clean": {
