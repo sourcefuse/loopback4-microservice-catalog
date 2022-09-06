@@ -56,7 +56,10 @@ export class UserGroupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewUserGroupList],
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
   })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
@@ -81,7 +84,12 @@ export class UserGroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewUserGroupList]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -103,7 +111,10 @@ export class UserGroupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.AddMemberToUserGroup],
+    permissions: [
+      PermissionKey.AddMemberToUserGroup,
+      PermissionKey.AddMemberToUserGroupNum,
+    ],
   })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
@@ -150,7 +161,10 @@ export class UserGroupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.UpdateMemberInUserGroup],
+    permissions: [
+      PermissionKey.UpdateMemberInUserGroup,
+      PermissionKey.UpdateMemberInUserGroupNum,
+    ],
   })
   @patch(`${basePath}/{userGroupId}`, {
     security: OPERATION_SECURITY_SPEC,
@@ -199,6 +213,8 @@ export class UserGroupController {
     permissions: [
       PermissionKey.RemoveMemberFromUserGroup,
       PermissionKey.LeaveUserGroup,
+      PermissionKey.RemoveMemberFromUserGroupNum,
+      PermissionKey.LeaveUserGroupNum,
     ],
   })
   @del(`${basePath}/{userGroupId}`, {

@@ -50,7 +50,12 @@ export class PubnubNotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CanGetNotificationAccess]})
+  @authorize({
+    permissions: [
+      PermissionKey.CanGetNotificationAccess,
+      PermissionKey.CanGetNotificationAccessNum,
+    ],
+  })
   @patch('/notifications/access/{id}', {
     security: OPERATION_SECURITY_SPEC,
     responses: {

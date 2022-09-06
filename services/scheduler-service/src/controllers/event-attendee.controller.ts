@@ -40,7 +40,9 @@ export class EventAttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
+  @authorize({
+    permissions: [PermissionKey.ViewAttendee, PermissionKey.ViewAttendeeNum],
+  })
   @get(basePath, {
     description:
       'Attendees are visible to everyone according to the access permissions provided to them.',
@@ -66,7 +68,12 @@ export class EventAttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateAttendee,
+      PermissionKey.CreateAttendeeNum,
+    ],
+  })
   @post(basePath, {
     description:
       'Attendees could be added to the event. This action could only be performed by the organizer',
@@ -101,7 +108,12 @@ export class EventAttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttendee,
+      PermissionKey.UpdateAttendeeNum,
+    ],
+  })
   @patch(basePath, {
     description:
       'Attendees can update details here. (Mainly accept or reject the invitation)',
@@ -132,7 +144,12 @@ export class EventAttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteAttendee,
+      PermissionKey.DeleteAttendeeNum,
+    ],
+  })
   @del(basePath, {
     description:
       'Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.',

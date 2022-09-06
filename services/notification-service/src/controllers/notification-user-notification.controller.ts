@@ -22,7 +22,12 @@ export class NotificationUserNotificationController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get('/notification-users/{id}/notification', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
