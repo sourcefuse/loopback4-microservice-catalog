@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.10.0 (2022-09-06)
+
+* feat(all-services): created number as string for permissions (#1006) ([396121b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/396121b)), closes [#1006](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1006) [#994](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/994)
+
+
+
+
+
 ## <small>0.9.1 (2022-09-02)</small>
 
 * chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
