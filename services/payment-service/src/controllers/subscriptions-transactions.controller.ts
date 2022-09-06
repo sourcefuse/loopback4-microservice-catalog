@@ -34,7 +34,12 @@ export class SubscriptionTransactionsController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateSubscription,
+      PermissionKey.CreateSubscriptionNum,
+    ],
+  })
   @post('/create-subscription-and-pay', {
     responses: {
       [redirectStatusCode]: {

@@ -8,4 +8,10 @@ export const enum PermissionKey {
   GetSubscriptions = 'GetSubscriptions',
   UpdateSubscriptions = 'UpdateSubscriptions',
   DeleteSubscriptions = 'DeleteSubscriptions',
+
+  GetSubscriptionCountNum = '1',
+  CreateSubscriptionNum = '2',
+  GetSubscriptionsNum = '3',
+  UpdateSubscriptionsNum = '4',
+  DeleteSubscriptionsNum = '5',
 }

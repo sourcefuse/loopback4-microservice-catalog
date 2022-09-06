@@ -59,7 +59,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateSubscription,
+      PermissionKey.CreateSubscriptionNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -90,7 +95,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSubscription,
+      PermissionKey.ViewSubscriptionNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -109,7 +119,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSubscription,
+      PermissionKey.ViewSubscriptionNum,
+    ],
+  })
   @get('/calendars/subscriptions/me', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -151,7 +166,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSubscription,
+      PermissionKey.ViewSubscriptionNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -177,7 +197,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscription,
+      PermissionKey.UpdateSubscriptionNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -204,7 +229,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSubscription,
+      PermissionKey.ViewSubscriptionNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -229,7 +259,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscription,
+      PermissionKey.UpdateSubscriptionNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -255,7 +290,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscription,
+      PermissionKey.UpdateSubscriptionNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -274,7 +314,12 @@ export class SubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteSubscription,
+      PermissionKey.DeleteSubscriptionNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

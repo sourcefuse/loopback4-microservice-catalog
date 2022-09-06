@@ -41,7 +41,12 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSubscription,
+      PermissionKey.ViewSubscriptionNum,
+    ],
+  })
   @get(basePath, {
     description:
       'These requests will be available to the owner of the subscription.',
@@ -70,7 +75,12 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateSubscription,
+      PermissionKey.CreateSubscriptionNum,
+    ],
+  })
   @post(basePath, {
     description:
       'This is an api to create a calendar subscription for any calendar.',
@@ -105,7 +115,12 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscription,
+      PermissionKey.UpdateSubscriptionNum,
+    ],
+  })
   @patch(basePath, {
     description: `This api is to update the calendar subscription by passing an \`id\`. 
       This action will be allowed only to the owner of the calendar or the admin.
@@ -139,7 +154,12 @@ export class CalendarSubscriptionController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteSubscription,
+      PermissionKey.DeleteSubscriptionNum,
+    ],
+  })
   @del(basePath, {
     description: `This api is to update the calendar subscription by passing an id. 
       This action will be allowed only to the owner of the calendar or the admin. 

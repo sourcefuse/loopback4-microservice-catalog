@@ -38,7 +38,12 @@ export class NotificationNotificationUserController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -63,7 +68,12 @@ export class NotificationNotificationUserController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -98,7 +108,12 @@ export class NotificationNotificationUserController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateNotification,
+      PermissionKey.UpdateNotificationNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -127,7 +142,12 @@ export class NotificationNotificationUserController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteNotification,
+      PermissionKey.DeleteNotificationNum,
+    ],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
