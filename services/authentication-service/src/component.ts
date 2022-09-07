@@ -89,6 +89,11 @@ import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 import bodyParser from 'body-parser';
+import {JWTSymmetricSignerProvider} from './providers/jwt-symmetric-signer.provider';
+import {JWTAsymmetricVerifierProvider} from './providers/jwt-asymmetric-verifier.provider';
+import {JWTSymmetricVerifierProvider} from './providers/jwt-symmetric-verifier.provider';
+import {JWTAsymmetricSignerProvider} from './providers/jwt--asymmetric-signer.provider';
+
 export class AuthenticationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -255,6 +260,20 @@ export class AuthenticationServiceComponent implements Component {
     this.providers[AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER.key] =
       AuthCodeGeneratorProvider;
 
+    if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY !== '') {
+      this.providers[AuthCodeBindings.JWT_SIGNER.key] =
+        JWTAsymmetricSignerProvider;
+    } else {
+      this.providers[AuthCodeBindings.JWT_SIGNER.key] =
+        JWTSymmetricSignerProvider;
+    }
+    if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY !== '') {
+      this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
+        JWTAsymmetricVerifierProvider;
+    } else {
+      this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
+        JWTSymmetricVerifierProvider;
+    }
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;
     this.providers[AuthServiceBindings.ForgotPasswordHandler.key] =

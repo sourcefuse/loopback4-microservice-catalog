@@ -29,7 +29,6 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {randomBytes} from 'crypto';
-import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
   authenticateClient,
@@ -48,7 +47,9 @@ import {
   AuthCodeGeneratorFn,
   CodeReaderFn,
   JwtPayloadFn,
+  JWTSignerFn,
 } from '../../providers';
+import * as jwt from 'jsonwebtoken';
 import {
   AuthClientRepository,
   OtpCacheRepository,
@@ -110,6 +111,8 @@ export class LoginController {
     private readonly loginHelperService: LoginHelperService,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
+    @inject(AuthCodeBindings.JWT_SIGNER)
+    private readonly jwtSigner: JWTSignerFn<object>,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -204,7 +207,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.user.id);
       }
 
-      return await this.createJWT(payload, this.client);
+      return await this.createJwt(payload, this.client);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -271,7 +274,74 @@ export class LoginController {
       }
     }
   }
-
+  private async createJWT(
+    payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
+    authClient: AuthClient,
+  ): Promise<TokenResponse> {
+    try {
+      const size = 32;
+      const ms = 1000;
+      let user: User | undefined;
+      if (payload.user) {
+        user = payload.user;
+      } else if (payload.userId) {
+        user = await this.userRepo.findById(payload.userId, {
+          include: [
+            {
+              relation: 'defaultTenant',
+            },
+          ],
+        });
+        if (payload.externalAuthToken && payload.externalRefreshToken) {
+          (user as AuthUser).externalAuthToken = payload.externalAuthToken;
+          (user as AuthUser).externalRefreshToken =
+            payload.externalRefreshToken;
+        }
+      } else {
+        // Do nothing and move ahead
+      }
+      if (!user) {
+        throw new HttpErrors.Unauthorized(
+          AuthenticateErrorKeys.UserDoesNotExist,
+        );
+      }
+      const data = await this.getJwtPayload(user, authClient);
+      const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
+        expiresIn: authClient.accessTokenExpiration,
+        issuer: process.env.JWT_ISSUER,
+        algorithm: 'HS256',
+      });
+      const refreshToken: string = randomBytes(size).toString('hex');
+      // Set refresh token into redis for later verification
+      await this.refreshTokenRepo.set(
+        refreshToken,
+        {
+          clientId: authClient.clientId,
+          userId: user.id,
+          username: user.username,
+          accessToken,
+          externalAuthToken: (user as AuthUser).externalAuthToken,
+          externalRefreshToken: (user as AuthUser).externalRefreshToken,
+        },
+        {ttl: authClient.refreshTokenExpiration * ms},
+      );
+      return new TokenResponse({
+        accessToken,
+        refreshToken,
+        expires: moment()
+          .add(authClient.accessTokenExpiration, 's')
+          .toDate()
+          .getTime(),
+      });
+    } catch (error) {
+      this.logger.error(error);
+      if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
+        throw error;
+      } else {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      }
+    }
+  }
   @authorize({permissions: ['*']})
   @post('/auth/token-refresh', {
     security: OPERATION_SECURITY_SPEC,
@@ -438,7 +508,7 @@ export class LoginController {
     return new AuthUser(this.user);
   }
 
-  private async createJWT(
+  private async createJwt(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
   ): Promise<TokenResponse> {
@@ -470,10 +540,8 @@ export class LoginController {
         );
       }
       const data = await this.getJwtPayload(user, authClient);
-      const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
+      const accessToken = await this.jwtSigner(data, {
         expiresIn: authClient.accessTokenExpiration,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
       });
       const refreshToken: string = randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
