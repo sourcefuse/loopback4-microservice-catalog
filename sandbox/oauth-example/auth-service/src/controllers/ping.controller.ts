@@ -14,6 +14,7 @@ import {
 /**
  * OpenAPI response for ping()
  */
+const statusCode = 200;
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',
   content: {
@@ -46,7 +47,7 @@ export class PingController {
 
   // Map to `GET /ping`
   @get('/ping')
-  @response(200, PING_RESPONSE)
+  @response(statusCode, PING_RESPONSE)
   ping(): object {
     // Reply with a greeting, the current time, the url, and request headers
     return {

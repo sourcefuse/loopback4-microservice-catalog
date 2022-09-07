@@ -2,11 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { first } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../auth.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +17,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  // returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthService
+    private authenticationService: AuthService,
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -32,11 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // Empty
   }
 
-  // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
@@ -52,27 +48,22 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
-    // this.alertService.clear();
-
-    // stop here if form is invalid
     if (!this.validateForm() && this.loginForm.invalid) {
       return;
     }
-    console.log(this.f.username.value, this.f.password.value);
     this.loading = true;
     this.authenticationService
       .login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        (data) => {
+        data => {
           this.router.navigate(['welcome'], {
-            queryParams: { code: data.code },
+            queryParams: {code: data.code},
           });
         },
-        (error) => {
+        error => {
           this.loading = false;
-        }
+        },
       );
   }
 

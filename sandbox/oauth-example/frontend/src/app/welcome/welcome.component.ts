@@ -2,10 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import { AuthPayload } from '../auth.model';
+import {AuthPayload} from '../auth.model';
 
 @Component({
   selector: 'app-welcome',
@@ -21,8 +21,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      console.log(params);
+    this.route.queryParams.subscribe(params => {
       this.token = params.code;
       this.payload = jwt_decode(this.token);
       this.username =

@@ -6,7 +6,7 @@ import {AuthServiceApplication} from './application';
 
 export async function migrate(args: string[]) {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
-  console.log('Migrating schemas (%s existing schema)', existingSchema);
+  console.log('Migrating schemas (%s existing schema)', existingSchema); //NOSONAR
 
   const app = new AuthServiceApplication();
   await app.boot();
@@ -19,6 +19,6 @@ export async function migrate(args: string[]) {
 }
 
 migrate(process.argv).catch(err => {
-  console.error('Cannot migrate database schema', err);
+  console.error('Cannot migrate database schema', err); //NOSONAR
   process.exit(1);
 });
