@@ -38,18 +38,5 @@
             "autoAttachChildProcesses": true,
             "envFile": "${workspaceFolder}/sandbox/chat-notification-socketio-example/facade/.env"
           },
-          {
-            "type": "node",
-            "request": "launch",
-            "name": "user-tenant-service",
-            "program": "${workspaceFolder}/services/user-tenant-service/dist/index.js",
-            "cwd": "${workspaceFolder}/services/user-tenant-service",
-            "outFiles": ["${workspaceFolder}/services/user-tenant-service/dist/**/*.js"],
-            "runtimeArgs": ["--preserve-symlinks", "--preserve-symlinks-main"],
-            "protocol": "inspector",
-            "sourceMaps": true,
-            "autoAttachChildProcesses": true,
-            "envFile": "${workspaceFolder}/services/user-tenant-service/.env"
-          },
     ]
 }
