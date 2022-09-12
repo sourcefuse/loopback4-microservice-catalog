@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.1 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-service
+
+
+
+
+
 ## 4.2.0 (2022-09-06)
 
 * feat(all-services): created number as string for permissions (#1006) ([396121b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/396121b)), closes [#1006](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1006) [#994](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/994)
