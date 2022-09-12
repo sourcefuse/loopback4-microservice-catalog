@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Scheduler Microservice",
   "keywords": [
     "loopback-extension",
