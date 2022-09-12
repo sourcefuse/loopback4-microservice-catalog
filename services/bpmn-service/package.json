@@ -68,9 +68,9 @@
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^8.5.1",
     "loopback-connector-postgresql": "^5.5.0",
-    "loopback4-authentication": "^7.0.0",
-    "loopback4-authorization": "^5.0.6",
-    "loopback4-soft-delete": "^5.2.1",
+    "loopback4-authentication": "^7.0.1",
+    "loopback4-authorization": "^5.0.7",
+    "loopback4-soft-delete": "^5.3.1",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
