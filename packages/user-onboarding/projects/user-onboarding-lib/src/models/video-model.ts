@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-[export const prefix = `<vg-player><vg-overlay-play>
+export const prefix = `<vg-player><vg-overlay-play>
 </vg-overlay-play>
 <vg-buffering>
 </vg-buffering>

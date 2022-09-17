@@ -1,5 +1,5 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
+import {fakeAsync, flush, TestBed} from '@angular/core/testing';
 import {TourServiceService} from './tour-service.service';
 import {TourStoreServiceService} from './tour-store-service.service';
 import {filterFn, newTour} from '../mocks/tourStore.mocks';
@@ -10,7 +10,7 @@ describe('TourServiceService', () => {
   let service: TourStoreServiceService;
   let tourService: TourServiceService;
   let router: Router;
-  const valueServiceSpy = jasmine.createSpyObj('TourStoreService', [
+  const storeServiceSpy = jasmine.createSpyObj('TourStoreService', [
     'loadTour',
     'getSessionId',
   ]);
@@ -21,38 +21,33 @@ describe('TourServiceService', () => {
       providers: [
         TourServiceService,
         TourStoreServiceService,
-        {provide: TourStoreServiceService, useValue: valueServiceSpy},
+        {provide: TourStoreServiceService, useValue: storeServiceSpy},
       ],
     });
     tourService = TestBed.inject(TourServiceService);
   });
-  it('Should set max time', () => {
-    const maxTime = 3000;
-    const result = tourService.maxWaitTime;
-    expect(result).toBeGreaterThan(0);
-    expect(result).toEqual(maxTime);
-  });
-  it('Should get maximum time', () => {
+  it('should have default max wait time as 3000', () => {
     const maxTime = 3000;
     const result = tourService.maxWaitTime;
     expect(result).toEqual(maxTime);
   });
-  it('Should set exitOnEsc', () => {
+  it('should have default exitOnEsc as true', () => {
     const result = tourService.exitOnEsc;
     expect(result).toEqual(true);
   });
-  it('Should get exitOnEsc', () => {
-    const result = tourService.exitOnEsc;
-    expect(result).toEqual(true);
-  });
-  it('Should run the tour ', () => {
+
+  it('should run the tour ', fakeAsync(() => {
     const sessionId = '1';
-    valueServiceSpy.loadTour.and.callFake(() => of(newTour));
-    valueServiceSpy.getSessionId.and.callFake(() => sessionId);
+    storeServiceSpy.loadTour.and.callFake(() => of(newTour));
+    storeServiceSpy.getSessionId.and.callFake(() => sessionId);
+    const triggerTourSpy = spyOn<any>(tourService, 'triggerTour'); //NOSONAR
+    triggerTourSpy.and.callFake(() => {});
     tourService.run('1', {key: 'Skip'}, {}, filterFn, {});
-    expect(valueServiceSpy.loadTour).toHaveBeenCalledWith({
+    flush();
+    expect(triggerTourSpy).toHaveBeenCalledOnceWith(newTour, {});
+    expect(storeServiceSpy.loadTour).toHaveBeenCalledWith({
       tourId: '1',
       sessionId,
     });
-  });
+  }));
 });
