@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.1.3 (2022-09-12)</small>
+
+* chore(deps): loopback version update for services (#1017) ([9a9d653](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a9d653)), closes [#1017](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1017) [#1015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1015)
+
+
+
+
+
+## <small>8.1.2 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>8.1.1 (2022-09-02)</small>
+
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 8.1.0 (2022-09-02)
+
+* feat(deps): updated for minor update in loopback4 (#1003) ([b04ebad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b04ebad)), closes [#1003](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1003) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>8.0.1 (2022-08-30)</small>
+
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 8.0.0 (2022-08-26)
+
+* fix(authentication-service): add all variables for azure oauth strategy (#990) ([920c6b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/920c6b6)), closes [#990](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/990) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(authentication-service): remove device info and auth clients from token (#992) ([880ef40](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/880ef40)), closes [#992](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/992) [#991](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/991)
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+### BREAKING CHANGE
+
+* auth clients in user model made optional
+
+
+
+
 ## <small>7.1.2 (2022-08-20)</small>
 
 * fix(authentication-service): fix minor issues in azure oauth (#985) ([af272a6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/af272a6)), closes [#985](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/985) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

@@ -8,7 +8,7 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'NotifAccessCache',
   connector: 'kv-redis',
-  url: '',
+  // url: '',
   host: process.env.NOTIFCACHE_DB_HOST,
   port: process.env.NOTIFCACHE_DB_PORT,
   password: process.env.NOTIFCACHE_DB_PASSWORD,

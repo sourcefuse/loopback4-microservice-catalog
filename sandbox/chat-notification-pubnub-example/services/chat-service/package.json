@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/chat-notif-example_chat-service",
-  "version": "0.2.5",
+  "version": "0.3.6",
   "description": "sourceloop chat service",
   "keywords": [
     "loopback-application",
@@ -59,8 +59,8 @@
     "@loopback/rest": "^12.0.2",
     "@loopback/rest-explorer": "^5.0.2",
     "@loopback/service-proxy": "^5.0.2",
-    "@sourceloop/chat-service": "^4.0.8",
-    "@sourceloop/core": "^7.1.1",
+    "@sourceloop/chat-service": "^4.2.2",
+    "@sourceloop/core": "^7.2.2",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
@@ -75,7 +75,7 @@
     "@loopback/eslint-config": "^13.0.2",
     "@loopback/testlab": "^5.0.2",
     "@types/node": "^14.18.21",
-    "eslint": "^8.19.0",
+    "eslint": "^8.21.0",
     "source-map-support": "^0.5.21",
     "typescript": "~4.7.4"
   },

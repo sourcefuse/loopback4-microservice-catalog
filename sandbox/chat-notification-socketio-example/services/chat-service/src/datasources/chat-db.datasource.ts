@@ -8,7 +8,7 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'chatDb',
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.CHAT_DB_HOST,
   port: process.env.CHAT_DB_PORT,
   user: process.env.CHAT_DB_USER,

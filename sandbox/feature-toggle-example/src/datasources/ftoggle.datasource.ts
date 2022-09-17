@@ -9,7 +9,7 @@ import {FeatureToggleDbName} from '@sourceloop/feature-toggle-service';
 const config = {
   name: FeatureToggleDbName,
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,

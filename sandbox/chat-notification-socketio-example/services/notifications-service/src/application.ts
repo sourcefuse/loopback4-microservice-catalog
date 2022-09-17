@@ -17,11 +17,11 @@ import {
 } from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
+import { NotificationBindings } from 'loopback4-notifications';
 import {
-  NotificationBindings,
-  SocketBindings,
   SocketIOProvider,
-} from 'loopback4-notifications';
+  SocketBindings,
+} from 'loopback4-notifications/socketio';
 import path from 'path';
 import {MySequence} from './sequence';
 

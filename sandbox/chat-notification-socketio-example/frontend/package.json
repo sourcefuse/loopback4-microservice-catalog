@@ -1,6 +1,7 @@
 {
   "name": "@sourceloop/chat-notif-example-ui-socket",
   "version": "0.0.0",
+  "description": "chat-notif-example-ui-socket.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

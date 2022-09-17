@@ -8,7 +8,7 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'db',
   connector: process.env.DB_CONNECTOR ?? 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,

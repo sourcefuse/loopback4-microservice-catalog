@@ -7,4 +7,8 @@ export const enum PermissionKey {
   CreateWorkflow = 'CreateWorkflow',
   UpdateWorkflow = 'UpdateWorkflow',
   DeleteWorkflow = 'DeleteWorkflow',
+  ViewWorkflowNum = '1',
+  CreateWorkflowNum = '2',
+  UpdateWorkflowNum = '3',
+  DeleteWorkflowNum = '4',
 }

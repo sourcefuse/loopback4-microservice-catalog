@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2022-09-02)</small>
+
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 0.4.0 (2022-09-02)
+
+* feat(deps): updated for minor update in loopback4 (#1003) ([b04ebad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b04ebad)), closes [#1003](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1003) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>0.3.8 (2022-08-30)</small>
+
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>0.3.7 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>0.3.6 (2022-07-27)</small>
 
 * fix(cache): override findOne method and add caching to it (#916) ([b46d6db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b46d6db)), closes [#916](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/916) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

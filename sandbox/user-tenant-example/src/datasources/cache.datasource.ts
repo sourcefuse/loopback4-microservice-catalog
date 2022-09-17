@@ -5,7 +5,7 @@ import {AuthCacheSourceName} from '@sourceloop/authentication-service';
 const config = {
   name: AuthCacheSourceName,
   connector: 'kv-redis',
-  url: '',
+  // url: '',
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   // user: process.env.DB_USER,
