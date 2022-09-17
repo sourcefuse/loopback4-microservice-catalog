@@ -8,7 +8,9 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/audit-service/@loopback/core)
 
-A LoopBack microservice used for auditing user actions. It uses [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) to store the logs to a datasource. This service provides REST endpoints to perform CRUD operations for the audit logs.
+## Overview
+
+A LoopBack microservice used for auditing user actions. All the user actions like insert, update and delete can be audited. It uses [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) as a base which provides the same functionality but through a repository mixin. A repository mixin logs all the actions by default. So when we use a repository mixin we have less control over the customization that can be done. So in case where we want to audit only in certain scenario or for a particular case this service can be used. This service exposes APIs to insert and read the audited data so that we have a free hand.
 
 ## Installation
 
@@ -20,8 +22,6 @@ npm i @sourceloop/audit-service
 
 ## Usage
 
-- Create a new Loopback4 Application (If you don't have one already)
-  `lb4 testapp`
 - Install the audit service
   `npm i @sourceloop/audit-service`
 - Set the [environment variables](#environment-variables).
@@ -41,6 +41,19 @@ npm i @sourceloop/audit-service
 
 The logs in this service can either be created through the REST endpoint, or through a repository mixin provided with the [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) npm module. This mixin, by default, creates logs for all the inbuilt actions done through the extended repository.
 You can read more about how to use this package [here](https://github.com/sourcefuse/loopback4-audit-log#readme).
+
+All the different types of action that are logged are
+
+```ts
+export declare enum Action {
+  INSERT_ONE = 'INSERT_ONE',
+  INSERT_MANY = 'INSERT_MANY',
+  UPDATE_ONE = 'UPDATE_ONE',
+  UPDATE_MANY = 'UPDATE_MANY',
+  DELETE_ONE = 'DELETE_ONE',
+  DELETE_MANY = 'DELETE_MANY',
+}
+```
 
 ### Environment Variables
 
