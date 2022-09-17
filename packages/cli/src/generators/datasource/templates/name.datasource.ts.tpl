@@ -11,6 +11,9 @@ const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
+  <% if (project.datasourceType === 'postgres') { -%>
+    schema: process.env.DB_SCHEMA,
+  <% } -%>
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE
 };

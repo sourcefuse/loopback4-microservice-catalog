@@ -60,7 +60,9 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
+  @authorize({
+    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewEventNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -127,7 +129,9 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateEvent]})
+  @authorize({
+    permissions: [PermissionKey.CreateEvent, PermissionKey.CreateEventNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -158,7 +162,9 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
+  @authorize({
+    permissions: [PermissionKey.UpdateEvent, PermissionKey.UpdateEventNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -186,7 +192,9 @@ export class CalendarEventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteEvent]})
+  @authorize({
+    permissions: [PermissionKey.DeleteEvent, PermissionKey.DeleteEventNum],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "5.0.1",
+  "version": "5.0.3",
   "description": "A global search component for search microservice.",
   "peerDependencies": {
     "@angular/animations": "~13.3.11",
@@ -40,7 +40,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",

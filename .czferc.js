@@ -46,6 +46,7 @@ const scopes = [
   {name: 'payment-service'},
   {name: 'sandbox'},
   {name: 'ocr-parser'},
+  {name: 'all-services'},
 ];
 
 /**

@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 let isLocal = false;
 dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  path: path.join(process.env.INIT_CWD ?? '.', '.env'),
+  defaults: path.join(process.env.INIT_CWD ?? '.', '.env.defaults'),
   errorOnMissing: false,
   includeProcessEnv: true,
 });

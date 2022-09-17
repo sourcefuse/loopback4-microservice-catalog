@@ -12,7 +12,7 @@ import {
 } from '@sourceloop/audit-log';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 import {PgDataSource} from '../datasources';
-import {ToDo, ToDoRelations} from '../models';
+import {ToDo, ToDoWithRelations} from '../models';
 
 const todoAuditOpts: IAuditMixinOptions = {
   actionKey: 'Todo_Logs',
@@ -21,10 +21,10 @@ const todoAuditOpts: IAuditMixinOptions = {
 export class ToDoRepository extends AuditRepositoryMixin<
   ToDo,
   typeof ToDo.prototype.id,
-  ToDoRelations,
+  ToDoWithRelations,
   string | number,
   Constructor<
-    DefaultCrudRepository<ToDo, typeof ToDo.prototype.id, ToDoRelations>
+    DefaultCrudRepository<ToDo, typeof ToDo.prototype.id, ToDoWithRelations>
   >
 >(DefaultCrudRepository, todoAuditOpts) {
   constructor(

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cli",
-  "version": "2.2.1",
+  "version": "2.4.1",
   "description": "Custom Sourceloop CLI",
   "bin": {
     "sl": "./bin/run"
@@ -21,10 +21,13 @@
     "postpack": "rimraf oclif.manifest.json",
     "copydeps": "copyfiles -a --up 1 src/**/templates/** lib ",
     "lint": "eslint ./src --ext .js,.ts && ejslint ./src",
-    "posttest": "tslint -p test -t stylish",
-    "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme && npm run copydeps",
+    "posttest": "npm run lint",
+    "prepack": "npm run build",
     "version": "oclif-dev readme && git add README.md",
-    "tsc": "tsc -b"
+    "tsc": "tsc -b",
+    "build": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme && npm run copydeps",
+    "postbuild": "rimraf oclif.manifest.json",
+    "test": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -49,7 +52,7 @@
     "yosay": "^2.0.2"
   },
   "devDependencies": {
-    "@loopback/eslint-config": "^13.0.1",
+    "@loopback/eslint-config": "^13.0.3",
     "@oclif/dev-cli": "^1.26.10",
     "@oclif/plugin-help": "^5.1.12",
     "@oclif/test": "^2.1.0",
@@ -57,22 +60,22 @@
     "@types/chai": "^4.3.1",
     "@types/lodash": "^4.14.182",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^14.18.21",
+    "@types/node": "^18.7.14",
     "@types/yeoman-environment": "^2.10.7",
     "@types/yeoman-generator": "^5.2.10",
     "@types/yosay": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.27.1",
-    "@typescript-eslint/parser": "^5.27.1",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "chai": "^4.3.6",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.17.0",
+    "eslint": "^8.23.0",
     "globby": "11.0.4",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.7.0",
     "tslint": "^6.1.3",
-    "typescript": "~4.7.3"
+    "typescript": "4.7.4"
   },
   "overrides": {
     "fast-glob": {

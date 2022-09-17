@@ -5,8 +5,6 @@
     "packages/cache",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
-    "packages/user-onboarding/projects/user-onboarding-lib/",
-    "packages/search/projects/search-lib/",
     "services/*",
     "facades/*",
     "sandbox/**"
@@ -35,7 +33,12 @@
         "@sourceloop/payment-example-frontend",
         "@sourceloop/user-onboarding-example",
         "@sourceloop/cache-example",
-        "@sourceloop/user-tenant-example"
+        "@sourceloop/user-tenant-example",
+        "@sourceloop/chat-notif-example-facade-socket",
+        "@sourceloop/chat-notif-example-ui-socket",
+        "@sourceloop/chat-notif-example-chat-socket",
+        "@sourceloop/chat-notif-example-notif-socket",
+        "@sourceloop/example-socketio"
       ]
     },
     "version": {
@@ -73,7 +76,14 @@
         "@sourceloop/payment-example-frontend",
         "@sourceloop/user-onboarding-example",
         "@sourceloop/cache-example",
-        "@sourceloop/user-tenant-example"
+        "@sourceloop/user-tenant-example",
+        "@sourceloop/chat-notif-example-facade-socket",
+        "@sourceloop/chat-notif-example-ui-socket",
+        "@sourceloop/chat-notif-example-chat-socket",
+        "@sourceloop/chat-notif-example-notif-socket",
+        "@sourceloop/example-socketio",
+        "@sourceloop/search-client",
+        "@sourceloop/user-onboarding-client"
       ]
     },
     "clean": {
@@ -85,10 +95,13 @@
   "changelogPreset": "custom-sf-changelog",
   "ignoreChanges": [
     "sandbox/**",
+    "services/user-tenant-service",
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**"
+    "packages/core/locales/**",
+    "packages/search",
+    "packages/user-onboarding"
   ],
   "version": "independent"
 }

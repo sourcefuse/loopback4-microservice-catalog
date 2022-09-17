@@ -1,0 +1,72 @@
+{
+  "name": "@sourceloop/example-socketio",
+  "description": "This is an example for spinning up socket server.",
+  "version": "0.6.2",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "IBM Corp. and LoopBack contributors",
+  "copyright.owner": "IBM Corp. and LoopBack contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loopbackio/loopback-next.git",
+    "directory": "examples/socketio"
+  },
+  "engines": {
+    "node": "14 || 16 || 17 || 18"
+  },
+  "private": true,
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t socketio .",
+    "docker:run": "docker run -p 3000:3000 -d socketio",
+    "migrate": "node ./dist/migrate",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run build",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^5.0.2",
+    "@loopback/core": "^4.0.2",
+    "@loopback/rest": "^12.0.2",
+    "@loopback/rest-explorer": "^5.0.2",
+    "@loopback/socketio": "^0.6.2",
+    "debug": "^4.3.4",
+    "p-event": "^4.2.0",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^9.0.2",
+    "@loopback/eslint-config": "^13.0.2",
+    "@loopback/testlab": "^5.0.2",
+    "@types/debug": "^4.1.7",
+    "@types/node": "^14.18.21",
+    "eslint": "^8.21.0",
+    "socket.io-client": "^4.5.1",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.7.4"
+  }
+}

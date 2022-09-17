@@ -55,7 +55,12 @@ export class WorkflowController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateWorkflow]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateWorkflow,
+      PermissionKey.CreateWorkflowNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -111,7 +116,12 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateWorkflow]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateWorkflow,
+      PermissionKey.UpdateWorkflowNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -158,7 +168,12 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateWorkflow]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateWorkflow,
+      PermissionKey.CreateWorkflowNum,
+    ],
+  })
   @post(`${basePath}/{id}/execute`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -212,7 +227,9 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewWorkflow]})
+  @authorize({
+    permissions: [PermissionKey.ViewWorkflow, PermissionKey.ViewWorkflowNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -236,7 +253,9 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewWorkflow]})
+  @authorize({
+    permissions: [PermissionKey.ViewWorkflow, PermissionKey.ViewWorkflowNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -251,7 +270,12 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteWorkflow,
+      PermissionKey.DeleteWorkflowNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -272,7 +296,12 @@ export class WorkflowController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteWorkflow]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteWorkflow,
+      PermissionKey.DeleteWorkflowNum,
+    ],
+  })
   @del(`${basePath}/{id}/version/{version}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

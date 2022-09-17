@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "4.0.0",
+  "version": "4.0.2",
   "description": "Library for providing a smooth user onboarding.",
   "keywords": [
     "angular-library"
@@ -41,7 +41,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",

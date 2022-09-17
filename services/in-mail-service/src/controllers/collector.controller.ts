@@ -63,7 +63,9 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetThread]})
+  @authorize({
+    permissions: [PermissionsEnums.GetThread, PermissionsEnums.GetThreadNum],
+  })
   @get('/threads/{threadId}', {
     security: OPERATION_SECURITY_SPEC,
     summary:
@@ -127,7 +129,9 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetInMail]})
+  @authorize({
+    permissions: [PermissionsEnums.GetInMail, PermissionsEnums.GetInMailNum],
+  })
   @get('/mails/{messageId}', {
     security: OPERATION_SECURITY_SPEC,
     summary:
@@ -215,7 +219,9 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetThread]})
+  @authorize({
+    permissions: [PermissionsEnums.GetThread, PermissionsEnums.GetThreadNum],
+  })
   @get('/threads', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'Thread List API. Collect a list of all threads.',
@@ -280,7 +286,9 @@ export class CollectorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.GetInMails]})
+  @authorize({
+    permissions: [PermissionsEnums.GetInMails, PermissionsEnums.GetInMailsNum],
+  })
   @get('/mails', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'Collect a list of all messages.',

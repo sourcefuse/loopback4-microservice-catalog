@@ -228,6 +228,54 @@ The migrations required for this service are processed during the installation a
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
 
+# **Using AZURE AD for OAuth**
+
+Passport strategy for authenticating via Azure Ad using [passport-azure-ad](https://www.npmjs.com/package/passport-azure-ad).
+Make sure you have an account on Azure and have your application registered. Follow the steps [here](https://docs.microsoft.com/en-us/azure/active-directory-b2c/configure-a-sample-node-web-app).
+
+### Application Binding
+
+To use this in your application bind `AuthenticationServiceComponent` the component in your appliation.
+
+```ts
+import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
+
+this.component(AuthenticationServiceComponent);
+```
+
+### Set the environment variables
+
+Refer the .env.example file to add all the relevant env variables for Azure Auth.
+Note - For boolean values that need to passed as false keep them blank.
+
+We are using cookie based approach instead of session based, so the library requires a cookie-parser middleware. To bind the middleware to you application set
+AZURE_AUTH_ENABLED=true in env file so the middleware will be added to the sequence.
+
+Also the verifier function uses Signup provider whose implementation needs to be added by the user.
+
+Bind the provider key to its corresponding value.
+
+```ts
+this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
+  AzureAdSignupProvider;
+```
+
+```ts
+export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
+  value(): AzureAdSignUpFn {
+    // sonarignore:start
+    return async profile => {
+      // sonarignore:end
+      throw new HttpErrors.NotImplemented(
+        `AzureAdSignupProvider not implemented`,
+      );
+    };
+  }
+}
+```
+
+Also bind `VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER` and `VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER` to override the basic implementation provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/authentication-service/src/providers).
+
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.

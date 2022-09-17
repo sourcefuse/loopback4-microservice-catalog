@@ -5,7 +5,7 @@ import {AuthDbSourceName} from '@sourceloop/authentication-service';
 const config = {
   name: AuthDbSourceName,
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,

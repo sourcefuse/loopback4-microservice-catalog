@@ -8,6 +8,7 @@ import * as AppleStrategy from 'passport-apple';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
+import * as AzureADStrategy from 'passport-azure-ad';
 import {
   AuthClient,
   ForgetPasswordResponseDto,
@@ -131,11 +132,7 @@ export interface IDeviceInfo {
 }
 
 export interface JwtPayloadFn {
-  (
-    user: IAuthUser,
-    authClient: IAuthClient,
-    deviceInfo?: IDeviceInfo,
-  ): Promise<object>;
+  (user: IAuthUser, authClient: IAuthClient): Promise<object>;
 }
 
 export interface ForgotPasswordHandlerFn {
@@ -164,4 +161,24 @@ export interface OtpSenderFn {
 
 export interface SignupTokenHandlerFn {
   (dto: DataObject<SignupRequestResponseDto>): Promise<void>;
+}
+
+export interface AzureAdSignUpFn {
+  (profile: AzureADStrategy.IProfile): Promise<(User & UserRelations) | null>;
+}
+
+export interface AzureAdPreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: AzureADStrategy.IProfile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface AzureAdPostVerifyFn {
+  (
+    profile: AzureADStrategy.IProfile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
 }
