@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Reporting Microservice",
   "keywords": [
     "loopback-extension",
@@ -70,9 +70,9 @@
     "dotenv": "^16.0.1",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",
-    "loopback4-authentication": "^7.0.0",
-    "loopback4-authorization": "^5.0.6",
-    "loopback4-soft-delete": "^5.2.1",
+    "loopback4-authentication": "^7.0.1",
+    "loopback4-authorization": "^5.0.7",
+    "loopback4-soft-delete": "^5.3.1",
     "moment": "^2.29.3",
     "tslib": "^2.4.0",
     "uuid": "^8.3.2"

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/ocr-service",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "ocr-services.",
   "keywords": [
     "loopback-extension",
@@ -62,9 +62,9 @@
     "@sourceloop/core": "^7.2.2",
     "loopback-connector-mysql": "^6.1.0",
     "loopback-connector-postgresql": "^5.5.0",
-    "loopback4-authentication": "^7.0.0",
-    "loopback4-authorization": "^5.0.6",
-    "loopback4-s3": "^6.0.2",
+    "loopback4-authentication": "^7.0.1",
+    "loopback4-authorization": "^5.0.7",
+    "loopback4-s3": "^6.0.3",
     "node-fetch": "^3.2.4",
     "swagger-stats": "^0.99.2",
     "symlink-resolver": "",

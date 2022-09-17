@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.2.2 (2022-09-12)</small>
+
+* chore(deps): loopback version update for services (#1017) ([9a9d653](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a9d653)), closes [#1017](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1017) [#1015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1015)
+
+
+
+
+
 ## <small>6.2.1 (2022-09-12)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-service
