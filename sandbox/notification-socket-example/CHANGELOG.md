@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.6 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>4.0.5 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>4.0.4 (2022-09-06)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example
