@@ -4,10 +4,13 @@ import {juggler} from '@loopback/repository';
 import {<%= project.baseServiceStoreName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } -%>
 
+const DEFAULT_MAX_CONNECTIONS = 25;
+const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
+const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
+
 const config = {
   name: '<%= project.datasourceName  %>',
   connector: '<%= project.datasourceConnectorName  %>',
-  url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
@@ -38,6 +41,21 @@ export class <%= project.datasourceClassName %>DataSource extends juggler.DataSo
     @inject('datasources.config.<%= project.datasourceName %>', {optional: true})
     dsConfig: object = config,
   ) {
+    if (!!+(process.env.ENABLE_DB_CONNECTION_POOLING ?? 0)) {
+      const dbPool = {
+        max: +(process.env.DB_MAX_CONNECTIONS ?? DEFAULT_MAX_CONNECTIONS),
+        idleTimeoutMillis: +(
+          process.env.DB_IDLE_TIMEOUT_MILLIS ?? DEFAULT_DB_IDLE_TIMEOUT_MILLIS
+        ),
+        connectionTimeoutMillis: +(
+          process.env.DB_CONNECTION_TIMEOUT_MILLIS ??
+          DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS
+        ),
+      };
+
+      dsConfig = {...dsConfig, ...dbPool};
+    }
+
     super(dsConfig);
   }
 }

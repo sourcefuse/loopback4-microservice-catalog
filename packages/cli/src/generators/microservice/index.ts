@@ -337,7 +337,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts[symlinkresolver] = symlinkresolver;
       scripts['resolve-links'] =
         'npm run symlink-resolver build ./node_modules/@local';
-      scripts['prestart'] = 'npm run rebuild && npm run openapi-spec';
+      scripts['prestart'] = 'npm run clean && npm run openapi-spec';
       scripts['rebuild'] = 'npm run clean && npm run build';
       scripts['start'] =
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';

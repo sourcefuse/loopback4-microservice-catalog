@@ -131,6 +131,7 @@
       "@istanbuljs/nyc-config-typescript": "^1.0.2",
       "loopback-connector-postgresql": "^5.5.0",
       "loopback-connector-mysql": "^6.1.0",
+      "loopback-connector-kv-redis": "^4.0.0",
       "db-migrate-pg": "^1.2.2",
       "db-migrate-mysql": "^2.2.0",
       "kindof": "^2.0.0",
