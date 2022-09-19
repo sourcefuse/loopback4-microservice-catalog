@@ -183,6 +183,9 @@
       "loopback-connector-mysql": "<%= project.dependencies["loopback-connector-mysql"]%>",
 <% } -%>
 <% } -%>
+<% if (project.facade || project.baseServiceCacheName) { -%>
+      "loopback-connector-kv-redis": "<%= project.dependencies["loopback-connector-kv-redis"]%>",
+<% } -%>
       "tslib": "<%= project.dependencies['tslib'] -%>"
     },
     "devDependencies": {
