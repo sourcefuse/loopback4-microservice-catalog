@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-tenant-service",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "user-tennat-services.",
   "keywords": [
     "loopback-extension",
@@ -68,7 +68,7 @@
     "@loopback/rest": "^12.0.3",
     "@loopback/rest-explorer": "^5.0.3",
     "@loopback/service-proxy": "^5.0.3",
-    "@sourceloop/core": "^7.2.2",
+    "@sourceloop/core": "^7.2.3",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",
