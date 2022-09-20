@@ -117,6 +117,8 @@
       "@sourceloop/user-tenant-service": "^0.1.2",
       "loopback4-authentication": "^6.1.4",
       "loopback4-authorization": "^5.0.6",
+      "loopback4-ratelimiter": "^4.1.2",
+      "loopback4-helmet": "^4.1.2",
       "swagger-stats": "^0.99.2",
       "@opentelemetry/exporter-jaeger": "^1.0.1",
       "@opentelemetry/node": "^0.24.0",

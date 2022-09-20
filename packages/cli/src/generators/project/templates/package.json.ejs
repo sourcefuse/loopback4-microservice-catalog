@@ -183,7 +183,11 @@
       "loopback-connector-mysql": "<%= project.dependencies["loopback-connector-mysql"]%>",
 <% } -%>
 <% } -%>
-<% if (project.facade || project.baseServiceCacheName) { -%>
+<% if (project.facade) { -%>
+      "loopback-connector-kv-redis": "<%= project.dependencies["loopback-connector-kv-redis"]%>",
+      "loopback4-ratelimiter": "<%= project.dependencies["loopback4-ratelimiter"]%>",
+      "loopback4-helmet": "<%= project.dependencies["loopback4-helmet"]%>",
+<% } else if (project.baseServiceCacheName) { -%>
       "loopback-connector-kv-redis": "<%= project.dependencies["loopback-connector-kv-redis"]%>",
 <% } -%>
       "tslib": "<%= project.dependencies['tslib'] -%>"

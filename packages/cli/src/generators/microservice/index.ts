@@ -37,6 +37,14 @@ const REDIS_DATASOURCE = join(
   'redis.datasource.ts.tpl',
 );
 
+const RATE_LIMIT_DATASOURCE = join(
+  '..',
+  '..',
+  'datasource',
+  'templates',
+  'rate-limit-store.datasource.ts.tpl',
+);
+
 const DATASOURCE_INDEX = join(
   '..',
   '..',
@@ -481,6 +489,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           name: 'Redis',
           fileName: 'redis',
         },
+        {
+          type: 'cache',
+          name: 'RateLimitStore',
+          fileName: 'rate-limit-store',
+        },
       ];
       this.fs.copyTpl(
         this.templatePath(REDIS_DATASOURCE),
@@ -488,6 +501,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         {
           project: this.projectInfo,
         },
+      );
+      this.fs.copyTpl(
+        this.templatePath(RATE_LIMIT_DATASOURCE),
+        this.destinationPath(
+          join('src', 'datasources', 'rate-limit-store.datasource.ts'),
+        ),
       );
       this.fs.copyTpl(
         this.templatePath(DATASOURCE_INDEX),
