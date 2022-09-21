@@ -13,6 +13,7 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
   BASESERVICEDSLIST,
+  BASESERVICECOMPONENTLIST,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -299,6 +300,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
       if (type === 'services') {
+        this.projectInfo.baseServiceComponentName =
+          this._setBaseServiceComponentName();
         const baseServiceDSList = this._setDataSourceName();
         this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
           ds => ds.type === 'store',
@@ -429,6 +432,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (this.options.baseService) {
       return BASESERVICEDSLIST[this.options.baseService];
     } else return [];
+  }
+
+  private _setBaseServiceComponentName() {
+    if (this.options.baseService) {
+      return BASESERVICECOMPONENTLIST[this.options.baseService];
+    } else return undefined;
   }
 
   private _createDataSource() {

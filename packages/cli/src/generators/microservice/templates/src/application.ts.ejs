@@ -6,7 +6,6 @@ import {
 } from '@loopback/rest-explorer';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -33,41 +32,9 @@ import {
   BearerVerifierType,
   SECURITY_SCHEME_SPEC,
 } from '@sourceloop/core';
-
-<% if(project.serviceDependency === 'audit-service') { -%>
-import {AuditServiceComponent} from '@sourceloop/audit-service';
+<% if (project.serviceDependency && project.baseServiceComponentName) { -%>
+import {<%= project.baseServiceComponentName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } -%>
-<% if(project.serviceDependency === 'authentication-service') { -%>
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
-<% } -%>
-<% if(project.serviceDependency === 'chat-service') { -%>
-import {ChatServiceComponent} from '@sourceloop/chat-service';
-<% } -%>
-<% if(project.serviceDependency === 'notification-service') { -%>
-import {NotificationServiceComponent} from '@sourceloop/notification-service';
-<% } -%>
-<% if(project.serviceDependency === 'bpmn-service') { -%>
-import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
-<% } -%>
-<% if(project.serviceDependency === 'feature-toggle-service') { -%>
-import {FeatureToggleServiceComponent} from '@sourceloop/feature-toggle-service';
-<% } -%>
-<% if(project.serviceDependency === 'in-mail-service') { -%>
-import {InMailServiceComponent} from '@sourceloop/in-mail-service';
-<% } -%>
-<% if(project.serviceDependency === 'payment-service') { -%>
-import {PaymentServiceComponent} from '@sourceloop/payment-service';
-<% } -%>
-<% if(project.serviceDependency === 'scheduler-service') { -%>
-import {SchedulerServiceComponent} from '@sourceloop/scheduler-service';
-<% } -%>
-<% if(project.serviceDependency === 'search-service') { -%>
-import {SearchServiceComponent} from '@sourceloop/search-service';
-<% } -%>
-<% if(project.serviceDependency === 'video-conferencing-service') { -%>
-import {VideoConfServiceComponent} from '@sourceloop/video-conferencing-service';
-<% } -%>
-
 <% if (project.repositories) { -%>
 import {RepositoryMixin} from '@loopback/repository';
 <% } -%>
@@ -170,38 +137,8 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     // Add authentication component
     this.component(AuthenticationComponent);
 
-<% if(project.serviceDependency === 'audit-service') { -%>
-    this.component(AuditServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'authentication-service') { -%>
-    this.component(AuthenticationServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'chat-service') { -%>
-    this.component(ChatServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'notification-service') { -%>
-    this.component(NotificationServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'bpmn-service') { -%>
-    this.component(WorkflowServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'feature-toggle-service') { -%>
-    this.component(FeatureToggleServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'in-mail-service') { -%>
-    this.component(InMailServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'payment-service') { -%>
-    this.component(PaymentServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'scheduler-service') { -%>
-    this.component(SchedulerServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'search-service') { -%>
-    this.component(SearchServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'video-conferencing-service') { -%>
-    this.component(VideoConfServiceComponent);
+<% if (project.serviceDependency && project.baseServiceComponentName) { -%>
+  this.component(<%= project.baseServiceComponentName %>);
 <% } -%>
 
     // Add bearer verifier component
