@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.5 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
 ## <small>4.1.4 (2022-09-20)</small>
 
 * docs(video-conferencing-service): update readme file for video conferencing service. (#1016) ([9e5074d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e5074d)), closes [#1016](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1016) [#1012](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1012)

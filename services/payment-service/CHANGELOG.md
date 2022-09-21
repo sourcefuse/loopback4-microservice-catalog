@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.2.4 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
 ## <small>6.2.3 (2022-09-20)</small>
 
 * docs(payment-service): add db schema in  payment service readme (#975) ([3e4ec07](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3e4ec07)), closes [#975](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/975) [#941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/941) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

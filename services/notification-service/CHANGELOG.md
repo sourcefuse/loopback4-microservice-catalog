@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.2.4 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
 ## <small>6.2.3 (2022-09-20)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-service

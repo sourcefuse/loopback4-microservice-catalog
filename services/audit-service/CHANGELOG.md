@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.2.4 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## <small>5.2.3 (2022-09-20)</small>
 
 * docs(chore): readme changes for audit-log (#919) ([4479754](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4479754)), closes [#919](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/919) [#855](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/855)

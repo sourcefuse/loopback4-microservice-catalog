@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.4 (2022-09-21)</small>
+
+* chore(deps): update loopback4-soft-delete version in core (#1029) ([99b119c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99b119c)), closes [#1029](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1029) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)
+
+
+
+
+
 ## <small>7.2.3 (2022-09-20)</small>
 
 * chore(deps): update loopback4-soft-delete version in core (#1027) ([ccaa55a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ccaa55a)), closes [#1027](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1027) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)

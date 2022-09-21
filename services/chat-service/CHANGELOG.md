@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.4 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-service
+
+
+
+
+
 ## <small>4.2.3 (2022-09-20)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-service
