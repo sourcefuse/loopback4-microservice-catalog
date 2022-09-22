@@ -63,7 +63,9 @@ export abstract class DefaultTransactionalUserModifyRepository<
         },
       );
     } else {
-      // Do nothing
+      filter = filter ?? {};
+      filter.where = filter.where ?? {};
+      (filter.where as Condition<T>).deleted = false;
     }
     return super.find(filter, options);
   }
