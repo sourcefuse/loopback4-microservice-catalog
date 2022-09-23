@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.6 (2022-09-23)</small>
+
+* fix(chore): remove user-tenant from lerna ignore (#1033) ([ddce5c9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ddce5c9)), closes [#1033](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1033) [#1032](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1032) [#1032](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1032)
+
+
+
+
+
 ## <small>0.4.5 (2022-09-21)</small>
 
 * chore(deps): update loopback4-soft-delete version in services (#1030) ([d386bc1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d386bc1)), closes [#1030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1030) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)

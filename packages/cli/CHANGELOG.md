@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.2 (2022-09-23)</small>
+
+* fix(cli): Include the update of loopback packages via sourceloop cli (#1024) ([c3978bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3978bb)), closes [#1024](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1024) [#1023](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1023) [#1023](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1023)
+
+
+
+
+
 ## <small>2.4.1 (2022-09-02)</small>
 
 * chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
