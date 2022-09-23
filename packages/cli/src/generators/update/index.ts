@@ -50,7 +50,6 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
             ),
           );
 
-          if (this.shouldExit()) return;
           await this._updateSourceloopDep();
         }
       }
