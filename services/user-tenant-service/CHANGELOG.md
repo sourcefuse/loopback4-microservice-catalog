@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2022-09-26)
+
+* feat(user-tenant-service): dummy commit for user-tenant (#1035) ([90d2f2b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/90d2f2b)), closes [#1035](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1035) [#1032](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1032)
+
+
+
+
+
 ## <small>0.4.6 (2022-09-23)</small>
 
 * fix(chore): remove user-tenant from lerna ignore (#1033) ([ddce5c9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ddce5c9)), closes [#1033](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1033) [#1032](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1032) [#1032](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1032)
