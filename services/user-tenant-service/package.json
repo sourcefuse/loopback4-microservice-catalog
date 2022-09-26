@@ -8,7 +8,6 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": "false",
   "engines": {
     "node": "12 || 14 || 16 || 17"
   },
