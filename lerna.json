@@ -99,8 +99,8 @@
     "**/__tests__/**",
     "**/*.md",
     "packages/core/locales/**",
-    "packages/search",
-    "packages/user-onboarding"
+    "packages/user-onboarding",
+    "packages/search"
   ],
   "version": "independent"
 }
