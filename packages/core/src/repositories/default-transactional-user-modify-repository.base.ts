@@ -8,11 +8,6 @@ import {
   Getter,
   juggler,
   Where,
-  Filter,
-  AndClause,
-  OrClause,
-  Condition,
-  AnyObject,
   Entity,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
@@ -37,100 +32,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     >,
   ) {
     super(entityClass, dataSource);
-  }
-
-  find(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
-    if (
-      filter?.where &&
-      (filter?.where as AndClause<T>).and &&
-      (filter?.where as AndClause<T>).and.length > 0
-    ) {
-      (filter?.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter?.where as OrClause<T>).or &&
-      (filter?.where as OrClause<T>).or.length > 0
-    ) {
-      (filter?.where as AndClause<T>).and = [];
-      (filter?.where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (filter?.where as OrClause<T>).or,
-        },
-      );
-    } else {
-      // Do nothing
-    }
-    return super.find(filter, options);
-  }
-
-  findOne(
-    filter?: Filter<T> | undefined,
-    options?: AnyObject | undefined,
-  ): Promise<(T & Relations) | null> {
-    if (
-      filter?.where &&
-      (filter?.where as AndClause<T>).and &&
-      (filter?.where as AndClause<T>).and.length > 0
-    ) {
-      (filter?.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter?.where as OrClause<T>).or &&
-      (filter?.where as OrClause<T>).or.length > 0
-    ) {
-      (filter?.where as AndClause<T>).and = [];
-      (filter?.where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (filter?.where as OrClause<T>).or,
-        },
-      );
-    } else {
-      // Do nothing
-    }
-    return super.findOne(filter, options);
-  }
-
-  findById(
-    id: ID,
-    filter?: Filter<T>,
-    options?: Options,
-  ): Promise<T & Relations> {
-    if (
-      filter?.where &&
-      (filter?.where as AndClause<T>).and &&
-      (filter?.where as AndClause<T>).and.length > 0
-    ) {
-      (filter?.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter?.where as OrClause<T>).or &&
-      (filter?.where as OrClause<T>).or.length > 0
-    ) {
-      (filter?.where as AndClause<T>).and = [];
-      (filter?.where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (filter?.where as OrClause<T>).or,
-        },
-      );
-    } else {
-      // Do nothing
-    }
-    return super.findById(id, filter, options);
   }
 
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
@@ -208,6 +109,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
     data.modifiedBy = uid;
     return super.updateById(id, data, options);
   }
+
   async replaceById(
     id: ID,
     data: DataObject<T>,
@@ -220,35 +122,5 @@ export abstract class DefaultTransactionalUserModifyRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
     return super.replaceById(id, data, options);
-  }
-
-  async deleteAllHard(where?: Where<T>, options?: Options): Promise<Count> {
-    return super.deleteAll(where, options);
-  }
-
-  async deleteByIdHard(id: ID, options?: Options): Promise<void> {
-    return super.deleteById(id, options);
-  }
-
-  async deleteById(id: ID, options?: Options): Promise<void> {
-    // Do soft delete, no hard delete allowed
-    return super.updateById(
-      id,
-      {
-        deleted: true,
-      } as DataObject<T>,
-      options,
-    );
-  }
-
-  async deleteAll(where?: Where<T>, options?: Options): Promise<Count> {
-    // Do soft delete, no hard delete allowed
-    return super.updateAll(
-      {
-        deleted: true,
-      } as DataObject<T>,
-      where,
-      options,
-    );
   }
 }
