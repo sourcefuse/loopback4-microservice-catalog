@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/user-tenant-service",
   "version": "0.4.6",
-  "description": "user-tennat-services.",
+  "description": "User Tenant Service.",
   "keywords": [
     "loopback-extension",
     "loopback"
