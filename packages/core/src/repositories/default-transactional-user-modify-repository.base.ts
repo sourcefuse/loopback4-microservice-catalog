@@ -13,12 +13,12 @@ import {
   OrClause,
   Condition,
   AnyObject,
-  DefaultTransactionalRepository,
   Entity,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';
 import {AuthErrorKeys} from 'loopback4-authentication';
+import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
 import {IAuthUserWithPermissions} from '../components';
 import {UserModifiableEntity} from '../models';
 
@@ -26,7 +26,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
   T extends UserModifiableEntity,
   ID,
   Relations extends object = {},
-> extends DefaultTransactionalRepository<T, ID, Relations> {
+> extends DefaultTransactionSoftCrudRepository<T, ID, Relations> {
   constructor(
     entityClass: typeof Entity & {
       prototype: T;
