@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.1 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
 ## 0.6.0 (2022-09-26)
 
 * feat(user-tenant-service): dummy user-tenant commit (#1036) ([aa979ab](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aa979ab)), closes [#1036](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1036) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

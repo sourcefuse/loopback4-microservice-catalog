@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.7 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-service
+
+
+
+
+
 ## <small>4.2.6 (2022-09-26)</small>
 
 * feat(chat-service):add attachment feature in chat service. (#983) ([a0e943b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a0e943b)), closes [#983](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/983) [#576](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/576)
