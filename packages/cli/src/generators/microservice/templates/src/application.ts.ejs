@@ -22,6 +22,7 @@ import {
 <% if(project.facade) { -%>
   SecureSequence,
   rateLimitKeyGen,
+  AuthCacheSourceName,
 <% } else { -%>
   ServiceSequence,
 <% } -%>
@@ -126,7 +127,7 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     });
 
     this.bind(RateLimitSecurityBindings.CONFIG).to({
-      name: 'RateLimitStore',
+      name: AuthCacheSourceName,
       max: parseInt(process.env.RATE_LIMIT_REQUEST_CAP ?? '100'),
       keyGenerator: rateLimitKeyGen,
     });
