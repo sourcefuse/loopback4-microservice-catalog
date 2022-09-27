@@ -1,9 +1,12 @@
-  import {<%= project.applicationName %>} from '../..';
+import {<%= project.applicationName %>} from '../..';
 import {
   createRestAppClient,
   givenHttpServerConfig,
   Client,
 } from '@loopback/testlab';
+<% if (project.facade) { -%>
+import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
+<% } -%>
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -33,6 +36,12 @@ export async function setupApplication(): Promise<AppWithClient> {
     app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
       name: process.env.REDIS_NAME,
       connector: 'kv-memory',
+    });
+  <% } -%>
+
+  <% if (project.facade) { -%>
+    app.bind(RateLimitSecurityBindings.RATELIMIT_SECURITY_ACTION).to(async () => {
+      /* nothing here */
     });
   <% } -%>
 

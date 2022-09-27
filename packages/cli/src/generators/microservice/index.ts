@@ -13,6 +13,7 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
   BASESERVICEDSLIST,
+  BASESERVICECOMPONENTLIST,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -291,6 +292,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
       if (type === 'services') {
+        this.projectInfo.baseServiceComponentName =
+          this._setBaseServiceComponentName();
         const baseServiceDSList = this._setDataSourceName();
         this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
           ds => ds.type === 'store',
@@ -337,7 +340,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts[symlinkresolver] = symlinkresolver;
       scripts['resolve-links'] =
         'npm run symlink-resolver build ./node_modules/@local';
-      scripts['prestart'] = 'npm run rebuild && npm run openapi-spec';
+      scripts['prestart'] = 'npm run clean && npm run openapi-spec';
       scripts['rebuild'] = 'npm run clean && npm run build';
       scripts['start'] =
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
@@ -421,6 +424,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (this.options.baseService) {
       return BASESERVICEDSLIST[this.options.baseService];
     } else return [];
+  }
+
+  private _setBaseServiceComponentName() {
+    if (this.options.baseService) {
+      return BASESERVICECOMPONENTLIST[this.options.baseService];
+    } else return undefined;
   }
 
   private _createDataSource() {

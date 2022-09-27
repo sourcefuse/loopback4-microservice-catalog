@@ -6,15 +6,26 @@ import {
 } from '@loopback/rest-explorer';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+<% if(project.facade) { -%>
+import {HelmetSecurityBindings} from 'loopback4-helmet';
+import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
+<% } -%>
 import {
+<% if(!project.serviceDependency) { -%>
   CoreComponent,
+<% } -%>
+<% if(project.facade) { -%>
+  SecureSequence,
+  rateLimitKeyGen,
+  AuthCacheSourceName,
+<% } else { -%>
   ServiceSequence,
+<% } -%>
   SFCoreBindings,
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -22,41 +33,9 @@ import {
   BearerVerifierType,
   SECURITY_SCHEME_SPEC,
 } from '@sourceloop/core';
-
-<% if(project.serviceDependency === 'audit-service') { -%>
-import {AuditServiceComponent} from '@sourceloop/audit-service';
+<% if (project.serviceDependency && project.baseServiceComponentName) { -%>
+import {<%= project.baseServiceComponentName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } -%>
-<% if(project.serviceDependency === 'authentication-service') { -%>
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
-<% } -%>
-<% if(project.serviceDependency === 'chat-service') { -%>
-import {ChatServiceComponent} from '@sourceloop/chat-service';
-<% } -%>
-<% if(project.serviceDependency === 'notification-service') { -%>
-import {NotificationServiceComponent} from '@sourceloop/notification-service';
-<% } -%>
-<% if(project.serviceDependency === 'bpmn-service') { -%>
-import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
-<% } -%>
-<% if(project.serviceDependency === 'feature-toggle-service') { -%>
-import {FeatureToggleServiceComponent} from '@sourceloop/feature-toggle-service';
-<% } -%>
-<% if(project.serviceDependency === 'in-mail-service') { -%>
-import {InMailServiceComponent} from '@sourceloop/in-mail-service';
-<% } -%>
-<% if(project.serviceDependency === 'payment-service') { -%>
-import {PaymentServiceComponent} from '@sourceloop/payment-service';
-<% } -%>
-<% if(project.serviceDependency === 'scheduler-service') { -%>
-import {SchedulerServiceComponent} from '@sourceloop/scheduler-service';
-<% } -%>
-<% if(project.serviceDependency === 'search-service') { -%>
-import {SearchServiceComponent} from '@sourceloop/search-service';
-<% } -%>
-<% if(project.serviceDependency === 'video-conferencing-service') { -%>
-import {VideoConfServiceComponent} from '@sourceloop/video-conferencing-service';
-<% } -%>
-
 <% if (project.repositories) { -%>
 import {RepositoryMixin} from '@loopback/repository';
 <% } -%>
@@ -107,47 +86,6 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     };
 
     super(options);
-    this.component(CoreComponent);
-
-    // Set up the custom sequence
-    this.sequence(ServiceSequence);
-
-    // Add authentication component
-    this.component(AuthenticationComponent);
-
-<% if(project.serviceDependency === 'audit-service') { -%>
-    this.component(AuditServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'authentication-service') { -%>
-    this.component(AuthenticationServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'chat-service') { -%>
-    this.component(ChatServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'notification-service') { -%>
-    this.component(NotificationServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'bpmn-service') { -%>
-    this.component(WorkflowServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'feature-toggle-service') { -%>
-    this.component(FeatureToggleServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'in-mail-service') { -%>
-    this.component(InMailServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'payment-service') { -%>
-    this.component(PaymentServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'scheduler-service') { -%>
-    this.component(SchedulerServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'search-service') { -%>
-    this.component(SearchServiceComponent);
-<% } -%>
-<% if(project.serviceDependency === 'video-conferencing-service') { -%>
-    this.component(VideoConfServiceComponent);
-<% } -%>
 
     // To check if monitoring is enabled from env or not
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
@@ -162,6 +100,47 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
       swaggerUsername: process.env.SWAGGER_USER,
       swaggerPassword: process.env.SWAGGER_PASSWORD,
     });
+
+<% if(!project.serviceDependency) { -%>
+    this.component(CoreComponent);
+<% } -%>
+
+    // Set up the custom sequence
+<% if(project.facade) { -%>
+    this.sequence(SecureSequence);
+
+    this.bind(HelmetSecurityBindings.CONFIG).to({
+      referrerPolicy: {
+        policy: 'same-origin',
+      },
+      contentSecurityPolicy: {
+        directives: {
+          frameSrc: ["'self'"],
+          scriptSrc: ["'self'", `'${process.env.CSP_SCRIPT_SRC_HASH ?? ''}'`],
+        },
+      },
+      hsts: {
+        maxAge: 31536000,
+        includeSubDomains: true,
+        preload: true,
+      },
+    });
+
+    this.bind(RateLimitSecurityBindings.CONFIG).to({
+      name: AuthCacheSourceName,
+      max: parseInt(process.env.RATE_LIMIT_REQUEST_CAP ?? '100'),
+      keyGenerator: rateLimitKeyGen,
+    });
+<% } else { -%>
+    this.sequence(ServiceSequence);
+<% } -%>
+
+    // Add authentication component
+    this.component(AuthenticationComponent);
+
+<% if (project.serviceDependency && project.baseServiceComponentName) { -%>
+  this.component(<%= project.baseServiceComponentName %>);
+<% } -%>
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
