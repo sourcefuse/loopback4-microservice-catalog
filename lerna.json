@@ -95,13 +95,12 @@
   "changelogPreset": "custom-sf-changelog",
   "ignoreChanges": [
     "sandbox/**",
-    "services/user-tenant-service",
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
     "packages/core/locales/**",
-    "packages/search",
-    "packages/user-onboarding"
+    "packages/user-onboarding",
+    "packages/search"
   ],
   "version": "independent"
 }
