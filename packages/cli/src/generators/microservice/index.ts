@@ -371,7 +371,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       );
       this.spawnCommandSync('npm', ['i']);
       this.spawnCommandSync('npm', ['run', 'prettier:fix']);
-      this.destinationRoot(BACK_TO_ROOT);
+      this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
       if (this.options.migrations) {
         if (!this._migrationExists()) {
           this._createMigrationPackage();
