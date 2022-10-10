@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.6 (2022-10-10)</small>
+
+* fix(core): IP address issue in RateLimitKeyGen (#1040) ([2c9c8d8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c9c8d8)), closes [#1040](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1040) [#1039](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1039)
+
+
+
+
+
 ## <small>7.2.5 (2022-09-26)</small>
 
 * fix(core): change parent class of DefaultTransactionalUserModifyRepository (#1034) ([55794ab](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55794ab)), closes [#1034](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1034) [#1031](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1031)
