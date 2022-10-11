@@ -37,3 +37,6 @@ export * from './keys';
 export * from './azure-ad-signup.provider';
 export * from './azure-post-verify.provider';
 export * from './azure-pre-verify.provider';
+export * from './cognito-oauth2-signup.provider';
+export * from './cognito-pre-verify.provider';
+export * from './cognito-post-verify.provider';
