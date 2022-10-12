@@ -527,6 +527,30 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           destPath.replace('.ejs', ''),
       },
     );
+    // for the tpl files
+    const tplFilePath = this.templatePath(
+      join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
+    );
+    fs.readdirSync(
+      this.templatePath(
+        join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
+      ),
+    ).forEach(file => {
+      if (file.includes('.tpl')) {
+        const targetFileName = file.replace('.tpl', '');
+        const sourcePath = join(tplFilePath, file);
+        const destinationPath = join(
+          this.destinationRoot(),
+          MIGRATION_FOLDER,
+          targetFileName,
+        );
+        this.fs.copyTpl(sourcePath, destinationPath, {
+          name: this.options.name
+            ? this.options.name.toUpperCase()
+            : DEFAULT_NAME,
+        });
+      }
+    });
   }
 
   private _createCustomMigration() {
@@ -556,7 +580,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             sourceloopMigrationPath(this.options.baseService),
           ),
         ),
-        this.destinationPath(join(MIGRATION_FOLDER, name)),
+        this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
       if (this.options.datasourceType) {
@@ -599,6 +623,22 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         packageJsFile,
         JSON.stringify(packageJs, undefined, JSON_SPACING),
       );
+      const name = this.options.name
+        ? this.options.name.toUpperCase()
+        : DEFAULT_NAME;
+      let migEnv = this.fs.read(join(MIGRATION_FOLDER, '.env.example'));
+      const envToAdd = `\n${name}_DB_HOST= \n${name}_DB_PORT= \n${name}_DB_USER= \n${name}_DB_DATABASE= \n${name}_DB_PASSWORD=`;
+      migEnv = migEnv + envToAdd;
+      fs.writeFile(
+        join(MIGRATION_FOLDER, '.env.example'),
+        migEnv,
+        {
+          flag: 'w',
+        },
+        function () {
+          //This is intentional.
+        },
+      );
     } catch {
       //do nothing
     }
@@ -606,6 +646,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   async end() {
     if (this.projectInfo) {
+      this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
       this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
     }
     await super.end();
