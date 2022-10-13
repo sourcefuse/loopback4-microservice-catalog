@@ -58,14 +58,12 @@ export class Microservice extends Base<MicroserviceOptions> {
       name: 'includeMigrations',
       description: 'Include base microservice migrations',
       exclusive: ['facade', 'customMigrations'],
-      // dependsOn: ['baseService', 'datasourceName', 'datasourceType'],
       dependsOn: ['baseService'],
     }),
     customMigrations: flags.boolean({
       name: 'generateMigrations',
       description: 'Setup custom migration for this microservice',
       exclusive: ['facade', 'includeMigrations'],
-      // dependsOn: ['datasourceName', 'datasourceType'],
     }),
   };
   static args = [
