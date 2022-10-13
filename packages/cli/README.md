@@ -156,5 +156,4 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.4/src/commands/update.ts)_
-
 <!-- commandsstop -->
