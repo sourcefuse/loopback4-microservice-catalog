@@ -76,22 +76,10 @@ export default abstract class CommandBase<T extends object> extends Command {
         continue;
       }
 
-      let dependencyExists = true;
-      let exclusivity = true;
-
-      flags[flag].dependsOn?.forEach(dependency => {
-        if (!options[dependency]) {
-          dependencyExists = false;
-        }
-      });
-
-      flags[flag].exclusive?.forEach(ex => {
-        if (options[ex]) {
-          exclusivity = false;
-        }
-      });
-
-      if (exclusivity && dependencyExists) {
+      if (
+        this.exclusivity(options, flags[flag].exclusive) &&
+        this.dependencyExists(options, flags[flag].dependsOn)
+      ) {
         const answer = await this.prompt([
           this.createPromptObject(flags[flag]),
         ]);
@@ -118,5 +106,33 @@ export default abstract class CommandBase<T extends object> extends Command {
       //do nothing
     }
     return response;
+  }
+
+  private dependencyExists(
+    options: AnyObject,
+    dependsOn: string[] | undefined,
+  ): boolean {
+    if (dependsOn && dependsOn.length > 0) {
+      for (const dependency of dependsOn) {
+        if (!options[dependency]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private exclusivity(
+    options: AnyObject,
+    exclusive: string[] | undefined,
+  ): boolean {
+    if (exclusive && exclusive.length > 0) {
+      for (const ex of exclusive) {
+        if (options[ex]) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
