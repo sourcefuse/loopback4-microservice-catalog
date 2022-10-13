@@ -70,32 +70,33 @@ export default abstract class CommandBase<T extends object> extends Command {
   private async promptFlags(flags: FlagInput<AnyObject>, options: AnyObject) {
     for (const flag in flags) {
       if (
-        (options[flag] === undefined || options[flag] === null) &&
-        !IGNORED_FLAGS.includes(flag)
+        (options[flag] !== undefined && options[flag] !== null) ||
+        IGNORED_FLAGS.includes(flag)
       ) {
-        let dependencyExists = true;
-        let exclusivity = true;
-        if (flags[flag].dependsOn) {
-          flags[flag].dependsOn?.forEach(dependency => {
-            if (!options[dependency]) {
-              dependencyExists = false;
-            }
-          });
+        continue;
+      }
+
+      let dependencyExists = true;
+      let exclusivity = true;
+
+      flags[flag].dependsOn?.forEach(dependency => {
+        if (!options[dependency]) {
+          dependencyExists = false;
         }
-        if (flags[flag].exclusive) {
-          flags[flag].exclusive?.forEach(ex => {
-            if (options[ex]) {
-              exclusivity = false;
-            }
-          });
+      });
+
+      flags[flag].exclusive?.forEach(ex => {
+        if (options[ex]) {
+          exclusivity = false;
         }
-        if (exclusivity && dependencyExists) {
-          const answer = await this.prompt([
-            this.createPromptObject(flags[flag]),
-          ]);
-          if (answer) {
-            options[flag] = answer[flags[flag].name];
-          }
+      });
+
+      if (exclusivity && dependencyExists) {
+        const answer = await this.prompt([
+          this.createPromptObject(flags[flag]),
+        ]);
+        if (answer) {
+          options[flag] = answer[flags[flag].name];
         }
       }
     }
@@ -113,6 +114,8 @@ export default abstract class CommandBase<T extends object> extends Command {
     } else if (flag.options) {
       response.type = 'list';
       response.choices = flag.options;
+    } else {
+      //do nothing
     }
     return response;
   }
