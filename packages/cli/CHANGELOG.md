@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.4 (2022-10-13)</small>
+
+* fix(cli): fixing migration for microservices (#1048) ([a138860](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a138860)), closes [#1048](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1048) [#1047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1047) [#1047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1047)
+
+
+
+
+
 ## <small>2.4.3 (2022-10-10)</small>
 
 * fix(cli): DB pooling and obf fix in cli (#1025) ([37f1020](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/37f1020)), closes [#1025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1025)
