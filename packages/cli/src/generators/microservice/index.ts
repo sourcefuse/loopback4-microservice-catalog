@@ -627,7 +627,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ? this.options.name.toUpperCase()
         : DEFAULT_NAME;
       let migEnv = this.fs.read(join(MIGRATION_FOLDER, '.env.example'));
-      const envToAdd = `\n${name}_DB_HOST= \n${name}_DB_PORT= \n${name}_DB_USER= \n${name}_DB_DATABASE= \n${name}_DB_PASSWORD=`;
+      const envToAdd = `\n${name}_DB_HOST= \n${name}_DB_PORT= \n${name}_DB_USER= 
+      \n${name}_DB_DATABASE= \n${name}_DB_PASSWORD=`;
       migEnv = migEnv + envToAdd;
       fs.writeFile(
         join(MIGRATION_FOLDER, '.env.example'),
