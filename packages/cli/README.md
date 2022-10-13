@@ -19,7 +19,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.4.3 linux-x64 node-v16.14.2
+@sourceloop/cli/2.4.4 linux-x64 node-v16.13.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -155,6 +155,6 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.3/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.4/src/commands/update.ts)_
 
 <!-- commandsstop -->
