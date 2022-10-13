@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -40,7 +44,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateRoles]})
+  @authorize({
+    permissions: [PermissionKey.CreateRoles, PermissionKey.CreateRolesNum],
+  })
   @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -71,7 +77,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewRoles]})
+  @authorize({
+    permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
+  })
   @get(`${baseUrl}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -91,7 +99,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewRoles]})
+  @authorize({
+    permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
+  })
   @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -118,7 +128,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateRoles]})
+  @authorize({
+    permissions: [PermissionKey.UpdateRoles, PermissionKey.UpdateRolesNum],
+  })
   @patch(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -146,7 +158,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewRoles]})
+  @authorize({
+    permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
+  })
   @get(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -171,7 +185,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateRoles]})
+  @authorize({
+    permissions: [PermissionKey.UpdateRoles, PermissionKey.UpdateRoles],
+  })
   @patch(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -197,7 +213,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateRoles]})
+  @authorize({
+    permissions: [PermissionKey.UpdateRoles, PermissionKey.UpdateRolesNum],
+  })
   @put(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -216,7 +234,9 @@ export class RoleController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteRoles]})
+  @authorize({
+    permissions: [PermissionKey.DeleteRoles, PermissionKey.DeleteRolesNum],
+  })
   @del(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, service} from '@loopback/core';
 import {TwilioS3TargetOptions, TwilioWebhookPayload} from '.';
 import {TwilioMeetingResponse, TwilioSessonOptions} from '..';

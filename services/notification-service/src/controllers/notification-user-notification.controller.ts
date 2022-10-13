@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {repository} from '@loopback/repository';
 import {get, getModelSchemaRef, param} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -18,7 +22,12 @@ export class NotificationUserNotificationController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get('/notification-users/{id}/notification', {
     security: OPERATION_SECURITY_SPEC,
     responses: {

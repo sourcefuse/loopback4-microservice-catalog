@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {get, oas, OperationVisibility} from '@loopback/openapi-v3';
 import {Response, RestBindings} from '@loopback/rest';

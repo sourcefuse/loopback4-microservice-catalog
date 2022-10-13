@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
@@ -65,11 +69,9 @@ import {
   CodeResponse,
   LoginRequest,
 } from './';
-import {AuthUser, DeviceInfo} from './models/auth-user.model';
+import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-
-const userAgentKey = 'user-agent';
 
 export class LoginController {
   constructor(
@@ -175,7 +177,6 @@ export class LoginController {
   })
   async loginWithClientUser(
     @requestBody() req: LoginRequest,
-    @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
     await this.loginHelperService.verifyClientUserLogin(
       req,
@@ -203,10 +204,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.user.id);
       }
 
-      return await this.createJWT(payload, this.client, {
-        deviceId,
-        userAgent: this.req.headers[userAgentKey],
-      });
+      return await this.createJWT(payload, this.client);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -233,7 +231,6 @@ export class LoginController {
     @requestBody() req: AuthTokenRequest,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     codeReader: CodeReaderFn,
-    @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
     const authClient = await this.authClientRepository.findOne({
       where: {
@@ -262,10 +259,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.userId);
       }
 
-      return await this.createJWT(payload, authClient, {
-        deviceId,
-        userAgent: this.req.headers[userAgentKey],
-      });
+      return await this.createJWT(payload, authClient);
     } catch (error) {
       this.logger.error(error);
       if (error.name === 'TokenExpiredError') {
@@ -330,10 +324,6 @@ export class LoginController {
         externalRefreshToken: refreshPayload.externalRefreshToken,
       },
       authClient,
-      {
-        deviceId,
-        userAgent: this.req.headers[userAgentKey],
-      },
     );
   }
 
@@ -450,7 +440,6 @@ export class LoginController {
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
-    deviceInfo: DeviceInfo,
   ): Promise<TokenResponse> {
     try {
       const size = 32;
@@ -479,7 +468,7 @@ export class LoginController {
           AuthenticateErrorKeys.UserDoesNotExist,
         );
       }
-      const data = await this.getJwtPayload(user, authClient, deviceInfo);
+      const data = await this.getJwtPayload(user, authClient);
       const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
         expiresIn: authClient.accessTokenExpiration,
         issuer: process.env.JWT_ISSUER,

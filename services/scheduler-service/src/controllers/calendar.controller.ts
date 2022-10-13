@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -67,7 +71,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateCalendar]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateCalendar,
+      PermissionKey.CreateCalendarNum,
+    ],
+  })
   @post(basePath, {
     description: `This is an api to create a calendar for any user. 
       Recommendation: Use this while adding a user to the main application, in order to create 
@@ -99,7 +108,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateCalendar]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateCalendar,
+      PermissionKey.CreateCalendarNum,
+    ],
+  })
   @post('/calendars/calendarSubscription', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -175,7 +189,9 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewCalendar]})
+  @authorize({
+    permissions: [PermissionKey.ViewCalendar, PermissionKey.ViewCalendarNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -192,7 +208,9 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewCalendar]})
+  @authorize({
+    permissions: [PermissionKey.ViewCalendar, PermissionKey.ViewCalendarNum],
+  })
   @get(basePath, {
     description:
       'These requests will be available to everyone in the event to look at.',
@@ -220,7 +238,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateCalendar]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateCalendar,
+      PermissionKey.UpdateCalendarNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -247,7 +270,9 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewCalendar]})
+  @authorize({
+    permissions: [PermissionKey.ViewCalendar, PermissionKey.ViewCalendarNum],
+  })
   @get(`${basePath}/{id}`, {
     description:
       'These requests will be available to everyone in the event to look at.',
@@ -274,7 +299,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateCalendar]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateCalendar,
+      PermissionKey.UpdateCalendarNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -300,7 +330,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateCalendar]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateCalendar,
+      PermissionKey.UpdateCalendarNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     description: `This api is to update the calendar by passing an id. This action will be allowed only to 
       the owner of the calendar or the admin. To identify the ‘owner’ we will check for the email 
@@ -347,7 +382,12 @@ export class CalendarController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteCalendar]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteCalendar,
+      PermissionKey.DeleteCalendarNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     description: `This api is to update the calendar by passing an id. This action will be allowed only to the 
       owner of the calendar or the admin. To identify the ‘owner’ we will check for the email 

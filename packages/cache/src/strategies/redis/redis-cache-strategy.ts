@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {JugglerDataSource} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {TextDecoder} from 'util';
@@ -25,8 +29,8 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
   async searchInCache(
     key: string,
     cacheOptions: IRedisCacheMixinOptions,
-  ): Promise<M | M[] | undefined> {
-    let result: M | M[] | undefined;
+  ): Promise<M | M[] | undefined | null> {
+    let result: M | M[] | undefined | null;
     try {
       const res = (await this.executeRedisCommand('GET', [key])) as Buffer;
       if (res) {
@@ -42,7 +46,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
 
   async saveInCache(
     key: string,
-    value: M | M[],
+    value: M | M[] | null,
     cacheOptions: IRedisCacheMixinOptions,
   ): Promise<void> {
     try {

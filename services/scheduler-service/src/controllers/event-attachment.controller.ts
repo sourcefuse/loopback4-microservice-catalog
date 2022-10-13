@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -36,7 +40,12 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachment,
+      PermissionKey.ViewAttachmentNum,
+    ],
+  })
   @get(basePath, {
     description:
       'These requests will be available to everyone in the event to look at.',
@@ -62,7 +71,12 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateAttachment,
+      PermissionKey.CreateAttachmentNum,
+    ],
+  })
   @post(basePath, {
     description:
       'Organizer can add attachments to the event (if it was missed while creating event).',
@@ -97,7 +111,12 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachment,
+      PermissionKey.UpdateAttachmentNum,
+    ],
+  })
   @patch(basePath, {
     description: 'Organizer can update details of the attachment.',
     security: OPERATION_SECURITY_SPEC,
@@ -127,7 +146,12 @@ export class EventAttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteAttachment,
+      PermissionKey.DeleteAttachmentNum,
+    ],
+  })
   @del(basePath, {
     description: 'Organizer can delete the attachment.',
     security: OPERATION_SECURITY_SPEC,

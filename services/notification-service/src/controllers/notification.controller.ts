@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
   Count,
@@ -53,7 +57,12 @@ export class NotificationController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -92,7 +101,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
   @post(`${basePath}/bulk`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -143,7 +157,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -183,7 +202,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -201,7 +225,12 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateNotification,
+      PermissionKey.UpdateNotificationNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -229,7 +258,12 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateNotification,
+      PermissionKey.UpdateNotificationNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -253,7 +287,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteNotification,
+      PermissionKey.DeleteNotificationNum,
+    ],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

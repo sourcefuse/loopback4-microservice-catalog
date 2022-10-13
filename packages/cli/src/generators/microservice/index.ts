@@ -1,4 +1,8 @@
-import {writeFileSync} from 'fs';
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import fs from 'fs';
 import {join} from 'path';
 import {Question} from 'yeoman-generator';
 import AppGenerator from '../../app-generator';
@@ -9,6 +13,7 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
   BASESERVICEDSLIST,
+  BASESERVICECOMPONENTLIST,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
 import {
@@ -186,12 +191,24 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       const prompts = [];
 
       if (!this.options.datasourceName) {
-        prompts.push({
-          type: 'input',
-          name: 'datasourceName',
-          message: 'Datasource name: ',
-          default: 'db',
-        });
+        const {extraDataSource} = await this.prompt([
+          {
+            type: 'confirm',
+            name: 'extraDataSource',
+            message:
+              'Do you want to add additional datasource apart from the one in base service',
+            default: false,
+          },
+        ]);
+
+        if (extraDataSource) {
+          prompts.push({
+            type: 'input',
+            name: 'datasourceName',
+            message: 'Datasource name: ',
+            default: 'db',
+          });
+        }
       }
 
       if (!this.options.datasourceType) {
@@ -218,11 +235,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ...this.options,
         ...answers,
       };
-
-      this.projectInfo.datasourceName = this.options.datasourceName;
-      this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
-        this.options.datasourceName,
-      );
       this.projectInfo.datasourceConnector =
         DATASOURCE_CONNECTORS[
           this.options.datasourceType ?? DATASOURCES.POSTGRES
@@ -279,6 +291,22 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   scaffold() {
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
+      if (type === 'services') {
+        this.projectInfo.baseServiceComponentName =
+          this._setBaseServiceComponentName();
+        const baseServiceDSList = this._setDataSourceName();
+        this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
+          ds => ds.type === 'store',
+        );
+
+        const redisDsPresent = baseServiceDSList.filter(
+          ds => ds.type === 'cache',
+        );
+
+        this.projectInfo.baseServiceCacheName = redisDsPresent.length
+          ? 'redis'
+          : undefined;
+      }
       this.destinationRoot(join(type, this.options.name ?? DEFAULT_NAME));
       this.projectInfo.dependencies = appendDependencies(
         this.projectInfo.dependencies,
@@ -293,43 +321,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   writing() {
     if (!this.shouldExit()) {
-      if (this.options.datasourceName) {
-        const nameArr = [this.options.datasourceName];
-
-        this._setDataSourceName();
-
-        this.fs.copyTpl(
-          this.templatePath(DATASOURCE_TEMPLATE),
-          this.destinationPath(
-            join(
-              'src',
-              'datasources',
-              `${this.options.datasourceName}.datasource.ts`,
-            ),
-          ),
-          {
-            project: this.projectInfo,
-          },
-        );
-        if (this.projectInfo.baseServiceCacheName) {
-          this.fs.copyTpl(
-            this.templatePath(REDIS_DATASOURCE),
-            this.destinationPath(
-              join('src', 'datasources', 'redis.datasource.ts'),
-            ),
-            {
-              project: this.projectInfo,
-            },
-          );
-          nameArr.push('redis');
-        }
-        this.fs.copyTpl(
-          this.templatePath(DATASOURCE_INDEX),
-          this.destinationPath(join('src', 'datasources', `index.ts`)),
-          {
-            nameArr: nameArr,
-          },
-        );
+      if (this.options.baseService || this.options.datasourceName) {
+        this._createDataSource();
       } else {
         this._createFacadeRedisDatasource();
       }
@@ -347,7 +340,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts[symlinkresolver] = symlinkresolver;
       scripts['resolve-links'] =
         'npm run symlink-resolver build ./node_modules/@local';
-      scripts['prestart'] = 'npm run rebuild && npm run openapi-spec';
+      scripts['prestart'] = 'npm run clean && npm run openapi-spec';
       scripts['rebuild'] = 'npm run clean && npm run build';
       scripts['start'] =
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
@@ -372,13 +365,13 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             `@sourceloop/${this.options.baseService}`,
           );
       }
-      writeFileSync(
+      fs.writeFileSync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
       this.spawnCommandSync('npm', ['i']);
       this.spawnCommandSync('npm', ['run', 'prettier:fix']);
-      this.destinationRoot(BACK_TO_ROOT);
+      this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
       if (this.options.migrations) {
         if (!this._migrationExists()) {
           this._createMigrationPackage();
@@ -398,22 +391,106 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
+  addScope() {
+    let czConfig = this.fs.read(
+      join(this.destinationPath(), '../../', '.cz-config.js'),
+    );
+    const lastScopeIndex = czConfig.indexOf(
+      '[',
+      czConfig.lastIndexOf('scopes'),
+    );
+    const offset = 2;
+    const firstPart = czConfig.slice(0, lastScopeIndex + offset);
+    const secPart = czConfig.slice(lastScopeIndex + offset);
+    const suffix = this.options.facade ? 'facade' : 'service';
+
+    const stringToAdd =
+      `{name: \'${this.options.name}` + '-' + `${suffix}\'}, \n`;
+
+    czConfig = firstPart + stringToAdd + secPart;
+    fs.writeFile(
+      join(this.destinationPath(), '../../', '.cz-config.js'),
+      czConfig,
+      {
+        flag: 'w',
+      },
+      function () {
+        //This is intentional.
+      },
+    );
+  }
+
   private _setDataSourceName() {
-    if (this.options.datasourceName && this.options.baseService) {
-      const datasourceList = BASESERVICEDSLIST[this.options.baseService];
-      datasourceList.forEach(ds => {
-        if (ds.type === 'store') {
-          this.projectInfo.baseServiceStoreName = ds.name;
-        } else {
-          this.projectInfo.baseServiceCacheName = ds.name;
-        }
+    if (this.options.baseService) {
+      return BASESERVICEDSLIST[this.options.baseService];
+    } else return [];
+  }
+
+  private _setBaseServiceComponentName() {
+    if (this.options.baseService) {
+      return BASESERVICECOMPONENTLIST[this.options.baseService];
+    } else return undefined;
+  }
+
+  private _createDataSource() {
+    const baseServiceDSList = this._setDataSourceName();
+    if (this.options.datasourceName) {
+      baseServiceDSList?.push({
+        type: 'store',
+        name: this.options.datasourceName,
+        fileName: this.options.datasourceName,
+        isNotBase: true,
       });
     }
+    baseServiceDSList.forEach(ds => {
+      if (ds.type === 'store') {
+        if (!ds.isNotBase) this.projectInfo.baseServiceStoreName = ds.name;
+        this.projectInfo.datasourceName = ds.fileName;
+        this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
+          ds.fileName,
+        );
+        this.fs.copyTpl(
+          this.templatePath(DATASOURCE_TEMPLATE),
+          this.destinationPath(
+            join('src', 'datasources', `${ds.fileName}.datasource.ts`),
+          ),
+          {
+            project: this.projectInfo,
+          },
+        );
+        this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
+      } else {
+        this.projectInfo.baseServiceCacheName = ds.name;
+        this.fs.copyTpl(
+          this.templatePath(REDIS_DATASOURCE),
+          this.destinationPath(
+            join('src', 'datasources', `${ds.fileName}.datasource.ts`),
+          ),
+          {
+            project: this.projectInfo,
+          },
+        );
+      }
+    });
+
+    this.fs.copyTpl(
+      this.templatePath(DATASOURCE_INDEX),
+      this.destinationPath(join('src', 'datasources', `index.ts`)),
+      {
+        nameArr: baseServiceDSList,
+      },
+    );
   }
 
   private _createFacadeRedisDatasource() {
     if (this.options.facade) {
-      const nameArr = ['redis'];
+      const nameArr = [
+        {
+          type: 'cache',
+          name: 'Redis',
+          fileName: 'redis',
+        },
+      ];
       this.fs.copyTpl(
         this.templatePath(REDIS_DATASOURCE),
         this.destinationPath(join('src', 'datasources', 'redis.datasource.ts')),
@@ -450,6 +527,30 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           destPath.replace('.ejs', ''),
       },
     );
+    // for the tpl files
+    const tplFilePath = this.templatePath(
+      join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
+    );
+    fs.readdirSync(
+      this.templatePath(
+        join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
+      ),
+    ).forEach(file => {
+      if (file.includes('.tpl')) {
+        const targetFileName = file.replace('.tpl', '');
+        const sourcePath = join(tplFilePath, file);
+        const destinationPath = join(
+          this.destinationRoot(),
+          MIGRATION_FOLDER,
+          targetFileName,
+        );
+        this.fs.copyTpl(sourcePath, destinationPath, {
+          name: this.options.name
+            ? this.options.name.toUpperCase()
+            : DEFAULT_NAME,
+        });
+      }
+    });
   }
 
   private _createCustomMigration() {
@@ -479,7 +580,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             sourceloopMigrationPath(this.options.baseService),
           ),
         ),
-        this.destinationPath(join(MIGRATION_FOLDER, name)),
+        this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
       if (this.options.datasourceType) {
@@ -518,9 +619,26 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
 
       packageJs.scripts = script;
-      writeFileSync(
+      fs.writeFileSync(
         packageJsFile,
         JSON.stringify(packageJs, undefined, JSON_SPACING),
+      );
+      const name = this.options.name
+        ? this.options.name.toUpperCase()
+        : DEFAULT_NAME;
+      let migEnv = this.fs.read(join(MIGRATION_FOLDER, '.env.example'));
+      const envToAdd = `\n${name}_DB_HOST= \n${name}_DB_PORT= \n${name}_DB_USER= 
+      \n${name}_DB_DATABASE= \n${name}_DB_PASSWORD=`;
+      migEnv = migEnv + envToAdd;
+      fs.writeFile(
+        join(MIGRATION_FOLDER, '.env.example'),
+        migEnv,
+        {
+          flag: 'w',
+        },
+        function () {
+          //This is intentional.
+        },
       );
     } catch {
       //do nothing
@@ -529,6 +647,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   async end() {
     if (this.projectInfo) {
+      this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
       this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
     }
     await super.end();

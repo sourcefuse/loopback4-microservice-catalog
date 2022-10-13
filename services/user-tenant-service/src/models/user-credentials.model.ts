@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BaseEntity} from '@sourceloop/core';
 import {model, property, belongsTo} from '@loopback/repository';
 import {User, UserWithRelations} from './index';

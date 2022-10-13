@@ -1,0 +1,88 @@
+{
+  "name": "@sourceloop/chat-notif-example-facade-socket",
+  "version": "0.1.8",
+  "description": "facade",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "12 || 14 || 16 || 17"
+  },
+  "private": true,
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t facade .",
+    "docker:run": "docker run -p 3000:3000 -d facade",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Yesha <yesha.mavani@sourcefuse.com>",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^5.0.2",
+    "@loopback/context": "^5.0.2",
+    "@loopback/core": "^4.0.2",
+    "@loopback/repository": "^5.0.2",
+    "@loopback/rest": "^12.0.2",
+    "@loopback/rest-explorer": "^5.0.2",
+    "@loopback/service-proxy": "^5.0.2",
+    "@sourceloop/core": "^7.2.6",
+    "ajv": "^8.11.0",
+    "ajv-errors": "^3.0.0",
+    "dotenv": "^16.0.1",
+    "dotenv-extended": "^2.9.0",
+    "loopback-connector-kv-redis": "^4.0.0",
+    "loopback-connector-postgresql": "^5.5.1",
+    "loopback-connector-rest": "^4.0.1",
+    "loopback4-authentication": "^7.0.0",
+    "loopback4-authorization": "^5.0.6",
+    "prom-client": "^14.0.1",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^9.0.2",
+    "@loopback/eslint-config": "^13.0.2",
+    "@loopback/testlab": "^5.0.2",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^14.18.21",
+    "eslint": "^8.21.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.7.4"
+  },
+  "overrides": {
+    "check-code-coverage": {
+      "lodash": "^4.17.21"
+    }
+  }
+}

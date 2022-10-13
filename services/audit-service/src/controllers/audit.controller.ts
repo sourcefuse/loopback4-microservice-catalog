@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -28,7 +32,9 @@ export class AuditController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateAudit]})
+  @authorize({
+    permissions: [PermissionKey.CreateAudit, PermissionKey.CreateAuditNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -55,7 +61,9 @@ export class AuditController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewAudit]})
+  @authorize({
+    permissions: [PermissionKey.ViewAudit, PermissionKey.ViewAuditNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -70,7 +78,9 @@ export class AuditController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewAudit]})
+  @authorize({
+    permissions: [PermissionKey.ViewAudit, PermissionKey.ViewAuditNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -94,7 +104,9 @@ export class AuditController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewAudit]})
+  @authorize({
+    permissions: [PermissionKey.ViewAudit, PermissionKey.ViewAuditNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

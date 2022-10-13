@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {
   FilterBuilder,
@@ -42,6 +46,10 @@ export class UserTenantController {
       PermissionKey.ViewOwnUser,
       PermissionKey.ViewTenantUser,
       PermissionKey.ViewTenantUserRestricted,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewOwnUserNum,
+      PermissionKey.ViewTenantUserNum,
+      PermissionKey.ViewTenantUserRestrictedNum,
     ],
   })
   @get('/user-tenants/{id}', {

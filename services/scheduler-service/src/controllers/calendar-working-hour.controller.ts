@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -37,7 +41,12 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewWorkingHour,
+      PermissionKey.ViewWorkingHourNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -61,7 +70,12 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateWorkingHour,
+      PermissionKey.CreateWorkingHourNum,
+    ],
+  })
   @post(basePath, {
     description: 'This is an api to create a calendar for any user.',
     security: OPERATION_SECURITY_SPEC,
@@ -95,7 +109,12 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateWorkingHour,
+      PermissionKey.UpdateWorkingHourNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -124,7 +143,12 @@ export class CalendarWorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteWorkingHour,
+      PermissionKey.DeleteWorkingHourNum,
+    ],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

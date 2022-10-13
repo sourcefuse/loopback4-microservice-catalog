@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -7,15 +11,15 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import {ServiceSequence} from '@sourceloop/core';
 import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import * as path from 'path';
-import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
-import {ServiceSequence} from '@sourceloop/core';
 import {UserTenantServiceComponent} from '../component';
+import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
 
 export {ApplicationConfig};
 

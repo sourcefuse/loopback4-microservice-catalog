@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Binding,
   Component,
@@ -8,7 +12,12 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {CoreComponent, SECURITY_SCHEME_SPEC} from '@sourceloop/core';
+import {
+  CoreComponent,
+  SECURITY_SCHEME_SPEC,
+  SFCoreBindings,
+} from '@sourceloop/core';
+import cookieParser from 'cookie-parser';
 import {
   AuthenticationComponent,
   Strategies,
@@ -24,6 +33,7 @@ import {AuthServiceBindings} from './keys';
 import {models} from './models';
 import {
   AppleOauth2VerifyProvider,
+  AzureAdVerifyProvider,
   BearerTokenVerifyProvider,
   ClientPasswordVerifyProvider,
   FacebookOauth2VerifyProvider,
@@ -39,6 +49,9 @@ import {
   ApplePostVerifyProvider,
   ApplePreVerifyProvider,
   AuthCodeBindings,
+  AzureAdSignupProvider,
+  AzurePostVerifyProvider,
+  AzurePreVerifyProvider,
   CodeWriterProvider,
   FacebookOauth2SignupProvider,
   FacebookPostVerifyProvider,
@@ -71,7 +84,7 @@ import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
-
+import bodyParser from 'body-parser';
 export class AuthenticationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -88,6 +101,16 @@ export class AuthenticationServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    if (!!+(process.env.AZURE_AUTH_ENABLED ?? 0)) {
+      const expressMiddlewares =
+        this.application.getSync(SFCoreBindings.EXPRESS_MIDDLEWARES) ?? [];
+      expressMiddlewares.push(cookieParser());
+      expressMiddlewares.push(bodyParser.urlencoded({extended: true}));
+      this.application
+        .bind(SFCoreBindings.EXPRESS_MIDDLEWARES)
+        .to(expressMiddlewares);
+    }
 
     // Mount authentication component
     this.setupAuthenticationComponent();
@@ -224,6 +247,15 @@ export class AuthenticationServiceComponent implements Component {
       JwtPayloadProvider;
     this.providers[AuthServiceBindings.ForgotPasswordHandler.key] =
       ForgotPasswordProvider;
+
+    this.providers[Strategies.Passport.AZURE_AD_VERIFIER.key] =
+      AzureAdVerifyProvider;
+    this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
+      AzureAdSignupProvider;
+    this.providers[VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER.key] =
+      AzurePreVerifyProvider;
+    this.providers[VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER.key] =
+      AzurePostVerifyProvider;
   }
 
   setupAuthorizationComponent() {

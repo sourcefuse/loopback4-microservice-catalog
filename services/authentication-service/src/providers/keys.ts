@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BindingKey} from '@loopback/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import {SignupTokenHandlerFn} from '.';
@@ -26,6 +30,9 @@ import {
   OtpSenderFn,
   OtpFn,
   MfaCheckFn,
+  AzureAdSignUpFn,
+  AzureAdPreVerifyFn,
+  AzureAdPostVerifyFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -42,6 +49,9 @@ export namespace SignUpBindings {
   );
   export const KEYCLOAK_SIGN_UP_PROVIDER = BindingKey.create<KeyCloakSignUpFn>(
     'sf.keycloak.signup.provider',
+  );
+  export const AZURE_AD_SIGN_UP_PROVIDER = BindingKey.create<AzureAdSignUpFn>(
+    'sf.azuread.signup.provider',
   );
   export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,6 +104,11 @@ export namespace VerifyBindings {
     BindingKey.create<VerifyFunction.GenericAuthFn>(
       `sf.bearer.signupverify.provider`,
     );
+
+  export const AZURE_AD_PRE_VERIFY_PROVIDER =
+    BindingKey.create<AzureAdPreVerifyFn>('sf.azure.preverify.provider');
+  export const AZURE_AD_POST_VERIFY_PROVIDER =
+    BindingKey.create<AzureAdPostVerifyFn>('sf.azure.postverify.provider');
 }
 
 export namespace AuthCodeBindings {

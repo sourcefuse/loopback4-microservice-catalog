@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 // Uncomment these imports to begin using these cool features!
 
 import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';

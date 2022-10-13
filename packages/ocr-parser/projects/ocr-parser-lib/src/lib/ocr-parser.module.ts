@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import { NgModule } from '@angular/core';
 import { OcrParserComponent} from './ocr-parser/ocr-parser.component';
 import { TabsComponent } from './ocr-parser/components/tabs/tabs.component';

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {PermissionKey} from '../enums';
 import {inject} from '@loopback/context';
 import {Filter, repository} from '@loopback/repository';
@@ -36,7 +40,12 @@ export class UserTenantPrefsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateUserTenantPreference]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserTenantPreference,
+      PermissionKey.UpdateUserTenantPreferenceNum,
+    ],
+  })
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -81,7 +90,12 @@ export class UserTenantPrefsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewUserTenantPreference]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserTenantPreference,
+      PermissionKey.ViewUserTenantPreferenceNum,
+    ],
+  })
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {

@@ -20,8 +20,6 @@ npm i @sourceloop/notification-service
 
 ### Usage
 
-- Create a new Loopback4 Application (If you don't have one already)
-  `lb4 testapp`
 - Install the notification service
   `npm i @sourceloop/notification-service`
 - Install the loopback4-notifications module -
@@ -35,105 +33,102 @@ npm i @sourceloop/notification-service
   ```
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `NotifDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
-- **Email Notifications with Amazon SES** -
+- Using this service you can send Email, SMS and push notifications. Steps to add any of these are described below. You may choose to add one or more of these depending on your requirement.
 
-  - Bind the SES Config to the `SESBindings.Config` key -
+  - **Email Notifications with Amazon SES** -
 
-  ```typescript
-  this.bind(SESBindings.Config).to({
-    accessKeyId: process.env.SES_ACCESS_KEY_ID,
-    secretAccessKey: process.env.SES_SECRET_ACCESS_KEY,
-    region: process.env.SES_REGION,
-  });
-  ```
+    - Bind the SES Config to the `SESBindings.Config` key -
 
-  - Implement an SES Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/email/ses)) or you can import the default SES provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.EmailProvider` key as described [here](https://github.com/sourcefuse/loopback4-notifications#email-notifications).
+      ```typescript
+      this.bind(SESBindings.Config).to({
+        accessKeyId: process.env.SES_ACCESS_KEY_ID,
+        secretAccessKey: process.env.SES_SECRET_ACCESS_KEY,
+        region: process.env.SES_REGION,
+      });
+      ```
 
-- **Email Notifications with Nodemailer** -
+    - Implement an SES Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/email/ses)) or you can import the default SES provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.EmailProvider` key as described [here](https://github.com/sourcefuse/loopback4-notifications#email-notifications).
 
-  - Bind the Nodemailer Config to the `NodemailerBindings.Config` key -
+  - **Email Notifications with Nodemailer** -
 
-  ```typescript
-  this.bind(NodemailerBindings.Config).to({
-    pool: true,
-    maxConnections: 100,
-    url: '',
-    host: 'smtp.example.com',
-    port: 80,
-    secure: false,
-    auth: {
-      user: 'username',
-      pass: 'password',
-    },
-    tls: {
-      rejectUnauthorized: true,
-    },
-  });
-  ```
+    - Bind the Nodemailer Config to the `NodemailerBindings.Config` key -
 
-  - Implement a Nodemailer Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/email/nodemailer)) or import the default Nodemailer provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.EmailProvider` key as described [here](https://github.com/sourcefuse/loopback4-notifications#email-notifications),
+    ```typescript
+    this.bind(NodemailerBindings.Config).to({
+      pool: true,
+      maxConnections: 100,
+      url: '',
+      host: 'smtp.example.com',
+      port: 80,
+      secure: false,
+      auth: {
+        user: 'username',
+        pass: 'password',
+      },
+      tls: {
+        rejectUnauthorized: true,
+      },
+    });
+    ```
 
-- **SMS Notification with Amazon SNS** -
-  - Bind the SNS Config to the `SNSBindings.Config` key -
-  ```typescript
-  this.bind(SNSBindings.Config).to({
-    accessKeyId: process.env.SNS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.SNS_SECRET_ACCESS_KEY,
-    region: process.env.SNS_REGION,
-  });
-  ```
-  - Implement an SnsProvider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/sms/sns)) or import the default SNS provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.SMSProvider` key -
-  ```typescript
-  import {
-    NotificationBindings,
-    SnsProvider // or your own provider
-  } from 'loopback4-notifications';
-  ...
-  this.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider);
-  ...
-  ```
-- **Push Notifications with Pubnub** -
-  - Bind the Pubnub Config to the `PubnubBindings.Config` key -
-  ```typescript
-  this.bind(PubnubBindings.Config).to({
-    subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
-    publishKey: process.env.PUBNUB_PUBLISH_KEY,
-    secretKey: process.env.PUBNUB_SECRET_KEY,
-    ssl: true,
-    logVerbosity: true,
-    uuid: 'my-app',
-    cipherKey: process.env.PUBNUB_CIPHER_KEY,
-    apns2Env: 'production',
-    apns2BundleId: 'com.app.myapp',
-  });
-  ```
-  - Implement a Pubnub Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/pubnuba)) or import the default Pubnub provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
-  ```typescript
-  import {
-    NotificationBindings,
-    PubNubProvider //or your own provider
-  } from 'loopback4-notifications';
-  ...
-  this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
-  ...
-  ```
-- **Push Notifications with Socket.io** -
-  - Bind the Socket.io Config to the `SocketBindings.Config` key -
-  ```typescript
-  this.bind(SocketBindings.Config).to({
-    url: process.env.SOCKETIO_SERVER_URL,
-  });
-  ```
-  - Implement a SocketIO Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/socketio)) or import the default Socket.io provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
-  ```typescript
-  import {
-    NotificationBindings,
-    SocketIOProvider // or your own provider
-  } from 'loopback4-notifications';
-  ...
-  this.bind(NotificationBindings.PushProvider).toProvider(SocketIOProvider);
-  ...
-  ```
+    - Implement a Nodemailer Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/email/nodemailer)) or import the default Nodemailer provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.EmailProvider` key as described [here](https://github.com/sourcefuse/loopback4-notifications#email-notifications),
+
+  - **SMS Notification with Amazon SNS** -
+    - Bind the SNS Config to the `SNSBindings.Config` key -
+    ```typescript
+    this.bind(SNSBindings.Config).to({
+      accessKeyId: process.env.SNS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.SNS_SECRET_ACCESS_KEY,
+      region: process.env.SNS_REGION,
+    });
+    ```
+    - Implement an SnsProvider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/sms/sns)) or import the default SNS provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.SMSProvider` key -
+    ```typescript
+    import {NotificationBindings} from 'loopback4-notifications';
+    import {SnsProvider} from 'loopback4-notifications/sns'; // or your own provider
+    ...
+    this.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider);
+    ...
+    ```
+  - **Push Notifications with Pubnub** -
+    - Bind the Pubnub Config to the `PubnubBindings.Config` key -
+    ```typescript
+    this.bind(PubnubBindings.Config).to({
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      publishKey: process.env.PUBNUB_PUBLISH_KEY,
+      secretKey: process.env.PUBNUB_SECRET_KEY,
+      ssl: true,
+      logVerbosity: true,
+      uuid: 'my-app',
+      cipherKey: process.env.PUBNUB_CIPHER_KEY,
+      apns2Env: 'production',
+      apns2BundleId: 'com.app.myapp',
+    });
+    ```
+    - Implement a Pubnub Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/pubnuba)) or import the default Pubnub provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
+    ```typescript
+    import {NotificationBindings} from 'loopback4-notifications';
+    import {PubNubProvider} from 'loopback4-notifications/pubnub';  //or your own provider
+    ...
+    this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
+    ...
+    ```
+  - **Push Notifications with Socket.io** -
+    - Bind the Socket.io Config to the `SocketBindings.Config` key -
+    ```typescript
+    this.bind(SocketBindings.Config).to({
+      url: process.env.SOCKETIO_SERVER_URL,
+    });
+    ```
+    - Implement a SocketIO Provider(refer [this](https://github.com/sourcefuse/loopback4-notifications/tree/master/src/providers/push/socketio)) or import the default Socket.io provider from the [loopback4-notifications](https://www.npmjs.com/package/loopback4-notifications) module and bind it to the `NotificationBindings.PushProvider` key -
+    ```typescript
+    import {NotificationBindings} from 'loopback4-notifications';
+    import {SocketIOProvider} from 'loopback4-notifications/socketio';  //or your own provider
+    ...
+    this.bind(NotificationBindings.PushProvider).toProvider(SocketIOProvider);
+    ...
+    ```
+
 - Start the application
   `npm start`
 
@@ -378,12 +373,14 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 ### Common Responses
 
-200: Successful Response. Response body varies w.r.t API
-401: Unauthorized: The JWT token is missing or invalid
-403: Forbidden : Not allowed to execute the concerned API
-404: Entity Not Found
-400: Bad Request (Error message varies w.r.t API)
-201: No content: Empty Response
+| Status | Description                                          |
+| ------ | ---------------------------------------------------- |
+| 200    | Successful Response. Response body varies w.r.t API  |
+| 401    | Unauthorized: The JWT token is missing or invalid    |
+| 403    | Forbidden : Not allowed to execute the concerned API |
+| 404    | Entity Not Found                                     |
+| 400    | Bad Request (Error message varies w.r.t API)         |
+| 201    | No content: Empty Response                           |
 
 ## API's Details
 

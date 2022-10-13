@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -38,7 +42,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateAttachment,
+      PermissionKey.CreateAttachmentNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -67,7 +76,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachment,
+      PermissionKey.ViewAttachmentNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -86,7 +100,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachment,
+      PermissionKey.ViewAttachmentNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -112,7 +131,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachment,
+      PermissionKey.UpdateAttachmentNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -139,7 +163,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachment,
+      PermissionKey.ViewAttachmentNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -164,7 +193,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachment,
+      PermissionKey.UpdateAttachmentNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -190,7 +224,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachment,
+      PermissionKey.UpdateAttachmentNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -209,7 +248,12 @@ export class AttachmentController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteAttachment]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteAttachment,
+      PermissionKey.DeleteAttachmentNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

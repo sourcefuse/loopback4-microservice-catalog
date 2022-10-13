@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';

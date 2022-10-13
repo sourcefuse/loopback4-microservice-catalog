@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.4 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* build(sandbox): update versions in all examples (#996) ([ebafab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebafab0)), closes [#996](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/996)
+
+
+
+
+
+## <small>0.1.3 (2022-07-27)</small>
+
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
 ## <small>0.1.2 (2022-06-24)</small>
 
 * chore(sandbox): update angular package examples to newer angular versions (#846) ([0e7e819](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e7e819)), closes [#846](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/846) [#829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/829)

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {
   Count,
@@ -62,6 +66,9 @@ export class TenantUserController {
       PermissionKey.ViewAnyUser,
       PermissionKey.ViewTenantUser,
       PermissionKey.ViewTenantUserRestricted,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewTenantUserNum,
+      PermissionKey.ViewTenantUserRestrictedNum,
     ],
   })
   @get(basePath, {
@@ -126,7 +133,7 @@ export class TenantUserController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewAllUser],
+    permissions: [PermissionKey.ViewAllUser, PermissionKey.ViewAllUserNum],
   })
   @get(`${basePath}/view-all`, {
     security: OPERATION_SECURITY_SPEC,
@@ -164,6 +171,9 @@ export class TenantUserController {
       PermissionKey.ViewAnyUser,
       PermissionKey.ViewTenantUser,
       PermissionKey.ViewTenantUserRestricted,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewTenantUserNum,
+      PermissionKey.ViewTenantUserRestrictedNum,
     ],
   })
   @get(`${basePath}/count`, {
@@ -227,6 +237,10 @@ export class TenantUserController {
       PermissionKey.ViewTenantUser,
       PermissionKey.ViewTenantUserRestricted,
       PermissionKey.ViewOwnUser,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewTenantUserNum,
+      PermissionKey.ViewTenantUserRestrictedNum,
+      PermissionKey.ViewOwnUserNum,
     ],
   })
   @get(`${basePath}/{userid}`, {
@@ -282,6 +296,9 @@ export class TenantUserController {
       PermissionKey.CreateAnyUser,
       PermissionKey.CreateTenantUser,
       PermissionKey.CreateTenantUserRestricted,
+      PermissionKey.CreateAnyUserNum,
+      PermissionKey.CreateTenantUserNum,
+      PermissionKey.CreateTenantUserRestrictedNum,
     ],
   })
   @post(basePath, {
@@ -334,6 +351,10 @@ export class TenantUserController {
       PermissionKey.UpdateOwnUser,
       PermissionKey.UpdateTenantUser,
       PermissionKey.UpdateTenantUserRestricted,
+      PermissionKey.UpdateAnyUserNum,
+      PermissionKey.UpdateOwnUserNum,
+      PermissionKey.UpdateTenantUserNum,
+      PermissionKey.UpdateTenantUserRestrictedNum,
     ],
   })
   @patch(`${basePath}/{userId}`, {
@@ -379,6 +400,9 @@ export class TenantUserController {
       PermissionKey.DeleteAnyUser,
       PermissionKey.DeleteTenantUser,
       PermissionKey.DeleteTenantUserRestricted,
+      PermissionKey.DeleteAnyUserNum,
+      PermissionKey.DeleteTenantUserNum,
+      PermissionKey.DeleteTenantUserRestrictedNum,
     ],
   })
   @del(`${basePath}/{userId}`, {

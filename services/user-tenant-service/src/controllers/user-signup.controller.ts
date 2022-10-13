@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {PermissionKey, AuthProvider} from '../enums';
 import {repository} from '@loopback/repository';
 import {get, getModelSchemaRef, param} from '@loopback/rest';
@@ -20,7 +24,12 @@ export class UserSignupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewAnyUser, PermissionKey.ViewTenantUser],
+    permissions: [
+      PermissionKey.ViewAnyUser,
+      PermissionKey.ViewTenantUser,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewTenantUserNum,
+    ],
   })
   @get('/check-signup/{email}', {
     responses: {

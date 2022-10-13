@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -38,7 +42,12 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateSettings]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateSettings,
+      PermissionKey.CreateSettingsNum,
+    ],
+  })
   @post(basePath, {
     description: 'Create any new settings',
     security: OPERATION_SECURITY_SPEC,
@@ -68,7 +77,9 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSettings]})
+  @authorize({
+    permissions: [PermissionKey.ViewSettings, PermissionKey.ViewSettingsNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -85,7 +96,9 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSettings]})
+  @authorize({
+    permissions: [PermissionKey.ViewSettings, PermissionKey.ViewSettingsNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -111,7 +124,12 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSettings]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSettings,
+      PermissionKey.UpdateSettingsNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -138,7 +156,9 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewSettings]})
+  @authorize({
+    permissions: [PermissionKey.ViewSettings, PermissionKey.ViewSettingsNum],
+  })
   @get(`${basePath}/{id}`, {
     description:
       'These requests will be available to everyone in the setting to look at.',
@@ -165,7 +185,12 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSettings]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSettings,
+      PermissionKey.UpdateSettingsNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -191,7 +216,12 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateSettings]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSettings,
+      PermissionKey.UpdateSettingsNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     description: 'Update setting.',
     security: OPERATION_SECURITY_SPEC,
@@ -211,7 +241,12 @@ export class SettingsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteSettings]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteSettings,
+      PermissionKey.DeleteSettingsNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     description: 'Delete setting.',
     security: OPERATION_SECURITY_SPEC,

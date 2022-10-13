@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {injectable, BindingScope, inject} from '@loopback/core';
 import {AWSS3Bindings, S3WithSigner} from 'loopback4-s3';
 

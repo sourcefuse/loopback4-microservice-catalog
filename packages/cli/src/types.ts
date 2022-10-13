@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {DATASOURCES, SERVICES} from './enum';
 import Generator from 'yeoman-generator';
 
@@ -25,11 +29,18 @@ export interface ExtensionOptions extends Generator.GeneratorOptions {
   help?: boolean;
 }
 
-export interface ScaffoldOptions extends Generator.GeneratorOptions {
+export interface BackstageIntegrationOptions
+  extends Generator.GeneratorOptions {
+  owner?: string;
+  description?: string;
+}
+
+export interface ScaffoldOptions extends BackstageIntegrationOptions {
   name?: string;
   help?: boolean;
   cwd?: string;
   issuePrefix?: string;
+  integrateWithBackstage?: boolean;
 }
 
 export interface MigrationOptions extends Generator.GeneratorOptions {

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 'use strict';
 import {Client, expect} from '@loopback/testlab';
 import {RoleTypes} from '@sourceloop/core';

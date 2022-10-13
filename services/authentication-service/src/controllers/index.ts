@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AppleLoginController} from '../modules/auth/apple-login.controller';
 import {FacebookLoginController} from '../modules/auth/facebook-login.controller';
 import {GoogleLoginController} from '../modules/auth/google-login.controller';
@@ -8,6 +12,7 @@ import {LogoutController} from '../modules/auth/logout.controller';
 import {ForgetPasswordController} from './forget-password.controller';
 import {OtpController} from '../modules/auth/otp.controller';
 import {SignupRequestController} from './signup-request.controller';
+import {AzureLoginController} from '../modules/auth/azure-login.controller';
 
 export * from '../modules/auth/login.controller';
 export * from '../modules/auth/logout.controller';
@@ -26,4 +31,5 @@ export const controllers = [
   OtpController,
   ForgetPasswordController,
   SignupRequestController,
+  AzureLoginController,
 ];

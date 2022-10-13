@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IDefaultReturnType, IModel} from './types';
 export class Configuration<T = IDefaultReturnType> {
   /** property to be displayed in the results */

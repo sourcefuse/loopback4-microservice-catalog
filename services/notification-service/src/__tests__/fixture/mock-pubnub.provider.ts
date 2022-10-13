@@ -1,9 +1,13 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/core';
+import {Config} from 'loopback4-notifications';
 import {
-  Config,
   PubNubMessage,
   PubNubNotification,
-} from 'loopback4-notifications';
+} from 'loopback4-notifications/pubnub';
 
 export class PubNubMockProvider implements Provider<PubNubNotification> {
   value() {

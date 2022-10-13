@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {hasMany, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {TenantStatus} from '../enums';
@@ -74,6 +78,24 @@ export class Tenant extends UserModifiableEntity {
     type: 'string',
   })
   country?: string;
+
+  @property({
+    name: 'primary_contact_email',
+    type: 'string',
+  })
+  primaryContactEmail: string;
+
+  @property({
+    name: 'allowed_domain',
+    type: 'string',
+  })
+  allowedDomain: string;
+
+  @property({
+    name: 'tenant_type',
+    type: 'string',
+  })
+  tenantType: string;
 
   @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];

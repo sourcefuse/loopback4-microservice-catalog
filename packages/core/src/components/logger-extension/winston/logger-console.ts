@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {createLogger, transports, format} from 'winston';
 import {LOGGER} from '../keys';
 import {WinstonLoggerBase} from './logger-base';

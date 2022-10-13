@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export const JSON_SPACING = 4;
 
 export function appendDependencies(dependencies: Record<string, string>) {

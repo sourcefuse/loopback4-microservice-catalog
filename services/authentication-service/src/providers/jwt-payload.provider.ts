@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
@@ -14,7 +18,7 @@ import {
   UserPermissionsFn,
 } from 'loopback4-authorization';
 
-import {AuthClient, User, UserTenant} from '../models';
+import {User, UserTenant} from '../models';
 import {AuthUser} from '../modules/auth';
 import {
   RoleRepository,
@@ -22,7 +26,7 @@ import {
   UserLevelPermissionRepository,
   UserTenantRepository,
 } from '../repositories';
-import {IDeviceInfo, JwtPayloadFn} from './types';
+import {JwtPayloadFn} from './types';
 
 export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
   constructor(
@@ -40,11 +44,7 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
   ) {}
 
   value() {
-    return async (
-      authUserData: IAuthUser,
-      authClient: IAuthClient,
-      deviceInfo?: IDeviceInfo,
-    ) => {
+    return async (authUserData: IAuthUser, authClient: IAuthClient) => {
       const user = authUserData as User;
       const userTenant = await this.userTenantRepo.findOne({
         where: {
@@ -66,6 +66,7 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }
+      delete user.authClientIds;
 
       // Create user DTO for payload to JWT
       const authUser: AuthUser = new AuthUser(Object.assign({}, user));
@@ -74,8 +75,6 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       // Add locale info
       await this._setLocale(authUser, userTenant);
 
-      authUser.deviceInfo = deviceInfo;
-      authUser.authClientId = (authClient as AuthClient).id ?? 0;
       authUser.tenantId = userTenant.tenantId;
       authUser.userTenantId = userTenant.id;
       authUser.status = userTenant.status;
@@ -97,7 +96,7 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
         },
       });
       authUser.permissions = this.getUserPermissions(utPerms, role.permissions);
-      authUser.role = role.roleType?.toString();
+      authUser.role = role.name;
       if (authUser.dob) {
         const age = getAge(new Date(authUser.dob));
         authUser.age = age;

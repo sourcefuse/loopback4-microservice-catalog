@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -38,7 +42,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateWorkingHour,
+      PermissionKey.CreateWorkingHourNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -69,7 +78,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewWorkingHour,
+      PermissionKey.ViewWorkingHourNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -88,7 +102,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewWorkingHour,
+      PermissionKey.ViewWorkingHourNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -114,7 +133,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateWorkingHour,
+      PermissionKey.UpdateWorkingHourNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -141,7 +165,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewWorkingHour,
+      PermissionKey.ViewWorkingHourNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     description:
       'These requests will be available to everyone to look at. This will be represent the work timings for the owner of the calendar.',
@@ -168,7 +197,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateWorkingHour,
+      PermissionKey.UpdateWorkingHourNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -194,7 +228,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateWorkingHour,
+      PermissionKey.UpdateWorkingHourNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     description: `This api is to update the calendar by passing an \`id\`. This action will be allowed only 
       to the owner of the calendar or the admin. To identify the \`owner\` we 
@@ -217,7 +256,12 @@ export class WorkingHourController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteWorkingHour]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteWorkingHour,
+      PermissionKey.DeleteWorkingHourNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     description: `This api is to update the calendar by passing an \`id\`. This action will 
       be allowed only to the owner of the calendar or the admin. To identify the ‘owner’ 

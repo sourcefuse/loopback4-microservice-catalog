@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';
@@ -11,8 +15,8 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  path: path.join(process.env.INIT_CWD ?? '.', '.env'),
+  defaults: path.join(process.env.INIT_CWD ?? '.', '.env.defaults'),
   errorOnMissing: false,
   includeProcessEnv: true,
 });

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IAuthUserWithPermissions, IServiceConfig} from '@sourceloop/core';
 import {Config} from 'loopback4-notifications';
 import {Notification, NotificationUser} from './models';
@@ -13,11 +17,7 @@ export interface INotificationUserManager {
   getNotifUsers(notif: Notification): Promise<NotificationUser[]>;
 }
 
-export interface INotifServiceConfig extends IServiceConfig {
-  useCustomEmailProvider: boolean;
-  useCustomSMSProvider: boolean;
-  useCustomPushProvider: boolean;
-}
+export interface INotifServiceConfig extends IServiceConfig {}
 
 export type INotificationFilterFunc = (
   notif: Notification,

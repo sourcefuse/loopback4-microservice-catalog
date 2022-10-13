@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export const prefix = `<vg-player><vg-overlay-play></vg-overlay-play><vg-buffering></vg-buffering>
 <vg-scrub-bar><vg-scrub-bar-current-time></vg-scrub-bar-current-time><vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time></vg-scrub-bar>
 <vg-controls><vg-play-pause></vg-play-pause> <vg-playback-button></vg-playback-button><vg-time-display vgProperty="current" vgFormat="mm:ss">

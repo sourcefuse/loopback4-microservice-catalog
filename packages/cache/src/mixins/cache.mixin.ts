@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Constructor, MixinTarget} from '@loopback/core';
 import {
   DefaultCrudRepository,
@@ -5,6 +9,7 @@ import {
   Filter,
   FilterExcludingWhere,
   JugglerDataSource,
+  Options,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import * as crypto from 'crypto';
@@ -113,6 +118,38 @@ export class CacheManager {
           }
         }
 
+        return finalResult;
+      }
+
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+      // @ts-ignore
+      async findOne(
+        filter?: Filter<M>,
+        options?: Options,
+      ): Promise<(M & Relations) | null> {
+        this.checkDataSource();
+        const key = await this.generateKey(undefined, filter);
+        let finalResult: (M & Relations) | null;
+        if (options?.forceUpdate) {
+          finalResult = await super.findOne(filter, options);
+          this.strategy
+            .saveInCache(key, finalResult, cacheOptions)
+            .catch(err => console.error(err)); //NOSONAR
+        } else {
+          const result = (await this.strategy.searchInCache(
+            key,
+            cacheOptions,
+          )) as (M & Relations) | null;
+          // check is only for undefined as result of type null can also be stored in cache
+          if (result !== undefined) {
+            finalResult = result;
+          } else {
+            finalResult = await super.findOne(filter, options);
+            this.strategy
+              .saveInCache(key, finalResult, cacheOptions)
+              .catch(err => console.error(err)); //NOSONAR
+          }
+        }
         return finalResult;
       }
 

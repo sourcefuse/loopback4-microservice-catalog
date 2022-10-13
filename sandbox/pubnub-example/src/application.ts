@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {
@@ -12,13 +16,11 @@ import {
   NotificationServiceComponent,
   NotifServiceBindings,
 } from '@sourceloop/notification-service';
-import {
-  NotificationBindings,
-  PubnubBindings,
-  PubNubProvider,
-  SESBindings,
-  SNSBindings,
-} from 'loopback4-notifications';
+import {NotificationBindings} from 'loopback4-notifications';
+import { PubnubBindings,
+  PubNubProvider,} from 'loopback4-notifications/pubnub';
+import {SNSBindings} from 'loopback4-notifications/sns';
+import { SESBindings } from 'loopback4-notifications/ses';
 
 export {ApplicationConfig};
 

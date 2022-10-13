@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Entity, Filter, JugglerDataSource, Options} from '@loopback/repository';
 import {ICacheStrategy} from './strategies';
 import {CacheStrategyTypes} from './strategy-types.enum';

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {get, Request, RestBindings} from '@loopback/rest';
 import {
@@ -6,9 +10,8 @@ import {
   STATUS_CODE,
 } from '@sourceloop/core';
 import {
-  featuresFlag,
-  StrategyBindings,
-} from '@sourceloop/feature-toggle-service';
+  featureFlag
+} from '@sourceloop/feature-toggle';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
@@ -19,13 +22,8 @@ export class FeatureToggleExampleController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [
-      StrategyBindings.SYSTEM_STRATEGY,
-      StrategyBindings.TENANT_STRATEGY,
-      StrategyBindings.USER_STRATEGY,
-    ],
+  @featureFlag({
+    featureKey: 'Calendar'
   })
   @authorize({permissions: ['*']})
   @get('/all_3_strategies', {
@@ -48,9 +46,8 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [StrategyBindings.SYSTEM_STRATEGY],
+  @featureFlag({
+    featureKey: 'Calendar'
   })
   @authorize({permissions: ['*']})
   @get('/system_strategy', {
@@ -73,9 +70,8 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [StrategyBindings.TENANT_STRATEGY],
+  @featureFlag({
+    featureKey: 'Calendar'
   })
   @authorize({permissions: ['*']})
   @get('/tenant_strategy', {
@@ -98,9 +94,8 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: [StrategyBindings.USER_STRATEGY],
+  @featureFlag({
+    featureKey: 'Calendar'
   })
   @authorize({permissions: ['*']})
   @get('/user_strategy', {
@@ -123,9 +118,8 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
-    featureKey: 'Calendar',
-    strategies: ['*'],
+  @featureFlag({
+    featureKey: 'Calendar'
   })
   @authorize({permissions: ['*']})
   @get('/skip_all_strategy', {

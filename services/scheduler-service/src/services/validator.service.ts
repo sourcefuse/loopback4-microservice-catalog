@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {bind, BindingScope, inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {IAuthUserWithPermissions} from '@sourceloop/core';

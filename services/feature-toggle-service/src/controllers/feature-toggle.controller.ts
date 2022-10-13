@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -35,7 +39,12 @@ export class FeatureToggleController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateFeatureToggle,
+      PermissionKey.CreateFeatureToggleNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -63,7 +72,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewFeatureToggle,
+      PermissionKey.ViewFeatureToggleNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -80,7 +94,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewFeatureToggle,
+      PermissionKey.ViewFeatureToggleNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -104,7 +123,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateFeatureToggle,
+      PermissionKey.UpdateFeatureToggleNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -129,7 +153,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewFeatureToggle,
+      PermissionKey.ViewFeatureToggleNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -152,7 +181,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateFeatureToggle,
+      PermissionKey.UpdateFeatureToggleNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -176,7 +210,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateFeatureToggle,
+      PermissionKey.UpdateFeatureToggleNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -193,7 +232,12 @@ export class FeatureToggleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteFeatureToggle]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteFeatureToggle,
+      PermissionKey.DeleteFeatureToggleNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

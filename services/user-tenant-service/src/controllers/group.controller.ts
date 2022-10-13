@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {PermissionKey} from '../enums';
 import {inject} from '@loopback/context';
 import {service} from '@loopback/core';
@@ -52,7 +56,12 @@ export class GroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateUserGroup]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateUserGroup,
+      PermissionKey.CreateUserGroupNum,
+    ],
+  })
   @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -90,7 +99,12 @@ export class GroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewUserGroupList]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
+  })
   @get(`${baseUrl}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -110,7 +124,12 @@ export class GroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewUserGroupList]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
+  })
   @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -139,7 +158,12 @@ export class GroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewUserGroupList]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupList,
+    ],
+  })
   @get(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -166,7 +190,12 @@ export class GroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateUserGroup]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserGroup,
+      PermissionKey.UpdateUserGroupNum,
+    ],
+  })
   @patch(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -192,7 +221,12 @@ export class GroupController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteUserGroup]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteUserGroup,
+      PermissionKey.DeleteUserGroupNum,
+    ],
+  })
   @del(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

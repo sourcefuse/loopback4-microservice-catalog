@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BelongsToAccessor, juggler} from '@loopback/repository';
 import {Group, Message, Thread} from '../models';
 import {inject, Getter} from '@loopback/core';

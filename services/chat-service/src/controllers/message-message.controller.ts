@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -35,7 +39,9 @@ export class MessageMessageController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
+  @authorize({
+    permissions: [PermissionKey.ViewMessage, PermissionKey.ViewMessageNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -57,7 +63,9 @@ export class MessageMessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateMessage]})
+  @authorize({
+    permissions: [PermissionKey.CreateMessage, PermissionKey.CreateMessageNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -87,7 +95,9 @@ export class MessageMessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
+  @authorize({
+    permissions: [PermissionKey.UpdateMessage, PermissionKey.UpdateMessageNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -114,7 +124,9 @@ export class MessageMessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteMessage]})
+  @authorize({
+    permissions: [PermissionKey.DeleteMessage, PermissionKey.DeleteMessageNum],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

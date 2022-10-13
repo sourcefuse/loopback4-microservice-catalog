@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AuthClientRepository} from './auth-client.repository';
 import {OtpCacheRepository} from './otp-cache.repository';
 import {OtpRepository} from './otp.repository';

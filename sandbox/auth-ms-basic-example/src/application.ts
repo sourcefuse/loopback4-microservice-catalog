@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -12,6 +16,7 @@ import {
   SignUpBindings,
 } from '@sourceloop/authentication-service';
 import path from 'path';
+import {AzureAdSignupProvider} from './providers';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MySequence} from './sequence';
 
@@ -37,6 +42,9 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     this.component(AuthenticationServiceComponent);
     this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
       LocalSignupProvider,
+    );
+    this.bind(SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER).toProvider(
+      AzureAdSignupProvider,
     );
 
     this.projectRoot = __dirname;

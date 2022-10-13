@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import Base from '../command-base';
 import {ScaffoldOptions} from '../types';
@@ -20,6 +24,14 @@ export class Scaffold extends Base<ScaffoldOptions> {
       description:
         'directory where project will be scaffolded, instead of the project name',
     }),
+    integrateWithBackstage: flags.boolean({
+      name: 'integrateWithBackstage',
+      description: 'Do you want to include backstage integration files?',
+    }),
+    owner: flags.string({
+      name: 'owner',
+      description: 'owner of the repo',
+    }),
   };
   static args = [
     {name: 'name', description: 'name of the project', required: false},
@@ -32,6 +44,8 @@ export class Scaffold extends Base<ScaffoldOptions> {
       help: input.flags.help,
       cwd: input.flags.cwd,
       issuePrefix: input.flags.issuePrefix,
+      integrateWithBackstage: input.flags.integrateWithBackstage,
+      owner: input.flags.owner,
     });
   }
 }

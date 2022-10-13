@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IServiceConfig, STATUS_CODE} from '@sourceloop/core';
 import {RequestInit, Response} from 'node-fetch';
 export interface IRequestServiceConfig extends IServiceConfig {

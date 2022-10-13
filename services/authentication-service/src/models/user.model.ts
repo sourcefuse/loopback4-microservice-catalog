@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2022 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   belongsTo,
   hasMany,
@@ -68,7 +72,7 @@ export class User extends UserModifiableEntity implements IAuthUser {
     type: 'string',
     name: 'auth_client_ids',
   })
-  authClientIds: string;
+  authClientIds?: string;
 
   @property({
     type: 'date',
