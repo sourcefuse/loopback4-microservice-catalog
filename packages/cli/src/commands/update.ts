@@ -18,9 +18,6 @@ export class Update extends Base<UpdateOptions> {
   };
 
   async run() {
-    const input = this.parse(Update);
-    await super.generate('update', {
-      help: input.flags.help,
-    });
+    await super.generate('update', Update);
   }
 }

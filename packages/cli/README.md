@@ -13,30 +13,27 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.0.2 darwin-arm64 node-v16.14.2
+@sourceloop/cli/2.4.3 linux-x64 node-v16.14.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl update`](#sl-update)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -96,10 +93,10 @@ OPTIONS
   -s,
   --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-serv
   ice|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service|user-tenant-service)
-      base sourceloop microservice
+      Base sourceloop microservice
 
   --[no-]baseOnService
-      base on sourceloop microservice or not
+      Base on sourceloop microservice or not
 
   --customMigrations
       Setup custom migration for this microservice
@@ -137,7 +134,7 @@ OPTIONS
   --cwd=cwd                  Directory where project will be scaffolded, instead of the project name
   --help                     show manual pages
   --integrateWithBackstage   Do you want to include backstage integration files?
-  --issuePrefix=issuePrefix  prefix to be used for issues(e.g. GH-)
+  --issuePrefix=issuePrefix  Prefix to be used for issues(e.g. GH-)
   --owner=owner              owner of the repo
 ```
 
@@ -156,5 +153,4 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.3/src/commands/update.ts)_
-
 <!-- commandsstop -->

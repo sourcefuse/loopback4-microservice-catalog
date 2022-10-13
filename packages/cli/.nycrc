@@ -7,7 +7,7 @@
   ],
   "exclude": [
     "**/*.d.ts",
-    "**/test/**/*"
+    "**/__tests__/**/*"
   ],
   "all": true
 }
