@@ -72,8 +72,7 @@ export class CognitoLoginController {
   @get('/auth/cognito', {
     responses: {
       [STATUS_CODE.OK]: {
-        description:
-          'Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        description: `Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)`, //NOSONAR
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -83,7 +82,8 @@ export class CognitoLoginController {
     },
   })
   /**
-   * @deprecated This method should not be used, possible security issue if secret is passed via query params, please use the post endpoint
+   * @deprecated This method should not be used, possible security issue
+   * if secret is passed via query params, please use the post endpoint
    */
   async loginViaCognito(
     @inject(AuthenticationBindings.CURRENT_USER)
@@ -94,7 +94,6 @@ export class CognitoLoginController {
     clientSecret?: string,
   ): Promise<void> {
     //do nothing
-    console.log('inside cognito body, User: ', user);
   }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
