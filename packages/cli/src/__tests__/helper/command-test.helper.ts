@@ -5,11 +5,7 @@ import {createStubInstance, stub} from 'sinon';
 import Environment from 'yeoman-environment';
 import {AnyObject, CommandTestCase} from '../../types';
 
-export function commandTest(
-  testCase: CommandTestCase,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  command: new (...args: any[]) => Command,
-) {
+export function commandTest(testCase: CommandTestCase, command: ICommand) {
   it(testCase.name, async () => {
     const prompt = stub();
     prompt.callsFake(async questions => {
@@ -42,3 +38,8 @@ export function commandTest(
     expect(stubEnv.run.getCall(0).args[1]).is.deep.equal(testCase.options);
   });
 }
+
+export type ICommand = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): Command;
+};

@@ -18,16 +18,16 @@
     "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
-    "postpack": "rimraf oclif.manifest.json",
     "copydeps": "copyfiles -a --up 1 src/**/templates/** lib ",
     "lint": "eslint ./src --ext .js,.ts && ejslint ./src",
-    "posttest": "npm run lint",
     "build": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme && npm run copydeps",
     "postbuild": "rimraf oclif.manifest.json",
     "version": "oclif-dev readme && git add README.md",
-    "test": "nyc mocha --timeout 20000",
-    "prepack": "npm run build",
     "pretest": "npm run build",
+    "test": "nyc mocha --timeout 20000",
+    "posttest": "npm run lint",
+    "prepack": "npm run build",
+    "postpack": "rimraf oclif.manifest.json",
     "tsc": "tsc -b"
   },
   "repository": {

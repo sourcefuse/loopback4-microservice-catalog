@@ -42,6 +42,10 @@ export class Scaffold extends Base<ScaffoldOptions> {
       name: 'owner',
       description: 'owner of the repo',
     }),
+    description: flags.string({
+      name: 'description',
+      description: 'description of the repo',
+    }),
   };
   static args = [
     {name: 'name', description: 'name of the project', required: false},

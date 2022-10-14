@@ -16,4 +16,12 @@ export const extensionSuite = [
       },
     ],
   },
+  {
+    name: 'extension command with name flag',
+    options: {
+      name: 'test',
+    },
+    argv: ['test'],
+    prompts: [],
+  },
 ];

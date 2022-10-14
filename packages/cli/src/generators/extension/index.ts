@@ -28,6 +28,7 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     return super.setOptions();
   }
 
+  //Loopback4 prompts
   async promptProjectName() {
     return super.promptProjectName();
   }

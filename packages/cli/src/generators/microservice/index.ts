@@ -86,18 +86,19 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     return super.setOptions();
   }
 
-  async promptProjectName() {
-    return super.promptProjectName();
-  }
-
-  async promptFacade() {
+  async setFacade() {
     this.projectInfo.facade = this.options.facade;
   }
 
-  async promptBaseService() {
+  async setBaseService() {
     if (this.options.baseService) {
       this.projectInfo.serviceDependency = this.options.baseService;
     }
+  }
+
+  //Loopback4 prompts
+  async promptProjectName() {
+    return super.promptProjectName();
   }
 
   async promptApplication() {
