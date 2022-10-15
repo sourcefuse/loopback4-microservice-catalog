@@ -73,7 +73,7 @@
     "loopback4-authorization": "^5.0.6",
     "loopback4-helmet": "^4.1.1",
     "loopback4-ratelimiter": "^4.1.1",
-    "loopback4-soft-delete": "^5.2.1",
+    "loopback4-soft-delete": "^5.3.3",
     "prom-client": "^14.0.1",
     "tslib": "^2.0.0"
   },
