@@ -23,16 +23,11 @@ import {
 @model({
   name: 'users',
   description: 'This is signature for user model.',
-  settings: {
-    defaultIdSort: false,
-    strict: false,
-  },
 })
 export class User extends UserModifiableEntity implements IAuthUser {
   @property({
     type: 'string',
     id: true,
-    generated: false,
   })
   id?: string;
 
@@ -74,6 +69,9 @@ export class User extends UserModifiableEntity implements IAuthUser {
 
   @property({
     type: 'string',
+    jsonSchema: {
+      pattern: `^\\+?[1-9]\\d{1,14}$`,
+    },
   })
   phone?: string;
 
@@ -81,13 +79,16 @@ export class User extends UserModifiableEntity implements IAuthUser {
     type: 'string',
     name: 'auth_client_ids',
   })
-  authClientIds: string;
+  authClientIds?: string;
 
   @property({
+    type: 'date',
     name: 'last_login',
-    type: 'string',
+    postgresql: {
+      column: 'last_login',
+    },
   })
-  lastLogin?: string;
+  lastLogin?: Date;
 
   @property({
     name: 'photo_url',
@@ -116,15 +117,16 @@ export class User extends UserModifiableEntity implements IAuthUser {
 
   @belongsTo(
     () => Tenant,
-    {name: 'defaultTenant'},
+    {keyFrom: 'default_tenant_id', name: 'defaultTenant'},
     {
       name: 'default_tenant_id',
+      required: false,
     },
   )
   defaultTenantId?: string;
 
-  @hasOne(() => UserCredentials, {keyTo: 'userId', name: 'userCredentials'})
-  userCredentials: UserCredentials;
+  @hasOne(() => UserCredentials, {keyTo: 'userId'})
+  credentials: UserCredentials;
 
   @hasMany(() => UserTenant, {keyTo: 'userId'})
   userTenants: UserTenant[];
@@ -136,7 +138,7 @@ export class User extends UserModifiableEntity implements IAuthUser {
 
 export interface UserRelations {
   defaultTenant: TenantWithRelations;
-  userCredentials: UserCredentialsWithRelations;
+  credentials: UserCredentialsWithRelations;
   userTenants: UserTenantWithRelations[];
 }
 
