@@ -1,11 +1,11 @@
 ---
 title: Authentication Service v1.0.0
 language_tabs:
-  - javascript: JavaScript
-  - javascript--nodejs: Node.JS
+  - "'javascript": JavaScript
+  - "'javascript--nodejs": Node.JS'
 language_clients:
-  - javascript: request
-  - javascript--nodejs: ""
+  - "'javascript": request'
+  - "'javascript--nodejs": ""
 toc_footers: []
 includes: []
 search: false
@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Authentication microservice.
+Authentication microservice
 
 Base URLs:
 
@@ -38,27 +38,7 @@ Base URLs:
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/apple-oauth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -117,30 +97,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded'
-};
-
-fetch('/auth/oauth-apple',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -202,31 +159,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/azure',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -298,27 +231,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/azure',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -379,27 +292,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/azure-oauth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -461,33 +354,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "refreshToken": "string",
-  "username": "string",
-  "password": "string",
-  "oldPassword": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'string'
-};
-
-fetch('/auth/change-password',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "refreshToken": "string",
@@ -551,32 +418,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string",
-  "username": "string",
-  "password": "string"
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/auth/login',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -647,33 +489,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string",
-  "username": "string",
-  "password": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/auth/login-token',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -754,27 +570,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/auth/me',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -824,31 +620,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "code": "string",
-  "clientId": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/auth/token',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "code": "string",
@@ -925,32 +697,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "refreshToken": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'device_id':'string',
-  'Authorization':'string'
-};
-
-fetch('/auth/token-refresh',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "refreshToken": "string"
@@ -1032,28 +779,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'code':'string',
-  'clientId':'string'
-};
-
-fetch('/auth/check-qr-code',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1110,30 +836,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "code": "string",
-  "clientId": "string"
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/auth/create-qr-code',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "code": "string",
@@ -1200,31 +903,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string",
-  "key": "string"
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/auth/send-otp',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -1293,30 +972,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "key": "string",
-  "otp": "string"
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/auth/verify-otp',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "key": "string",
@@ -1377,11 +1033,11 @@ Gets you the code that will be used for getting token (webapps)
 This operation does not require authentication
 </aside>
 
-<h1 id="authentication-service-facebooklogincontroller">FacebookLoginController</h1>
+<h1 id="authentication-service-cognitologincontroller">CognitoLoginController</h1>
 
-## FacebookLoginController.postLoginViaFacebook
+## CognitoLoginController.postLoginViaCognito
 
-<a id="opIdFacebookLoginController.postLoginViaFacebook"></a>
+<a id="opIdCognitoLoginController.postLoginViaCognito"></a>
 
 > Code samples
 
@@ -1395,7 +1051,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/auth/facebook',
+fetch('/auth/cognito',
 {
   method: 'POST',
   body: inputBody,
@@ -1410,6 +1066,236 @@ fetch('/auth/facebook',
 ```
 
 ```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/cognito`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="cognitologincontroller.postloginviacognito-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="cognitologincontroller.postloginviacognito-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Cognito based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## CognitoLoginController.loginViaCognito
+
+<a id="opIdCognitoLoginController.loginViaCognito"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/cognito`
+
+<h3 id="cognitologincontroller.loginviacognito-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="cognitologincontroller.loginviacognito-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## CognitoLoginController.cognitoCallback
+
+<a id="opIdCognitoLoginController.cognitoCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/cognito-auth-redirect`
+
+<h3 id="cognitologincontroller.cognitocallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="cognitologincontroller.cognitocallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cognito Redirect Token Response|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-facebooklogincontroller">FacebookLoginController</h1>
+
+## FacebookLoginController.postLoginViaFacebook
+
+<a id="opIdFacebookLoginController.postLoginViaFacebook"></a>
+
+> Code samples
+
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -1479,27 +1365,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/facebook-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1560,32 +1426,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "username": "string",
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/auth/forget-password',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "username": "string",
@@ -1650,33 +1491,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "token": "string",
-  "password": "string",
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/auth/reset-password',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "token": "string",
@@ -1739,22 +1554,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-
-fetch('/auth/verify-reset-password-link?token=string',
-{
-  method: 'GET'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 fetch('/auth/verify-reset-password-link?token=string',
@@ -1796,31 +1596,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/google',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -1890,27 +1666,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/google',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -1969,27 +1725,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/google-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2050,31 +1786,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/instagram',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -2144,27 +1856,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/instagram-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2225,31 +1917,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
@@ -2321,27 +1989,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2400,27 +2048,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/keycloak-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2481,30 +2109,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "email": "string",
-  "data": {}
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/auth/sign-up/create-token',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "email": "string",
@@ -2565,32 +2170,7 @@ This operation does not require authentication
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "email": "string",
-  "password": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/auth/sign-up/create-user',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "email": "string",
@@ -2665,27 +2245,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-
-const headers = {
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/auth/sign-up/verify-token',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 
 const headers = {
@@ -2731,31 +2291,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "refreshToken": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'string'
-};
-
-fetch('/keycloak/logout',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "refreshToken": "string"
@@ -2830,31 +2366,7 @@ HTTPBearer
 
 > Code samples
 
-```javascript
-const inputBody = '{
-  "refreshToken": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'string'
-};
-
-fetch('/logout',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
+```'javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
   "refreshToken": "string"

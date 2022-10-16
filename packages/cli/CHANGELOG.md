@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.4 (2022-10-13)</small>
+
+* fix(cli): fixing migration for microservices (#1048) ([a138860](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a138860)), closes [#1048](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1048) [#1047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1047) [#1047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1047)
+
+
+
+
+
+## <small>2.4.3 (2022-10-10)</small>
+
+* fix(cli): DB pooling and obf fix in cli (#1025) ([37f1020](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/37f1020)), closes [#1025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1025)
+* fix(cli): fix the migration copy issue from base (#1044) ([bd9a49e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bd9a49e)), closes [#1044](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1044) [#1041](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1041)
+
+
+
+
+
+## <small>2.4.2 (2022-09-23)</small>
+
+* fix(cli): Include the update of loopback packages via sourceloop cli (#1024) ([c3978bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3978bb)), closes [#1024](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1024) [#1023](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1023) [#1023](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1023)
+
+
+
+
+
 ## <small>2.4.1 (2022-09-02)</small>
 
 * chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

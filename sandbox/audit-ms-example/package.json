@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-ms-example",
-  "version": "0.5.9",
+  "version": "0.5.11",
   "description": "An audit microservice example",
   "keywords": [
     "loopback-application",
@@ -61,8 +61,8 @@
     "@loopback/rest-explorer": "^5.0.2",
     "@loopback/service-proxy": "^5.0.2",
     "@sourceloop/audit-log": "^3.1.2",
-    "@sourceloop/audit-service": "^5.2.5",
-    "@sourceloop/core": "^7.2.4",
+    "@sourceloop/audit-service": "^5.2.7",
+    "@sourceloop/core": "^7.2.6",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "db-migrate": "^1.0.0-beta.18",

@@ -87,3 +87,20 @@ export const BASESERVICEDSLIST: {
   'chat-service': [],
   'user-tenant-service': [],
 };
+
+export const BASESERVICECOMPONENTLIST: {
+  [key in SERVICES]: string;
+} = {
+  'authentication-service': 'AuthenticationServiceComponent',
+  'audit-service': 'AuditServiceComponent',
+  'notification-service': 'NotificationServiceComponent',
+  'bpmn-service': 'WorkflowServiceComponent',
+  'feature-toggle-service': 'FeatureToggleServiceComponent',
+  'in-mail-service': 'InMailServiceComponent',
+  'payment-service': 'PaymentServiceComponent',
+  'scheduler-service': 'SchedulerServiceComponent',
+  'search-service': 'SearchServiceComponent',
+  'video-conferencing-service': 'VideoConfServiceComponent',
+  'chat-service': 'ChatServiceComponent',
+  'user-tenant-service': 'UserTenantServiceComponent',
+};

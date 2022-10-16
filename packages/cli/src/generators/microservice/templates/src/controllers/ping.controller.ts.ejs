@@ -6,6 +6,12 @@ import {
   ResponseObject,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
+<% if(project.facade) { -%>
+import {ratelimit} from 'loopback4-ratelimiter';
+import {rateLimitKeyGenPublic, STATUS_CODE} from '@sourceloop/core';
+<% } else { -%>
+import {STATUS_CODE} from '@sourceloop/core';
+<% } -%>
 
 /**
  * OpenAPI response for ping()
@@ -41,10 +47,16 @@ export class PingController {
   constructor(@inject(RestBindings.Http.REQUEST) readonly private req: Request) {}
 
   // Map to `GET /ping`
+<% if(project.facade) { -%>
+  @ratelimit(true, {
+    max: parseInt(process.env.PUBLIC_API_MAX_ATTEMPTS ?? '5'),
+    keyGenerator: rateLimitKeyGenPublic,
+  })
+<% } -%>
   @authorize({permissions: ['*']})
   @get('/ping', {
     responses: {
-      '200': PING_RESPONSE,
+      [STATUS_CODE.OK]: PING_RESPONSE,
     },
   })
   ping(): object {

@@ -18,12 +18,12 @@
     "db-migrate": "<%= project.dependencies["db-migrate"] -%>",
     "dotenv": "<%= project.dependencies["dotenv"] -%>",
     "dotenv-extended": "<%= project.dependencies["dotenv-extended"] -%>",
-    "kindof": "<%= project.dependencies["kindof"] -%>"
-<% if (project.databaseType === 'postgres') { -%>
-    "db-migrate-pg": "<%= project.dependencies['db-migrate-pg'] -%>",
+    "kindof": "<%= project.dependencies["kindof"] -%>",
+<% if (project.datasourceType === 'postgres') { -%>
+    "db-migrate-pg": "<%= project.dependencies['db-migrate-pg'] -%>"
 <% } -%>
-<% if (project.databaseType === 'mysql') { -%>
-    "db-migrate-mysql": "<%= project.dependencies['db-migrate-mysql'] -%>",
+<% if (project.datasourceType === 'mysql') { -%>
+    "db-migrate-mysql": "<%= project.dependencies['db-migrate-mysql'] -%>"
 <% } -%>
   },
   "devDependencies": {

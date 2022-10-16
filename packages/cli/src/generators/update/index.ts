@@ -5,8 +5,9 @@
 import {AnyObject} from '../../types';
 import BaseUpdateGenerator from '../../update-generator';
 import {join} from 'path';
-import {readdirSync} from 'fs';
+import fs, {readdirSync} from 'fs';
 import {PackageDependencies, UpdateOptions} from './types/types';
+import {JSON_SPACING} from '../../utils';
 const chalk = require('chalk'); //NOSONAR
 const fse = require('fs-extra'); //NOSONAR
 
@@ -42,30 +43,21 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
           this.destinationPath(packageJsonFile),
         ) as AnyObject;
 
-        this.log(
-          chalk.cyan(
-            `Updating dependencies in the following project- ${pkgJs.name}`,
-          ),
-        );
+        if (pkgJs) {
+          this.log(
+            chalk.cyan(
+              `Updating dependencies in the following project- ${pkgJs.name}`,
+            ),
+          );
 
-        await super.checkLoopBackProject();
-        if (
-          this.shouldExit() &&
-          this.exitGeneration
-            .toString()
-            .includes('The command must be run in a LoopBack project.')
-        ) {
-          this.exitGeneration = '';
-          continue;
+          await this._updateSourceloopDep();
         }
-
-        await this._updateSourceloopDep();
       }
     }
 
     // lerna bootstrap at the end
     this.destinationRoot(monoRepo);
-    this.spawnCommandSync('lerna', ['bootstrap']);
+    await this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
   }
 
   private _getDirectories(folderPath: string) {
@@ -78,33 +70,11 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     // remove the dependencies
     const incompatibleDeps = await this._checkDependencies();
     if (incompatibleDeps) {
-      //get users choice to update or not
-      const choices = [
-        {
-          name: 'Upgrade project dependencies',
-          value: 'upgrade',
-        },
-        {
-          name: 'Skip upgrading project dependencies',
-          value: 'continue',
-        },
-      ];
-      const prompts = [
-        {
-          name: 'decision',
-          message: 'How do you want to proceed?',
-          type: 'list',
-          choices,
-          default: 0,
-        },
-      ];
-      const answer = await this.prompt(prompts);
-      if (answer && answer.decision === 'continue') {
-        return;
-      }
-      if (answer && answer.decision === 'upgrade') {
-        await this._updateDependencies();
-      }
+      await this._updateDependencies();
+    }
+    const currDir = this.destinationPath();
+    if (currDir.includes('/packages/')) {
+      await this.spawnCommandSync('npm', ['i']);
     }
   }
 
@@ -240,14 +210,14 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     this.log(
       chalk.red('Upgrading dependencies may break the current project.'),
     );
-    this.fs.writeJSON(this.destinationPath(packageJsonFile), packageJs);
+    fs.writeFileSync(
+      this.destinationPath(packageJsonFile),
+      JSON.stringify(packageJs, undefined, JSON_SPACING),
+      {flag: 'w+'},
+    );
     //deleting the node modules and lock file
-    await fse.removeSync(this.destinationPath('node_modules'));
-    this.fs.delete(join(this.destinationPath(), 'package-lock.json'));
-    const currDir = this.destinationPath();
-    if (currDir.includes('/packages/')) {
-      await this.spawnCommandSync('npm', ['i']);
-    }
+    fse.removeSync(this.destinationPath('node_modules'));
+    fse.removeSync(join(this.destinationPath(), 'package-lock.json'));
   }
 
   async end() {

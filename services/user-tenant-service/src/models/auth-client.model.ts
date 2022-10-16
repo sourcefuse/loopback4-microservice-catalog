@@ -8,17 +8,13 @@ import {BaseEntity} from '@sourceloop/core';
 
 @model({
   name: 'auth_clients',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class AuthClient extends BaseEntity implements IAuthClient {
   @property({
     type: 'number',
     id: true,
-    generated: false,
   })
-  id: number;
+  id?: number;
 
   @property({
     name: 'client_id',

@@ -1,14 +1,13 @@
 {
   "name": "@sourceloop/user-tenant-service",
-  "version": "0.4.5",
-  "description": "user-tennat-services.",
+  "version": "0.6.2",
+  "description": "Sourceloop User Tenant Service.",
   "keywords": [
     "loopback-extension",
     "loopback"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "private": "true",
   "engines": {
     "node": "12 || 14 || 16 || 17"
   },
@@ -68,7 +67,7 @@
     "@loopback/rest": "^12.0.3",
     "@loopback/rest-explorer": "^5.0.3",
     "@loopback/service-proxy": "^5.0.3",
-    "@sourceloop/core": "^7.2.4",
+    "@sourceloop/core": "^7.2.6",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "dotenv-extended": "^2.9.0",

@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {Request} from '@loopback/rest';
 import {isString} from 'lodash';
+import {getClientIp} from 'request-ip';
 import moment from 'moment';
 
 // sonarignore:start
@@ -31,9 +32,12 @@ export const getDOBFromAge = (age: number): Date => {
 };
 
 export const rateLimitKeyGen = (req: Request) => {
-  const key = req.headers?.authorization?.replace(/bearer /i, '') ?? req.ip;
+  const clientIp = getClientIp(req);
+  const key = req.headers?.authorization?.replace(/bearer /i, '') ?? clientIp;
   return `${process.env.RATE_LIMIT_KEY_PREFIX}_${key}`;
 };
 
-export const rateLimitKeyGenPublic = (req: Request) =>
-  `${process.env.RATE_LIMIT_KEY_PREFIX}_${req.ip}_${req.method}_${req.url}`;
+export const rateLimitKeyGenPublic = (req: Request) => {
+  const clientIp = getClientIp(req);
+  return `${process.env.RATE_LIMIT_KEY_PREFIX}_${clientIp}_${req.method}_${req.url}`;
+};

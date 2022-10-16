@@ -13,6 +13,7 @@ import {ForgetPasswordController} from './forget-password.controller';
 import {OtpController} from '../modules/auth/otp.controller';
 import {SignupRequestController} from './signup-request.controller';
 import {AzureLoginController} from '../modules/auth/azure-login.controller';
+import {CognitoLoginController} from '../modules/auth/cognito-login.controller';
 
 export * from '../modules/auth/login.controller';
 export * from '../modules/auth/logout.controller';
@@ -32,4 +33,5 @@ export const controllers = [
   ForgetPasswordController,
   SignupRequestController,
   AzureLoginController,
+  CognitoLoginController,
 ];

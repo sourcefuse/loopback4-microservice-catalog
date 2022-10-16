@@ -3,8 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {hasMany, model, property} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourceloop/core';
-import {TenantStatus} from '../enums';
+import {UserModifiableEntity, TenantStatus} from '@sourceloop/core';
 
 import {
   TenantConfig,
@@ -16,15 +15,11 @@ import {
 @model({
   name: 'tenants',
   description: 'signature for all tenants',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class Tenant extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
   })
   id?: string;
 
@@ -36,6 +31,7 @@ export class Tenant extends UserModifiableEntity {
 
   @property({
     type: 'number',
+    required: true,
     description: 'Tenant status - Active or Inactive',
     jsonSchema: {
       enum: [TenantStatus.ACTIVE, TenantStatus.INACTIVE],
