@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Authentication microservice.
+Authentication microservice
 
 Base URLs:
 
@@ -1372,6 +1372,260 @@ Gets you the code that will be used for getting token (webapps)
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="otpcontroller.verifyotp-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-cognitologincontroller">CognitoLoginController</h1>
+
+## CognitoLoginController.postLoginViaCognito
+
+<a id="opIdCognitoLoginController.postLoginViaCognito"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/cognito`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="cognitologincontroller.postloginviacognito-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="cognitologincontroller.postloginviacognito-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Cognito based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## CognitoLoginController.loginViaCognito
+
+<a id="opIdCognitoLoginController.loginViaCognito"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/cognito`
+
+<h3 id="cognitologincontroller.loginviacognito-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="cognitologincontroller.loginviacognito-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## CognitoLoginController.cognitoCallback
+
+<a id="opIdCognitoLoginController.cognitoCallback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/cognito-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/cognito-auth-redirect`
+
+<h3 id="cognitologincontroller.cognitocallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="cognitologincontroller.cognitocallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cognito Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication

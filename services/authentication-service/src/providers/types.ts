@@ -3,7 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {DataObject} from '@loopback/repository';
-import {IAuthClient, IAuthUser, Keycloak} from 'loopback4-authentication';
+import {
+  Cognito,
+  IAuthClient,
+  IAuthUser,
+  Keycloak,
+} from 'loopback4-authentication';
 import * as AppleStrategy from 'passport-apple';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
@@ -181,4 +186,21 @@ export interface AzureAdPostVerifyFn {
     profile: AzureADStrategy.IProfile,
     user: IAuthUser | null,
   ): Promise<IAuthUser | null>;
+}
+
+export interface CognitoPreVerifyFn {
+  (
+    accessToken: string,
+    refreshToken: string,
+    profile: Cognito.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface CognitoPostVerifyFn {
+  (profile: Cognito.Profile, user: IAuthUser | null): Promise<IAuthUser | null>;
+}
+
+export interface CognitoSignUpFn {
+  (profile: Cognito.Profile): Promise<(User & UserRelations) | null>;
 }
