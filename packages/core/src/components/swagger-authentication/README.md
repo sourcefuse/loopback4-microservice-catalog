@@ -2,23 +2,15 @@
 
 ## Overview
 
-A Loopback Component that adds an authenticating middleware for Rest Explorer
-
-### Installation
-
-```bash
-
-npm i @sourceloop/authentication-service
-
-```
+A Loopback Component that adds an authenticating middleware for Rest Explorer.
 
 ### Usage
 
 - Create a new Loopback4 Application (If you don't have one already)
   `lb4 testapp`
-- Install the authentication service
+- Install the sourceloop core using:
   `npm i @sourceloop/core`
-- Configure `@sourceloop/core` component to include `SwaggerAuthenticateComponent` - 
+- Configure `@sourceloop/core` component to include `SwaggerAuthenticateComponent` -
   ```typescript
   this.bind(SFCoreBindings.config).to({
     authenticateSwaggerUI: true,
