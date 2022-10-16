@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.2.7 (2022-10-10)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
+## <small>6.2.6 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
+## <small>6.2.5 (2022-09-21)</small>
+
+* chore(deps): update loopback4-soft-delete version in services (#1030) ([d386bc1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d386bc1)), closes [#1030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1030) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)
+
+
+
+
+
+## <small>6.2.4 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
+## <small>6.2.3 (2022-09-20)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
 ## <small>6.2.2 (2022-09-12)</small>
 
 * chore(deps): loopback version update for services (#1017) ([9a9d653](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a9d653)), closes [#1017](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1017) [#1015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1015)

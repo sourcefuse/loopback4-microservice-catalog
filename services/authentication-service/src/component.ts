@@ -36,6 +36,7 @@ import {
   AzureAdVerifyProvider,
   BearerTokenVerifyProvider,
   ClientPasswordVerifyProvider,
+  CognitoOauth2VerifyProvider,
   FacebookOauth2VerifyProvider,
   GoogleAuthenticatorVerifyProvider,
   GoogleOauth2VerifyProvider,
@@ -53,6 +54,9 @@ import {
   AzurePostVerifyProvider,
   AzurePreVerifyProvider,
   CodeWriterProvider,
+  CognitoOauth2SignupProvider,
+  CognitoPostVerifyProvider,
+  CognitoPreVerifyProvider,
   FacebookOauth2SignupProvider,
   FacebookPostVerifyProvider,
   FacebookPreVerifyProvider,
@@ -196,6 +200,8 @@ export class AuthenticationServiceComponent implements Component {
       AppleOauth2VerifyProvider;
     this.providers[Strategies.Passport.FACEBOOK_OAUTH2_VERIFIER.key] =
       FacebookOauth2VerifyProvider;
+    this.providers[Strategies.Passport.COGNITO_OAUTH2_VERIFIER.key] =
+      CognitoOauth2VerifyProvider;
     this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
       KeycloakVerifyProvider;
     this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
@@ -208,6 +214,8 @@ export class AuthenticationServiceComponent implements Component {
       AppleOauth2SignupProvider;
     this.providers[SignUpBindings.FACEBOOK_SIGN_UP_PROVIDER.key] =
       FacebookOauth2SignupProvider;
+    this.providers[SignUpBindings.COGNITO_SIGN_UP_PROVIDER.key] =
+      CognitoOauth2SignupProvider;
     this.providers[SignUpBindings.LOCAL_SIGNUP_PROVIDER.key] =
       LocalSignupProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
@@ -234,6 +242,10 @@ export class AuthenticationServiceComponent implements Component {
       FacebookPreVerifyProvider;
     this.providers[VerifyBindings.FACEBOOK_POST_VERIFY_PROVIDER.key] =
       FacebookPostVerifyProvider;
+    this.providers[VerifyBindings.COGNITO_PRE_VERIFY_PROVIDER.key] =
+      CognitoPreVerifyProvider;
+    this.providers[VerifyBindings.COGNITO_POST_VERIFY_PROVIDER.key] =
+      CognitoPostVerifyProvider;
     this.providers[VerifyBindings.BEARER_SIGNUP_VERIFY_PROVIDER.key] =
       SignupBearerVerifyProvider;
     this.providers[AuthCodeBindings.CODEREADER_PROVIDER.key] =

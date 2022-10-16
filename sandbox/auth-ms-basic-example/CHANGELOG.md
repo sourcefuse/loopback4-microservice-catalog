@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.4 (2022-10-10)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.3 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.2 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.1 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.7.0 (2022-09-20)
+
+* feat(sandbox): Add an example for azure Ad auth in sandbox (#977) ([c67cf7d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c67cf7d)), closes [#977](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/977) [#976](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/976) [#976](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/976)
+
+
+
+
+
 ## <small>0.6.6 (2022-09-12)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-ms-basic-example

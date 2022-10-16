@@ -25,6 +25,7 @@ A Loopback Microservice for handling authentications. It provides -
 - Instagram OAuth using [passport-instagram](http://www.passportjs.org/packages/passport-instagram/).
 - Facebook OAuth using [passport-facebook](http://www.passportjs.org/packages/passport-facebook/).
 - Apple OAuth using [passport-apple](https://www.npmjs.com/package/passport-apple).
+- Cognito OAuth using [passport-cognito-oauth2](https://www.npmjs.com/package/passport-cognito-oauth2).
 - OTP Auth using custom passport otp strategy.
 - Two-Factor Authentication.
 

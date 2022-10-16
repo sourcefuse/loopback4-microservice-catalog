@@ -22,4 +22,8 @@ export enum PermissionKey {
   ViewMessageRecipientNum = '6',
   UpdateMessageRecipientNum = '7',
   DeleteMessageRecipientNum = '8',
+  CreateAttachmentFile = 'CreateAttachmentFile',
+  ViewAttachmentFile = 'ViewAttachmentFile',
+  UpdateAttachmentFile = 'UpdateAttachmentFile',
+  DeleteAttachmentFile = 'DeleteAttachmentFile',
 }
