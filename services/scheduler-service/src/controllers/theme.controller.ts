@@ -42,7 +42,9 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateTheme]})
+  @authorize({
+    permissions: [PermissionKey.CreateTheme, PermissionKey.CreateThemeNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -71,7 +73,9 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewTheme]})
+  @authorize({
+    permissions: [PermissionKey.ViewTheme, PermissionKey.ViewThemeNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -88,7 +92,9 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewTheme]})
+  @authorize({
+    permissions: [PermissionKey.ViewTheme, PermissionKey.ViewThemeNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -112,7 +118,9 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateTheme]})
+  @authorize({
+    permissions: [PermissionKey.UpdateTheme, PermissionKey.UpdateThemeNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -139,7 +147,9 @@ export class ThemeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewTheme]})
+  @authorize({
+    permissions: [PermissionKey.ViewTheme, PermissionKey.ViewThemeNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

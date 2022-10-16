@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.11 (2022-10-10)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.10 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.9 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.8 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.7 (2022-09-20)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.6 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.5 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
+## <small>0.7.4 (2022-09-06)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
 ## <small>0.7.3 (2022-09-02)</small>
 
 * chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

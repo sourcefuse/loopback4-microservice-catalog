@@ -77,10 +77,8 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class InmailDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class InmailDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = PaymentDatasourceName;
   static readonly defaultConfig = config;
 
@@ -96,6 +94,10 @@ export class InmailDataSource
 ### Migration
 
 The migrations required for this service are processed during the installation automatically if you set the `PAYMENT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `PAYMENT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+### Database Schema
+
+![Database Schema](https://user-images.githubusercontent.com/98279679/186740482-496cd283-8073-4db5-b9d1-cd066d85d313.png)
 
 ### Setting Environment Variables
 

@@ -24,7 +24,12 @@ export class UserSignupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewAnyUser, PermissionKey.ViewTenantUser],
+    permissions: [
+      PermissionKey.ViewAnyUser,
+      PermissionKey.ViewTenantUser,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewTenantUserNum,
+    ],
   })
   @get('/check-signup/{email}', {
     responses: {

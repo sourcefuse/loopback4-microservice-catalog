@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.6 (2022-10-10)</small>
+
+* fix(core): IP address issue in RateLimitKeyGen (#1040) ([2c9c8d8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c9c8d8)), closes [#1040](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1040) [#1039](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1039)
+
+
+
+
+
+## <small>7.2.5 (2022-09-26)</small>
+
+* fix(core): change parent class of DefaultTransactionalUserModifyRepository (#1034) ([55794ab](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55794ab)), closes [#1034](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1034) [#1031](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1031)
+
+
+
+
+
+## <small>7.2.4 (2022-09-21)</small>
+
+* chore(deps): update loopback4-soft-delete version in core (#1029) ([99b119c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99b119c)), closes [#1029](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1029) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)
+
+
+
+
+
+## <small>7.2.3 (2022-09-20)</small>
+
+* chore(deps): update loopback4-soft-delete version in core (#1027) ([ccaa55a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ccaa55a)), closes [#1027](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1027) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)
+
+
+
+
+
+## <small>7.2.2 (2022-09-12)</small>
+
+* chore(deps): loopback version update (#1014) ([b74f9f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b74f9f6)), closes [#1014](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1014) [#1013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1013)
+
+
+
+
+
 ## <small>7.2.1 (2022-09-02)</small>
 
 * chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

@@ -51,7 +51,9 @@ export class TenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateTenant]})
+  @authorize({
+    permissions: [PermissionKey.CreateTenant, PermissionKey.CreateTenantNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -83,7 +85,9 @@ export class TenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewTenant]})
+  @authorize({
+    permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -100,7 +104,9 @@ export class TenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewTenant]})
+  @authorize({
+    permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -124,7 +130,9 @@ export class TenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateTenant]})
+  @authorize({
+    permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -152,7 +160,12 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewTenant, PermissionKey.ViewOwnTenant],
+    permissions: [
+      PermissionKey.ViewTenant,
+      PermissionKey.ViewTenantNum,
+      PermissionKey.ViewOwnTenantNum,
+      PermissionKey.ViewOwnTenant,
+    ],
   })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
@@ -187,7 +200,12 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateOwnTenant],
+    permissions: [
+      PermissionKey.UpdateTenant,
+      PermissionKey.UpdateTenantNum,
+      PermissionKey.UpdateOwnTenantNum,
+      PermissionKey.UpdateOwnTenant,
+    ],
   })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
@@ -222,7 +240,9 @@ export class TenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteTenant]})
+  @authorize({
+    permissions: [PermissionKey.DeleteTenant, PermissionKey.DeleteTenantUser],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -239,7 +259,12 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewTenant, PermissionKey.ViewOwnTenant],
+    permissions: [
+      PermissionKey.ViewTenant,
+      PermissionKey.ViewTenantNum,
+      PermissionKey.ViewOwnTenantNum,
+      PermissionKey.ViewOwnTenant,
+    ],
   })
   @get(`${basePath}/{id}/config`, {
     security: OPERATION_SECURITY_SPEC,

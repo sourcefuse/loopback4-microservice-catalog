@@ -46,6 +46,10 @@ export class UserTenantController {
       PermissionKey.ViewOwnUser,
       PermissionKey.ViewTenantUser,
       PermissionKey.ViewTenantUserRestricted,
+      PermissionKey.ViewAnyUserNum,
+      PermissionKey.ViewOwnUserNum,
+      PermissionKey.ViewTenantUserNum,
+      PermissionKey.ViewTenantUserRestrictedNum,
     ],
   })
   @get('/user-tenants/{id}', {

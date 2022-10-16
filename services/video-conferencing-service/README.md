@@ -52,6 +52,18 @@ npm i @sourceloop/video-conferencing-service
   });
   ```
 
+  -(For Twilio)
+  bind twilio config to the `TwilioBindings.config` key-
+
+  ```typescript
+  this.bind(TwilioBindings.config).to({
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN,
+    apiSid: process.env.TWILIO_API_KEY,
+    apiSecret: process.env.TWILIO_API_SECRET,
+  });
+  ```
+
 - Add the `VideoConfServiceComponent` to your Loopback4 Application (in `application.ts`)
 
   ```typescript
@@ -127,10 +139,8 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class VideoDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class VideoDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = VideoConfDatasource;
   static readonly defaultConfig = config;
 

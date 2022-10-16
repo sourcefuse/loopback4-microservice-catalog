@@ -45,7 +45,9 @@ export class RoleUserTenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewRoles]})
+  @authorize({
+    permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -72,7 +74,9 @@ export class RoleUserTenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewRoles]})
+  @authorize({
+    permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -95,7 +99,9 @@ export class RoleUserTenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.NotAllowed]})
+  @authorize({
+    permissions: [PermissionKey.NotAllowed, PermissionKey.NotAllowedNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -128,7 +134,9 @@ export class RoleUserTenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.NotAllowed]})
+  @authorize({
+    permissions: [PermissionKey.NotAllowed, PermissionKey.NotAllowedNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -157,7 +165,9 @@ export class RoleUserTenantController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.NotAllowed]})
+  @authorize({
+    permissions: [PermissionKey.NotAllowed, PermissionKey.NotAllowedNum],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

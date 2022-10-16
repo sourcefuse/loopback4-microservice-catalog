@@ -42,7 +42,12 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateAttendee,
+      PermissionKey.CreateAttendeeNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -71,7 +76,9 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
+  @authorize({
+    permissions: [PermissionKey.ViewAttendee, PermissionKey.ViewAttendeeNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -88,7 +95,9 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
+  @authorize({
+    permissions: [PermissionKey.ViewAttendee, PermissionKey.ViewAttendeeNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -114,7 +123,12 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttendee,
+      PermissionKey.UpdateAttendeeNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -141,7 +155,9 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttendee]})
+  @authorize({
+    permissions: [PermissionKey.ViewAttendee, PermissionKey.ViewAttendeeNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -165,7 +181,12 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttendee,
+      PermissionKey.UpdateAttendeeNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -191,7 +212,12 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttendee,
+      PermissionKey.UpdateAttendeeNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -210,7 +236,12 @@ export class AttendeeController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteAttendee]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteAttendee,
+      PermissionKey.DeleteAttendeeNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

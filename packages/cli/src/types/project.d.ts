@@ -40,6 +40,7 @@ declare module '@loopback/cli/lib/project-generator' {
       baseServiceStoreName?: string;
       baseServiceCacheName?: string;
       baseServiceDSList?: DataSourceMap[];
+      baseServiceComponentName?: string;
     };
     projectOptions: string[];
     promptProjectName(): Promise<void>;

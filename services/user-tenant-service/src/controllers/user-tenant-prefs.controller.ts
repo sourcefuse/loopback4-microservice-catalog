@@ -40,7 +40,12 @@ export class UserTenantPrefsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateUserTenantPreference]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserTenantPreference,
+      PermissionKey.UpdateUserTenantPreferenceNum,
+    ],
+  })
   @post(basePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -85,7 +90,12 @@ export class UserTenantPrefsController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewUserTenantPreference]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserTenantPreference,
+      PermissionKey.ViewUserTenantPreferenceNum,
+    ],
+  })
   @get(basePath, {
     responses: {
       [STATUS_CODE.OK]: {

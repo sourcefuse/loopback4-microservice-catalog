@@ -26,7 +26,10 @@ export class UserGroupsController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewUserGroupList],
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
   })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
@@ -51,7 +54,10 @@ export class UserGroupsController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewUserGroupList],
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
   })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,

@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/2.4.1 linux-x64 node-v16.13.0
+@sourceloop/cli/2.4.4 linux-x64 node-v16.13.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -73,7 +73,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.1/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.4/src/commands/extension.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -114,7 +114,7 @@ OPTIONS
       include base microservice migrations
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.1/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.4/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -135,7 +135,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.1/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.4/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -149,5 +149,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.1/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v2.4.4/src/commands/update.ts)_
 <!-- commandsstop -->
