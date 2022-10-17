@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.0 (2022-10-17)
+
+* fix(services): sync user-tenant-service properties with auth-service (#1010) ([5c7fce8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c7fce8)), closes [#1010](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1010)
+* feat(authentication-service): add APIs for Cognito OAuth (#1046) ([190f96a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/190f96a)), closes [#1046](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1046) [#1045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1045) [#1046](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1046)
+
+
+
+
+
 ## <small>8.1.8 (2022-10-10)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service
