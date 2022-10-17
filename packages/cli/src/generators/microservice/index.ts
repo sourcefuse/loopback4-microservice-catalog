@@ -68,7 +68,9 @@ const BACK_TO_ROOT = join('..', '..');
 
 const DEFAULT_NAME = 'microservice';
 
-export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
+export default class MicroserviceGenerator extends AppGenerator<
+  MicroserviceOptions
+> {
   constructor(args: string[], opts: MicroserviceOptions) {
     super(args, opts);
   }
@@ -239,8 +241,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         DATASOURCE_CONNECTORS[
           this.options.datasourceType ?? DATASOURCES.POSTGRES
         ];
-      this.projectInfo.datasourceConnectorName =
-        this.projectInfo.datasourceConnector;
+      this.projectInfo.datasourceConnectorName = 
+      this.projectInfo.datasourceConnector;
       this.projectInfo.datasourceType = this.options.datasourceType;
     }
   }
@@ -292,8 +294,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
       if (type === 'services') {
-        this.projectInfo.baseServiceComponentName =
-          this._setBaseServiceComponentName();
+        this.projectInfo.baseServiceComponentName = 
+        this._setBaseServiceComponentName();
         const baseServiceDSList = this._setDataSourceName();
         this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
           ds => ds.type === 'store',
@@ -359,11 +361,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts['coverage'] = 'nyc npm run test';
       packageJson.scripts = scripts;
       if (this.options.baseService) {
-        packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
-          getDependencyVersion(
-            this.projectInfo.dependencies,
-            `@sourceloop/${this.options.baseService}`,
-          );
+        packageJson.dependencies[
+          `@sourceloop/${this.options.baseService}`
+        ] = getDependencyVersion(
+          this.projectInfo.dependencies,
+          `@sourceloop/${this.options.baseService}`,
+        );
       }
       fs.writeFileSync(
         packageJsonFile,

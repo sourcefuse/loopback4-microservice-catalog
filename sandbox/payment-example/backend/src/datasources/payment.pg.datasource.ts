@@ -19,15 +19,14 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class PaymentDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class PaymentDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = 'payment';
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.inmail' otherwise you might get Errors
+    // You need to set datasource configuration name
+    //as 'datasources.config.inmail' otherwise you might get Errors
     @inject('datasources.config.payment', {optional: true})
     dsConfig: object = config,
   ) {

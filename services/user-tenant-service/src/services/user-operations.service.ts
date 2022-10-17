@@ -150,9 +150,8 @@ export class UserOperationsService {
     user.email = user?.email?.toLowerCase().trim();
 
     // Check for valid email
-    const emailRegex = new RegExp(
-      "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-    );
+    const emailRegex =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (user.email && !emailRegex.test(user.email)) {
       throw new HttpErrors.BadRequest('Email invalid.');
     }

@@ -116,9 +116,7 @@ export class UserOpsService {
 
   validateUserCreation(userData: UserDto, options?: AnyObject) {
     // Check for valid email
-    const emailRegex = new RegExp(
-      "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-    );
+    const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (userData.email && !emailRegex.test(userData.email)) {
       throw new HttpErrors.BadRequest('Email invalid.');
     }

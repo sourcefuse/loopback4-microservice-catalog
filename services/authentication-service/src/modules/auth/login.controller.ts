@@ -276,7 +276,8 @@ export class LoginController {
   @post('/auth/token-refresh', {
     security: OPERATION_SECURITY_SPEC,
     description:
-      'Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
+      'Gets you a new access and refresh token once your access token is expired',
+    //(both mobile and web)
     responses: {
       [STATUS_CODE.OK]: {
         description: 'New Token Response',

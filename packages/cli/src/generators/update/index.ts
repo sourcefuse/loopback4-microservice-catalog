@@ -16,7 +16,9 @@ const tempDeps = configJsonFile.config.templateDependencies;
 
 const packageJsonFile = 'package.json';
 
-export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> {
+export default class UpdateGenerator extends BaseUpdateGenerator<
+  UpdateOptions
+> {
   constructor(public args: string[], public opts: UpdateOptions) {
     super(args, opts);
   }
@@ -108,7 +110,8 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       // No incompatible dependencies
       this.log(
         chalk.green(
-          `The project dependencies are compatible with @sourceloop/cli@${configJsonFile.version}`,
+          `The project dependencies are compatible 
+          with @sourceloop/cli@${configJsonFile.version}`,
         ),
       );
       return false;
