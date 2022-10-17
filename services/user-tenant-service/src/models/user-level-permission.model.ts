@@ -9,9 +9,6 @@ import {UserTenant} from './index';
 
 @model({
   name: 'user_permissions',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class UserLevelPermission
   extends UserModifiableEntity
@@ -20,7 +17,6 @@ export class UserLevelPermission
   @property({
     type: 'string',
     id: true,
-    generated: false,
   })
   id?: string;
 
@@ -39,7 +35,7 @@ export class UserLevelPermission
 
   @belongsTo(
     () => UserTenant,
-    {name: 'userTenant'},
+    {keyFrom: 'user_tenant_id', name: 'userTenant'},
     {
       name: 'user_tenant_id',
       required: true,

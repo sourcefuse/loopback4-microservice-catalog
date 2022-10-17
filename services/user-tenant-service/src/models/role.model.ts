@@ -11,15 +11,11 @@ import {UserView} from './user-view.model';
 
 @model({
   name: 'roles',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class Role extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
   })
   id?: string;
 
@@ -34,7 +30,7 @@ export class Role extends UserModifiableEntity {
     required: true,
     name: 'role_type',
     jsonSchema: {
-      maximum: 11,
+      maximum: 15,
       minimum: 0,
     },
   })

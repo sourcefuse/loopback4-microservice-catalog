@@ -8,15 +8,11 @@ import {User, UserWithRelations} from './index';
 
 @model({
   name: 'user_credentials',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class UserCredentials extends BaseEntity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
   })
   id?: string;
 
@@ -41,12 +37,19 @@ export class UserCredentials extends BaseEntity {
 
   @property({
     type: 'string',
+    name: 'secret_key',
+    description: 'Secret for Authenticator app',
+  })
+  secretKey?: string;
+
+  @property({
+    type: 'string',
   })
   password?: string;
 
   @belongsTo(
     () => User,
-    {name: 'user'},
+    {keyFrom: 'user_id', name: 'user'},
     {
       name: 'user_id',
       required: true,

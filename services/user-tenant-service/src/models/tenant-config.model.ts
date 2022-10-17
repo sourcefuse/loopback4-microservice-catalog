@@ -8,15 +8,11 @@ import {Tenant, TenantWithRelations} from './index';
 
 @model({
   name: 'tenant_configs',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class TenantConfig extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
   })
   id?: string;
 
@@ -35,7 +31,7 @@ export class TenantConfig extends UserModifiableEntity {
 
   @belongsTo(
     () => Tenant,
-    {name: 'tenant'},
+    {keyFrom: 'tenant_id', name: 'tenant'},
     {
       name: 'tenant_id',
       required: true,

@@ -37,5 +37,6 @@
 	"API not found !": "API not found !",
 	"Invalid data \"{where": "{\\n        \\\"id\\\":\\\"feature_1\\\"\\n      }}\" for parameter \"filter\".",
 	"Cannot set properties of undefined (setting 'modifiedBy')": "Cannot set properties of undefined (setting 'modifiedBy')",
-	"Entity not found": " strategies with id \"feature_2\""
+	"Entity not found": " strategies with id \"feature_2\"",
+	"The `tenants` instance is not valid. Details": " `status` can't be blank (value: NaN)."
 }
