@@ -17,8 +17,7 @@ import {
 import {UserLevelResourceRepository} from '../repositories';
 
 export class CasbinEnforcerConfigProvider
-  implements Provider<CasbinEnforcerConfigGetterFn>
-{
+  implements Provider<CasbinEnforcerConfigGetterFn> {
   constructor(
     @inject.getter(AuthorizationBindings.METADATA)
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,
@@ -40,14 +39,14 @@ export class CasbinEnforcerConfigProvider
     isCasbinPolicy = false,
   ): Promise<CasbinConfig> {
     const resourceIds = resourceValue.split(',');
-    const {permissions}: AuthorizationMetadata = await this.getCasbinMetadata(); // decorator permissions
-
+    // decorator permissions
+    const {permissions}: AuthorizationMetadata = await this.getCasbinMetadata();
     const userPermissions = permissions.filter(permission =>
       authUser.permissions.includes(permission),
     );
     let resourcesAllowed: ResourcePermissionObject[] = [];
-
-    const userResources = await this._getUserResources(authUser); //permissions with the resource value
+    //permissions with the resource value
+    const userResources = await this._getUserResources(authUser);
     resourcesAllowed = userPermissions.map(permission => {
       return {permission: permission, resource: '*'};
     });

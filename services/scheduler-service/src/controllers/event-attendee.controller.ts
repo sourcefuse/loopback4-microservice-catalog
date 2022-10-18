@@ -151,8 +151,8 @@ export class EventAttendeeController {
     ],
   })
   @del(basePath, {
-    description:
-      'Organiser is allowed to delete an attendee of an event. Event participants details from the past could not be created or updated.',
+    description: `Organiser is allowed to delete an attendee of an event.
+       Event participants details from the past could not be created or updated.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {

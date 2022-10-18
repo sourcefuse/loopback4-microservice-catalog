@@ -62,8 +62,10 @@ export class KeycloakLoginController {
       host: process.env.KEYCLOAK_HOST,
       realm: process.env.KEYCLOAK_REALM, //'Tenant1',
       clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
+      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
+      //'http://localhost:3001/auth/keycloak-auth-redirect',
       authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
@@ -104,8 +106,10 @@ export class KeycloakLoginController {
       host: process.env.KEYCLOAK_HOST,
       realm: process.env.KEYCLOAK_REALM, //'Tenant1',
       clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
+      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
+      //'http://localhost:3001/auth/keycloak-auth-redirect',
       authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
@@ -117,8 +121,9 @@ export class KeycloakLoginController {
   @get('/auth/keycloak', {
     responses: {
       [STATUS_CODE.OK]: {
-        description:
-          'Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        description: 'Keycloak Token Response',
+        // (Deprecated: Possible security issue
+        //if secret is passed via query params, please use the post endpoint)
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -142,8 +147,10 @@ export class KeycloakLoginController {
       host: process.env.KEYCLOAK_HOST,
       realm: process.env.KEYCLOAK_REALM, //'Tenant1',
       clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
+      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
+      //'http://localhost:3001/auth/keycloak-auth-redirect',
       authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,

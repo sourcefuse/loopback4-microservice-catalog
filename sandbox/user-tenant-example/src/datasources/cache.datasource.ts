@@ -15,15 +15,14 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class AuthenticationDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = AuthCacheSourceName;
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.Authentication' otherwise you might get Errors
+    // You need to set datasource configuration name
+    // as 'datasources.config.Authentication' otherwise you might get Errors
     @inject('datasources.config.authentication', {optional: true})
     dsConfig: object = config,
   ) {

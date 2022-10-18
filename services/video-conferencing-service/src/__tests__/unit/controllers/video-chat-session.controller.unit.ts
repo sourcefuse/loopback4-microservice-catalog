@@ -164,7 +164,7 @@ describe('Session APIs', () => {
       expect(error).instanceof(Error);
     });
 
-    it('denies if the threshold time to join has not been achieved (scheduling logic)', async () => {
+    it('denies if threshold time to join has not been achieved (scheduling logic)', async () => {
       setUp({
         getToken: sinon.stub().returns(getSessionResponse({})),
       });
