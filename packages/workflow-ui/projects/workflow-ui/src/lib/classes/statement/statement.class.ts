@@ -3,8 +3,8 @@ import { WorkflowElement } from '../element/abstract-element.class';
 import { StatementNode } from './statement-node.class';
 
 export class Statement<E, S = RecordOfAnyType> {
-  head: StatementNode<E>[];
-  tail: StatementNode<E>[];
+  head: StatementNode<E>[] = [];
+  tail: StatementNode<E>[] = [];
   state: StateMap<S>;
   constructor(state: StateMap<S>) {
     this.state = state;
@@ -18,7 +18,7 @@ export class Statement<E, S = RecordOfAnyType> {
   }
   addStart(element: WorkflowElement<E>) {
     const newNode = new StatementNode<E>(element);
-    if (this.head) {
+    if (this.head.length > 0) {
       newNode.next = this.head;
       this.head[0].prev = [newNode];
       this.head = [newNode];
@@ -30,7 +30,7 @@ export class Statement<E, S = RecordOfAnyType> {
 
   addEnd(element: WorkflowElement<E>) {
     const newNode = new StatementNode<E>(element);
-    if (this.tail) {
+    if (this.tail.length > 0) {
       this.tail[this.tail.length - 1].next = [newNode];
       newNode.prev = this.tail;
       this.tail = [newNode];
@@ -42,14 +42,13 @@ export class Statement<E, S = RecordOfAnyType> {
 
   addNode(element: WorkflowElement<E>, node: WorkflowNode<E>) {
     const newNode = new StatementNode<E>(element, node);
-    if (this.head) {
-      const lastEvent = this.tail[this.tail.length - 1];
-      // newNode.next = lastEvent.next;
+    if (this.head.length > 0) {
       newNode.prev = this.tail;
-      // if (lastEvent.next) {
-      //   lastEvent.next[lastEvent.next.length - 1].next = [newNode];
-      // }
-      lastEvent.next = [newNode];
+      for (const element of this.tail) {
+        if (element.element.name !== 'read column value' || this.tail.length < 2) {
+          element.next = [newNode];
+        }
+      }
       this.tail = [newNode];
     } else {
       this.head = this.tail = [newNode];
@@ -58,14 +57,25 @@ export class Statement<E, S = RecordOfAnyType> {
   }
 
   addNodes(statementNodes: StatementNode<E>[]) {
-    if (this.head) {
-      const lastEvent = this.tail[this.tail.length - 1];
-      statementNodes[0].prev = this.tail;
-      // if (lastEvent.next) {
-      //   lastEvent.next[lastEvent.next.length - 1].next = statementNodes;
-      // }
-      lastEvent.next = statementNodes;
-      this.tail = statementNodes;
+    if (this.head.length > 0) {
+      for (let i = 0; i < statementNodes.length; i++) {
+        switch (statementNodes[i].element.name) {
+          case 'read column value':
+            statementNodes[i].prev = this.tail;
+            statementNodes[i].next = [statementNodes[i + 1]];
+            break;
+          case 'gateway':
+            statementNodes[i].prev = [statementNodes[i - 1]];
+            break;
+        }
+      }
+
+      for (const element of this.tail) {
+        if (element.element.name !== 'read column value') {
+          element.next = statementNodes.filter(node => node.element.name !== 'gateway');
+        }
+      }
+      this.tail = statementNodes.filter(node => node.element.name !== 'read column value');
     }
     else {
       this.head = this.tail = statementNodes;

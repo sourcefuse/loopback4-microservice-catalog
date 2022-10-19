@@ -5,6 +5,7 @@
       [isLast]="i === eventGroups.length - 1"
       [isFirst]="i === 0"
       [nodeType]="types.EVENT"
+      [eventGroups]="eventGroups"
       [popupTemplate]="nodePopup"
       (add)="openPopup(types.GROUP)"
       (remove)="onGroupRemove(i)"
