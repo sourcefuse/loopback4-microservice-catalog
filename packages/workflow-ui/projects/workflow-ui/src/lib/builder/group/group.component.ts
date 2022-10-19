@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from "@angular/core";
 import { NgxPopperjsContentComponent } from "ngx-popperjs";
-import { ElementService, isSelectInput, NodeService, WorkflowEvent, WorkflowPrompt } from "../../classes";
+import { ElementService, isSelectInput, NodeService, WorkflowPrompt } from "../../classes";
 import { BaseGroup } from "../../classes/nodes/abstract-base-group.class";
 import { InputTypes, NodeTypes } from "../../enum";
 import { InvalidEntityError } from "../../errors/base.error";
-import { ActionAddition, AllowedValues, AllowedValuesMap, EventAddition, InputChanged, NodeWithInput, RecordOfAnyType, WorkflowNode } from "../../types";
+import { AllowedValues, AllowedValuesMap, NodeWithInput, RecordOfAnyType, WorkflowNode } from "../../types";
 
 @Component({
   selector: 'workflow-group',
