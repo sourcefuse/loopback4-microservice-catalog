@@ -63,25 +63,15 @@ export class BpmnBuilderService extends BuilderService<
     statement.addEnd(end);
     let current = statement.head;
     while (current) {
-      if (current.length === 1) {
-        const tag = current[0].element.create(current[0]);
-        base.get('flowElements').push(tag);
-        current[0].setTag(tag);
-        if (current[0].prev) {
-          const prev = current[0].prev;
-          if (prev.length === 1) {
-            const link = prev[0].element.link(prev[0]);
-            base.get('flowElements').push(...link);
-          }
-          else {
-            //TODO
-          }
+      this.setTags(current, base);
+      this.linkNodes(current, base);
+      if (current.length > 1) {
+        for (let i = 1; i < current.length; i++) {
+          this.setTags(current[i].next, base);
+          this.linkNodes(current[i].next, base);
         }
-        current = current[0].next;
       }
-      else {
-        //TODO
-      }
+      current = current[0].next;
     }
     const { xml } = await this.moddle.toXML(this.root);
     try {
@@ -90,6 +80,26 @@ export class BpmnBuilderService extends BuilderService<
       return '';
     }
   }
+
+  setTags(statementNode: StatementNode<ModdleElement>[], base: ModdleElement) {
+    for (let element of statementNode) {
+      const tag = element.element.create(element);
+      base.get('flowElements').push(tag);
+      element.setTag(tag);
+    }
+  }
+
+  linkNodes(statementNode: StatementNode<ModdleElement>[], base: ModdleElement) {
+    for (let element of statementNode) {
+      if (element.prev && element.tag) {
+        for (let _element of element.prev) {
+          const link = _element.element.link(_element);
+          base.get('flowElements').push(...link);
+        }
+      }
+    }
+  }
+
 
   async restore(xml: string) {
     const result = await this.moddle.fromXML(xml);

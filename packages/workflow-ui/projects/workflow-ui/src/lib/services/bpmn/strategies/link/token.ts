@@ -1,6 +1,6 @@
-import {InjectionToken} from '@angular/core';
-import {LinkStrategy} from '../../../../interfaces';
-import {ModdleElement} from '../../../../types';
+import { InjectionToken } from '@angular/core';
+import { LinkStrategy } from '../../../../interfaces';
+import { ModdleElement } from '../../../../types';
 
 export const LINK_BASIC_STRATEGY = new InjectionToken<
   LinkStrategy<ModdleElement>

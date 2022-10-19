@@ -128,45 +128,6 @@ export class BuilderComponent<E> implements OnInit {
     this.eventGroups.splice(index, 1);
   }
 
-  // onNodeAdd(node: WorkflowNode<E>, id?: string) {
-  //   const newNode = {
-  //     node: this.nodes.getNodeByName(node.constructor.name, id),
-  //     inputs: this.nodes.mapInputs(node.prompts),
-  //   };
-  //   if (node.type === NodeTypes.EVENT) {
-  //     this.selectedEvents.push(newNode as EventWithInput<E>);
-  //     this.eventAdded.emit({
-  //       name: node.constructor.name,
-  //       event: newNode.node as WorkflowEvent<E>
-  //     });
-  //     this.updateDiagram();
-  //     this.updateState(node, newNode.inputs);
-  //   } else if (node.type === NodeTypes.ACTION) {
-  //     this.selectedActions.push(newNode);
-  //     this.actionAdded.emit({
-  //       name: node.constructor.name,
-  //       action: newNode.node,
-  //     });
-  //     this.updateDiagram();
-  //     this.updateState(node, newNode.inputs);
-  //   } else {
-  //     throw new InvalidEntityError('Node');
-  //   }
-  // }
-
-  // onNodeRemove(type: NodeTypes, index: number) {
-  //   let node: NodeWithInput<E>;
-  //   if (type === NodeTypes.ACTION) {
-  //     [node] = this.selectedActions.splice(index, 1);
-  //   } else if (type === NodeTypes.EVENT) {
-  //     [node] = this.selectedEvents.splice(index, 1);
-  //   } else {
-  //     throw new InvalidEntityError('Node');
-  //   }
-  //   this.updateDiagram();
-  //   this.updateState(node.node, node.inputs, true);
-  // }
-
   onEventAdded(event: any) {
     this.eventAdded.emit({
       name: event.node.constructor.name,
@@ -249,8 +210,8 @@ export class BuilderComponent<E> implements OnInit {
               node.elements.forEach(element => {
                 const instance = this.elements.createInstance(element);
                 statement.addNode(instance, node);
-              })
-            })
+              });
+            });
         } else if (group.name === 'or') {
           const statementNodes: StatementNode<E>[] = [];
           [...group.children]
@@ -259,15 +220,13 @@ export class BuilderComponent<E> implements OnInit {
               node.elements.forEach(element => {
                 const instance = this.elements.createInstance(element);
                 statementNodes.push(new StatementNode(instance, node));
-              })
-            })
+              });
+            });
           statement.addNodes(statementNodes);
         } else {
           throw new Error('Invalid Node type');
         }
-      })
-    console.log(statement);
-
+      });
     return this.builder.build(statement);
   }
   async updateDiagram() {

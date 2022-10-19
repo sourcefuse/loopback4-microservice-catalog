@@ -22,6 +22,7 @@ export class BasicLinkStrategy implements LinkStrategy<ModdleElement> {
     const to = node.next[0].tag;
     const id = node.outgoing ?? `Flow_${this.utils.uuid()}`;
     node.next[0].incoming = id;
+
     const start = this.moddle.create('bpmn:FlowNode', {
       id: from.id,
     });

@@ -25,39 +25,31 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     node: BpmnStatementNode,
   ): ModdleElement[] {
     const link = this.createMainLink(node);
-    const endLink = this.createEndLink(node);
-    return [link, ...endLink];
-  }
-
-  private createEndLink(node: BpmnStatementNode) {
-    const end = this.moddle.create('bpmn:EndEvent', {
-      id: `EndElement_${this.utils.uuid()}`,
-    });
-    const id = `Flow_${this.utils.uuid()}`;
-    const attrs = this.createLinkAttrs(id, node.tag, end);
-    const link = this.moddle.create('bpmn:SequenceFlow', attrs);
-    node.tag.get('outgoing').push(link);
-    end.get('incoming').push(link);
-    return [link, end];
+    return [...link];
   }
 
   private createMainLink(node: BpmnStatementNode) {
+    const link = [];
     const from = node.tag;
-    const to = node.next[0].tag;
-    const id = node.outgoing ?? `Flow_${this.utils.uuid()}`;
-    node.next[0].incoming = id;
-    const attrs = this.createLinkAttrs(id, from, to);
-    const { script, name } = this.createScript(node, id);
-    const expression = this.moddle.create('bpmn:FormalExpression', {
-      body: script,
-      language: 'Javascript',
-      'xsi:type': 'bpmn:tFormalExpression',
-    });
-    attrs['conditionExpression'] = expression;
-    attrs['name'] = name;
-    const link = this.moddle.create('bpmn:SequenceFlow', attrs);
-    from.get('outgoing').push(link);
-    to.get('incoming').push(link);
+    for (let i = 0; i < node.next.length; i++) {
+      const id = i == 0 ? node.outgoing : `Flow_${this.utils.uuid()}`;
+      const to = node.next[i].tag;
+      node.next[i].incoming = id;
+      const attrs = this.createLinkAttrs(id, from, to);
+      const { script, name } = this.createScript(node, id);
+      const expression = this.moddle.create('bpmn:FormalExpression', {
+        body: script,
+        language: 'Javascript',
+        'xsi:type': 'bpmn:tFormalExpression',
+      });
+      attrs['conditionExpression'] = expression;
+      attrs['name'] = name;
+      const _link = this.moddle.create('bpmn:SequenceFlow', attrs);
+      from.get('outgoing').push(_link);
+      to.get('incoming').push(_link);
+      link.push(_link);
+    }
+
     return link;
   }
 
