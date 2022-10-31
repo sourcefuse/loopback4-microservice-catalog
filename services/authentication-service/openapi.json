@@ -3,7 +3,7 @@
   "info": {
     "title": "Authentication Service",
     "version": "1.0.0",
-    "description": "Authentication microservice.",
+    "description": "Authentication microservice",
     "contact": {}
   },
   "paths": {
@@ -244,6 +244,115 @@
           }
         ],
         "operationId": "OtpController.checkQr"
+      }
+    },
+    "/auth/cognito": {
+      "post": {
+        "x-controller-name": "CognitoLoginController",
+        "x-operation-name": "postLoginViaCognito",
+        "tags": [
+          "CognitoLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Cognito based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "CognitoLoginController.postLoginViaCognito"
+      },
+      "get": {
+        "x-controller-name": "CognitoLoginController",
+        "x-operation-name": "loginViaCognito",
+        "tags": [
+          "CognitoLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "CognitoLoginController.loginViaCognito"
+      }
+    },
+    "/auth/cognito-auth-redirect": {
+      "get": {
+        "x-controller-name": "CognitoLoginController",
+        "x-operation-name": "cognitoCallback",
+        "tags": [
+          "CognitoLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cognito Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "CognitoLoginController.cognitoCallback"
       }
     },
     "/auth/create-qr-code": {

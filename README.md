@@ -305,6 +305,9 @@ The `Sourceloop` utilizes many extensions created by SourceFuse.
 - [sourcefuse/loopback4-authorization: An authorization extension for loopback4 applications (github.com)](https://github.com/sourcefuse/loopback4-authorization)
 - [sourcefuse/loopback4-helmet: A loopback4 extension for helmetjs integration (github.com)](https://github.com/sourcefuse/loopback4-helmet)
 - [sourcefuse/loopback4-vault: A loopback-next extension for HashiCorp's Vault integration in loopback-next applications (github.com)](https://github.com/sourcefuse/loopback4-vault)
+- [sourcefuse/loopback4-kafka-client: A Kafka Client for Loopback4 built on top of KafkaJS (github.com)](https://github.com/sourcefuse/loopback4-kafka-client)
+- [sourcefuse/loopback4-dynamic-datasource: A loopback 4 extension to connect to dynamic data sources runtime while maintaining old connections (github.com)](https://github.com/sourcefuse/loopback4-dynamic-datasource)
+- [sourcefuse/loopback4-sequelize: A Loopback 4 Extension that provides Sequelize query builder at repository level (github.com)](https://github.com/sourcefuse/loopback4-sequelize)
 
 ### Feedback
 

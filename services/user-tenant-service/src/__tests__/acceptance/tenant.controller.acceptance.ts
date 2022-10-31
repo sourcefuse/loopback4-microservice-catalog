@@ -61,7 +61,7 @@ describe('Tenant Controller', function () {
       .expect(200);
   });
 
-  it('gives status 422 when request bodt is invalid', async () => {
+  it('gives status 422 when request body is invalid', async () => {
     const tenant = {};
     await client
       .post(basePath)
@@ -89,6 +89,7 @@ describe('Tenant Controller', function () {
       new Tenant({
         name: tenantName,
         key: key,
+        status: 1,
       }),
     );
     await client
@@ -103,6 +104,7 @@ describe('Tenant Controller', function () {
       new Tenant({
         name: tenantName,
         key: key,
+        status: 1,
       }),
     );
     const response = await client
@@ -118,6 +120,7 @@ describe('Tenant Controller', function () {
       new Tenant({
         name: tenantName,
         key: key,
+        status: 1,
       }),
     );
     await client

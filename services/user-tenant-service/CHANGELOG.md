@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.3 (2022-10-17)</small>
+
+* fix(services): sync user-tenant-service properties with auth-service (#1010) ([5c7fce8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c7fce8)), closes [#1010](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1010)
+
+
+
+
+
 ## <small>0.6.2 (2022-10-10)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service

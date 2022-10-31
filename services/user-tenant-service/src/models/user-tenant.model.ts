@@ -17,9 +17,6 @@ import {UserGroup, UserGroupWithRelations} from './user-group.model';
 
 @model({
   name: 'user_tenants',
-  settings: {
-    defaultIdSort: false,
-  },
 })
 export class UserTenant extends BaseEntity implements IUserPrefs {
   @property({
@@ -45,7 +42,7 @@ export class UserTenant extends BaseEntity implements IUserPrefs {
 
   @belongsTo(
     () => User,
-    {name: 'user'},
+    {keyFrom: 'user_id', name: 'user'},
     {
       name: 'user_id',
       required: true,
@@ -55,7 +52,7 @@ export class UserTenant extends BaseEntity implements IUserPrefs {
 
   @belongsTo(
     () => Tenant,
-    {name: 'tenant'},
+    {keyFrom: 'tenant_id', name: 'tenant'},
     {
       name: 'tenant_id',
       required: true,
@@ -65,7 +62,7 @@ export class UserTenant extends BaseEntity implements IUserPrefs {
 
   @belongsTo(
     () => Role,
-    {name: 'role'},
+    {keyFrom: 'role_id', name: 'role'},
     {
       name: 'role_id',
       required: true,

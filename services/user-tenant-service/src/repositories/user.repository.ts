@@ -7,20 +7,20 @@ import {
   BelongsToAccessor,
   DataObject,
   Entity,
+  HasManyRepositoryFactory,
   HasOneRepositoryFactory,
+  juggler,
   Options,
   repository,
-  HasManyRepositoryFactory,
-  juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import * as bcrypt from 'bcrypt';
-import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
 import {
   AuthenticateErrorKeys,
-  IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
 } from '@sourceloop/core';
+import * as bcrypt from 'bcrypt';
+import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
 
 import {UserTenantDataSourceName} from '../keys';
 import {
@@ -78,11 +78,11 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       this.userTenants.inclusionResolver,
     );
     this.credentials = this.createHasOneRepositoryFactoryFor(
-      'userCredentials',
+      'credentials',
       userCredentialsRepositoryGetter,
     );
     this.registerInclusionResolver(
-      'userCredentials',
+      'credentials',
       this.credentials.inclusionResolver,
     );
     this.tenant = this.createBelongsToAccessorFor(

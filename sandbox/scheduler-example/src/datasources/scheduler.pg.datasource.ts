@@ -18,15 +18,14 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class SchedulerDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class SchedulerDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = 'schedulerDb';
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.audit' otherwise you might get Errors
+    // You need to set datasource configuration name as
+    //'datasources.config.audit' otherwise you might get Errors
     @inject('datasources.config.schedulerDb', {optional: true})
     dsConfig: object = config,
   ) {
