@@ -24,24 +24,11 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     return super._setupGenerator();
   }
 
-  async promptName() {
-    if (!this.shouldExit() && !this.options.name) {
-      const {name} = await this.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'Name of the extension:',
-          required: true,
-        },
-      ]);
-      this.options.name = name;
-    }
-  }
-
   async setOptions() {
     return super.setOptions();
   }
 
+  //Loopback4 prompts
   async promptProjectName() {
     return super.promptProjectName();
   }

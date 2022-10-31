@@ -11,32 +11,6 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
     super(args, opts);
   }
 
-  async prompting() {
-    if (!this.options.name) {
-      const {name} = await this.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'Name of the directory in which the project is scaffolded:',
-        },
-      ]);
-      this.options.name = name;
-    }
-  }
-
-  async ticketNumberPrompt() {
-    if (!this.options.issuePrefix) {
-      const {issuePrefix} = await this.prompt([
-        {
-          type: 'input',
-          name: 'issuePrefix',
-          message: 'Enter the issue Prefix:',
-        },
-      ]);
-      this.options.issuePrefix = issuePrefix;
-    }
-  }
-
   async configuring() {
     this._setRoot();
     this.spawnCommandSync('git', ['init']);

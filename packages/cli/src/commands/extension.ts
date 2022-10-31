@@ -17,14 +17,10 @@ export class Extension extends Base<ExtensionOptions> {
     }),
   };
   static args = [
-    {name: 'name', description: 'name of the extension', required: false},
+    {name: 'name', description: 'Name of the extension', required: false},
   ];
 
   async run() {
-    const inputs = this.parse(Extension);
-    await super.generate('extension', {
-      name: inputs.args.name,
-      help: inputs.flags.help,
-    });
+    await super.generate('extension', Extension);
   }
 }

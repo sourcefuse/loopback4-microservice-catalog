@@ -14,56 +14,63 @@ export class Microservice extends Base<MicroserviceOptions> {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
-      type: 'boolean',
     }),
     facade: flags.boolean({
       name: 'facade',
-      description: 'create a microservice facade',
-      type: 'boolean',
+      description: 'Create as facade',
+      allowNo: true,
+    }),
+    baseOnService: flags.boolean({
+      name: 'baseOnService',
+      exclusive: ['facade'],
+      description: 'Base on sourceloop microservice or not',
       allowNo: true,
     }),
     baseService: flags.enum({
       name: 'service',
       char: 's',
-      description: 'base sourceloop microservice',
+      description: 'Base sourceloop microservice',
       options: Object.values(SERVICES),
       required: false,
+      exclusive: ['facade'],
+      dependsOn: ['baseOnService'],
     }),
     uniquePrefix: flags.string({
       name: 'unique-prefix',
       char: 'p',
-      description: 'unique prefix to be used for docker images',
+      description: 'Unique prefix to be used for docker images',
       required: false,
     }),
     datasourceName: flags.string({
-      name: 'datasource-name',
-      description: 'name of the datasource to generate',
+      name: 'datasourceName',
+      description: 'Name of the datasource to generate',
       required: false,
+      exclusive: ['facade'],
     }),
     datasourceType: flags.enum({
-      name: 'datasource-type',
-      description: 'type of the datasource',
+      name: 'datasourceType',
+      description: 'Type of the datasource',
       required: false,
       options: Object.values(DATASOURCES),
+      exclusive: ['facade'],
     }),
     includeMigrations: flags.boolean({
-      name: 'include-migrations',
-      description: 'include base microservice migrations',
+      name: 'includeMigrations',
+      description: 'Include base microservice migrations',
+      exclusive: ['facade', 'customMigrations'],
+      dependsOn: ['baseService'],
     }),
     customMigrations: flags.boolean({
-      name: 'generate-migrations',
-      description: 'setup custom migration for this microservice',
+      name: 'generateMigrations',
+      description: 'Setup custom migration for this microservice',
+      exclusive: ['facade', 'includeMigrations'],
     }),
   };
   static args = [
-    {name: 'name', description: 'name of the microservice', required: false},
+    {name: 'name', description: 'Name of the microservice', required: false},
   ];
 
   async run() {
-    const inputs = this.parse(Microservice);
-    await super.generate('microservice', {
-      name: inputs.args.name,
-      ...inputs.flags,
-    });
+    await super.generate('microservice', Microservice);
   }
 }
