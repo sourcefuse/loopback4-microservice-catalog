@@ -124,6 +124,7 @@ describe('UserTenantPrefs Controller', function () {
       new Tenant({
         name: tenantName,
         key: key,
+        status: 1,
       }),
     );
     const userTenant = await userTenantRepo.create(

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.5 (2022-10-17)</small>
+
+* chore(deps): updating sourceloop dependencies for cli (#1055) ([d063db2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d063db2)), closes [#1055](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1055) [#1054](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1054)
+
+
+
+
+
 ## <small>2.4.4 (2022-10-13)</small>
 
 * fix(cli): fixing migration for microservices (#1048) ([a138860](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a138860)), closes [#1048](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1048) [#1047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1047) [#1047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1047)

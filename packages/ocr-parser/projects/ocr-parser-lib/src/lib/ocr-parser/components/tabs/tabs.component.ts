@@ -2,11 +2,19 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Subscription } from 'rxjs';
-import { FieldData } from '../../models/ocr.model';
-import { OcrDataService } from '../../services/ocrData.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {Subscription} from 'rxjs';
+import {FieldData} from '../../models/ocr.model';
+import {OcrDataService} from '../../services/ocrData.service';
 
 @Component({
   selector: 'sourceloop-tabs',
@@ -21,12 +29,14 @@ export class TabsComponent implements OnInit, OnDestroy {
   textSubscription!: Subscription;
   @Output() tabChangeEvent = new EventEmitter();
 
-  constructor(private readonly dataService: OcrDataService) { }
+  constructor(private readonly dataService: OcrDataService) {}
 
   ngOnInit(): void {
-    this.textSubscription = this.dataService.$getSelectedClauseData.subscribe(resp => {
-      this.selectedField = resp.fieldData;
-    });
+    this.textSubscription = this.dataService.$getSelectedClauseData.subscribe(
+      resp => {
+        this.selectedField = resp.fieldData;
+      },
+    );
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {

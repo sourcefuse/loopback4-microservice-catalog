@@ -27,7 +27,7 @@ export class Role extends UserModifiableEntity {
     name: 'role_type',
     jsonSchema: {
       maximum: 15,
-      minimum: 1,
+      minimum: 0,
     },
   })
   roleType: RoleTypes;

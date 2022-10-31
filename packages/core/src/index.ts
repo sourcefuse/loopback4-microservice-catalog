@@ -17,3 +17,4 @@ export * from './service-sequence';
 export * from './utils';
 export * from './types';
 export * from './security-specs';
+export * from './mixins';

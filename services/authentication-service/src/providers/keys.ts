@@ -33,6 +33,9 @@ import {
   AzureAdSignUpFn,
   AzureAdPreVerifyFn,
   AzureAdPostVerifyFn,
+  CognitoSignUpFn,
+  CognitoPreVerifyFn,
+  CognitoPostVerifyFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -52,6 +55,9 @@ export namespace SignUpBindings {
   );
   export const AZURE_AD_SIGN_UP_PROVIDER = BindingKey.create<AzureAdSignUpFn>(
     'sf.azuread.signup.provider',
+  );
+  export const COGNITO_SIGN_UP_PROVIDER = BindingKey.create<CognitoSignUpFn>(
+    'sf.cognito.signup.provider',
   );
   export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,6 +94,10 @@ export namespace VerifyBindings {
     BindingKey.create<KeyCloakPreVerifyFn>('sf.keycloak.preverify.provider');
   export const KEYCLOAK_POST_VERIFY_PROVIDER =
     BindingKey.create<KeyCloakPostVerifyFn>('sf.keycloak.postverify.provider');
+  export const COGNITO_PRE_VERIFY_PROVIDER =
+    BindingKey.create<CognitoPreVerifyFn>('sf.cognito.preverify.provider');
+  export const COGNITO_POST_VERIFY_PROVIDER =
+    BindingKey.create<CognitoPostVerifyFn>('sf.cognito.postverify.provider');
 
   export const OTP_PROVIDER = BindingKey.create<OtpFn>('sf.otp.provider');
   export const OTP_GENERATE_PROVIDER = BindingKey.create<OtpGenerateFn>(
