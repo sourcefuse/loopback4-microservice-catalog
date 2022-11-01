@@ -9,7 +9,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "echo \"No tests available !\"",
+    "test": "ng test --no-watch",
+    "coverage": "ng test --code-coverage --no-watch",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "userOnBoardingBuild": "ng build userOnboardingLib  && cp -r projects/user-onboarding-lib/src/assets projects/user-onboarding-lib/dist"
