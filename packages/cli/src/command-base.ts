@@ -11,6 +11,8 @@ import inquirer, {Question} from 'inquirer';
 import {AnyObject, PromptFunction} from './types';
 import {IFlag} from '@oclif/command/lib/flags';
 import {IConfig} from '@oclif/config';
+import fetch from 'node-fetch';
+const chalk = require('chalk'); //NOSONAR
 
 const IGNORED_FLAGS = ['help', 'cwd'];
 export default abstract class CommandBase<T extends object> extends Command {
@@ -35,6 +37,7 @@ export default abstract class CommandBase<T extends object> extends Command {
     }
   }
   protected async generate(type: string, generatorOptions: Parser.Input<T>) {
+    await this.promptToUpdateVersion();
     const inputs = this.parse(generatorOptions);
     if (generatorOptions.args) {
       await this.promptArgs(generatorOptions.args, inputs.args);
@@ -134,5 +137,26 @@ export default abstract class CommandBase<T extends object> extends Command {
       }
     }
     return true;
+  }
+
+  private async promptToUpdateVersion() {
+    const configJsonFile = require('../package.json');
+    const currentVersion = configJsonFile.version;
+
+    const res = await fetch(
+      'https://registry.npmjs.org/@sourceloop/cli/latest',
+    );
+    const data = await res.json();
+    const latestVersion = data.version;
+
+    if (currentVersion !== latestVersion) {
+      console.log(
+        chalk.yellow(
+          'Current Sourceloop CLI version is v%s. To use latest features, please update to v%s',
+        ),
+        currentVersion,
+        latestVersion,
+      );
+    }
   }
 }
