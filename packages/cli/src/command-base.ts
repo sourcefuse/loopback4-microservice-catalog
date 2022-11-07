@@ -150,7 +150,7 @@ export default abstract class CommandBase<T extends object> extends Command {
     const latestVersion = data.version;
 
     if (currentVersion !== latestVersion) {
-      console.log(
+      this.log(
         chalk.yellow(
           'Current Sourceloop CLI version is v%s. To use latest features, please update to v%s',
         ),
