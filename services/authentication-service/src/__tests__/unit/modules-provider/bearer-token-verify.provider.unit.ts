@@ -10,6 +10,8 @@ import {
 import {RevokedTokenRepository} from '../../../repositories';
 import sinon from 'sinon';
 import {BearerTokenVerifyProvider} from '../../../modules/auth/providers/bearer-token-verify.provider';
+import {JWTSymmetricVerifierProvider} from '../../..';
+import {AuthUser} from '../../../modules/auth';
 
 describe('Bearer Token Verify Provider', () => {
   let revokedTokenRepo: StubbedInstanceWithSinonAccessor<RevokedTokenRepository>;
@@ -66,6 +68,7 @@ describe('Bearer Token Verify Provider', () => {
     bearerTokenVerifyProvider = new BearerTokenVerifyProvider(
       revokedTokenRepo,
       logger,
+      new JWTSymmetricVerifierProvider<AuthUser>().value(),
     );
   }
 });

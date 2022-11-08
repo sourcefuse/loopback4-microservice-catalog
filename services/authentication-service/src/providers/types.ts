@@ -205,7 +205,7 @@ export interface CognitoSignUpFn {
   (profile: Cognito.Profile): Promise<(User & UserRelations) | null>;
 }
 export type JWTSignerFn<T> = (
-  payload: string | T,
+  payload: T,
   options: SignOptions,
 ) => Promise<string>;
 export type JWTVerifierFn<T> = (

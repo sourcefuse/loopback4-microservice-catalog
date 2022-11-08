@@ -67,7 +67,11 @@ import {
   InstagramOauth2SignupProvider,
   InstagramPostVerifyProvider,
   InstagramPreVerifyProvider,
+  JWTAsymmetricSignerProvider,
+  JWTAsymmetricVerifierProvider,
   JwtPayloadProvider,
+  JWTSymmetricSignerProvider,
+  JWTSymmetricVerifierProvider,
   KeyCloakPostVerifyProvider,
   KeyCloakPreVerifyProvider,
   OtpGenerateProvider,
@@ -89,10 +93,6 @@ import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 import bodyParser from 'body-parser';
-import {JWTSymmetricSignerProvider} from './providers/jwt-symmetric-signer.provider';
-import {JWTAsymmetricVerifierProvider} from './providers/jwt-asymmetric-verifier.provider';
-import {JWTSymmetricVerifierProvider} from './providers/jwt-symmetric-verifier.provider';
-import {JWTAsymmetricSignerProvider} from './providers/jwt--asymmetric-signer.provider';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(

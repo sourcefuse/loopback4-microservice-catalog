@@ -17,7 +17,7 @@ export class DeviceInfo {
 }
 @model({
   description: `This is the signature for authenticated user which holds permissions and role.`,
-  settings: {strict: false},
+  settings: {strict: true},
 })
 export class AuthUser extends User implements IAuthUserWithPermissions {
   @property({
