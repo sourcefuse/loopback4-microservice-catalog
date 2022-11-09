@@ -148,6 +148,10 @@ npm i @sourceloop/authentication-service
 
 | `REDIS_DATABASE` | Y | | Database within Redis to connect to. |
 
+| `JWT_PRIVATE_KEY` | Y | | Asymmetric signing key of the JWT token. |
+
+| `JWT_PUBLIC_KEY` | Y | | Verifying signed JWT Token. |
+
 | `JWT_SECRET` | Y | | Symmetric signing key of the JWT token. |
 
 | `JWT_ISSUER` | Y | | Issuer of the JWT token. |
@@ -200,10 +204,8 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class AuthenticationDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = AuthDbSourceName;
   static readonly defaultConfig = config;
 
@@ -257,8 +259,9 @@ Also the verifier function uses Signup provider whose implementation needs to be
 Bind the provider key to its corresponding value.
 
 ```ts
-this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
-  AzureAdSignupProvider;
+this.providers[
+  SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key
+] = AzureAdSignupProvider;
 ```
 
 ```ts
@@ -276,6 +279,27 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
 ```
 
 Also bind `VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER` and `VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER` to override the basic implementation provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/authentication-service/src/providers).
+
+### Authenticating JWT using RSA Encryption
+
+In order to authenticate JWT token using RSA encrytion, we need to provide JWT_PUBLIC_KEY and JWT_PRIVATE_KEY where the JWT_PUBLIC_KEY and JWT_PRIVATE_KEY are the paths to your public and private keys(.pem files).Steps to create Public key and private key are as follows:
+
+-For creating RSA key pair,use the following command in the terminal:
+
+```bash
+ssh-keygen -t rsa -m PEM
+```
+
+- Use the following command and replace the public key provided in the file with the key in the terminal.
+
+```bash
+
+ssh-keygen -f file_name -e -m pem
+
+```
+
+- Both the files should be in (.pem) format.
+  for example: test-key.pem file for private key and test_key.pub.pem file for public key.
 
 #### Common Headers
 
