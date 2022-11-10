@@ -36,6 +36,8 @@ import {
   CognitoSignUpFn,
   CognitoPreVerifyFn,
   CognitoPostVerifyFn,
+  JWTSignerFn,
+  JWTVerifierFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -129,9 +131,14 @@ export namespace AuthCodeBindings {
   export const CODEREADER_PROVIDER = BindingKey.create<CodeReaderFn>(
     'sf.auth.codereader.provider',
   );
-
   export const AUTH_CODE_GENERATOR_PROVIDER =
     BindingKey.create<AuthCodeGeneratorProvider>(
       'sf.auth-code.generator.provider',
     );
+  export const JWT_SIGNER = BindingKey.create<JWTSignerFn<object>>(
+    'sf.auth-token.generator.provider',
+  );
+  export const JWT_VERIFIER = BindingKey.create<JWTVerifierFn<string>>(
+    'sf.auth-payload.provider',
+  );
 }

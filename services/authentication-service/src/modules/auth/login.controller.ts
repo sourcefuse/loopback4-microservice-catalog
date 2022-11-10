@@ -29,7 +29,6 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {randomBytes} from 'crypto';
-import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
   authenticateClient,
@@ -48,7 +47,9 @@ import {
   AuthCodeGeneratorFn,
   CodeReaderFn,
   JwtPayloadFn,
+  JWTSignerFn,
 } from '../../providers';
+import * as jwt from 'jsonwebtoken';
 import {
   AuthClientRepository,
   OtpCacheRepository,
@@ -110,6 +111,8 @@ export class LoginController {
     private readonly loginHelperService: LoginHelperService,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
+    @inject(AuthCodeBindings.JWT_SIGNER)
+    private readonly jwtSigner: JWTSignerFn<object>,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -470,10 +473,8 @@ export class LoginController {
         );
       }
       const data = await this.getJwtPayload(user, authClient);
-      const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
+      const accessToken = await this.jwtSigner(data, {
         expiresIn: authClient.accessTokenExpiration,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
       });
       const refreshToken: string = randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
