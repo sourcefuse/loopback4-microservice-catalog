@@ -40,3 +40,7 @@ export * from './azure-pre-verify.provider';
 export * from './cognito-oauth2-signup.provider';
 export * from './cognito-pre-verify.provider';
 export * from './cognito-post-verify.provider';
+export * from './jwt-asymmetric-signer.provider';
+export * from './jwt-asymmetric-verifier.provider';
+export * from './jwt-symmetric-signer.provider';
+export * from './jwt-symmetric-verifier.provider';
