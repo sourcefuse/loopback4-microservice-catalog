@@ -1,109 +1,109 @@
 {
-    "name": "@sourceloop/reporting-service",
-    "version": "0.3.8",
-    "description": "Reporting Microservice",
-    "keywords": [
-        "loopback-extension",
-        "loopback"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": "12 || 14 || 16 || 17"
+  "name": "@sourceloop/reporting-service",
+  "version": "0.3.8",
+  "description": "Reporting Microservice",
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "12 || 14 || 16 || 17"
+  },
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "echo \"No tests !\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t reporting-service .",
+    "docker:run": "docker run -p 3000:3000 -d reporting-service",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/reporting-service"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "database.json",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate-pg": "^1.2.2"
+  },
+  "dependencies": {
+    "@loopback/boot": "^5.0.4",
+    "@loopback/context": "^5.0.4",
+    "@loopback/core": "^4.0.4",
+    "@loopback/openapi-v3": "^8.0.4",
+    "@loopback/repository": "^5.0.4",
+    "@loopback/rest": "^12.0.4",
+    "@loopback/rest-explorer": "^5.0.4",
+    "@loopback/service-proxy": "^5.0.4",
+    "@sourceloop/core": "^7.2.6",
+    "axios": "^0.26.1",
+    "circular-json": "^0.5.9",
+    "dotenv": "^16.0.3",
+    "dotenv-extended": "^2.9.0",
+    "handlebars": "^4.7.7",
+    "loopback4-authentication": "^7.1.1",
+    "loopback4-authorization": "^5.0.8",
+    "loopback4-soft-delete": "^7.0.0",
+    "moment": "^2.29.3",
+    "tslib": "^2.0.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@loopback/build": "^9.0.4",
+    "@loopback/eslint-config": "^13.0.4",
+    "@loopback/testlab": "^5.0.4",
+    "@types/circular-json": "^0.4.0",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^14.18.32",
+    "@types/uuid": "^8.3.4",
+    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate-pg": "^1.2.2",
+    "eslint": "^8.25.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^4.8.4",
+    "widdershins": "^4.0.1"
+  },
+  "overrides": {
+    "widdershins": {
+      "swagger2openapi": "^7.0.8",
+      "markdown-it": "^12.3.2",
+      "yargs": "^17.4.1"
     },
-    "scripts": {
-        "prebuild": "npm run clean",
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "lb-eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run rebuild",
-        "test": "echo \"No tests !\"",
-        "posttest": "npm run lint",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-        "docker:build": "docker build -t reporting-service .",
-        "docker:run": "docker run -p 3000:3000 -d reporting-service",
-        "premigrate": "npm run build",
-        "migrate": "node ./dist/migrate",
-        "preopenapi-spec": "npm run build",
-        "openapi-spec": "node ./dist/openapi-spec",
-        "prestart": "npm run rebuild",
-        "start": "node -r source-map-support/register .",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "rebuild": "npm run clean && npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-        "directory": "services/reporting-service"
-    },
-    "author": "Sourcefuse",
-    "license": "MIT",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "database.json",
-        "!*/__tests__"
-    ],
-    "peerDependencies": {
-        "db-migrate": "^1.0.0-beta.18",
-        "db-migrate-pg": "^1.2.2"
-    },
-    "dependencies": {
-        "@loopback/boot": "^5.0.4",
-        "@loopback/context": "^5.0.4",
-        "@loopback/core": "^4.0.4",
-        "@loopback/openapi-v3": "^8.0.4",
-        "@loopback/repository": "^5.0.4",
-        "@loopback/rest": "^12.0.4",
-        "@loopback/rest-explorer": "^5.0.4",
-        "@loopback/service-proxy": "^5.0.4",
-        "@sourceloop/core": "^7.2.6",
-        "axios": "^0.26.1",
-        "circular-json": "^0.5.9",
-        "dotenv": "^16.0.3",
-        "dotenv-extended": "^2.9.0",
-        "handlebars": "^4.7.7",
-        "loopback4-authentication": "^7.1.1",
-        "loopback4-authorization": "^5.0.8",
-        "loopback4-soft-delete": "^7.0.0",
-        "moment": "^2.29.3",
-        "tslib": "^2.0.0",
-        "uuid": "^8.3.2"
-    },
-    "devDependencies": {
-        "@loopback/build": "^9.0.4",
-        "@loopback/eslint-config": "^13.0.4",
-        "@loopback/testlab": "^5.0.4",
-        "@types/circular-json": "^0.4.0",
-        "@types/lodash": "^4.14.182",
-        "@types/node": "^14.18.32",
-        "@types/uuid": "^8.3.4",
-        "db-migrate": "^1.0.0-beta.18",
-        "db-migrate-pg": "^1.2.2",
-        "eslint": "^8.25.0",
-        "source-map-support": "^0.5.21",
-        "typescript": "^4.8.4",
-        "widdershins": "^4.0.1"
-    },
-    "overrides": {
-        "widdershins": {
-            "swagger2openapi": "^7.0.8",
-            "markdown-it": "^12.3.2",
-            "yargs": "^17.4.1"
-        },
-        "passport-azure-ad": {
-            "passport": "^0.6.0"
-        }
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/",
-        "access": "public"
+    "passport-azure-ad": {
+      "passport": "^0.6.0"
     }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
 }
