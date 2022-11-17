@@ -3,7 +3,7 @@
   "info": {
     "title": "Video Conferencing Service",
     "version": "1.0.0",
-    "description": "Microservice providing Video-Conferencing functionality",
+    "description": "Microservice providing Video-Conferencing functionality.",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -52,7 +52,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
-        "description": "Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
+        "description": "Used to fetch a specific archive w.r.t archiveId.\n       If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -87,7 +87,7 @@
         "tags": [
           "VideoChatArchiveController"
         ],
-        "description": "Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| DeleteMeetingArchive   |\n",
+        "description": "Used to delete a specific archive w.r.t archiveId.\n       If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| DeleteMeetingArchive   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -226,7 +226,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used for Generating token, which is used for connecting to a room/session on a client side. \n      In vonage, there are three different roles (Moderator, Subscriber, Publisher). \n      We can use expire time for limited validity of a token. Successful \n      execution will send a token.\n\n| Permissions |\n| ------- |\n| GenerateMeetingToken   |\n",
+        "description": "Used for Generating token,\n     which is used for connecting to a room/session on a client side. \n      In vonage, there are three different roles (Moderator, Subscriber, Publisher). \n      We can use expire time for limited validity of a token. Successful \n      execution will send a token.\n\n| Permissions |\n| ------- |\n| GenerateMeetingToken   |\n",
         "security": [
           {
             "HTTPBearer": []
@@ -314,7 +314,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used for Creating a session with options such as end to end encryption, archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.\n\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
+        "description": "Used for Creating a session with options such as end to end encryption,\n     archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.\n\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
         "security": [
           {
             "HTTPBearer": []

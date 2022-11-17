@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-In mail microservice.
+In mail microservice
 
 Base URLs:
 
@@ -100,6 +100,7 @@ fetch('/mails/bulk/restore',
 | Permissions |
 | ------- |
 | RestoreMail   |
+| 10   |
 
 > Body parameter
 
@@ -202,6 +203,7 @@ fetch('/mails/bulk/{storage}/{action}',
 | Permissions |
 | ------- |
 | TrashMail   |
+| 9   |
 
 > Body parameter
 
@@ -306,6 +308,7 @@ fetch('/mails/marking/{markType}',
 | Permissions |
 | ------- |
 | UpdateMail   |
+| 2   |
 
 > Body parameter
 
@@ -390,6 +393,7 @@ fetch('/mails/{messageId}/attachments/{attachmentId}',
 | Permissions |
 | ------- |
 | DeleteAttachment   |
+| 14   |
 
 <h3 id="api-provides-an-interface-for-removing-attachment-before-message-is-sent-parameters">Parameters</h3>
 
@@ -508,6 +512,7 @@ fetch('/mails/{messageId}/attachments',
 | Permissions |
 | ------- |
 | AddAttachments   |
+| 4   |
 
 > Body parameter
 
@@ -653,6 +658,7 @@ fetch('/mails/{messageId}/send',
 | Permissions |
 | ------- |
 | ComposeMail   |
+| 1   |
 
 <h3 id="api-for-sending-a-drafted-message.-parameters">Parameters</h3>
 
@@ -858,6 +864,7 @@ fetch('/mails/{messageId}',
 | Permissions |
 | ------- |
 | UpdateMail   |
+| 2   |
 
 > Body parameter
 
@@ -1137,6 +1144,7 @@ fetch('/mails',
 | Permissions |
 | ------- |
 | ComposeMail   |
+| 1   |
 
 > Body parameter
 
@@ -1287,6 +1295,7 @@ fetch('/mails/{messageId}',
 | Permissions |
 | ------- |
 | GetInMail   |
+| 8   |
 
 <h3 id="get-message-api.-collect-a-single-message-based-on-message-identity.-parameters">Parameters</h3>
 
@@ -1380,6 +1389,7 @@ fetch('/mails',
 | Permissions |
 | ------- |
 | GetInMails   |
+| 7   |
 
 <h3 id="collect-a-list-of-all-messages.-parameters">Parameters</h3>
 
@@ -1458,6 +1468,7 @@ fetch('/threads/{threadId}',
 | Permissions |
 | ------- |
 | GetThread   |
+| 6   |
 
 <h3 id="get-thread-message-api.-collect-complete-single-message-thread-based-on-thread-identity.-parameters">Parameters</h3>
 
@@ -1576,6 +1587,7 @@ fetch('/threads',
 | Permissions |
 | ------- |
 | GetThread   |
+| 6   |
 
 <h3 id="thread-list-api.-collect-a-list-of-all-threads.-parameters">Parameters</h3>
 
@@ -1823,6 +1835,7 @@ fetch('/threads/{threadId}/forward',
 | Permissions |
 | ------- |
 | ComposeMail   |
+| 1   |
 
 > Body parameter
 
@@ -2123,6 +2136,7 @@ fetch('/threads/{threadId}/mails/{messageId}/replies',
 | Permissions |
 | ------- |
 | ReplyMail   |
+| 3   |
 
 > Body parameter
 

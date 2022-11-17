@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Audit logging microservice.
+Audit logging microservice
 
 Base URLs:
 
@@ -86,6 +86,7 @@ fetch('/audit-logs/count',
 | Permissions |
 | ------- |
 | ViewAudit   |
+| 1   |
 
 <h3 id="auditcontroller.count-parameters">Parameters</h3>
 
@@ -168,6 +169,7 @@ fetch('/audit-logs/{id}',
 | Permissions |
 | ------- |
 | ViewAudit   |
+| 1   |
 
 <h3 id="auditcontroller.findbyid-parameters">Parameters</h3>
 
@@ -282,6 +284,7 @@ fetch('/audit-logs',
 | Permissions |
 | ------- |
 | CreateAudit   |
+| 2   |
 
 > Body parameter
 
@@ -389,6 +392,7 @@ fetch('/audit-logs',
 | Permissions |
 | ------- |
 | ViewAudit   |
+| 1   |
 
 <h3 id="auditcontroller.find-parameters">Parameters</h3>
 

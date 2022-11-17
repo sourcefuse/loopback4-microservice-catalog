@@ -91,7 +91,7 @@ export class NotificationController {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
     const notif = await this.notificationRepository.create(notification);
-    if (!notif || !notif.id) {
+    if (!notif?.id) {
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
     }
 
@@ -145,7 +145,7 @@ export class NotificationController {
     const notifs = await this.notificationRepository.createAll(notifications);
     const notifUsers: NotificationUser[] = [];
     for (const notif of notifs) {
-      if (!notif || !notif.id) {
+      if (!notif?.id) {
         throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
       }
 
@@ -309,7 +309,7 @@ export class NotificationController {
   }
 
   createNotifUsers(notif: Notification) {
-    if (!notif.receiver || !notif.receiver.to) {
+    if (!notif.receiver?.to) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.ReceiverNotFound);
     }
 

@@ -3,7 +3,7 @@
   "info": {
     "title": "Notification Service",
     "version": "1.0.0",
-    "description": "notification microservice.",
+    "description": "notification microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -33,7 +33,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -73,7 +73,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "where",
@@ -110,7 +110,7 @@
             "description": "Notification DELETE success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
         "parameters": [
           {
             "name": "where",
@@ -157,7 +157,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -188,7 +188,7 @@
             "description": "NotificationUser PUT success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -227,7 +227,7 @@
             "description": "NotificationUser PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -273,7 +273,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -302,7 +302,7 @@
             "description": "NotificationUser DELETE success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
         "parameters": [
           {
             "name": "id",
@@ -340,7 +340,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -375,7 +375,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "where",
@@ -429,7 +429,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -461,7 +461,7 @@
             "description": "Notification DELETE success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
         "parameters": [
           {
             "name": "where",
@@ -505,7 +505,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CanGetNotificationAccess   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CanGetNotificationAccess   |\n| 5   |\n",
         "parameters": [
           {
             "name": "id",
@@ -597,7 +597,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -637,7 +637,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "where",
@@ -681,7 +681,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
         "parameters": [
           {
             "name": "id",
@@ -727,7 +727,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n| 3   |\n",
         "parameters": [
           {
             "name": "id",
@@ -790,7 +790,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -838,7 +838,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
         "parameters": [
           {
             "name": "id",
@@ -883,7 +883,7 @@
             "description": "Notification PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n| 3   |\n",
         "parameters": [
           {
             "name": "id",
@@ -924,7 +924,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -962,7 +962,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -997,7 +997,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n| 3   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1083,7 +1083,7 @@
             "description": "Notification DELETE success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
         "parameters": [
           {
             "name": "where",
