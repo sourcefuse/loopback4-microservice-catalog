@@ -7,6 +7,7 @@
       [nodeType]="types.EVENT"
       [eventGroups]="eventGroups"
       [popupTemplate]="nodePopup"
+      [templateMap]="templateMap"
       (add)="openPopup(types.GROUP)"
       (remove)="onGroupRemove(i)"
       (eventAdded)="onEventAdded($event)"
@@ -15,11 +16,25 @@
     ></workflow-group>
   </span>
 
-  <br />
   then
-  <br />
 
   <span *ngFor="let group of actionGroups; let i = index">
+    <workflow-group
+      [group]="group"
+      [isLast]="true"
+      [isFirst]="true"
+      [nodeType]="types.GROUP"
+      [popupTemplate]="nodePopup"
+      [templateMap]="templateMap"
+      (eventAdded)="onEventAdded($event)"
+      (actionAdded)="onActionAdded($event)"
+      (itemChanged)="onItemChanged($event)"
+    ></workflow-group>
+  </span>
+
+  else
+
+  <span *ngFor="let group of eActionGroups; let i = index">
     <workflow-group
       [group]="group"
       [isLast]="true"

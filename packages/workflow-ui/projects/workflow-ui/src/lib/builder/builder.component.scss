@@ -4,9 +4,10 @@
   user-select: none;
   cursor: pointer;
   text-decoration: underline;
-  color: grey;
+  text-decoration-color: #9e9a9a;
+  color: #9e9a9a;
   p {
-      margin-bottom: 0;
+    margin-bottom: 0;
   }
 }
 .input-text {
@@ -17,19 +18,16 @@
   }
 }
 .container {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
+  width: 32%;
+  margin: auto;
+  font-size: 18px;
 }
-.option-div{
-    padding: 5px 15px;
-    cursor: pointer;
-    font-size: 14px;
-    min-width: 200px;
-    &:hover {
-        background: rgb(240, 239, 239);
-    }
+.option-div {
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 200px;
+  &:hover {
+    background: rgb(240, 239, 239);
+  }
 }

@@ -13,12 +13,13 @@ export class TriggerWhenColumnChanges extends ServiceTaskElement {
     protected creator: CreateStrategy<ModdleElement>,
     @Inject(LINK_BASIC_STRATEGY)
     protected linker: LinkStrategy<ModdleElement>,
+    @Inject('env') private env: any,
     public utils: UtilsService,
   ) {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': 'trigger-on-tcv-change-dev',
+      'camunda:topic': `trigger-on-tcv-change-${this.env.envIdentifier}`,
     };
   }
   name = 'trigger when column value changes';

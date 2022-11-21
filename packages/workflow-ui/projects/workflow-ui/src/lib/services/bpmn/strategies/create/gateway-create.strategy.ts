@@ -27,7 +27,7 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
     node: BpmnStatementNode,
     attrs: RecordOfAnyType,
   ): ModdleElement {
-    element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}`;
+    element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
     node.outgoing = `Flow_${this.utils.uuid()}`;
     return this.moddle.create(element.tag, {
       id: element.id,

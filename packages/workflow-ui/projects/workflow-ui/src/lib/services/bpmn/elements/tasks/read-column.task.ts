@@ -13,12 +13,13 @@ export class ReadColumnValue extends ServiceTaskElement {
     protected creator: CreateStrategy<ModdleElement>,
     @Inject(LINK_BASIC_STRATEGY)
     protected linker: LinkStrategy<ModdleElement>,
+    @Inject('env') private env: any,
     public utils: UtilsService,
   ) {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': 'read-task-column-value-dev',
+      'camunda:topic': `read-task-column-value-${this.env.envIdentifier}`,
     };
   }
   name = 'read column value';

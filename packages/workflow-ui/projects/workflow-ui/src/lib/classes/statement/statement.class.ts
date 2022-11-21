@@ -46,7 +46,7 @@ export class Statement<E, S = RecordOfAnyType> {
       newNode.prev = this.tail;
       for (const element of this.tail) {
         if (element.element.name !== 'read column value' || this.tail.length < 2) {
-          element.next = [newNode];
+          element.next ? element.next.push(newNode) : element.next = [newNode];
         }
       }
       this.tail = [newNode];
@@ -82,6 +82,15 @@ export class Statement<E, S = RecordOfAnyType> {
     }
     return statementNodes;
   }
+
+  // addElseStatement(statement: Statement<E>) {
+  //   if (this.head.length > 0) {
+  //     for (const element of this.tail) {
+  //       element.next ? element.next.push(statement.head[0]) : element.next = statement.head;
+  //     }
+  //     statement.head[0].prev = this.tail;
+  //   }
+  // }
 
   toBaseArray() {
     let current = this.head;

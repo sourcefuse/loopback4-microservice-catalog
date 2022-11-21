@@ -6,6 +6,8 @@ import { WorkflowPrompt } from './abstract-prompt.class';
 
 export abstract class WorkflowNode<E> {
   abstract type: NodeTypes;
+  abstract groupType: NodeTypes;
+  abstract groupId: string;
   abstract elements: Constructor<WorkflowElement<E>>[];
   abstract statement: string;
   abstract prompts: Constructor<WorkflowPrompt>[];

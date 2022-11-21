@@ -3,5 +3,10 @@
   "dest": "../../dist/workflow-ui",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "@ng-bootstrap/ng-bootstrap",
+    "ng-multiselect-dropdown",
+    "moment"
+  ]
 }

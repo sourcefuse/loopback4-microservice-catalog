@@ -11,6 +11,7 @@ import {
 import { CONDITION_LIST } from '../../../../const';
 import { UtilsService } from '../../../utils.service';
 import { InputTypes } from '../../../../enum';
+import { WorkflowAction } from '../../../../classes/nodes/abstract-workflow-action.class';
 
 @Injectable()
 export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
@@ -24,17 +25,27 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
   ): ModdleElement[] {
-    const link = this.createMainLink(node);
-    return [...link];
+    const links = this.createLink(node);
+    return links;
   }
 
-  private createMainLink(node: BpmnStatementNode) {
+  private createLink(node: BpmnStatementNode) {
+    const links: ModdleElement[] = [];
+    let mainNodes: BpmnStatementNode[] = [];
+    let elseNodes: BpmnStatementNode[] = [];
+    node.next.forEach(node => node.element.constructor.name === "ChangeColumnValue" && (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction ? elseNodes.push(node) : mainNodes.push(node));
+    links.push(...this.createMainLink(node, mainNodes));
+    elseNodes.length ? links.push(...this.createElseLink(node, elseNodes)) : links.push(...this.createEndLink(node));
+    return links;
+  }
+
+  private createMainLink(node: BpmnStatementNode, nextNodes: BpmnStatementNode[]) {
     const link = [];
     const from = node.tag;
-    for (let i = 0; i < node.next.length; i++) {
+    for (let i = 0; i < nextNodes.length; i++) {
       const id = i == 0 ? node.outgoing : `Flow_${this.utils.uuid()}`;
-      const to = node.next[i].tag;
-      node.next[i].incoming = id;
+      const to = nextNodes[i].tag;
+      nextNodes[i].incoming = id;
       const attrs = this.createLinkAttrs(id, from, to);
       const { script, name } = this.createScript(node, id);
       const expression = this.moddle.create('bpmn:FormalExpression', {
@@ -49,8 +60,31 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       to.get('incoming').push(_link);
       link.push(_link);
     }
-
     return link;
+  }
+
+  private createElseLink(node: BpmnStatementNode, elseNextNodes: BpmnStatementNode[]) {
+    const from = node.tag;
+    const id = `Flow_${this.utils.uuid()}`;
+    const to = elseNextNodes[0].tag;
+    elseNextNodes[0].incoming = id;
+    const attrs = this.createLinkAttrs(id, node.tag, to);
+    const link = this.moddle.create('bpmn:SequenceFlow', attrs);
+    from.get('outgoing').push(link);
+    to.get('incoming').push(link);
+    return [link];
+  }
+
+  private createEndLink(node: BpmnStatementNode) {
+    const end = this.moddle.create('bpmn:EndEvent', {
+      id: `EndElement_${this.utils.uuid()}`,
+    });
+    const id = `Flow_${this.utils.uuid()}`;
+    const attrs = this.createLinkAttrs(id, node.tag, end);
+    const link = this.moddle.create('bpmn:SequenceFlow', attrs);
+    node.tag.get('outgoing').push(link);
+    end.get('incoming').push(link);
+    return [link, end];
   }
 
   private createLinkAttrs(id: string, from: ModdleElement, to: ModdleElement) {

@@ -39,20 +39,20 @@ export class BpmnNodesService<E> extends NodeService<E> {
       .filter(instance => trigger === (instance as WorkflowEvent<E>).trigger);
   }
 
-  getGroups(trigger = false, type = NodeTypes.EVENT) {
+  getGroups(trigger = false, type = NodeTypes.EVENT, isElseGroup = false) {
     if (trigger) {
       return this.groups
-        .map(Group => new Group(type))
+        .map(Group => new Group(this.utils.uuid(), type, isElseGroup))
         .filter(n => n.type === NodeTypes.GROUP)
         .filter(instance => trigger === instance.trigger);
     } else {
       return this.groups
-        .map(Group => new Group(type))
+        .map(Group => new Group(this.utils.uuid(), type, isElseGroup))
         .filter(n => n.type === NodeTypes.GROUP);
     }
   }
 
-  getNodeByName(name: string, id?: string) {
+  getNodeByName(name: string, groupName: string, groupId: string, id?: string, isElseAction?: boolean) {
     const ctor = this.nodes.find(n => n.name === name);
     if (!id) {
       id = this.utils.uuid();
@@ -60,7 +60,18 @@ export class BpmnNodesService<E> extends NodeService<E> {
     if (!ctor) {
       throw new InvalidEntityError(name);
     }
-    return new ctor(id);
+    return new ctor(id, groupName, groupId, isElseAction);
+  }
+
+  getGroupByName(name: string, nodeType: NodeTypes, id?: string, isElseGroup?: boolean): BaseGroup<E> {
+    const ctor = this.groups.find(n => n.name === name);
+    if (!id) {
+      id = this.utils.uuid();
+    }
+    if (!ctor) {
+      throw new InvalidEntityError(name);
+    }
+    return new ctor(id, nodeType, isElseGroup);
   }
 
   mapInputs(prompts: typeof WorkflowPrompt[]) {

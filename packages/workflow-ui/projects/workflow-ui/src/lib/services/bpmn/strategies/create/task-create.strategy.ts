@@ -14,8 +14,9 @@ import {
   isFromParam,
   isStateParam,
 } from '../../../../interfaces';
-import { WorkflowElement } from '../../../../classes';
+import { WorkflowAction, WorkflowElement } from '../../../../classes';
 import { InvalidEntityError } from '../../../../errors';
+import { NodeTypes } from '../../../../enum';
 
 @Injectable()
 export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
@@ -32,7 +33,10 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
       throw new InvalidEntityError(node.constructor.name);
     }
 
-    element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}`;
+    element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
+    if (node.workflowNode.type === NodeTypes.ACTION) {
+      element.id += `_${(node.workflowNode as WorkflowAction<ModdleElement>).isElseAction}`;
+    }
     node.outgoing = `Flow_${this.utils.uuid()}`;
     const customAttrs = Object.assign(
       {},

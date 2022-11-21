@@ -1,35 +1,194 @@
-.action-text,
-.input-text {
-  display: inline-block;
-  user-select: none;
-  cursor: pointer;
-  text-decoration: underline;
-  color: grey;
-  p {
+$primary-color: #000;
+$white: #fff;
+$hover-color: rgb(240, 239, 239);
+$node-bg: #f9f2f2;
+$grey: grey;
+$light-grey: rgb(240, 239, 239);
+
+@mixin round-btn {
+  height: 30px;
+  width: 44px;
+  margin: 10px;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 5px;
+}
+
+@mixin theme {
+  background-color: $primary-color;
+  border: 1px solid $primary-color;
+  color: $white;
+}
+
+.tree-group {
+  margin-left: 10px;
+  margin-bottom: -20px;
+  .workflow-group {
+    display: flex;
+    background: $node-bg;
+    border-radius: 5px;
+    margin: 0 0px 5px 0px;
+    padding: 5px;
+    .workflow-group-content {
+      flex-grow: 1;
+    }
+  }
+  .action-text,
+  .input-text {
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: $grey;
+    color: $grey;
+    p {
       margin-bottom: 0;
+    }
   }
-}
-.input-text {
-  display: inline;
-  .value-text {
-    color: black;
-    text-decoration: dotted;
+  .input-text {
+    display: inline;
+    .value-text {
+      color: $primary-color;
+      text-decoration: dotted;
+    }
   }
-}
-.container {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-}
-.option-div{
+  .container {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  }
+  .option-div {
     padding: 5px 15px;
     cursor: pointer;
     font-size: 14px;
     min-width: 200px;
     &:hover {
-        background: rgb(240, 239, 239);
+      .delete,
+      .action-add {
+        background: $hover-color;
+        border-radius: 5px;
+        padding: 4px;
+      }
     }
+  }
+
+  .action-items {
+    .icomoon {
+      cursor: pointer;
+      display: inline !important;
+      margin: 0 5px;
+      color: $grey;
+      font-size: 15px;
+      padding: 3px;
+      color: $grey;
+      &:hover {
+        background: $light-grey;
+        border-radius: 3px;
+      }
+    }
+  }
+}
+
+:host ::ng-deep {
+  .multiselect-dropdown,
+  .dropdown-list {
+    min-width: 250px;
+    margin-top: 0 !important;
+    .dropdown-btn {
+      width: 225px;
+    }
+  }
+  .multiselect-dropdown {
+    .dropdown-btn {
+      .selected-item-container {
+        .selected-item {
+          font-size: 12px;
+        }
+      }
+    }
+    .multiselect-item-checkbox input[type='checkbox'] + div:before,
+    .selected-item {
+      // @include theme;
+    }
+  }
+}
+
+:host ::ng-deep {
+  div.ngxp__container {
+    max-width: none;
+  }
+  .ngb-dp-week {
+    border-radius: 5px;
+    display: flex;
+    width: 320px;
+    justify-content: space-between;
+  }
+  .btn-link {
+    color: $primary-color;
+  }
+  .ngb-dp-day {
+    .bg-primary {
+      @include theme;
+    }
+  }
+}
+
+:host ::ng-deep {
+  fieldset {
+    border: 0;
+    text-align: center;
+    padding: 0;
+  }
+  .ngb-tp-input {
+    @include round-btn;
+  }
+  .ngb-tp-meridian {
+    .btn-outline-primary {
+      @include round-btn;
+    }
+  }
+
+  .sr-only {
+    display: none;
+  }
+  div.ngxp__container {
+    max-width: none;
+  }
+  .ngb-dp-week {
+    border-radius: 5px;
+    display: flex;
+    width: 320px;
+    justify-content: space-between;
+  }
+  .btn-link {
+    @include theme;
+  }
+  .ngb-dp-day {
+    .bg-primary {
+      @include theme;
+    }
+  }
+}
+
+.date-time-picker {
+  border: 1px solid;
+  max-width: 330px;
+  border-radius: 5px;
+  .time-picker {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+  }
+  .close-btn {
+    @include theme;
+    height: 30px;
+    padding: 0 10px;
+    margin-top: 35px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+  }
 }

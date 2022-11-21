@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import BPMNModdle from 'bpmn-moddle';
 import { CustomBpmnModdle } from './types/bpmn.types';
@@ -67,10 +67,20 @@ import { FormsModule } from '@angular/forms';
 import { AndGroup, OrGroup } from './services/statement/groups';
 import { GroupComponent } from './builder/group/group.component';
 
+
+import {
+  NgbDatepickerModule,
+  NgbTimepickerModule,
+  NgbPopoverModule,
+} from '@ng-bootstrap/ng-bootstrap';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [BuilderComponent, GroupComponent, NodeComponent],
   exports: [BuilderComponent, GroupComponent, NodeComponent, NgxPopperjsModule],
-  imports: [CommonModule, FormsModule, NgxPopperjsModule],
+  imports: [CommonModule, FormsModule, NgxPopperjsModule, NgbDatepickerModule,
+    NgbTimepickerModule,
+    NgbPopoverModule,
+    NgMultiSelectDropDownModule.forRoot()],
   providers: [
     {
       provide: CustomBpmnModdle,
@@ -119,4 +129,16 @@ import { GroupComponent } from './builder/group/group.component';
     { provide: CONDITION_LIST, useValue: typeTuppleList },
   ],
 })
-export class WorkflowBuilderModule { }
+export class WorkflowBuilderModule {
+  public static forRoot(environment: any): ModuleWithProviders<any> {
+    return {
+      ngModule: WorkflowBuilderModule,
+      providers: [
+        {
+          provide: 'env', // you can also use InjectionToken
+          useValue: environment,
+        },
+      ],
+    };
+  }
+}

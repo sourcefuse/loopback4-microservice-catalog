@@ -11,6 +11,7 @@ import { RecordOfAnyType, NodeWithInput } from '../../types';
 @Component({
   selector: 'workflow-node',
   templateUrl: './node.component.html',
+  styleUrls: ['./node.component.scss'],
 })
 export class NodeComponent<E> {
   @Input()

@@ -16,6 +16,7 @@ export enum InputTypes {
   People = 'people',
   Interval = 'interval',
   Date = 'date',
+  DateTime = 'datetime'
 }
 
 export enum ConditionTypes {

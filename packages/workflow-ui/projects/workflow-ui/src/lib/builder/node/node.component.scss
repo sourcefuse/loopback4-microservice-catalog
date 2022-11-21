@@ -1,0 +1,28 @@
+.tree-node {
+  display: flex;
+  background: #f9f2f2;
+  border-radius: 5px;
+  margin: 0 0 5px 30px;
+  padding: 5px;
+  .workflow-content {
+    flex-grow: 1;
+  }
+  .action-items {
+    .icomoon {
+      cursor: pointer;
+      display: inline !important;
+      margin: 0 5px;
+      font-size: 15px;
+      padding: 3px;
+      color: grey;
+      &:hover {
+        .delete,
+        .action-add {
+          background: rgb(240, 239, 239);
+          border-radius: 5px;
+          padding: 4px;
+        }
+      }
+    }
+  }
+}
