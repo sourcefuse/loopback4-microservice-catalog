@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {ENV} from 'projects/workflow-ui/src/lib/types/base.types';
+import {ENV} from '../../../../types/base.types';
 import {CreateStrategy, LinkStrategy} from '../../../../interfaces';
 import {ModdleElement} from '../../../../types/bpmn.types';
 import {UtilsService} from '../../../utils.service';

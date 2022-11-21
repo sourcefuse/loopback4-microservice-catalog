@@ -280,8 +280,9 @@ export class GroupComponent<E> implements OnInit {
     return moment(dateTime.toString()).format();
   }
 
-  convertToTwoDigits(value: number): string | number {
-    return value <= NUMBER.NINE ? '0' + value : value;
+  convertToTwoDigits(value: number | null): string | number {
+    if (value) return value <= NUMBER.NINE ? '0' + value : value;
+    return 0;
   }
 
   addValue(
