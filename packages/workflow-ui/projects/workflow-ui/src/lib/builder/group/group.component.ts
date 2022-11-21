@@ -14,6 +14,7 @@ import {
   NodeService,
   WorkflowPrompt,
 } from '../../classes';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
 import {InputTypes, NodeTypes} from '../../enum';
 import {InvalidEntityError} from '../../errors/base.error';
@@ -24,9 +25,16 @@ import {
   RecordOfAnyType,
   WorkflowNode,
 } from '../../types';
-import {EventWithInput, ActionWithInput} from '../../types/base.types';
+import {
+  EventWithInput,
+  ActionWithInput,
+  Dropdown,
+  Select,
+} from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import * as moment from 'moment';
+import {NUMBER} from '../..';
+
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
@@ -63,15 +71,18 @@ export class GroupComponent<E> implements OnInit {
   add = new EventEmitter<boolean>();
 
   @Output()
-  eventAdded = new EventEmitter<any>();
+  eventAdded = new EventEmitter<unknown>();
 
   @Output()
-  actionAdded = new EventEmitter<any>();
+  actionAdded = new EventEmitter<unknown>();
 
   @Output()
-  itemChanged = new EventEmitter<any>();
+  itemChanged = new EventEmitter<unknown>();
 
-  dateTime = {date: {month: null, day: null, year: null}, time: {hour: null, minute: null}};
+  dateTime = {
+    date: {month: 0, day: 0, year: 0},
+    time: {hour: null, minute: null},
+  };
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
@@ -229,13 +240,13 @@ export class GroupComponent<E> implements OnInit {
     }
   }
 
-  onSelect(items: any) {
+  onSelect(items: Array<Dropdown> | Dropdown) {
     const ids: string[] = [];
-    const value: Array<any> = [];
+    const value: Array<Select> = [];
     let displayValue = '';
     if (Array.isArray(items)) {
       displayValue = items
-        .map((item: {id: string; fullName: string}) => {
+        .map((item: Dropdown) => {
           if (item.id) {
             ids.push(item.id);
             value.push({text: item.fullName, value: item.id});
@@ -253,7 +264,7 @@ export class GroupComponent<E> implements OnInit {
     };
   }
 
-  onDateSelect(date: any) {
+  onDateSelect(date: NgbDateStruct) {
     const year = date.year;
     const month = this.convertToTwoDigits(date.month);
     const day = this.convertToTwoDigits(date.day);
@@ -262,15 +273,16 @@ export class GroupComponent<E> implements OnInit {
 
   onDateTimeSelect() {
     const {date, time} = this.dateTime;
-    if(!time.hour || !time.minute) return;
+    if (!time.hour || !time.minute) return;
     const hours = this.convertToTwoDigits(time.hour);
     const min = this.convertToTwoDigits(time.minute);
     const dateTime = `${this.onDateSelect(date)} ${hours}:${min}`;
     return moment(dateTime.toString()).format();
   }
 
-  convertToTwoDigits(value: any) {
-    return value <= 9 ? '0' + value : value;
+  convertToTwoDigits(value: number | null): string | number {
+    if (value) return value <= NUMBER.NINE ? '0' + value : value;
+    return 0;
   }
 
   addValue(

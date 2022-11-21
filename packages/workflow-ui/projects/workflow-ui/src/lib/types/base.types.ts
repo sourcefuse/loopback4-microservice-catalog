@@ -1,8 +1,8 @@
-import { WorkflowPrompt } from '../classes/nodes/abstract-prompt.class';
-import { WorkflowAction } from '../classes/nodes/abstract-workflow-action.class';
-import { WorkflowEvent } from '../classes/nodes/abstract-workflow-event.class';
-import { ConditionTypes } from '../enum';
-import { AndGroup, OrGroup } from '../services/statement/groups';
+import {WorkflowPrompt} from '../classes/nodes/abstract-prompt.class';
+import {WorkflowAction} from '../classes/nodes/abstract-workflow-action.class';
+import {WorkflowEvent} from '../classes/nodes/abstract-workflow-event.class';
+import {ConditionTypes} from '../enum';
+import {AndGroup, OrGroup} from '../services/statement/groups';
 
 export type RecordOfAnyType = {
   // sonarignore:start
@@ -56,4 +56,18 @@ export type ConstructorParameters = {
     args: string[];
   }[];
   type: string;
+};
+
+export type Dropdown = {
+  id: string;
+  fullName: string;
+};
+
+export type Select = {
+  text: string;
+  value: string;
+};
+
+export type ENV = {
+  envIdentifier: string;
 };

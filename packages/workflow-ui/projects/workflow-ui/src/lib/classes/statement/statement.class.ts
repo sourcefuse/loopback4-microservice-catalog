@@ -1,6 +1,7 @@
-import { RecordOfAnyType, StateMap, WorkflowNode } from '../../types/base.types';
-import { WorkflowElement } from '../element/abstract-element.class';
-import { StatementNode } from './statement-node.class';
+import {ElementTypes, NUMBER} from '../..';
+import {RecordOfAnyType, StateMap, WorkflowNode} from '../../types/base.types';
+import {WorkflowElement} from '../element/abstract-element.class';
+import {StatementNode} from './statement-node.class';
 
 export class Statement<E, S = RecordOfAnyType> {
   head: StatementNode<E>[] = [];
@@ -45,8 +46,13 @@ export class Statement<E, S = RecordOfAnyType> {
     if (this.head.length > 0) {
       newNode.prev = this.tail;
       for (const element of this.tail) {
-        if (element.element.name !== 'read column value' || this.tail.length < 2) {
-          element.next ? element.next.push(newNode) : element.next = [newNode];
+        if (
+          element.element.name !== ElementTypes.readColumnValue ||
+          this.tail.length < NUMBER.TWO
+        ) {
+          element.next
+            ? element.next.push(newNode)
+            : (element.next = [newNode]);
         }
       }
       this.tail = [newNode];
@@ -60,43 +66,36 @@ export class Statement<E, S = RecordOfAnyType> {
     if (this.head.length > 0) {
       for (let i = 0; i < statementNodes.length; i++) {
         switch (statementNodes[i].element.name) {
-          case 'read column value':
+          case ElementTypes.readColumnValue:
             statementNodes[i].prev = this.tail;
             statementNodes[i].next = [statementNodes[i + 1]];
             break;
-          case 'gateway':
+          case ElementTypes.gateway:
             statementNodes[i].prev = [statementNodes[i - 1]];
             break;
         }
       }
 
       for (const element of this.tail) {
-        if (element.element.name !== 'read column value') {
-          element.next = statementNodes.filter(node => node.element.name !== 'gateway');
+        if (element.element.name !== ElementTypes.readColumnValue) {
+          element.next = statementNodes.filter(
+            node => node.element.name !== ElementTypes.gateway,
+          );
         }
       }
-      this.tail = statementNodes.filter(node => node.element.name !== 'read column value');
-    }
-    else {
+      this.tail = statementNodes.filter(
+        node => node.element.name !== ElementTypes.readColumnValue,
+      );
+    } else {
       this.head = this.tail = statementNodes;
     }
     return statementNodes;
   }
 
-  // addElseStatement(statement: Statement<E>) {
-  //   if (this.head.length > 0) {
-  //     for (const element of this.tail) {
-  //       element.next ? element.next.push(statement.head[0]) : element.next = statement.head;
-  //     }
-  //     statement.head[0].prev = this.tail;
-  //   }
-  // }
-
   toBaseArray() {
     let current = this.head;
     const out: StatementNode<E>[] = [];
     while (current) {
-
       current.forEach(node => {
         out.push(node);
       });

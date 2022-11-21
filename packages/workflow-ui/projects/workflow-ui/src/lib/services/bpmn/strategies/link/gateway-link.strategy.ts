@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
-import { WorkflowElement } from '../../../../classes';
-import { LinkStrategy } from '../../../../interfaces';
+import {Inject, Injectable} from '@angular/core';
+import {WorkflowElement} from '../../../../classes';
+import {LinkStrategy} from '../../../../interfaces';
 import {
   CustomBpmnModdle,
   ModdleElement,
@@ -8,11 +8,12 @@ import {
   ConditionOperatorPair,
   RecordOfAnyType,
 } from '../../../../types';
-import { CONDITION_LIST } from '../../../../const';
-import { UtilsService } from '../../../utils.service';
-import { InputTypes } from '../../../../enum';
-import { WorkflowAction } from '../../../../classes/nodes/abstract-workflow-action.class';
+import {CONDITION_LIST} from '../../../../const';
+import {UtilsService} from '../../../utils.service';
+import {InputTypes} from '../../../../enum';
+import {WorkflowAction} from '../../../../classes/nodes/abstract-workflow-action.class';
 
+const BPMN_SEQ_FLOW = 'bpmn:SequenceFlow';
 @Injectable()
 export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
   constructor(
@@ -20,7 +21,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     private readonly utils: UtilsService,
     @Inject(CONDITION_LIST)
     private readonly conditions: Array<ConditionOperatorPair>,
-  ) { }
+  ) {}
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
@@ -33,13 +34,23 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     const links: ModdleElement[] = [];
     let mainNodes: BpmnStatementNode[] = [];
     let elseNodes: BpmnStatementNode[] = [];
-    node.next.forEach(node => node.element.constructor.name === "ChangeColumnValue" && (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction ? elseNodes.push(node) : mainNodes.push(node));
+    node.next.forEach(node =>
+      node.element.constructor.name === 'ChangeColumnValue' &&
+      (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
+        ? elseNodes.push(node)
+        : mainNodes.push(node),
+    );
     links.push(...this.createMainLink(node, mainNodes));
-    elseNodes.length ? links.push(...this.createElseLink(node, elseNodes)) : links.push(...this.createEndLink(node));
+    elseNodes.length
+      ? links.push(...this.createElseLink(node, elseNodes))
+      : links.push(...this.createEndLink(node));
     return links;
   }
 
-  private createMainLink(node: BpmnStatementNode, nextNodes: BpmnStatementNode[]) {
+  private createMainLink(
+    node: BpmnStatementNode,
+    nextNodes: BpmnStatementNode[],
+  ) {
     const link = [];
     const from = node.tag;
     for (let i = 0; i < nextNodes.length; i++) {
@@ -47,7 +58,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       const to = nextNodes[i].tag;
       nextNodes[i].incoming = id;
       const attrs = this.createLinkAttrs(id, from, to);
-      const { script, name } = this.createScript(node, id);
+      const {script, name} = this.createScript(node, id);
       const expression = this.moddle.create('bpmn:FormalExpression', {
         body: script,
         language: 'Javascript',
@@ -55,7 +66,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       });
       attrs['conditionExpression'] = expression;
       attrs['name'] = name;
-      const _link = this.moddle.create('bpmn:SequenceFlow', attrs);
+      const _link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
       from.get('outgoing').push(_link);
       to.get('incoming').push(_link);
       link.push(_link);
@@ -63,13 +74,16 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return link;
   }
 
-  private createElseLink(node: BpmnStatementNode, elseNextNodes: BpmnStatementNode[]) {
+  private createElseLink(
+    node: BpmnStatementNode,
+    elseNextNodes: BpmnStatementNode[],
+  ) {
     const from = node.tag;
     const id = `Flow_${this.utils.uuid()}`;
     const to = elseNextNodes[0].tag;
     elseNextNodes[0].incoming = id;
     const attrs = this.createLinkAttrs(id, node.tag, to);
-    const link = this.moddle.create('bpmn:SequenceFlow', attrs);
+    const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
     from.get('outgoing').push(link);
     to.get('incoming').push(link);
     return [link];
@@ -81,7 +95,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     });
     const id = `Flow_${this.utils.uuid()}`;
     const attrs = this.createLinkAttrs(id, node.tag, end);
-    const link = this.moddle.create('bpmn:SequenceFlow', attrs);
+    const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
     node.tag.get('outgoing').push(link);
     end.get('incoming').push(link);
     return [link, end];

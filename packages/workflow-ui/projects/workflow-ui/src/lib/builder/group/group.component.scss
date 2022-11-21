@@ -1,15 +1,11 @@
-$primary-color: #000;
-$white: #fff;
-$hover-color: rgb(240, 239, 239);
-$node-bg: #f9f2f2;
-$grey: grey;
-$light-grey: rgb(240, 239, 239);
+@import '../../../../assets/styles/colors';
 
 @mixin round-btn {
   height: 30px;
   width: 44px;
   margin: 10px;
-  border: 1px solid rgb(118, 118, 118);
+  background-color: $white;
+  border: 1px solid $black;
   border-radius: 5px;
 }
 
@@ -82,7 +78,6 @@ $light-grey: rgb(240, 239, 239);
       color: $grey;
       font-size: 15px;
       padding: 3px;
-      color: $grey;
       &:hover {
         background: $light-grey;
         border-radius: 3px;
@@ -108,14 +103,8 @@ $light-grey: rgb(240, 239, 239);
         }
       }
     }
-    .multiselect-item-checkbox input[type='checkbox'] + div:before,
-    .selected-item {
-      // @include theme;
-    }
   }
-}
 
-:host ::ng-deep {
   div.ngxp__container {
     max-width: none;
   }
@@ -133,9 +122,10 @@ $light-grey: rgb(240, 239, 239);
       @include theme;
     }
   }
-}
+  ngb-datepicker-navigation-select > .custom-select {
+    margin-right: 10px;
+  }
 
-:host ::ng-deep {
   fieldset {
     border: 0;
     text-align: center;
@@ -164,11 +154,9 @@ $light-grey: rgb(240, 239, 239);
   }
   .btn-link {
     @include theme;
-  }
-  .ngb-dp-day {
-    .bg-primary {
-      @include theme;
-    }
+    background-color: $white;
+    font-size: 13px;
+    border: 0;
   }
 }
 

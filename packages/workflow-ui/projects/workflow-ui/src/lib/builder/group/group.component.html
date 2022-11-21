@@ -30,10 +30,10 @@
         [popperPlacement]="'bottom'"
         (click)="addClick()"
       >
-        <i class="icomoon plus_small"></i>
+        <span class="icomoon plus_small"></span>
       </span>
       <span class="delete" *ngIf="!isFirst" (click)="removeClick()">
-        <i class="icomoon Delete-Filled delete-icon"></i>
+        <span class="icomoon Delete-Filled delete-icon"></span>
       </span>
     </span>
   </div>
@@ -49,8 +49,6 @@
       (remove)="onNodeRemove(i)"
     ></workflow-node>
   </span>
-
-  <!-- <br *ngIf="!isLast" /> -->
 
   <popper-content #nodePopup>
     <div
@@ -187,7 +185,11 @@
           ></ngb-timepicker>
         </div>
         <div>
-          <button class="close-btn" (click)="callback(onDateTimeSelect())" [disabled]="!dateTime.date || !dateTime.time">
+          <button
+            class="close-btn"
+            (click)="callback(onDateTimeSelect())"
+            [disabled]="!dateTime.date || !dateTime.time"
+          >
             Set
           </button>
         </div>
