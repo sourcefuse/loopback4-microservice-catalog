@@ -32,6 +32,7 @@ export class AuthClient extends UserModifiableEntity implements IAuthClient {
 
   @property({
     type: 'string',
+    description: 'Value can be a string or a private key.',
     required: true,
   })
   secret: string;

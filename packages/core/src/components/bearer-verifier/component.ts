@@ -14,6 +14,7 @@ import {
 } from './keys';
 import {RevokedToken} from './models';
 import {FacadesBearerTokenVerifyProvider} from './providers/facades-bearer-token-verify.provider';
+import {ServicesBearerAsymmetricTokenVerifyProvider} from './providers/services-bearer-asym-token-verifier';
 import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-token-verify.provider';
 import {RevokedTokenRepository} from './repositories';
 
@@ -29,8 +30,13 @@ export class BearerVerifierComponent implements Component {
     this.models = [RevokedToken];
 
     if (this.config && this.config.type === BearerVerifierType.service) {
-      this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
-        ServicesBearerTokenVerifyProvider;
+      if (process.env.JWT_PUBLIC_KEY && process.env.JWT_PUBLIC_KEY !== '') {
+        this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+          ServicesBearerAsymmetricTokenVerifyProvider;
+      } else {
+        this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+          ServicesBearerTokenVerifyProvider;
+      }
     } else if (this.config && this.config.type === BearerVerifierType.facade) {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
         FacadesBearerTokenVerifyProvider;
