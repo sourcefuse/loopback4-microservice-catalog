@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
   WorkflowElement,
   BuilderService,
@@ -8,10 +8,10 @@ import {
   StatementNode,
   WorkflowAction,
 } from '../../classes';
-import { BaseGroup } from '../../classes/nodes/abstract-base-group.class';
-import { BASE_XML } from '../../const';
-import { NodeTypes } from '../../enum';
-import { AutoLayoutService } from '../../layout/layout.service';
+import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
+import {BASE_XML} from '../../const';
+import {NodeTypes} from '../../enum';
+import {AutoLayoutService} from '../../layout/layout.service';
 import {
   CustomBpmnModdle,
   ModdleElement,
@@ -19,9 +19,9 @@ import {
   StateMap,
   WorkflowNode,
 } from '../../types';
-import { ProcessPropertiesElement } from './elements/process/process-properties.element';
-import { ActionWithInput, EventWithInput } from '../../types/base.types';
-import { UtilsService } from '../utils.service';
+import {ProcessPropertiesElement} from './elements/process/process-properties.element';
+import {ActionWithInput, EventWithInput} from '../../types/base.types';
+import {UtilsService} from '../utils.service';
 @Injectable()
 export class BpmnBuilderService extends BuilderService<
   ModdleElement,
@@ -41,7 +41,10 @@ export class BpmnBuilderService extends BuilderService<
     super();
   }
 
-  async build(statement: Statement<ModdleElement>, elseStatement: Statement<ModdleElement>) {
+  async build(
+    statement: Statement<ModdleElement>,
+    elseStatement: Statement<ModdleElement>,
+  ) {
     const result = await this.moddle.fromXML(this.baseXML);
     this.root = result.rootElement;
     const attrs: RecordOfAnyType = {};
@@ -66,32 +69,49 @@ export class BpmnBuilderService extends BuilderService<
     statement.addEnd(end);
     let current = statement.head;
     while (current) {
-      if (elseStatement.head.length && current[0].element.constructor.name === 'GatewayElement') {
+      if (
+        elseStatement.head.length &&
+        current[0].element.constructor.name === 'GatewayElement'
+      ) {
         current[0].next.push(elseStatement.head[0]);
-        elseStatement.head[0].prev ?  elseStatement.head[0].prev.push(current[0]) :  elseStatement.head[0].prev = [current[0]];
+        elseStatement.head[0].prev
+          ? elseStatement.head[0].prev.push(current[0])
+          : (elseStatement.head[0].prev = [current[0]]);
       }
       this.setTags(current);
       this.linkNodes(current);
       if (current.length > 1) {
-        for (let i = 1; i < current.length; i++) {
-          if (elseStatement.head.length && current[i].element.constructor.name === 'GatewayElement') {
-            current[i].next.push(elseStatement.head[0]);
-            elseStatement.head[0].prev ? elseStatement.head[0].prev.push(current[i]) :  elseStatement.head[0].prev = [current[i]];
-          }
-          if (current[i].next) {
-            this.setTags(current[i].next);
-            this.linkNodes(current[i].next);
-          }
-        }
+        this.processNodes(current, elseStatement);
       }
       current = current[0].next;
     }
     this.elseStatementBuild(elseStatement);
-    const { xml } = await this.moddle.toXML(this.root);
+    const {xml} = await this.moddle.toXML(this.root);
     try {
       return (await this.layout.layoutProcess(xml)).xml;
     } catch (e) {
       return '';
+    }
+  }
+
+  private processNodes(
+    current: StatementNode<ModdleElement>[],
+    elseStatement: Statement<ModdleElement>,
+  ) {
+    for (let i = 1; i < current.length; i++) {
+      if (
+        elseStatement.head.length &&
+        current[i].element.constructor.name === 'GatewayElement'
+      ) {
+        current[i].next.push(elseStatement.head[0]);
+        elseStatement.head[0].prev
+          ? elseStatement.head[0].prev.push(current[i])
+          : (elseStatement.head[0].prev = [current[i]]);
+      }
+      if (current[i].next) {
+        this.setTags(current[i].next);
+        this.linkNodes(current[i].next);
+      }
     }
   }
 
@@ -126,7 +146,6 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
-
   async restore(xml: string) {
     const result = await this.moddle.fromXML(xml);
     this.root = result.rootElement;
@@ -151,12 +170,23 @@ export class BpmnBuilderService extends BuilderService<
     let elements: WorkflowElement<ModdleElement>[] = [];
     let currentNode: WorkflowNode<ModdleElement>;
     tags.forEach(tag => {
-      const [elementCtor, nodeCtor, id, groupType, groupId, isElseAction] = tag.id.split('_');
+      const [elementCtor, nodeCtor, id, groupType, groupId, isElseAction] =
+        tag.id.split('_');
       const element = this.elements.createInstanceByName(elementCtor);
-      currentNode = this.nodes.getNodeByName(nodeCtor, groupType, groupId, id, isElseAction == "true" ? true : false);
-      if (!groupIds.includes(groupId) && isElseAction !== "true") {
+      currentNode = this.nodes.getNodeByName(
+        nodeCtor,
+        groupType,
+        groupId,
+        id,
+        isElseAction == 'true' ? true : false,
+      );
+      if (!groupIds.includes(groupId) && isElseAction !== 'true') {
         groupIds.push(groupId);
-        let currentGroup = this.nodes.getGroupByName(groupType, currentNode.type, groupId);
+        let currentGroup = this.nodes.getGroupByName(
+          groupType,
+          currentNode.type,
+          groupId,
+        );
         currentGroup.id = groupId;
         groups.push(currentGroup);
       }
@@ -170,7 +200,9 @@ export class BpmnBuilderService extends BuilderService<
             node: currentNode as WorkflowAction<ModdleElement>,
             inputs: this.nodes.mapInputs(currentNode.prompts),
           };
-          (currentNode as WorkflowAction<ModdleElement>).isElseAction ? elseActions.push(nodeWithInput) : actions.push(nodeWithInput);
+          (currentNode as WorkflowAction<ModdleElement>).isElseAction
+            ? elseActions.push(nodeWithInput)
+            : actions.push(nodeWithInput);
         } else {
           events.push({
             node: currentNode,

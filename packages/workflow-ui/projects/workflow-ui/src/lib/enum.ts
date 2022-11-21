@@ -16,7 +16,7 @@ export enum InputTypes {
   People = 'people',
   Interval = 'interval',
   Date = 'date',
-  DateTime = 'datetime'
+  DateTime = 'datetime',
 }
 
 export enum ConditionTypes {
@@ -31,9 +31,18 @@ export enum ConditionTypes {
   Like = 'like',
 }
 
-
 export enum NodeTypes {
   ACTION,
   EVENT,
-  GROUP
+  GROUP,
+}
+
+export enum ElementTypes {
+  readColumnValue = 'read column value',
+  gateway = 'gateway',
+}
+
+export enum NUMBER {
+  TWO = 2,
+  NINE = 9,
 }
