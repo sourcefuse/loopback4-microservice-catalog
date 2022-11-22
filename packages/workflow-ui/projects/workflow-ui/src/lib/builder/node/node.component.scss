@@ -1,26 +1,23 @@
+@import '../../../../assets/styles/colors';
+
 .tree-node {
   display: flex;
-  background: #f9f2f2;
-  border-radius: 5px;
-  margin: 0 0 5px 30px;
-  padding: 5px;
+  padding-bottom: 4px;
   .workflow-content {
     flex-grow: 1;
   }
   .action-items {
-    .icomoon {
+    .action-icons {
       cursor: pointer;
       display: inline !important;
-      margin: 0 5px;
-      font-size: 15px;
-      padding: 3px;
-      color: grey;
+      margin: 0 15px;
+      font-size: 18px;
+      padding: 5px;
       &:hover {
-        .delete,
-        .action-add {
-          background: rgb(240, 239, 239);
+        &.icon-workflow-plus,
+        &.icon-workflow-delete {
+          background: $grey2;
           border-radius: 5px;
-          padding: 4px;
         }
       }
     }

@@ -15,10 +15,10 @@ import {
   WorkflowEvent,
   WorkflowPrompt,
 } from '../classes';
-import { BaseGroup } from '../classes/nodes/abstract-base-group.class';
-import { BuilderService, ElementService, NodeService } from '../classes/services';
-import { NodeTypes } from '../enum';
-import { InvalidEntityError } from '../errors/base.error';
+import {BaseGroup} from '../classes/nodes/abstract-base-group.class';
+import {BuilderService, ElementService, NodeService} from '../classes/services';
+import {NodeTypes} from '../enum';
+import {InvalidEntityError} from '../errors/base.error';
 import {
   ActionAddition,
   ActionWithInput,
@@ -36,14 +36,17 @@ import {
 @Component({
   selector: 'workflow-builder',
   templateUrl: './builder.component.html',
-  styleUrls: ['./builder.component.scss'],
+  styleUrls: [
+    './builder.component.scss',
+    '../../../assets/icons/icomoon/style.css',
+  ],
 })
 export class BuilderComponent<E> implements OnInit {
   constructor(
     private readonly builder: BuilderService<E, RecordOfAnyType>,
     private readonly nodes: NodeService<E>,
     private readonly elements: ElementService<E>,
-  ) { }
+  ) {}
 
   @Input()
   state: StateMap<RecordOfAnyType> = {};
@@ -84,16 +87,21 @@ export class BuilderComponent<E> implements OnInit {
   public types = NodeTypes;
 
   ngOnInit(): void {
-    this.nodes.getGroups(true, NodeTypes.EVENT).forEach(group => this.onGroupAdd(group));
-    this.nodes.getGroups(true, NodeTypes.ACTION).forEach(group => this.onGroupAdd(group));
-    this.nodes.getGroups(true, NodeTypes.ACTION, true).forEach(group => this.eActionGroups.push(group));
+    this.nodes
+      .getGroups(true, NodeTypes.EVENT)
+      .forEach(group => this.onGroupAdd(group));
+    this.nodes
+      .getGroups(true, NodeTypes.ACTION)
+      .forEach(group => this.onGroupAdd(group));
+    this.nodes
+      .getGroups(true, NodeTypes.ACTION, true)
+      .forEach(group => this.eActionGroups.push(group));
   }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['diagram'] && changes['state'] && this.diagram && this.state) {
-      const { events, actions, elseActions, groups, process, state } = await this.builder.restore(
-        this.diagram,
-      );
+      const {events, actions, elseActions, groups, process, state} =
+        await this.builder.restore(this.diagram);
       this.processId = process.id;
 
       this.eventGroups = [];
@@ -134,11 +142,9 @@ export class BuilderComponent<E> implements OnInit {
   onGroupAdd(group: BaseGroup<E>) {
     if (group.nodeType === NodeTypes.EVENT) {
       this.eventGroups.push(group);
-    }
-    else if (group.nodeType === NodeTypes.ACTION) {
+    } else if (group.nodeType === NodeTypes.ACTION) {
       this.actionGroups.push(group);
-    }
-    else {
+    } else {
       throw new Error('Invalid Group');
     }
   }
@@ -150,7 +156,7 @@ export class BuilderComponent<E> implements OnInit {
   onEventAdded(event: any) {
     this.eventAdded.emit({
       name: event.node.constructor.name,
-      event: event.newNode.node as WorkflowEvent<E>
+      event: event.newNode.node as WorkflowEvent<E>,
     });
     this.updateDiagram();
     this.updateState(event.node, event.newNode.inputs);
@@ -159,7 +165,7 @@ export class BuilderComponent<E> implements OnInit {
   onActionAdded(action: any) {
     this.actionAdded.emit({
       name: action.node.constructor.name,
-      action: action.newNode.node as WorkflowAction<E>
+      action: action.newNode.node as WorkflowAction<E>,
     });
     this.updateDiagram();
     this.updateState(action.node, action.newNode.inputs);
@@ -179,14 +185,17 @@ export class BuilderComponent<E> implements OnInit {
     if (type === NodeTypes.GROUP) {
       this.nodeList = this.nodes.getGroups();
     } else {
-      throw new InvalidEntityError("" + type);
+      throw new InvalidEntityError('' + type);
     }
   }
 
-
   private restoreState(state: StateMap<RecordOfAnyType>) {
     state = this.mergeState(this.state, state);
-    const allNodes = [...this.selectedEvents, ...this.selectedActions, ...this.selectedElseActions];
+    const allNodes = [
+      ...this.selectedEvents,
+      ...this.selectedActions,
+      ...this.selectedElseActions,
+    ];
     Object.keys(state).forEach(nodeId => {
       const node = allNodes.find(n => n.node.id === nodeId);
       if (node) {
@@ -276,7 +285,8 @@ export class BuilderComponent<E> implements OnInit {
 
     if (this.eActionGroups[0].children.length > 0) {
       this.eActionGroups.forEach(group => {
-        group.children.map(e => e.node)
+        group.children
+          .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {
               const instance = this.elements.createInstance(element);
@@ -340,5 +350,4 @@ export class BuilderComponent<E> implements OnInit {
     });
     return stateA;
   }
-
 }

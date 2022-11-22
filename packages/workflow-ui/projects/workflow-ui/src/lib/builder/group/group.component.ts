@@ -38,7 +38,10 @@ import {NUMBER} from '../..';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss'],
+  styleUrls: [
+    './group.component.scss',
+    '../../../../assets/icons/icomoon/style.css',
+  ],
 })
 export class GroupComponent<E> implements OnInit {
   constructor(
@@ -273,11 +276,10 @@ export class GroupComponent<E> implements OnInit {
 
   onDateTimeSelect() {
     const {date, time} = this.dateTime;
-    if (!time.hour || !time.minute) return;
     const hours = this.convertToTwoDigits(time.hour);
     const min = this.convertToTwoDigits(time.minute);
     const dateTime = `${this.onDateSelect(date)} ${hours}:${min}`;
-    return moment(dateTime.toString()).format();
+    return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').format();
   }
 
   convertToTwoDigits(value: number | null): string | number {

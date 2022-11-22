@@ -1,11 +1,13 @@
+@import '../../../assets/styles/colors';
+
 .action-text,
 .input-text {
   display: inline-block;
   user-select: none;
   cursor: pointer;
   text-decoration: underline;
-  text-decoration-color: #9e9a9a;
-  color: #9e9a9a;
+  text-decoration-color: $grey1;
+  color: $grey1;
   p {
     margin-bottom: 0;
   }
@@ -13,14 +15,27 @@
 .input-text {
   display: inline;
   .value-text {
-    color: black;
+    color: $black;
     text-decoration: dotted;
   }
 }
 .container {
-  width: 32%;
+  width: 40%;
+  color: rgb(50, 51, 56);
   margin: auto;
-  font-size: 18px;
+  font-size: 26px;
+  font-weight: 300;
+  font-family: 'helvetica';
+  .icon-workflow-down-arrow {
+    font-weight: 600;
+    font-size: 30px;
+    &.green {
+      color: $green;
+    }
+    &.red {
+      color: $red;
+    }
+  }
 }
 .option-div {
   padding: 5px 15px;
