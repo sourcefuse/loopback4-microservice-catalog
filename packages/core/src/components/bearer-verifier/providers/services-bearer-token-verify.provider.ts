@@ -2,19 +2,27 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject, Provider} from '@loopback/context';
+import {Constructor, inject, Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';
-import {VerifyFunction} from 'loopback4-authentication';
+import {
+  VerifyFunction,
+  AuthenticationBindings,
+  EntityWithIdentifier,
+  IAuthUser,
+} from 'loopback4-authentication';
 import moment from 'moment-timezone';
-
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
 export class ServicesBearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
 {
-  constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
+  constructor(
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthenticationBindings.USER_MODEL, {optional: true})
+    public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
+  ) {}
 
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
@@ -36,7 +44,11 @@ export class ServicesBearerTokenVerifyProvider
       ) {
         throw new HttpErrors.Unauthorized('PasswordExpiryError');
       }
-      return user;
+      if (this.authUserModel) {
+        return new this.authUserModel(user);
+      } else {
+        return user;
+      }
     };
   }
 }
