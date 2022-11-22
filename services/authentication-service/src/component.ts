@@ -22,6 +22,7 @@ import {
   AuthenticationComponent,
   Strategies,
   STRATEGY,
+  AuthenticationBindings,
 } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -33,6 +34,7 @@ import {AuthServiceBindings} from './keys';
 import {models} from './models';
 import {
   AppleOauth2VerifyProvider,
+  AuthUser,
   AzureAdVerifyProvider,
   BearerTokenVerifyProvider,
   ClientPasswordVerifyProvider,
@@ -259,6 +261,7 @@ export class AuthenticationServiceComponent implements Component {
       CodeWriterProvider;
     this.providers[AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER.key] =
       AuthCodeGeneratorProvider;
+    this.application.bind(AuthenticationBindings.USER_MODEL.key).to(AuthUser);
 
     if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY !== '') {
       this.providers[AuthCodeBindings.JWT_SIGNER.key] =

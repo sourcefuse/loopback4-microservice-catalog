@@ -94,6 +94,10 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
   })
   status?: UserStatus;
 
+  getIdentifier() {
+    return this.id;
+  }
+
   constructor(data?: Partial<AuthUser>) {
     super(data);
   }
