@@ -105,9 +105,12 @@
     }
   }
 
-  .multiselect-item-checkbox input[type='checkbox']:checked + div:before,
-  .multiselect-item-checkbox input[type='checkbox'] + div:before {
+  .multiselect-item-checkbox input[type='checkbox']:checked + div:before {
     background: $primary-color !important;
+    border: 2px solid $primary-color !important;
+  }
+
+  .multiselect-item-checkbox input[type='checkbox'] + div:before {
     border: 2px solid $primary-color !important;
   }
 
