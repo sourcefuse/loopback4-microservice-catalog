@@ -215,7 +215,7 @@
       "@sourceloop/video-conferencing-service": "^4.1.8",
       "@sourceloop/user-tenant-service": "^0.6.3",
       "@sourceloop/reporting-service": "^0.3.8",
-      "loopback4-authentication": "^7.1.1",
+      "loopback4-authentication": "^7.2.0",
       "loopback4-authorization": "^5.0.8",
       "loopback4-soft-delete": "^7.0.0",
       "loopback4-ratelimiter": "^4.1.3",

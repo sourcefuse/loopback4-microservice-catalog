@@ -1,101 +1,101 @@
 {
-  "name": "@sourceloop/ocr-s3-service",
-  "version": "0.4.8",
-  "description": "ocr-s3-services.",
-  "keywords": [
-    "loopback-extension",
-    "loopback"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": ">=10.16"
-  },
-  "scripts": {
-    "build": "npm run clean && lb-tsc",
-    "build:watch": "lb-tsc --watch",
-    "lint": "npm run prettier:check && npm run eslint",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "lb-eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run build",
-    "test": "echo \"No tests !\"",
-    "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "coverage": "nyc npm run test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "services/ocr-s3-service"
-  },
-  "author": "Sourcefuse",
-  "license": "MIT",
-  "private": true,
-  "files": [
-    "README.md",
-    "dist",
-    "src",
-    "!*/__tests__"
-  ],
-  "dependencies": {
-    "@loopback/boot": "^5.0.4",
-    "@loopback/context": "^5.0.4",
-    "@loopback/core": "^4.0.4",
-    "@loopback/openapi-v3": "^8.0.4",
-    "@loopback/repository": "^5.0.4",
-    "@loopback/rest": "^12.0.4",
-    "@loopback/rest-explorer": "^5.0.4",
-    "@loopback/service-proxy": "^5.0.4",
-    "@opentelemetry/exporter-jaeger": "^1.0.1",
-    "@opentelemetry/node": "^0.24.0",
-    "@opentelemetry/plugin-dns": "^0.15.0",
-    "@opentelemetry/plugin-http": "^0.18.2",
-    "@opentelemetry/plugin-https": "^0.18.2",
-    "@opentelemetry/plugin-pg": "^0.15.0",
-    "@opentelemetry/plugin-pg-pool": "^0.15.0",
-    "@opentelemetry/tracing": "^0.24.0",
-    "@sourceloop/core": "^7.2.6",
-    "loopback-connector-mysql": "^6.1.0",
-    "loopback4-authentication": "^7.1.1",
-    "loopback4-authorization": "^5.0.8",
-    "loopback4-s3": "^6.0.3",
-    "swagger-stats": "^0.99.2",
-    "symlink-resolver": "",
-    "tslib": "^2.0.0",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@loopback/build": "^9.0.4",
-    "@loopback/eslint-config": "^13.0.4",
-    "@loopback/testlab": "^5.0.4",
-    "@types/node": "^14.18.32",
-    "@types/uuid": "^8.3.4",
-    "dotenv": "^16.0.3",
-    "dotenv-extended": "^2.9.0",
-    "eslint": "^8.25.0",
-    "nyc": "^15.1.0",
-    "source-map-support": "^0.5.21",
-    "typescript": "^4.8.4",
-    "widdershins": "^4.0.1"
-  },
-  "overrides": {
-    "widdershins": {
-      "swagger2openapi": "^7.0.8",
-      "markdown-it": "^12.3.2",
-      "yargs": "^17.4.1"
+    "name": "@sourceloop/ocr-s3-service",
+    "version": "0.4.8",
+    "description": "ocr-s3-services.",
+    "keywords": [
+        "loopback-extension",
+        "loopback"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "engines": {
+        "node": ">=10.16"
     },
-    "passport-azure-ad": {
-      "passport": "^0.6.0"
+    "scripts": {
+        "build": "npm run clean && lb-tsc",
+        "build:watch": "lb-tsc --watch",
+        "lint": "npm run prettier:check && npm run eslint",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+        "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+        "prettier:check": "npm run prettier:cli",
+        "prettier:fix": "npm run prettier:cli -- --write",
+        "eslint": "lb-eslint --report-unused-disable-directives .",
+        "eslint:fix": "npm run eslint -- --fix",
+        "pretest": "npm run build",
+        "test": "echo \"No tests !\"",
+        "posttest": "npm run lint",
+        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+        "coverage": "nyc npm run test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+        "directory": "services/ocr-s3-service"
+    },
+    "author": "Sourcefuse",
+    "license": "MIT",
+    "private": true,
+    "files": [
+        "README.md",
+        "dist",
+        "src",
+        "!*/__tests__"
+    ],
+    "dependencies": {
+        "@loopback/boot": "^5.0.4",
+        "@loopback/context": "^5.0.4",
+        "@loopback/core": "^4.0.4",
+        "@loopback/openapi-v3": "^8.0.4",
+        "@loopback/repository": "^5.0.4",
+        "@loopback/rest": "^12.0.4",
+        "@loopback/rest-explorer": "^5.0.4",
+        "@loopback/service-proxy": "^5.0.4",
+        "@opentelemetry/exporter-jaeger": "^1.0.1",
+        "@opentelemetry/node": "^0.24.0",
+        "@opentelemetry/plugin-dns": "^0.15.0",
+        "@opentelemetry/plugin-http": "^0.18.2",
+        "@opentelemetry/plugin-https": "^0.18.2",
+        "@opentelemetry/plugin-pg": "^0.15.0",
+        "@opentelemetry/plugin-pg-pool": "^0.15.0",
+        "@opentelemetry/tracing": "^0.24.0",
+        "@sourceloop/core": "^7.2.6",
+        "loopback-connector-mysql": "^6.1.0",
+        "loopback4-authentication": "^7.2.0",
+        "loopback4-authorization": "^5.0.8",
+        "loopback4-s3": "^6.0.3",
+        "swagger-stats": "^0.99.2",
+        "symlink-resolver": "",
+        "tslib": "^2.0.0",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
+        "@loopback/build": "^9.0.4",
+        "@loopback/eslint-config": "^13.0.4",
+        "@loopback/testlab": "^5.0.4",
+        "@types/node": "^14.18.32",
+        "@types/uuid": "^8.3.4",
+        "dotenv": "^16.0.3",
+        "dotenv-extended": "^2.9.0",
+        "eslint": "^8.25.0",
+        "nyc": "^15.1.0",
+        "source-map-support": "^0.5.21",
+        "typescript": "^4.8.4",
+        "widdershins": "^4.0.1"
+    },
+    "overrides": {
+        "widdershins": {
+            "swagger2openapi": "^7.0.8",
+            "markdown-it": "^12.3.2",
+            "yargs": "^17.4.1"
+        },
+        "passport-azure-ad": {
+            "passport": "^0.6.0"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  }
 }
