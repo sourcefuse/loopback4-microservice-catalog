@@ -1,85 +1,85 @@
 {
-    "name": "@sourceloop/feature-toggle",
-    "version": "0.3.6",
-    "description": "Package for feature toggle",
-    "keywords": [
-        "loopback-extension",
-        "loopback"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": "14 || 16 || 17 || 18"
-    },
-    "scripts": {
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "lb-eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run build",
-        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-        "coverage": "lb-nyc npm run test",
-        "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
-        "posttest": "npm run lint",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "prepublishOnly": "npm run build && npm run lint",
-        "rebuild": "npm run clean && npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-        "directory": "packages/feature-toggle"
-    },
-    "author": "Sourcefuse",
-    "license": "MIT",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "!*/__tests__"
-    ],
-    "peerDependencies": {
-        "@loopback/core": "^4.0.4"
-    },
-    "dependencies": {
-        "@loopback/boot": "^5.0.4",
-        "@loopback/context": "^5.0.4",
-        "@loopback/core": "^4.0.4",
-        "@loopback/express": "^5.0.4",
-        "@loopback/repository": "^5.0.4",
-        "@loopback/rest": "^12.0.4",
-        "@loopback/rest-explorer": "^5.0.4",
-        "@loopback/service-proxy": "^5.0.4",
-        "@sourceloop/core": "^7.2.6",
-        "lodash": "^4.17.21",
-        "loopback4-authentication": "^7.2.0",
-        "sinon": "^14.0.0",
-        "tslib": "^2.0.0"
-    },
-    "devDependencies": {
-        "@loopback/build": "^9.0.4",
-        "@loopback/core": "^4.0.4",
-        "@loopback/eslint-config": "^13.0.4",
-        "@loopback/testlab": "^5.0.4",
-        "@types/lodash": "^4.14.182",
-        "@types/node": "^14.18.32",
-        "eslint": "^8.25.0",
-        "source-map-support": "^0.5.21",
-        "typescript": "^4.8.4"
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/",
-        "access": "public"
-    },
-    "overrides": {
-        "passport-azure-ad": {
-            "passport": "^0.6.0"
-        }
+  "name": "@sourceloop/feature-toggle",
+  "version": "0.3.6",
+  "description": "Package for feature toggle",
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "14 || 16 || 17 || 18"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run build",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "coverage": "lb-nyc npm run test",
+    "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "prepublishOnly": "npm run build && npm run lint",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/feature-toggle"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "@loopback/core": "^4.0.4"
+  },
+  "dependencies": {
+    "@loopback/boot": "^5.0.4",
+    "@loopback/context": "^5.0.4",
+    "@loopback/core": "^4.0.4",
+    "@loopback/express": "^5.0.4",
+    "@loopback/repository": "^5.0.4",
+    "@loopback/rest": "^12.0.4",
+    "@loopback/rest-explorer": "^5.0.4",
+    "@loopback/service-proxy": "^5.0.4",
+    "@sourceloop/core": "^7.2.6",
+    "lodash": "^4.17.21",
+    "loopback4-authentication": "^7.2.0",
+    "sinon": "^14.0.0",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^9.0.4",
+    "@loopback/core": "^4.0.4",
+    "@loopback/eslint-config": "^13.0.4",
+    "@loopback/testlab": "^5.0.4",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^14.18.32",
+    "eslint": "^8.25.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^4.8.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "overrides": {
+    "passport-azure-ad": {
+      "passport": "^0.6.0"
     }
+  }
 }
