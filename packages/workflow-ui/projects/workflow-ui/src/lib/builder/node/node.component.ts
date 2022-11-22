@@ -5,13 +5,16 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core';
-import { NgxPopperjsContentComponent } from 'ngx-popperjs';
-import { RecordOfAnyType, NodeWithInput } from '../../types';
+import {NgxPopperjsContentComponent} from 'ngx-popperjs';
+import {RecordOfAnyType, NodeWithInput} from '../../types';
 
 @Component({
   selector: 'workflow-node',
   templateUrl: './node.component.html',
-  styleUrls: ['./node.component.scss'],
+  styleUrls: [
+    './node.component.scss',
+    '../../../../assets/icons/icomoon/style.css',
+  ],
 })
 export class NodeComponent<E> {
   @Input()

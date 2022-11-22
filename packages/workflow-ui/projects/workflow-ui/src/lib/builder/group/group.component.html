@@ -30,10 +30,10 @@
         [popperPlacement]="'bottom'"
         (click)="addClick()"
       >
-        <span class="icomoon plus_small"></span>
+        <span class="action-icons icon-workflow-plus"></span>
       </span>
       <span class="delete" *ngIf="!isFirst" (click)="removeClick()">
-        <span class="icomoon Delete-Filled delete-icon"></span>
+        <span class="action-icons icon-workflow-delete"></span>
       </span>
     </span>
   </div>
@@ -150,6 +150,7 @@
       (focusout)="callback(getInputValue($event.target))"
     />
   </ng-template>
+
   <ng-template
     #searchableDropdownTemplate
     let-list="list"

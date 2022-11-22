@@ -12,7 +12,12 @@ export class ChangeColumnValueAction extends BpmnAction {
   name = 'Change Column Value';
   statement = 'change ';
   prompts = [ToColumnInput, ToValueInput];
-  constructor(id: string, groupType: NodeTypes, groupId: string, isElseAction: boolean) {
+  constructor(
+    id: string,
+    groupType: NodeTypes,
+    groupId: string,
+    isElseAction: boolean,
+  ) {
     super();
     this.id = id;
     this.groupType = groupType;

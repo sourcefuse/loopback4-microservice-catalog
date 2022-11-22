@@ -10,20 +10,16 @@
 }
 
 @mixin theme {
-  background-color: $primary-color;
+  background-color: $primary-color !important;
   border: 1px solid $primary-color;
   color: $white;
 }
 
 .tree-group {
-  margin-left: 10px;
-  margin-bottom: -20px;
+  margin-bottom: -40px;
+  padding: 5px 0;
   .workflow-group {
     display: flex;
-    background: $node-bg;
-    border-radius: 5px;
-    margin: 0 0px 5px 0px;
-    padding: 5px;
     .workflow-group-content {
       flex-grow: 1;
     }
@@ -31,21 +27,18 @@
   .action-text,
   .input-text {
     display: inline-block;
-    user-select: none;
     cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: $grey;
-    color: $grey;
+    border-bottom: 1.5px solid;
+    .placeholder-text {
+      color: $placeholder-color;
+      text-transform: lowercase;
+    }
     p {
       margin-bottom: 0;
     }
   }
   .input-text {
     display: inline;
-    .value-text {
-      color: $primary-color;
-      text-decoration: dotted;
-    }
   }
   .container {
     margin: 0;
@@ -71,16 +64,18 @@
   }
 
   .action-items {
-    .icomoon {
+    .action-icons {
       cursor: pointer;
       display: inline !important;
-      margin: 0 5px;
-      color: $grey;
-      font-size: 15px;
-      padding: 3px;
+      margin: 0 15px;
+      font-size: 18px;
+      padding: 5px;
       &:hover {
-        background: $light-grey;
-        border-radius: 3px;
+        &.icon-workflow-plus,
+        &.icon-workflow-delete {
+          background: $grey2;
+          border-radius: 5px;
+        }
       }
     }
   }
@@ -91,8 +86,11 @@
   .dropdown-list {
     min-width: 250px;
     margin-top: 0 !important;
+    font-size: 15px;
     .dropdown-btn {
       width: 225px;
+      font-size: 16px;
+      padding: 9px 12px;
     }
   }
   .multiselect-dropdown {
@@ -100,13 +98,22 @@
       .selected-item-container {
         .selected-item {
           font-size: 12px;
+          background: $primary-color !important;
+          border: 1px solid $primary-color !important;
         }
       }
     }
   }
 
+  .multiselect-item-checkbox input[type='checkbox']:checked + div:before,
+  .multiselect-item-checkbox input[type='checkbox'] + div:before {
+    background: $primary-color !important;
+    border: 2px solid $primary-color !important;
+  }
+
   div.ngxp__container {
     max-width: none;
+    font-size: 15px;
   }
   .ngb-dp-week {
     border-radius: 5px;
@@ -122,6 +129,10 @@
       @include theme;
     }
   }
+  ngb-datepicker {
+    padding-top: 10px;
+  }
+
   ngb-datepicker-navigation-select > .custom-select {
     margin-right: 10px;
   }
@@ -153,7 +164,6 @@
     justify-content: space-between;
   }
   .btn-link {
-    @include theme;
     background-color: $white;
     font-size: 13px;
     border: 0;

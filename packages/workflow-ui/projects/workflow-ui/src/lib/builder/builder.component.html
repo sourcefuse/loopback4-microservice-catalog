@@ -15,9 +15,7 @@
       (itemChanged)="onItemChanged($event)"
     ></workflow-group>
   </span>
-
-  then
-
+  <div><span class="icon-workflow-down-arrow green"></span></div>
   <span *ngFor="let group of actionGroups; let i = index">
     <workflow-group
       [group]="group"
@@ -33,6 +31,7 @@
   </span>
 
   else
+  <div><span class="icon-workflow-down-arrow red"></span></div>
 
   <span *ngFor="let group of eActionGroups; let i = index">
     <workflow-group
