@@ -66,6 +66,7 @@
     "@types/lodash": "^4.14.182",
     "@types/mocha": "^9.1.1",
     "@types/node": "^14.18.26",
+    "@types/node-fetch": "^2.6.2",
     "@types/yeoman-environment": "^2.10.7",
     "@types/yeoman-generator": "^5.2.10",
     "@types/yosay": "^2.0.1",
