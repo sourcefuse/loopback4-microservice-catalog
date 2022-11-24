@@ -22,6 +22,7 @@ import {
 import {ProcessPropertiesElement} from './elements/process/process-properties.element';
 import {ActionWithInput, EventWithInput} from '../../types/base.types';
 import {UtilsService} from '../utils.service';
+import {JSON_COLUMNS} from '../..';
 @Injectable()
 export class BpmnBuilderService extends BuilderService<
   ModdleElement,
@@ -239,7 +240,11 @@ export class BpmnBuilderService extends BuilderService<
         properties.get('values').forEach(property => {
           const [id, key] = property['name'].split('_');
           if (state[id]) {
-            state[id][key] = property['value'];
+            state[id][key] =
+              JSON_COLUMNS.includes(state[id].columnName?.toLowerCase()) &&
+              property['name'] === `${id}_value`
+                ? JSON.parse(property['value'])
+                : property['value'];
           } else {
             state[id] = {
               [key]: property['value'],

@@ -68,6 +68,11 @@ export type Select = {
   value: string;
 };
 
+export type DateTime = {
+  date: {month: 0; day: 0; year: 0};
+  time: {hour: null; minute: null};
+};
+
 export type ENV = {
   envIdentifier: string;
 };

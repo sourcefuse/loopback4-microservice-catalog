@@ -1,4 +1,5 @@
 import {InjectionToken} from '@angular/core';
+import {InputTypes} from '.';
 import {WorkflowElement} from './classes/element/abstract-element.class';
 import {ConditionTypes} from './enum';
 import {ConditionOperatorPair} from './types/base.types';
@@ -43,3 +44,5 @@ export const typeTuppleList: Array<ConditionOperatorPair> = [
   {condition: ConditionTypes.Equal, operator: '===', value: true},
   {condition: ConditionTypes.NotEqual, operator: '!==', value: true},
 ];
+
+export const JSON_COLUMNS = [InputTypes.People];

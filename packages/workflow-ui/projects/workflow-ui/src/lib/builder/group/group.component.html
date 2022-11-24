@@ -144,11 +144,7 @@
   </ng-template>
 
   <ng-template #numberTemplate let-callback="callback" let-input="input">
-    <input
-      type="number"
-      autofocus
-      (focusout)="callback(getInputValue($event.target))"
-    />
+    <input type="number" autofocus (focusout)="callback($event.target)" />
   </ng-template>
 
   <ng-template
@@ -162,17 +158,14 @@
       [settings]="dropdownSettings"
       [data]="list"
       [(ngModel)]="selectedItems"
-      (onSelect)="callback(onSelect($event))"
-      (onSelectAll)="callback(onSelect($event))"
+      (onSelect)="callback($event)"
+      (onSelectAll)="callback($event)"
     >
     </ng-multiselect-dropdown>
   </ng-template>
 
   <ng-template #dateTemplate let-callback="callback" let-input="input">
-    <ngb-datepicker
-      #d
-      (dateSelect)="callback(onDateSelect($event))"
-    ></ngb-datepicker>
+    <ngb-datepicker #d (dateSelect)="callback($event)"></ngb-datepicker>
   </ng-template>
 
   <ng-template #dateTimeTemplate let-callback="callback" let-input="input">
@@ -188,7 +181,7 @@
         <div>
           <button
             class="close-btn"
-            (click)="callback(onDateTimeSelect())"
+            (click)="callback(dateTime)"
             [disabled]="!dateTime.date || !dateTime.time"
           >
             Set
