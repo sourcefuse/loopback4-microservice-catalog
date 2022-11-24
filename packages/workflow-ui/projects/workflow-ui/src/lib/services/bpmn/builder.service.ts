@@ -9,7 +9,7 @@ import {
   WorkflowAction,
 } from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
-import {BASE_XML} from '../../const';
+import {BASE_XML, JSON_COLUMNS} from '../../const';
 import {NodeTypes} from '../../enum';
 import {AutoLayoutService} from '../../layout/layout.service';
 import {
@@ -22,7 +22,7 @@ import {
 import {ProcessPropertiesElement} from './elements/process/process-properties.element';
 import {ActionWithInput, EventWithInput} from '../../types/base.types';
 import {UtilsService} from '../utils.service';
-import {JSON_COLUMNS} from '../..';
+
 @Injectable()
 export class BpmnBuilderService extends BuilderService<
   ModdleElement,

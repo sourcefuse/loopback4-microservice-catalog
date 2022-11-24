@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {JSON_COLUMNS} from 'projects/workflow-ui/src/lib';
+import {JSON_COLUMNS} from '../../../../const';
 import {WorkflowElement, StatementNode} from '../../../../classes';
 import {CreateStrategy} from '../../../../interfaces';
 import {

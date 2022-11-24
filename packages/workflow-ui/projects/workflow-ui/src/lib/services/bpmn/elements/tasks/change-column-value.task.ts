@@ -7,7 +7,7 @@ import {UtilsService} from '../../../utils.service';
 import {CREATE_TASK_STRATEGY} from '../../strategies/create';
 import {LINK_BASIC_STRATEGY} from '../../strategies/link';
 import {ServiceTaskElement} from './service-task.task';
-import {JSON_COLUMNS} from 'projects/workflow-ui/src/lib';
+import {JSON_COLUMNS} from '../../../../const';
 
 @Injectable()
 export class ChangeColumnValue extends ServiceTaskElement {
