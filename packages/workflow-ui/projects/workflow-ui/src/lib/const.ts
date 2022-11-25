@@ -1,7 +1,6 @@
 import {InjectionToken} from '@angular/core';
-import {InputTypes} from '.';
 import {WorkflowElement} from './classes/element/abstract-element.class';
-import {ConditionTypes} from './enum';
+import {ConditionTypes, InputTypes} from './enum';
 import {ConditionOperatorPair} from './types/base.types';
 import {BpmnNode, CustomBpmnModdle, ModdleElement} from './types/bpmn.types';
 

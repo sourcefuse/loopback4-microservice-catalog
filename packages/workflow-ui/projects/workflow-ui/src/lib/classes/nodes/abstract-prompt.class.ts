@@ -1,6 +1,6 @@
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import moment from 'moment';
-import {InvalidEntityError} from '../..';
+import {InvalidEntityError} from '../../errors';
 import {InputTypes, NUMBER} from '../../enum';
 import {
   AllowedValues,

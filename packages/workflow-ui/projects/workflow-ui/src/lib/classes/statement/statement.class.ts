@@ -1,4 +1,4 @@
-import {ElementTypes, NUMBER} from '../..';
+import {ElementNames, NUMBER} from '../../enum';
 import {RecordOfAnyType, StateMap, WorkflowNode} from '../../types/base.types';
 import {WorkflowElement} from '../element/abstract-element.class';
 import {StatementNode} from './statement-node.class';
@@ -47,7 +47,7 @@ export class Statement<E, S = RecordOfAnyType> {
       newNode.prev = this.tail;
       for (const element of this.tail) {
         if (
-          element.element.name !== ElementTypes.readColumnValue ||
+          element.element.name !== ElementNames.readColumnValue ||
           this.tail.length < NUMBER.TWO
         ) {
           element.next
@@ -66,25 +66,25 @@ export class Statement<E, S = RecordOfAnyType> {
     if (this.head.length > 0) {
       for (let i = 0; i < statementNodes.length; i++) {
         switch (statementNodes[i].element.name) {
-          case ElementTypes.readColumnValue:
+          case ElementNames.readColumnValue:
             statementNodes[i].prev = this.tail;
             statementNodes[i].next = [statementNodes[i + 1]];
             break;
-          case ElementTypes.gateway:
+          case ElementNames.gateway:
             statementNodes[i].prev = [statementNodes[i - 1]];
             break;
         }
       }
 
       for (const element of this.tail) {
-        if (element.element.name !== ElementTypes.readColumnValue) {
+        if (element.element.name !== ElementNames.readColumnValue) {
           element.next = statementNodes.filter(
-            node => node.element.name !== ElementTypes.gateway,
+            node => node.element.name !== ElementNames.gateway,
           );
         }
       }
       this.tail = statementNodes.filter(
-        node => node.element.name !== ElementTypes.readColumnValue,
+        node => node.element.name !== ElementNames.readColumnValue,
       );
     } else {
       this.head = this.tail = statementNodes;

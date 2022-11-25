@@ -37,7 +37,7 @@ export enum NodeTypes {
   GROUP,
 }
 
-export enum ElementTypes {
+export enum ElementNames {
   readColumnValue = 'read column value',
   gateway = 'gateway',
 }
