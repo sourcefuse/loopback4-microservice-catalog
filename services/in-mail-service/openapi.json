@@ -3,7 +3,7 @@
   "info": {
     "title": "In-mail Service",
     "version": "1.0.0",
-    "description": "In mail microservice.",
+    "description": "In mail microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -33,7 +33,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| RestoreMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| RestoreMail   |\n| 10   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -85,7 +85,7 @@
             "description": "Message identity does not exist."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| TrashMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| TrashMail   |\n| 9   |\n",
         "parameters": [
           {
             "name": "storage",
@@ -147,7 +147,7 @@
             "description": "Message is marked read/unread/important"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMail   |\n| 2   |\n",
         "parameters": [
           {
             "name": "markType",
@@ -195,7 +195,7 @@
             "description": "Message identity does not exist."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteAttachment   |\n| 14   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -260,7 +260,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| AddAttachments   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| AddAttachments   |\n| 4   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -327,7 +327,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ComposeMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ComposeMail   |\n| 1   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -384,7 +384,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMail   |\n| 2   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -460,7 +460,7 @@
             "description": "Message identity does not exist"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| GetInMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| GetInMail   |\n| 8   |\n",
         "parameters": [
           {
             "name": "messageId",
@@ -517,7 +517,7 @@
             "description": "Message identity does not exist."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ComposeMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ComposeMail   |\n| 1   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -571,7 +571,7 @@
             "description": "Forbidden request due to unauthrized token in header."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| GetInMails   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| GetInMails   |\n| 7   |\n",
         "parameters": [
           {
             "name": "messageFilter",
@@ -632,7 +632,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ComposeMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ComposeMail   |\n| 1   |\n",
         "parameters": [
           {
             "name": "threadId",
@@ -705,7 +705,7 @@
             "description": "Message is replied back to the sender"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ReplyMail   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ReplyMail   |\n| 3   |\n",
         "parameters": [
           {
             "name": "threadId",
@@ -815,7 +815,7 @@
             "description": "Forbidden request due to unauthorized token in header."
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| GetThread   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| GetThread   |\n| 6   |\n",
         "parameters": [
           {
             "name": "threadId",
@@ -884,7 +884,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| GetThread   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| GetThread   |\n| 6   |\n",
         "parameters": [
           {
             "name": "threadFilter",

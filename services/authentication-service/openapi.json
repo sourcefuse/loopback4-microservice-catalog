@@ -545,7 +545,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Google Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)",
+            "description": "Google Token Response,\n         (Deprecated: Possible security issue if secret is passed via query params, \n          please use the post endpoint)",
             "content": {
               "application/json": {
                 "schema": {
@@ -725,7 +725,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)",
+            "description": "Keycloak Token Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -1180,7 +1180,7 @@
             "HTTPBearer": []
           }
         ],
-        "description": "Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n",
+        "description": "Gets you a new access and refresh token once your access token is expired",
         "responses": {
           "200": {
             "description": "New Token Response",
@@ -1722,7 +1722,8 @@
             "type": "string"
           },
           "secret": {
-            "type": "string"
+            "type": "string",
+            "description": "Value can be a string or a private key."
           },
           "redirectUrl": {
             "type": "string"

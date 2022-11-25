@@ -133,7 +133,7 @@ export class AppleLoginController {
         clientId,
       },
     });
-    if (!client || !client.redirectUrl) {
+    if (!client?.redirectUrl) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {

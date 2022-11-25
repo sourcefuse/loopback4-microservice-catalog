@@ -3,7 +3,7 @@
   "info": {
     "title": "Bpmn Service",
     "version": "1.0.0",
-    "description": "BPMN microservice.",
+    "description": "BPMN microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -26,7 +26,7 @@
             "description": "Workflow instance"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n| 2   |\n",
         "parameters": [
           {
             "name": "id",
@@ -67,7 +67,7 @@
             "description": "Workflow DELETE success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n| 4   |\n",
         "parameters": [
           {
             "name": "id",
@@ -106,7 +106,7 @@
             "description": "Workflow PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkflow   |\n| 3   |\n",
         "parameters": [
           {
             "name": "id",
@@ -144,7 +144,7 @@
             "description": "Workflow Model"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -173,7 +173,7 @@
             "description": "Workflow DELETE success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n| 4   |\n",
         "parameters": [
           {
             "name": "id",
@@ -211,7 +211,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n| 2   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -249,7 +249,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n| 1   |\n",
         "parameters": [
           {
             "name": "filter",

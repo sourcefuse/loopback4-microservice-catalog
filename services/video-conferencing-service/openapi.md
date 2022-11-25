@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Microservice providing Video-Conferencing functionality
+Microservice providing Video-Conferencing functionality.
 
 Base URLs:
 
@@ -173,7 +173,8 @@ fetch('/archives/{archiveId}',
 
 `GET /archives/{archiveId}`
 
-Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.
+Used to fetch a specific archive w.r.t archiveId.
+       If archive is not present, it will throw HTTP Not Found Error.
 
 | Permissions |
 | ------- |
@@ -257,7 +258,8 @@ fetch('/archives/{archiveId}',
 
 `DELETE /archives/{archiveId}`
 
-Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.
+Used to delete a specific archive w.r.t archiveId.
+       If archive is not present, it will throw HTTP Not Found Error.
 
 | Permissions |
 | ------- |
@@ -578,7 +580,8 @@ fetch('/session/{meetingLinkId}/token',
 
 `POST /session/{meetingLinkId}/token`
 
-Used for Generating token, which is used for connecting to a room/session on a client side. 
+Used for Generating token,
+     which is used for connecting to a room/session on a client side. 
       In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
       We can use expire time for limited validity of a token. Successful 
       execution will send a token.
@@ -815,7 +818,8 @@ fetch('/session',
 
 `POST /session`
 
-Used for Creating a session with options such as end to end encryption, archive mode. 
+Used for Creating a session with options such as end to end encryption,
+     archive mode. 
       Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
       an Error will be thrown. Successful execution will send a meeting link 
       id which can be used to amend in client url.

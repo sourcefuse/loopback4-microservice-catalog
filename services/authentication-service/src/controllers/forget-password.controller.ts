@@ -77,7 +77,7 @@ export class ForgetPasswordController {
     } catch (e) {
       return;
     }
-    if (!user || !user.id) {
+    if (!user?.id) {
       this.logger.info(`Forget password attempted for invalid user`);
       return;
     }
