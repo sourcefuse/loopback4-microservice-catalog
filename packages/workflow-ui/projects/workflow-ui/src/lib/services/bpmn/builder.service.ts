@@ -74,10 +74,7 @@ export class BpmnBuilderService extends BuilderService<
         elseStatement.head.length &&
         current[0].element.constructor.name === 'GatewayElement'
       ) {
-        current[0].next.push(elseStatement.head[0]);
-        elseStatement.head[0].prev
-          ? elseStatement.head[0].prev.push(current[0])
-          : (elseStatement.head[0].prev = [current[0]]);
+        this.getPreviousNode(elseStatement, current[0]);
       }
       this.setTags(current);
       this.linkNodes(current);
@@ -104,16 +101,23 @@ export class BpmnBuilderService extends BuilderService<
         elseStatement.head.length &&
         current[i].element.constructor.name === 'GatewayElement'
       ) {
-        current[i].next.push(elseStatement.head[0]);
-        elseStatement.head[0].prev
-          ? elseStatement.head[0].prev.push(current[i])
-          : (elseStatement.head[0].prev = [current[i]]);
+        this.getPreviousNode(elseStatement, current[i]);
       }
       if (current[i].next) {
         this.setTags(current[i].next);
         this.linkNodes(current[i].next);
       }
     }
+  }
+
+  private getPreviousNode(
+    elseStatement: Statement<ModdleElement>,
+    currentNode: StatementNode<ModdleElement>,
+  ) {
+    const head = elseStatement.head[0];
+    let prev = head.prev;
+    currentNode.next.push(head);
+    prev ? prev.push(currentNode) : (prev = [currentNode]);
   }
 
   private elseStatementBuild(eStatement: Statement<ModdleElement>) {

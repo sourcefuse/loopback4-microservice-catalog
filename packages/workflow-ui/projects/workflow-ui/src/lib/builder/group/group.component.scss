@@ -118,15 +118,7 @@
     max-width: none;
     font-size: 15px;
   }
-  .ngb-dp-week {
-    border-radius: 5px;
-    display: flex;
-    width: 320px;
-    justify-content: space-between;
-  }
-  .btn-link {
-    color: $primary-color;
-  }
+
   .ngb-dp-day {
     .bg-primary {
       @include theme;
@@ -157,9 +149,6 @@
   .sr-only {
     display: none;
   }
-  div.ngxp__container {
-    max-width: none;
-  }
   .ngb-dp-week {
     border-radius: 5px;
     display: flex;
@@ -168,8 +157,9 @@
   }
   .btn-link {
     background-color: $white;
-    font-size: 13px;
     border: 0;
+    color: $primary-color;
+    font-size: 13px;
   }
 }
 
