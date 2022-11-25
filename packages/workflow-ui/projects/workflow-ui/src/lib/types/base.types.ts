@@ -41,6 +41,11 @@ export type EventWithInput<E> = {
   inputs: WorkflowPrompt[];
 };
 
+export type ElementsWithInput<E> = {
+  node: WorkflowNode<E>;
+  newNode: NodeWithInput<E>;
+};
+
 export type NodeWithInput<E> = EventWithInput<E> | ActionWithInput<E>;
 
 export type StateMap<R extends RecordOfAnyType> = {

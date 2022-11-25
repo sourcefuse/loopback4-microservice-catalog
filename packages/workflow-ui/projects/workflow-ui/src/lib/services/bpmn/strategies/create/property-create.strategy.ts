@@ -24,7 +24,6 @@ export class CreatePropertyStrategy implements CreateStrategy<ModdleElement> {
     const propertyMap = attrs['state'];
     delete attrs['state'];
 
-    // TODO: Need to add handling for object
     Object.keys(propertyMap).forEach(id => {
       Object.keys(propertyMap[id]).forEach(key => {
         properties.push(

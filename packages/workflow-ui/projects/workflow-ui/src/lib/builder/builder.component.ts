@@ -12,6 +12,7 @@ import {
   Statement,
   StatementNode,
   WorkflowAction,
+  WorkflowElement,
   WorkflowEvent,
   WorkflowPrompt,
 } from '../classes';
@@ -24,6 +25,7 @@ import {
   ActionWithInput,
   AllowedValues,
   AllowedValuesMap,
+  ElementsWithInput,
   EventAddition,
   EventWithInput,
   InputChanged,
@@ -153,7 +155,7 @@ export class BuilderComponent<E> implements OnInit {
     this.eventGroups.splice(index, 1);
   }
 
-  onEventAdded(event: any) {
+  onEventAdded(event: ElementsWithInput<E>) {
     this.eventAdded.emit({
       name: event.node.constructor.name,
       event: event.newNode.node as WorkflowEvent<E>,
@@ -162,7 +164,7 @@ export class BuilderComponent<E> implements OnInit {
     this.updateState(event.node, event.newNode.inputs);
   }
 
-  onActionAdded(action: any) {
+  onActionAdded(action: ElementsWithInput<E>) {
     this.actionAdded.emit({
       name: action.node.constructor.name,
       action: action.newNode.node as WorkflowAction<E>,
@@ -171,7 +173,7 @@ export class BuilderComponent<E> implements OnInit {
     this.updateState(action.node, action.newNode.inputs);
   }
 
-  onItemChanged(item: any) {
+  onItemChanged(item: RecordOfAnyType) {
     this.itemChanged.emit({
       field: item.field,
       value: item.value,

@@ -50,9 +50,11 @@ export class Statement<E, S = RecordOfAnyType> {
           element.element.name !== ElementNames.readColumnValue ||
           this.tail.length < NUMBER.TWO
         ) {
-          element.next
-            ? element.next.push(newNode)
-            : (element.next = [newNode]);
+          if (element.next) {
+            element.next.push(newNode);
+          } else {
+            element.next = [newNode];
+          }
         }
       }
       this.tail = [newNode];
