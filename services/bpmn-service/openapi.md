@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-BPMN microservice.
+BPMN microservice
 
 Base URLs:
 
@@ -92,6 +92,7 @@ fetch('/workflows/{id}/execute',
 | Permissions |
 | ------- |
 | CreateWorkflow   |
+| 2   |
 
 > Body parameter
 
@@ -172,6 +173,7 @@ fetch('/workflows/{id}/version/{version}',
 | Permissions |
 | ------- |
 | DeleteWorkflow   |
+| 4   |
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -255,6 +257,7 @@ fetch('/workflows/{id}',
 | Permissions |
 | ------- |
 | UpdateWorkflow   |
+| 3   |
 
 > Body parameter
 
@@ -337,6 +340,7 @@ fetch('/workflows/{id}',
 | Permissions |
 | ------- |
 | ViewWorkflow   |
+| 1   |
 
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
@@ -407,6 +411,7 @@ fetch('/workflows/{id}',
 | Permissions |
 | ------- |
 | DeleteWorkflow   |
+| 4   |
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -491,6 +496,7 @@ fetch('/workflows',
 | Permissions |
 | ------- |
 | CreateWorkflow   |
+| 2   |
 
 > Body parameter
 
@@ -597,6 +603,7 @@ fetch('/workflows',
 | Permissions |
 | ------- |
 | ViewWorkflow   |
+| 1   |
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 

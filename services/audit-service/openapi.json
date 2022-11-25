@@ -3,7 +3,7 @@
   "info": {
     "title": "Audit Service",
     "version": "1.0.0",
-    "description": "Audit logging microservice.",
+    "description": "Audit logging microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -33,7 +33,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
         "parameters": [
           {
             "name": "where",
@@ -77,7 +77,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -126,7 +126,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateAudit   |\n| 2   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -164,7 +164,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
         "parameters": [
           {
             "name": "filter",

@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-notification microservice.
+notification microservice
 
 Base URLs:
 
@@ -112,6 +112,7 @@ fetch('/notification-users/bulk',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 > Body parameter
 
@@ -221,6 +222,7 @@ fetch('/notification-users/count',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationusercontroller.count-parameters">Parameters</h3>
 
@@ -301,6 +303,7 @@ fetch('/notification-users/hard',
 | Permissions |
 | ------- |
 | DeleteNotification   |
+| 4   |
 
 <h3 id="notificationusercontroller.deleteallhard-parameters">Parameters</h3>
 
@@ -395,6 +398,7 @@ fetch('/notification-users/{id}',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 > Body parameter
 
@@ -507,6 +511,7 @@ fetch('/notification-users/{id}',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 > Body parameter
 
@@ -597,6 +602,7 @@ fetch('/notification-users/{id}',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationusercontroller.findbyid-parameters">Parameters</h3>
 
@@ -686,6 +692,7 @@ fetch('/notification-users/{id}',
 | Permissions |
 | ------- |
 | DeleteNotification   |
+| 4   |
 
 <h3 id="notificationusercontroller.deletebyid-parameters">Parameters</h3>
 
@@ -780,6 +787,7 @@ fetch('/notification-users',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 > Body parameter
 
@@ -911,6 +919,7 @@ fetch('/notification-users',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 > Body parameter
 
@@ -1011,6 +1020,7 @@ fetch('/notification-users',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationusercontroller.find-parameters">Parameters</h3>
 
@@ -1121,6 +1131,7 @@ fetch('/notification-users',
 | Permissions |
 | ------- |
 | DeleteNotification   |
+| 4   |
 
 <h3 id="notificationusercontroller.deleteall-parameters">Parameters</h3>
 
@@ -1195,6 +1206,7 @@ fetch('/notification-users/{id}/notification',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationusernotificationcontroller.getnotification-parameters">Parameters</h3>
 
@@ -1315,6 +1327,7 @@ fetch('/notifications/access/{id}',
 | Permissions |
 | ------- |
 | CanGetNotificationAccess   |
+| 5   |
 
 > Body parameter
 
@@ -1488,6 +1501,7 @@ fetch('/notifications/bulk',
 | Permissions |
 | ------- |
 | CreateNotification   |
+| 2   |
 
 > Body parameter
 
@@ -1579,6 +1593,7 @@ fetch('/notifications/count',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationcontroller.count-parameters">Parameters</h3>
 
@@ -1677,6 +1692,7 @@ fetch('/notifications/{id}',
 | Permissions |
 | ------- |
 | UpdateNotification   |
+| 3   |
 
 > Body parameter
 
@@ -1762,6 +1778,7 @@ fetch('/notifications/{id}',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationcontroller.findbyid-parameters">Parameters</h3>
 
@@ -1865,6 +1882,7 @@ fetch('/notifications',
 | Permissions |
 | ------- |
 | CreateNotification   |
+| 2   |
 
 > Body parameter
 
@@ -1984,6 +2002,7 @@ fetch('/notifications',
 | Permissions |
 | ------- |
 | UpdateNotification   |
+| 3   |
 
 > Body parameter
 
@@ -2181,6 +2200,7 @@ fetch('/notifications',
 | Permissions |
 | ------- |
 | DeleteNotification   |
+| 4   |
 
 <h3 id="notificationcontroller.deleteall-parameters">Parameters</h3>
 
@@ -2277,6 +2297,7 @@ fetch('/notifications/{id}/notification-users',
 | Permissions |
 | ------- |
 | CreateNotification   |
+| 2   |
 
 > Body parameter
 
@@ -2409,6 +2430,7 @@ fetch('/notifications/{id}/notification-users',
 | Permissions |
 | ------- |
 | UpdateNotification   |
+| 3   |
 
 > Body parameter
 
@@ -2510,6 +2532,7 @@ fetch('/notifications/{id}/notification-users',
 | Permissions |
 | ------- |
 | ViewNotification   |
+| 1   |
 
 <h3 id="notificationnotificationusercontroller.find-parameters">Parameters</h3>
 
@@ -2623,6 +2646,7 @@ fetch('/notifications/{id}/notification-users',
 | Permissions |
 | ------- |
 | DeleteNotification   |
+| 4   |
 
 <h3 id="notificationnotificationusercontroller.delete-parameters">Parameters</h3>
 

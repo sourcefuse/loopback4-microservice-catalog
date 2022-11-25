@@ -133,8 +133,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
-      !creds ||
-      !creds.password ||
+      !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
       !(await bcrypt.compare(password, creds.password))
     ) {
