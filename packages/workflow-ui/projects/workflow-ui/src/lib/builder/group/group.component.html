@@ -136,11 +136,7 @@
   </ng-template>
 
   <ng-template #textTemplate let-callback="callback" let-input="input">
-    <input
-      type="text"
-      autofocus
-      (focusout)="callback(getInputValue($event.target))"
-    />
+    <input type="text" autofocus (focusout)="callback($event.target)" />
   </ng-template>
 
   <ng-template #numberTemplate let-callback="callback" let-input="input">

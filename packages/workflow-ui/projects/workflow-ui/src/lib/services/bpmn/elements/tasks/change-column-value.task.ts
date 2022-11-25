@@ -39,7 +39,10 @@ export class ChangeColumnValue extends ServiceTaskElement {
 
       changedValue: {
         formatter: <S extends RecordOfAnyType>(state: State<S>) => {
-          if (JSON_COLUMNS.includes(state.get('columnName')?.toLowerCase())) {
+          if (
+            JSON_COLUMNS.includes(state.get('columnName')?.toLowerCase()) &&
+            typeof state.get('value') === 'object'
+          ) {
             return `'${JSON.stringify(state.get('value'))}'`;
           }
           return `'{"displayValue": "${

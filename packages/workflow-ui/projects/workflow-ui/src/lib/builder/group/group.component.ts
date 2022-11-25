@@ -74,7 +74,6 @@ export class GroupComponent<E> implements OnInit {
     date: {month: 0, day: 0, year: 0},
     time: {hour: null, minute: null},
   };
-  selectedItems = [];
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'id',
