@@ -9,6 +9,15 @@ export class ValueInput extends WorkflowListPrompt {
   listNameField = 'text';
   listValueField = 'value';
   placeholder = 'Value';
+
+  // setListName = <S extends RecordOfAnyType>(state: State<S>) => {
+  //   return state.get('listName') ?? this.listNameField;
+  // };
+
+  // setListValue = <S extends RecordOfAnyType>(state: State<S>) => {
+  //   return state.get('listValue') ?? this.listValueField;
+  // };
+
   prevchange = <S extends RecordOfAnyType>(state: State<S>) => {
     state.remove('value');
     state.remove('valueName');

@@ -7,6 +7,7 @@ import {UtilsService} from '../../../utils.service';
 import {CREATE_TASK_STRATEGY} from '../../strategies/create';
 import {LINK_BASIC_STRATEGY} from '../../strategies/link';
 import {ServiceTaskElement} from './service-task.task';
+import {JSON_COLUMNS} from '../../../../const';
 
 @Injectable()
 export class ChangeColumnValue extends ServiceTaskElement {
@@ -38,7 +39,10 @@ export class ChangeColumnValue extends ServiceTaskElement {
 
       changedValue: {
         formatter: <S extends RecordOfAnyType>(state: State<S>) => {
-          if (typeof state.get('value') === 'object') {
+          if (
+            JSON_COLUMNS.includes(state.get('columnName')?.toLowerCase()) &&
+            typeof state.get('value') === 'object'
+          ) {
             return `'${JSON.stringify(state.get('value'))}'`;
           }
           return `'{"displayValue": "${

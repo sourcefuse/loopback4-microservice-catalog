@@ -8,13 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {NgxPopperjsContentComponent} from 'ngx-popperjs';
-import {
-  ElementService,
-  isSelectInput,
-  NodeService,
-  WorkflowPrompt,
-} from '../../classes';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {isSelectInput, NodeService, WorkflowPrompt} from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
 import {InputTypes, NodeTypes} from '../../enum';
 import {InvalidEntityError} from '../../errors/base.error';
@@ -28,12 +22,9 @@ import {
 import {
   EventWithInput,
   ActionWithInput,
-  Dropdown,
-  Select,
+  DateTime,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import * as moment from 'moment';
-import {NUMBER} from '../..';
 
 @Component({
   selector: 'workflow-group',
@@ -44,10 +35,7 @@ import {NUMBER} from '../..';
   ],
 })
 export class GroupComponent<E> implements OnInit {
-  constructor(
-    private readonly nodes: NodeService<E>,
-    private readonly elements: ElementService<E>,
-  ) {}
+  constructor(private readonly nodes: NodeService<E>) {}
 
   @Input()
   group: BaseGroup<E>;
@@ -82,11 +70,10 @@ export class GroupComponent<E> implements OnInit {
   @Output()
   itemChanged = new EventEmitter<unknown>();
 
-  dateTime = {
+  dateTime: DateTime = {
     date: {month: 0, day: 0, year: 0},
     time: {hour: null, minute: null},
   };
-  selectedItems = [];
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -174,7 +161,9 @@ export class GroupComponent<E> implements OnInit {
       this.nodeList = this.actions;
     } else if (type === NodeTypes.EVENT) {
       this.nodeList =
-        this.eventGroups.length === 1 ? this.triggerEvents : this.events;
+        this.eventGroups.length === 1 && !this.group.children.length
+          ? this.triggerEvents
+          : this.events;
     } else {
       throw new InvalidEntityError('' + type);
     }
@@ -227,64 +216,12 @@ export class GroupComponent<E> implements OnInit {
         this.addValue(
           element,
           input,
-          value,
+          input.setValue(element.node.state, value),
           input.typeFunction(element.node.state) === InputTypes.List,
         );
       }
       popper.hide();
     };
-  }
-
-  getInputValue(target: EventTarget | null) {
-    if (target) {
-      return (target as HTMLInputElement).value;
-    } else {
-      throw new InvalidEntityError('Event');
-    }
-  }
-
-  onSelect(items: Array<Dropdown> | Dropdown) {
-    const ids: string[] = [];
-    const value: Array<Select> = [];
-    let displayValue = '';
-    if (Array.isArray(items)) {
-      displayValue = items
-        .map((item: Dropdown) => {
-          if (item.id) {
-            ids.push(item.id);
-            value.push({text: item.fullName, value: item.id});
-          }
-          return item.fullName;
-        })
-        .join(', ');
-    } else {
-      displayValue = items.fullName;
-    }
-    return {
-      displayValue,
-      ids,
-      value,
-    };
-  }
-
-  onDateSelect(date: NgbDateStruct) {
-    const year = date.year;
-    const month = this.convertToTwoDigits(date.month);
-    const day = this.convertToTwoDigits(date.day);
-    return `${day}-${month}-${year}`;
-  }
-
-  onDateTimeSelect() {
-    const {date, time} = this.dateTime;
-    const hours = this.convertToTwoDigits(time.hour);
-    const min = this.convertToTwoDigits(time.minute);
-    const dateTime = `${this.onDateSelect(date)} ${hours}:${min}`;
-    return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').format();
-  }
-
-  convertToTwoDigits(value: number | null): string | number {
-    if (value) return value <= NUMBER.NINE ? '0' + value : value;
-    return 0;
   }
 
   addValue(
@@ -305,11 +242,7 @@ export class GroupComponent<E> implements OnInit {
       });
       value = (value as AllowedValuesMap)[input.listValueField];
     }
-    const displayValue =
-      typeof value === 'object'
-        ? (value as AllowedValuesMap)['displayValue']
-        : value;
-    element.node.state.change(input.inputKey, displayValue);
+    element.node.state.change(input.inputKey, value);
     this.handleSubsequentInputs(element, input);
     this.itemChanged.emit({
       field: input,
