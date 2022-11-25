@@ -50,11 +50,7 @@ export class Statement<E, S = RecordOfAnyType> {
           element.element.name !== ElementNames.readColumnValue ||
           this.tail.length < NUMBER.TWO
         ) {
-          if (element.next) {
-            element.next.push(newNode);
-          } else {
-            element.next = [newNode];
-          }
+          this.prepareNextNode(element, newNode);
         }
       }
       this.tail = [newNode];
@@ -104,5 +100,13 @@ export class Statement<E, S = RecordOfAnyType> {
       current = current[current.length - 1].next;
     }
     return out;
+  }
+
+  prepareNextNode(element: StatementNode<E>, newNode: StatementNode<E>) {
+    if (element.next) {
+      element.next.push(newNode);
+    } else {
+      element.next = [newNode];
+    }
   }
 }

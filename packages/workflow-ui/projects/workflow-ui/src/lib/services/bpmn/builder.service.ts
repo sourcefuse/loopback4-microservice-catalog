@@ -117,7 +117,11 @@ export class BpmnBuilderService extends BuilderService<
     const head = elseStatement.head[0];
     let prev = head.prev;
     currentNode.next.push(head);
-    prev ? prev.push(currentNode) : (head.prev = [currentNode]);
+    if (prev) {
+      prev.push(currentNode);
+    } else {
+      head.prev = [currentNode];
+    }
   }
 
   private elseStatementBuild(eStatement: Statement<ModdleElement>) {

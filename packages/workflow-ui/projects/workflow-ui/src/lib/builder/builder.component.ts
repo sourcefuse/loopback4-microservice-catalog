@@ -12,7 +12,6 @@ import {
   Statement,
   StatementNode,
   WorkflowAction,
-  WorkflowElement,
   WorkflowEvent,
   WorkflowPrompt,
 } from '../classes';
