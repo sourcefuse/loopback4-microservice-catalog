@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.0 (2022-11-25)
+
+* chore(deps): loopback version update in services and packages (#1086) ([478668a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/478668a)), closes [#1086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1086)
+* feat(authentication-service): add asymmetric login in authentication service (#1011) ([92c21fb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/92c21fb)), closes [#1011](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1011) [#1007](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1007)
+* feat(cli): add a prompt to update CLI version (#1068) ([e624582](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e624582)), closes [#1068](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1068)
+* feat(cli): add basic tests (#848) ([d6908ad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d6908ad)), closes [#848](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/848) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+
+
+### BREAKING CHANGE
+
+* moved prompts to commands
+* moved prompts to commands
+* moved prompts to commands
+* moved prompts to commands
+* moved prompts to commands
+* moved prompts to commands
+* moved prompts to commands
+* moved prompts to commands
+
+
+
+
 ## <small>2.4.5 (2022-10-17)</small>
 
 * chore(deps): updating sourceloop dependencies for cli (#1055) ([d063db2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d063db2)), closes [#1055](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1055) [#1054](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1054)

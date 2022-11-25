@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.3.0 (2022-11-25)
+
+* chore(deps): loopback version update in services and packages (#1086) ([478668a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/478668a)), closes [#1086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1086)
+* feat(authentication-service): add asymmetric login in authentication service (#1011) ([92c21fb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/92c21fb)), closes [#1011](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1011) [#1007](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1007)
+* feat(core): add base-entity and user-modifiable-entity mixins (#815) ([ba57053](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ba57053)), closes [#815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/815) [#814](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/814) [#814](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/814)
+* docs(ReadMe): update readme file for sourceloop core (#970) ([3779351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3779351)), closes [#970](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/970) [#254](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/254)
+* fix(services): sync user-tenant-service properties with auth-service (#1010) ([5c7fce8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c7fce8)), closes [#1010](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1010)
+
+
+
+
+
 ## <small>7.2.6 (2022-10-10)</small>
 
 * fix(core): IP address issue in RateLimitKeyGen (#1040) ([2c9c8d8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c9c8d8)), closes [#1040](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1040) [#1039](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1039)

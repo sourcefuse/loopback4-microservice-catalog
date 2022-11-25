@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.9 (2022-11-25)</small>
+
+* chore(deps): loopback version update in services and packages (#1086) ([478668a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/478668a)), closes [#1086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1086)
+
+
+
+
+
 ## <small>4.2.8 (2022-10-10)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-service

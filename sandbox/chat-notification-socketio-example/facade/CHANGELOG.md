@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.9 (2022-11-25)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket
+
+
+
+
+
 ## <small>0.1.8 (2022-10-10)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket
