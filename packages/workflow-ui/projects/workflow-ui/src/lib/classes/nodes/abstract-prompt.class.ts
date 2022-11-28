@@ -47,6 +47,11 @@ export abstract class WorkflowPrompt {
             .join(', ');
         } else {
           displayValue = (value as Dropdown).fullName;
+          _value.push({
+            text: (value as Dropdown).fullName,
+            value: (value as Dropdown).id,
+          });
+          ids.push((value as Dropdown).id);
         }
         return {
           displayValue,

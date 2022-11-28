@@ -158,6 +158,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     if (valueType === InputTypes.Text || valueType === InputTypes.List) {
       value = `'${value}'`;
     }
+    if (valueType === InputTypes.People) {
+      value = `'${JSON.stringify(value)}'`;
+    }
     const condition = node.workflowNode.state.get('condition');
     const pair = this.conditions.find(item => item.condition === condition);
     if (!pair) {
