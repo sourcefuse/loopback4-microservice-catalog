@@ -16,6 +16,11 @@ import * as fs from 'fs/promises';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
+/**
+ *  Exporting `ServicesBearerTokenVerifyProvider` provider class
+ * which implements the `VerifyFunction.BearerFn` interface.
+ *  Constructor is used to inject the logger and user model.
+ */
 export class ServicesBearerAsymmetricTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
 {
@@ -25,6 +30,11 @@ export class ServicesBearerAsymmetricTokenVerifyProvider
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
   ) {}
 
+  /**
+   *  `VerifyFunction.BearerFn` will be called when the token is verified.
+   * `user` variable that will be used to store the user information.
+   * `verify()` that verifies the token.
+   *  */
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
       let user: IAuthUserWithPermissions;
@@ -40,13 +50,15 @@ export class ServicesBearerAsymmetricTokenVerifyProvider
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
 
+      /* This is used to check if the password is expired or not. */
       if (
         user.passwordExpiryTime &&
         moment().isSameOrAfter(moment(user.passwordExpiryTime))
       ) {
         throw new HttpErrors.Unauthorized('PasswordExpiryError');
       }
-
+      /* `this.authUserModel` that checks if the user model is defined or not. If it is defined, then it will
+       return the user model. If it is not defined, then it will return the user. */
       if (this.authUserModel) {
         return new this.authUserModel(user);
       } else {

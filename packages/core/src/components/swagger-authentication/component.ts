@@ -15,6 +15,12 @@ import {SwaggerAuthenticationBindings} from './keys';
 import {AuthenticateSwaggerMiddlewareInterceptor} from './middlewares';
 import {HttpAuthenticationVerifierProvider} from './providers/http-authentication.verifier';
 
+/**
+ *  `SwaggerAuthenticationComponent` a class that extends the Component class and implements the Component interface.
+ *   Injecting the RestApplication instance into the component.
+ *   Provider that is used to verify the authentication.
+ *   Adding the middleware to the application.
+ */
 export class SwaggerAuthenticationComponent implements Component {
   providers?: ProviderMap;
   bindings: Binding[] = [];

@@ -5,6 +5,8 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '../../constants';
 import {HttpAuthenticationVerifier} from './types';
+/* Creating a namespace called SwaggerAuthenticationBindings and then creating a constant called
+VERIFIER. */
 export namespace SwaggerAuthenticationBindings {
   export const VERIFIER = BindingKey.create<HttpAuthenticationVerifier>(
     `${BINDING_PREFIX}.swagger-auth.verifier`,

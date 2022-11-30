@@ -7,12 +7,18 @@ import {LOGGER} from '../keys';
 import {WinstonLoggerBase} from './logger-base';
 import {TransformableInfo} from 'logform';
 
+/**
+ * Defining the structure of the log entry.
+ * Creating an interface `LogEntry` which
+ * extends `TransformableInfo`.
+ */
 interface LogEntry extends TransformableInfo {
   level: string;
   message: string;
   timestamp?: Date;
 }
 
+/* Creating a new Winston logger instance and setting the format to be used. */
 export class WinstonConsoleLogger extends WinstonLoggerBase {
   constructor() {
     super();

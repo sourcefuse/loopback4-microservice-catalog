@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {LogMessage} from './types';
 
+/* Exporting interface ILogger. */
 export interface ILogger {
   log(info: LogMessage): void;
   info(msg: string, key?: string): void;

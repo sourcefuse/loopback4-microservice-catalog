@@ -7,9 +7,14 @@ import {ILogger} from '../logger.interface';
 import {LogMessage} from '../types';
 import {LOGGER} from '../keys';
 
+/* The WinstonLoggerBase class implements the ILogger interface and has a logger property of type
+WinstonLogger */
 export class WinstonLoggerBase implements ILogger {
   logger: WinstonLogger;
 
+  /**
+   *  A switch case statement.
+   */
   log(info: LogMessage): void {
     switch (Number(info.level)) {
       case LOGGER.LOG_LEVEL.INFO:
@@ -26,6 +31,10 @@ export class WinstonLoggerBase implements ILogger {
         break;
     }
   }
+  /**
+   *  Functions are created(info,warn,error,debug)
+   *  that takes two parameters, message and key.The default value of key is 'App_Log'.
+   */
   info(message: string, key = 'App_Log'): void {
     this.logger.info(`${key} -> ${message}`);
   }

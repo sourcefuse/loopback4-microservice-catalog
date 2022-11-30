@@ -7,9 +7,13 @@ import {SFCoreBindings} from '../../../keys';
 import {CoreConfig} from '../../../types';
 import {HttpAuthenticationVerifier} from '../types';
 
+/** 
+ *  Exporting `HttpAuthenticationVerifierProvider` 
+    that implements the Provider interface. */
 export class HttpAuthenticationVerifierProvider
   implements Provider<HttpAuthenticationVerifier>
 {
+  /* Injecting the config object from the binding `SFCoreBindings`. */
   constructor(
     @inject(SFCoreBindings.config, {optional: true})
     private readonly coreConfig: CoreConfig,

@@ -20,6 +20,9 @@ import {SwaggerAuthenticationBindings} from '../keys';
 import {HttpAuthenticationVerifier} from '../types';
 import {STATUS_CODE} from '../../../enums';
 
+/**
+ * A decorator `@globalInterceptor` that is used to register the interceptor globally.
+ */
 @globalInterceptor('auth', {tags: {name: 'AuthenticateSwaggerMiddleware'}})
 export class AuthenticateSwaggerMiddlewareInterceptor
   implements Provider<Middleware>
@@ -34,6 +37,9 @@ export class AuthenticateSwaggerMiddlewareInterceptor
     return this.intercept.bind(this);
   }
 
+  /* A middleware interceptor that intercepts the request and checks if the request is for swagger. If
+ it is, it checks if the request has the basic authentication header. If it does not, it returns a
+ 401 response. */
   async intercept(
     context: MiddlewareContext,
     next: () => ValueOrPromise<InvocationResult>,
@@ -57,6 +63,13 @@ export class AuthenticateSwaggerMiddlewareInterceptor
     return next();
   }
 
+  /**
+   * It takes a request object, extracts the authorization header, decodes it, and returns an object
+   * with the username and password
+   * @param {Request} request - Request - this is the request object that is passed to the middleware
+   * function.
+   * @returns An object with username and password properties.
+   */
   private decodeHeader(request: Request) {
     const header = request.headers.authorization ?? ''; // get the auth header
     const token = header.split(/\s+/).pop() ?? ''; // and the encoded auth token
@@ -71,6 +84,11 @@ export class AuthenticateSwaggerMiddlewareInterceptor
     };
   }
 
+  /**
+   * If the request URL contains the path to the OpenAPI spec, return true
+   * @param {Request} request - The request object that was sent to the server.
+   * @returns The return value is a boolean.
+   */
   private isOpenAPISpecRequest(request: Request) {
     const swaggerUrl = `${this.config.path}/openapi.json`;
     if (request.url.includes(swaggerUrl)) {
@@ -79,6 +97,7 @@ export class AuthenticateSwaggerMiddlewareInterceptor
     return false;
   }
 
+  /* `isRequestContext` a type guard function. It checks if the context is of type RequestContext. */
   private isRequestContext(context?: Context): context is RequestContext {
     return !!(
       (context as RequestContext).request &&
