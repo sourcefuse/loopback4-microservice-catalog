@@ -111,6 +111,7 @@
                   ? input.options(nodeWithInput.node.state)
                   : [],
                 callback: createCallback(nodeWithInput, input, inputPopper),
+                nodeWithInput: nodeWithInput,
                 input: input
               }
             "
@@ -125,9 +126,15 @@
     let-list="list"
     let-callback="callback"
     let-input="input"
+    let-nodeWithInput="nodeWithInput"
   >
     <div
       class="option-div"
+      [ngClass]="{
+        selected:
+          option[input.listValueField] ==
+          input.setValueName(nodeWithInput.node.state)
+      }"
       (click)="callback(option)"
       *ngFor="let option of list"
     >
@@ -135,12 +142,34 @@
     </div>
   </ng-template>
 
-  <ng-template #textTemplate let-callback="callback" let-input="input">
-    <input type="text" autofocus (focusout)="callback($event.target)" />
+  <ng-template
+    #textTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+  >
+    <input
+      type="text"
+      class="text-input"
+      autofocus
+      (focusout)="callback($event.target)"
+      value="{{ input.setValueName(nodeWithInput.node.state) }}"
+    />
   </ng-template>
 
-  <ng-template #numberTemplate let-callback="callback" let-input="input">
-    <input type="number" autofocus (focusout)="callback($event.target)" />
+  <ng-template
+    #numberTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+  >
+    <input
+      type="number"
+      class="text-input"
+      autofocus
+      (focusout)="callback($event.target)"
+      value="{{ input.setValueName(nodeWithInput.node.state) }}"
+    />
   </ng-template>
 
   <ng-template
@@ -148,6 +177,7 @@
     let-list="list"
     let-callback="callback"
     let-input="input"
+    let-nodeWithInput="nodeWithInput"
   >
     <ng-multiselect-dropdown
       [placeholder]="'Please Select'"
@@ -160,11 +190,21 @@
     </ng-multiselect-dropdown>
   </ng-template>
 
-  <ng-template #dateTemplate let-callback="callback" let-input="input">
+  <ng-template
+    #dateTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+  >
     <ngb-datepicker #d (dateSelect)="callback($event)"></ngb-datepicker>
   </ng-template>
 
-  <ng-template #dateTimeTemplate let-callback="callback" let-input="input">
+  <ng-template
+    #dateTimeTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+  >
     <div class="date-time-picker">
       <ngb-datepicker [(ngModel)]="dateTime.date" #d></ngb-datepicker>
       <div class="time-picker">

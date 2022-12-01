@@ -106,4 +106,29 @@ export abstract class WorkflowPrompt {
         return state.get(this.inputKey);
     }
   }
+
+  setValueName<S extends RecordOfAnyType>(state: State<S>) {
+    switch (this.typeFunction(state)) {
+      case InputTypes.List:
+        return state.get(this.inputKey);
+      case InputTypes.People: {
+        console.log(state);
+        return state.get(this.inputKey);
+      }
+      case InputTypes.Date: {
+        console.log(state);
+        return state.get(this.inputKey);
+      }
+      case InputTypes.DateTime: {
+        console.log(state);
+        return state.get(this.inputKey);
+      }
+      case InputTypes.Number:
+      case InputTypes.Text:
+      case InputTypes.Boolean:
+      case InputTypes.Percentage:
+      default:
+        return state.get(this.inputKey);
+    }
+  }
 }
