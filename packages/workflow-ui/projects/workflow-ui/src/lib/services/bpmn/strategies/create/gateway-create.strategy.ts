@@ -8,6 +8,7 @@ import {
   ModdleElement,
 } from '../../../../types/bpmn.types';
 import { UtilsService } from '../../../utils.service';
+import { GatewayElement } from '../../elements';
 
 @Injectable()
 export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
@@ -29,10 +30,23 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
   ): ModdleElement {
     element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
     node.outgoing = `Flow_${this.utils.uuid()}`;
+    (element as GatewayElement).elseOutGoing = `Flow_${this.utils.uuid()}`;
+    (element as GatewayElement).default = `Flow_${this.utils.uuid()}`;
     return this.moddle.create(element.tag, {
       id: element.id,
       name: 'Gateway',
-      ...attrs,
+      ...this.parseAttributes(attrs,  node),
     });
+  }
+  private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
+    Object.keys(attrs).forEach(key => {
+      if(typeof attrs[key] !== 'string'){
+        switch(Object.keys(attrs[key])[0]){
+          case 'state':
+              attrs[key] = node.workflowNode.state.get(attrs[key].state);
+        }
+      }
+    })
+    return attrs;
   }
 }

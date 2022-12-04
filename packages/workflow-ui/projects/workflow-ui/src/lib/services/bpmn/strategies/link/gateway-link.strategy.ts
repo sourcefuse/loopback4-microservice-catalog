@@ -12,6 +12,7 @@ import {CONDITION_LIST} from '../../../../const';
 import {UtilsService} from '../../../utils.service';
 import {InputTypes} from '../../../../enum';
 import {WorkflowAction} from '../../../../classes/nodes/abstract-workflow-action.class';
+import {GatewayElement} from '../../elements';
 
 const BPMN_SEQ_FLOW = 'bpmn:SequenceFlow';
 @Injectable()
@@ -42,7 +43,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     );
     links.push(...this.createMainLink(node, mainNodes));
     elseNodes.length
-      ? links.push(...this.createElseLink(node, elseNodes))
+      ? links.push(this.createElseLink(node, elseNodes))
       : links.push(...this.createEndLink(node));
     return links;
   }
@@ -79,21 +80,29 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     elseNextNodes: BpmnStatementNode[],
   ) {
     const from = node.tag;
-    const id = `Flow_${this.utils.uuid()}`;
+    const id = (node.element as GatewayElement).elseOutGoing ?? `Flow_${this.utils.uuid()}`;
     const to = elseNextNodes[0].tag;
     elseNextNodes[0].incoming = id;
     const attrs = this.createLinkAttrs(id, node.tag, to);
+    const {script, name} = this.createScript(node, id, true);
+    const expression = this.moddle.create('bpmn:FormalExpression', {
+      body: script,
+      language: 'Javascript',
+      'xsi:type': 'bpmn:tFormalExpression',
+    });
+    attrs['conditionExpression'] = expression;
+    attrs['name'] = name;
     const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
     from.get('outgoing').push(link);
     to.get('incoming').push(link);
-    return [link];
+    return link;
   }
 
   private createEndLink(node: BpmnStatementNode) {
     const end = this.moddle.create('bpmn:EndEvent', {
       id: `EndElement_${this.utils.uuid()}`,
     });
-    const id = `Flow_${this.utils.uuid()}`;
+    const id = (node.element as GatewayElement).default ?? `Flow_${this.utils.uuid()}`;
     const attrs = this.createLinkAttrs(id, node.tag, end);
     const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
     node.tag.get('outgoing').push(link);
@@ -116,12 +125,12 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return attrs;
   }
 
-  private createScript(node: BpmnStatementNode, flowId: string) {
+  private createScript(node: BpmnStatementNode, flowId: string, isELse?: boolean) {
     const lastNodeWithOutput = this.getLastNodeWithOutput(node);
     const read = `var readObj = JSON.parse(execution.getVariable('${lastNodeWithOutput.element.id}'));`;
     const declarations = `var ids = [];var json = S("{}");`;
     const column = node.workflowNode.state.get('columnName');
-    const condition = this.getCondition(node);
+    const condition = this.getCondition(node, isELse);
     const loop = `
       for(var key in readObj){
           var taskValuePair = readObj[key];
@@ -152,7 +161,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return current;
   }
 
-  private getCondition(node: BpmnStatementNode) {
+  private getCondition(node: BpmnStatementNode, isElse = false) {
     let value = node.workflowNode.state.get('value');
     const valueType = node.workflowNode.state.get('valueInputType');
     if (valueType === InputTypes.Text || valueType === InputTypes.List) {
@@ -162,9 +171,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       value = `'${JSON.stringify(value)}'`;
     }
     const condition = node.workflowNode.state.get('condition');
-    const pair = this.conditions.find(item => item.condition === condition);
+    const pair = this.conditions.find(item => isElse ? item.condition !== condition : item.condition === condition);
     if (!pair) {
-      return `===${value}`;
+      return isElse ? `!==${value}` : `===${value}`; //TODO: Greater than/Less than
     }
     if (pair.value) {
       return `${pair.operator}${value}`;

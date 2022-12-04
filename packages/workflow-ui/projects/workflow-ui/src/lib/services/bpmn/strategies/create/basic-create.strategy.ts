@@ -31,7 +31,18 @@ export class CreateBasicStrategy implements CreateStrategy<ModdleElement> {
     return this.moddle.create(element.tag, {
       id: element.id,
       name: element.name,
-      ...attrs,
+      ...this.parseAttributes(attrs,node),
     });
+  }
+  private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
+    Object.keys(attrs).forEach(key => {
+      if(typeof attrs[key] !== 'string'){
+        switch(Object.keys(attrs[key])[0]){
+          case 'state':
+              attrs[key] = node.workflowNode.state.get(attrs[key].state);
+        }
+      }
+    })
+    return attrs;
   }
 }

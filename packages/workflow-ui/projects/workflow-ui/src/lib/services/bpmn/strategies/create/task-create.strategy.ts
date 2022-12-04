@@ -17,6 +17,7 @@ import {
 import { WorkflowAction, WorkflowElement } from '../../../../classes';
 import { InvalidEntityError } from '../../../../errors';
 import { NodeTypes } from '../../../../enum';
+import { GatewayElement } from '../../elements/gateways/gateway.element';
 
 @Injectable()
 export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
@@ -134,7 +135,7 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     node: BpmnStatementNode,
   ) {
     if (node.prev[0].element.constructor.name === 'GatewayElement') {
-      return node.prev[0].outgoing;
+      return node.element.id?.split('_').includes('true') ? (node.prev[0].element as GatewayElement).elseOutGoing : node.prev[0].outgoing;
     } else {
       return node.prev[0].element.id;
     }
