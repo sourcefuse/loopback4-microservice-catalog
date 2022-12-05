@@ -6,16 +6,16 @@ import {BpmnNode, CustomBpmnModdle, ModdleElement} from './types/bpmn.types';
 
 export const BASE_XML_VALUE = `
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" 
-xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
-xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
-xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
-xmlns:camunda="http://camunda.org/schema/1.0/bpmn" 
-xmlns:modeler="http://camunda.org/schema/modeler/1.0" 
-id="Definitions_1aj5pzu" 
-targetNamespace="http://bpmn.io/schema/bpmn" 
-exporter="Camunda Modeler" exporterVersion="4.12.0" 
-modeler:executionPlatform="Camunda Platform" 
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+xmlns:modeler="http://camunda.org/schema/modeler/1.0"
+id="Definitions_1aj5pzu"
+targetNamespace="http://bpmn.io/schema/bpmn"
+exporter="Camunda Modeler" exporterVersion="4.12.0"
+modeler:executionPlatform="Camunda Platform"
 modeler:executionPlatformVersion="7.15.0">
 </bpmn:definitions>
 `;
@@ -40,8 +40,10 @@ export const CONDITION_LIST = new InjectionToken<Array<ConditionOperatorPair>>(
   'workflow.const.types.list',
 );
 export const typeTuppleList: Array<ConditionOperatorPair> = [
-  {condition: ConditionTypes.Equal, operator: '===', value: true},
-  {condition: ConditionTypes.NotEqual, operator: '!==', value: true},
+  {condition: ConditionTypes.Equal, operator: '===', value: true, elseCondition: ConditionTypes.NotEqual},
+  {condition: ConditionTypes.NotEqual, operator: '!==', value: true, elseCondition: ConditionTypes.Equal},
+  {condition: ConditionTypes.GreaterThan, operator: '>', value: true, elseCondition: ConditionTypes.LessThan},
+  {condition: ConditionTypes.LessThan, operator: '<', value: true, elseCondition: ConditionTypes.GreaterThan},
 ];
 
 export const JSON_COLUMNS = [InputTypes.People];
