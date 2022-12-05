@@ -171,14 +171,15 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       value = `'${JSON.stringify(value)}'`;
     }
     const condition = node.workflowNode.state.get('condition');
-    const pair = this.conditions.find(item => isElse ? item.condition !== condition : item.condition === condition);
+    const pair = this.conditions.find(item => item.condition === condition);
+    const inverse = this.conditions.find(item => item.condition === pair?.elseCondition)
     if (!pair) {
-      return isElse ? `!==${value}` : `===${value}`; //TODO: Greater than/Less than
+      return isElse ? `!==${value}` : `===${value}`;
     }
     if (pair.value) {
-      return `${pair.operator}${value}`;
+      return isElse ? `${inverse?.operator}${value}` : `${pair.operator}${value}`;
     } else {
-      return `${pair.operator}`;
+      return isElse ? `${inverse?.operator}` : `${pair.operator}`;
     }
   }
 }
