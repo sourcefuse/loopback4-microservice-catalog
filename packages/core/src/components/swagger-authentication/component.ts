@@ -16,10 +16,12 @@ import {AuthenticateSwaggerMiddlewareInterceptor} from './middlewares';
 import {HttpAuthenticationVerifierProvider} from './providers/http-authentication.verifier';
 
 /**
- *  `SwaggerAuthenticationComponent` a class that extends the Component class and implements the Component interface.
- *   Injecting the RestApplication instance into the component.
- *   Provider that is used to verify the authentication.
- *   Adding the middleware to the application.
+ *  `SwaggerAuthenticationComponent` a class for swagger authentication.
+ *   @param {RestApplication} - Injectng instance into the component.
+ *   @param {HttpAuthenticationVerifierProvider} - `HttpAuthenticationVerifierProvider` Provider
+ *   that is used to verify the authentication.
+ *   @param {AuthenticateSwaggerMiddlewareInterceptor} - `AuthenticateSwaggerMiddlewareInterceptor`
+ *   Middleware that is added to the application.
  */
 export class SwaggerAuthenticationComponent implements Component {
   providers?: ProviderMap;

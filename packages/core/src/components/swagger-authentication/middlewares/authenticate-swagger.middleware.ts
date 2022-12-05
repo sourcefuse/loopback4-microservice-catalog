@@ -21,7 +21,7 @@ import {HttpAuthenticationVerifier} from '../types';
 import {STATUS_CODE} from '../../../enums';
 
 /**
- * A decorator `@globalInterceptor` that is used to register the interceptor globally.
+ * @decorator `@globalInterceptor` A decorator that is used to register the interceptor globally.
  */
 @globalInterceptor('auth', {tags: {name: 'AuthenticateSwaggerMiddleware'}})
 export class AuthenticateSwaggerMiddlewareInterceptor
@@ -37,9 +37,11 @@ export class AuthenticateSwaggerMiddlewareInterceptor
     return this.intercept.bind(this);
   }
 
-  /* A middleware interceptor that intercepts the request and checks if the request is for swagger. If
- it is, it checks if the request has the basic authentication header. If it does not, it returns a
- 401 response. */
+  /**
+   * @param {intercept} intercept - a middleware interceptor that intercepts the request and checks if the request is for swagger.
+   * If it is, it checks if the request has the basic authentication header.
+   * If it does not, it returns a 401 response.
+   * */
   async intercept(
     context: MiddlewareContext,
     next: () => ValueOrPromise<InvocationResult>,
@@ -97,7 +99,9 @@ export class AuthenticateSwaggerMiddlewareInterceptor
     return false;
   }
 
-  /* `isRequestContext` a type guard function. It checks if the context is of type RequestContext. */
+  /**
+   *  @param {isRequestContext} isRequestContext a type guard function. It checks if the context is of type RequestContext.
+   *  */
   private isRequestContext(context?: Context): context is RequestContext {
     return !!(
       (context as RequestContext).request &&

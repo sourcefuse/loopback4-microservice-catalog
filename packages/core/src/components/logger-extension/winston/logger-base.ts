@@ -7,8 +7,9 @@ import {ILogger} from '../logger.interface';
 import {LogMessage} from '../types';
 import {LOGGER} from '../keys';
 
-/* The WinstonLoggerBase class implements the ILogger interface and has a logger property of type
-WinstonLogger */
+/**
+ * @param {WinstonLoggerBase} WinstonLoggerBase class implements the `ILogger` interface and has a logger property of type WinstonLogger
+ *  */
 export class WinstonLoggerBase implements ILogger {
   logger: WinstonLogger;
 
@@ -32,9 +33,11 @@ export class WinstonLoggerBase implements ILogger {
     }
   }
   /**
-   *  Functions are created(info,warn,error,debug)
-   *  that takes two parameters, message and key.The default value of key is 'App_Log'.
-   */
+   * @param {info} info function takes two parameters, message and key.The default value of key is 'App_Log'.
+   * @param {warn} warn function takes two parameters, message and key.The default value of key is 'App_Log'.
+   * @param {error} error function takes two parameters, message and key.The default value of key is 'App_Log'.
+   * @param {debug} debug function takes two parameters, message and key.The default value of key is 'App_Log'.
+   * */
   info(message: string, key = 'App_Log'): void {
     this.logger.info(`${key} -> ${message}`);
   }

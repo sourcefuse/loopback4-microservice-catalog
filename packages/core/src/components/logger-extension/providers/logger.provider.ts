@@ -7,9 +7,10 @@ import {ILogger} from '../logger.interface';
 import {WinstonConsoleLogger} from '../winston/logger-console';
 
 /**
- *   `LoggerProvider` class that implements the Provider interface, and
- *   constructor creates a new
- *    `WinstonConsoleLogger` object */
+ *  @param {LoggerProvider} `LoggerProvider` class that implements the Provider interface, and
+ *  constructor creates a new `WinstonConsoleLogger` object
+ *  @returns ILogger
+ * */
 export class LoggerProvider implements Provider<ILogger> {
   constructor() {
     this.logger = new WinstonConsoleLogger();

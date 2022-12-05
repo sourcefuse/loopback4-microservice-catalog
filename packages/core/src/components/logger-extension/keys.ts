@@ -8,7 +8,7 @@ import {BINDING_PREFIX} from '../../constants';
 
 export namespace LOGGER {
   /**
-   * Injection key constant
+   * @param {LOGGER_INJECT} - Injection key constant `LOGGER_INJECT`.
    */
   export const LOGGER_INJECT = `${BINDING_PREFIX}.log.action`;
 

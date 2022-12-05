@@ -6,7 +6,9 @@ import {Component, ProviderMap} from '@loopback/core';
 import {LOGGER} from './keys';
 import {LoggerProvider} from './providers/logger.provider';
 
-/* `The LoggerExtensionComponent` class is a component that provides a LoggerProvider */
+/**
+ * @param {LoggerExtensionComponent} - The `LoggerExtensionComponent` class is a component that provides a `LoggerProvider`
+ * */
 export class LoggerExtensionComponent implements Component {
   providers: ProviderMap = {};
   constructor() {

@@ -7,7 +7,8 @@
 import {Request, OperationArgs} from '@loopback/rest';
 
 /**
- * A function to perform REST req/res logging action
+ * @param {LogFn} LogFn A function to perform REST req/res logging action.
+ * @return returning values req,args,result.
  */
 export interface LogFn {
   (
@@ -20,6 +21,10 @@ export interface LogFn {
   Promise<void>;
 }
 
+/**
+ * @param {LogMessage} - exporting interface `LogMessage`.
+ * @return returning values of properties key,message,level,timestamp.
+ */
 export interface LogMessage {
   key?: string;
   message: string;

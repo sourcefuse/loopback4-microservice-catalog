@@ -18,20 +18,26 @@ import {ServicesBearerAsymmetricTokenVerifyProvider} from './providers/services-
 import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-token-verify.provider';
 import {RevokedTokenRepository} from './repositories';
 
-/* Exporting class `BearerVerifierComponent` which implements `Component` class 
-which is used to register the providers. */
+/**
+ *  @param {BearerVerifierComponent} - exporting class`BearerVerifierComponent` which implements `Component` class
+ *  which is used to register the providers.
+ *  @constructor Injecting the config and logger.
+ * */
 export class BearerVerifierComponent implements Component {
-  /* Injecting the config and logger. */
   constructor(
     @inject(BearerVerifierBindings.Config)
     private readonly config: BearerVerifierConfig,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {
     this.providers = {};
-    /* Registering the repository with the application. */
+    /**
+     * @param {RevokedTokenRepository} - Registering the repository with the application.
+     *  */
     this.repositories = [RevokedTokenRepository];
 
-    /* Registering the model with the application. */
+    /**
+     *  @param {RevokedToken} - Registering the model with the application.
+     *  */
     this.models = [RevokedToken];
 
     /**

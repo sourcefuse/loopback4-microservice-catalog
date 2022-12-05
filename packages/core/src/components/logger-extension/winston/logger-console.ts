@@ -18,7 +18,10 @@ interface LogEntry extends TransformableInfo {
   timestamp?: Date;
 }
 
-/* Creating a new Winston logger instance and setting the format to be used. */
+/**
+ * @param {WinstonConsoleLogger} - exporting `WinstonConsoleLogger` class
+ * extending `WinstonLoggerBase`.
+ * */
 export class WinstonConsoleLogger extends WinstonLoggerBase {
   constructor() {
     super();

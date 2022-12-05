@@ -7,6 +7,17 @@ import {
   IUserModifiableEntityConfig,
 } from './types';
 
+/**
+ * @param {UserModifiableEntityMixin} - Exporting function `UserModifiableEntityMixin`,
+ * in which class T extends Entity and S extends Constructor | AbstractConstructor.
+ * It takes an abstract class `UserModifiableEntity` and returns a new class that extends the `base` class and
+ * adds the properties createdBy and modifiedBy.
+ * @param {S} base - The base class to extend.
+ * @param {IUserModifiableEntityConfig} [config] - IUserModifiableEntityConfig
+ * @returns A function that takes a base class `UserModifiableEntity` and a config object
+ * and returns a new class `AbstractConstructor` that extends
+ * the base class and implements the IUserModifiableEntity interface.
+ */
 export function UserModifiableEntityMixin<
   T extends Entity,
   S extends Constructor<T> | AbstractConstructor<T>,

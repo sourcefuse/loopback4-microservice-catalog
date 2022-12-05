@@ -6,14 +6,18 @@ import {IAuthUser} from 'loopback4-authentication';
 import {BindingKey} from '@loopback/context';
 import {BINDING_PREFIX} from '../../constants';
 
-/* Creating a namespace called 'BearerVerifierBindings' and then creating a constant called Config. */
+/**
+ * @param {BearerVerifierBindings} - Creating a namespace called 'BearerVerifierBindings' and
+ * then creating a constant called Config.
+ * @param {BearerVerifierType} - `BearerVerifierType` a type of the config object that is passed to the 'BearerVerifierBindings.Config.'
+ * @param {IUserPrefs} - exporting an interface `IUserPrefs` for the user preference.
+ *  */
 export namespace BearerVerifierBindings {
   export const Config = BindingKey.create<BearerVerifierConfig>(
     `${BINDING_PREFIX}.bearer-verfier.config`,
   );
 }
 
-/* Defining the type of the config object that is passed to the 'BearerVerifierBindings.Config.' */
 export enum BearerVerifierType {
   service,
   facade,
@@ -22,14 +26,15 @@ export interface BearerVerifierConfig {
   type: BearerVerifierType;
 }
 
-/* Defining an interface 'IUserPrefs' for the user preferences. */
 export interface IUserPrefs {
   locale?: string;
 }
 
 /**
- *  Exporting interface `IAuthUserWithPermissions`.
- *  Extending the 'IAuthUser' interface and adding more properties to it. */
+ *  @param {IAuthUserWithPermissions} - exporting interface `IAuthUserWithPermissions`.
+ *  @param {IAuthUser} - extending the 'IAuthUser' interface and adding more properties to it.
+ *  @return Properties in their data types will give value in return.
+ * */
 export interface IAuthUserWithPermissions<
   ID = string,
   TID = string,

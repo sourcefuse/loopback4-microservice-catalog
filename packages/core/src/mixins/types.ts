@@ -1,5 +1,11 @@
 import {PropertyDefinition} from '@loopback/repository';
 
+/**
+ * @param {IBaseEntityConfig} - exporting the interface for the base entity config with two properties(createdOn, modifiedOn).
+ * @param {IBaseEntityConfig} - extending the interface with two new properties(createdBy, modifiedBy) from `IUserModifiableEntityConfig`.
+ * @param {IBaseEntity} - exporting the interface for the base entity config with two properties(createdOn, modifiedOn).
+ * @param {IBaseEntity} - extending the interface with two new properties(createdBy, modifiedBy) from `IUserModifiableEntity`.
+ * */
 export interface IBaseEntityConfig {
   createdOn?: Partial<PropertyDefinition>;
   modifiedOn?: Partial<PropertyDefinition>;
