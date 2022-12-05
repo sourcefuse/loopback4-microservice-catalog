@@ -3,6 +3,7 @@ import {CreateStrategy, LinkStrategy} from '../../../../interfaces';
 import {ModdleElement} from '../../../../types/bpmn.types';
 import {UtilsService} from '../../../utils.service';
 import {CREATE_TASK_STRATEGY} from '../../strategies/create';
+import {ENV} from '../../../../types/base.types';
 import {LINK_BASIC_STRATEGY} from '../../strategies/link';
 import {ServiceTaskElement} from './service-task.task';
 
@@ -13,9 +14,14 @@ export class SendEmail extends ServiceTaskElement {
     protected creator: CreateStrategy<ModdleElement>,
     @Inject(LINK_BASIC_STRATEGY)
     protected linker: LinkStrategy<ModdleElement>,
+    @Inject('env') private env: ENV,
     public utils: UtilsService,
   ) {
     super();
+    this.attributes = {
+      ...this.attributes,
+      'camunda:topic': `send-alert-${this.env.envIdentifier}`,
+    };
   }
   name = 'Send Email';
   properties = {};

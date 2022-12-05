@@ -36,7 +36,8 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     let mainNodes: BpmnStatementNode[] = [];
     let elseNodes: BpmnStatementNode[] = [];
     node.next.forEach(node =>
-      node.element.constructor.name === 'ChangeColumnValue' &&
+      (node.element.constructor.name === 'ChangeColumnValue' ||
+        node.element.constructor.name === 'SendEmail') &&
       (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
         ? elseNodes.push(node)
         : mainNodes.push(node),
@@ -80,7 +81,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     elseNextNodes: BpmnStatementNode[],
   ) {
     const from = node.tag;
-    const id = (node.element as GatewayElement).elseOutGoing ?? `Flow_${this.utils.uuid()}`;
+    const id =
+      (node.element as GatewayElement).elseOutGoing ??
+      `Flow_${this.utils.uuid()}`;
     const to = elseNextNodes[0].tag;
     elseNextNodes[0].incoming = id;
     const attrs = this.createLinkAttrs(id, node.tag, to);
@@ -102,7 +105,8 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     const end = this.moddle.create('bpmn:EndEvent', {
       id: `EndElement_${this.utils.uuid()}`,
     });
-    const id = (node.element as GatewayElement).default ?? `Flow_${this.utils.uuid()}`;
+    const id =
+      (node.element as GatewayElement).default ?? `Flow_${this.utils.uuid()}`;
     const attrs = this.createLinkAttrs(id, node.tag, end);
     const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
     node.tag.get('outgoing').push(link);
@@ -125,13 +129,17 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return attrs;
   }
 
-  private createScript(node: BpmnStatementNode, flowId: string, isELse?: boolean) {
+  private createScript(
+    node: BpmnStatementNode,
+    flowId: string,
+    isElse?: boolean,
+  ) {
     const lastNodeWithOutput = this.getLastNodeWithOutput(node);
     const read = `var readObj = JSON.parse(execution.getVariable('${lastNodeWithOutput.element.id}'));`;
     const declarations = `var ids = [];var json = S("{}");`;
     const column = node.workflowNode.state.get('columnName');
-    const condition = this.getCondition(node, isELse);
-    const loop = `
+    const condition = this.getCondition(node, isElse);
+    let loop = `
       for(var key in readObj){
           var taskValuePair = readObj[key];
           if(taskValuePair && taskValuePair.value${condition}){
@@ -139,6 +147,22 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
             }
         }
       `;
+    if (
+      node.workflowNode.state.get('condition') === 'pasttoday' &&
+      condition === undefined
+    ) {
+      loop = `
+        for(var key in readObj){
+            var taskValuePair = readObj[key];
+            if(taskValuePair && taskValuePair.value){
+                var readDateValue = new Date(taskValuePair.value);
+                if(readDateValue ${isElse ? '>' : '<'} new Date()){
+                ids.push(taskValuePair.id);
+              }
+          }
+        }
+        `;
+    }
     const setters = `
       json.prop("taskIds", ids);
       execution.setVariable('${flowId}',json);
@@ -146,7 +170,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       `;
     return {
       script: [read, declarations, loop, setters].join('\n'),
-      name: `${column}${condition}`,
+      name: `${column}${condition ?? ''}`,
     };
   }
 
@@ -163,6 +187,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
 
   private getCondition(node: BpmnStatementNode, isElse = false) {
     let value = node.workflowNode.state.get('value');
+    if (!value) {
+      return undefined;
+    }
     const valueType = node.workflowNode.state.get('valueInputType');
     if (valueType === InputTypes.Text || valueType === InputTypes.List) {
       value = `'${value}'`;
@@ -172,12 +199,16 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     }
     const condition = node.workflowNode.state.get('condition');
     const pair = this.conditions.find(item => item.condition === condition);
-    const inverse = this.conditions.find(item => item.condition === pair?.elseCondition)
+    const inverse = this.conditions.find(
+      item => item.condition === pair?.elseCondition,
+    );
     if (!pair) {
       return isElse ? `!==${value}` : `===${value}`;
     }
     if (pair.value) {
-      return isElse ? `${inverse?.operator}${value}` : `${pair.operator}${value}`;
+      return isElse
+        ? `${inverse?.operator}${value}`
+        : `${pair.operator}${value}`;
     } else {
       return isElse ? `${inverse?.operator}` : `${pair.operator}`;
     }
