@@ -44,6 +44,7 @@ export const typeTuppleList: Array<ConditionOperatorPair> = [
   {condition: ConditionTypes.NotEqual, operator: '!==', value: true, elseCondition: ConditionTypes.Equal},
   {condition: ConditionTypes.GreaterThan, operator: '>', value: true, elseCondition: ConditionTypes.LessThan},
   {condition: ConditionTypes.LessThan, operator: '<', value: true, elseCondition: ConditionTypes.GreaterThan},
+  {condition: ConditionTypes.PastToday, operator: '<', value: false, elseCondition: ConditionTypes.GreaterThan}
 ];
 
 export const JSON_COLUMNS = [InputTypes.People];

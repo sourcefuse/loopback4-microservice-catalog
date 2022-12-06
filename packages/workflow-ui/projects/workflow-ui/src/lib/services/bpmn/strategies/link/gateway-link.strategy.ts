@@ -139,30 +139,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     const declarations = `var ids = [];var json = S("{}");`;
     const column = node.workflowNode.state.get('columnName');
     const condition = this.getCondition(node, isElse);
-    let loop = `
-      for(var key in readObj){
-          var taskValuePair = readObj[key];
-          if(taskValuePair && taskValuePair.value${condition}){
-              ids.push(taskValuePair.id);
-            }
-        }
-      `;
-    if (
-      node.workflowNode.state.get('condition') === 'pasttoday' &&
-      condition === undefined
-    ) {
-      loop = `
-        for(var key in readObj){
-            var taskValuePair = readObj[key];
-            if(taskValuePair && taskValuePair.value){
-                var readDateValue = new Date(taskValuePair.value);
-                if(readDateValue ${isElse ? '>' : '<'} new Date()){
-                ids.push(taskValuePair.id);
-              }
-          }
-        }
-        `;
-    }
+    const loop = this.createLoopScript(node, condition);
     const setters = `
       json.prop("taskIds", ids);
       execution.setVariable('${flowId}',json);
@@ -170,8 +147,34 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       `;
     return {
       script: [read, declarations, loop, setters].join('\n'),
-      name: `${column}${condition ?? ''}`,
+      name: `${column}${condition}`,
     };
+  }
+
+  private createLoopScript(node: BpmnStatementNode, condition: string){
+    if(node.workflowNode.state.get('condition') !== 'pasttoday'){
+      return `
+      for(var key in readObj){
+          var taskValuePair = readObj[key];
+          if(taskValuePair && taskValuePair.value${condition}){
+            ids.push(taskValuePair.id);
+          }
+        }
+      `;
+    }
+    else {
+      return `
+      for(var key in readObj){
+        var taskValuePair = readObj[key];
+        if(taskValuePair && taskValuePair.value){
+          var readDateValue = new Date(taskValuePair.value);
+          if(readDateValue ${condition.charAt(0)} new Date()){
+            ids.push(taskValuePair.id);
+          }
+        }
+      }
+      `;
+    }
   }
 
   private getLastNodeWithOutput(node: BpmnStatementNode) {
@@ -187,9 +190,6 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
 
   private getCondition(node: BpmnStatementNode, isElse = false) {
     let value = node.workflowNode.state.get('value');
-    if (!value) {
-      return undefined;
-    }
     const valueType = node.workflowNode.state.get('valueInputType');
     if (valueType === InputTypes.Text || valueType === InputTypes.List) {
       value = `'${value}'`;
@@ -210,7 +210,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
         ? `${inverse?.operator}${value}`
         : `${pair.operator}${value}`;
     } else {
-      return isElse ? `${inverse?.operator}` : `${pair.operator}`;
+      return isElse ? `${inverse?.operator}${pair.condition}` : `${pair.operator}${pair.condition}`;
     }
   }
 }
