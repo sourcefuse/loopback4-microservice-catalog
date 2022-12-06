@@ -25,6 +25,7 @@ import {
   DateTime,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {ConditionTypes, ValueInput} from '../..';
 
 @Component({
   selector: 'workflow-group',
@@ -154,6 +155,13 @@ export class GroupComponent<E> implements OnInit {
 
   addClick() {
     this.add.emit(true);
+  }
+
+  validateCondition(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
+    return !(
+      input.constructor === ValueInput &&
+      nodeWithInput.node.state.get('condition') === ConditionTypes.PastToday
+    );
   }
 
   openPopup(type: NodeTypes) {
