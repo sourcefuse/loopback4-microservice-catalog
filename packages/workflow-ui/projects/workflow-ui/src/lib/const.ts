@@ -40,11 +40,12 @@ export const CONDITION_LIST = new InjectionToken<Array<ConditionOperatorPair>>(
   'workflow.const.types.list',
 );
 export const typeTuppleList: Array<ConditionOperatorPair> = [
-  {condition: ConditionTypes.Equal, operator: '===', value: true, elseCondition: ConditionTypes.NotEqual},
-  {condition: ConditionTypes.NotEqual, operator: '!==', value: true, elseCondition: ConditionTypes.Equal},
-  {condition: ConditionTypes.GreaterThan, operator: '>', value: true, elseCondition: ConditionTypes.LessThan},
-  {condition: ConditionTypes.LessThan, operator: '<', value: true, elseCondition: ConditionTypes.GreaterThan},
-  {condition: ConditionTypes.PastToday, operator: '<', value: false, elseCondition: ConditionTypes.GreaterThan}
+  {condition: ConditionTypes.Equal, operator: '===', value: true},
+  {condition: ConditionTypes.NotEqual, operator: '!==', value: true},
+  {condition: ConditionTypes.GreaterThan, operator: '>', value: true},
+  {condition: ConditionTypes.LessThan, operator: '<', value: true},
+  {condition: ConditionTypes.ComingIn, operator: '-', value: true},
+  {condition: ConditionTypes.PastBy, operator: '+', value: true},
 ];
 
 export const JSON_COLUMNS = [InputTypes.People];

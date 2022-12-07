@@ -25,7 +25,6 @@ export type ConditionOperatorPair = {
   condition: ConditionTypes;
   operator: string;
   value: boolean;
-  elseCondition: ConditionTypes;
 };
 
 export type WorkflowNode<E> = WorkflowAction<E> | WorkflowEvent<E>;
