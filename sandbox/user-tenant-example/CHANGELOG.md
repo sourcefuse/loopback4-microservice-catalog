@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.14 (2022-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-example
+
+
+
+
+
 ## <small>0.3.13 (2022-11-25)</small>
 
 * refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
