@@ -29,6 +29,7 @@ export enum ConditionTypes {
   GreaterThan = 'greaterThan',
   LessThan = 'lessThan',
   Like = 'like',
+  Changes = 'changes',
 }
 
 export enum NodeTypes {

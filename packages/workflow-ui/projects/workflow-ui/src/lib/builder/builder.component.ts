@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   TemplateRef,
 } from '@angular/core';
+import {ConditionTypes} from '..';
 import {
   isSelectInput,
   Statement,
@@ -85,6 +86,7 @@ export class BuilderComponent<E> implements OnInit {
 
   nodeList: BaseGroup<E>[] = [];
   processId: string;
+  showElseBlock = true;
   public types = NodeTypes;
 
   ngOnInit(): void {
@@ -135,7 +137,9 @@ export class BuilderComponent<E> implements OnInit {
           }
         });
       });
-
+      this.showElseBlock =
+        this.eventGroups[0].children[0].node.state.get('condition') !==
+        ConditionTypes.Changes;
       this.updateDiagram();
     }
   }
@@ -179,6 +183,9 @@ export class BuilderComponent<E> implements OnInit {
       item: item.element.node,
     });
     this.updateState(item.element.node, item.element.inputs);
+    this.showElseBlock =
+      this.eventGroups[0].children[0].node.state.get('condition') !==
+      ConditionTypes.Changes;
     this.updateDiagram();
   }
 
