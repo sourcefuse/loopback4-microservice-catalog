@@ -249,7 +249,7 @@ export class GroupComponent<E> implements OnInit {
        * Remove node on changes event
        */
       element.inputs[1].prefix = '';
-      element.node.elements.splice(-2, 2);
+      // element.node.elements.splice(-2, 2);
       this.enableActionIcon = false;
     }
     if (select && isSelectInput(input)) {
