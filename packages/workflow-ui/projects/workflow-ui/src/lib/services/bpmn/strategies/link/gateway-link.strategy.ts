@@ -147,7 +147,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       `;
     return {
       script: [read, declarations, loop, setters].join('\n'),
-      name: `${column}${condition}`,
+      name:`${isElse?'! ': ''}${column}${condition}`,
     };
   }
 
