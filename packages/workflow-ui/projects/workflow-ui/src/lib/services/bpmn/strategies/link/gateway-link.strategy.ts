@@ -10,7 +10,7 @@ import {
 } from '../../../../types';
 import {CONDITION_LIST} from '../../../../const';
 import {UtilsService} from '../../../utils.service';
-import {InputTypes} from '../../../../enum';
+import {ConditionTypes, InputTypes} from '../../../../enum';
 import {WorkflowAction} from '../../../../classes/nodes/abstract-workflow-action.class';
 import {GatewayElement} from '../../elements';
 
@@ -138,8 +138,8 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     const read = `var readObj = JSON.parse(execution.getVariable('${lastNodeWithOutput.element.id}'));`;
     const declarations = `var ids = [];var json = S("{}");`;
     const column = node.workflowNode.state.get('columnName');
-    const condition = this.getCondition(node, isElse);
-    const loop = this.createLoopScript(node, condition);
+    const condition = this.getCondition(node);
+    const loop = this.createLoopScript(node, condition, isElse);
     const setters = `
       json.prop("taskIds", ids);
       execution.setVariable('${flowId}',json);
@@ -151,29 +151,42 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     };
   }
 
-  private createLoopScript(node: BpmnStatementNode, condition: string){
-    if(node.workflowNode.state.get('condition') !== 'pasttoday'){
-      return `
-      for(var key in readObj){
-          var taskValuePair = readObj[key];
-          if(taskValuePair && taskValuePair.value${condition}){
-            ids.push(taskValuePair.id);
-          }
-        }
-      `;
-    }
-    else {
-      return `
-      for(var key in readObj){
-        var taskValuePair = readObj[key];
-        if(taskValuePair && taskValuePair.value){
-          var readDateValue = new Date(taskValuePair.value);
-          if(readDateValue ${condition.charAt(0)} new Date()){
-            ids.push(taskValuePair.id);
-          }
-        }
-      }
-      `;
+  private createLoopScript(node: BpmnStatementNode, condition: string, isElse = false) {
+    switch (node.workflowNode.state.get('condition')) {
+      case ConditionTypes.PastToday:
+        return `
+                for(var key in readObj){
+                  var taskValuePair = readObj[key];
+                  if(taskValuePair && taskValuePair.value){
+                    var readDateValue = new Date(taskValuePair.value);
+                    if(${isElse ? '!':''}(readDateValue < new Date())){
+                      ids.push(taskValuePair.id);
+                    }
+                  }
+                }
+              `;
+      case ConditionTypes.ComingIn:
+      case ConditionTypes.PastBy:
+        return `
+                for(var key in readObj){
+                  var taskValuePair = readObj[key];
+                  if(taskValuePair && taskValuePair.value){
+                    var readDateValue = new Date(taskValuePair.value);
+                    if(${isElse ? '!':''}(readDateValue > new Date() && readDateValue.setDate(readDateValue.getDate()${condition}) < new Date())){
+                      ids.push(taskValuePair.id);
+                    }
+                  }
+                }
+              `;
+      default:
+        return `
+                for(var key in readObj){
+                  var taskValuePair = readObj[key];
+                  if(taskValuePair && ${isElse ? '!' : ''}taskValuePair.value${condition}){
+                    ids.push(taskValuePair.id);
+                  }
+                }
+              `;
     }
   }
 
@@ -188,7 +201,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return current;
   }
 
-  private getCondition(node: BpmnStatementNode, isElse = false) {
+  private getCondition(node: BpmnStatementNode) {
     let value = node.workflowNode.state.get('value');
     const valueType = node.workflowNode.state.get('valueInputType');
     if (valueType === InputTypes.Text || valueType === InputTypes.List) {
@@ -199,18 +212,13 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     }
     const condition = node.workflowNode.state.get('condition');
     const pair = this.conditions.find(item => item.condition === condition);
-    const inverse = this.conditions.find(
-      item => item.condition === pair?.elseCondition,
-    );
     if (!pair) {
-      return isElse ? `!==${value}` : `===${value}`;
+      return `===${value}`;
     }
     if (pair.value) {
-      return isElse
-        ? `${inverse?.operator}${value}`
-        : `${pair.operator}${value}`;
+      return `${pair.operator}${value}`;
     } else {
-      return isElse ? `${inverse?.operator}${pair.condition}` : `${pair.operator}${pair.condition}`;
+      return `${pair.operator}`;
     }
   }
 }
