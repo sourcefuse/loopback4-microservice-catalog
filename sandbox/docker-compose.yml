@@ -85,6 +85,8 @@ x-feature-toggle-variables: &feature-toggle-variables
   DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
   DB_DATABASE: feature_toggle_db
   JWT_SECRET: i_am_a_strong_secret
+  REDIS_PASSWORD:
+  REDIS_DATABASE: 0
   JWT_ISSUER: https://loopback4-microservice-catalog
 
 x-scheduler-variables: &scheduler-variables
@@ -177,12 +179,14 @@ x-chat-notif-facade-chat-variables: &chat-notif-facade-chat-variables
   CHAT_DB_PORT: 5432
   CHAT_DB_USER: ${POSTGRES_USER:-postgres}
   CHAT_DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-  CHAT_DB_DATABASE: chatdb
+  CHAT_DB_DATABASE: chat_db
   CHAT_DB_SCHEMA: main
   AUTHCACHE_DB_HOST: redis
   AUTHCACHE_DB_PORT: 6379
   AUTHCACHE_DB_PASSWORD:
   AUTHCACHE_DB_DATABASE: 0
+  REDIS_PASSWORD:
+  REDIS_DATABASE: 0
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
 
@@ -220,8 +224,8 @@ x-cache-variables: &cache-variables
   REDIS_HOST: redis
   REDIS_PORT: 6379
   REDIS_URL:
-  REDIS_PASSWORD:
-  REDIS_DB: 0
+  REDIS_DATABASE: 0
+  REDIS_PASS:
 
 x-user-tenant-variables: &user-tenant-variables
   NODE_ENV: dev
@@ -240,7 +244,8 @@ x-user-tenant-variables: &user-tenant-variables
   REDIS_PASSWORD:
   REDIS_DB: 0
   USER_TEMP_PASSWORD: tempP@ssw0rd
-
+  SUCCESS_CALLBACK_URL: http://localhost:3000
+  FAILURE_CALLBACK_URL: http://localhost:3000
 services:
   chat-notification-pubnub-example:
     image: ${REGISTRY:-localhost:32000}/chat-notification-pubnub-example
@@ -733,21 +738,21 @@ services:
       - postgres
     command: >
       bash -c "export PGPASSWORD=${POSTGRES_PASSWORD:-changeme} && sleep 30 &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database authentication_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notification_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database workflow_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database audit_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database pubnub_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database feature_toggle_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database scheduler_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database in_mail_db'&&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database search_db'&&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database video_db'&&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chat_notif_facade_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database chatdb' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database payment_db' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database notifdb' &&
-               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c 'create database cache_db'"
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database authentication_db' where not exists (select from pg_database where datname = 'authentication_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database notification_db' where not exists (select from pg_database where datname = 'notification_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database workflow_db' where not exists (select from pg_database where datname = 'workflow_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database audit_db' where not exists (select from pg_database where datname = 'audit_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database pubnub_db' where not exists (select from pg_database where datname = 'pubnub_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database feature_toggle_db' where not exists (select from pg_database where datname = 'feature_toggle_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database scheduler_db' where not exists (select from pg_database where datname = 'scheduler_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database in_mail_db' where not exists (select from pg_database where datname = 'in_mail_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database search_db' where not exists (select from pg_database where datname = 'search_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database video_db' where not exists (select from pg_database where datname = 'video_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database chat_notif_facade_db' where not exists (select from pg_database where datname = 'chat_notif_facade_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database chat_db' where not exists (select from pg_database where datname = 'chat_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database payment_db' where not exists (select from pg_database where datname = 'payment_db') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database notifdb' where not exists (select from pg_database where datname = 'notifdb') &&
+               psql -U ${POSTGRES_USER:-postgres} -d postgres -h postgres -c select 'create database cache_db' where not exists (select from pg_database where datname = 'cache_db') "
 
   pgadmin:
     container_name: pgadmin_container
