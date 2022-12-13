@@ -17,11 +17,8 @@ import {HttpAuthenticationVerifierProvider} from './providers/http-authenticatio
 
 /**
  *  `SwaggerAuthenticationComponent` a class for swagger authentication.
- *   @param {RestApplication} - Injectng instance into the component.
- *   @param {HttpAuthenticationVerifierProvider} - `HttpAuthenticationVerifierProvider` Provider
- *   that is used to verify the authentication.
- *   @param {AuthenticateSwaggerMiddlewareInterceptor} - `AuthenticateSwaggerMiddlewareInterceptor`
- *   Middleware that is added to the application.
+ *   Injectng instance `RestApplication` into the component.
+ *  `HttpAuthenticationVerifierProvider` Provider that is used to verify the authentication.
  */
 export class SwaggerAuthenticationComponent implements Component {
   providers?: ProviderMap;

@@ -8,16 +8,15 @@ import {CoreConfig} from '../../../types';
 import {HttpAuthenticationVerifier} from '../types';
 
 /**
- * @param {HttpAuthenticationVerifierProvider} - exporting `HttpAuthenticationVerifierProvider`
- * that implements the Provider interface.
- * */
+ * Exporting `HttpAuthenticationVerifierProvider` that implements the Provider interface.
+ */
 export class HttpAuthenticationVerifierProvider
   implements Provider<HttpAuthenticationVerifier>
 {
   /**
-   * @param {SFCoreBindings} - Injecting the `config` object from the binding `SFCoreBindings`.
-   * @return returns username and password from interface `coreConfig`.
-   * */
+   * Injecting the `config` object from the binding `SFCoreBindings`.
+   * returns username and password from interface `coreConfig`.
+   */
   constructor(
     @inject(SFCoreBindings.config, {optional: true})
     private readonly coreConfig: CoreConfig,

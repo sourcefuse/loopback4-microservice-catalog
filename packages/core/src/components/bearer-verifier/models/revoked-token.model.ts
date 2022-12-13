@@ -6,7 +6,8 @@ import {Entity, model, property} from '@loopback/repository';
 
 /**
  * @model It's a model class that represents a class `RevokedToken` which extends `Entity` class.
- * @decorator `@property` is used to define the properties of the model,returning 'type','id','required' fields.
+ * @decorator `@property` is used to define the properties of the model,
+ * returning 'type','id','required' fields.
  * @constructor A constructor is used to create an instance of the class.
  */
 @model()

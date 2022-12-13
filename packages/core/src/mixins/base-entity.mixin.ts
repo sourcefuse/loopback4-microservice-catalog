@@ -3,7 +3,7 @@ import {Entity, property} from '@loopback/repository';
 import {AbstractConstructor, IBaseEntityConfig, IBaseEntity} from './types';
 
 /**
- * @param {BaseEntityMixin} - Exporting function `BaseEntityMixin`,
+ * @param BaseEntityMixin Exporting function `BaseEntityMixin`,
  * in which class T extends Entity and S extends Constructor | AbstractConstructor.
  * It takes an abstract class `BaseEntity` and returns a new class that extends the original class `base` and
  * adds two properties to it,which are createdOn , modifiedOn.

@@ -19,33 +19,36 @@ import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-tok
 import {RevokedTokenRepository} from './repositories';
 
 /**
- *  @param {BearerVerifierComponent} - exporting class`BearerVerifierComponent` which implements `Component` class
+ *  Exporting class`BearerVerifierComponent` which implements `Component` class
  *  which is used to register the providers.
- *  @constructor Injecting the config and logger.
- * */
+ */
 export class BearerVerifierComponent implements Component {
   constructor(
+    /**
+     * @constructor for the `BearerVerifierComponent` class,
+     * @decorator `@inject` used to inject the config and logger.
+     */
     @inject(BearerVerifierBindings.Config)
     private readonly config: BearerVerifierConfig,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {
     this.providers = {};
     /**
-     * @param {RevokedTokenRepository} - Registering the repository with the application.
-     *  */
+     * Registering the repository with the application.
+     */
     this.repositories = [RevokedTokenRepository];
 
     /**
-     *  @param {RevokedToken} - Registering the model with the application.
-     *  */
+     * Registering the model with the application.
+     */
     this.models = [RevokedToken];
 
     /**
      * Checking the type of the bearer verifier and then registering the appropriate provider.
      * If the type is not specified in the config, then the default
-       provider is registered.
+     * provider is registered.
      * Registering the FacadesBearerTokenVerifyProvider as the provider for the key
-       Strategies.Passport.BEARER_TOKEN_VERIFIER.key.
+     * Strategies.Passport.BEARER_TOKEN_VERIFIER.key.
      */
     if (this.config && this.config.type === BearerVerifierType.service) {
       if (process.env.JWT_PUBLIC_KEY && process.env.JWT_PUBLIC_KEY !== '') {

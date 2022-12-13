@@ -5,10 +5,17 @@
 import {LogMessage} from './types';
 
 /**
- * @param {ILogger} - Exporting interface `ILogger`.
- * @return returning values log,info,warn,error,debug.
- * */
+ * Exporting interface `ILogger`,with specified types log,info,warn,error,debug.
+ */
 export interface ILogger {
+  /**
+   * Defining the interface for the logger.
+   *
+   * @param info - info message with key returned in string type
+   * @param warn - warn message with key returned in string type
+   * @param error - error message with key returned in string type
+   * @param message - debug message with key returned in string type
+   */
   log(info: LogMessage): void;
   info(msg: string, key?: string): void;
   warn(msg: string, key?: string): void;

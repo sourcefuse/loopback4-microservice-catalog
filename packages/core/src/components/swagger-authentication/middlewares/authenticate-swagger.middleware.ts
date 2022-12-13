@@ -38,10 +38,10 @@ export class AuthenticateSwaggerMiddlewareInterceptor
   }
 
   /**
-   * @param {intercept} intercept - a middleware interceptor that intercepts the request and checks if the request is for swagger.
+   * A middleware interceptor that intercepts the request and checks if the request is for swagger.
    * If it is, it checks if the request has the basic authentication header.
    * If it does not, it returns a 401 response.
-   * */
+   */
   async intercept(
     context: MiddlewareContext,
     next: () => ValueOrPromise<InvocationResult>,
@@ -68,9 +68,7 @@ export class AuthenticateSwaggerMiddlewareInterceptor
   /**
    * It takes a request object, extracts the authorization header, decodes it, and returns an object
    * with the username and password
-   * @param {Request} request - Request - this is the request object that is passed to the middleware
-   * function.
-   * @returns An object with username and password properties.
+   * `Request`-this is the request object that is passed to the middleware function.
    */
   private decodeHeader(request: Request) {
     const header = request.headers.authorization ?? ''; // get the auth header
@@ -88,8 +86,7 @@ export class AuthenticateSwaggerMiddlewareInterceptor
 
   /**
    * If the request URL contains the path to the OpenAPI spec, return true
-   * @param {Request} request - The request object that was sent to the server.
-   * @returns The return value is a boolean.
+   * The request object that was sent to the server.
    */
   private isOpenAPISpecRequest(request: Request) {
     const swaggerUrl = `${this.config.path}/openapi.json`;
@@ -100,8 +97,10 @@ export class AuthenticateSwaggerMiddlewareInterceptor
   }
 
   /**
-   *  @param {isRequestContext} isRequestContext a type guard function. It checks if the context is of type RequestContext.
-   *  */
+   * @param isRequestContext a type guard function.
+   * It checks if the context is of type RequestContext.
+   * @return it returns request and response.
+   */
   private isRequestContext(context?: Context): context is RequestContext {
     return !!(
       (context as RequestContext).request &&

@@ -19,9 +19,8 @@ interface LogEntry extends TransformableInfo {
 }
 
 /**
- * @param {WinstonConsoleLogger} - exporting `WinstonConsoleLogger` class
- * extending `WinstonLoggerBase`.
- * */
+ * Exporting `WinstonConsoleLogger` class which is extending `WinstonLoggerBase`.
+ */
 export class WinstonConsoleLogger extends WinstonLoggerBase {
   constructor() {
     super();
@@ -33,6 +32,10 @@ export class WinstonConsoleLogger extends WinstonLoggerBase {
       ),
     );
 
+    /**
+     * Creating a logger object.
+     * @param createLogger
+     */
     this.logger = createLogger({
       transports: [new transports.Console()],
       format: logFormat,

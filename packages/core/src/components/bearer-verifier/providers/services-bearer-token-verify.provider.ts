@@ -16,9 +16,9 @@ import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
 /**
- * @param {ServicesBearerTokenVerifyProvider} - exporting `ServicesBearerTokenVerifyProvider` class
+ * Exporting `ServicesBearerTokenVerifyProvider` class
  * which implements the `VerifyFunction.BearerFn` interface.
- * @constructor Constructor is used to inject the `logger` and `user model`.
+ * @constructor Constructor is used to inject the logger and user model.
  * */
 export class ServicesBearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
@@ -30,11 +30,14 @@ export class ServicesBearerTokenVerifyProvider
   ) {}
 
   /**
-   *  @param {VerifyFunction.BearerFn} `VerifyFunction.BearerFn` will be called when the token is verified.
-   *  @param {user} -`user` variable that will be used to store the user information.
-   *  `verify()` that verifies the token.
-   *  */
+   * @returns {VerifyFunction.BearerFn}
+   */
   value(): VerifyFunction.BearerFn {
+    /**
+     * @param token - jwt token to verify using public key
+     * @returns user if valid, throws error otherwise.
+     * `user` variable contains data provided while signing
+     */
     return async (token: string) => {
       let user: IAuthUserWithPermissions;
 
@@ -58,9 +61,10 @@ export class ServicesBearerTokenVerifyProvider
         throw new HttpErrors.Unauthorized('PasswordExpiryError');
       }
       /**
-       * @param {this.authUserModel} `this.authUserModel` that checks if the user model is defined or not.
-       * @return If it is defined, then it will return the `user model`. If it is not defined, then it will return the `user`.
-       * */
+       * `this.authUserModel` that checks if the user model is defined or not.
+       * If it is defined, then it will return the `user model`.
+       * If it is not defined, then it will return the `user`.
+       */
       if (this.authUserModel) {
         return new this.authUserModel(user);
       } else {

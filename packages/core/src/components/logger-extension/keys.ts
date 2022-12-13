@@ -6,9 +6,12 @@ import {BindingKey} from '@loopback/context';
 import {ILogger} from './logger.interface';
 import {BINDING_PREFIX} from '../../constants';
 
+/**
+ * Exporting a namespace `LOGGER`.
+ */
 export namespace LOGGER {
   /**
-   * @param {LOGGER_INJECT} - Injection key constant `LOGGER_INJECT`.
+   * Injection key constant `LOGGER_INJECT`.
    */
   export const LOGGER_INJECT = `${BINDING_PREFIX}.log.action`;
 

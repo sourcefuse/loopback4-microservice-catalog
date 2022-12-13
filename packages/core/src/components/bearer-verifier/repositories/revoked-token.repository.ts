@@ -9,9 +9,8 @@ import {RevokedToken} from '../models';
 import {AuthCacheSourceName} from '../types';
 
 /**
- *  @param {RevokedTokenRepository} - a class that extends the `DefaultKeyValueRepository` class,
- *  which is a class that comes with LoopBack 4, uses the AuthCacheSource data source to store and retrieve data.
- * */
+ * A repository class using the AuthCacheSource to store RevokedToken.
+ */
 export class RevokedTokenRepository extends DefaultKeyValueRepository<RevokedToken> {
   constructor(
     @inject(`datasources.${AuthCacheSourceName}`)

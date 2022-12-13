@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 /**
- * @param {AuthCacheSourceName} - exporting a constant named AuthCacheSourceName with a value of 'AuthCache'.
- *  */
+ * @param AuthCacheSourceName exporting a constant named AuthCacheSourceName which is a string
+ * representing the name of an authentication cache,with a value of 'AuthCache'.
+ */
 export const AuthCacheSourceName = 'AuthCache';

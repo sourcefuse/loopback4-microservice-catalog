@@ -8,7 +8,7 @@ import {
 } from './types';
 
 /**
- * @param {UserModifiableEntityMixin} - Exporting function `UserModifiableEntityMixin`,
+ * @param UserModifiableEntityMixin Exporting function `UserModifiableEntityMixin`,
  * in which class T extends Entity and S extends Constructor | AbstractConstructor.
  * It takes an abstract class `UserModifiableEntity` and returns a new class that extends the `base` class and
  * adds the properties createdBy and modifiedBy.
