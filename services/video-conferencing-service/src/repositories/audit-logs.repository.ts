@@ -60,6 +60,9 @@ export class AuditLogsRepository extends DefaultCrudRepository<
         entity.actor = currentUser.id ? currentUser.id.toString() : '';
       });
     }
+    if (entities.length <= 0) {
+      return [];
+    }
     return super.createAll(entities, options);
   }
 
