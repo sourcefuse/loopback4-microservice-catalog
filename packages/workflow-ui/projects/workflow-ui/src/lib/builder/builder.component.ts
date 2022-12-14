@@ -31,6 +31,7 @@ import {
   InputChanged,
   NodeWithInput,
   RecordOfAnyType,
+  Select,
   StateMap,
   WorkflowNode,
 } from '../types';
@@ -60,6 +61,9 @@ export class BuilderComponent<E> implements OnInit {
   templateMap?: {
     [key: string]: TemplateRef<RecordOfAnyType>;
   };
+
+  @Input()
+  allColumns: Select[];
 
   @Output()
   stateChange = new EventEmitter<StateMap<RecordOfAnyType>>();
@@ -137,9 +141,9 @@ export class BuilderComponent<E> implements OnInit {
           }
         });
       });
-      this.showElseBlock =
-        this.eventGroups[0].children[0].node.state.get('condition') !==
-        ConditionTypes.Changes;
+      // this.showElseBlock =
+      //   this.eventGroups[0].children[0].node.state.get('condition') !==
+      //   ConditionTypes.Changes;
       this.updateDiagram();
     }
   }
@@ -183,9 +187,9 @@ export class BuilderComponent<E> implements OnInit {
       item: item.element.node,
     });
     this.updateState(item.element.node, item.element.inputs);
-    this.showElseBlock =
-      this.eventGroups[0].children[0].node.state.get('condition') !==
-      ConditionTypes.Changes;
+    // this.showElseBlock =
+    //   this.eventGroups[0].children[0].node.state.get('condition') !==
+    //   ConditionTypes.Changes;
     this.updateDiagram();
   }
 
@@ -267,7 +271,7 @@ export class BuilderComponent<E> implements OnInit {
 
     [...this.eventGroups, ...this.actionGroups].forEach(group => {
       if (group.name === 'and') {
-        [...group.children]
+        group.children
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {
@@ -277,7 +281,7 @@ export class BuilderComponent<E> implements OnInit {
           });
       } else if (group.name === 'or') {
         const statementNodes: StatementNode<E>[] = [];
-        [...group.children]
+        group.children
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {

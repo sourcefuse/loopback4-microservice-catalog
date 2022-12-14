@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { RecordOfAnyType } from '../../../../types/base.types';
+import {Injectable} from '@angular/core';
+import {RecordOfAnyType} from '../../../../types/base.types';
 import {
   BpmnElement,
   BpmnStatementNode,
   CustomBpmnModdle,
   ModdleElement,
 } from '../../../../types/bpmn.types';
-import { UtilsService } from '../../../utils.service';
+import {UtilsService} from '../../../utils.service';
 import {
   CreateStrategy,
   FromParam,
@@ -14,17 +14,17 @@ import {
   isFromParam,
   isStateParam,
 } from '../../../../interfaces';
-import { WorkflowAction, WorkflowElement } from '../../../../classes';
-import { InvalidEntityError } from '../../../../errors';
-import { NodeTypes } from '../../../../enum';
-import { GatewayElement } from '../../elements/gateways/gateway.element';
+import {WorkflowAction, WorkflowElement} from '../../../../classes';
+import {InvalidEntityError} from '../../../../errors';
+import {InputTypes, NodeTypes} from '../../../../enum';
+import {GatewayElement} from '../../elements/gateways/gateway.element';
 
 @Injectable()
 export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
   constructor(
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
-  ) { }
+  ) {}
   execute(
     element: BpmnElement,
     node: BpmnStatementNode,
@@ -36,7 +36,9 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
 
     element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
     if (node.workflowNode.type === NodeTypes.ACTION) {
-      element.id += `_${(node.workflowNode as WorkflowAction<ModdleElement>).isElseAction}`;
+      element.id += `_${
+        (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
+      }`;
     }
     node.outgoing = `Flow_${this.utils.uuid()}`;
     const customAttrs = Object.assign(
@@ -88,6 +90,15 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     });
   }
 
+  private transposeArrayToString(ids: string[]) {
+    let idCol = '';
+    ids?.forEach(id => {
+      idCol = idCol.concat(`'${id}',`);
+    });
+
+    return idCol.substring(0, idCol.length - 1);
+  }
+
   private createJsonScript(element: BpmnElement, node: BpmnStatementNode) {
     const params = element.inputs.fields;
     const prevId = this.getInputFromPrev(element, node);
@@ -102,7 +113,8 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     const getVariables = froms
       .map(
         p =>
-          `var ${(p as FromParam).from}Local = readObj.${(p as FromParam).from
+          `var ${(p as FromParam).from}Local = readObj.${
+            (p as FromParam).from
           };`,
       )
       .join('\n');
@@ -114,6 +126,14 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
         } else if (isFromParam(tmp)) {
           return `${p}\njson.prop("${key}", ${tmp.from}Local);`;
         } else if (isStateParam(tmp)) {
+          if (
+            tmp.state === InputTypes.Email?.toLowerCase() &&
+            Array.isArray(state.get(tmp.state))
+          ) {
+            const metaValue = this.transposeArrayToString(state.get(tmp.state));
+            return `${p}\njson.prop("${key}", [${metaValue ?? ''}]);`;
+          }
+
           return `${p}\njson.prop("${key}", "${state.get(tmp.state) ?? ''}");`;
         } else {
           return `${p}\njson.prop("${key}", "${tmp.value}");`;
@@ -135,7 +155,9 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     node: BpmnStatementNode,
   ) {
     if (node.prev[0].element.constructor.name === 'GatewayElement') {
-      return node.element.id?.split('_').includes('true') ? (node.prev[0].element as GatewayElement).elseOutGoing : node.prev[0].outgoing;
+      return node.element.id?.split('_').includes('true')
+        ? (node.prev[0].element as GatewayElement).elseOutGoing
+        : node.prev[0].outgoing;
     } else {
       return node.prev[0].element.id;
     }

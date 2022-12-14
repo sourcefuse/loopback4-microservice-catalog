@@ -48,6 +48,45 @@
     transform: translate(-50%, -50%);
     font-size: 20px;
   }
+  .email-template {
+    width: 450px;
+    .email-input {
+      padding: 10px;
+      width: 100%;
+      border: 0;
+      outline: none;
+    }
+    .email-body-input {
+      border-top: 1px solid $grey;
+      border-bottom: 1px solid $grey;
+    }
+    .auto-populate {
+      padding: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      .item {
+        border: 1px solid $grey;
+        margin: 5px 10px;
+        padding: 4px;
+        font-size: 13px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+    .set-email-btn {
+      text-align: right;
+      padding: 10px;
+      .close-btn {
+        background: $black;
+        color: $white;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 5px 20px;
+        border: 0;
+        border-radius: 5px;
+      }
+    }
+  }
   .text-input {
     border: 2px solid $primary-color;
   }

@@ -78,6 +78,11 @@ export type DateTime = {
   time: {hour: null; minute: null};
 };
 
+export type EmailInput = {
+  subject: string;
+  body: string;
+};
+
 export type ENV = {
   envIdentifier: string;
 };

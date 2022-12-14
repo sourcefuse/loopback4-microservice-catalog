@@ -32,8 +32,8 @@ import {OnValueEvent} from './services/statement/events/onvalue.event';
 import {ColumnInput} from './services/statement/inputs/column.input';
 import {ConditionInput} from './services/statement/inputs/condition.input';
 import {
-  EmailBodyInput,
-  EmailSubjectInput,
+  EmailDataInput,
+  // EmailSubjectInput,
   EmailToInput,
 } from './services/statement/inputs/email.input';
 import {ToColumnInput} from './services/statement/inputs/tocolumn.input';
@@ -117,9 +117,9 @@ import {ENV} from './types';
     {provide: BPMN_ELEMENTS, useValue: ProcessPropertiesElement, multi: true},
     {provide: BPMN_INPUTS, useClass: ColumnInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ConditionInput, multi: true},
+    {provide: BPMN_INPUTS, useClass: EmailDataInput, multi: true},
     {provide: BPMN_INPUTS, useClass: EmailToInput, multi: true},
-    {provide: BPMN_INPUTS, useClass: EmailBodyInput, multi: true},
-    {provide: BPMN_INPUTS, useClass: EmailSubjectInput, multi: true},
+    // {provide: BPMN_INPUTS, useClass: EmailSubjectInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ToColumnInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ToValueInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ValueInput, multi: true},

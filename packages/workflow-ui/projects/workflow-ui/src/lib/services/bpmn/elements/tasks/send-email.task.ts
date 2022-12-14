@@ -6,7 +6,6 @@ import {CREATE_TASK_STRATEGY} from '../../strategies/create';
 import {ENV} from '../../../../types/base.types';
 import {LINK_BASIC_STRATEGY} from '../../strategies/link';
 import {ServiceTaskElement} from './service-task.task';
-
 @Injectable()
 export class SendEmail extends ServiceTaskElement {
   constructor(
@@ -38,7 +37,7 @@ export class SendEmail extends ServiceTaskElement {
         value: 'custom',
       },
       recipientType: {
-        value: 'specific_people',
+        state: 'recipientType',
       },
       recipients: {
         state: 'email',

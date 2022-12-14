@@ -17,6 +17,7 @@ export enum InputTypes {
   Interval = 'interval',
   Date = 'date',
   DateTime = 'datetime',
+  Email = 'Email',
 }
 
 export enum ConditionTypes {
@@ -46,4 +47,11 @@ export enum ElementNames {
 export enum NUMBER {
   TWO = 2,
   NINE = 9,
+}
+
+export enum NotificationRecipientTypesEnum {
+  NotifyMe = 'me',
+  NotifyEveryoneOnProject = 'everyone_on_project',
+  NotifyProjectOwners = 'project_owners',
+  NotifySpecificPeople = 'specific_people',
 }

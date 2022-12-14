@@ -23,6 +23,9 @@ import {
   EventWithInput,
   ActionWithInput,
   DateTime,
+  EmailInput,
+  Dropdown,
+  Select,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import {ConditionTypes, ValueInput} from '../..';
@@ -75,6 +78,10 @@ export class GroupComponent<E> implements OnInit {
     date: {month: 0, day: 0, year: 0},
     time: {hour: null, minute: null},
   };
+  emailInput: EmailInput = {
+    subject: 'Email Subject',
+    body: 'Hello Folks',
+  };
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -100,6 +107,11 @@ export class GroupComponent<E> implements OnInit {
   templateMap?: {
     [key: string]: TemplateRef<RecordOfAnyType>;
   };
+
+  @Input()
+  allColumns: Select[];
+
+  @ViewChild('emailTemplate') emailTemplate: TemplateRef<RecordOfAnyType>;
 
   @ViewChild('listTemplate')
   listTemplate: TemplateRef<RecordOfAnyType>;
@@ -146,6 +158,8 @@ export class GroupComponent<E> implements OnInit {
         this.searchableDropdownTemplate,
       [InputTypes.Interval]:
         this.templateMap?.[InputTypes.Interval] || this.listTemplate,
+      [InputTypes.Email]:
+        this.templateMap?.[InputTypes.Email] || this.emailTemplate,
     };
   }
 
@@ -157,13 +171,17 @@ export class GroupComponent<E> implements OnInit {
     this.add.emit(true);
   }
 
-  validateCondition(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
-    return !(
-      input.constructor === ValueInput &&
-      (nodeWithInput.node.state.get('condition') === ConditionTypes.Changes ||
-        nodeWithInput.node.state.get('condition') === ConditionTypes.PastToday)
-    );
+  appendEmailBody(item: Select) {
+    this.emailInput.body += ` ${item.value}`;
   }
+
+  // validateCondition(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
+  //   return !(
+  //     input.constructor === ValueInput &&
+  //     (nodeWithInput.node.state.get('condition') === ConditionTypes.Changes ||
+  //       nodeWithInput.node.state.get('condition') === ConditionTypes.PastToday)
+  //   );
+  // }
 
   openPopup(type: NodeTypes) {
     if (type === NodeTypes.ACTION) {

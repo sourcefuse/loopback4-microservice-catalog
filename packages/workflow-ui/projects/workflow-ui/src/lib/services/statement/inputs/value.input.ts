@@ -1,5 +1,9 @@
 import {State, WorkflowListPrompt} from '../../../classes';
-import {InputTypes} from '../../../enum';
+import {
+  ConditionTypes,
+  InputTypes,
+  NotificationRecipientTypesEnum,
+} from '../../../enum';
 import {RecordOfAnyType} from '../../../types';
 
 export class ValueInput extends WorkflowListPrompt {
@@ -17,6 +21,15 @@ export class ValueInput extends WorkflowListPrompt {
   // setListValue = <S extends RecordOfAnyType>(state: State<S>) => {
   //   return state.get('listValue') ?? this.listValueField;
   // };
+
+  isHidden = <S extends RecordOfAnyType>(state: State<S>) => {
+    return !(
+      state.get('condition') !== ConditionTypes.Changes ||
+      state.get('condition') !== ConditionTypes.PastToday ||
+      state.get('emailTo') ===
+        NotificationRecipientTypesEnum.NotifySpecificPeople
+    );
+  };
 
   prevchange = <S extends RecordOfAnyType>(state: State<S>) => {
     state.remove('value');

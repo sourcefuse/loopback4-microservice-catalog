@@ -80,7 +80,7 @@
         [popperHideOnScroll]="true"
         [popperTrigger]="'click'"
         [popperPlacement]="'bottom'"
-        *ngIf="validateCondition(input, nodeWithInput)"
+        *ngIf="!(input.isHidden && input.isHidden(nodeWithInput.node.state))"
       >
         <span
           class="value-text"
@@ -159,6 +159,46 @@
       (focusout)="callback($event.target)"
       value="{{ input.setValueName(nodeWithInput.node.state) }}"
     />
+  </ng-template>
+
+  <ng-template
+    #emailTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+  >
+    <div class="email-template">
+      <input
+        type="text"
+        class="email-input"
+        autofocus
+        [(ngModel)]="emailInput.subject"
+        placeholder="Type your subject"
+        value="{{ input.setValueName(nodeWithInput.node.state) }}"
+      />
+
+      <textarea
+        placeholder="Type your mail"
+        class="email-input email-body-input"
+        [(ngModel)]="emailInput.body"
+      ></textarea>
+      <div class="auto-populate">
+        <ng-container *ngFor="let item of allColumns">
+          <div class="item" (click)="appendEmailBody(item)">
+            {{ item.text }}
+          </div>
+        </ng-container>
+      </div>
+      <div class="set-email-btn">
+        <button
+          class="close-btn"
+          (click)="callback(emailInput)"
+          [disabled]="!emailInput.subject || !emailInput.body"
+        >
+          Set
+        </button>
+      </div>
+    </div>
   </ng-template>
 
   <ng-template
