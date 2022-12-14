@@ -40,7 +40,7 @@ export class SendEmail extends ServiceTaskElement {
         state: 'recipientType',
       },
       recipients: {
-        state: 'email',
+        state: 'recipients',
       },
       message: {
         state: 'body',

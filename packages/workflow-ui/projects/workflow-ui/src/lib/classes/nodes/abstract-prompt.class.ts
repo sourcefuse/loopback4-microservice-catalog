@@ -68,6 +68,7 @@ export abstract class WorkflowPrompt {
         const dateTime = `${this.onDateSelect(date)} ${hours}:${min}`;
         return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').format();
       case InputTypes.Email:
+        (value as AllowedValuesMap).displayValue = 'email';
         return value;
       case InputTypes.Number:
       case InputTypes.Text:
@@ -101,7 +102,8 @@ export abstract class WorkflowPrompt {
       case InputTypes.People:
         return state.get(`${this.inputKey}`)?.displayValue;
       case InputTypes.Email:
-        return 'email';
+        console.log(state, this.inputKey);
+        return state.get(this.inputKey)?.displayValue;
       case InputTypes.Number:
       case InputTypes.Text:
       case InputTypes.Boolean:
@@ -125,7 +127,8 @@ export abstract class WorkflowPrompt {
         return state.get(this.inputKey);
       }
       case InputTypes.Email:
-        return 'email';
+        console.log(state, this.inputKey);
+        return state.get(this.inputKey);
       case InputTypes.Number:
       case InputTypes.Text:
       case InputTypes.Boolean:

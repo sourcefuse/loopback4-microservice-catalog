@@ -31,9 +31,10 @@ export class CreatePropertyStrategy implements CreateStrategy<ModdleElement> {
             name: `${id}_${key}`,
             value:
               propertyMap[id].value &&
-              JSON_COLUMNS.includes(
+              (JSON_COLUMNS.includes(
                 propertyMap[id].columnName?.toLowerCase(),
-              ) &&
+              ) ||
+                propertyMap[id][key]?.displayValue === 'email') &&
               typeof propertyMap[id][key] === 'object'
                 ? JSON.stringify(propertyMap[id][key])
                 : propertyMap[id][key],

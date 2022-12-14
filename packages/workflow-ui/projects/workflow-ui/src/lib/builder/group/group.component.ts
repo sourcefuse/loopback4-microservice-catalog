@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -28,7 +29,7 @@ import {
   Select,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {ConditionTypes, ValueInput} from '../..';
+import {ConditionTypes} from '../..';
 
 @Component({
   selector: 'workflow-group',
@@ -37,6 +38,7 @@ import {ConditionTypes, ValueInput} from '../..';
     './group.component.scss',
     '../../../../assets/icons/icomoon/style.css',
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent<E> implements OnInit {
   constructor(private readonly nodes: NodeService<E>) {}
@@ -79,8 +81,8 @@ export class GroupComponent<E> implements OnInit {
     time: {hour: null, minute: null},
   };
   emailInput: EmailInput = {
-    subject: 'Email Subject',
-    body: 'Hello Folks',
+    subject: '',
+    body: '',
   };
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,

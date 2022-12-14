@@ -174,13 +174,13 @@
         autofocus
         [(ngModel)]="emailInput.subject"
         placeholder="Type your subject"
-        value="{{ input.setValueName(nodeWithInput.node.state) }}"
+        value="{{ input.setValueName(nodeWithInput.node.state)?.subject }}"
       />
-
       <textarea
         placeholder="Type your mail"
         class="email-input email-body-input"
         [(ngModel)]="emailInput.body"
+        value="{{ input.setValueName(nodeWithInput.node.state)?.body }}"
       ></textarea>
       <div class="auto-populate">
         <ng-container *ngFor="let item of allColumns">

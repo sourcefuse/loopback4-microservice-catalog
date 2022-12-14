@@ -127,7 +127,7 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
           return `${p}\njson.prop("${key}", ${tmp.from}Local);`;
         } else if (isStateParam(tmp)) {
           if (
-            tmp.state === InputTypes.Email?.toLowerCase() &&
+            tmp.state === 'recipients' &&
             Array.isArray(state.get(tmp.state))
           ) {
             const metaValue = this.transposeArrayToString(state.get(tmp.state));

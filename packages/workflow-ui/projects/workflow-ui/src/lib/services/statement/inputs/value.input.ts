@@ -23,11 +23,14 @@ export class ValueInput extends WorkflowListPrompt {
   // };
 
   isHidden = <S extends RecordOfAnyType>(state: State<S>) => {
-    return !(
-      state.get('condition') !== ConditionTypes.Changes ||
-      state.get('condition') !== ConditionTypes.PastToday ||
-      state.get('emailTo') ===
-        NotificationRecipientTypesEnum.NotifySpecificPeople
+    return (
+      [
+        NotificationRecipientTypesEnum.NotifyMe,
+        NotificationRecipientTypesEnum.NotifyEveryoneOnProject,
+        NotificationRecipientTypesEnum.NotifyProjectOwners,
+      ].includes(state.get('emailTo')) ||
+      state.get('condition') === ConditionTypes.Changes ||
+      state.get('condition') === ConditionTypes.PastToday
     );
   };
 
