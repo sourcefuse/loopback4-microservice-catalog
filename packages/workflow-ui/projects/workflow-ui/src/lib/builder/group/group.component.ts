@@ -10,7 +10,7 @@ import {
 import {NgxPopperjsContentComponent} from 'ngx-popperjs';
 import {isSelectInput, NodeService, WorkflowPrompt} from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
-import {InputTypes, NodeTypes} from '../../enum';
+import {ConditionTypes, InputTypes, NodeTypes} from '../../enum';
 import {InvalidEntityError} from '../../errors/base.error';
 import {
   AllowedValues,
@@ -25,7 +25,7 @@ import {
   DateTime,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {ConditionTypes, ValueInput} from '../..';
+import {ValueInput} from '../../services/statement/inputs/value.input';
 
 @Component({
   selector: 'workflow-group',

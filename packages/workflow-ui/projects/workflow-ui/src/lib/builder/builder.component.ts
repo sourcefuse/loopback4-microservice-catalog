@@ -7,7 +7,6 @@ import {
   SimpleChanges,
   TemplateRef,
 } from '@angular/core';
-import {ConditionTypes} from '..';
 import {
   isSelectInput,
   Statement,
@@ -18,7 +17,7 @@ import {
 } from '../classes';
 import {BaseGroup} from '../classes/nodes/abstract-base-group.class';
 import {BuilderService, ElementService, NodeService} from '../classes/services';
-import {NodeTypes} from '../enum';
+import {ConditionTypes, NodeTypes} from '../enum';
 import {InvalidEntityError} from '../errors/base.error';
 import {
   ActionAddition,
@@ -267,7 +266,7 @@ export class BuilderComponent<E> implements OnInit {
 
     [...this.eventGroups, ...this.actionGroups].forEach(group => {
       if (group.name === 'and') {
-        [...group.children]
+        group.children
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {
@@ -277,7 +276,7 @@ export class BuilderComponent<E> implements OnInit {
           });
       } else if (group.name === 'or') {
         const statementNodes: StatementNode<E>[] = [];
-        [...group.children]
+        group.children
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {

@@ -69,8 +69,14 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       attrs['conditionExpression'] = expression;
       attrs['name'] = name;
       const _link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
-      from.get('outgoing').push(_link);
-      to.get('incoming').push(_link);
+      const outgoing = from.get('outgoing');
+      const incoming = to.get('incoming');
+      if (!outgoing.find((item: any) => item.id === id)) {
+        outgoing.push(_link);
+      }
+      if (!incoming.find((item: any) => item.id === id)) {
+        incoming.push(_link);
+      }
       link.push(_link);
     }
     return link;
@@ -96,8 +102,14 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     attrs['conditionExpression'] = expression;
     attrs['name'] = name;
     const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
-    from.get('outgoing').push(link);
-    to.get('incoming').push(link);
+    const outgoing = from.get('outgoing');
+    const incoming = to.get('incoming');
+    if (!outgoing.find((item: any) => item.id === id)) {
+      outgoing.push(link);
+    }
+    if (!incoming.find((item: any) => item.id === id)) {
+      incoming.push(link);
+    }
     return link;
   }
 
@@ -147,11 +159,15 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       `;
     return {
       script: [read, declarations, loop, setters].join('\n'),
-      name:`${isElse?'! ': ''}${column}${condition}`,
+      name: isElse ? `!(${column}${condition})` : `${column}${condition}`,
     };
   }
 
-  private createLoopScript(node: BpmnStatementNode, condition: string, isElse = false) {
+  private createLoopScript(
+    node: BpmnStatementNode,
+    condition: string,
+    isElse = false,
+  ) {
     switch (node.workflowNode.state.get('condition')) {
       case ConditionTypes.PastToday:
         return `
@@ -159,7 +175,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
                   var taskValuePair = readObj[key];
                   if(taskValuePair && taskValuePair.value){
                     var readDateValue = new Date(taskValuePair.value);
-                    if(${isElse ? '!':''}(readDateValue < new Date())){
+                    if(${isElse ? '!' : ''}(readDateValue < new Date())){
                       ids.push(taskValuePair.id);
                     }
                   }
@@ -172,7 +188,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
                   var taskValuePair = readObj[key];
                   if(taskValuePair && taskValuePair.value){
                     var readDateValue = new Date(taskValuePair.value);
-                    if(${isElse ? '!':''}(readDateValue > new Date() && readDateValue.setDate(readDateValue.getDate()${condition}) < new Date())){
+                    if(${
+                      isElse ? '!' : ''
+                    }(readDateValue > new Date() && readDateValue.setDate(readDateValue.getDate()${condition}) < new Date())){
                       ids.push(taskValuePair.id);
                     }
                   }
@@ -182,7 +200,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
         return `
                 for(var key in readObj){
                   var taskValuePair = readObj[key];
-                  if(taskValuePair && ${isElse ? '!' : ''}taskValuePair.value${condition}){
+                  if(taskValuePair && ${
+                    isElse ? '!' : ''
+                  }(taskValuePair.value${condition})){
                     ids.push(taskValuePair.id);
                   }
                 }
