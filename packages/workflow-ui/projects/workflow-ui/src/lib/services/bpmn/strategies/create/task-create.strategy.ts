@@ -96,7 +96,9 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     let read = '';
     if (froms.length > 0) {
       if (prevIds.length) {
-        read = `var readObj = ${prevIds.map(id => `JSON.parse(execution.getVariable('${id}')`).join(' || ')} || {};`;
+        read = `var readObj = ${prevIds
+          .map(id => `JSON.parse(execution.getVariable('${id}'))`)
+          .join(' || ')} || {};`;
       }
     }
     const getVariables = froms
