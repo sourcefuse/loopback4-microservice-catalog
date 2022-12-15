@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.13 (2022-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-example
+
+
+
+
+
+## <small>0.5.12 (2022-11-25)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-example
+
+
+
+
+
 ## <small>0.5.11 (2022-10-10)</small>
 
 **Note:** Version bump only for package @sourceloop/feature-toggle-example

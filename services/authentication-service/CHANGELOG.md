@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.1 (2022-12-07)</small>
+
+* chore(deps): update loopback and sourceloop packages (#1101) ([fc6b432](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc6b432)), closes [#1101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1101) [#1100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1100)
+
+
+
+
+
+## 9.0.0 (2022-11-25)
+
+* feat(authentication-service): add asymmetric login in authentication service (#1011) ([92c21fb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/92c21fb)), closes [#1011](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1011) [#1007](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1007)
+* feat(authentication-service): feat(authentication-service): change parent class AuthClient (#1081) ([537cc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/537cc75)), closes [#1081](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1081)
+* chore(deps): loopback version update in services and packages (#1086) ([478668a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/478668a)), closes [#1086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1086)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+
+
+
+
+
 ## 8.2.0 (2022-10-17)
 
 * fix(services): sync user-tenant-service properties with auth-service (#1010) ([5c7fce8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c7fce8)), closes [#1010](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1010)

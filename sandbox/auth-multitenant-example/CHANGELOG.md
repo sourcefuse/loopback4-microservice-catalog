@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.1 (2022-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
+## 5.0.0 (2022-11-25)
+
+* feat(authentication-service): feat(authentication-service): change parent class AuthClient (#1081) ([537cc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/537cc75)), closes [#1081](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1081)
+* fix(sandbox): add missing migrations to auth-examples (#1079) ([bf9f641](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf9f641)), closes [#1079](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1079)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+
+
+
+
+
 ## <small>4.0.12 (2022-10-17)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example
