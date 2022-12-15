@@ -29,22 +29,23 @@
       (itemChanged)="onItemChanged($event)"
     ></workflow-group>
   </span>
+  <ng-container *ngIf="showElseBlock">
+    else
+    <div><span class="icon-workflow-down-arrow red"></span></div>
 
-  else
-  <div><span class="icon-workflow-down-arrow red"></span></div>
-
-  <span *ngFor="let group of eActionGroups; let i = index">
-    <workflow-group
-      [group]="group"
-      [isLast]="true"
-      [isFirst]="true"
-      [nodeType]="types.GROUP"
-      [popupTemplate]="nodePopup"
-      (eventAdded)="onEventAdded($event)"
-      (actionAdded)="onActionAdded($event)"
-      (itemChanged)="onItemChanged($event)"
-    ></workflow-group>
-  </span>
+    <span *ngFor="let group of eActionGroups; let i = index">
+      <workflow-group
+        [group]="group"
+        [isLast]="true"
+        [isFirst]="true"
+        [nodeType]="types.GROUP"
+        [popupTemplate]="nodePopup"
+        (eventAdded)="onEventAdded($event)"
+        (actionAdded)="onActionAdded($event)"
+        (itemChanged)="onItemChanged($event)"
+      ></workflow-group>
+    </span>
+  </ng-container>
 </div>
 
 <popper-content #nodePopup>

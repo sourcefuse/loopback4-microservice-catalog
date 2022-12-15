@@ -18,7 +18,10 @@
       </span>
     </div>
 
-    <span class="action-items" *ngIf="group.children.length">
+    <span
+      class="action-items"
+      *ngIf="group.children.length && enableActionIcon"
+    >
       <span
         class="action-add"
         *ngIf="isLast && nodeType === types.EVENT"

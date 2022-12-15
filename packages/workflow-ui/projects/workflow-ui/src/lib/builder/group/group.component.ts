@@ -87,7 +87,7 @@ export class GroupComponent<E> implements OnInit {
     defaultOpen: true,
   };
   showDateTimePicker = true;
-
+  enableActionIcon = true;
   events: WorkflowNode<E>[] = [];
   triggerEvents: WorkflowNode<E>[] = [];
   actions: WorkflowNode<E>[] = [];
@@ -160,7 +160,8 @@ export class GroupComponent<E> implements OnInit {
   validateCondition(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
     return !(
       input.constructor === ValueInput &&
-      nodeWithInput.node.state.get('condition') === ConditionTypes.PastToday
+      (nodeWithInput.node.state.get('condition') === ConditionTypes.Changes ||
+        nodeWithInput.node.state.get('condition') === ConditionTypes.PastToday)
     );
   }
 
@@ -238,6 +239,19 @@ export class GroupComponent<E> implements OnInit {
     value: AllowedValues | AllowedValuesMap,
     select = false,
   ) {
+    this.enableActionIcon = true;
+    element.inputs[1].prefix = 'is';
+    if (
+      input.constructor.name === 'ConditionInput' &&
+      (value as AllowedValuesMap).value === ConditionTypes.Changes
+    ) {
+      /**
+       * Remove node on changes event
+       */
+      element.inputs[1].prefix = '';
+      // element.node.elements.splice(-2, 2);
+      this.enableActionIcon = false;
+    }
     if (select && isSelectInput(input)) {
       element.node.state.change(
         `${input.inputKey}Name`,
@@ -257,6 +271,8 @@ export class GroupComponent<E> implements OnInit {
       value: value,
       element: element,
     });
+    this.enableActionIcon =
+      element.node.state.get('condition') !== ConditionTypes.Changes;
   }
 
   private handleSubsequentInputs(

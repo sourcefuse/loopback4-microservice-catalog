@@ -1,7 +1,7 @@
 <div class="tree-node">
   <span
     class="action-icons icon-workflow-plus"
-    *ngIf="isLast"
+    *ngIf="isLast && node.node.state.get('condition') !== 'changes'"
     [popper]="popupTemplate"
     [popperShowOnStart]="false"
     [popperHideOnClickOutside]="true"
