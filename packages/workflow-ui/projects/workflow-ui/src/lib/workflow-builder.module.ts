@@ -33,7 +33,7 @@ import {ColumnInput} from './services/statement/inputs/column.input';
 import {ConditionInput} from './services/statement/inputs/condition.input';
 import {
   EmailDataInput,
-  // EmailSubjectInput,
+  EmailRecepientInput,
   EmailToInput,
 } from './services/statement/inputs/email.input';
 import {ToColumnInput} from './services/statement/inputs/tocolumn.input';
@@ -119,7 +119,7 @@ import {ENV} from './types';
     {provide: BPMN_INPUTS, useClass: ConditionInput, multi: true},
     {provide: BPMN_INPUTS, useClass: EmailDataInput, multi: true},
     {provide: BPMN_INPUTS, useClass: EmailToInput, multi: true},
-    // {provide: BPMN_INPUTS, useClass: EmailSubjectInput, multi: true},
+    {provide: BPMN_INPUTS, useClass: EmailRecepientInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ToColumnInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ToValueInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ValueInput, multi: true},

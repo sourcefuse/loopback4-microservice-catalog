@@ -248,14 +248,19 @@ export class BpmnBuilderService extends BuilderService<
         properties.get('values').forEach(property => {
           const [id, key] = property['name'].split('_');
           if (state[id]) {
+            //TODO: Refactor this part
             state[id][key] =
-              JSON_COLUMNS.includes(state[id].columnName?.toLowerCase()) &&
-              property['name'] === `${id}_value`
+              (JSON_COLUMNS.includes(state[id].columnName?.toLowerCase()) &&
+                property['name'] === `${id}_value`) ||
+              key === 'specificRecepient'
                 ? JSON.parse(property['value'])
                 : property['value'];
           } else {
             state[id] = {
-              [key]: property['value'],
+              [key]:
+                key === 'email'
+                  ? JSON.parse(property['value'])
+                  : property['value'],
             };
           }
         });

@@ -260,7 +260,6 @@ export class GroupComponent<E> implements OnInit {
     select = false,
   ) {
     this.enableActionIcon = true;
-    element.inputs[1].prefix = 'is';
     if (
       input.constructor.name === 'ConditionInput' &&
       (value as AllowedValuesMap).value === ConditionTypes.Changes
@@ -269,7 +268,6 @@ export class GroupComponent<E> implements OnInit {
        * Remove node on changes event
        */
       element.inputs[1].prefix = '';
-      // element.node.elements.splice(-2, 2);
       this.enableActionIcon = false;
     }
     if (select && isSelectInput(input)) {

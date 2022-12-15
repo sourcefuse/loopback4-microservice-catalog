@@ -102,7 +102,6 @@ export abstract class WorkflowPrompt {
       case InputTypes.People:
         return state.get(`${this.inputKey}`)?.displayValue;
       case InputTypes.Email:
-        console.log(state, this.inputKey);
         return state.get(this.inputKey)?.displayValue;
       case InputTypes.Number:
       case InputTypes.Text:
@@ -127,7 +126,6 @@ export abstract class WorkflowPrompt {
         return state.get(this.inputKey);
       }
       case InputTypes.Email:
-        console.log(state, this.inputKey);
         return state.get(this.inputKey);
       case InputTypes.Number:
       case InputTypes.Text:

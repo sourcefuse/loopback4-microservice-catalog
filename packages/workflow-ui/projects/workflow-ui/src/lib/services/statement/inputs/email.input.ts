@@ -1,5 +1,6 @@
+import {ValueInput} from '.';
 import {State, WorkflowPrompt} from '../../../classes';
-import {ConditionTypes, InputTypes} from '../../../enum';
+import {InputTypes} from '../../../enum';
 import {RecordOfAnyType} from '../../../types/base.types';
 
 export class EmailDataInput extends WorkflowPrompt {
@@ -24,18 +25,6 @@ export class EmailToInput extends WorkflowPrompt {
     state.get('emailToInputType') as InputTypes;
 }
 
-// export class EmailSubjectInput extends WorkflowPrompt {
-//   prefix = 'with subject: ';
-//   suffix = 'and';
-//   typeFunction = () => InputTypes.Text;
-//   inputKey = 'subject';
-//   placeholder = 'Subject';
-// }
-
-// export class EmailBodyInput extends WorkflowPrompt {
-//   prefix = 'to';
-//   suffix = '';
-//   typeFunction = () => InputTypes.List;
-//   inputKey = 'body';
-//   placeholder = 'someone';
-// }
+export class EmailRecepientInput extends ValueInput {
+  inputKey = 'specificRecepient';
+}

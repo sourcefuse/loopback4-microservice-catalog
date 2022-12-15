@@ -3,9 +3,8 @@ import {NodeTypes} from '../../../enum';
 import {BpmnAction} from '../../../types/bpmn.types';
 import {SendEmail} from '../../bpmn/elements/tasks/send-email.task';
 import {
-  // EmailToInput,
-  // EmailSubjectInput,
   EmailDataInput,
+  EmailRecepientInput,
   EmailToInput,
 } from '../inputs/email.input';
 
@@ -16,7 +15,7 @@ export class SendEmailAction extends BpmnAction {
   elements = [SendEmail];
   name = 'Send Email';
   statement = 'send an';
-  prompts = [EmailDataInput, EmailToInput, ValueInput];
+  prompts = [EmailDataInput, EmailToInput, EmailRecepientInput];
   constructor(
     id: string,
     groupType: NodeTypes,

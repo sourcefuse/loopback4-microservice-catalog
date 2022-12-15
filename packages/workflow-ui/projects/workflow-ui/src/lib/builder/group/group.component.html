@@ -171,15 +171,15 @@
       <input
         type="text"
         class="email-input"
+        (keyup)="emailInput.subject = $event.target?.value"
         autofocus
-        [(ngModel)]="emailInput.subject"
         placeholder="Type your subject"
         value="{{ input.setValueName(nodeWithInput.node.state)?.subject }}"
       />
       <textarea
         placeholder="Type your mail"
         class="email-input email-body-input"
-        [(ngModel)]="emailInput.body"
+        (keyup)="emailInput.body = $event.target?.value"
         value="{{ input.setValueName(nodeWithInput.node.state)?.body }}"
       ></textarea>
       <div class="auto-populate">

@@ -30,10 +30,11 @@ export class CreatePropertyStrategy implements CreateStrategy<ModdleElement> {
           this.moddle.create('camunda:Property', {
             name: `${id}_${key}`,
             value:
-              propertyMap[id].value &&
-              (JSON_COLUMNS.includes(
-                propertyMap[id].columnName?.toLowerCase(),
-              ) ||
+              (propertyMap[id].value || propertyMap[id].email) &&
+              (!propertyMap[id].columnName ||
+                JSON_COLUMNS.includes(
+                  propertyMap[id].columnName?.toLowerCase(),
+                ) ||
                 propertyMap[id][key]?.displayValue === 'email') &&
               typeof propertyMap[id][key] === 'object'
                 ? JSON.stringify(propertyMap[id][key])
