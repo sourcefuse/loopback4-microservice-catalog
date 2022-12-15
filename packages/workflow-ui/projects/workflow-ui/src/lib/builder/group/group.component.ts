@@ -11,7 +11,7 @@ import {
 import {NgxPopperjsContentComponent} from 'ngx-popperjs';
 import {isSelectInput, NodeService, WorkflowPrompt} from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
-import {InputTypes, NodeTypes} from '../../enum';
+import {ConditionTypes, InputTypes, NodeTypes} from '../../enum';
 import {InvalidEntityError} from '../../errors/base.error';
 import {
   AllowedValues,
@@ -29,8 +29,6 @@ import {
   Select,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {ConditionTypes} from '../..';
-
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
@@ -176,14 +174,6 @@ export class GroupComponent<E> implements OnInit {
   appendEmailBody(item: Select) {
     this.emailInput.body += ` ${item.value}`;
   }
-
-  // validateCondition(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
-  //   return !(
-  //     input.constructor === ValueInput &&
-  //     (nodeWithInput.node.state.get('condition') === ConditionTypes.Changes ||
-  //       nodeWithInput.node.state.get('condition') === ConditionTypes.PastToday)
-  //   );
-  // }
 
   openPopup(type: NodeTypes) {
     if (type === NodeTypes.ACTION) {

@@ -69,22 +69,10 @@ export class BpmnBuilderService extends BuilderService<
     statement.addStart(start);
     statement.addEnd(end);
     let current = statement.head;
-    while (current) {
-      if (
-        elseStatement.head.length &&
-        current[0].element.constructor.name === 'GatewayElement'
-      ) {
-        this.getPreviousNode(elseStatement, current[0]);
-      }
-      this.setTags(current);
-      this.linkNodes(current);
-      if (current.length > 1) {
-        this.processNodes(current, elseStatement);
-      }
-      current = current[0].next;
-    }
-    this.elseStatementBuild(elseStatement);
-    const {xml} = await this.moddle.toXML(this.root);
+    elseStatement.head.length ? this.addElseIntoMainFlow(elseStatement, statement) : '';
+    this.traverseToSetTags(current[0]);
+    this.traverseToLink(current[0]);
+    const { xml } = await this.moddle.toXML(this.root);
     try {
       return (await this.layout.layoutProcess(xml)).xml;
     } catch (e) {
@@ -92,62 +80,59 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
-  private processNodes(
-    current: StatementNode<ModdleElement>[],
-    elseStatement: Statement<ModdleElement>,
-  ) {
-    for (let i = 1; i < current.length; i++) {
-      if (
-        elseStatement.head.length &&
-        current[i].element.constructor.name === 'GatewayElement'
-      ) {
-        this.getPreviousNode(elseStatement, current[i]);
-      }
-      if (current[i].next) {
-        this.setTags(current[i].next);
-        this.linkNodes(current[i].next);
-      }
+  traverseToSetTags(root: StatementNode<ModdleElement>) {
+    let queue = [root];
+    while (queue.length > 0) {
+      let current = queue.shift()!;
+      if(!current.tag)
+        this.setTags(current);
+      if (current?.next && current.next.length) queue.push(...current.next);
+
     }
   }
 
-  private getPreviousNode(
-    elseStatement: Statement<ModdleElement>,
-    currentNode: StatementNode<ModdleElement>,
-  ) {
-    const head = elseStatement.head[0];
-    let prev = head.prev;
-    currentNode.next.push(head);
-    if (prev) {
-      prev.push(currentNode);
-    } else {
-      head.prev = [currentNode];
-    }
-  }
-
-  private elseStatementBuild(eStatement: Statement<ModdleElement>) {
-    if (!eStatement.head.length) return;
-    const end = this.elements.createInstanceByName('EndElement');
-    eStatement.addEnd(end);
-    let current = eStatement.head;
-    while (current) {
-      this.setTags(current);
+  traverseToLink(root: StatementNode<ModdleElement>) {
+    let queue = [root];
+    while (queue.length > 0) {
+      const current = queue.shift()!;
       this.linkNodes(current);
-      current = current[0].next;
+      if (current?.next && current.next.length) queue.push(...current.next);
     }
   }
 
-  setTags(statementNode: StatementNode<ModdleElement>[]) {
-    statementNode.forEach(element => {
-      const tag = element.element.create(element);
-      this.base.get('flowElements').push(tag);
-      element.setTag(tag);
-    });
+  private addElseIntoMainFlow(
+    elseStatement: Statement<ModdleElement>,
+    statement: Statement<ModdleElement>,
+  ) {
+    const elseEnd = this.elements.createInstanceByName('EndElement');
+    elseStatement.addEnd(elseEnd);
+    let queue = [statement.head[0]];
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      if (elseStatement.head.length && current.element.constructor.name === 'GatewayElement') {
+        current.next.push(elseStatement.head[0]);
+        elseStatement.head[0].prev ?
+          elseStatement.head[0].prev.push(current) : elseStatement.head[0].prev = [current];
+      }
+      if (current?.next && current.next.length) queue.push(...current.next);
+    }
   }
 
-  linkNodes(statementNode: StatementNode<ModdleElement>[]) {
-    for (let element of statementNode) {
-      if (element.prev && element.tag) {
-        for (let _element of element.prev) {
+  setTags(element: StatementNode<ModdleElement>) {
+    if(element.element.constructor.name === "ChangeColumnValue" || element.element.constructor.name === "SendEmail"){
+      for(let ele of element.prev){
+        ele.element.create(ele);
+      }
+    }
+    const tag = element.element.create(element);
+    this.base.get('flowElements').push(tag);
+    element.setTag(tag);
+  }
+
+  linkNodes(element: StatementNode<ModdleElement>) {
+    if (element.prev) {
+      for (let _element of element.prev) {
+        if (_element.next) {
           const link = _element.element.link(_element);
           this.base.get('flowElements').push(...link);
         }

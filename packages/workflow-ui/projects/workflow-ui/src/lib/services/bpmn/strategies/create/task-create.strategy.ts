@@ -101,13 +101,15 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
 
   private createJsonScript(element: BpmnElement, node: BpmnStatementNode) {
     const params = element.inputs.fields;
-    const prevId = this.getInputFromPrev(element, node);
+    const prevIds = this.getInputFromPrev(element, node);
     const state = node.workflowNode.state;
     const froms = Object.values(params).filter(p => isFromParam(p));
     let read = '';
     if (froms.length > 0) {
-      if (prevId) {
-        read = `var readObj = JSON.parse(execution.getVariable('${prevId}'))`;
+      if (prevIds.length) {
+        read = `var readObj = ${prevIds
+          .map(id => `JSON.parse(execution.getVariable('${id}'))`)
+          .join(' || ')} || {};`;
       }
     }
     const getVariables = froms
@@ -154,12 +156,15 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
   ) {
-    if (node.prev[0].element.constructor.name === 'GatewayElement') {
+    const prevGateways = node.prev.filter(
+      n => n.element.constructor.name === 'GatewayElement',
+    );
+    if (prevGateways.length) {
       return node.element.id?.split('_').includes('true')
-        ? (node.prev[0].element as GatewayElement).elseOutGoing
-        : node.prev[0].outgoing;
+        ? prevGateways.map(e => (e.element as GatewayElement).elseOutGoing)
+        : prevGateways.map(e => e.outgoing);
     } else {
-      return node.prev[0].element.id;
+      return [node.prev[0].element.id];
     }
   }
 }

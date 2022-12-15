@@ -29,9 +29,9 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
     attrs: RecordOfAnyType,
   ): ModdleElement {
     element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
-    node.outgoing = `Flow_${this.utils.uuid()}`;
-    (element as GatewayElement).elseOutGoing = `Flow_${this.utils.uuid()}`;
-    (element as GatewayElement).default = `Flow_${this.utils.uuid()}`;
+    node.outgoing = node.outgoing ?? `Flow_${this.utils.uuid()}`;
+    (element as GatewayElement).elseOutGoing = (element as GatewayElement).elseOutGoing ?? `Flow_${this.utils.uuid()}`;
+    (element as GatewayElement).default = (element as GatewayElement).default  ??`Flow_${this.utils.uuid()}`;
     return this.moddle.create(element.tag, {
       id: element.id,
       name: 'Gateway',
