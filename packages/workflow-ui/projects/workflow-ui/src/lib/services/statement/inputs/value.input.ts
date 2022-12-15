@@ -14,14 +14,6 @@ export class ValueInput extends WorkflowListPrompt {
   listValueField = 'value';
   placeholder = 'Value';
 
-  // setListName = <S extends RecordOfAnyType>(state: State<S>) => {
-  //   return state.get('listName') ?? this.listNameField;
-  // };
-
-  // setListValue = <S extends RecordOfAnyType>(state: State<S>) => {
-  //   return state.get('listValue') ?? this.listValueField;
-  // };
-
   isHidden = <S extends RecordOfAnyType>(state: State<S>) => {
     return (
       [

@@ -69,10 +69,12 @@ export class BpmnBuilderService extends BuilderService<
     statement.addStart(start);
     statement.addEnd(end);
     let current = statement.head;
-    elseStatement.head.length ? this.addElseIntoMainFlow(elseStatement, statement) : '';
+    elseStatement.head.length
+      ? this.addElseIntoMainFlow(elseStatement, statement)
+      : '';
     this.traverseToSetTags(current[0]);
     this.traverseToLink(current[0]);
-    const { xml } = await this.moddle.toXML(this.root);
+    const {xml} = await this.moddle.toXML(this.root);
     try {
       return (await this.layout.layoutProcess(xml)).xml;
     } catch (e) {
@@ -84,10 +86,8 @@ export class BpmnBuilderService extends BuilderService<
     let queue = [root];
     while (queue.length > 0) {
       let current = queue.shift()!;
-      if(!current.tag)
-        this.setTags(current);
+      if (!current.tag) this.setTags(current);
       if (current?.next && current.next.length) queue.push(...current.next);
-
     }
   }
 
@@ -109,18 +109,25 @@ export class BpmnBuilderService extends BuilderService<
     let queue = [statement.head[0]];
     while (queue.length > 0) {
       const current = queue.shift()!;
-      if (elseStatement.head.length && current.element.constructor.name === 'GatewayElement') {
+      if (
+        elseStatement.head.length &&
+        current.element.constructor.name === 'GatewayElement'
+      ) {
         current.next.push(elseStatement.head[0]);
-        elseStatement.head[0].prev ?
-          elseStatement.head[0].prev.push(current) : elseStatement.head[0].prev = [current];
+        elseStatement.head[0].prev
+          ? elseStatement.head[0].prev.push(current)
+          : (elseStatement.head[0].prev = [current]);
       }
       if (current?.next && current.next.length) queue.push(...current.next);
     }
   }
 
   setTags(element: StatementNode<ModdleElement>) {
-    if(element.element.constructor.name === "ChangeColumnValue" || element.element.constructor.name === "SendEmail"){
-      for(let ele of element.prev){
+    if (
+      element.element.constructor.name === 'ChangeColumnValue' ||
+      element.element.constructor.name === 'SendEmail'
+    ) {
+      for (let ele of element.prev) {
         ele.element.create(ele);
       }
     }
@@ -237,6 +244,8 @@ export class BpmnBuilderService extends BuilderService<
             state[id][key] =
               (JSON_COLUMNS.includes(state[id].columnName?.toLowerCase()) &&
                 property['name'] === `${id}_value`) ||
+              (state[id].columnName === 'Priority' &&
+                property['name'] === `${id}_valueName`) ||
               key === 'specificRecepient'
                 ? JSON.parse(property['value'])
                 : property['value'];

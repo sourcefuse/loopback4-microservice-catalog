@@ -30,6 +30,9 @@ export abstract class WorkflowPrompt {
   ) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
+        // if (typeof value === 'object') {
+        //   return (value as AllowedValuesMap).displayValue;
+        // }
         return value;
       case InputTypes.People: {
         const ids: string[] = [];
@@ -98,6 +101,11 @@ export abstract class WorkflowPrompt {
   getValueName<S extends RecordOfAnyType>(state: State<S>) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
+        if (typeof state.get(`${this.inputKey}Name`) === 'object') {
+          return state.get(`${this.inputKey}Name`)?.displayValue;
+        }
+        console.log('getvalueName', state.get(`${this.inputKey}Name`));
+
         return state.get(`${this.inputKey}Name`);
       case InputTypes.People:
         return state.get(`${this.inputKey}`)?.displayValue;
@@ -115,6 +123,12 @@ export abstract class WorkflowPrompt {
   setValueName<S extends RecordOfAnyType>(state: State<S>) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
+        console.log('setvalueName', state.get(this.inputKey));
+        if (
+          typeof state.get(this.inputKey) === 'object' &&
+          state.get(this.inputKey)?.value
+        )
+          return state.get(this.inputKey)?.value;
         return state.get(this.inputKey);
       case InputTypes.People: {
         return state.get(this.inputKey);

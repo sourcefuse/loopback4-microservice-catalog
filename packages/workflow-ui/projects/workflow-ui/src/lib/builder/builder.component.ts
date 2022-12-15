@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -42,12 +44,14 @@ import {
     './builder.component.scss',
     '../../../assets/icons/icomoon/style.css',
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BuilderComponent<E> implements OnInit {
   constructor(
     private readonly builder: BuilderService<E, RecordOfAnyType>,
     private readonly nodes: NodeService<E>,
     private readonly elements: ElementService<E>,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   @Input()
@@ -140,9 +144,11 @@ export class BuilderComponent<E> implements OnInit {
           }
         });
       });
-      // this.showElseBlock =
-      //   this.eventGroups[0].children[0].node.state.get('condition') !==
-      //   ConditionTypes.Changes;
+      console.log(this.eventGroups);
+
+      this.showElseBlock =
+        this.eventGroups[0].children[0].node.state.get('condition') !==
+        ConditionTypes.Changes;
       this.updateDiagram();
     }
   }
@@ -186,9 +192,11 @@ export class BuilderComponent<E> implements OnInit {
       item: item.element.node,
     });
     this.updateState(item.element.node, item.element.inputs);
-    // this.showElseBlock =
-    //   this.eventGroups[0].children[0].node.state.get('condition') !==
-    //   ConditionTypes.Changes;
+    console.log(this.eventGroups);
+
+    this.showElseBlock =
+      this.eventGroups[0].children[0].node.state.get('condition') !==
+      ConditionTypes.Changes;
     this.updateDiagram();
   }
 
@@ -230,6 +238,7 @@ export class BuilderComponent<E> implements OnInit {
         });
       }
     });
+    this.cdr.detectChanges();
   }
 
   addValue(
@@ -312,6 +321,7 @@ export class BuilderComponent<E> implements OnInit {
   async updateDiagram() {
     this.diagram = await this.build();
     this.diagramChange.emit(this.diagram);
+    this.cdr.detectChanges();
   }
 
   updateState(node: WorkflowNode<E>, inputs: WorkflowPrompt[], remove = false) {

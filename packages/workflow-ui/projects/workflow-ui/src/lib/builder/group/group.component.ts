@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -25,7 +24,6 @@ import {
   ActionWithInput,
   DateTime,
   EmailInput,
-  Dropdown,
   Select,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
@@ -36,7 +34,6 @@ import {IDropdownSettings} from 'ng-multiselect-dropdown';
     './group.component.scss',
     '../../../../assets/icons/icomoon/style.css',
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent<E> implements OnInit {
   constructor(private readonly nodes: NodeService<E>) {}
@@ -261,16 +258,29 @@ export class GroupComponent<E> implements OnInit {
       this.enableActionIcon = false;
     }
     if (select && isSelectInput(input)) {
-      element.node.state.change(
-        `${input.inputKey}Name`,
-        (value as AllowedValuesMap)[input.listNameField],
-      );
-      this.itemChanged.emit({
-        field: input,
-        value: (value as AllowedValuesMap)[input.listValueField],
-        element: element,
-      });
-      value = (value as AllowedValuesMap)[input.listValueField];
+      if (element.node.state.get('columnName') === 'Priority') {
+        element.node.state.change(
+          `${input.inputKey}Name`,
+          value as AllowedValuesMap,
+        );
+        this.itemChanged.emit({
+          field: input,
+          value: value as AllowedValuesMap,
+          element: element,
+        });
+        value = value as AllowedValuesMap;
+      } else {
+        element.node.state.change(
+          `${input.inputKey}Name`,
+          (value as AllowedValuesMap)[input.listNameField],
+        );
+        this.itemChanged.emit({
+          field: input,
+          value: (value as AllowedValuesMap)[input.listValueField],
+          element: element,
+        });
+        value = (value as AllowedValuesMap)[input.listValueField];
+      }
     }
     element.node.state.change(input.inputKey, value);
     this.handleSubsequentInputs(element, input);

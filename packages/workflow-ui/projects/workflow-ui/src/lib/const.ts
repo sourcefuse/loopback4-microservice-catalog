@@ -48,4 +48,4 @@ export const typeTuppleList: Array<ConditionOperatorPair> = [
   {condition: ConditionTypes.PastBy, operator: '+', value: true},
 ];
 
-export const JSON_COLUMNS = [InputTypes.People];
+export const JSON_COLUMNS = [InputTypes.People, 'Priority', 'priority'];
