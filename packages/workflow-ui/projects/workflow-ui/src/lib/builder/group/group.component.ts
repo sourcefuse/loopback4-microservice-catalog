@@ -8,7 +8,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import {NgxPopperjsContentComponent} from 'ngx-popperjs';
-import {isSelectInput, NodeService, WorkflowPrompt} from '../../classes';
+import {
+  isSelectInput,
+  NodeService,
+  WorkflowElement,
+  WorkflowPrompt,
+} from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
 import {ConditionTypes, InputTypes, NodeTypes} from '../../enum';
 import {InvalidEntityError} from '../../errors/base.error';
@@ -25,8 +30,10 @@ import {
   DateTime,
   EmailInput,
   Select,
+  Constructor,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {GatewayElement, ReadColumnValue, TriggerWhenColumnChanges} from '../..';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
@@ -247,15 +254,21 @@ export class GroupComponent<E> implements OnInit {
     select = false,
   ) {
     this.enableActionIcon = true;
-    if (
-      input.constructor.name === 'ConditionInput' &&
-      (value as AllowedValuesMap).value === ConditionTypes.Changes
-    ) {
-      /**
-       * Remove node on changes event
-       */
-      element.inputs[1].prefix = '';
-      this.enableActionIcon = false;
+    if (input.constructor.name === 'ConditionInput') {
+      if ((value as AllowedValuesMap).value === ConditionTypes.Changes) {
+        /**
+         * Remove node on changes event
+         */
+        element.node.elements.splice(-2, 2);
+        element.inputs[1].prefix = '';
+        this.enableActionIcon = false;
+      } else {
+        element.node.elements = [
+          TriggerWhenColumnChanges,
+          ReadColumnValue,
+          GatewayElement,
+        ] as unknown as Constructor<WorkflowElement<E>>[];
+      }
     }
     if (select && isSelectInput(input)) {
       if (element.node.state.get('columnName') === 'Priority') {

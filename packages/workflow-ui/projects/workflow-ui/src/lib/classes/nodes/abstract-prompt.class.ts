@@ -104,8 +104,6 @@ export abstract class WorkflowPrompt {
         if (typeof state.get(`${this.inputKey}Name`) === 'object') {
           return state.get(`${this.inputKey}Name`)?.displayValue;
         }
-        console.log('getvalueName', state.get(`${this.inputKey}Name`));
-
         return state.get(`${this.inputKey}Name`);
       case InputTypes.People:
         return state.get(`${this.inputKey}`)?.displayValue;
@@ -123,7 +121,6 @@ export abstract class WorkflowPrompt {
   setValueName<S extends RecordOfAnyType>(state: State<S>) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
-        console.log('setvalueName', state.get(this.inputKey));
         if (
           typeof state.get(this.inputKey) === 'object' &&
           state.get(this.inputKey)?.value
