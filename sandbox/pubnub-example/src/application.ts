@@ -12,10 +12,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
-import {
-  NotificationServiceComponent,
-  NotifServiceBindings,
-} from '@sourceloop/notification-service';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
 import {NotificationBindings} from 'loopback4-notifications';
 import {PubnubBindings, PubNubProvider} from 'loopback4-notifications/pubnub';
 
@@ -38,13 +35,6 @@ export class PubnubExampleApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
     this.component(NotificationServiceComponent);
-
-    // this.bind(NotifServiceBindings.Config).to({
-    //   useCustomEmailProvider: false,
-    //   useCustomSMSProvider: false,
-    //   useCustomPushProvider: true,
-    //   useCustomSequence: false,
-    // });
 
     /*
       subscribeKey: String - key used for subscribing to a channel (mandatory)
