@@ -10,7 +10,6 @@ import {
   del,
   get,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
@@ -97,9 +96,6 @@ export class AttachmentFileController {
     attachFileDto.attachmentFiles.forEach(messageFile => {
       attachFiles.push(new AttachmentFile(messageFile));
     });
-    if (attachFiles.length <= 0) {
-      throw new HttpErrors.BadRequest('Atleast one file should be present');
-    }
     return this.attachmentFileRepository.createAll(attachFiles);
   }
   @authenticate(STRATEGY.BEARER, {

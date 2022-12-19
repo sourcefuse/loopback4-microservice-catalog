@@ -144,7 +144,7 @@ export class NotificationController {
         notification.body = notification.body.substring(0, maxBodyLen - 1);
       }
     });
-    if (notifications.length > 0) {
+    if (notifications.length) {
       const notifs = await this.notificationRepository.createAll(notifications);
       const notifUsers: NotificationUser[] = [];
       for (const notif of notifs) {
@@ -155,7 +155,7 @@ export class NotificationController {
         const receiversToCreate = await this.createNotifUsers(notif);
         notifUsers.push(...receiversToCreate);
       }
-      if (notifUsers.length > 0) {
+      if (notifUsers.length) {
         await this.notificationUserRepository.createAll(notifUsers);
       }
       return notifs;
