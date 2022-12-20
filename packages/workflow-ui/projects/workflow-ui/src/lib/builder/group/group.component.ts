@@ -31,9 +31,17 @@ import {
   EmailInput,
   Select,
   Constructor,
+  DateType,
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {GatewayElement, ReadColumnValue, TriggerWhenColumnChanges} from '../..';
+import {
+  EmailDataInput,
+  GatewayElement,
+  ReadColumnValue,
+  ToValueInput,
+  TriggerWhenColumnChanges,
+  ValueInput,
+} from '../..';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
@@ -78,6 +86,7 @@ export class GroupComponent<E> implements OnInit {
   @Output()
   itemChanged = new EventEmitter<unknown>();
 
+  date: DateType = {month: 0, day: 0, year: 0};
   dateTime: DateTime = {
     date: {month: 0, day: 0, year: 0},
     time: {hour: null, minute: null},
@@ -97,6 +106,7 @@ export class GroupComponent<E> implements OnInit {
     allowSearchFilter: true,
     defaultOpen: true,
   };
+  selectedItems = [];
   showDateTimePicker = true;
   enableActionIcon = true;
   events: WorkflowNode<E>[] = [];
@@ -165,6 +175,28 @@ export class GroupComponent<E> implements OnInit {
       [InputTypes.Email]:
         this.templateMap?.[InputTypes.Email] || this.emailTemplate,
     };
+  }
+
+  setInput(input: any, nodeWithInput: any) {
+    const allowedInputs = [ValueInput, EmailDataInput, ToValueInput];
+    if (allowedInputs.includes(input.constructor)) {
+      const value = input.getModelValue(nodeWithInput.node.state);
+      if (nodeWithInput.node.state.get('email')) {
+        this.emailInput = value;
+      } else {
+        switch (nodeWithInput.node.state.get('valueInputType')) {
+          case InputTypes.Date:
+            this.date = value;
+            break;
+          case InputTypes.DateTime:
+            this.dateTime = value;
+            break;
+          case InputTypes.People:
+            this.selectedItems = value;
+            break;
+        }
+      }
+    }
   }
 
   removeClick() {
@@ -254,7 +286,10 @@ export class GroupComponent<E> implements OnInit {
     select = false,
   ) {
     this.enableActionIcon = true;
-    if (input.constructor.name === 'ConditionInput') {
+    if (
+      input.constructor.name === 'ConditionInput' &&
+      element.node.constructor.name === 'OnChangeEvent'
+    ) {
       if ((value as AllowedValuesMap).value === ConditionTypes.Changes) {
         /**
          * Remove node on changes event
@@ -271,7 +306,10 @@ export class GroupComponent<E> implements OnInit {
       }
     }
     if (select && isSelectInput(input)) {
-      if (element.node.state.get('columnName') === 'Priority') {
+      if (
+        element.node.state.get('columnName') === 'Priority' &&
+        input.inputKey !== 'condition'
+      ) {
         element.node.state.change(
           `${input.inputKey}Name`,
           value as AllowedValuesMap,

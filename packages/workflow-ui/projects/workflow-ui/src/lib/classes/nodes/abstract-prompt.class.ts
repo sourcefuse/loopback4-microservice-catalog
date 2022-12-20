@@ -30,9 +30,6 @@ export abstract class WorkflowPrompt {
   ) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
-        // if (typeof value === 'object') {
-        //   return (value as AllowedValuesMap).displayValue;
-        // }
         return value;
       case InputTypes.People: {
         const ids: string[] = [];
@@ -63,13 +60,14 @@ export abstract class WorkflowPrompt {
         };
       }
       case InputTypes.Date:
-        return this.onDateSelect(value as NgbDateStruct);
+        const _date = `${this.onDateSelect(value as NgbDateStruct)}`;
+        return moment(_date.toString(), 'DD-MM-YYYY').format('YYYY-MM-DD');
       case InputTypes.DateTime:
         const {date, time} = value as DateTime;
         const hours = this.convertToTwoDigits(time.hour);
         const min = this.convertToTwoDigits(time.minute);
         const dateTime = `${this.onDateSelect(date)} ${hours}:${min}`;
-        return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').format();
+        return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').utc().format();
       case InputTypes.Email:
         (value as AllowedValuesMap).displayValue = 'email';
         return value;
@@ -144,6 +142,48 @@ export abstract class WorkflowPrompt {
       case InputTypes.Percentage:
       default:
         return state.get(this.inputKey);
+    }
+  }
+
+  getModelValue<S extends RecordOfAnyType>(state: State<S>) {
+    const DATE_TIME_FORMAT = `YYYY-MM-DD hh:mm`;
+    switch (this.typeFunction(state)) {
+      case InputTypes.People: {
+        const value = state.get(this.inputKey)?.value;
+        return value.map((val: any) => {
+          val.fullName = val.text;
+          val.id = val.value;
+          return val;
+        });
+      }
+      case InputTypes.Date: {
+        const dateString = state.get(this.inputKey);
+        return {
+          month: moment(dateString).month() + 1,
+          day: moment(dateString).date(),
+          year: moment(dateString).year(),
+        };
+      }
+      case InputTypes.DateTime: {
+        const dateString = moment(state.get(this.inputKey))?.format(
+          DATE_TIME_FORMAT,
+        );
+        return {
+          date: {
+            month: moment(dateString).month() + 1,
+            day: moment(dateString).date(),
+            year: moment(dateString).year(),
+          },
+          time: {
+            hour: moment(dateString).hours(),
+            minute: moment(dateString).minutes(),
+          },
+        };
+      }
+      case InputTypes.Email:
+        return state.get(this.inputKey);
+      default:
+        return '';
     }
   }
 }

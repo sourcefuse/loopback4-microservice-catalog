@@ -85,6 +85,7 @@
         <span
           class="value-text"
           *ngIf="input.getValueName(nodeWithInput.node.state)"
+          (click)="setInput(input, nodeWithInput)"
           >{{ input.getValueName(nodeWithInput.node.state) }}</span
         >
         <span
@@ -174,13 +175,13 @@
         (keyup)="emailInput.subject = $event.target?.value"
         autofocus
         placeholder="Type your subject"
-        value="{{ input.setValueName(nodeWithInput.node.state)?.subject }}"
+        [(ngModel)]="emailInput.subject"
       />
       <textarea
         placeholder="Type your mail"
         class="email-input email-body-input"
         (keyup)="emailInput.body = $event.target?.value"
-        value="{{ input.setValueName(nodeWithInput.node.state)?.body }}"
+        [(ngModel)]="emailInput.body"
       ></textarea>
       <div class="auto-populate">
         <ng-container *ngFor="let item of allColumns">
@@ -240,7 +241,11 @@
     let-input="input"
     let-nodeWithInput="nodeWithInput"
   >
-    <ngb-datepicker #d (dateSelect)="callback($event)"></ngb-datepicker>
+    <ngb-datepicker
+      [(ngModel)]="date"
+      #d
+      (dateSelect)="callback($event)"
+    ></ngb-datepicker>
   </ng-template>
 
   <ng-template

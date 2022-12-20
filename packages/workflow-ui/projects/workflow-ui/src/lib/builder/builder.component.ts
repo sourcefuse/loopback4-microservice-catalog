@@ -144,8 +144,6 @@ export class BuilderComponent<E> implements OnInit {
           }
         });
       });
-      console.log(this.eventGroups);
-
       this.showElseBlock =
         this.eventGroups[0].children[0].node.state.get('condition') !==
         ConditionTypes.Changes;
@@ -192,8 +190,6 @@ export class BuilderComponent<E> implements OnInit {
       item: item.element.node,
     });
     this.updateState(item.element.node, item.element.inputs);
-    console.log(this.eventGroups);
-
     this.showElseBlock =
       this.eventGroups[0].children[0].node.state.get('condition') !==
       ConditionTypes.Changes;

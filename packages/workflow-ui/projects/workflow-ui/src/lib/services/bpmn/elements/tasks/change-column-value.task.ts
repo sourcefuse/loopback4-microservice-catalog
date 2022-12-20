@@ -36,7 +36,9 @@ export class ChangeColumnValue extends ServiceTaskElement {
       groupColumnId: {
         state: 'column',
       },
-
+      boardId: {
+        state: 'boardId',
+      },
       changedValue: {
         formatter: <S extends RecordOfAnyType>(state: State<S>) => {
           if (

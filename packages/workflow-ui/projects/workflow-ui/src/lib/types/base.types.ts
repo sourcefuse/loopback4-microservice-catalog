@@ -73,8 +73,9 @@ export type Select = {
   value: string;
 };
 
+export type DateType = {month: 0; day: 0; year: 0};
 export type DateTime = {
-  date: {month: 0; day: 0; year: 0};
+  date: DateType;
   time: {hour: null; minute: null};
 };
 
