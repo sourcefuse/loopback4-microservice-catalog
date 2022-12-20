@@ -12,7 +12,7 @@ const config = {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   password: process.env.REDIS_PASSWORD,
-  db: process.env.REDIS_DATABASE,
+  db: process.env.REDIS_DB,
   url: process.env.REDIS_URL,
 };
 

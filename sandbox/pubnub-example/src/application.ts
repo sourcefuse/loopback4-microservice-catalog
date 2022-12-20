@@ -12,14 +12,9 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
-import {
-  NotificationServiceComponent,
-  NotifServiceBindings,
-} from '@sourceloop/notification-service';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
 import {NotificationBindings} from 'loopback4-notifications';
 import {PubnubBindings, PubNubProvider} from 'loopback4-notifications/pubnub';
-import {SNSBindings} from 'loopback4-notifications/sns';
-import {SESBindings} from 'loopback4-notifications/ses';
 
 export {ApplicationConfig};
 
@@ -40,13 +35,6 @@ export class PubnubExampleApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
     this.component(NotificationServiceComponent);
-
-    this.bind(NotifServiceBindings.Config).to({
-      useCustomEmailProvider: false,
-      useCustomSMSProvider: false,
-      useCustomPushProvider: true,
-      useCustomSequence: false,
-    });
 
     /*
       subscribeKey: String - key used for subscribing to a channel (mandatory)
@@ -69,8 +57,6 @@ export class PubnubExampleApplication extends BootMixin(
       apns2BundleId: process.env.APP_BUNDLE_ID,
     });
 
-    this.bind(SNSBindings.Config).to({});
-    this.bind(SESBindings.Config).to({});
     this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
 
     this.projectRoot = __dirname;
