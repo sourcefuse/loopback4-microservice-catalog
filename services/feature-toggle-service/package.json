@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/feature-toggle-service",
-  "version": "0.10.9",
+  "version": "0.11.0",
   "description": "A service that provides feature toggle functionality",
   "keywords": [
     "loopback-application",

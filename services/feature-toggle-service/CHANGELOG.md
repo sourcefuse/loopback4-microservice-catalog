@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.11.0 (2022-12-21)
+
+* refactor(chore): changes in the docker-compose (#1123) ([5704835](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5704835)), closes [#1123](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1123) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>0.10.9 (2022-12-07)</small>
 
 * chore(deps): update loopback and sourceloop packages (#1101) ([fc6b432](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc6b432)), closes [#1101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1101) [#1100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1100)
