@@ -66,7 +66,7 @@
     "@sourceloop/core": "^7.3.1",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "loopback-connector-postgresql": "^6.0.0",
     "loopback4-authentication": "^7.2.1",
     "loopback4-authorization": "^5.0.9",
