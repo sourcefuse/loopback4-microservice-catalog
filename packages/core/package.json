@@ -51,7 +51,7 @@
     "@loopback/service-proxy": "^5.0.5",
     "casbin": "^5.15.0",
     "i18n": "^0.14.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "logform": "^2.4.0",
     "loopback-datasource-juggler": "^4.28.0",
