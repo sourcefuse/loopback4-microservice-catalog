@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -95,6 +96,7 @@ export class GroupComponent<E> implements OnInit {
     subject: '',
     body: '',
   };
+  emailFocusKey: string;
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -208,7 +210,12 @@ export class GroupComponent<E> implements OnInit {
   }
 
   appendEmailBody(item: Select) {
-    this.emailInput.body += ` ${item.value}`;
+    if (this.emailFocusKey === 'subject') {
+      this.emailInput.subject += ` ${item.value}`;
+    }
+    if (this.emailFocusKey === 'body') {
+      this.emailInput.body += ` ${item.value}`;
+    }
   }
 
   openPopup(type: NodeTypes) {
