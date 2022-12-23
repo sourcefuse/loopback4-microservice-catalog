@@ -10,7 +10,7 @@ import {
 } from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
 import {BASE_XML, JSON_COLUMNS} from '../../const';
-import {NodeTypes} from '../../enum';
+import { NodeTypes, EventTypes } from '../../enum';
 import {AutoLayoutService} from '../../layout/layout.service';
 import {
   CustomBpmnModdle,
@@ -58,7 +58,7 @@ export class BpmnBuilderService extends BuilderService<
         statement.head[0],
       );
     }
-    const start = this.elements.createInstanceByName('StartElement');
+    const start = this.getStartEvent(statement.head[0]);
     const end = this.elements.createInstanceByName('EndElement');
     this.base = this.elements.createElementByName(
       'ProcessElement',
@@ -79,6 +79,21 @@ export class BpmnBuilderService extends BuilderService<
       return (await this.layout.layoutProcess(xml)).xml;
     } catch (e) {
       return '';
+    }
+  }
+
+  private getStartEvent(trigger: StatementNode<ModdleElement>){
+    if(!trigger){
+      return this.elements.createInstanceByName('StartElement');
+    }
+    switch(trigger.workflowNode.constructor.name) {
+      case EventTypes.OnIntervalEvent:
+        return this.elements.createInstanceByName('StartOnIntervalElement');
+      case EventTypes.OnChangeEvent:
+      case EventTypes.OnValueEvent:
+      case EventTypes.OnAddItemEvent:
+      default:
+        return this.elements.createInstanceByName('StartElement');
     }
   }
 
@@ -111,7 +126,7 @@ export class BpmnBuilderService extends BuilderService<
       const current = queue.shift()!;
       if (
         elseStatement.head.length &&
-        current.element.constructor.name === 'GatewayElement'
+        (current.element.constructor.name === 'GatewayElement' || current.element.constructor.name === 'EGatewayElement')
       ) {
         current.next.push(elseStatement.head[0]);
         elseStatement.head[0].prev

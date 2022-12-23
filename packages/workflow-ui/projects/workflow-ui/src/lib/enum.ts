@@ -4,6 +4,7 @@ export enum ElementTypes {
   End = 'end.event',
   Process = 'process',
   Gateway = 'gateway',
+  EGateway = 'egateway',
   Extension = 'extension',
 }
 
@@ -54,4 +55,11 @@ export enum NotificationRecipientTypesEnum {
   NotifyEveryoneOnProject = 'everyone_on_project',
   NotifyProjectOwners = 'project_owners',
   NotifySpecificPeople = 'specific_people',
+}
+
+export enum EventTypes {
+  OnChangeEvent = 'OnChangeEvent',
+  OnValueEvent = 'OnValueEvent',
+  OnIntervalEvent = 'OnIntervalEvent',
+  OnAddItemEvent = 'OnAddItemEvent',
 }

@@ -11,18 +11,23 @@ import {
 import {CONDITION_LIST} from '../../../../const';
 import {UtilsService} from '../../../utils.service';
 import {ConditionTypes, InputTypes} from '../../../../enum';
-import {WorkflowAction} from '../../../../classes/nodes/abstract-workflow-action.class';
-import {GatewayElement} from '../../elements';
+import {EGatewayElement} from '../../elements';
 
 const BPMN_SEQ_FLOW = 'bpmn:SequenceFlow';
 @Injectable()
-export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
+export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
   constructor(
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
     @Inject(CONDITION_LIST)
     private readonly conditions: Array<ConditionOperatorPair>,
   ) {}
+/**
+ * It creates a link between the element and the node
+ * @param element - The element that is being processed.
+ * @param {BpmnStatementNode} node - BpmnStatementNode
+ * @returns An array of ModdleElements
+ */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
@@ -31,37 +36,18 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return links;
   }
 
-  private createLink(node: BpmnStatementNode) {
-    const links: ModdleElement[] = [];
-    let mainNodes: BpmnStatementNode[] = [];
-    let elseNodes: BpmnStatementNode[] = [];
-    node.next.forEach(node =>
-      (node.element.constructor.name === 'ChangeColumnValue' ||
-        node.element.constructor.name === 'SendEmail') &&
-      (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
-        ? elseNodes.push(node)
-        : mainNodes.push(node),
-    );
-    links.push(...this.createMainLink(node, mainNodes));
-      elseNodes.length && node.element.id?.split('_')[3] !== 'OrGroup'
-        ? links.push(this.createElseLink(node, elseNodes)!)
-        : links.push(...this.createEndLink(node));
-    // links.push(...this.createMainLink(node));
-    return links;
-  }
-
-  private createMainLink(
+  private createLink(
     node: BpmnStatementNode,
-    nextNodes: BpmnStatementNode[],
   ) {
     const link = [];
     const from = node.tag;
-    for (let i = 0; i < nextNodes.length; i++) {
-      const id = i == 0 ? node.outgoing : `Flow_${this.utils.uuid()}`;
-      const to = nextNodes[i].tag;
-      nextNodes[i].incoming = id;
+    for (let i = 0; i < node.next.length; i++) {
+      const flag = node.next[i].element.id?.split('_').includes('true');
+      const id = flag ? (node.element as EGatewayElement).elseOutGoing : node.outgoing;
+      const to = node.next[i].tag;
+      node.next[i].incoming = id;
       const attrs = this.createLinkAttrs(id, from, to);
-      const {script, name} = this.createScript(node, id);
+      const {script, name} = this.createScript(node, id, flag);
       const expression = this.moddle.create('bpmn:FormalExpression', {
         body: script,
         language: 'Javascript',
@@ -81,86 +67,6 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       link.push(_link);
     }
     return link;
-  }
-
-  private createElseLink(
-    node: BpmnStatementNode,
-    elseNextNodes: BpmnStatementNode[],
-  ) {
-    const from = node.tag;
-    const id =
-      (node.element as GatewayElement).elseOutGoing ??
-      `Flow_${this.utils.uuid()}`;
-    const to = elseNextNodes[0].tag;
-    elseNextNodes[0].incoming = id;
-    const attrs = this.createLinkAttrs(id, node.tag, to);
-    const {script, name} = this.createScript(node, id, true);
-    const expression = this.moddle.create('bpmn:FormalExpression', {
-      body: script,
-      language: 'Javascript',
-      'xsi:type': 'bpmn:tFormalExpression',
-    });
-    attrs['conditionExpression'] = expression;
-    attrs['name'] = name;
-    const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
-    const outgoing = from.get('outgoing');
-    const incoming = to.get('incoming');
-    if (!outgoing.find((item: any) => item.id === id)) {
-      outgoing.push(link);
-    }
-    if (!incoming.find((item: any) => item.id === id)) {
-      incoming.push(link);
-    }
-    return link;
-  }
-
-  // private createMainLink(
-  //   node: BpmnStatementNode,
-  // ) {
-  //   const link = [];
-  //   const from = node.tag;
-  //   if(!node.next.length){
-  //     link.push(...this.createEndLink(node));
-  //   }
-  //   for (let i = 0; i < node.next.length; i++) {
-  //     const isElse = (node.element.constructor.name === 'ChangeColumnValue' || node.element.constructor.name === 'SendEmail') && (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
-  //     const id = isElse ? (node.next[i].element as GatewayElement).elseOutGoing : i == 0 ? node.outgoing : `Flow_${this.utils.uuid()}`;
-  //     const to = node.next[i].tag;
-  //     node.next[i].incoming = id;
-  //     const attrs = this.createLinkAttrs(id, from, to);
-  //     const {script, name} = this.createScript(node, id, isElse);
-  //     const expression = this.moddle.create('bpmn:FormalExpression', {
-  //       body: script,
-  //       language: 'Javascript',
-  //       'xsi:type': 'bpmn:tFormalExpression',
-  //     });
-  //     attrs['conditionExpression'] = expression;
-  //     attrs['name'] = name;
-  //     const _link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
-  //     const outgoing = from.get('outgoing');
-  //     const incoming = to.get('incoming');
-  //     if (!outgoing.find((item: any) => item.id === id)) {
-  //       outgoing.push(_link);
-  //     }
-  //     if (!incoming.find((item: any) => item.id === id)) {
-  //       incoming.push(_link);
-  //     }
-  //     link.push(_link);
-  //   }
-  //   return link;
-  // }
-
-  private createEndLink(node: BpmnStatementNode) {
-    const end = this.moddle.create('bpmn:EndEvent', {
-      id: `EndElement_${this.utils.uuid()}`,
-    });
-    const id =
-      (node.element as GatewayElement).default ?? `Flow_${this.utils.uuid()}`;
-    const attrs = this.createLinkAttrs(id, node.tag, end);
-    const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
-    node.tag.get('outgoing').push(link);
-    end.get('incoming').push(link);
-    return [link, end];
   }
 
   private createLinkAttrs(id: string, from: ModdleElement, to: ModdleElement) {

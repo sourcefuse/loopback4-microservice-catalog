@@ -43,19 +43,25 @@ import {BuilderService, ElementService, NodeService} from './classes';
 import {
   CreateBasicStrategy,
   CreateGatewayStrategy,
+  CreateEGatewayStrategy,
   CreateTaskStrategy,
   CreatePropertyStrategy,
   CREATE_BASIC_STRATEGY,
   CREATE_GATEWAY_STRATEGY,
+  CREATE_E_GATEWAY_STRATEGY,
   CREATE_PROPERTIES_STRATEGY,
   CREATE_TASK_STRATEGY,
+  CreateBasicIntervalStrategy,
+  CREATE_BASIC_INTERVAL_STRATEGY,
 } from './services/bpmn/strategies/create';
 import {
   BasicLinkStrategy,
   GatewayLinkStrategy,
+  EGatewayLinkStrategy,
   NoLinkStrategy,
   LINK_BASIC_STRATEGY,
   LINK_GATEWAY_STRATEGY,
+  LINK_E_GATEWAY_STRATEGY,
   LINK_NONE_STRATEGY,
 } from './services/bpmn/strategies/link';
 import {BuilderComponent} from './builder/builder.component';
@@ -73,6 +79,12 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {ENV} from './types';
+import {EGatewayElement} from './services/bpmn/elements/gateways/e-gateway.element';
+import {OnIntervalEvent} from './services/statement/events/oninterval.event';
+import {TriggerOnInterval} from './services/bpmn/elements/tasks/trigger-on-interval.task';
+import {StartOnIntervalElement} from './services/bpmn/elements/base/start-on-interval.element';
+import {TriggerOnAddItem} from './services/bpmn/elements/tasks/trigger-on-add-item.task';
+import {OnAddItemEvent} from './services/statement/events/onadditem.event';
 @NgModule({
   declarations: [BuilderComponent, GroupComponent, NodeComponent],
   exports: [BuilderComponent, GroupComponent, NodeComponent, NgxPopperjsModule],
@@ -104,13 +116,19 @@ import {ENV} from './types';
     {provide: BPMN_NODES, useValue: SendEmailAction, multi: true},
     {provide: BPMN_NODES, useValue: OnChangeEvent, multi: true},
     {provide: BPMN_NODES, useValue: OnValueEvent, multi: true},
+    {provide: BPMN_NODES, useValue: OnIntervalEvent, multi: true},
+    {provide: BPMN_NODES, useValue: OnAddItemEvent, multi: true},
     {provide: BPMN_NODES, useValue: AndGroup, multi: true},
     {provide: BPMN_NODES, useValue: OrGroup, multi: true},
     {provide: BPMN_ELEMENTS, useValue: StartElement, multi: true},
+    {provide: BPMN_ELEMENTS, useValue: StartOnIntervalElement, multi: true},
     {provide: BPMN_ELEMENTS, useValue: EndElement, multi: true},
     {provide: BPMN_ELEMENTS, useValue: GatewayElement, multi: true},
+    {provide: BPMN_ELEMENTS, useValue: EGatewayElement, multi: true},
     {provide: BPMN_ELEMENTS, useValue: ProcessElement, multi: true},
     {provide: BPMN_ELEMENTS, useValue: TriggerWhenColumnChanges, multi: true},
+    {provide: BPMN_ELEMENTS, useValue: TriggerOnInterval, multi: true},
+    {provide: BPMN_ELEMENTS, useValue: TriggerOnAddItem, multi: true},
     {provide: BPMN_ELEMENTS, useValue: ReadColumnValue, multi: true},
     {provide: BPMN_ELEMENTS, useValue: SendEmail, multi: true},
     {provide: BPMN_ELEMENTS, useValue: ChangeColumnValue, multi: true},
@@ -124,11 +142,14 @@ import {ENV} from './types';
     {provide: BPMN_INPUTS, useClass: ToValueInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ValueInput, multi: true},
     {provide: CREATE_BASIC_STRATEGY, useClass: CreateBasicStrategy},
+    {provide: CREATE_BASIC_INTERVAL_STRATEGY, useClass: CreateBasicIntervalStrategy},
     {provide: CREATE_GATEWAY_STRATEGY, useClass: CreateGatewayStrategy},
+    {provide: CREATE_E_GATEWAY_STRATEGY, useClass: CreateEGatewayStrategy},
     {provide: CREATE_TASK_STRATEGY, useClass: CreateTaskStrategy},
     {provide: CREATE_PROPERTIES_STRATEGY, useClass: CreatePropertyStrategy},
     {provide: LINK_BASIC_STRATEGY, useClass: BasicLinkStrategy},
     {provide: LINK_GATEWAY_STRATEGY, useClass: GatewayLinkStrategy},
+    {provide: LINK_E_GATEWAY_STRATEGY, useClass: EGatewayLinkStrategy},
     {provide: LINK_NONE_STRATEGY, useClass: NoLinkStrategy},
     {provide: CONDITION_LIST, useValue: typeTuppleList},
   ],

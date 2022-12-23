@@ -11,3 +11,6 @@ export const LINK_GATEWAY_STRATEGY = new InjectionToken<
 export const LINK_NONE_STRATEGY = new InjectionToken<
   LinkStrategy<ModdleElement>
 >('workflow.strategy.link.none');
+export const LINK_E_GATEWAY_STRATEGY = new InjectionToken<
+  LinkStrategy<ModdleElement>
+>('workflow.strategy.link.egateway');

@@ -17,3 +17,11 @@ export const CREATE_BASIC_STRATEGY = new InjectionToken<
 export const CREATE_PROPERTIES_STRATEGY = new InjectionToken<
   CreateStrategy<ModdleElement>
 >('workflow.strategy.create.properties');
+
+export const CREATE_E_GATEWAY_STRATEGY = new InjectionToken<
+  CreateStrategy<ModdleElement>
+>('workflow.strategy.create.egateway');
+
+export const CREATE_BASIC_INTERVAL_STRATEGY = new InjectionToken<
+  CreateStrategy<ModdleElement>
+>('workflow.strategy.create.basic.interval');

@@ -60,7 +60,7 @@ export class Statement<E, S = RecordOfAnyType> {
     return newNode;
   }
 
-  addNodes(statementNodes: StatementNode<E>[]) {
+  addNodes(statementNodes: StatementNode<E>[], gateway: StatementNode<E>) {
     if (this.head.length > 0) {
       for (let i = 0; i < statementNodes.length; i++) {
         switch (statementNodes[i].element.name) {
@@ -70,22 +70,20 @@ export class Statement<E, S = RecordOfAnyType> {
             break;
           case ElementNames.gateway:
             statementNodes[i].prev = [statementNodes[i - 1]];
+            statementNodes[i].next = [gateway];
             break;
         }
       }
+      gateway.prev = statementNodes.filter(
+        node => node.element.name === ElementNames.gateway
+        );
 
       for (const element of this.tail) {
-        if (element.element.name !== ElementNames.readColumnValue) {
-          element.next = statementNodes.filter(
-            node => node.element.name !== ElementNames.gateway,
-          );
-        }
+        element.next = statementNodes.filter(
+          node => node.element.name === ElementNames.readColumnValue
+        );
       }
-      this.tail = statementNodes.filter(
-        node => node.element.name !== ElementNames.readColumnValue,
-      );
-    } else {
-      this.head = this.tail = statementNodes;
+      this.tail = [gateway];
     }
     return statementNodes;
   }
