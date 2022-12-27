@@ -95,8 +95,8 @@ export class GroupComponent<E> implements OnInit {
   emailInput: EmailInput = {
     subject: '',
     body: '',
+    focusKey: '',
   };
-  emailFocusKey: string;
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -166,7 +166,7 @@ export class GroupComponent<E> implements OnInit {
       [InputTypes.Percentage]:
         this.templateMap?.[InputTypes.Percentage] || this.numberTemplate,
       [InputTypes.Date]:
-        this.templateMap?.[InputTypes.DateTime] || this.dateTemplate,
+        this.templateMap?.[InputTypes.Date] || this.dateTemplate,
       [InputTypes.DateTime]:
         this.templateMap?.[InputTypes.DateTime] || this.dateTimeTemplate,
       [InputTypes.People]:
@@ -209,13 +209,17 @@ export class GroupComponent<E> implements OnInit {
     this.add.emit(true);
   }
 
-  appendEmailBody(item: Select) {
-    if (this.emailFocusKey === 'subject') {
-      this.emailInput.subject += ` ${item.value}`;
+  appendEmailBody(item: Select, emailInput: EmailInput) {
+    if (emailInput.focusKey === 'subject') {
+      emailInput.subject += ` ${item.value}`;
     }
-    if (this.emailFocusKey === 'body') {
-      this.emailInput.body += ` ${item.value}`;
+    if (emailInput.focusKey === 'body') {
+      emailInput.body += ` ${item.value}`;
     }
+  }
+
+  setFocusKey(emailInput: EmailInput, key: string) {
+    emailInput.focusKey = key;
   }
 
   openPopup(type: NodeTypes) {
