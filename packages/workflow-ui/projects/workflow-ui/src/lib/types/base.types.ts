@@ -82,6 +82,7 @@ export type DateTime = {
 export type EmailInput = {
   subject: string;
   body: string;
+  focusKey: string;
 };
 
 export type ENV = {

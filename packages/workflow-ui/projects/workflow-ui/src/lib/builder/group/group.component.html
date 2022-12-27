@@ -117,7 +117,10 @@
                   : [],
                 callback: createCallback(nodeWithInput, input, inputPopper),
                 nodeWithInput: nodeWithInput,
-                input: input
+                input: input,
+                emailInput: emailInput,
+                appendEmailBody: appendEmailBody,
+                setFocusKey: setFocusKey
               }
             "
           ></ng-container>
@@ -167,6 +170,9 @@
     let-callback="callback"
     let-input="input"
     let-nodeWithInput="nodeWithInput"
+    let-emailInput="emailInput"
+    let-appendEmailBody="appendEmailBody"
+    let-setFocusKey="setFocusKey"
   >
     <div class="email-template">
       <input
@@ -174,7 +180,7 @@
         class="email-input"
         id="email-subject"
         autofocus
-        (focus)="emailFocusKey = 'subject'"
+        (focus)="setFocusKey(emailInput, 'subject')"
         placeholder="Type your subject"
         [(ngModel)]="emailInput.subject"
       />
@@ -182,12 +188,12 @@
         placeholder="Type your mail"
         id="email-body"
         class="email-input email-body-input"
-        (focus)="emailFocusKey = 'body'"
+        (focus)="setFocusKey(emailInput, 'body')"
         [(ngModel)]="emailInput.body"
       ></textarea>
       <div class="auto-populate">
         <ng-container *ngFor="let item of allColumns">
-          <div class="item" (click)="appendEmailBody(item)">
+          <div class="item" (click)="appendEmailBody(item, emailInput)">
             {{ item.text }}
           </div>
         </ng-container>
@@ -223,8 +229,6 @@
     #searchableDropdownTemplate
     let-list="list"
     let-callback="callback"
-    let-input="input"
-    let-nodeWithInput="nodeWithInput"
   >
     <ng-multiselect-dropdown
       [placeholder]="'Please Select'"
