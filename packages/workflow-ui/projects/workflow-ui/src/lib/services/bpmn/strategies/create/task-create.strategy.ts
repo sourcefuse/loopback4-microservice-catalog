@@ -16,7 +16,7 @@ import {
 } from '../../../../interfaces';
 import {WorkflowAction, WorkflowElement} from '../../../../classes';
 import {InvalidEntityError} from '../../../../errors';
-import {InputTypes, NodeTypes} from '../../../../enum';
+import {NodeTypes} from '../../../../enum';
 import {GatewayElement} from '../../elements/gateways/gateway.element';
 
 @Injectable()
