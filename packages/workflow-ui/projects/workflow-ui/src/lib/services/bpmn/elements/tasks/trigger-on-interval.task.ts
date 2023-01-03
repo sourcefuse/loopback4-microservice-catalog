@@ -28,8 +28,11 @@ export class TriggerOnInterval extends ServiceTaskElement {
   inputs = {
     name: 'pathParams',
     fields: {
-      groupColumnId: {
-        state: 'column',
+      groupId: {
+        state: 'groupId',
+      },
+      boardId: {
+        state: 'boardId',
       },
     },
   };

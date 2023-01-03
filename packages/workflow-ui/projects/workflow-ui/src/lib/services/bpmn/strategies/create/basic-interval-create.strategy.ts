@@ -31,7 +31,7 @@ export class CreateBasicIntervalStrategy implements CreateStrategy<ModdleElement
 
     const timerEventDefinition = this.moddle.create('bpmn:TimerEventDefinition');
 
-    const timeCycle = this.moddle.create('bpmn:timeCycle', {
+    const timeCycle = this.moddle.create('bpmn:FormalExpression', {
       'xsi:type': 'bpmn:tFormalExpression',
       body: 'R/P5D'
     });
