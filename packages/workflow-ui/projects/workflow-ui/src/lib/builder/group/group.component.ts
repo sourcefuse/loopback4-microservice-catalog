@@ -256,6 +256,9 @@ export class GroupComponent<E> implements OnInit {
         node: node,
         newNode: newNode,
       });
+      if (newNode.node.constructor.name === 'OnIntervalEvent') {
+        newNode.node.state.change('valueInputType', 'number');
+      }
       this.group.children.push(newNode as EventWithInput<E>);
     } else if (node.type === NodeTypes.ACTION) {
       this.actionAdded.emit({

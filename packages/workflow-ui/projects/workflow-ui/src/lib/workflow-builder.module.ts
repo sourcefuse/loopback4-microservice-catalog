@@ -30,6 +30,7 @@ import {SendEmailAction} from './services/statement/actions/sendmail.action';
 import {OnChangeEvent} from './services/statement/events/onchange.event';
 import {OnValueEvent} from './services/statement/events/onvalue.event';
 import {ColumnInput} from './services/statement/inputs/column.input';
+import {IntervalInput} from './services/statement/inputs/interval.input';
 import {ConditionInput} from './services/statement/inputs/condition.input';
 import {
   EmailDataInput,
@@ -85,6 +86,7 @@ import {TriggerOnInterval} from './services/bpmn/elements/tasks/trigger-on-inter
 import {StartOnIntervalElement} from './services/bpmn/elements/base/start-on-interval.element';
 import {TriggerOnAddItem} from './services/bpmn/elements/tasks/trigger-on-add-item.task';
 import {OnAddItemEvent} from './services/statement/events/onadditem.event';
+// import {OnConditionChangeEvent} from '.';
 @NgModule({
   declarations: [BuilderComponent, GroupComponent, NodeComponent],
   exports: [BuilderComponent, GroupComponent, NodeComponent, NgxPopperjsModule],
@@ -116,6 +118,7 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
     {provide: BPMN_NODES, useValue: SendEmailAction, multi: true},
     {provide: BPMN_NODES, useValue: OnChangeEvent, multi: true},
     {provide: BPMN_NODES, useValue: OnValueEvent, multi: true},
+    // {provide: BPMN_NODES, useValue: OnConditionChangeEvent, multi: true},
     {provide: BPMN_NODES, useValue: OnIntervalEvent, multi: true},
     {provide: BPMN_NODES, useValue: OnAddItemEvent, multi: true},
     {provide: BPMN_NODES, useValue: AndGroup, multi: true},
@@ -134,6 +137,7 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
     {provide: BPMN_ELEMENTS, useValue: ChangeColumnValue, multi: true},
     {provide: BPMN_ELEMENTS, useValue: ProcessPropertiesElement, multi: true},
     {provide: BPMN_INPUTS, useClass: ColumnInput, multi: true},
+    {provide: BPMN_INPUTS, useClass: IntervalInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ConditionInput, multi: true},
     {provide: BPMN_INPUTS, useClass: EmailDataInput, multi: true},
     {provide: BPMN_INPUTS, useClass: EmailToInput, multi: true},
@@ -142,7 +146,10 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
     {provide: BPMN_INPUTS, useClass: ToValueInput, multi: true},
     {provide: BPMN_INPUTS, useClass: ValueInput, multi: true},
     {provide: CREATE_BASIC_STRATEGY, useClass: CreateBasicStrategy},
-    {provide: CREATE_BASIC_INTERVAL_STRATEGY, useClass: CreateBasicIntervalStrategy},
+    {
+      provide: CREATE_BASIC_INTERVAL_STRATEGY,
+      useClass: CreateBasicIntervalStrategy,
+    },
     {provide: CREATE_GATEWAY_STRATEGY, useClass: CreateGatewayStrategy},
     {provide: CREATE_E_GATEWAY_STRATEGY, useClass: CreateEGatewayStrategy},
     {provide: CREATE_TASK_STRATEGY, useClass: CreateTaskStrategy},

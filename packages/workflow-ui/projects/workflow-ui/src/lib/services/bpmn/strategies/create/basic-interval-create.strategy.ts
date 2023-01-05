@@ -1,20 +1,22 @@
-import { Injectable } from '@angular/core';
-import { UtilsService } from '../../../utils.service';
-import { CreateStrategy } from '../../../../interfaces';
+import {Injectable} from '@angular/core';
+import {UtilsService} from '../../../utils.service';
+import {CreateStrategy} from '../../../../interfaces';
 import {
   BpmnStatementNode,
   CustomBpmnModdle,
   ModdleElement,
   RecordOfAnyType,
 } from '../../../../types';
-import { WorkflowElement } from '../../../../classes';
+import {WorkflowElement} from '../../../../classes';
 
 @Injectable()
-export class CreateBasicIntervalStrategy implements CreateStrategy<ModdleElement> {
+export class CreateBasicIntervalStrategy
+  implements CreateStrategy<ModdleElement>
+{
   constructor(
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
-  ) { }
+  ) {}
   /**
    * It creates a new BPMN element, assigns it an ID, and returns it
    * @param element - WorkflowElement<ModdleElement>
@@ -29,11 +31,15 @@ export class CreateBasicIntervalStrategy implements CreateStrategy<ModdleElement
   ): ModdleElement {
     element.id = `${element.constructor.name}_${this.utils.uuid()}`;
 
-    const timerEventDefinition = this.moddle.create('bpmn:TimerEventDefinition');
+    const timerEventDefinition = this.moddle.create(
+      'bpmn:TimerEventDefinition',
+    );
+    const workflowNode = node.next[0].workflowNode;
+    const state = workflowNode.state;
 
     const timeCycle = this.moddle.create('bpmn:FormalExpression', {
       'xsi:type': 'bpmn:tFormalExpression',
-      body: 'R/P5D'
+      body: `R/P${state.get('value')}${state.get('interval')}`,
     });
 
     timerEventDefinition['timeCycle'] = timeCycle;
@@ -41,19 +47,19 @@ export class CreateBasicIntervalStrategy implements CreateStrategy<ModdleElement
     return this.moddle.create(element.tag, {
       id: element.id,
       name: element.name,
-      ...this.parseAttributes(attrs,node),
-      eventDefinitions: [timerEventDefinition]
+      ...this.parseAttributes(attrs, node),
+      eventDefinitions: [timerEventDefinition],
     });
   }
   private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
     Object.keys(attrs).forEach(key => {
-      if(typeof attrs[key] !== 'string'){
-        switch(Object.keys(attrs[key])[0]){
+      if (typeof attrs[key] !== 'string') {
+        switch (Object.keys(attrs[key])[0]) {
           case 'state':
-              attrs[key] = node.workflowNode.state.get(attrs[key].state);
+            attrs[key] = node.workflowNode.state.get(attrs[key].state);
         }
       }
-    })
+    });
     return attrs;
   }
 }

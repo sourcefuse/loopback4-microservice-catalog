@@ -12,6 +12,7 @@ import {
 } from '../../types/base.types';
 import {State} from '../state';
 
+const openDefaultKey = 'openDefault';
 export abstract class WorkflowPrompt {
   abstract suffix?: string | {state: string};
   abstract prefix?: string | {state: string};
@@ -22,6 +23,13 @@ export abstract class WorkflowPrompt {
   prevchange?: <S extends RecordOfAnyType>(state: State<S>) => void;
   getValue<S extends RecordOfAnyType>(state: State<S>) {
     return state.get(this.inputKey);
+  }
+
+  toggleOpenDefault<S extends RecordOfAnyType>(state: State<S>) {
+    const key = `${openDefaultKey}-${this.inputKey}`;
+    let openDefault = !!state.get(key);
+    openDefault = !openDefault;
+    state.change(key, openDefault);
   }
 
   setValue<S extends RecordOfAnyType>(

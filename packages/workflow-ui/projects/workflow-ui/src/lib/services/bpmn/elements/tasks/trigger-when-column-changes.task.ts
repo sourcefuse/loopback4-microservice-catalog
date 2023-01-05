@@ -31,6 +31,9 @@ export class TriggerWhenColumnChanges extends ServiceTaskElement {
       groupColumnId: {
         state: 'column',
       },
+      boardId: {
+        state: 'boardId',
+      },
     },
   };
   outputs = 'outputVariable';

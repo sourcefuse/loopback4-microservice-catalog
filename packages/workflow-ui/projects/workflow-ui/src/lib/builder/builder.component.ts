@@ -19,7 +19,7 @@ import {
 } from '../classes';
 import {BaseGroup} from '../classes/nodes/abstract-base-group.class';
 import {BuilderService, ElementService, NodeService} from '../classes/services';
-import { ConditionTypes, NodeTypes, EventTypes } from '../enum';
+import {ConditionTypes, NodeTypes, EventTypes} from '../enum';
 import {InvalidEntityError} from '../errors/base.error';
 import {
   ActionAddition,
@@ -145,8 +145,10 @@ export class BuilderComponent<E> implements OnInit {
         });
       });
       this.showElseBlock =
-        this.eventGroups[0].children[0].node.constructor.name === EventTypes.OnChangeEvent
-        && this.eventGroups[0].children[0].node.state.get('condition') !== ConditionTypes.Changes;
+        this.eventGroups[0].children[0].node.constructor.name ===
+          EventTypes.OnChangeEvent &&
+        this.eventGroups[0].children[0].node.state.get('condition') !==
+          ConditionTypes.Changes;
       this.updateDiagram();
     }
   }
@@ -172,7 +174,8 @@ export class BuilderComponent<E> implements OnInit {
     });
     this.updateDiagram();
     this.updateState(event.node, event.newNode.inputs);
-    this.showElseBlock = event.node.constructor.name === EventTypes.OnChangeEvent;
+    this.showElseBlock =
+      event.node.constructor.name === EventTypes.OnChangeEvent;
   }
 
   onActionAdded(action: ElementsWithInput<E>) {
@@ -191,7 +194,11 @@ export class BuilderComponent<E> implements OnInit {
       item: item.element.node,
     });
     this.updateState(item.element.node, item.element.inputs);
-    this.showElseBlock = this.eventGroups[0].children[0].node.constructor.name === EventTypes.OnChangeEvent && this.eventGroups[0].children[0].node.state.get('condition') !== ConditionTypes.Changes;
+    this.showElseBlock =
+      this.eventGroups[0].children[0].node.constructor.name ===
+        EventTypes.OnChangeEvent &&
+      this.eventGroups[0].children[0].node.state.get('condition') !==
+        ConditionTypes.Changes;
     this.updateDiagram();
   }
 
@@ -284,7 +291,9 @@ export class BuilderComponent<E> implements OnInit {
           });
       } else if (group.name === 'or') {
         const statementNodes: StatementNode<E>[] = [];
-        const elseNode = new StatementNode(this.elements.createInstanceByName('EGatewayElement'));
+        const elseNode = new StatementNode(
+          this.elements.createInstanceByName('EGatewayElement'),
+        );
         group.children
           .map(e => e.node)
           .forEach(node => {

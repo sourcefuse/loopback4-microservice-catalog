@@ -1,4 +1,3 @@
-import {ValueInput} from '..';
 import {NodeTypes} from '../../../enum';
 import {BpmnAction} from '../../../types/bpmn.types';
 import {SendEmail} from '../../bpmn/elements/tasks/send-email.task';

@@ -40,7 +40,6 @@
       </span>
     </span>
   </div>
-
   <span *ngFor="let node of group.children; let i = index">
     <workflow-node
       [node]="node"
@@ -80,16 +79,22 @@
         [popperHideOnScroll]="true"
         [popperTrigger]="'click'"
         [popperPlacement]="'bottom'"
+        [popperApplyClass]="'workflow-popper'"
+        (popperOnHidden)="input.toggleOpenDefault(nodeWithInput.node.state)"
         *ngIf="!(input.isHidden && input.isHidden(nodeWithInput.node.state))"
       >
         <span
           class="value-text"
           *ngIf="input.getValueName(nodeWithInput.node.state)"
-          (click)="setInput(input, nodeWithInput)"
+          (click)="
+            setInput(input, nodeWithInput);
+            input.toggleOpenDefault(nodeWithInput.node.state)
+          "
           >{{ input.getValueName(nodeWithInput.node.state) }}</span
         >
         <span
           class="placeholder-text"
+          (click)="input.toggleOpenDefault(nodeWithInput.node.state)"
           *ngIf="!input.getValueName(nodeWithInput.node.state)"
         >
           {{ input.placeholder }}</span
@@ -120,7 +125,10 @@
                 input: input,
                 emailInput: emailInput,
                 appendEmailBody: appendEmailBody,
-                setFocusKey: setFocusKey
+                setFocusKey: setFocusKey,
+                openDefault: nodeWithInput.node.state.get(
+                  'openDefault-' + input.inputKey
+                )
               }
             "
           ></ng-container>
@@ -135,6 +143,7 @@
     let-callback="callback"
     let-input="input"
     let-nodeWithInput="nodeWithInput"
+    let-openDefault="openDefault"
   >
     <div
       class="option-div"
@@ -229,6 +238,7 @@
     #searchableDropdownTemplate
     let-list="list"
     let-callback="callback"
+    let-openDefault="openDefault"
   >
     <ng-multiselect-dropdown
       [placeholder]="'Please Select'"
@@ -246,6 +256,7 @@
     let-callback="callback"
     let-input="input"
     let-nodeWithInput="nodeWithInput"
+    let-openDefault="openDefault"
   >
     <ngb-datepicker
       [(ngModel)]="date"
@@ -259,6 +270,7 @@
     let-callback="callback"
     let-input="input"
     let-nodeWithInput="nodeWithInput"
+    let-openDefault="openDefault"
   >
     <div class="date-time-picker">
       <ngb-datepicker [(ngModel)]="dateTime.date" #d></ngb-datepicker>
