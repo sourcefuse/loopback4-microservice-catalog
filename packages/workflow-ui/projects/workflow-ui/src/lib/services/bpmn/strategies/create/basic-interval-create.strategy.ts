@@ -36,10 +36,11 @@ export class CreateBasicIntervalStrategy
     );
     const workflowNode = node.next[0].workflowNode;
     const state = workflowNode.state;
-
     const timeCycle = this.moddle.create('bpmn:FormalExpression', {
       'xsi:type': 'bpmn:tFormalExpression',
-      body: `R/P${state.get('value')}${state.get('interval')}`,
+      body: `R/P${state.get('timescale')}${state.get('value')}${state.get(
+        'interval',
+      )}`,
     });
 
     timerEventDefinition['timeCycle'] = timeCycle;

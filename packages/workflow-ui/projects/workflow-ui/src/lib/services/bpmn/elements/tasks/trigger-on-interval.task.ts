@@ -34,6 +34,9 @@ export class TriggerOnInterval extends ServiceTaskElement {
       boardId: {
         state: 'boardId',
       },
+      timescale: {
+        state: 'timescale',
+      },
     },
   };
   outputs = 'outputVariable';

@@ -9,8 +9,8 @@ import {
   WorkflowAction,
 } from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
-import {BASE_XML, JSON_COLUMNS} from '../../const';
-import { NodeTypes, EventTypes } from '../../enum';
+import {BASE_XML} from '../../const';
+import {NodeTypes, EventTypes} from '../../enum';
 import {AutoLayoutService} from '../../layout/layout.service';
 import {
   CustomBpmnModdle,
@@ -82,11 +82,11 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
-  private getStartEvent(trigger: StatementNode<ModdleElement>){
-    if(!trigger){
+  private getStartEvent(trigger: StatementNode<ModdleElement>) {
+    if (!trigger) {
       return this.elements.createInstanceByName('StartElement');
     }
-    switch(trigger.workflowNode.constructor.name) {
+    switch (trigger.workflowNode.constructor.name) {
       case EventTypes.OnIntervalEvent:
         return this.elements.createInstanceByName('StartOnIntervalElement');
       case EventTypes.OnChangeEvent:
@@ -126,7 +126,8 @@ export class BpmnBuilderService extends BuilderService<
       const current = queue.shift()!;
       if (
         elseStatement.head.length &&
-        (current.element.constructor.name === 'GatewayElement' || current.element.constructor.name === 'EGatewayElement')
+        (current.element.constructor.name === 'GatewayElement' ||
+          current.element.constructor.name === 'EGatewayElement')
       ) {
         current.next.push(elseStatement.head[0]);
         elseStatement.head[0].prev
@@ -255,15 +256,11 @@ export class BpmnBuilderService extends BuilderService<
         properties.get('values').forEach(property => {
           const [id, key] = property['name'].split('_');
           if (state[id]) {
-            //TODO: Refactor this part
-            state[id][key] =
-              (JSON_COLUMNS.includes(state[id].columnName?.toLowerCase()) &&
-                property['name'] === `${id}_value`) ||
-              (state[id].columnName === 'Priority' &&
-                property['name'] === `${id}_valueName`) ||
-              key === 'specificRecepient'
-                ? JSON.parse(property['value'])
-                : property['value'];
+            try {
+              state[id][key] = JSON.parse(property['value']);
+            } catch (error) {
+              state[id][key] = property['value'];
+            }
           } else {
             state[id] = {
               [key]:
