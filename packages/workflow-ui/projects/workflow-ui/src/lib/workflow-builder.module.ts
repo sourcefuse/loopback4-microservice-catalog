@@ -86,7 +86,6 @@ import {TriggerOnInterval} from './services/bpmn/elements/tasks/trigger-on-inter
 import {StartOnIntervalElement} from './services/bpmn/elements/base/start-on-interval.element';
 import {TriggerOnAddItem} from './services/bpmn/elements/tasks/trigger-on-add-item.task';
 import {OnAddItemEvent} from './services/statement/events/onadditem.event';
-// import {OnConditionChangeEvent} from '.';
 @NgModule({
   declarations: [BuilderComponent, GroupComponent, NodeComponent],
   exports: [BuilderComponent, GroupComponent, NodeComponent, NgxPopperjsModule],

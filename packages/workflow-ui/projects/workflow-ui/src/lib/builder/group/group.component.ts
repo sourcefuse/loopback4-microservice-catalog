@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -42,7 +41,7 @@ import {
   ToValueInput,
   TriggerWhenColumnChanges,
   ValueInput,
-} from '../..';
+} from '../../services';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',

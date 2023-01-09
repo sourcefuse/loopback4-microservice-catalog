@@ -42,7 +42,7 @@ export class CreateBasicStrategy implements CreateStrategy<ModdleElement> {
               attrs[key] = node.workflowNode.state.get(attrs[key].state);
         }
       }
-    })
+    });
     return attrs;
   }
 }

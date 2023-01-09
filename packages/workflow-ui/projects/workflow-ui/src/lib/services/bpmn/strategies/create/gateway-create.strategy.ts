@@ -46,7 +46,7 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
               attrs[key] = node.workflowNode.state.get(attrs[key].state);
         }
       }
-    })
+    });
     return attrs;
   }
 }

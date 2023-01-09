@@ -1,4 +1,4 @@
-import {ValueInput} from '.';
+import {ValueInput} from './value.input';
 import {State, WorkflowPrompt} from '../../../classes';
 import {InputTypes} from '../../../enum';
 import {RecordOfAnyType} from '../../../types/base.types';
