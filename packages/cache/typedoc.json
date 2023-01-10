@@ -1,0 +1,5 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "./../../docs/packages/cache/",
+  "plugin": ["typedoc-plugin-markdown"]
+}

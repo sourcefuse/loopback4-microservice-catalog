@@ -6,7 +6,7 @@ A simple loopback-next extension for checking the disabled features. Here a new 
 
 ## Working and Flow
 
-This extension provides a method level decorator @featureFlag that takes the name of the feature that needs to be checked as metadata and verifies if that particular feature is allowed or not. What it expects is that a list of disabled features is saved for the current user of the type `IAuthUserWithDisabledFeat` and compares that with the one passed in the metadata of the decorator.
+This extension provides a method level decorator `@featureFlag` that takes the name of the feature that needs to be checked as metadata and verifies if that particular feature is allowed or not. What it expects is that a list of disabled features is saved for the current user of the type `IAuthUserWithDisabledFeat` and compares that with the one passed in the metadata of the decorator.
 
 ```ts
  @featureFlag({featureKey: 'feature_key'})

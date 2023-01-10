@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+lerna exec --scope '{@sourceloop/core,@sourceloop/audit-service,@sourceloop/authentication-service,@sourceloop/feature-toggle,@sourceloop/bpmn-service,@sourceloop/chat-service,@sourceloop/feature-toggle-service,@sourceloop/in-mail-service,@sourceloop/notification-service,@sourceloop/ocr-s3-service,@sourceloop/ocr-service,@sourceloop/payment-service,@sourceloop/reporting-service,@sourceloop/scheduler-service,@sourceloop/search-service,@sourceloop/user-tenant-service,@sourceloop/video-conferencing-service,@sourceloop/cache}' -- npx typedoc --logLevel Error --excludeExternals
+
+lerna exec --scope '{@sourceloop/audit-service,@sourceloop/authentication-service,@sourceloop/bpmn-service,@sourceloop/in-mail-service,@sourceloop/notification-service,@sourceloop/scheduler-service,@sourceloop/search-service,@sourceloop/video-conferencing-service}' -- sed -i 's/```.*javascript--nodejs/```js/g' ./openapi.md
+
+lerna exec --scope '{@sourceloop/audit-service,@sourceloop/authentication-service,@sourceloop/bpmn-service,@sourceloop/in-mail-service,@sourceloop/notification-service,@sourceloop/scheduler-service,@sourceloop/search-service,@sourceloop/video-conferencing-service}' -- sed -i '1,15d' openapi.md
+
+lerna run typedoc:postapiexport --scope '{@sourceloop/core,@sourceloop/audit-service,@sourceloop/authentication-service,@sourceloop/feature-toggle,@sourceloop/bpmn-service,@sourceloop/chat-service,@sourceloop/feature-toggle-service,@sourceloop/in-mail-service,@sourceloop/notification-service,@sourceloop/ocr-s3-service,@sourceloop/ocr-service,@sourceloop/payment-service,@sourceloop/reporting-service,@sourceloop/scheduler-service,@sourceloop/search-service,@sourceloop/user-tenant-service,@sourceloop/video-conferencing-service,@sourceloop/cache}'

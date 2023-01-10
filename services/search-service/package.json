@@ -22,7 +22,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "openapi-spec": "node ./dist/openapi-spec",
-    "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
@@ -30,7 +30,8 @@
     "coverage": "nyc npm run test",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "postinstall": "node migration.js",
-    "migration:create": "./node_modules/.bin/db-migrate create $1 --config './database.json' -m './migrations' --sql-file"
+    "migration:create": "./node_modules/.bin/db-migrate create $1 --config './database.json' -m './migrations' --sql-file",
+    "typedoc:postapiexport": "cp openapi.md ./../../docs/services/search-service/openapi.md"
   },
   "repository": {
     "type": "git",

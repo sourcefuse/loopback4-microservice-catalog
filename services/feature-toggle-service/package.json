@@ -47,7 +47,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "services/chat-service"
+    "directory": "services/feature-toggle-service"
   },
   "author": "Sourcefuse",
   "license": "MIT",

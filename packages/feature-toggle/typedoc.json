@@ -1,0 +1,5 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "./../../docs/packages/feature-toggle/",
+  "plugin": ["typedoc-plugin-markdown"]
+}

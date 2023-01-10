@@ -8,6 +8,12 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/core/@loopback/core)
 
+### Installation
+
+```bash
+npm install @sourceloop/core
+```
+
 ## Overview
 
 `@sourceloop/core` is the [application core](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/) for the `sourceloop`. It contains
@@ -239,7 +245,7 @@ You can find documentation for mixins. [here](/src/mixins)
 
 ### Models
 
-A model describes business domain objects(shape of data) to be persisted in the database, for example, Customer, Address, and Order. It usually defines a list of properties with name, type, and other constraints.We use decorators @model and @property to annotate or modify the Class members and Class respectively which helps in manipulating the metadata or even integrate with JSON Schema generation.
+A model describes business domain objects(shape of data) to be persisted in the database, for example, Customer, Address, and Order. It usually defines a list of properties with name, type, and other constraints.We use decorators `@model` and `@property` to annotate or modify the Class members and Class respectively which helps in manipulating the metadata or even integrate with JSON Schema generation.
 
 ```ts
 export abstract class UserModifiableEntity extends BaseEntity {
@@ -261,7 +267,7 @@ In order to use models provided, in your application:
 
 - Extend your model class with name of model's class provided in sourceloop core i.e. **BaseEntity**(for example) replacing entity that will add two attributes to the model Class i.e. createdBy and modifiedBy of this model.
 
--Other models like SuccessResponse model will add attribute success,UpsertResponse model will add created,updated and failed attributes to the model class extending it.
+- Other models like SuccessResponse model will add attribute success,UpsertResponse model will add created,updated and failed attributes to the model class extending it.
 
 For all models provided in here, see [here]`packages/core/src/models`.
 
@@ -358,7 +364,8 @@ import {
 } from 'loopback4-authorization';
 
 export class CasbinResValModifierProvider
-  implements Provider<CasbinResourceModifierFn> {
+  implements Provider<CasbinResourceModifierFn>
+{
   constructor(
     @inject.getter(AuthorizationBindings.METADATA)
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,
@@ -406,7 +413,8 @@ import {
 import * as path from 'path';
 
 export class CasbinEnforcerConfigProvider
-  implements Provider<CasbinEnforcerConfigGetterFn> {
+  implements Provider<CasbinEnforcerConfigGetterFn>
+{
   constructor() {}
 
   value(): CasbinEnforcerConfigGetterFn {
@@ -563,23 +571,24 @@ async create(@requestBody() role: Role): Promise<Role> {
 }
 ```
 
--**Secure-sequence** :It is an action-based sequence. This sequence is a generated class that contains logger,authenticate and authorize actions in the handle method along with helmet and ratelimiting actions that can be used in facades
+- **Secure-sequence** :It is an action-based sequence. This sequence is a generated class that contains logger,authenticate and authorize actions in the handle method along with helmet and ratelimiting actions that can be used in facades
 
--Helmet action will get triggered for each request and helps in securing HTTP headers which sets them up to prevent attacks like Cross-Site-Scripting(XSS) etc
--Ratelimiting action will trigger ratelimiter middleware for all the requests passing through, providing different rate limiting options at API method level.
-For example, If you want to keep hard rate limit for unauthorized API requests and want to keep it softer for other API requests.
+- Helmet action will get triggered for each request and helps in securing HTTP headers which sets them up to prevent attacks like Cross-Site-Scripting(XSS) etc
 
--**Service-sequence** :It is an action-based sequence. This sequence is a generated class that contains authenticate and authorize actions in the handle method.It is used while working with internal secure API's where user authentication and authorization actions are required.
+- Ratelimiting action will trigger ratelimiter middleware for all the requests passing through, providing different rate limiting options at API method level.
+  For example, If you want to keep hard rate limit for unauthorized API requests and want to keep it softer for other API requests.
+
+- **Service-sequence** :It is an action-based sequence. This sequence is a generated class that contains authenticate and authorize actions in the handle method.It is used while working with internal secure API's where user authentication and authorization actions are required.
 
 ## Usage
 
--import the sequence you want to use.for example,import ServiceSequence in your application component file.
+- import the sequence you want to use.for example,import ServiceSequence in your application component file.
 
 ```ts
 import {ServiceSequence} from '@sourceloop/core';
 ```
 
--There is an inbuilt setUpSequence() that will enable user to provide these sequences as per requirement.
+- There is an inbuilt setUpSequence() that will enable user to provide these sequences as per requirement.
 
 ```ts
 if (!this.config?.useCustomSequence) {
@@ -618,12 +627,6 @@ setupSequence() {
 }
 ```
 
--You can also use custom sequence instead by providing custom sequence name in the application.
+- You can also use custom sequence instead by providing custom sequence name in the application.
 
 ![sequence](https://loopback.io/pages/en/lb4/imgs/middleware.png)
-
-### Installation
-
-```bash
-npm install @sourceloop/core
-```

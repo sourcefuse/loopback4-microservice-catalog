@@ -14,7 +14,7 @@ any client application.
 ## Installation
 
 ```bash
-   npm i @sourceloop/payment-service
+npm i @sourceloop/payment-service
 ```
 
 ## Usage
@@ -77,8 +77,10 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class InmailDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class InmailDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = PaymentDatasourceName;
   static readonly defaultConfig = config;
 

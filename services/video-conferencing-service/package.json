@@ -24,7 +24,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "openapi-spec": "node ./dist/openapi-spec",
-    "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
@@ -32,7 +32,8 @@
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "prepublishOnly": "npm run test",
-    "postinstall": "node migration.js"
+    "postinstall": "node migration.js",
+    "typedoc:postapiexport": "cp openapi.md ./../../docs/services/video-conferencing-service/openapi.md"
   },
   "repository": {
     "type": "git"
