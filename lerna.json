@@ -87,7 +87,9 @@
         "@sourceloop/search-client",
         "@sourceloop/user-onboarding-client",
         "@sourceloop/oauth-example-api",
-        "@sourceloop/oauth-example-ui"
+        "@sourceloop/oauth-example-ui",
+        "@sourceloop/ocr-service",
+        "@sourceloop/ocr-s3-service"
       ]
     },
     "clean": {
