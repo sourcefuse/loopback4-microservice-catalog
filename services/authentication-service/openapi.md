@@ -3535,6 +3535,8 @@ ForgetPasswordDto
   "deletedBy": "string",
   "createdOn": "2019-08-24T14:15:22Z",
   "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": 0,
   "clientId": "string",
   "clientSecret": "string",
@@ -3558,6 +3560,8 @@ AuthClient
 |deletedBy|string¦null|false|none|none|
 |createdOn|string(date-time)|false|none|none|
 |modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|number|false|none|none|
 |clientId|string|true|none|none|
 |clientSecret|string|true|none|none|
