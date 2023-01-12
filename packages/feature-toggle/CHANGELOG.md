@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.9 (2023-01-12)</small>
+
+* chore(deps): loopback and sourceloop version update (#1195) ([ea9bb21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ea9bb21)), closes [#1195](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1195) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194)
+
+
+
+
+
 ## <small>0.3.8 (2022-12-07)</small>
 
 * chore(deps): update loopback and sourceloop packages (#1101) ([fc6b432](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc6b432)), closes [#1101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1101) [#1100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1100)
