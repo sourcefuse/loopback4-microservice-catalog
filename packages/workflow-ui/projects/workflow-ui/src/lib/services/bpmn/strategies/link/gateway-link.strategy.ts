@@ -46,7 +46,6 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       elseNodes.length && node.element.id?.split('_')[3] !== 'OrGroup'
         ? links.push(this.createElseLink(node, elseNodes)!)
         : links.push(...this.createEndLink(node));
-    // links.push(...this.createMainLink(node));
     return links;
   }
 
@@ -114,42 +113,6 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return link;
   }
 
-  // private createMainLink(
-  //   node: BpmnStatementNode,
-  // ) {
-  //   const link = [];
-  //   const from = node.tag;
-  //   if(!node.next.length){
-  //     link.push(...this.createEndLink(node));
-  //   }
-  //   for (let i = 0; i < node.next.length; i++) {
-  //     const isElse = (node.element.constructor.name === 'ChangeColumnValue' || node.element.constructor.name === 'SendEmail') && (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
-  //     const id = isElse ? (node.next[i].element as GatewayElement).elseOutGoing : i == 0 ? node.outgoing : `Flow_${this.utils.uuid()}`;
-  //     const to = node.next[i].tag;
-  //     node.next[i].incoming = id;
-  //     const attrs = this.createLinkAttrs(id, from, to);
-  //     const {script, name} = this.createScript(node, id, isElse);
-  //     const expression = this.moddle.create('bpmn:FormalExpression', {
-  //       body: script,
-  //       language: 'Javascript',
-  //       'xsi:type': 'bpmn:tFormalExpression',
-  //     });
-  //     attrs['conditionExpression'] = expression;
-  //     attrs['name'] = name;
-  //     const _link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
-  //     const outgoing = from.get('outgoing');
-  //     const incoming = to.get('incoming');
-  //     if (!outgoing.find((item: any) => item.id === id)) {
-  //       outgoing.push(_link);
-  //     }
-  //     if (!incoming.find((item: any) => item.id === id)) {
-  //       incoming.push(_link);
-  //     }
-  //     link.push(_link);
-  //   }
-  //   return link;
-  // }
-
   private createEndLink(node: BpmnStatementNode) {
     const end = this.moddle.create('bpmn:EndEvent', {
       id: `EndElement_${this.utils.uuid()}`,
@@ -205,7 +168,56 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     condition: string,
     isElse = false,
   ) {
-    switch (node.workflowNode.state.get('condition')) {
+    const column: string = node.workflowNode.state.get('columnName');
+    const conditionType = node.workflowNode.state.get('condition');
+    if(column?.toLowerCase() === InputTypes.People){
+      return !isElse ?
+      `var selectedVals = ${condition};
+      var selCol = selectedVals.split(',');
+      for(var key in readObj){
+        var taskValuePair = readObj[key];
+        if(taskValuePair && taskValuePair.value && taskValuePair.value.length){
+            var hasUser = false;
+            var usCol = taskValuePair.value;
+
+            for(var selKey in selCol){
+                for(var myKey in usCol){
+                    if(usCol[myKey].value == selCol[selKey] && !hasUser){
+                        hasUser = true;
+                    }
+                }
+            }
+            if(${
+              ConditionTypes.NotEqual === conditionType ? '!' : ''
+            }(hasUser)){
+                ids.push(taskValuePair.id);
+            }
+        }
+      }` :
+          `var selectedVals = ${condition};
+          var selCol = selectedVals.split(',');
+          for(var key in readObj){
+            var taskValuePair = readObj[key];
+            if(taskValuePair && taskValuePair.value && taskValuePair.value.length){
+                var hasUser = false;
+                var usCol = taskValuePair.value;
+
+                for(var selKey in selCol){
+                    for(var myKey in usCol){
+                        if(usCol[myKey].value == selCol[selKey] && !hasUser){
+                            hasUser = true;
+                        }
+                    }
+                }
+                if(${
+                  ConditionTypes.NotEqual === conditionType ? '' : '!'
+                }(hasUser)){
+                    ids.push(taskValuePair.id);
+                }
+            }
+          }`;
+    }
+    switch (conditionType) {
       case ConditionTypes.PastToday:
         return `
                 for(var key in readObj){
@@ -265,8 +277,8 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     if (valueType === InputTypes.Text || valueType === InputTypes.List) {
       value = `'${value}'`;
     }
-    if (valueType === InputTypes.People) {
-      value = `'${JSON.stringify(value)}'`;
+    if (value && valueType === InputTypes.People) {
+      return `'${value.ids}'`;
     }
     const condition = node.workflowNode.state.get('condition');
     const pair = this.conditions.find(item => item.condition === condition);
