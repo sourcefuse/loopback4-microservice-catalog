@@ -12,7 +12,7 @@ export type SearchFunctionType<T> = (query: SearchQuery) => Promise<T[]>;
 export type SearchableModelsService = {
   add: (model: typeof Model) => Promise<void>;
   delete: (model: typeof Model) => Promise<void>;
-  get: () => Promise<typeof Model[]>;
+  get: () => Promise<(typeof Model)[]>;
 };
 
 export interface Searchable {
