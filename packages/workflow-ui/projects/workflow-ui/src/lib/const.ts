@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
 import {WorkflowElement} from './classes/element/abstract-element.class';
-import {ConditionTypes, InputTypes} from './enum';
+import {ConditionTypes} from './enum';
 import {ConditionOperatorPair} from './types/base.types';
 import {BpmnNode, CustomBpmnModdle, ModdleElement} from './types/bpmn.types';
 
@@ -47,5 +47,3 @@ export const typeTuppleList: Array<ConditionOperatorPair> = [
   {condition: ConditionTypes.ComingIn, operator: '-', value: true},
   {condition: ConditionTypes.PastBy, operator: '+', value: true},
 ];
-
-export const JSON_COLUMNS = [InputTypes.People, 'Priority', 'priority'];

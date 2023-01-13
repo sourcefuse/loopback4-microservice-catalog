@@ -1,11 +1,6 @@
-import { NodeTypes } from '../../../enum';
-import { BpmnEvent } from '../../../types/bpmn.types';
-import { GatewayElement } from '../../bpmn/elements/gateways/gateway.element';
-import { ReadColumnValue } from '../../bpmn/elements/tasks/read-column.task';
-import { TriggerOnAddItem } from '../../bpmn/elements/tasks/trigger-on-add-item.task';
-import { ColumnInput } from '../inputs/column.input';
-import { ConditionInput } from '../inputs/condition.input';
-import { ValueInput } from '../inputs/value.input';
+import {NodeTypes} from '../../../enum';
+import {BpmnEvent} from '../../../types/bpmn.types';
+import {TriggerOnAddItem} from '../../bpmn/elements/tasks/trigger-on-add-item.task';
 
 export class OnAddItemEvent extends BpmnEvent {
   groupType: NodeTypes;

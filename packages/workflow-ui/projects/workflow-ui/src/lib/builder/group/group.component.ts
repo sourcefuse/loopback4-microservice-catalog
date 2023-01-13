@@ -35,13 +35,11 @@ import {
 } from '../../types/base.types';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import {
-  EmailDataInput,
   GatewayElement,
   ReadColumnValue,
-  ToValueInput,
   TriggerWhenColumnChanges,
-  ValueInput,
 } from '../../services';
+import {NUMBER} from '../..';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
@@ -103,7 +101,7 @@ export class GroupComponent<E> implements OnInit {
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
     enableCheckAll: true,
-    itemsShowLimit: 1,
+    itemsShowLimit: 2,
     allowSearchFilter: true,
     defaultOpen: true,
   };
@@ -179,9 +177,9 @@ export class GroupComponent<E> implements OnInit {
     };
   }
 
-  setInput(input: any, nodeWithInput: any) {
-    const allowedInputs = [ValueInput, EmailDataInput, ToValueInput];
-    if (allowedInputs.includes(input.constructor)) {
+  setInput(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
+    const allowedInputs = ['ValueInput', 'EmailDataInput', 'ToValueInput'];
+    if (allowedInputs.includes(input.constructor.name)) {
       const value = input.getModelValue(nodeWithInput.node.state);
       if (nodeWithInput.node.state.get('email')) {
         this.emailInput = value;
@@ -289,11 +287,18 @@ export class GroupComponent<E> implements OnInit {
           input.typeFunction(element.node.state) === InputTypes.List,
         );
       }
-      // input.toggleOpenDefault(element.node.state);
       popper.hide();
     };
   }
 
+  /**
+   *
+   * @param event Mouse click event to open input
+   * @param popper Popper templateref to open popper programatically
+   * hide all open popper/input before opening a new input
+   * prevent proogation of click event
+   * update popperInstance to set new popper position for change detection
+   */
   onPoperClick(event: MouseEvent, popper: NgxPopperjsContentComponent) {
     this.prevPopperRef?.hide();
     this.prevPopperRef = popper;
@@ -324,7 +329,7 @@ export class GroupComponent<E> implements OnInit {
         /**
          * Remove node on changes event
          */
-        element.node.elements.splice(-2, 2);
+        element.node.elements.splice(-NUMBER.TWO, NUMBER.TWO);
         element.inputs[1].prefix = '';
         this.enableActionIcon = false;
       } else {

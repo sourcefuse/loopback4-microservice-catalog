@@ -54,11 +54,11 @@ export class CreateBasicIntervalStrategy
   }
   private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
     Object.keys(attrs).forEach(key => {
-      if (typeof attrs[key] !== 'string') {
-        switch (Object.keys(attrs[key])[0]) {
-          case 'state':
-            attrs[key] = node.workflowNode.state.get(attrs[key].state);
-        }
+      if (
+        typeof attrs[key] !== 'string' &&
+        Object.keys(attrs[key])[0] === 'state'
+      ) {
+        attrs[key] = node.workflowNode.state.get(attrs[key].state);
       }
     });
     return attrs;

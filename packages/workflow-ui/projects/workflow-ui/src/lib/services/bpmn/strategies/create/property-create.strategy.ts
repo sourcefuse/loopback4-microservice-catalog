@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {JSON_COLUMNS} from '../../../../const';
 import {WorkflowElement, StatementNode} from '../../../../classes';
 import {CreateStrategy} from '../../../../interfaces';
 import {
@@ -23,22 +22,18 @@ export class CreatePropertyStrategy implements CreateStrategy<ModdleElement> {
     const properties: ModdleElement[] = [];
     const propertyMap = attrs['state'];
     delete attrs['state'];
-
     Object.keys(propertyMap).forEach(id => {
       Object.keys(propertyMap[id]).forEach(key => {
+        let value;
+        if (typeof propertyMap[id][key] === 'object') {
+          value = JSON.stringify(propertyMap[id][key]);
+        } else {
+          value = propertyMap[id][key];
+        }
         properties.push(
           this.moddle.create('camunda:Property', {
             name: `${id}_${key}`,
-            value:
-              (propertyMap[id].value || propertyMap[id].email) &&
-              (!propertyMap[id].columnName ||
-                JSON_COLUMNS.includes(
-                  propertyMap[id].columnName?.toLowerCase(),
-                ) ||
-                propertyMap[id][key]?.displayValue === 'email') &&
-              typeof propertyMap[id][key] === 'object'
-                ? JSON.stringify(propertyMap[id][key])
-                : propertyMap[id][key],
+            value,
           }),
         );
       });

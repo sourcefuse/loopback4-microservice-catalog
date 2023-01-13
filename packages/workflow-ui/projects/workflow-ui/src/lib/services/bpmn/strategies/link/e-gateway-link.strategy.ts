@@ -22,12 +22,12 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     @Inject(CONDITION_LIST)
     private readonly conditions: Array<ConditionOperatorPair>,
   ) {}
-/**
- * It creates a link between the element and the node
- * @param element - The element that is being processed.
- * @param {BpmnStatementNode} node - BpmnStatementNode
- * @returns An array of ModdleElements
- */
+  /**
+   * It creates a link between the element and the node
+   * @param element - The element that is being processed.
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns An array of ModdleElements
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
@@ -36,16 +36,16 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return links;
   }
 
-  private createLink(
-    node: BpmnStatementNode,
-  ) {
+  private createLink(node: BpmnStatementNode) {
     const link = [];
     const from = node.tag;
-    for (let i = 0; i < node.next.length; i++) {
-      const flag = node.next[i].element.id?.split('_').includes('true');
-      const id = flag ? (node.element as EGatewayElement).elseOutGoing : node.outgoing;
-      const to = node.next[i].tag;
-      node.next[i].incoming = id;
+    for (let nextNode of node.next) {
+      const flag = nextNode.element.id?.split('_').includes('true');
+      const id = flag
+        ? (node.element as EGatewayElement).elseOutGoing
+        : node.outgoing;
+      const to = nextNode.tag;
+      nextNode.incoming = id;
       const attrs = this.createLinkAttrs(id, from, to);
       const {script, name} = this.createScript(node, id, flag);
       const expression = this.moddle.create('bpmn:FormalExpression', {
@@ -58,10 +58,10 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       const _link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
       const outgoing = from.get('outgoing');
       const incoming = to.get('incoming');
-      if (!outgoing.find((item: any) => item.id === id)) {
+      if (!outgoing.find((item: ModdleElement) => item.id === id)) {
         outgoing.push(_link);
       }
-      if (!incoming.find((item: any) => item.id === id)) {
+      if (!incoming.find((item: ModdleElement) => item.id === id)) {
         incoming.push(_link);
       }
       link.push(_link);
@@ -157,12 +157,12 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     let queue = [node];
     while (queue.length > 0) {
       const current = queue.shift()!;
-      if(current.element.outputs){
+      if (current.element.outputs) {
         return current;
       }
       if (current?.prev && current.prev.length) queue.push(...current.prev);
     }
-    return queue[queue.length-1];
+    return queue[queue.length - 1];
   }
 
   private getCondition(node: BpmnStatementNode) {

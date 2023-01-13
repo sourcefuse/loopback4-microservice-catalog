@@ -10,7 +10,7 @@ import {
 } from '../../../../types';
 import {CONDITION_LIST} from '../../../../const';
 import {UtilsService} from '../../../utils.service';
-import {ConditionTypes, InputTypes} from '../../../../enum';
+import {ConditionTypes, InputTypes, NUMBER} from '../../../../enum';
 import {WorkflowAction} from '../../../../classes/nodes/abstract-workflow-action.class';
 import {GatewayElement} from '../../elements';
 
@@ -43,9 +43,9 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
         : mainNodes.push(node),
     );
     links.push(...this.createMainLink(node, mainNodes));
-      elseNodes.length && node.element.id?.split('_')[3] !== 'OrGroup'
-        ? links.push(this.createElseLink(node, elseNodes)!)
-        : links.push(...this.createEndLink(node));
+    elseNodes.length && node.element.id?.split('_')[NUMBER.THREE] !== 'OrGroup'
+      ? links.push(this.createElseLink(node, elseNodes)!)
+      : links.push(...this.createEndLink(node));
     return links;
   }
 
@@ -71,10 +71,10 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
       const _link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
       const outgoing = from.get('outgoing');
       const incoming = to.get('incoming');
-      if (!outgoing.find((item: any) => item.id === id)) {
+      if (!outgoing.find((item: ModdleElement) => item.id === id)) {
         outgoing.push(_link);
       }
-      if (!incoming.find((item: any) => item.id === id)) {
+      if (!incoming.find((item: ModdleElement) => item.id === id)) {
         incoming.push(_link);
       }
       link.push(_link);
@@ -104,10 +104,10 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     const link = this.moddle.create(BPMN_SEQ_FLOW, attrs);
     const outgoing = from.get('outgoing');
     const incoming = to.get('incoming');
-    if (!outgoing.find((item: any) => item.id === id)) {
+    if (!outgoing.find((item: ModdleElement) => item.id === id)) {
       outgoing.push(link);
     }
-    if (!incoming.find((item: any) => item.id === id)) {
+    if (!incoming.find((item: ModdleElement) => item.id === id)) {
       incoming.push(link);
     }
     return link;
@@ -170,9 +170,13 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
   ) {
     const column: string = node.workflowNode.state.get('columnName');
     const conditionType = node.workflowNode.state.get('condition');
-    if(column?.toLowerCase() === InputTypes.People){
-      return !isElse ?
-      `var selectedVals = ${condition};
+    const conditionExpression =
+      ConditionTypes.NotEqual === conditionType ? '!' : '';
+    const conditionExpressionElse =
+      ConditionTypes.NotEqual === conditionType ? '' : '!';
+    if (column?.toLowerCase() === InputTypes.People) {
+      return !isElse
+        ? `var selectedVals = ${condition};
       var selCol = selectedVals.split(',');
       for(var key in readObj){
         var taskValuePair = readObj[key];
@@ -187,14 +191,12 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
                     }
                 }
             }
-            if(${
-              ConditionTypes.NotEqual === conditionType ? '!' : ''
-            }(hasUser)){
+            if(${conditionExpression}(hasUser)){
                 ids.push(taskValuePair.id);
             }
         }
-      }` :
-          `var selectedVals = ${condition};
+      }`
+        : `var selectedVals = ${condition};
           var selCol = selectedVals.split(',');
           for(var key in readObj){
             var taskValuePair = readObj[key];
@@ -209,9 +211,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
                         }
                     }
                 }
-                if(${
-                  ConditionTypes.NotEqual === conditionType ? '' : '!'
-                }(hasUser)){
+                if(${conditionExpressionElse}(hasUser)){
                     ids.push(taskValuePair.id);
                 }
             }
@@ -263,12 +263,12 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     let queue = [node];
     while (queue.length > 0) {
       const current = queue.shift()!;
-      if(current.element.outputs){
+      if (current.element.outputs) {
         return current;
       }
       if (current?.prev && current.prev.length) queue.push(...current.prev);
     }
-    return queue[queue.length-1];
+    return queue[queue.length - 1];
   }
 
   private getCondition(node: BpmnStatementNode) {

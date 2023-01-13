@@ -19,7 +19,7 @@
     </div>
 
     <span
-      class="action-items"
+      class="action-items hide"
       *ngIf="group.children.length && enableActionIcon"
     >
       <span
@@ -137,13 +137,51 @@
   </ng-template>
 
   <ng-template
+    #textTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+    let-hide="hide"
+  >
+    <div (document:click)="hide()">
+      <input
+        type="text"
+        class="text-input"
+        autofocus
+        value="{{ input.setValueName(nodeWithInput.node.state) }}"
+        (focusout)="callback($event.target)"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template
+    #numberTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+    let-hide="hide"
+  >
+    <div (document:click)="hide()">
+      <input
+        type="number"
+        class="text-input"
+        autofocus
+        value="{{ input.setValueName(nodeWithInput.node.state) }}"
+        (focusout)="callback($event.target)"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template
     #listTemplate
     let-list="list"
     let-callback="callback"
     let-input="input"
     let-nodeWithInput="nodeWithInput"
+    let-hide="hide"
   >
     <div
+      #select
       class="option-div"
       [ngClass]="{
         selected:
@@ -151,6 +189,7 @@
           input.setValueName(nodeWithInput.node.state)
       }"
       (click)="callback(option)"
+      (document:click)="hide()"
       *ngFor="let option of list"
     >
       {{ option[input.listNameField] }}
@@ -158,18 +197,65 @@
   </ng-template>
 
   <ng-template
-    #textTemplate
+    #searchableDropdownTemplate
+    let-list="list"
+    let-callback="callback"
+    let-hide="hide"
+  >
+    <ng-multiselect-dropdown
+      [placeholder]="'Please Select'"
+      [settings]="dropdownSettings"
+      [data]="list"
+      [(ngModel)]="selectedItems"
+      (onDropDownClose)="hide()"
+      (onSelect)="callback($event)"
+      (onSelectAll)="callback($event)"
+    >
+    </ng-multiselect-dropdown>
+  </ng-template>
+
+  <ng-template
+    #dateTemplate
     let-callback="callback"
     let-input="input"
     let-nodeWithInput="nodeWithInput"
+    let-hide="hide"
   >
-    <input
-      type="text"
-      class="text-input"
-      autofocus
-      (focusout)="callback($event.target)"
-      value="{{ input.setValueName(nodeWithInput.node.state) }}"
-    />
+    <ngb-datepicker
+      [(ngModel)]="date"
+      #d
+      (dateSelect)="callback($event)"
+      (document:click)="hide()"
+    ></ngb-datepicker>
+  </ng-template>
+
+  <ng-template
+    #dateTimeTemplate
+    let-callback="callback"
+    let-input="input"
+    let-nodeWithInput="nodeWithInput"
+    let-hide="hide"
+  >
+    <div class="date-time-picker" (document:click)="hide()">
+      <ngb-datepicker [(ngModel)]="dateTime.date" #d></ngb-datepicker>
+      <div class="time-picker">
+        <div>
+          <ngb-timepicker
+            [(ngModel)]="dateTime.time"
+            meridian="true"
+          ></ngb-timepicker>
+        </div>
+        <div>
+          <button
+            class="close-btn"
+            (click)="callback(dateTime)"
+            [disabled]="!dateTime.date || !dateTime.time"
+          >
+            Set
+          </button>
+        </div>
+      </div>
+    </div>
   </ng-template>
 
   <ng-template
@@ -180,8 +266,9 @@
     let-emailInput="emailInput"
     let-appendEmailBody="appendEmailBody"
     let-setFocusKey="setFocusKey"
+    let-hide="hide"
   >
-    <div class="email-template">
+    <div class="email-template" (document:click)="hide()">
       <input
         type="text"
         class="email-input"
@@ -213,78 +300,6 @@
         >
           Set
         </button>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template
-    #numberTemplate
-    let-callback="callback"
-    let-input="input"
-    let-nodeWithInput="nodeWithInput"
-  >
-    <input
-      type="number"
-      class="text-input"
-      autofocus
-      (focusout)="callback($event.target)"
-      value="{{ input.setValueName(nodeWithInput.node.state) }}"
-    />
-  </ng-template>
-
-  <ng-template
-    #searchableDropdownTemplate
-    let-list="list"
-    let-callback="callback"
-  >
-    <ng-multiselect-dropdown
-      [placeholder]="'Please Select'"
-      [settings]="dropdownSettings"
-      [data]="list"
-      [(ngModel)]="selectedItems"
-      (onSelect)="callback($event)"
-      (onSelectAll)="callback($event)"
-    >
-    </ng-multiselect-dropdown>
-  </ng-template>
-
-  <ng-template
-    #dateTemplate
-    let-callback="callback"
-    let-input="input"
-    let-nodeWithInput="nodeWithInput"
-  >
-    <ngb-datepicker
-      [(ngModel)]="date"
-      #d
-      (dateSelect)="callback($event)"
-    ></ngb-datepicker>
-  </ng-template>
-
-  <ng-template
-    #dateTimeTemplate
-    let-callback="callback"
-    let-input="input"
-    let-nodeWithInput="nodeWithInput"
-  >
-    <div class="date-time-picker">
-      <ngb-datepicker [(ngModel)]="dateTime.date" #d></ngb-datepicker>
-      <div class="time-picker">
-        <div>
-          <ngb-timepicker
-            [(ngModel)]="dateTime.time"
-            meridian="true"
-          ></ngb-timepicker>
-        </div>
-        <div>
-          <button
-            class="close-btn"
-            (click)="callback(dateTime)"
-            [disabled]="!dateTime.date || !dateTime.time"
-          >
-            Set
-          </button>
-        </div>
       </div>
     </div>
   </ng-template>

@@ -129,6 +129,10 @@ export class BuilderComponent<E> implements OnInit {
             group.children.push(event);
           }
         });
+        this.eventAdded.emit({
+          name: event.node.constructor.name,
+          event: event.node,
+        });
       });
       actions.forEach(action => {
         const groupId = action.node.groupId;
@@ -136,6 +140,10 @@ export class BuilderComponent<E> implements OnInit {
           if (group.id === groupId) {
             group.children.push(action);
           }
+        });
+        this.eventAdded.emit({
+          name: action.node.constructor.name,
+          event: action.node as unknown as WorkflowEvent<E>,
         });
       });
       if (this.eventGroups[0].children?.length) {

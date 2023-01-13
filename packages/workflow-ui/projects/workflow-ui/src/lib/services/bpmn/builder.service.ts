@@ -69,9 +69,7 @@ export class BpmnBuilderService extends BuilderService<
     statement.addStart(start);
     statement.addEnd(end);
     let current = statement.head;
-    elseStatement.head.length
-      ? this.addElseIntoMainFlow(elseStatement, statement)
-      : '';
+    this.addElseIntoMainFlow(elseStatement, statement);
     this.traverseToSetTags(current[0]);
     this.traverseToLink(current[0]);
     const {xml} = await this.moddle.toXML(this.root);
@@ -119,6 +117,9 @@ export class BpmnBuilderService extends BuilderService<
     elseStatement: Statement<ModdleElement>,
     statement: Statement<ModdleElement>,
   ) {
+    if (!elseStatement.head.length) {
+      return;
+    }
     const elseEnd = this.elements.createInstanceByName('EndElement');
     elseStatement.addEnd(elseEnd);
     let queue = [statement.head[0]];
@@ -130,9 +131,11 @@ export class BpmnBuilderService extends BuilderService<
           current.element.constructor.name === 'EGatewayElement')
       ) {
         current.next.push(elseStatement.head[0]);
-        elseStatement.head[0].prev
-          ? elseStatement.head[0].prev.push(current)
-          : (elseStatement.head[0].prev = [current]);
+        if (elseStatement.head[0].prev) {
+          elseStatement.head[0].prev.push(current);
+        } else {
+          elseStatement.head[0].prev = [current];
+        }
       }
       if (current?.next && current.next.length) queue.push(...current.next);
     }
@@ -254,24 +257,26 @@ export class BpmnBuilderService extends BuilderService<
       const properties = extension.get('values')[0];
       if (properties && properties['values']) {
         properties.get('values').forEach(property => {
-          const [id, key] = property['name'].split('_');
-          if (state[id]) {
-            try {
-              state[id][key] = JSON.parse(property['value']);
-            } catch (error) {
-              state[id][key] = property['value'];
-            }
-          } else {
-            state[id] = {
-              [key]:
-                key === 'email'
-                  ? JSON.parse(property['value'])
-                  : property['value'],
-            };
-          }
+          this.setState(property, state);
         });
       }
     }
     return state;
+  }
+
+  private setState(property: ModdleElement, state: RecordOfAnyType) {
+    const [id, key] = property['name'].split('_');
+    if (state[id]) {
+      try {
+        state[id][key] = JSON.parse(property['value']);
+      } catch (error) {
+        state[id][key] = property['value'];
+      }
+    } else {
+      state[id] = {
+        [key]:
+          key === 'email' ? JSON.parse(property['value']) : property['value'],
+      };
+    }
   }
 }

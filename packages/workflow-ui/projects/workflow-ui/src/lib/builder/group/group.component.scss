@@ -23,31 +23,45 @@
     .workflow-group-content {
       flex-grow: 1;
     }
+    .action-items {
+      &.hide {
+        display: none;
+      }
+      .action-icons {
+        cursor: pointer;
+        display: inline !important;
+        margin: 0 15px;
+        font-size: 18px;
+        padding: 5px;
+        &:hover {
+          &.icon-workflow-plus,
+          &.icon-workflow-delete {
+            background: $grey2;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
   }
-  .action-text,
+
   .input-text {
-    display: inline-block;
     cursor: pointer;
     border-bottom: 1.5px solid;
+    display: inline;
+    text-decoration: inherit;
     .placeholder-text {
       color: $placeholder-color;
       text-transform: lowercase;
     }
-    p {
-      margin-bottom: 0;
-    }
     .value-text {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      max-width: 47%;
       display: inline-block;
-      padding-bottom: 4px;
-      vertical-align: middle;
+      overflow: hidden;
+      max-width: 45%;
+      text-decoration: inherit;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      white-space: nowrap;
     }
-  }
-  .input-text {
-    display: inline;
   }
   .container {
     margin: 0;
@@ -110,23 +124,6 @@
     &.selected {
       background-color: $primary-color;
       color: $white;
-    }
-  }
-
-  .action-items {
-    .action-icons {
-      cursor: pointer;
-      display: inline !important;
-      margin: 0 15px;
-      font-size: 18px;
-      padding: 5px;
-      &:hover {
-        &.icon-workflow-plus,
-        &.icon-workflow-delete {
-          background: $grey2;
-          border-radius: 5px;
-        }
-      }
     }
   }
 }

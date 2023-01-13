@@ -1,5 +1,10 @@
 @import '../../../assets/styles/colors';
 
+:host {
+  overflow-y: scroll;
+  min-height: 100%;
+}
+
 .action-text,
 .input-text {
   display: inline-block;

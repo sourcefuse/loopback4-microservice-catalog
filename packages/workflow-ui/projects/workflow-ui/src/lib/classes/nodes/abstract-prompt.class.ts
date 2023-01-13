@@ -153,7 +153,7 @@ export abstract class WorkflowPrompt {
     switch (this.typeFunction(state)) {
       case InputTypes.People: {
         const value = state.get(this.inputKey)?.value;
-        return value.map((val: any) => {
+        return value.map((val: AllowedValuesMap) => {
           val.fullName = val.text;
           val.id = val.value;
           return val;

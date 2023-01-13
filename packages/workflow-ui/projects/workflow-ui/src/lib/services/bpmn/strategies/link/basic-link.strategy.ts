@@ -37,10 +37,10 @@ export class BasicLinkStrategy implements LinkStrategy<ModdleElement> {
     const link = this.moddle.create('bpmn:SequenceFlow', attrs);
     const outgoing = from.get('outgoing');
     const incoming = to.get('incoming');
-    if (!outgoing.find((item: any) => item.id === id)) {
+    if (!outgoing.find((item: ModdleElement) => item.id === id)) {
       outgoing.push(link);
     }
-    if (!incoming.find((item: any) => item.id === id)) {
+    if (!incoming.find((item: ModdleElement) => item.id === id)) {
       incoming.push(link);
     }
     return [link];

@@ -1,6 +1,7 @@
 {
   "name": "@sourceloop/workflow-ui",
   "version": "0.0.0",
+  "description": "Library for providing a simple workflow builder",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

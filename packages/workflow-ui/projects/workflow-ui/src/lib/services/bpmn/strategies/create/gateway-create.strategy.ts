@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
-import { WorkflowElement } from '../../../../classes';
-import { CreateStrategy } from '../../../../interfaces';
-import { RecordOfAnyType } from '../../../../types/base.types';
+import {Injectable} from '@angular/core';
+import {WorkflowElement} from '../../../../classes';
+import {CreateStrategy} from '../../../../interfaces';
+import {RecordOfAnyType} from '../../../../types/base.types';
 import {
   BpmnStatementNode,
   CustomBpmnModdle,
   ModdleElement,
 } from '../../../../types/bpmn.types';
-import { UtilsService } from '../../../utils.service';
-import { GatewayElement } from '../../elements';
+import {UtilsService} from '../../../utils.service';
+import {GatewayElement} from '../../elements';
 
 @Injectable()
 export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
   constructor(
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
-  ) { }
+  ) {}
   /**
    * It creates a new BPMN element, sets the id, and sets the outgoing flow
    * @param element - WorkflowElement<ModdleElement>
@@ -30,21 +30,23 @@ export class CreateGatewayStrategy implements CreateStrategy<ModdleElement> {
   ): ModdleElement {
     element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
     node.outgoing = node.outgoing ?? `Flow_${this.utils.uuid()}`;
-    (element as GatewayElement).elseOutGoing = (element as GatewayElement).elseOutGoing ?? `Flow_${this.utils.uuid()}`;
-    (element as GatewayElement).default = (element as GatewayElement).default  ??`Flow_${this.utils.uuid()}`;
+    (element as GatewayElement).elseOutGoing =
+      (element as GatewayElement).elseOutGoing ?? `Flow_${this.utils.uuid()}`;
+    (element as GatewayElement).default =
+      (element as GatewayElement).default ?? `Flow_${this.utils.uuid()}`;
     return this.moddle.create(element.tag, {
       id: element.id,
       name: 'Gateway',
-      ...this.parseAttributes(attrs,  node),
+      ...this.parseAttributes(attrs, node),
     });
   }
   private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
     Object.keys(attrs).forEach(key => {
-      if(typeof attrs[key] !== 'string'){
-        switch(Object.keys(attrs[key])[0]){
-          case 'state':
-              attrs[key] = node.workflowNode.state.get(attrs[key].state);
-        }
+      if (
+        typeof attrs[key] !== 'string' &&
+        Object.keys(attrs[key])[0] === 'state'
+      ) {
+        attrs[key] = node.workflowNode.state.get(attrs[key].state);
       }
     });
     return attrs;

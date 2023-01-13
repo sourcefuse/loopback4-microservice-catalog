@@ -47,6 +47,7 @@ export enum ElementNames {
 
 export enum NUMBER {
   TWO = 2,
+  THREE = 3,
   NINE = 9,
 }
 
