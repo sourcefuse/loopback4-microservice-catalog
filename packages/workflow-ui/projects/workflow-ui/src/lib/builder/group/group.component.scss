@@ -36,6 +36,15 @@
     p {
       margin-bottom: 0;
     }
+    .value-text {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 47%;
+      display: inline-block;
+      padding-bottom: 4px;
+      vertical-align: middle;
+    }
   }
   .input-text {
     display: inline;

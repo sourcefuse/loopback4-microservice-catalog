@@ -20,12 +20,18 @@
   }
 }
 .container {
-  width: 45%;
+  width: 46%;
   color: rgb(50, 51, 56);
   margin: auto;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 300;
   font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+  @media screen and (max-width: 480px) {
+    width: 90%;
+  }
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    width: 60%;
+  }
   .icon-workflow-down-arrow {
     font-weight: 600;
     font-size: 30px;

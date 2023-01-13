@@ -116,17 +116,12 @@ export class BuilderComponent<E> implements OnInit {
 
       this.eventGroups = [];
       this.actionGroups = [];
-
       this.selectedActions = actions;
       this.selectedEvents = events;
       this.selectedElseActions = elseActions;
-
       groups.forEach(group => this.onGroupAdd(group));
-
       this.restoreState(state);
-
       this.eActionGroups[0].children = elseActions;
-
       events.forEach(event => {
         const groupId = event.node.groupId;
         this.eventGroups.forEach(group => {
@@ -135,7 +130,6 @@ export class BuilderComponent<E> implements OnInit {
           }
         });
       });
-
       actions.forEach(action => {
         const groupId = action.node.groupId;
         this.actionGroups.forEach(group => {
@@ -144,11 +138,13 @@ export class BuilderComponent<E> implements OnInit {
           }
         });
       });
-      this.showElseBlock =
-        this.eventGroups[0].children[0].node.constructor.name ===
-          EventTypes.OnChangeEvent &&
-        this.eventGroups[0].children[0].node.state.get('condition') !==
-          ConditionTypes.Changes;
+      if (this.eventGroups[0].children?.length) {
+        this.showElseBlock =
+          this.eventGroups[0].children[0].node.constructor.name ===
+            EventTypes.OnChangeEvent &&
+          this.eventGroups[0].children[0].node.state.get('condition') !==
+            ConditionTypes.Changes;
+      }
       this.updateDiagram();
     }
   }
@@ -175,7 +171,8 @@ export class BuilderComponent<E> implements OnInit {
     this.updateDiagram();
     this.updateState(event.node, event.newNode.inputs);
     this.showElseBlock =
-      event.node.constructor.name === EventTypes.OnChangeEvent;
+      event.node.constructor.name === EventTypes.OnChangeEvent ||
+      event.node.constructor.name === EventTypes.OnValueEvent;
   }
 
   onActionAdded(action: ElementsWithInput<E>) {
@@ -194,11 +191,13 @@ export class BuilderComponent<E> implements OnInit {
       item: item.element.node,
     });
     this.updateState(item.element.node, item.element.inputs);
-    this.showElseBlock =
-      this.eventGroups[0].children[0].node.constructor.name ===
-        EventTypes.OnChangeEvent &&
-      this.eventGroups[0].children[0].node.state.get('condition') !==
-        ConditionTypes.Changes;
+    if (this.eventGroups[0].children?.length) {
+      this.showElseBlock =
+        this.eventGroups[0].children[0].node.constructor.name ===
+          EventTypes.OnChangeEvent &&
+        this.eventGroups[0].children[0].node.state.get('condition') !==
+          ConditionTypes.Changes;
+    }
     this.updateDiagram();
   }
 

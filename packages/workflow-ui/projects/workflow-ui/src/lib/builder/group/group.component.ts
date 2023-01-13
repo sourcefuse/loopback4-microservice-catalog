@@ -117,6 +117,7 @@ export class GroupComponent<E> implements OnInit {
   nodeList: WorkflowNode<E>[];
 
   public types = NodeTypes;
+  public prevPopperRef: NgxPopperjsContentComponent;
 
   @Input()
   templateMap?: {
@@ -288,7 +289,23 @@ export class GroupComponent<E> implements OnInit {
           input.typeFunction(element.node.state) === InputTypes.List,
         );
       }
+      // input.toggleOpenDefault(element.node.state);
       popper.hide();
+    };
+  }
+
+  onPoperClick(event: MouseEvent, popper: NgxPopperjsContentComponent) {
+    this.prevPopperRef?.hide();
+    this.prevPopperRef = popper;
+    event.preventDefault();
+    event.stopPropagation();
+    this.prevPopperRef.show();
+    popper?.popperInstance?.forceUpdate();
+  }
+
+  hidePopper() {
+    return () => {
+      this.prevPopperRef?.hide();
     };
   }
 

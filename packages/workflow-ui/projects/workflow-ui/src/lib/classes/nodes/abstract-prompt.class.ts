@@ -25,13 +25,6 @@ export abstract class WorkflowPrompt {
     return state.get(this.inputKey);
   }
 
-  toggleOpenDefault<S extends RecordOfAnyType>(state: State<S>) {
-    const key = `${openDefaultKey}-${this.inputKey}`;
-    let openDefault = !!state.get(key);
-    openDefault = !openDefault;
-    state.change(key, openDefault);
-  }
-
   setValue<S extends RecordOfAnyType>(
     state: State<S>,
     value: AllowedValues | AllowedValuesMap,
@@ -69,13 +62,15 @@ export abstract class WorkflowPrompt {
       }
       case InputTypes.Date:
         const _date = `${this.onDateSelect(value as NgbDateStruct)}`;
-        return moment(_date.toString(), 'DD-MM-YYYY').format('YYYY-MM-DD');
+        return moment(_date.toString(), 'DD-MM-YYYY').format('MMM DD, YYYY');
       case InputTypes.DateTime:
         const {date, time} = value as DateTime;
         const hours = this.convertToTwoDigits(time.hour);
         const min = this.convertToTwoDigits(time.minute);
         const dateTime = `${this.onDateSelect(date)} ${hours}:${min}`;
-        return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').utc().format();
+        return moment(dateTime.toString(), 'DD-MM-YYYY hh:mm').format(
+          'MMM DD, YYYY hh:mm A',
+        );
       case InputTypes.Email:
         (value as AllowedValuesMap).displayValue = 'email';
         return value;
