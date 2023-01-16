@@ -5,7 +5,7 @@
     "prepare": "husky install",
     "postinstall": "patch-package",
     "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
-    "export-typedocs": "sh export-typedocs.sh"
+    "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",

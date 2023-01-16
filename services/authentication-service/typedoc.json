@@ -1,7 +1,0 @@
-{
-  "theme": "markdown",
-  "entryPoints": ["src/index.ts"],
-  "out": "./../../docs/services/authentication-service/",
-  "plugin": ["typedoc-plugin-markdown"],
-  "name": "Authentication Service"
-}

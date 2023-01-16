@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/feature-toggle",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Package for feature toggle",
   "keywords": [
     "loopback-extension",
@@ -45,36 +45,64 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^4.0.5"
+    "@loopback/core": "^4.0.7"
   },
   "dependencies": {
-    "@loopback/boot": "^5.0.5",
-    "@loopback/context": "^5.0.5",
-    "@loopback/core": "^4.0.5",
-    "@loopback/express": "^5.0.5",
-    "@loopback/repository": "^5.1.0",
-    "@loopback/rest": "^12.0.5",
-    "@loopback/rest-explorer": "^5.0.5",
-    "@loopback/service-proxy": "^5.0.5",
-    "@sourceloop/core": "^7.3.1",
+    "@loopback/boot": "^5.0.7",
+    "@loopback/context": "^5.0.7",
+    "@loopback/core": "^4.0.7",
+    "@loopback/express": "^5.0.7",
+    "@loopback/repository": "^5.1.2",
+    "@loopback/rest": "^12.0.7",
+    "@loopback/rest-explorer": "^5.0.7",
+    "@loopback/service-proxy": "^5.0.7",
+    "@sourceloop/core": "^7.3.2",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^7.2.1",
+    "loopback4-authentication": "^7.3.1",
     "sinon": "^14.0.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.5",
-    "@loopback/core": "^4.0.5",
-    "@loopback/eslint-config": "^13.0.5",
-    "@loopback/testlab": "^5.0.5",
+    "@loopback/build": "^9.0.7",
+    "@loopback/core": "^4.0.7",
+    "@loopback/eslint-config": "^13.0.7",
+    "@loopback/testlab": "^5.0.7",
     "@types/lodash": "^4.14.182",
-    "@types/node": "^14.18.33",
-    "eslint": "^8.28.0",
+    "@types/node": "^14.18.36",
+    "eslint": "^8.30.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.8.4"
+    "typescript": "~4.9.4"
+  },
+  "overrides": {
+    "body-parser": {
+      "debug": "^4.3.4"
+    },
+    "send": {
+      "debug": "^4.3.4"
+    },
+    "finalhandler": {
+      "debug": "^4.3.4"
+    },
+    "express": {
+      "debug": "^4.3.4",
+      "finalhandler": "^1.2.0",
+      "send": "^0.18.0",
+      "serve-static": "^1.15.0"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/feature-toggle",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }

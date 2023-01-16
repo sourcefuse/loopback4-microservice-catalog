@@ -1,5 +1,0 @@
-{
-  "entryPoints": ["src/index.ts"],
-  "out": "./../../docs/services/chat-service/",
-  "plugin": ["typedoc-plugin-markdown"]
-}

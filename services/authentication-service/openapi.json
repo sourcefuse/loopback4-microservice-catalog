@@ -1712,6 +1712,12 @@
             "type": "string",
             "format": "date-time"
           },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "number"
           },

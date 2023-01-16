@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.4 (2023-01-12)</small>
+
+* chore(cli): update template dependencies in sl cli (#1197) ([5302be5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5302be5)), closes [#1197](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1197) [#1196](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1196)
+
+
+
+
+
+## <small>3.0.3 (2023-01-12)</small>
+
+* chore(deps): loopback and sourceloop version update (#1195) ([ea9bb21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ea9bb21)), closes [#1195](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1195) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194)
+
+
+
+
+
 ## <small>3.0.2 (2022-12-21)</small>
 
 * chore(deps): update cli template dependencies (#1121) ([fa9dca7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fa9dca7)), closes [#1121](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1121) [#1120](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1120)

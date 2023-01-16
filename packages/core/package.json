@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Sourceloop core package.",
   "keywords": [
     "loopback-extension",
@@ -40,26 +40,26 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^5.0.5",
-    "@loopback/context": "^5.0.5",
-    "@loopback/core": "^4.0.5",
-    "@loopback/express": "^5.0.5",
-    "@loopback/openapi-v3": "^8.0.5",
-    "@loopback/repository": "^5.1.0",
-    "@loopback/rest": "^12.0.5",
-    "@loopback/rest-explorer": "^5.0.5",
-    "@loopback/service-proxy": "^5.0.5",
+    "@loopback/boot": "^5.0.7",
+    "@loopback/context": "^5.0.7",
+    "@loopback/core": "^4.0.7",
+    "@loopback/express": "^5.0.7",
+    "@loopback/openapi-v3": "^8.0.7",
+    "@loopback/repository": "^5.1.2",
+    "@loopback/rest": "^12.0.7",
+    "@loopback/rest-explorer": "^5.0.7",
+    "@loopback/service-proxy": "^5.0.7",
     "casbin": "^5.15.0",
     "i18n": "^0.14.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "logform": "^2.4.0",
-    "loopback-datasource-juggler": "^4.28.0",
-    "loopback4-authentication": "^7.2.1",
-    "loopback4-authorization": "^5.0.9",
-    "loopback4-helmet": "^4.1.4",
-    "loopback4-ratelimiter": "^4.1.4",
-    "loopback4-soft-delete": "^7.0.2",
+    "loopback-datasource-juggler": "^4.28.1",
+    "loopback4-authentication": "^7.3.1",
+    "loopback4-authorization": "^5.1.0",
+    "loopback4-helmet": "^4.2.0",
+    "loopback4-ratelimiter": "^4.2.0",
+    "loopback4-soft-delete": "^7.1.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
     "openapi3-ts": "^2.0.2",
@@ -69,23 +69,45 @@
     "winston": "^3.7.2"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.5",
-    "@loopback/eslint-config": "^13.0.5",
-    "@loopback/testlab": "^5.0.5",
+    "@loopback/build": "^9.0.7",
+    "@loopback/eslint-config": "^13.0.7",
+    "@loopback/testlab": "^5.0.7",
     "@types/i18n": "^0.13.2",
-    "@types/jsonwebtoken": "^8.5.8",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.182",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^14.18.33",
+    "@types/node": "^14.18.36",
     "@types/request-ip": "^0.0.37",
     "@types/swagger-stats": "^0.95.4",
-    "eslint": "^8.28.0",
+    "eslint": "^8.30.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.8.4"
+    "typescript": "~4.9.4"
+  },
+  "overrides": {
+    "body-parser": {
+      "debug": "^4.3.4"
+    },
+    "express": {
+      "debug": "^4.3.4",
+      "finalhandler": "^1.2.0",
+      "send": "^0.18.0",
+      "serve-static": "^1.15.0"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/core",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }

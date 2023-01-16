@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-tenant-service",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Sourceloop User Tenant Service.",
   "keywords": [
     "loopback-extension",
@@ -59,41 +59,41 @@
     "db-migrate-pg": "^1.2.2"
   },
   "dependencies": {
-    "@loopback/boot": "^5.0.5",
-    "@loopback/context": "^5.0.5",
-    "@loopback/core": "^4.0.5",
-    "@loopback/openapi-v3": "^8.0.5",
-    "@loopback/repository": "^5.1.0",
-    "@loopback/rest": "^12.0.5",
-    "@loopback/rest-explorer": "^5.0.5",
-    "@loopback/service-proxy": "^5.0.5",
-    "@sourceloop/core": "^7.3.1",
+    "@loopback/boot": "^5.0.7",
+    "@loopback/context": "^5.0.7",
+    "@loopback/core": "^4.0.7",
+    "@loopback/openapi-v3": "^8.0.7",
+    "@loopback/repository": "^5.1.2",
+    "@loopback/rest": "^12.0.7",
+    "@loopback/rest-explorer": "^5.0.7",
+    "@loopback/service-proxy": "^5.0.7",
+    "@sourceloop/core": "^7.3.2",
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
-    "jsonwebtoken": "^8.5.1",
-    "loopback4-authentication": "^7.2.1",
-    "loopback4-authorization": "^5.0.9",
-    "loopback4-soft-delete": "^7.0.2",
+    "jsonwebtoken": "^9.0.0",
+    "loopback4-authentication": "^7.3.1",
+    "loopback4-authorization": "^5.1.0",
+    "loopback4-soft-delete": "^7.1.0",
     "nanoid": "^3.1.25",
     "prom-client": "^14.0.1",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.5",
-    "@loopback/eslint-config": "^13.0.5",
-    "@loopback/testlab": "^5.0.5",
+    "@loopback/build": "^9.0.7",
+    "@loopback/eslint-config": "^13.0.7",
+    "@loopback/testlab": "^5.0.7",
     "@types/bcrypt": "^5.0.0",
-    "@types/jsonwebtoken": "^8.5.8",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.169",
-    "@types/node": "^14.18.33",
+    "@types/node": "^14.18.36",
     "@types/uuid": "^8.3.3",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
-    "eslint": "^8.28.0",
+    "eslint": "^8.30.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.8.4",
+    "typescript": "~4.9.4",
     "widdershins": "^4.0.1"
   },
   "overrides": {
@@ -101,10 +101,42 @@
       "swagger2openapi": "^7.0.8",
       "markdown-it": "^12.3.2",
       "yargs": "^17.4.1"
+    },
+    "body-parser": {
+      "debug": "^4.3.4"
+    },
+    "httpsnippet": {
+      "debug": "^4.3.4"
+    },
+    "send": {
+      "debug": "^4.3.4"
+    },
+    "tunnel-ssh": {
+      "debug": "^4.3.4"
+    },
+    "finalhandler": {
+      "debug": "^4.3.4"
+    },
+    "express": {
+      "debug": "^4.3.4",
+      "finalhandler": "^1.2.0",
+      "send": "^0.18.0",
+      "serve-static": "^1.15.0"
     }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/user-tenant-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }
