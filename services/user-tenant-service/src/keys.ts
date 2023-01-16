@@ -12,6 +12,12 @@ export namespace UserTenantServiceComponentBindings {
   export const COMPONENT = BindingKey.create<UserTenantServiceComponent>(
     `${CoreBindings.COMPONENTS}.UserTenantServiceComponent`,
   );
+  export const CURRENT_USER = BindingKey.create(
+    'sf.userAuthentication.currentUser',
+  );
+  export const TENANT_FILTER_INTERCEPTOR = BindingKey.create(
+    'sf.tenantFilterInterceptor',
+  );
 }
 
 export const UserTenantDataSourceName = 'AuthDB';

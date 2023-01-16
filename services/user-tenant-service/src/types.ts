@@ -6,9 +6,17 @@
  * Interface defining the component's options object
  */
 // sonarignore:start
+
+export type SpecParameter = {
+  name: string;
+};
+export interface ControllerMethodWithSpecs {
+  spec: {
+    parameters: SpecParameter[];
+  };
+}
 export interface UserTenantServiceComponentOptions {
-  //NOSONAR
-  // Add the definitions here
+  enableTenantFilter: boolean;
 }
 // sonarignore:end
 
@@ -17,5 +25,6 @@ export interface UserTenantServiceComponentOptions {
  */
 export const DEFAULT_USER_TENANT_SERVICE_OPTIONS: UserTenantServiceComponentOptions =
   {
+    enableTenantFilter: false,
     // Specify the values here
   };

@@ -70,6 +70,7 @@ import {
   UserViewRepository,
   UserRepository,
 } from './repositories';
+import { TenantFilterInterceptor } from './interceptors';
 
 // Configure the binding for UserTenantServiceComponent
 @injectable({
@@ -98,6 +99,7 @@ export class UserTenantServiceComponent implements Component {
   ) {
     this.bindings = [];
     this.application.component(CoreComponent);
+    this.providers= [TenantFilterInterceptor];
     this.models = [
       AuthClient,
       GroupUserCountView,
@@ -147,5 +149,10 @@ export class UserTenantServiceComponent implements Component {
       UserViewRepository,
       UserRepository,
     ];
+    if (options.enableTenantFilter) {
+      this.application
+        .bind(UserTenantServiceComponentBindings.TENANT_FILTER_INTERCEPTOR)
+        .toProvider(TenantFilterInterceptor);
+    }
   }
 }

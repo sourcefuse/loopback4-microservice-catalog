@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from './enums';
+import {PermissionKey, RoleTypeValue} from './enums';
 
 export const userGroupOwnerPerms = [
   PermissionKey.AddMemberToUserGroup,
@@ -11,3 +11,10 @@ export const userGroupOwnerPerms = [
   PermissionKey.UpdateUserGroup,
   PermissionKey.DeleteUserGroup,
 ];
+
+export const RoleNames: {
+  [key in RoleTypeValue]: string;
+} = {
+  [RoleTypeValue.SuperAdmin]: 'SuperAdmin',
+  [RoleTypeValue.TenantAdmin]: 'TenantAdmin',
+};

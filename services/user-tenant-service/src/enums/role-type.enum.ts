@@ -18,6 +18,11 @@ export const enum RoleKey {
 }
 export type RoleType = RoleKey & RoleTypes;
 
+export enum RoleTypeValue {
+  SuperAdmin,
+  TenantAdmin,
+}
+
 export const DisallowedRoles = [RoleTypes.Others];
 
 export interface RoleTypeMapValue {
