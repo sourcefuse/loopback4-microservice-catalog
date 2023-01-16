@@ -5,8 +5,9 @@
 import {AnyObject, ExtensionOptions} from '../../types';
 import BaseExtensionGenerator from '../../extension-generator';
 import {join} from 'path';
-import {writeFileSync} from 'fs';
 import {JSON_SPACING} from '../../utils';
+import fs from 'fs';
+
 export default class ExtensionGenerator extends BaseExtensionGenerator<ExtensionOptions> {
   constructor(public args: string[], public opts: ExtensionOptions) {
     super(args, opts);
@@ -16,7 +17,7 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     if (!this.fs.exists(join(this.destinationPath(), 'lerna.json'))) {
       this.exit('Can create an extension only from the root of a monorepo');
     } else {
-      this.destinationRoot(join('packages', this.options.name ?? 'module'));
+      this.options.name = this.options.name ?? 'module';
     }
   }
 
@@ -30,7 +31,9 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
 
   //Loopback4 prompts
   async promptProjectName() {
-    return super.promptProjectName();
+    const promtAns = await super.promptProjectName();
+    this.destinationRoot(join('packages', this.projectInfo.name));
+    return promtAns;
   }
 
   async promptComponent() {
@@ -55,7 +58,7 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
       scripts.preinstall = 'npm i @loopback/build --no-save && npm run build';
       scripts.prune = 'npm prune --production';
       packageJson.scripts = scripts;
-      writeFileSync(
+      fs.writeFileSync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
@@ -63,6 +66,32 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     } else {
       return false;
     }
+  }
+
+  addScope() {
+    let czConfig = this.fs.read(
+      join(this.destinationPath(), '../../', '.cz-config.js'),
+    );
+    const lastScopeIndex = czConfig.indexOf(
+      '[',
+      czConfig.lastIndexOf('scopes'),
+    );
+    const offset = 2;
+    const firstPart = czConfig.slice(0, lastScopeIndex + offset);
+    const secPart = czConfig.slice(lastScopeIndex + offset);
+    const stringToAdd = `{name: \'${this.options.name}\'}, \n`;
+
+    czConfig = firstPart + stringToAdd + secPart;
+    fs.writeFile(
+      join(this.destinationPath(), '../../', '.cz-config.js'),
+      czConfig,
+      {
+        flag: 'w',
+      },
+      function () {
+        //This is intentional.
+      },
+    );
   }
 
   end() {
