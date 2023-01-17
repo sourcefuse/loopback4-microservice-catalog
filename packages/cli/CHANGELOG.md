@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.5 (2023-01-17)</small>
+
+* chore(deps): loopback and sourceloop version update (#1211) ([3086a5b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3086a5b)), closes [#1211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1211) [#1206](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1206)
+* docs(core): add mkdocs and typedoc configuration (#1193) ([4b348b1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b348b1)), closes [#1193](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1193) [#1192](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1192)
+* fix(cli): can generate multiple local packages using extension comamnd (#1129) ([a970216](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a970216)), closes [#1129](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1129) [#1074](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1074)
+
+
+
+
+
 ## <small>3.0.4 (2023-01-12)</small>
 
 * chore(cli): update template dependencies in sl cli (#1197) ([5302be5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5302be5)), closes [#1197](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1197) [#1196](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1196)
