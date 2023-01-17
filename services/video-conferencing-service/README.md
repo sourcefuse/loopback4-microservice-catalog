@@ -52,8 +52,7 @@ npm i @sourceloop/video-conferencing-service
   });
   ```
 
-  -(For Twilio)
-  bind twilio config to the `TwilioBindings.config` key-
+- For Twilio bind twilio config to the `TwilioBindings.config` key-
 
   ```typescript
   this.bind(TwilioBindings.config).to({
@@ -139,8 +138,10 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class VideoDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class VideoDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = VideoConfDatasource;
   static readonly defaultConfig = config;
 

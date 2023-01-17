@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache",
-  "version": "0.4.3",
+  "version": "0.4.5",
   "description": "This package provides a mixin which works with redis to cache GET request responses",
   "keywords": [
     "cache",
@@ -44,30 +44,41 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^4.0.5",
-    "@loopback/repository": "^5.1.0",
-    "@loopback/rest": "^12.0.5",
+    "@loopback/core": "^4.0.7",
+    "@loopback/repository": "^5.1.2",
+    "@loopback/rest": "^12.0.7",
     "loopback-connector-kv-redis": "^4.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.4.1"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.5",
-    "@loopback/core": "^4.0.5",
-    "@loopback/eslint-config": "^13.0.5",
-    "@loopback/repository": "^5.1.0",
-    "@loopback/rest": "^12.0.5",
-    "@loopback/testlab": "^5.0.5",
-    "@types/node": "^14.18.33",
+    "@loopback/build": "^9.0.7",
+    "@loopback/core": "^4.0.7",
+    "@loopback/eslint-config": "^13.0.7",
+    "@loopback/repository": "^5.1.2",
+    "@loopback/rest": "^12.0.7",
+    "@loopback/testlab": "^5.0.7",
+    "@types/node": "^18.11.18",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
-    "eslint": "^8.28.0",
+    "eslint": "^8.32.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.8.4"
+    "typescript": "~4.9.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/cache",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }

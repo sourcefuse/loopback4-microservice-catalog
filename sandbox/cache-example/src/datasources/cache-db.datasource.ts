@@ -8,10 +8,10 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'cacheDb',
   connector: 'kv-redis',
-  // url: '',
+  url: process.env.REDIS_URL,
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD,
+  password: process.env.REDIS_PASS,
   db: process.env.REDIS_DATABASE,
 };
 

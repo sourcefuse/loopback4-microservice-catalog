@@ -11,10 +11,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {
-  NotificationServiceComponent,
-  NotifServiceBindings,
-} from '@sourceloop/notification-service';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
 import {
@@ -52,13 +49,6 @@ export class ChatAndNotifApplication extends BootMixin(
 
     // add Component for AuthenticationService
     this.component(NotificationServiceComponent);
-
-    this.bind(NotifServiceBindings.Config).to({
-      useCustomEmailProvider: false,
-      useCustomSMSProvider: false,
-      useCustomPushProvider: true,
-      useCustomSequence: false,
-    });
 
     this.bind(PubnubBindings.Config).to({
       subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,

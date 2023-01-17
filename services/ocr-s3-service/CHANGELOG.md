@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.12 (2023-01-17)</small>
+
+**Note:** Version bump only for package @sourceloop/ocr-s3-service
+
+
+
+
+
+## <small>0.4.11 (2023-01-12)</small>
+
+**Note:** Version bump only for package @sourceloop/ocr-s3-service
+
+
+
+
+
 ## <small>0.4.10 (2022-12-07)</small>
 
 * chore(deps): update loopback and sourceloop packages (#1101) ([fc6b432](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc6b432)), closes [#1101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1101) [#1100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1100)
