@@ -64,8 +64,8 @@
     "moment-timezone": "^0.5.34",
     "openapi3-ts": "^2.0.2",
     "request-ip": "^3.3.0",
-    "swagger-stats": "^0.99.2",
-    "tslib": "^2.0.0",
+    "swagger-stats": "^0.99.5",
+    "tslib": "^2.4.1",
     "winston": "^3.7.2"
   },
   "devDependencies": {
@@ -77,10 +77,10 @@
     "@types/lodash": "^4.14.182",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^14.18.36",
+    "@types/node": "^18.11.18",
     "@types/request-ip": "^0.0.37",
     "@types/swagger-stats": "^0.95.4",
-    "eslint": "^8.30.0",
+    "eslint": "^8.32.0",
     "source-map-support": "^0.5.21",
     "typescript": "~4.9.4"
   },
