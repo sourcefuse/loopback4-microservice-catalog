@@ -54,38 +54,40 @@ class ApiReferenceExporter {
 
     const project = this.app.convert();
 
-    if (project) {
-      // Project may not have converted correctly
-      const outputDir = path.resolve(__dirname, 'docs', this.config.out);
+    if (!project) {
+      throw new Error('Typedoc project reflection is not converted correctly.');
+    }
 
-      // Rendered docs
-      await this.app.generateDocs(project, outputDir);
+    const outputDir = path.resolve(__dirname, 'docs', this.config.out);
 
-      // Post export
-      if (this.settings.includeOpenAPIDoc) {
-        const openAPIDocFile = path.resolve(this.pkg.location, 'openapi.md');
-        if (!existsSync(openAPIDocFile)) {
-          console.log('openapi.md missing in ', this.pkg.name);
-          return;
-        }
+    // Generate docs
+    await this.app.generateDocs(project, outputDir);
 
-        let openAPIContent = readFileSync(openAPIDocFile, 'utf-8');
-        let lines = openAPIContent.split('\n');
-
-        // remove the first 15 lines
-        lines.splice(0, 15);
-
-        // join the remaining lines back into a string
-        openAPIContent = lines.join('\n');
-
-        openAPIContent = openAPIContent.replace(
-          /```.javascript--nodejs/gm,
-          '```js',
-        );
-
-        // Write openapi.md to `outputDir`
-        writeFileSync(path.resolve(outputDir, 'openapi.md'), openAPIContent);
+    // Post export
+    if (this.settings.includeOpenAPIDoc) {
+      const openAPIDocFile = path.resolve(this.pkg.location, 'openapi.md');
+      if (!existsSync(openAPIDocFile)) {
+        throw new Error('openapi.md is missing in '.concat(this.pkg.name));
       }
+
+      let openAPIContent = readFileSync(openAPIDocFile, 'utf-8');
+      let lines = openAPIContent.split('\n');
+
+      // remove the first few lines as these are open api specific front matter
+      const frontMatterEndsAt = 15;
+      lines.splice(0, frontMatterEndsAt);
+
+      // join the remaining lines back into a string
+      openAPIContent = lines.join('\n');
+
+      // fix language name in codeblocks
+      openAPIContent = openAPIContent.replace(
+        /```.javascript--nodejs/gm,
+        '```js',
+      );
+
+      // write openapi.md to `outputDir`
+      writeFileSync(path.resolve(outputDir, 'openapi.md'), openAPIContent);
     }
   }
 }
@@ -105,7 +107,6 @@ async function main() {
       packageJson.typedoc === undefined ||
       packageJson.typedoc.config === undefined
     ) {
-      console.log(`typedoc options not found in ${pkg.name}, skipping.`);
       continue;
     }
 
@@ -118,9 +119,9 @@ async function main() {
   }
 }
 
-main().catch(console.error);
+main();
 
-// Types //
+// Types
 interface LernaPackageInfo {
   name: string;
   version: string;
@@ -131,6 +132,7 @@ interface LernaPackageInfo {
 interface PackageJsonWithTypeDoc extends PackageJson {
   typedoc?: CustomTypeDocOptions;
 }
+
 interface ExportSettings {
   /**
    * Settings this to `true` will tweak and copy the `openapi.md` in respective docs folder
