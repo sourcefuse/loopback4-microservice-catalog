@@ -18,7 +18,7 @@ Authenication service as it uses the same database tables and no new migration i
 ## Installation
 
 ```bash
-   npm i @sourceloop/user-tenant-service
+npm i @sourceloop/user-tenant-service
 ```
 
 ## Usage

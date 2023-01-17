@@ -9,6 +9,8 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sourcefuse_loopback4-microservice-catalog)](https://sonarcloud.io/summary/new_code?id=sourcefuse_loopback4-microservice-catalog)
 
+<!-- docs-index-start -->
+
 The `Sourceloop` is a collection of pre-built microservices that aim to reduce time to market for enterprise projects. Large enterprises usually face a similar set of challenges when developing cloud native platforms as part of digital transformation efforts or the creation of new products. The services are implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), allowing you to install them into existing LoopBack applications or use the [LoopBack Command-line interface](https://loopback.io/doc/en/lb4/Command-line-interface.html) to generate standalone services. Our recommended approach is to deploy these services as standalone micro-services in Docker.
 
 The current catalog consists of the following services:
@@ -27,21 +29,21 @@ The current catalog consists of the following services:
 
 This repository also contains a set of example projects in the [sandbox](sandbox) directory that can be run from `docker-compose`.
 
-- [audit-ms-example](sandbox/audit-ms-example)
-- [auth-multitenant-example](sandbox/auth-multitenant-example)
-- [auth-ms-basic-example](sandbox/auth-ms-basic-example)
-- [notification-socket-example](sandbox/notification-socket-example)
-- [workflow-ms-example](sandbox/workflow-ms-example)
-- [audit-ms-example](sandbox/audit-ms-example)
-- [in-mail-example](sandbox/in-mail-example)
-- [scheduler-example](sandbox/scheduler-example)
-- [video-conferencing-ms-example](sandbox/video-conferencing-ms-example)
-- [chat-notification-pubnub-example](sandbox/chat-notification-pubnub-example)
-- [feature-toggle-example](sandbox/feature-toggle-example)
-- [payment-example](sandbox/payment-example)
-- [search-client-example](sandbox/search-client-example)
-- [search-ms-example](sandbox/search-ms-example)
-- [user-onboarding-example](sandbox/user-onboarding-example)
+- [audit-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/audit-ms-example)
+- [auth-multitenant-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/auth-multitenant-example)
+- [auth-ms-basic-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/auth-ms-basic-example)
+- [notification-socket-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/notification-socket-example)
+- [workflow-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/workflow-ms-example)
+- [audit-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/audit-ms-example)
+- [in-mail-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/in-mail-example)
+- [scheduler-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/scheduler-example)
+- [video-conferencing-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/video-conferencing-ms-example)
+- [chat-notification-pubnub-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/chat-notification-pubnub-example)
+- [feature-toggle-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/feature-toggle-example)
+- [payment-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/payment-example)
+- [search-client-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/search-client-example)
+- [search-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/search-ms-example)
+- [user-onboarding-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/user-onboarding-example)
 
 ## Table of Contents
 
@@ -324,3 +326,5 @@ Code of conduct guidelines [here.](CODE_OF_CONDUCT.md)
 ### License
 
 [MIT](LICENSE)
+
+<!-- docs-index-end -->

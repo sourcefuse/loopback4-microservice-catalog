@@ -1,0 +1,32 @@
+name: Docs
+on:
+  push:
+    branches:
+      - master
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - name: Setup Node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18.x'
+      - name: Bootstrap
+        run: |
+          npm ci
+          npx lerna bootstrap
+          npx lerna run build
+      - name: Install mkdocs deps/plugins
+        run: |
+          pip install mkdocs-material
+          pip install mkdocs-include-markdown-plugin
+      - name: Create the docs directory locally in CI
+        run: npm run export-typedocs
+      - name: Deploy 🚀
+        run: mkdocs gh-deploy --force

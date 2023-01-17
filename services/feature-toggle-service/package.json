@@ -47,7 +47,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "services/chat-service"
+    "directory": "services/feature-toggle-service"
   },
   "author": "Sourcefuse",
   "license": "MIT",
@@ -132,5 +132,16 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/feature-toggle-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }

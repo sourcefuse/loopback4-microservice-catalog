@@ -124,5 +124,16 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/payment-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
   }
 }
