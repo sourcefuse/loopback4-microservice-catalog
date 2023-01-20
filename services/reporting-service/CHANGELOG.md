@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.3 (2023-01-20)</small>
+
+**Note:** Version bump only for package @sourceloop/reporting-service
+
+
+
+
+
 ## <small>0.4.2 (2023-01-17)</small>
 
 * chore(deps): loopback and sourceloop version update (#1211) ([3086a5b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3086a5b)), closes [#1211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1211) [#1206](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1206)

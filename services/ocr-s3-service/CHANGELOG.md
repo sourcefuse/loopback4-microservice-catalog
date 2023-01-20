@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.13 (2023-01-20)</small>
+
+**Note:** Version bump only for package @sourceloop/ocr-s3-service
+
+
+
+
+
 ## <small>0.4.12 (2023-01-17)</small>
 
 **Note:** Version bump only for package @sourceloop/ocr-s3-service
