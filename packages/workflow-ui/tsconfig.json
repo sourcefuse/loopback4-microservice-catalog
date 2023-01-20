@@ -14,19 +14,14 @@
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "search-lib": [
-        "dist"
-      ]
+      "search-lib": ["dist"]
     },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"]
   },
   "paths": {
     "@angular/*": ["./node_modules/@angular/*"]
@@ -35,7 +30,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "enableIvy":false
+    "strictTemplates": false
   }
 }

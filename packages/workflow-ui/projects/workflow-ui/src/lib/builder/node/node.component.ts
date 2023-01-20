@@ -13,7 +13,7 @@ import {RecordOfAnyType, NodeWithInput} from '../../types';
   templateUrl: './node.component.html',
   styleUrls: [
     './node.component.scss',
-    '../../../../assets/icons/icomoon/style.css',
+    '../../../assets/icons/icomoon/style.css',
   ],
 })
 export class NodeComponent<E> {

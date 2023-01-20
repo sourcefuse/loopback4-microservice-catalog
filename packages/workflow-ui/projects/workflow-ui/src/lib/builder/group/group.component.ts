@@ -15,7 +15,7 @@ import {
   WorkflowPrompt,
 } from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
-import {ConditionTypes, InputTypes, NodeTypes} from '../../enum';
+import {ConditionTypes, InputTypes, NodeTypes, NUMBER} from '../../enum';
 import {InvalidEntityError} from '../../errors/base.error';
 import {
   AllowedValues,
@@ -39,13 +39,12 @@ import {
   ReadColumnValue,
   TriggerWhenColumnChanges,
 } from '../../services';
-import {NUMBER} from '../..';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
   styleUrls: [
     './group.component.scss',
-    '../../../../assets/icons/icomoon/style.css',
+    '../../../assets/icons/icomoon/style.css',
   ],
 })
 export class GroupComponent<E> implements OnInit {
