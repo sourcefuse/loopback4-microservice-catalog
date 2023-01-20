@@ -42,7 +42,7 @@ import {
   templateUrl: './builder.component.html',
   styleUrls: [
     './builder.component.scss',
-    '../../../assets/icons/icomoon/style.css',
+    '../../assets/icons/icomoon/style.css',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

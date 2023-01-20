@@ -161,7 +161,9 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
   ],
 })
 export class WorkflowBuilderModule {
-  public static forRoot(environment: ENV): ModuleWithProviders<unknown> {
+  public static forRoot(
+    environment: ENV,
+  ): ModuleWithProviders<WorkflowBuilderModule> {
     return {
       ngModule: WorkflowBuilderModule,
       providers: [

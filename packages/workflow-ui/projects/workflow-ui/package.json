@@ -1,33 +1,56 @@
 {
   "name": "@sourceloop/workflow-ui",
   "version": "0.0.1",
+  "description": "Library for providing a smooth user workflow",
+  "keywords": [
+    "angular-library"
+  ],
   "peerDependencies": {
-    "@angular/common": "^12.1.5",
-    "@angular/core": "^12.1.5",
-    "@angular/forms": "~12.1.5",
-    "@popperjs/core": "^2.11.5",
-    "bpmn-moddle": "^7.1.2",
+    "@angular/common": "~13.3.11",
+    "@angular/core": "~13.3.11",
+    "@angular/forms": "~13.3.11",
+    "@popperjs/core": "^2.11.6",
+    "bpmn-moddle": "^8.0.0",
     "lodash": "^4.17.21",
-    "ngx-popperjs": "^12.1.0",
-    "tslib": "^2.2.0"
+    "ngx-popperjs": "^13.3.0"
+  },
+  "scripts": {
+    "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
+    "installNodeModules": "cd ../../ && npm i",
+    "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
+    "build": "ng build",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@angular/common": "^12.1.5",
-    "@angular/core": "^12.1.5",
-    "@angular/forms": "~12.1.5",
-    "@angular/platform-browser-dynamic": "^12.1.5",
-    "@popperjs/core": "^2.11.5",
+    "@angular/common": "~13.3.11",
+    "@angular/core": "~13.3.11",
+    "@angular/forms": "~13.3.11",
+    "@angular/platform-browser-dynamic": "~13.3.11",
     "@types/bpmn-moddle": "^5.1.6",
     "@types/lodash": "^4.14.182",
-    "bpmn-moddle": "^7.1.2",
+    "bpmn-moddle": "^8.0.0",
     "lodash": "^4.17.21",
-    "ngx-popperjs": "^12.1.0",
-    "tslib": "^2.2.0",
+    "ngx-popperjs": "^13.3.0",
+    "tslib": "^2.0.0",
     "typedoc-umlclass": "^0.6.1"
   },
   "dependencies": {
+    "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "moment": "^2.29.4",
-    "@ng-bootstrap/ng-bootstrap": "^10.0.0",
-    "ng-multiselect-dropdown": "^0.3.9"
+    "ng-multiselect-dropdown": "^0.3.9",
+    "tslib": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/workflow-ui"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "directory": "dist"
   }
 }

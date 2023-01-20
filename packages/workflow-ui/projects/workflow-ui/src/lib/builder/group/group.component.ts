@@ -39,13 +39,13 @@ import {
   ReadColumnValue,
   TriggerWhenColumnChanges,
 } from '../../services';
-import {NUMBER} from '../..';
+import {NUMBER} from '../../enum';
 @Component({
   selector: 'workflow-group',
   templateUrl: './group.component.html',
   styleUrls: [
     './group.component.scss',
-    '../../../../assets/icons/icomoon/style.css',
+    '../../../assets/icons/icomoon/style.css',
   ],
 })
 export class GroupComponent<E> implements OnInit {
