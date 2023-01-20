@@ -9,29 +9,29 @@ export enum ElementTypes {
 }
 
 export enum InputTypes {
-  List = 'list',
-  Text = 'text',
-  Number = 'number',
   Boolean = 'boolean',
-  Percentage = 'percentage',
-  People = 'people',
-  Interval = 'interval',
   Date = 'date',
   DateTime = 'datetime',
   Email = 'Email',
+  Interval = 'interval',
+  List = 'list',
+  Number = 'number',
+  People = 'people',
+  Percentage = 'percentage',
+  Text = 'text',
 }
 
 export enum ConditionTypes {
-  Equal = 'equal',
-  NotEqual = 'notequal',
-  PastToday = 'pasttoday',
-  DueInDays = 'dueindays',
+  Changes = 'changes',
   ComingIn = 'comingin',
-  PastBy = 'pastby',
+  DueInDays = 'dueindays',
+  Equal = 'equal',
   GreaterThan = 'greaterThan',
   LessThan = 'lessThan',
   Like = 'like',
-  Changes = 'changes',
+  NotEqual = 'notequal',
+  PastBy = 'pastby',
+  PastToday = 'pasttoday',
 }
 
 export enum NodeTypes {
@@ -41,8 +41,8 @@ export enum NodeTypes {
 }
 
 export enum ElementNames {
-  readColumnValue = 'read column value',
   gateway = 'gateway',
+  readColumnValue = 'read column value',
 }
 
 export enum NUMBER {
@@ -59,8 +59,8 @@ export enum NotificationRecipientTypesEnum {
 }
 
 export enum EventTypes {
-  OnChangeEvent = 'OnChangeEvent',
-  OnValueEvent = 'OnValueEvent',
-  OnIntervalEvent = 'OnIntervalEvent',
   OnAddItemEvent = 'OnAddItemEvent',
+  OnChangeEvent = 'OnChangeEvent',
+  OnIntervalEvent = 'OnIntervalEvent',
+  OnValueEvent = 'OnValueEvent',
 }
