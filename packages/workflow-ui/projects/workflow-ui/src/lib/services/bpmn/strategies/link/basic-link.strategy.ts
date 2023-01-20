@@ -14,6 +14,13 @@ export class BasicLinkStrategy implements LinkStrategy<ModdleElement> {
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
   ) {}
+
+  /**
+   * It creates a link between two nodes
+   * @param element - WorkflowElement<ModdleElement>
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns The link between the two nodes.
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,

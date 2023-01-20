@@ -65,6 +65,7 @@ export class GroupComponent<E> implements OnInit {
   @Input()
   nodeType: NodeTypes;
 
+  /* A decorator that tells Angular that the popupTemplate property is an input property. */
   @Input()
   popupTemplate!: NgxPopperjsContentComponent;
 
@@ -144,12 +145,20 @@ export class GroupComponent<E> implements OnInit {
   @ViewChild('dateTimeTemplate')
   dateTimeTemplate: TemplateRef<RecordOfAnyType>;
 
+  /**
+   * It gets the events and actions from the nodes service and stores them in the events and actions
+   * variables
+   */
   ngOnInit(): void {
     this.events = this.nodes.getEvents();
     this.triggerEvents = this.nodes.getEvents(true);
     this.actions = this.nodes.getActions();
   }
 
+  /**
+   * If the user has provided a custom template for a given input type, use that template. Otherwise,
+   * use the default template
+   */
   ngAfterViewInit() {
     this.templateMap = {
       [InputTypes.Boolean]:
@@ -176,6 +185,11 @@ export class GroupComponent<E> implements OnInit {
     };
   }
 
+  /**
+   * If the input is a value input, then set the value of the input to the value of the node
+   * @param {WorkflowPrompt} input - WorkflowPrompt - The input that was passed in from the workflow.
+   * @param nodeWithInput - The node that has the input.
+   */
   setInput(input: WorkflowPrompt, nodeWithInput: NodeWithInput<E>) {
     const allowedInputs = ['ValueInput', 'EmailDataInput', 'ToValueInput'];
     if (allowedInputs.includes(input.constructor.name)) {
@@ -198,14 +212,27 @@ export class GroupComponent<E> implements OnInit {
     }
   }
 
+  /**
+   * The removeClick() function emits a boolean value of true to the parent component
+   */
   removeClick() {
     this.remove.emit(true);
   }
 
+  /**
+   * The addClick() function emits the add event, which is a boolean value of true
+   */
   addClick() {
     this.add.emit(true);
   }
 
+  /**
+   * If the focusKey is subject, append the value of the item to the subject. If the focusKey is body,
+   * append the value of the item to the body
+   * @param {Select} item - Select - this is the item that was selected from the dropdown
+   * @param {EmailInput} emailInput - EmailInput - this is the object that contains the email input
+   * values.
+   */
   appendEmailBody(item: Select, emailInput: EmailInput) {
     if (emailInput.focusKey === 'subject') {
       emailInput.subject += ` ${item.value}`;
@@ -215,10 +242,22 @@ export class GroupComponent<E> implements OnInit {
     }
   }
 
+  /**
+   * Set the focus key of the email input to the key.
+   * @param {EmailInput} emailInput - EmailInput - This is the email input object that you created in
+   * the previous step.
+   * @param {string} key - The key of the input.
+   */
   setFocusKey(emailInput: EmailInput, key: string) {
     emailInput.focusKey = key;
   }
 
+  /**
+   * If the type is an action, set the node list to the actions, otherwise if the type is an event, set
+   * the node list to the trigger events if there is only one event group and no children, otherwise
+   * set the node list to the events
+   * @param {NodeTypes} type - NodeTypes
+   */
   openPopup(type: NodeTypes) {
     if (type === NodeTypes.ACTION) {
       this.nodeList = this.actions;
@@ -232,6 +271,14 @@ export class GroupComponent<E> implements OnInit {
     }
   }
 
+  /**
+   * `onNodeAdd` is a function that takes in a node, a group type, a group id, and an id, and then
+   * emits an event with a node and a new node
+   * @param node - The node that was added.
+   * @param {string} groupType - string - The type of group that the node is being added to.
+   * @param {string} groupId - The id of the group that the node is being added to.
+   * @param {string} [id] - The id of the node.
+   */
   onNodeAdd(
     node: WorkflowNode<E>,
     groupType: string,
@@ -268,10 +315,22 @@ export class GroupComponent<E> implements OnInit {
     }
   }
 
+  /**
+   * It removes the node at the given index from the group
+   * @param {number} index - The index of the node that was removed.
+   */
   onNodeRemove(index: number) {
     this.group.children.splice(index, 1);
   }
 
+  /**
+   * It takes in an element, an input, and a popper, and returns a function that takes in a value, and
+   * if that value is defined, it adds the value to the element, and hides the popper
+   * @param element - NodeWithInput<E>
+   * @param {WorkflowPrompt} input - WorkflowPrompt - this is the input object that was clicked on
+   * @param {NgxPopperjsContentComponent} popper - NgxPopperjsContentComponent
+   * @returns A function that takes a value and returns a function that takes a value and emits an event
+   */
   createCallback(
     element: NodeWithInput<E>,
     input: WorkflowPrompt,
@@ -291,12 +350,10 @@ export class GroupComponent<E> implements OnInit {
   }
 
   /**
-   *
-   * @param event Mouse click event to open input
-   * @param popper Popper templateref to open popper programatically
-   * hide all open popper/input before opening a new input
-   * prevent proogation of click event
-   * update popperInstance to set new popper position for change detection
+   * It hides the previous popper and shows the current popper.
+   * @param {MouseEvent} event - MouseEvent - The event that triggered the popper to show.
+   * @param {NgxPopperjsContentComponent} popper - NgxPopperjsContentComponent - this is the popper
+   * component that you want to show/hide.
    */
   onPoperClick(event: MouseEvent, popper: NgxPopperjsContentComponent) {
     this.prevPopperRef?.hide();
@@ -307,12 +364,25 @@ export class GroupComponent<E> implements OnInit {
     popper?.popperInstance?.forceUpdate();
   }
 
+  /**
+   * It returns a function that hides the previous popper
+   * @returns A function that calls the hide method on the previous popper reference.
+   */
   hidePopper() {
     return () => {
       this.prevPopperRef?.hide();
     };
   }
 
+  /**
+   * It takes in a node, an input, a value, and a boolean, and then it changes the state of the node
+   * based on the input and value
+   * @param element - NodeWithInput<E> - The element that is being changed.
+   * @param {WorkflowPrompt} input - WorkflowPrompt - this is the input that was changed
+   * @param {AllowedValues | AllowedValuesMap} value - AllowedValues | AllowedValuesMap,
+   * @param [select=false] - boolean - This is a flag that tells the function whether the input is a
+   * select input or not.
+   */
   addValue(
     element: NodeWithInput<E>,
     input: WorkflowPrompt,
@@ -378,6 +448,11 @@ export class GroupComponent<E> implements OnInit {
       element.node.state.get('condition') !== ConditionTypes.Changes;
   }
 
+  /**
+   * It removes all the inputs that come after the current input
+   * @param element - NodeWithInput<E>
+   * @param {WorkflowPrompt} input - WorkflowPrompt - this is the input that was just changed
+   */
   private handleSubsequentInputs(
     element: NodeWithInput<E>,
     input: WorkflowPrompt,

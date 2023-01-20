@@ -85,6 +85,12 @@ export class BpmnElementService<E> implements ElementService<E> {
     return this.createInstance(ctor);
   }
 
+  /**
+   * It gets the constructor parameters of a class, and if they have a decorator, it uses the
+   * decorator's arguments, otherwise it uses the type of the parameter
+   * @param ctor - DecoratedContructor<WorkflowElement<E>>
+   * @returns An array of the constructor parameters of the class.
+   */
   private getConstructorParams(ctor: DecoratedContructor<WorkflowElement<E>>) {
     if (!ctor.ctorParameters) {
       return [];

@@ -20,11 +20,28 @@ export abstract class WorkflowPrompt {
   abstract inputKey: string;
   abstract placeholder: string;
 
+  /* A function that is called before the value is changed. */
   prevchange?: <S extends RecordOfAnyType>(state: State<S>) => void;
+
+  /**
+   * "Get the value of the input key from the state."
+   *
+   * The first line of the function is the function signature. It says that the function takes a single
+   * argument, state, which is of type State<S>. The <S> part is a generic type parameter. It means
+   * that the function can take a State of any type
+   * @param state - The state object that is passed to the reducer.
+   * @returns The value of the inputKey in the state.
+   */
   getValue<S extends RecordOfAnyType>(state: State<S>) {
     return state.get(this.inputKey);
   }
 
+  /**
+   * It takes in a state and a value and returns the value in the format that the state expects
+   * @param state - State<S> - The state of the form.
+   * @param {AllowedValues | AllowedValuesMap} value - The value that is being set.
+   * @returns The value of the input field.
+   */
   setValue<S extends RecordOfAnyType>(
     state: State<S>,
     value: AllowedValues | AllowedValuesMap,
@@ -87,11 +104,22 @@ export abstract class WorkflowPrompt {
     }
   }
 
+  /**
+   * If the value is less than or equal to 9, add a 0 to the front of it, otherwise return the value
+   * @param {number | null} value - number | null - The value to be converted to two digits.
+   * @returns A string or a number.
+   */
   private convertToTwoDigits(value: number | null): string | number {
     if (value) return value <= NUMBER.NINE ? '0' + value : value;
     return 0;
   }
 
+  /**
+   * It takes a date object, extracts the year, month and day, converts the month and day to two
+   * digits, and returns a string in the format of day-month-year
+   * @param {NgbDateStruct} date - NgbDateStruct - The date object that is passed to the function.
+   * @returns A string in the format of dd-mm-yyyy
+   */
   private onDateSelect(date: NgbDateStruct) {
     const year = date.year;
     const month = this.convertToTwoDigits(date.month);
@@ -99,6 +127,12 @@ export abstract class WorkflowPrompt {
     return `${day}-${month}-${year}`;
   }
 
+  /**
+   * It returns the value of the input key, but if the input type is a list, people, or email, it
+   * returns the display value instead
+   * @param state - State<S> - The state of the form.
+   * @returns The value of the inputKey in the state.
+   */
   getValueName<S extends RecordOfAnyType>(state: State<S>) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
@@ -119,6 +153,12 @@ export abstract class WorkflowPrompt {
     }
   }
 
+  /**
+   * It returns the value of the inputKey in the state, but if the inputKey is a list, it returns the
+   * value of the list
+   * @param state - State<S>
+   * @returns The value of the inputKey in the state.
+   */
   setValueName<S extends RecordOfAnyType>(state: State<S>) {
     switch (this.typeFunction(state)) {
       case InputTypes.List:
@@ -148,6 +188,11 @@ export abstract class WorkflowPrompt {
     }
   }
 
+  /**
+   * It takes a state object and returns a value based on the type of input
+   * @param state - State<S>
+   * @returns The value of the inputKey in the state.
+   */
   getModelValue<S extends RecordOfAnyType>(state: State<S>) {
     const DATE_TIME_FORMAT = `YYYY-MM-DD hh:mm`;
     switch (this.typeFunction(state)) {

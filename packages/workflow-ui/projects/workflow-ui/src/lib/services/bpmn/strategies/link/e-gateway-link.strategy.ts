@@ -36,6 +36,11 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return links;
   }
 
+  /**
+   * > Create a link between two nodes
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns An array of links
+   */
   private createLink(node: BpmnStatementNode) {
     const link = [];
     const from = node.tag;
@@ -69,6 +74,13 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return link;
   }
 
+  /**
+   * It creates a link between two nodes
+   * @param {string} id - The id of the link
+   * @param {ModdleElement} from - ModdleElement - the source element of the link
+   * @param {ModdleElement} to - ModdleElement - the element that the link is going to
+   * @returns An object with the id, sourceRef, and targetRef properties.
+   */
   private createLinkAttrs(id: string, from: ModdleElement, to: ModdleElement) {
     const start = this.moddle.create('bpmn:FlowNode', {
       id: from.id,
@@ -84,6 +96,15 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return attrs;
   }
 
+  /**
+   * It creates a script that loops through the rows of the table and adds the taskIds of the rows that
+   * match the condition to an array
+   * @param {BpmnStatementNode} node - The node that we're creating the script for.
+   * @param {string} flowId - The id of the flow that is being created.
+   * @param {boolean} [isElse] - boolean - This is a flag that tells the function whether or not the
+   * script is for the else statement.
+   * @returns An object with a script and a name.
+   */
   private createScript(
     node: BpmnStatementNode,
     flowId: string,
@@ -106,6 +127,15 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     };
   }
 
+  /**
+   * It creates a loop script that loops through the read object and pushes the task ids to the ids
+   * array if the condition is met
+   * @param {BpmnStatementNode} node - BpmnStatementNode - The node that is being processed
+   * @param {string} condition - The condition to be evaluated.
+   * @param [isElse=false] - This is a boolean value that determines whether the loop is for the else
+   * condition or not.
+   * @returns A string of javascript code.
+   */
   private createLoopScript(
     node: BpmnStatementNode,
     condition: string,
@@ -153,6 +183,11 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     }
   }
 
+  /**
+   * > Get the last node with outputs
+   * @param {BpmnStatementNode} node - The node to start from
+   * @returns The last node with an output.
+   */
   private getLastNodeWithOutput(node: BpmnStatementNode) {
     let queue = [node];
     while (queue.length > 0) {
@@ -165,6 +200,11 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return queue[queue.length - 1];
   }
 
+  /**
+   * It returns a string that represents the condition of the node
+   * @param {BpmnStatementNode} node - BpmnStatementNode - the node that is being processed
+   * @returns The condition is being returned.
+   */
   private getCondition(node: BpmnStatementNode) {
     let value = node.workflowNode.state.get('value');
     const valueType = node.workflowNode.state.get('valueInputType');

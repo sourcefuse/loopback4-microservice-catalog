@@ -34,6 +34,15 @@ export class CreateBasicStrategy implements CreateStrategy<ModdleElement> {
       ...this.parseAttributes(attrs, node),
     });
   }
+
+  /**
+   * It takes an object of attributes and a node, and if any of the attributes are objects with a key
+   * of 'state', it replaces the attribute with the value of the state variable
+   * @param {RecordOfAnyType} attrs - RecordOfAnyType - this is the attributes object that is passed to
+   * the node.
+   * @param {BpmnStatementNode} node - The current node being processed
+   * @returns The attributes of the node.
+   */
   private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
     Object.keys(attrs).forEach(key => {
       if (
