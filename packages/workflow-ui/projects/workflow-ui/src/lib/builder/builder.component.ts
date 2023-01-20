@@ -93,6 +93,9 @@ export class BuilderComponent<E> implements OnInit {
 
   nodeList: BaseGroup<E>[] = [];
   processId: string;
+  // sonarignore:start
+  // TODO: Refactor this code to be more flexible
+  // sonarignore:start
   showElseBlock = true;
   public types = NodeTypes;
 

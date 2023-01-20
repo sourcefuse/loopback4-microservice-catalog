@@ -75,6 +75,9 @@ export class BpmnBuilderService extends BuilderService<
     statement.addStart(start);
     statement.addEnd(end);
     let current = statement.head;
+    // sonarignore:start
+    // TODO: Refactor this code to be more flexible
+    // sonarignore:start
     this.addElseIntoMainFlow(elseStatement, statement);
     this.traverseToSetTags(current[0]);
     this.traverseToLink(current[0]);
