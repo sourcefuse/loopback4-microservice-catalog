@@ -52,6 +52,15 @@ export class CreateBasicIntervalStrategy
       eventDefinitions: [timerEventDefinition],
     });
   }
+
+  /**
+   * It takes an object of attributes and a node, and returns the same object of attributes, but with
+   * any attribute that is a state reference replaced with the value of that state
+   * @param {RecordOfAnyType} attrs - RecordOfAnyType - this is the attributes object that is passed to
+   * the node.
+   * @param {BpmnStatementNode} node - The current node being processed
+   * @returns The attributes of the node.
+   */
   private parseAttributes(attrs: RecordOfAnyType, node: BpmnStatementNode) {
     Object.keys(attrs).forEach(key => {
       if (

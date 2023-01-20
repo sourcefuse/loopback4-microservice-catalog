@@ -39,6 +39,8 @@ export const DEFAULT_NODE = 'BASE_NODE';
 export const CONDITION_LIST = new InjectionToken<Array<ConditionOperatorPair>>(
   'workflow.const.types.list',
 );
+
+/* A list of condition types and their operators. */
 export const typeTuppleList: Array<ConditionOperatorPair> = [
   {condition: ConditionTypes.Equal, operator: '===', value: true},
   {condition: ConditionTypes.NotEqual, operator: '!==', value: true},

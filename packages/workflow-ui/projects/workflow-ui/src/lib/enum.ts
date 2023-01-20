@@ -1,56 +1,63 @@
+/* Defining the types of elements that can be used in the application. */
 export enum ElementTypes {
-  ServiceTask = 'service.task',
-  Start = 'start.event',
-  End = 'end.event',
-  Process = 'process',
-  Gateway = 'gateway',
   EGateway = 'egateway',
+  End = 'end.event',
   Extension = 'extension',
+  Gateway = 'gateway',
+  Process = 'process',
+  Start = 'start.event',
+  ServiceTask = 'service.task',
 }
 
+/* Defining the types of inputs that can be used in the application. */
 export enum InputTypes {
-  List = 'list',
-  Text = 'text',
-  Number = 'number',
   Boolean = 'boolean',
-  Percentage = 'percentage',
-  People = 'people',
-  Interval = 'interval',
   Date = 'date',
   DateTime = 'datetime',
   Email = 'Email',
+  Interval = 'interval',
+  List = 'list',
+  Number = 'number',
+  People = 'people',
+  Percentage = 'percentage',
+  Text = 'text',
 }
 
+/* Defining the types of conditions that can be used in the application. */
 export enum ConditionTypes {
-  Equal = 'equal',
-  NotEqual = 'notequal',
-  PastToday = 'pasttoday',
-  DueInDays = 'dueindays',
+  Changes = 'changes',
   ComingIn = 'comingin',
-  PastBy = 'pastby',
+  DueInDays = 'dueindays',
+  Equal = 'equal',
   GreaterThan = 'greaterThan',
   LessThan = 'lessThan',
   Like = 'like',
-  Changes = 'changes',
+  NotEqual = 'notequal',
+  PastToday = 'pasttoday',
+  PastBy = 'pastby',
 }
 
+/* Defining the types of nodes that can be used in the application. */
 export enum NodeTypes {
   ACTION,
   EVENT,
   GROUP,
 }
 
+/* Defining the types of elements that can be used in the application. */
 export enum ElementNames {
-  readColumnValue = 'read column value',
   gateway = 'gateway',
+  readColumnValue = 'read column value',
 }
 
+/* Defining a constant. */
 export enum NUMBER {
   TWO = 2,
   THREE = 3,
   NINE = 9,
 }
 
+/* Defining the types of notifications that can be used in the application. */
 export enum NotificationRecipientTypesEnum {
   NotifyMe = 'me',
   NotifyEveryoneOnProject = 'everyone_on_project',
@@ -58,9 +65,10 @@ export enum NotificationRecipientTypesEnum {
   NotifySpecificPeople = 'specific_people',
 }
 
+/* Defining the types of events that can be used in the application. */
 export enum EventTypes {
-  OnChangeEvent = 'OnChangeEvent',
-  OnValueEvent = 'OnValueEvent',
-  OnIntervalEvent = 'OnIntervalEvent',
   OnAddItemEvent = 'OnAddItemEvent',
+  OnChangeEvent = 'OnChangeEvent',
+  OnIntervalEvent = 'OnIntervalEvent',
+  OnValueEvent = 'OnValueEvent',
 }

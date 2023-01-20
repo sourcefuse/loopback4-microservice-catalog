@@ -14,6 +14,15 @@ export class CreatePropertyStrategy implements CreateStrategy<ModdleElement> {
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
   ) {}
+
+  /**
+   * It takes the state object from the node's attributes, and converts it into a Camunda Properties
+   * element
+   * @param element - WorkflowElement<ModdleElement>
+   * @param node - The node that is being executed.
+   * @param {RecordOfAnyType} attrs - The attributes of the node.
+   * @returns A moddle element with the id and values.
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: StatementNode<ModdleElement>,

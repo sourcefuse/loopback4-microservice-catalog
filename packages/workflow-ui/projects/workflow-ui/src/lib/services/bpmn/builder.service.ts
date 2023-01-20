@@ -42,6 +42,12 @@ export class BpmnBuilderService extends BuilderService<
     super();
   }
 
+  /**
+   * It takes a statement and an else statement, and returns a promise that resolves to a string of XML
+   * @param statement - Statement<ModdleElement>
+   * @param elseStatement - The else statement that is to be added to the main flow.
+   * @returns The XML of the process
+   */
   async build(
     statement: Statement<ModdleElement>,
     elseStatement: Statement<ModdleElement>,
@@ -80,6 +86,12 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * > It creates a new instance of a StartElement, StartOnIntervalElement, or StartElement depending
+   * on the type of trigger
+   * @param trigger - StatementNode<ModdleElement>
+   * @returns A start event.
+   */
   private getStartEvent(trigger: StatementNode<ModdleElement>) {
     if (!trigger) {
       return this.elements.createInstanceByName('StartElement');
@@ -95,6 +107,10 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * It traverses the tree and sets the tags for each node.
+   * @param root - The root node of the tree.
+   */
   traverseToSetTags(root: StatementNode<ModdleElement>) {
     let queue = [root];
     while (queue.length > 0) {
@@ -104,6 +120,10 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * It traverses the tree and links the nodes.
+   * @param root - The root node of the tree.
+   */
   traverseToLink(root: StatementNode<ModdleElement>) {
     let queue = [root];
     while (queue.length > 0) {
@@ -113,6 +133,13 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * It adds the else statement to the main flow
+   * @param elseStatement - Statement<ModdleElement> - the statement that contains the else flow
+   * @param statement - Statement<ModdleElement> - the statement that is being parsed
+   * @returns The return statement stops the execution of a function and returns a value from that
+   * function.
+   */
   private addElseIntoMainFlow(
     elseStatement: Statement<ModdleElement>,
     statement: Statement<ModdleElement>,
@@ -141,6 +168,10 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * It creates a new tag for the element and adds it to the base
+   * @param element - StatementNode<ModdleElement>
+   */
   setTags(element: StatementNode<ModdleElement>) {
     if (
       element.element.constructor.name === 'ChangeColumnValue' ||
@@ -155,6 +186,10 @@ export class BpmnBuilderService extends BuilderService<
     element.setTag(tag);
   }
 
+  /**
+   * It links the nodes in the diagram.
+   * @param element - StatementNode<ModdleElement>
+   */
   linkNodes(element: StatementNode<ModdleElement>) {
     if (element.prev) {
       for (let _element of element.prev) {
@@ -166,6 +201,20 @@ export class BpmnBuilderService extends BuilderService<
     }
   }
 
+  /**
+   * It takes an XML string, converts it to a moddle object, and then returns an object with the
+   * actions, events, groups, state, and process
+   * @param {string} xml - The XML string that you want to restore.
+   * @returns An object with the following properties:
+   * - actions: An array of ActionWithInput objects
+   * - elseActions: An array of ActionWithInput objects
+   * - events: An array of EventWithInput objects
+   * - groups: An array of BaseGroup objects
+   * - state: An object with the following properties:
+   *   - name: A string
+   *   - description: A string
+   *   -
+   */
   async restore(xml: string) {
     const result = await this.moddle.fromXML(xml);
     this.root = result.rootElement;
@@ -241,6 +290,13 @@ export class BpmnBuilderService extends BuilderService<
     };
   }
 
+  /**
+   * It creates a new ProcessPropertiesElement, which is a class that extends the Element class, and
+   * passes it the node and state
+   * @param state - The state of the process.
+   * @param node - The node that is being processed.
+   * @returns A new ProcessPropertiesElement
+   */
   private saveProperties(
     state: StateMap<RecordOfAnyType>,
     node: StatementNode<ModdleElement>,
@@ -250,6 +306,13 @@ export class BpmnBuilderService extends BuilderService<
     });
   }
 
+  /**
+   * It gets the extension elements of the element, then gets the properties of the extension elements,
+   * then sets the state of the property
+   * @param {ModdleElement} element - ModdleElement - the element that we want to get the properties
+   * from
+   * @returns An object with the properties of the element.
+   */
   private getProperties(element: ModdleElement) {
     const extension = element.get('extensionElements');
     const state: RecordOfAnyType = {};
@@ -264,6 +327,12 @@ export class BpmnBuilderService extends BuilderService<
     return state;
   }
 
+  /**
+   * It takes a property and a state object, and it sets the state object's value to the property's
+   * value
+   * @param {ModdleElement} property - ModdleElement - this is the property that is being set
+   * @param {RecordOfAnyType} state - The state object that we're going to be updating.
+   */
   private setState(property: ModdleElement, state: RecordOfAnyType) {
     const [id, key] = property['name'].split('_');
     if (state[id]) {

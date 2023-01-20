@@ -38,10 +38,16 @@ export class NodeComponent<E> {
   @Output()
   add = new EventEmitter<boolean>();
 
+  /**
+   * The removeClick() function emits a boolean value of true to the parent component
+   */
   removeClick() {
     this.remove.emit(true);
   }
 
+  /**
+   * The addClick() function emits the add event, which is a boolean value of true
+   */
   addClick() {
     this.add.emit(true);
   }

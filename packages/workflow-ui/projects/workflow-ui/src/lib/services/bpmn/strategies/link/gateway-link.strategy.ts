@@ -23,6 +23,13 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     @Inject(CONDITION_LIST)
     private readonly conditions: Array<ConditionOperatorPair>,
   ) {}
+
+  /**
+   * It creates a link between two nodes
+   * @param element - The element that is being processed.
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns An array of ModdleElements
+   */
   execute(
     element: WorkflowElement<ModdleElement>,
     node: BpmnStatementNode,
@@ -31,6 +38,11 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return links;
   }
 
+  /**
+   * It creates a link between two nodes
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns An array of links.
+   */
   private createLink(node: BpmnStatementNode) {
     const links: ModdleElement[] = [];
     let mainNodes: BpmnStatementNode[] = [];
@@ -49,6 +61,12 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return links;
   }
 
+  /**
+   * It creates a link between two nodes
+   * @param {BpmnStatementNode} node - The current node
+   * @param {BpmnStatementNode[]} nextNodes - The next node of the current node
+   * @returns An array of links.
+   */
   private createMainLink(
     node: BpmnStatementNode,
     nextNodes: BpmnStatementNode[],
@@ -82,6 +100,12 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return link;
   }
 
+  /**
+   * It creates a link between the current node and the next node
+   * @param {BpmnStatementNode} node - The current node
+   * @param {BpmnStatementNode[]} elseNextNodes - The next node of the else branch
+   * @returns A link between the current node and the next node.
+   */
   private createElseLink(
     node: BpmnStatementNode,
     elseNextNodes: BpmnStatementNode[],
@@ -113,6 +137,11 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return link;
   }
 
+  /**
+   * It creates a link between the current node and the end node
+   * @param {BpmnStatementNode} node - BpmnStatementNode
+   * @returns An array of two elements.
+   */
   private createEndLink(node: BpmnStatementNode) {
     const end = this.moddle.create('bpmn:EndEvent', {
       id: `EndElement_${this.utils.uuid()}`,
@@ -126,6 +155,13 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return [link, end];
   }
 
+  /**
+   * It creates a link between two nodes
+   * @param {string} id - The id of the link
+   * @param {ModdleElement} from - ModdleElement - the source element
+   * @param {ModdleElement} to - ModdleElement - the element that the link is going to
+   * @returns An object with the id, sourceRef, and targetRef properties.
+   */
   private createLinkAttrs(id: string, from: ModdleElement, to: ModdleElement) {
     const start = this.moddle.create('bpmn:FlowNode', {
       id: from.id,
@@ -141,6 +177,15 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return attrs;
   }
 
+  /**
+   * It creates a script that loops through the rows of the table and adds the taskIds of the rows that
+   * match the condition to an array
+   * @param {BpmnStatementNode} node - The node that we're creating the script for.
+   * @param {string} flowId - The id of the flow that is being created.
+   * @param {boolean} [isElse] - boolean - This is a flag that tells the script whether it's an if or
+   * an else statement.
+   * @returns An object with a script and a name.
+   */
   private createScript(
     node: BpmnStatementNode,
     flowId: string,
@@ -163,6 +208,15 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     };
   }
 
+  /**
+   * It creates a loop script that loops through the data and pushes the ids of the tasks that match
+   * the condition to an array
+   * @param {BpmnStatementNode} node - BpmnStatementNode - this is the node that is being processed
+   * @param {string} condition - The condition that is being checked.
+   * @param [isElse=false] - This is a boolean value that determines whether the script is for the if
+   * or else statement.
+   * @returns A string of javascript code.
+   */
   private createLoopScript(
     node: BpmnStatementNode,
     condition: string,
@@ -259,6 +313,11 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     }
   }
 
+  /**
+   * > Get the last node in the graph that has outputs
+   * @param {BpmnStatementNode} node - The node to start from
+   * @returns The last node with an output.
+   */
   private getLastNodeWithOutput(node: BpmnStatementNode) {
     let queue = [node];
     while (queue.length > 0) {
@@ -271,6 +330,11 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     return queue[queue.length - 1];
   }
 
+  /**
+   * It returns a string that represents the condition of the node
+   * @param {BpmnStatementNode} node - BpmnStatementNode - the node that is being processed
+   * @returns The condition is being returned.
+   */
   private getCondition(node: BpmnStatementNode) {
     let value = node.workflowNode.state.get('value');
     const valueType = node.workflowNode.state.get('valueInputType');
