@@ -8,8 +8,7 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/payment-service/@loopback/core)
 
-A Loopback Microservice primarily used for payment implementation to charge the payments for
-any client application.
+A Loopback Microservice primarily used for managing user-tenants along with authentication service.
 
 ## Prerequiste
 
@@ -93,3 +92,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 404: Entity Not Found
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
+
+#### API Details
+
+Visit the [OpenAPI spec docs](./openapi.md)
