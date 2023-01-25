@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: SourceLoop
+  namespace: arc
+  description: ARC API framework. The artist formerly known as SourceLoop.
+  annotations:
+    github.com/project-slug: sourcefuse/loopback4-microservice-catalog
+    backstage.io/techdocs-ref: dir:.
+spec:
+  owner: sourcefuse

@@ -1,4 +1,5 @@
-site_name: SourceLoop
+site_name: ARC API
+site_description: ARC API framework. The artist formerly known as SourceLoop.
 
 theme:
   name: material
@@ -35,6 +36,7 @@ extra:
 plugins:
   - search
   - include-markdown
+  - techdocs-core
 
 repo_name: sourcefuse/loopback4-microservice-catalog
 repo_url: https://github.com/sourcefuse/loopback4-microservice-catalog
