@@ -20,7 +20,7 @@ export class ReadColumnValue extends ServiceTaskElement {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': `read-task-column-value-${this.env.envIdentifier}`,
+      'camunda:topic': `read-task-column-value-${this.env?.envIdentifier}`,
     };
   }
   name = 'read column value';

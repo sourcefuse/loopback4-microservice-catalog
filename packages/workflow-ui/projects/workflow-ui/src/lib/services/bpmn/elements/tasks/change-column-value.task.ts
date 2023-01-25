@@ -21,7 +21,7 @@ export class ChangeColumnValue extends ServiceTaskElement {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': `change-task-column-value-${this.env.envIdentifier}`,
+      'camunda:topic': `change-task-column-value-${this.env?.envIdentifier}`,
     };
   }
   name = 'change column value';

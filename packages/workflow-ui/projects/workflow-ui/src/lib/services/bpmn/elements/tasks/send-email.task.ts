@@ -19,7 +19,7 @@ export class SendEmail extends ServiceTaskElement {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': `send-alert-${this.env.envIdentifier}`,
+      'camunda:topic': `send-alert-${this.env?.envIdentifier}`,
     };
   }
   name = 'Send Email';

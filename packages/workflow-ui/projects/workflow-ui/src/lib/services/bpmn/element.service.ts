@@ -9,7 +9,7 @@ import {Constructor, DecoratedContructor, RecordOfAnyType} from '../../types';
 export class BpmnElementService<E> implements ElementService<E> {
   constructor(
     @Inject(BPMN_ELEMENTS)
-    private readonly elements: Constructor<WorkflowElement<E>>[],
+    private readonly elements: WorkflowElement<E>[],
     private readonly injector: Injector,
   ) {}
 
@@ -23,11 +23,11 @@ export class BpmnElementService<E> implements ElementService<E> {
    * @returns A new instance of the element.
    */
   createElement(
-    element: Constructor<WorkflowElement<E>>,
+    element: WorkflowElement<E>,
     node: StatementNode<E>,
     attributes?: RecordOfAnyType,
   ) {
-    const builder = this.createInstance(element);
+    const builder = this.cloneInstance(element);
     if (builder) {
       return builder.create(node, attributes);
     } else {
@@ -59,17 +59,11 @@ export class BpmnElementService<E> implements ElementService<E> {
     }
   }
 
-  /**
-   * It creates an instance of an element class by using the class's constructor and passing in the parameters
-   * that the constructor needs
-   * @param element - Constructor<WorkflowElement<E>>
-   * @returns A new instance of the element class with the parameters passed in.
-   */
-  createInstance(element: Constructor<WorkflowElement<E>>) {
-    const params = this.getConstructorParams(
-      element as DecoratedContructor<WorkflowElement<E>>,
-    );
-    return new element(...params);
+  // sonarignore:start
+  // TODO: Refactor this code
+  // sonarignore:end
+  cloneInstance(element: WorkflowElement<E>) {
+    return Object.assign(Object.create(element.constructor.prototype), element);
   }
 
   /**
@@ -78,26 +72,10 @@ export class BpmnElementService<E> implements ElementService<E> {
    * @returns An instance of the class that was passed in.
    */
   createInstanceByName(element: string) {
-    const ctor = this.elements.find(e => e.name === element);
-    if (!ctor) {
+    const instance = this.elements.find(e => e.constructor.name === element);
+    if (!instance) {
       throw new NotProvided(element);
     }
-    return this.createInstance(ctor);
-  }
-
-  /**
-   * It gets the constructor parameters of a class, and if they have a decorator, it uses the
-   * decorator's arguments, otherwise it uses the type of the parameter
-   * @param ctor - DecoratedContructor<WorkflowElement<E>>
-   * @returns An array of the constructor parameters of the class.
-   */
-  private getConstructorParams(ctor: DecoratedContructor<WorkflowElement<E>>) {
-    if (!ctor.ctorParameters) {
-      return [];
-    }
-    return ctor
-      .ctorParameters()
-      .map(r => r.decorators?.[0].args[0] || r.type)
-      .map(token => this.injector.get(token));
+    return this.cloneInstance(instance);
   }
 }

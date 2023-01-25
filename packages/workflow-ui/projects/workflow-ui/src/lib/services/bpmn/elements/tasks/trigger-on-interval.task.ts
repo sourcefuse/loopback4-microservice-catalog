@@ -20,7 +20,7 @@ export class TriggerOnInterval extends ServiceTaskElement {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': `trigger-on-interval-${this.env.envIdentifier}`,
+      'camunda:topic': `trigger-on-interval-${this.env?.envIdentifier}`,
     };
   }
   name = 'trigger on interval';

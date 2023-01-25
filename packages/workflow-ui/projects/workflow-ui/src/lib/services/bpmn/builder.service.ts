@@ -304,9 +304,13 @@ export class BpmnBuilderService extends BuilderService<
     state: StateMap<RecordOfAnyType>,
     node: StatementNode<ModdleElement>,
   ) {
-    return this.elements.createElement(ProcessPropertiesElement, node, {
-      state,
-    });
+    return this.elements.createElementByName(
+      ProcessPropertiesElement.name,
+      node,
+      {
+        state,
+      },
+    );
   }
 
   /**

@@ -353,7 +353,7 @@ export class BuilderComponent<E> implements OnInit {
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {
-              const instance = this.elements.createInstance(element);
+              const instance = this.elements.createInstanceByName(element.name);
               statement.addNode(instance, node);
             });
           });
@@ -366,7 +366,7 @@ export class BuilderComponent<E> implements OnInit {
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {
-              const instance = this.elements.createInstance(element);
+              const instance = this.elements.createInstanceByName(element.name);
               statementNodes.push(new StatementNode(instance, node));
             });
             elseNode.workflowNode = node;
@@ -383,7 +383,7 @@ export class BuilderComponent<E> implements OnInit {
           .map(e => e.node)
           .forEach(node => {
             node.elements.forEach(element => {
-              const instance = this.elements.createInstance(element);
+              const instance = this.elements.createInstanceByName(element.name);
               elseStatement.addNode(instance, node);
             });
           });

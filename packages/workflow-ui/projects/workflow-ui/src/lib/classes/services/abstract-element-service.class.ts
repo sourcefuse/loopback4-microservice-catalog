@@ -4,7 +4,7 @@ import {StatementNode} from '../statement';
 
 export abstract class ElementService<T> {
   abstract createElement(
-    ctor: Constructor<WorkflowElement<T>>,
+    element: WorkflowElement<T>,
     node: StatementNode<T>,
     attrs?: RecordOfAnyType,
   ): T;
@@ -13,8 +13,6 @@ export abstract class ElementService<T> {
     node: StatementNode<T>,
     attrs?: RecordOfAnyType,
   ): T;
-  abstract createInstance(
-    ctor: Constructor<WorkflowElement<T>>,
-  ): WorkflowElement<T>;
+  abstract cloneInstance(element: WorkflowElement<T>): WorkflowElement<T>;
   abstract createInstanceByName(name: string): WorkflowElement<T>;
 }

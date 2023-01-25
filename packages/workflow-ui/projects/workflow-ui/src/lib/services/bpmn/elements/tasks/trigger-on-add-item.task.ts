@@ -20,7 +20,7 @@ export class TriggerOnAddItem extends ServiceTaskElement {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': `trigger-on-add-item-${this.env.envIdentifier}`,
+      'camunda:topic': `trigger-on-add-item-${this.env?.envIdentifier}`,
     };
   }
   name = 'trigger on add item';

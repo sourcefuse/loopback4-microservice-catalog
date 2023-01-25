@@ -13,6 +13,7 @@
     "downlevelIteration": true,
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "search-lib": ["dist"]
     },

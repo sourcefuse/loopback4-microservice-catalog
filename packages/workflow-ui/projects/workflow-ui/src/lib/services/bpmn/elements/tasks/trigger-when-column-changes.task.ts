@@ -20,7 +20,7 @@ export class TriggerWhenColumnChanges extends ServiceTaskElement {
     super();
     this.attributes = {
       ...this.attributes,
-      'camunda:topic': `trigger-on-tcv-change-${this.env.envIdentifier}`,
+      'camunda:topic': `trigger-on-tcv-change-${this.env?.envIdentifier}`,
     };
   }
   name = 'trigger when column value changes';
