@@ -1,4 +1,4 @@
-<div class="tree-group">
+<div class="tree-group" [ngClass]="{'no-node': !group.children?.length}">
   <div class="workflow-group">
     <div class="workflow-group-content">
       <span *ngIf="!isFirst"> {{ group.name }} </span>
@@ -42,6 +42,7 @@
   </div>
   <span *ngFor="let node of group.children; let i = index">
     <workflow-node
+      [ngClass]="{'last-node': i === group.children.length - 1}"
       [node]="node"
       [ngClass]="{'last-node': i === group.children.length - 1}"
       [isLast]="i === group.children.length - 1"

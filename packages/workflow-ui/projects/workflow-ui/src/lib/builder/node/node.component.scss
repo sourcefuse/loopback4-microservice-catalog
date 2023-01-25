@@ -14,6 +14,10 @@
     font-size: 18px;
     padding: 5px;
     height: 30px;
+    @media screen and (max-width: 480px) {
+      font-size: 12px;
+      margin: 0 5px;
+    }
     &.icon-workflow-delete {
       order: 2;
     }

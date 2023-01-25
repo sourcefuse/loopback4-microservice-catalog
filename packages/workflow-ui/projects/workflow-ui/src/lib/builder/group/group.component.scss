@@ -17,6 +17,12 @@
 
 .tree-group {
   padding: 5px 0;
+  @media screen and (max-width: 480px) {
+    margin-bottom: -25px;
+  }
+  &.no-node {
+    margin-bottom: -25px;
+  }
   .workflow-group {
     display: flex;
     .workflow-group-content {
@@ -47,6 +53,9 @@
     &.last-node {
       display: block;
       height: 10px;
+      @media screen and (max-width: 1024px) {
+        height: auto;
+      }
     }
   }
 

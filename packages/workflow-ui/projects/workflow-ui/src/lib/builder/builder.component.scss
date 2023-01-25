@@ -32,10 +32,15 @@
   font-weight: 300;
   font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   @media screen and (max-width: 480px) {
-    width: 90%;
+    font-size: 18px;
+    width: 95%;
   }
   @media screen and (min-width: 481px) and (max-width: 768px) {
+    font-size: 20px;
     width: 60%;
+  }
+  .down-arrow {
+    margin-top: 10px;
   }
   .icon-workflow-down-arrow {
     font-weight: 600;
