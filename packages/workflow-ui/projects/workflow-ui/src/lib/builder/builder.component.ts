@@ -89,7 +89,7 @@ export class BuilderComponent<E> implements OnInit {
 
   eventGroups: BaseGroup<E>[] = [];
   actionGroups: BaseGroup<E>[] = [];
-  eActionGroups: BaseGroup<E>[] = [];
+  elseActionGroups: BaseGroup<E>[] = [];
 
   nodeList: BaseGroup<E>[] = [];
   processId: string;
@@ -111,7 +111,7 @@ export class BuilderComponent<E> implements OnInit {
       .forEach(group => this.onGroupAdd(group));
     this.nodes
       .getGroups(true, NodeTypes.ACTION, true)
-      .forEach(group => this.eActionGroups.push(group));
+      .forEach(group => this.elseActionGroups.push(group));
   }
 
   /**
@@ -131,7 +131,7 @@ export class BuilderComponent<E> implements OnInit {
       this.selectedElseActions = elseActions;
       groups.forEach(group => this.onGroupAdd(group));
       this.restoreState(state);
-      this.eActionGroups[0].children = elseActions;
+      this.elseActionGroups[0].children = elseActions;
       events.forEach(event => {
         const groupId = event.node.groupId;
         this.eventGroups.forEach(group => {
@@ -360,7 +360,7 @@ export class BuilderComponent<E> implements OnInit {
       } else if (group.name === 'or') {
         const statementNodes: StatementNode<E>[] = [];
         const elseNode = new StatementNode(
-          this.elements.createInstanceByName('EGatewayElement'),
+          this.elements.createInstanceByName('OrGatewayElement'),
         );
         group.children
           .map(e => e.node)
@@ -377,8 +377,8 @@ export class BuilderComponent<E> implements OnInit {
       }
     });
 
-    if (this.eActionGroups[0].children.length > 0) {
-      this.eActionGroups.forEach(group => {
+    if (this.elseActionGroups[0].children.length > 0) {
+      this.elseActionGroups.forEach(group => {
         group.children
           .map(e => e.node)
           .forEach(node => {

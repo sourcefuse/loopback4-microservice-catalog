@@ -7,25 +7,25 @@ import {
 import {ElementTypes} from '../../../../enum';
 import {BpmnElement, ModdleElement} from '../../../../types/bpmn.types';
 import {UtilsService} from '../../../utils.service';
-import {CREATE_E_GATEWAY_STRATEGY} from '../../strategies/create';
-import {LINK_E_GATEWAY_STRATEGY} from '../../strategies/link';
+import {CREATE_OR_GATEWAY_STRATEGY} from '../../strategies/create';
+import {LINK_OR_GATEWAY_STRATEGY} from '../../strategies/link';
 
 @Injectable()
-export class EGatewayElement extends BpmnElement {
+export class OrGatewayElement extends BpmnElement {
   constructor(
-    @Inject(CREATE_E_GATEWAY_STRATEGY)
+    @Inject(CREATE_OR_GATEWAY_STRATEGY)
     protected creator: CreateStrategy<ModdleElement>,
-    @Inject(LINK_E_GATEWAY_STRATEGY)
+    @Inject(LINK_OR_GATEWAY_STRATEGY)
     protected linker: LinkStrategy<ModdleElement>,
     public utils: UtilsService,
   ) {
     super();
   }
   tag = 'bpmn:ExclusiveGateway';
-  name = 'egateway';
+  name = 'orgateway';
   properties = {};
   statement: string | undefined;
-  static type = ElementTypes.EGateway;
+  static type = ElementTypes.Gateway;
   attributes = {
     name: 'merge OR',
   };

@@ -6,13 +6,15 @@ import {
   NodeService,
   Statement,
   StatementNode,
-  WorkflowAction,
 } from '../../classes';
 import {BaseGroup} from '../../classes/nodes/abstract-base-group.class';
 import {BASE_XML} from '../../const';
-import {NodeTypes, EventTypes} from '../../enum';
+import {NodeTypes, StartElementTypes} from '../../enum';
 import {AutoLayoutService} from '../../layout/layout.service';
 import {
+  BpmnAction,
+  BpmnEvent,
+  BpmnStatementNode,
   CustomBpmnModdle,
   ModdleElement,
   RecordOfAnyType,
@@ -95,26 +97,18 @@ export class BpmnBuilderService extends BuilderService<
    * @param trigger - StatementNode<ModdleElement>
    * @returns A start event.
    */
-  private getStartEvent(trigger: StatementNode<ModdleElement>) {
+  private getStartEvent(trigger: BpmnStatementNode) {
     if (!trigger) {
-      return this.elements.createInstanceByName('StartElement');
+      return this.elements.createInstanceByName(StartElementTypes.BasicStartElement);
     }
-    switch (trigger.workflowNode.constructor.name) {
-      case EventTypes.OnIntervalEvent:
-        return this.elements.createInstanceByName('StartOnIntervalElement');
-      case EventTypes.OnChangeEvent:
-      case EventTypes.OnValueEvent:
-      case EventTypes.OnAddItemEvent:
-      default:
-        return this.elements.createInstanceByName('StartElement');
-    }
+    return this.elements.createInstanceByName((trigger.workflowNode as BpmnEvent).startElement);
   }
 
   /**
    * It traverses the tree and sets the tags for each node.
    * @param root - The root node of the tree.
    */
-  traverseToSetTags(root: StatementNode<ModdleElement>) {
+  traverseToSetTags(root: BpmnStatementNode) {
     let queue = [root];
     while (queue.length > 0) {
       let current = queue.shift()!;
@@ -127,7 +121,7 @@ export class BpmnBuilderService extends BuilderService<
    * It traverses the tree and links the nodes.
    * @param root - The root node of the tree.
    */
-  traverseToLink(root: StatementNode<ModdleElement>) {
+  traverseToLink(root: BpmnStatementNode) {
     let queue = [root];
     while (queue.length > 0) {
       const current = queue.shift()!;
@@ -158,7 +152,7 @@ export class BpmnBuilderService extends BuilderService<
       if (
         elseStatement.head.length &&
         (current.element.constructor.name === 'GatewayElement' ||
-          current.element.constructor.name === 'EGatewayElement')
+          current.element.constructor.name === 'OrGatewayElement')
       ) {
         current.next.push(elseStatement.head[0]);
         if (elseStatement.head[0].prev) {
@@ -175,7 +169,7 @@ export class BpmnBuilderService extends BuilderService<
    * It creates a new tag for the element and adds it to the base
    * @param element - StatementNode<ModdleElement>
    */
-  setTags(element: StatementNode<ModdleElement>) {
+  setTags(element: BpmnStatementNode) {
     if (
       element.element.constructor.name === 'ChangeColumnValue' ||
       element.element.constructor.name === 'SendEmail'
@@ -193,7 +187,7 @@ export class BpmnBuilderService extends BuilderService<
    * It links the nodes in the diagram.
    * @param element - StatementNode<ModdleElement>
    */
-  linkNodes(element: StatementNode<ModdleElement>) {
+  linkNodes(element: BpmnStatementNode) {
     if (element.prev) {
       for (let _element of element.prev) {
         if (_element.next) {
@@ -245,6 +239,9 @@ export class BpmnBuilderService extends BuilderService<
       const [elementCtor, nodeCtor, id, groupType, groupId, isElseAction] =
         tag.id.split('_');
       const element = this.elements.createInstanceByName(elementCtor);
+      // sonarignore:start
+      // TODO: Refactor
+      // sonarignore:start
       currentNode = this.nodes.getNodeByName(
         nodeCtor,
         groupType,
@@ -269,10 +266,10 @@ export class BpmnBuilderService extends BuilderService<
         elements = [];
         if (currentNode.type === NodeTypes.ACTION) {
           const nodeWithInput = {
-            node: currentNode as WorkflowAction<ModdleElement>,
+            node: currentNode as BpmnAction,
             inputs: this.nodes.mapInputs(currentNode.prompts),
           };
-          (currentNode as WorkflowAction<ModdleElement>).isElseAction
+          (currentNode as BpmnAction).isElseAction
             ? elseActions.push(nodeWithInput)
             : actions.push(nodeWithInput);
         } else {

@@ -1,4 +1,4 @@
-import { NodeTypes } from '../../../enum';
+import { NodeTypes, StartElementTypes } from '../../../enum';
 import { BpmnEvent } from '../../../types/bpmn.types';
 import { GatewayElement } from '../../bpmn/elements/gateways/gateway.element';
 import { ReadColumnValue } from '../../bpmn/elements/tasks/read-column.task';
@@ -11,6 +11,7 @@ export class OnChangeEvent extends BpmnEvent {
   groupType: NodeTypes;
   groupId: string;
   trigger = true;
+  startElement = StartElementTypes.BasicStartElement;
   elements = [TriggerWhenColumnChanges, ReadColumnValue, GatewayElement];
   name = 'On Column Value Change';
   statement = 'When ';

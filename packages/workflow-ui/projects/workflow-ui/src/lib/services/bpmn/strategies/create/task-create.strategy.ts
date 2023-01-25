@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RecordOfAnyType} from '../../../../types/base.types';
 import {
+  BpmnAction,
   BpmnElement,
   BpmnStatementNode,
   CustomBpmnModdle,
@@ -14,7 +15,6 @@ import {
   isFromParam,
   isStateParam,
 } from '../../../../interfaces';
-import {WorkflowAction, WorkflowElement} from '../../../../classes';
 import {InvalidEntityError} from '../../../../errors';
 import {NodeTypes} from '../../../../enum';
 import {GatewayElement} from '../../elements/gateways/gateway.element';
@@ -46,7 +46,7 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
     element.id = `${element.constructor.name}_${node.workflowNode.constructor.name}_${node.workflowNode.id}_${node.workflowNode.groupType}_${node.workflowNode.groupId}`;
     if (node.workflowNode.type === NodeTypes.ACTION) {
       element.id += `_${
-        (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
+        (node.workflowNode as BpmnAction).isElseAction
       }`;
     }
     node.outgoing = `Flow_${this.utils.uuid()}`;
@@ -196,7 +196,7 @@ export class CreateTaskStrategy implements CreateStrategy<ModdleElement> {
    * @returns The id of the previous element.
    */
   getInputFromPrev(
-    element: WorkflowElement<ModdleElement>,
+    element: BpmnElement,
     node: BpmnStatementNode,
   ) {
     const prevGateways = node.prev.filter(

@@ -44,12 +44,12 @@ import {BuilderService, ElementService, NodeService} from './classes';
 import {
   CreateBasicStrategy,
   CreateGatewayStrategy,
-  CreateEGatewayStrategy,
+  CreateOrGatewayStrategy,
   CreateTaskStrategy,
   CreatePropertyStrategy,
   CREATE_BASIC_STRATEGY,
   CREATE_GATEWAY_STRATEGY,
-  CREATE_E_GATEWAY_STRATEGY,
+  CREATE_OR_GATEWAY_STRATEGY,
   CREATE_PROPERTIES_STRATEGY,
   CREATE_TASK_STRATEGY,
   CreateBasicIntervalStrategy,
@@ -58,11 +58,11 @@ import {
 import {
   BasicLinkStrategy,
   GatewayLinkStrategy,
-  EGatewayLinkStrategy,
+  OrGatewayLinkStrategy,
   NoLinkStrategy,
   LINK_BASIC_STRATEGY,
   LINK_GATEWAY_STRATEGY,
-  LINK_E_GATEWAY_STRATEGY,
+  LINK_OR_GATEWAY_STRATEGY,
   LINK_NONE_STRATEGY,
 } from './services/bpmn/strategies/link';
 import {BuilderComponent} from './builder/builder.component';
@@ -80,7 +80,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {ENV} from './types';
-import {EGatewayElement} from './services/bpmn/elements/gateways/e-gateway.element';
+import {OrGatewayElement} from './services/bpmn/elements/gateways/or-gateway.element';
 import {OnIntervalEvent} from './services/statement/events/oninterval.event';
 import {TriggerOnInterval} from './services/bpmn/elements/tasks/trigger-on-interval.task';
 import {StartOnIntervalElement} from './services/bpmn/elements/base/start-on-interval.element';
@@ -124,7 +124,7 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
     {provide: BPMN_ELEMENTS, useClass: StartOnIntervalElement, multi: true},
     {provide: BPMN_ELEMENTS, useClass: EndElement, multi: true},
     {provide: BPMN_ELEMENTS, useClass: GatewayElement, multi: true},
-    {provide: BPMN_ELEMENTS, useClass: EGatewayElement, multi: true},
+    {provide: BPMN_ELEMENTS, useClass: OrGatewayElement, multi: true},
     {provide: BPMN_ELEMENTS, useClass: ProcessElement, multi: true},
     {provide: BPMN_ELEMENTS, useClass: TriggerWhenColumnChanges, multi: true},
     {provide: BPMN_ELEMENTS, useClass: TriggerOnInterval, multi: true},
@@ -148,12 +148,12 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
       useClass: CreateBasicIntervalStrategy,
     },
     {provide: CREATE_GATEWAY_STRATEGY, useClass: CreateGatewayStrategy},
-    {provide: CREATE_E_GATEWAY_STRATEGY, useClass: CreateEGatewayStrategy},
+    {provide: CREATE_OR_GATEWAY_STRATEGY, useClass: CreateOrGatewayStrategy},
     {provide: CREATE_TASK_STRATEGY, useClass: CreateTaskStrategy},
     {provide: CREATE_PROPERTIES_STRATEGY, useClass: CreatePropertyStrategy},
     {provide: LINK_BASIC_STRATEGY, useClass: BasicLinkStrategy},
     {provide: LINK_GATEWAY_STRATEGY, useClass: GatewayLinkStrategy},
-    {provide: LINK_E_GATEWAY_STRATEGY, useClass: EGatewayLinkStrategy},
+    {provide: LINK_OR_GATEWAY_STRATEGY, useClass: OrGatewayLinkStrategy},
     {provide: LINK_NONE_STRATEGY, useClass: NoLinkStrategy},
     {provide: CONDITION_LIST, useValue: typeTuppleList},
   ],

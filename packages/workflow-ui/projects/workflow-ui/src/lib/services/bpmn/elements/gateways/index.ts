@@ -1,2 +1,2 @@
 export * from './gateway.element';
-export * from './e-gateway.element';
+export * from './or-gateway.element';

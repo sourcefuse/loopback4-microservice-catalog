@@ -11,11 +11,11 @@ import {
 import {CONDITION_LIST} from '../../../../const';
 import {UtilsService} from '../../../utils.service';
 import {ConditionTypes, InputTypes} from '../../../../enum';
-import {EGatewayElement} from '../../elements';
+import {OrGatewayElement} from '../../elements';
 
 const BPMN_SEQ_FLOW = 'bpmn:SequenceFlow';
 @Injectable()
-export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
+export class OrGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
   constructor(
     private readonly moddle: CustomBpmnModdle,
     private readonly utils: UtilsService,
@@ -47,7 +47,7 @@ export class EGatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     for (let nextNode of node.next) {
       const flag = nextNode.element.id?.split('_').includes('true');
       const id = flag
-        ? (node.element as EGatewayElement).elseOutGoing
+        ? (node.element as OrGatewayElement).elseOutGoing
         : node.outgoing;
       const to = nextNode.tag;
       nextNode.incoming = id;

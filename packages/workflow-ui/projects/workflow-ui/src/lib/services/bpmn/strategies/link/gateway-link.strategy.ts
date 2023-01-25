@@ -7,11 +7,11 @@ import {
   BpmnStatementNode,
   ConditionOperatorPair,
   RecordOfAnyType,
+  BpmnAction,
 } from '../../../../types';
 import {CONDITION_LIST} from '../../../../const';
 import {UtilsService} from '../../../utils.service';
 import {ConditionTypes, InputTypes, NUMBER} from '../../../../enum';
-import {WorkflowAction} from '../../../../classes/nodes/abstract-workflow-action.class';
 import {GatewayElement} from '../../elements';
 
 const BPMN_SEQ_FLOW = 'bpmn:SequenceFlow';
@@ -50,7 +50,7 @@ export class GatewayLinkStrategy implements LinkStrategy<ModdleElement> {
     node.next.forEach(node =>
       (node.element.constructor.name === 'ChangeColumnValue' ||
         node.element.constructor.name === 'SendEmail') &&
-      (node.workflowNode as WorkflowAction<ModdleElement>).isElseAction
+      (node.workflowNode as BpmnAction).isElseAction
         ? elseNodes.push(node)
         : mainNodes.push(node),
     );

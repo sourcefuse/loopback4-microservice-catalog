@@ -1,6 +1,5 @@
 /* Defining the types of elements that can be used in the application. */
 export enum ElementTypes {
-  EGateway = 'egateway',
   End = 'end.event',
   Extension = 'extension',
   Gateway = 'gateway',
@@ -71,4 +70,9 @@ export enum EventTypes {
   OnChangeEvent = 'OnChangeEvent',
   OnIntervalEvent = 'OnIntervalEvent',
   OnValueEvent = 'OnValueEvent',
+}
+
+export enum StartElementTypes {
+  BasicStartElement = 'StartElement',
+  StartOnIntervalElement = 'StartOnIntervalElement',
 }

@@ -43,6 +43,7 @@
   <span *ngFor="let node of group.children; let i = index">
     <workflow-node
       [node]="node"
+      [ngClass]="{'last-node': i === group.children.length - 1}"
       [isLast]="i === group.children.length - 1"
       [isFirst]="i === 0"
       [inputTemplate]="inputs"
