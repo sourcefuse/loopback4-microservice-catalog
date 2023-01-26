@@ -7,54 +7,66 @@ import {HttpErrors} from '@loopback/rest';
 import {TextDecoder} from 'util';
 import {CacheStrategyTypes} from '../../strategy-types.enum';
 import {
+  CacheEntity,
   CachePluginComponentOptions,
-  DEFAULT_CACHE_PLUGIN_OPTIONS,
+  RedisConnectorExecuteReturnType,
+  SaveInCacheValue,
+  SearchInCacheResponse,
 } from '../../types';
 import {ICacheStrategy} from '../cache-strategy';
-import {IRedisCacheMixinOptions} from './types';
 
 const decoder = new TextDecoder('utf-8');
-const defaultTTL = 60000;
-const defaultScanCount = 50;
 
 export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
   getCacheDataSource: () => Promise<JugglerDataSource>;
   cacheProvider = CacheStrategyTypes.Redis;
   prefix: string;
+  ttl: number;
+  deletionKey: string;
 
-  constructor(opts: Partial<CachePluginComponentOptions>) {
-    this.prefix = opts.prefix ?? DEFAULT_CACHE_PLUGIN_OPTIONS.prefix;
+  constructor(opts: CachePluginComponentOptions) {
+    this.prefix = opts.prefix;
+    this.ttl = opts.ttl;
+    this.deletionKey = `${this.prefix}_DELETION_TIME`;
   }
 
-  async searchInCache(
-    key: string,
-    cacheOptions: IRedisCacheMixinOptions,
-  ): Promise<M | M[] | undefined | null> {
-    let result: M | M[] | undefined | null;
+  async searchInCache(key: string): Promise<SearchInCacheResponse<M>> {
+    let result: CacheEntity<M> | undefined;
     try {
-      const res = (await this.executeRedisCommand('GET', [key])) as Buffer;
+      const res = await this.executeRedisCommand<Buffer>('GET', [key]);
       if (res) {
         result = JSON.parse(decoder.decode(res));
+        const deletionTime = await this.executeRedisCommand<Buffer>('GET', [
+          this.deletionKey,
+        ]);
+        if (
+          deletionTime &&
+          (result as CacheEntity<M>).insertionTime <=
+            parseInt(JSON.parse(decoder.decode(deletionTime)))
+        ) {
+          await this.executeRedisCommand('DEL', [key]);
+          result = undefined;
+        }
       }
     } catch (err) {
       throw new HttpErrors.UnprocessableEntity(
         `Unexpected error occured while searching in cache : ${err}`,
       );
     }
-    return result;
+    return result?.payload;
   }
 
-  async saveInCache(
-    key: string,
-    value: M | M[] | null,
-    cacheOptions: IRedisCacheMixinOptions,
-  ): Promise<void> {
+  async saveInCache(key: string, value: SaveInCacheValue<M>): Promise<void> {
     try {
+      const valueWithTime: CacheEntity<SaveInCacheValue<M>> = {
+        payload: value,
+        insertionTime: Date.now(),
+      };
       await this.executeRedisCommand('SET', [
         key,
-        JSON.stringify(value),
+        JSON.stringify(valueWithTime),
         `PX`,
-        cacheOptions.ttl ?? defaultTTL,
+        this.ttl,
       ]);
     } catch (err) {
       throw new HttpErrors.UnprocessableEntity(
@@ -63,41 +75,20 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
     }
   }
 
-  async clearCache(cacheOptions: IRedisCacheMixinOptions): Promise<void> {
-    this.checkDataSource();
-    const script = `
-      local cursor = 0
-      local dels = 0
-      repeat
-          local result = redis.call('SCAN', cursor, 'MATCH', ARGV[1], 'COUNT', '${
-            cacheOptions.scanCount ?? defaultScanCount
-          }')
-          for _,key in ipairs(result[2]) do
-              redis.call('DEL', key)
-              dels = dels + 1
-          end
-          cursor = tonumber(result[1])
-      until cursor == 0
-      return dels`;
+  async clearCache(): Promise<void> {
     try {
-      await this.executeRedisCommand(`EVAL`, [script, 0, `${this.prefix}*`]);
+      await this.executeRedisCommand('SET', [this.deletionKey, Date.now()]);
     } catch (err) {
       throw new HttpErrors.UnprocessableEntity(
-        `Unexpected error occured while executing script to empty cache : ${err}`,
+        `Unexpected error occured while saving deletion time : ${err}`,
       );
     }
   }
 
-  private checkDataSource(): void {
-    if (!this.getCacheDataSource) {
-      throw new Error(`Please provide value for getCacheDataSource`);
-    }
-  }
-
-  async executeRedisCommand(
+  async executeRedisCommand<T extends RedisConnectorExecuteReturnType>(
     command: string,
     args: (string | number)[],
-  ): Promise<Buffer | number | undefined> {
+  ): Promise<T | undefined> {
     const cacheDataSource = await this.getCacheDataSource();
     return new Promise((resolve, reject) => {
       if (cacheDataSource.connector?.execute) {
@@ -105,7 +96,7 @@ export class RedisCacheStrategy<M> implements ICacheStrategy<M> {
         cacheDataSource.connector.execute(
           command,
           args,
-          (err: Error, res: Buffer | number) => {
+          (err: Error, res: T) => {
             if (err) {
               reject(err);
             }
