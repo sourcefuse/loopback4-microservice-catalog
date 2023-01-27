@@ -6,6 +6,7 @@ import {CREATE_TASK_STRATEGY} from '../../strategies/create';
 import {ENV} from '../../../../types/base.types';
 import {LINK_BASIC_STRATEGY} from '../../strategies/link';
 import {ServiceTaskElement} from './service-task.task';
+import {ENV_TOKEN} from '../../../../token';
 @Injectable()
 export class SendEmail extends ServiceTaskElement {
   constructor(
@@ -13,7 +14,7 @@ export class SendEmail extends ServiceTaskElement {
     protected creator: CreateStrategy<ModdleElement>,
     @Inject(LINK_BASIC_STRATEGY)
     protected linker: LinkStrategy<ModdleElement>,
-    @Inject('env') private env: ENV,
+    @Inject(ENV_TOKEN) protected env: ENV,
     public utils: UtilsService,
   ) {
     super();

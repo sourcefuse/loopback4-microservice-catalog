@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import BPMNModdle from 'bpmn-moddle';
 import {CustomBpmnModdle} from './types/bpmn.types';
@@ -79,7 +79,6 @@ import {
   NgbPopoverModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import {ENV} from './types';
 import {OrGatewayElement} from './services/bpmn/elements/gateways/or-gateway.element';
 import {OnIntervalEvent} from './services/statement/events/oninterval.event';
 import {TriggerOnInterval} from './services/bpmn/elements/tasks/trigger-on-interval.task';
@@ -158,18 +157,4 @@ import {OnAddItemEvent} from './services/statement/events/onadditem.event';
     {provide: CONDITION_LIST, useValue: typeTuppleList},
   ],
 })
-export class WorkflowBuilderModule {
-  public static forRoot(
-    environment: ENV,
-  ): ModuleWithProviders<WorkflowBuilderModule> {
-    return {
-      ngModule: WorkflowBuilderModule,
-      providers: [
-        {
-          provide: 'env',
-          useValue: environment,
-        },
-      ],
-    };
-  }
-}
+export class WorkflowBuilderModule {}
