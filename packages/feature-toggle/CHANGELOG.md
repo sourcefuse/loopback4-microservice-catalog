@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.13 (2023-01-31)</small>
+
+* chore(deps): updating the loopback4-authentication package (#1260) ([99887d6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99887d6)), closes [#1260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1260) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259)
+
+
+
+
+
 ## <small>0.3.12 (2023-01-23)</small>
 
 * chore(cli): update cli with latest dependencies (#1222) ([8a63596](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8a63596)), closes [#1222](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1222) [#1221](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1221)
