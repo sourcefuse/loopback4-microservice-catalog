@@ -21,11 +21,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
       - run: node --version
       - run: npm --version
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16
 
       - name: lerna-bootstrap
         uses: m19c/action-lerna@1.0.0
