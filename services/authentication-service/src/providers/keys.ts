@@ -38,6 +38,9 @@ import {
   CognitoPostVerifyFn,
   JWTSignerFn,
   JWTVerifierFn,
+  SamlSignUpFn,
+  SamlPostVerifyFn,
+  SamlPreVerifyFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -60,6 +63,9 @@ export namespace SignUpBindings {
   );
   export const COGNITO_SIGN_UP_PROVIDER = BindingKey.create<CognitoSignUpFn>(
     'sf.cognito.signup.provider',
+  );
+  export const SAML_SIGN_UP_PROVIDER = BindingKey.create<SamlSignUpFn>(
+    'sf.saml.signup.provider',
   );
   export const PRE_LOCAL_SIGNUP_PROVIDER = BindingKey.create<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,6 +106,12 @@ export namespace VerifyBindings {
     BindingKey.create<CognitoPreVerifyFn>('sf.cognito.preverify.provider');
   export const COGNITO_POST_VERIFY_PROVIDER =
     BindingKey.create<CognitoPostVerifyFn>('sf.cognito.postverify.provider');
+  export const SAML_PRE_VERIFY_PROVIDER = BindingKey.create<SamlPreVerifyFn>(
+    'sf.saml.preverify.provider',
+  );
+  export const SAML_POST_VERIFY_PROVIDER = BindingKey.create<SamlPostVerifyFn>(
+    'sf.saml.postverify.provider',
+  );
 
   export const OTP_PROVIDER = BindingKey.create<OtpFn>('sf.otp.provider');
   export const OTP_GENERATE_PROVIDER = BindingKey.create<OtpGenerateFn>(

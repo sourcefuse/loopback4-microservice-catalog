@@ -10,5 +10,6 @@ module.exports = {
         checksVoidReturn: false,
       },
     ],
+    '@typescript-eslint/prefer-nullish-coalescing': 'warn',
   },
 };

@@ -44,3 +44,6 @@ export * from './jwt-asymmetric-signer.provider';
 export * from './jwt-asymmetric-verifier.provider';
 export * from './jwt-symmetric-signer.provider';
 export * from './jwt-symmetric-verifier.provider';
+export * from './saml-signup.provider';
+export * from './saml-post-verify.provider';
+export * from './saml-pre-verify.provider';
