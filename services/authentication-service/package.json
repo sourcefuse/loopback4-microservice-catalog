@@ -23,7 +23,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "openapi-spec": "node ./dist/openapi-spec",
-    "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "coverage": "nyc npm run test && npx update-badge",
@@ -69,12 +69,12 @@
     "body-parser": "^1.20.0",
     "check-code-coverage": "^1.10.0",
     "cookie-parser": "^1.4.6",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "https-proxy-agent": "^5.0.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "file:loopback4-authentication-7.3.1.tgz",
+    "loopback4-authentication": "^7.4.1",
     "loopback4-authorization": "^5.1.0",
     "loopback4-soft-delete": "^7.1.0",
     "moment": "^2.29.3",
@@ -87,21 +87,21 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-instagram": "^1.0.0",
     "qrcode": "^1.5.0",
-    "tslib": "^2.4.0"
+    "tslib": "^2.4.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@loopback/build": "^9.0.3",
-    "@loopback/eslint-config": "^13.0.3",
-    "@loopback/testlab": "^5.0.3",
+    "@loopback/build": "^9.0.7",
+    "@loopback/eslint-config": "^13.0.7",
+    "@loopback/testlab": "^5.0.7",
     "@types/base-64": "^1.0.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/i18n": "^0.13.2",
-    "@types/jsonwebtoken": "^8.5.8",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.182",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^18.7.14",
+    "@types/node": "^18.11.18",
     "@types/node-fetch": "^2.6.1",
     "@types/passport-apple": "^1.1.1",
     "@types/passport-azure-ad": "^4.3.1",
@@ -112,11 +112,11 @@
     "@types/sinon": "^10.0.11",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
-    "eslint": "^8.23.0",
+    "eslint": "^8.32.0",
     "nyc": "^15.1.0",
     "sinon": "^13.0.2",
     "source-map-support": "^0.5.21",
-    "typescript": "^4.8.2",
+    "typescript": "~4.9.4",
     "widdershins": "^4.0.1"
   },
   "overrides": {
@@ -129,12 +129,38 @@
       "markdown-it": "^12.3.2",
       "yargs": "^17.4.1"
     },
-    "passport-azure-ad": {
-      "passport": "^0.6.0"
+    "body-parser": {
+      "debug": "^4.3.4"
+    },
+    "httpsnippet": {
+      "debug": "^4.3.4"
+    },
+    "tunnel-ssh": {
+      "debug": "^4.3.4"
+    },
+    "express": {
+      "debug": "^4.3.4",
+      "finalhandler": "^1.2.0",
+      "send": "^0.18.0",
+      "serve-static": "^1.15.0"
     }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/authentication-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    },
+    "settings": {
+      "includeOpenAPIDoc": true
+    }
   }
 }

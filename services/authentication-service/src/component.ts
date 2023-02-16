@@ -207,7 +207,7 @@ export class AuthenticationServiceComponent implements Component {
       ResourceOwnerVerifyProvider;
     this.providers[Strategies.Passport.GOOGLE_OAUTH2_VERIFIER.key] =
       GoogleOauth2VerifyProvider;
-    this.providers[Strategies.SAML_VERIFIER.key] = SamlVerifyProvider;
+    this.providers[Strategies.Passport.SAML_VERIFIER.key] = SamlVerifyProvider;
     this.providers[Strategies.Passport.APPLE_OAUTH2_VERIFIER.key] =
       AppleOauth2VerifyProvider;
     this.providers[Strategies.Passport.FACEBOOK_OAUTH2_VERIFIER.key] =

@@ -4,7 +4,6 @@ import {
   get,
   getModelSchemaRef,
   HttpErrors,
-  oas,
   param,
   post,
   Request,
@@ -61,44 +60,6 @@ export class SamlLoginController {
       clientSecret: process.env.SAML_CLIENT_SECRET,
       tokenURL: process.env.SAML_TOKEN_URL,
     },
-    queryGen('query'),
-  )
-  @authorize({permissions: ['*']})
-  @oas.deprecated()
-  @get('/saml', {
-    description: 'POST Call for saml based login',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Saml Token Response',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: TokenResponse},
-          },
-        },
-      },
-    },
-  })
-  async getLoginViaSaml(
-    @param.query.string('client_id')
-    clientId?: string, //NOSONAR
-    @param.query.string('client_secret')
-    clientSecret?: string, //NOSONAR
-  ): Promise<void> {
-    //do nothing
-  }
-
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.SAML,
-    {
-      accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.SAML_URL,
-      callbackURL: process.env.SAML_CALLBACK_URL,
-      clientID: process.env.SAML_CLIENT_ID,
-      clientSecret: process.env.SAML_CLIENT_SECRET,
-      tokenURL: process.env.SAML_TOKEN_URL,
-    },
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
@@ -142,7 +103,7 @@ export class SamlLoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/saml-redirect', {
+  @get('/auth/saml', {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Saml Redirect Token Response',

@@ -77,7 +77,7 @@ describe('Saml Verify Provider', () => {
       const userCred = new UserCredentials({
         id: '1',
         userId: '1',
-        authProvider: 'google',
+        authProvider: 'saml',
         authId: '1',
       });
       const findOne = userRepo.stubs.findOne;
