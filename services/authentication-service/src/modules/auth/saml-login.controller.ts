@@ -103,7 +103,7 @@ export class SamlLoginController {
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/saml', {
+  @get('/auth/saml-auth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Saml Redirect Token Response',

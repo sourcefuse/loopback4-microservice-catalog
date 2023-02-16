@@ -2839,7 +2839,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/auth/saml',
+fetch('/auth/saml-auth-redirect',
 {
   method: 'GET',
 
@@ -2860,7 +2860,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/auth/saml',
+fetch('/auth/saml-auth-redirect',
 {
   method: 'GET',
 
@@ -2874,7 +2874,7 @@ fetch('/auth/saml',
 
 ```
 
-`GET /auth/saml`
+`GET /auth/saml-auth-redirect`
 
 <h3 id="samllogincontroller.samlcallback-parameters">Parameters</h3>
 

@@ -997,7 +997,9 @@
           }
         },
         "operationId": "SamlLoginController.postLoginViaSaml"
-      },
+      }
+    },
+    "/auth/saml-auth-redirect": {
       "get": {
         "x-controller-name": "SamlLoginController",
         "x-operation-name": "samlCallback",
