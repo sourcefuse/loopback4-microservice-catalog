@@ -11,6 +11,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   PLATFORM_ID,
   TemplateRef,
@@ -35,8 +36,11 @@ import {
   TypeEvent,
   ItemClickedEvent,
   IModel,
+  ISearchServiceWithPromises,
+  isApiServiceWithPromise,
 } from '../types';
 import {isPlatformBrowser} from '@angular/common';
+import {PromiseApiAdapterService} from './promise-api-adapter.service';
 
 const ALL_LABEL = 'All';
 @Component({
@@ -52,7 +56,8 @@ const ALL_LABEL = 'All';
   ],
 })
 export class SearchComponent<T extends IReturnType>
-  implements OnInit, OnDestroy, ControlValueAccessor {
+  implements OnInit, OnDestroy, ControlValueAccessor
+{
   searchBoxInput = '';
   suggestionsDisplay = false;
   categoryDisplay = false;
@@ -66,6 +71,7 @@ export class SearchComponent<T extends IReturnType>
   public get config(): Configuration<T> {
     return this._config;
   }
+
   @Input()
   public set config(value: Configuration<T>) {
     this._config = value;
@@ -87,6 +93,20 @@ export class SearchComponent<T extends IReturnType>
     }
   }
 
+  @Input()
+  public set searchProvider(
+    value: ISearchService<T> | ISearchServiceWithPromises<T>,
+  ) {
+    if (isApiServiceWithPromise(value)) {
+      value = this.promiseAdapter.adapt(value);
+    }
+    this.searchService = value;
+  }
+
+  public get searchProvider(): ISearchService<T> {
+    return this.searchService;
+  }
+
   @Input() titleTemplate?: TemplateRef<any>;
   @Input() subtitleTemplate?: TemplateRef<any>;
   // emitted when user clicks one of the suggested results (including recent search sugestions)
@@ -96,18 +116,21 @@ export class SearchComponent<T extends IReturnType>
      & requests made on change in category from dropdown)
   In case of recent search Array of recent Search request result is emitted */
 
-  onChange!: (value: string | undefined) => void;
-  onTouched!: () => void;
+  onChange: (value: string | undefined) => void = () => {};
+  onTouched: () => void = () => {};
   disabled = false;
 
   @ViewChild('searchInput') public searchInputElement!: ElementRef;
 
   constructor(
     @Inject(SEARCH_SERVICE_TOKEN)
-    private readonly searchService: ISearchService<T>,
+    @Optional()
+    private searchService: ISearchService<T>,
     // tslint:disable-next-line:ban-types
-    @Inject(PLATFORM_ID) private readonly platformId: Object,
+    @Inject(PLATFORM_ID)
+    private readonly platformId: Object,
     private readonly cdr: ChangeDetectorRef,
+    private readonly promiseAdapter: PromiseApiAdapterService<T>,
   ) {}
 
   ngOnInit(): void {
@@ -244,9 +267,9 @@ export class SearchComponent<T extends IReturnType>
   }
 
   populateValue(suggestion: T, event: MouseEvent) {
-    const value = (suggestion[
+    const value = suggestion[
       this.config.displayPropertyName
-    ] as unknown) as string;
+    ] as unknown as string;
     // converted to string to assign value to searchBoxInput
     this.searchBoxInput = value;
     this.suggestionsDisplay = false;
@@ -273,9 +296,9 @@ export class SearchComponent<T extends IReturnType>
   }
 
   fetchModelImageUrlFromSuggestion(suggestion: T) {
-    const modelName = (suggestion[
-      ('source' as unknown) as keyof T
-    ] as unknown) as string;
+    const modelName = suggestion[
+      'source' as unknown as keyof T
+    ] as unknown as string;
     let url: string | undefined;
     this.config.models.forEach(model => {
       if (model.name === modelName && model.imageUrl) {
@@ -287,7 +310,7 @@ export class SearchComponent<T extends IReturnType>
 
   boldString(str: T[keyof T] | string, substr: string) {
     const strRegExp = new RegExp(`(${substr})`, 'gi');
-    const stringToMakeBold: string = (str as unknown) as string;
+    const stringToMakeBold: string = str as unknown as string;
     return stringToMakeBold.replace(strRegExp, `<b>$1</b>`);
   }
 

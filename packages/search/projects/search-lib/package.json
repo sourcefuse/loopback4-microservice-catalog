@@ -21,17 +21,14 @@
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "build": "ng build && cp -r src/assets dist/assets",
+    "build": "ng build && ng build search-element && ts-node bundle-element.ts && cp -r src/assets dist/assets",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "tslib": "^2.2.0"
   },
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/public-api.ts"
-    },
-    "dest": "dist"
+  "devDependencies": {
+    "@angular/elements": "^13.3.11"
   },
   "repository": {
     "type": "git",
