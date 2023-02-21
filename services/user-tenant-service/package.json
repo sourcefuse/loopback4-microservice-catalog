@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-tenant-service",
-  "version": "0.6.7",
+  "version": "0.6.10",
   "description": "Sourceloop User Tenant Service.",
   "keywords": [
     "loopback-extension",
@@ -67,12 +67,12 @@
     "@loopback/rest": "^12.0.7",
     "@loopback/rest-explorer": "^5.0.7",
     "@loopback/service-proxy": "^5.0.7",
-    "@sourceloop/core": "^7.3.3",
+    "@sourceloop/core": "^7.3.6",
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^9.0.0",
-    "loopback4-authentication": "^7.3.1",
+    "loopback4-authentication": "^7.4.1",
     "loopback4-authorization": "^5.1.0",
     "loopback4-soft-delete": "^7.1.0",
     "nanoid": "^3.1.25",

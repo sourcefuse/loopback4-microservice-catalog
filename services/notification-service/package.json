@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-service",
-  "version": "6.2.11",
+  "version": "6.2.14",
   "description": "notification microservice",
   "keywords": [
     "loopback-extension",
@@ -61,12 +61,12 @@
     "@loopback/rest": "^12.0.7",
     "@loopback/rest-explorer": "^5.0.7",
     "@loopback/service-proxy": "^5.0.7",
-    "@sourceloop/core": "^7.3.3",
+    "@sourceloop/core": "^7.3.6",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^7.3.1",
+    "loopback4-authentication": "^7.4.1",
     "loopback4-authorization": "^5.1.0",
     "loopback4-notifications": "^5.1.1",
     "loopback4-soft-delete": "^7.1.0",
@@ -85,7 +85,7 @@
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^8.32.0",
-    "firebase-admin": "^11.4.1",
+    "firebase-admin": "^11.5.0",
     "mocha": "^10.2.0",
     "nodemailer": "^6.7.5",
     "nyc": "^15.1.0",
@@ -108,8 +108,8 @@
     "@parse/node-apn": {
       "jsonwebtoken": "^9.0.0"
     },
-    "firebase-admin": {
-      "jsonwebtoken": "^9.0.0"
+    "protobufjs-cli": {
+      "jsdoc": "^4.0.0"
     },
     "body-parser": {
       "debug": "^4.3.4"

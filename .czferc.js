@@ -48,6 +48,8 @@ const scopes = [
   {name: 'ocr-parser'},
   {name: 'user-tenant-service'},
   {name: 'all-services'},
+  {name: 'typedoc'},
+  {name: 'mkdocs'},
 ];
 
 /**

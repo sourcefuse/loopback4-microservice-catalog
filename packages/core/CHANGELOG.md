@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.3.6 (2023-02-01)</small>
+
+* chore(cli): update the cli template dependencies to the latest (#1262) ([b44c542](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b44c542)), closes [#1262](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1262) [#1261](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1261)
+
+
+
+
+
+## <small>7.3.5 (2023-01-31)</small>
+
+* chore(deps): updating the loopback4-authentication package (#1260) ([99887d6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99887d6)), closes [#1260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1260) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259)
+
+
+
+
+
+## <small>7.3.4 (2023-01-20)</small>
+
+* fix(core): add facade bearer asymmetric token verifier provider (#1216) ([90c67d8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/90c67d8)), closes [#1216](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1216) [#1212](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1212)
+
+
+
+
+
 ## <small>7.3.3 (2023-01-17)</small>
 
 * chore(deps): loopback and sourceloop version update (#1211) ([3086a5b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3086a5b)), closes [#1211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1211) [#1206](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1206)

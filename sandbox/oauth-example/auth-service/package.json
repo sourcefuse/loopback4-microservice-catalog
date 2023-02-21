@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/oauth-example-api",
-  "version": "0.2.3",
+  "version": "0.2.6",
   "description": "oauth example",
   "keywords": [
     "loopback-application",
@@ -59,7 +59,7 @@
     "@loopback/rest": "^12.0.1",
     "@loopback/rest-explorer": "^5.0.1",
     "@loopback/service-proxy": "^5.0.1",
-    "@sourceloop/authentication-service": "^9.0.3",
+    "@sourceloop/authentication-service": "^9.0.6",
     "bcrypt": "^5.0.1",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",

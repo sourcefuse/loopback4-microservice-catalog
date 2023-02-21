@@ -13,6 +13,7 @@ import {
   BearerVerifierType,
 } from './keys';
 import {RevokedToken} from './models';
+import {FacadesBearerAsymmetricTokenVerifyProvider} from './providers/facades-bearer-asym-token-verify.provider';
 import {FacadesBearerTokenVerifyProvider} from './providers/facades-bearer-token-verify.provider';
 import {ServicesBearerAsymmetricTokenVerifyProvider} from './providers/services-bearer-asym-token-verifier';
 import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-token-verify.provider';
@@ -50,8 +51,13 @@ export class BearerVerifierComponent implements Component {
           ServicesBearerTokenVerifyProvider;
       }
     } else if (this.config && this.config.type === BearerVerifierType.facade) {
-      this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
-        FacadesBearerTokenVerifyProvider;
+      if (process.env.JWT_PUBLIC_KEY && process.env.JWT_PUBLIC_KEY !== '') {
+        this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+          FacadesBearerAsymmetricTokenVerifyProvider;
+      } else {
+        this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+          FacadesBearerTokenVerifyProvider;
+      }
     } else {
       this.logger.error('Invalid BearerVerifierType specified !');
     }

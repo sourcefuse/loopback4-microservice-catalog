@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.14 (2023-02-01)</small>
+
+* chore(cli): update the cli template dependencies to the latest (#1262) ([b44c542](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b44c542)), closes [#1262](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1262) [#1261](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1261)
+
+
+
+
+
+## <small>0.3.13 (2023-01-31)</small>
+
+* chore(deps): updating the loopback4-authentication package (#1260) ([99887d6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99887d6)), closes [#1260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1260) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259)
+
+
+
+
+
+## <small>0.3.12 (2023-01-23)</small>
+
+* chore(cli): update cli with latest dependencies (#1222) ([8a63596](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8a63596)), closes [#1222](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1222) [#1221](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1221)
+
+
+
+
+
+## <small>0.3.11 (2023-01-20)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle
+
+
+
+
+
 ## <small>0.3.10 (2023-01-17)</small>
 
 * chore(deps): loopback and sourceloop version update (#1211) ([3086a5b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3086a5b)), closes [#1211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1211) [#1206](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1206)

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/feature-toggle",
-  "version": "0.3.10",
+  "version": "0.3.14",
   "description": "Package for feature toggle",
   "keywords": [
     "loopback-extension",
@@ -56,9 +56,9 @@
     "@loopback/rest": "^12.0.7",
     "@loopback/rest-explorer": "^5.0.7",
     "@loopback/service-proxy": "^5.0.7",
-    "@sourceloop/core": "^7.3.3",
+    "@sourceloop/core": "^7.3.6",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^7.3.1",
+    "loopback4-authentication": "^7.4.1",
     "sinon": "^14.0.0",
     "tslib": "^2.4.1"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-example",
-  "version": "0.8.1",
+  "version": "0.8.4",
   "description": "in mail example",
   "keywords": [
     "loopback-application",
@@ -56,7 +56,7 @@
     "@loopback/rest": "^12.0.5",
     "@loopback/rest-explorer": "^5.0.5",
     "@loopback/service-proxy": "^5.0.5",
-    "@sourceloop/in-mail-service": "^4.2.11",
+    "@sourceloop/in-mail-service": "^4.2.14",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "db-migrate": "^1.0.0-beta.18",

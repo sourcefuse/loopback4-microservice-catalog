@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "7.3.3",
+  "version": "7.3.6",
   "description": "Sourceloop core package.",
   "keywords": [
     "loopback-extension",
@@ -55,7 +55,7 @@
     "lodash": "^4.17.21",
     "logform": "^2.4.0",
     "loopback-datasource-juggler": "^4.28.1",
-    "loopback4-authentication": "^7.3.1",
+    "loopback4-authentication": "^7.4.1",
     "loopback4-authorization": "^5.1.0",
     "loopback4-helmet": "^4.2.0",
     "loopback4-ratelimiter": "^4.2.0",

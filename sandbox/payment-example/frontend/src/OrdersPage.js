@@ -64,7 +64,7 @@ const OrdersPage = () => {
       <MDBRow style={{marginLeft: '30px', marginRight: '30px'}}>
         {productList.map((product, index) => {
           return (
-            <MDBCol md="4">
+            <MDBCol md="4" key={product.name}>
               <MDBCard narrow ecommerce className="mb-2">
                 <MDBCardImage
                   cascade
