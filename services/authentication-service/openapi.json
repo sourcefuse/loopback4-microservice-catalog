@@ -967,6 +967,84 @@
         "operationId": "ForgetPasswordController.resetPassword"
       }
     },
+    "/auth/saml": {
+      "post": {
+        "x-controller-name": "SamlLoginController",
+        "x-operation-name": "postLoginViaSaml",
+        "tags": [
+          "SamlLoginController"
+        ],
+        "description": "POST Call for saml based login",
+        "responses": {
+          "200": {
+            "description": "Saml Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "SamlLoginController.postLoginViaSaml"
+      }
+    },
+    "/auth/saml-auth-redirect": {
+      "get": {
+        "x-controller-name": "SamlLoginController",
+        "x-operation-name": "samlCallback",
+        "tags": [
+          "SamlLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Saml Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "SamlLoginController.samlCallback"
+      }
+    },
     "/auth/send-otp": {
       "post": {
         "x-controller-name": "OtpController",
