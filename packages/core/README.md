@@ -282,7 +282,9 @@ Repositories are adding behavior to Models. Models describe the shape of data, R
 
 ![Repository](https://loopback.io/pages/en/lb4/imgs/repository.png)
 
-DefaultUserModifyCrudRepository -A repository Class which will provide CRUD operations for default user modifications adding modifiedby field along with it for the modified user.
+#### DefaultUserModifyCrudRepository
+
+A repository Class which will provide CRUD operations for default user modifications adding modifiedby field along with it for the modified user.
 
 Extend repositories with DefaultUserModifyCrudRepository Class replacing DefaultCrudRepository. For example,
 
@@ -323,6 +325,18 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
 ```
 
 ![Connector](https://loopback.io/images/9830486.png)
+
+#### SequelizeUserModifyCrudRepository
+
+Similar to [DefaultUserModifyCrudRepository](#defaultusermodifycrudrepository) for projects using sequelize as the underlying ORM using [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) extension.
+
+In order to use this follow the below import syntax:
+
+```ts
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
+```
+
+and make sure you've [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) installed.
 
 ### Sequence Handlers
 
