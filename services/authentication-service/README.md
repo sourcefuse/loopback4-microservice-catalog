@@ -26,6 +26,7 @@ A Loopback Microservice for handling authentications. It provides -
 - Facebook OAuth using [passport-facebook](http://www.passportjs.org/packages/passport-facebook/).
 - Apple OAuth using [passport-apple](https://www.npmjs.com/package/passport-apple).
 - Cognito OAuth using [passport-cognito-oauth2](https://www.npmjs.com/package/passport-cognito-oauth2).
+- SAML Authentication using [@node-saml/passport-saml](https://www.npmjs.com/package/passport-saml).
 - OTP Auth using custom passport otp strategy.
 - Two-Factor Authentication.
 

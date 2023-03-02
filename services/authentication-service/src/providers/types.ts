@@ -14,6 +14,7 @@ import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
 import * as AzureADStrategy from 'passport-azure-ad';
+import * as SamlStrategy from '@node-saml/passport-saml';
 import {
   AuthClient,
   ForgetPasswordResponseDto,
@@ -212,3 +213,20 @@ export type JWTVerifierFn<T> = (
   token: string,
   options: VerifyOptions,
 ) => Promise<T>;
+export interface SamlSignUpFn {
+  (profile: SamlStrategy.Profile): Promise<(User & UserRelations) | null>;
+}
+
+export interface SamlPreVerifyFn {
+  (
+    profile: SamlStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
+
+export interface SamlPostVerifyFn {
+  (
+    profile: SamlStrategy.Profile,
+    user: IAuthUser | null,
+  ): Promise<IAuthUser | null>;
+}
