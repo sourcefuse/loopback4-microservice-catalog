@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.11 (2023-03-06)</small>
+
+* chore(deps): loopback and sourceloop version update (#1332) ([39e1f7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39e1f7a)), closes [#1332](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1332) [#1331](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1331)
+* refactor(chore): resolve sonar code smells (#1264) ([70d3fc5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d3fc5)), closes [#1264](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1264) [#1200](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1200)
+
+
+
+
+
 ## <small>0.6.10 (2023-02-01)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service
