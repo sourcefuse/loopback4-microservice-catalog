@@ -83,7 +83,7 @@
     "winston": "^3.7.2"
   },
   "peerDependencies": {
-    "loopback4-sequelize": "^2.1.0"
+    "loopback4-sequelize": "^2.2.0"
   },
   "peerDependenciesMeta": {
     "loopback4-sequelize": {
