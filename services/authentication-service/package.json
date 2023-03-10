@@ -120,6 +120,9 @@
     "widdershins": "^4.0.1"
   },
   "overrides": {
+    "@sourceloop/core": {
+      "node-jose": "^2.2.0"
+    },
     "check-code-coverage": {
       "lodash": "^4.17.21",
       "got": "^11.8.5"
