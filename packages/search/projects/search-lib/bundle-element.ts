@@ -1,4 +1,4 @@
-import {ensureDir} from 'fs-extra';
+import {ensureDir, readFileSync, writeFileSync} from 'fs-extra';
 import {copyFile, rm} from 'fs/promises';
 const concat = require('concat');
 
@@ -15,6 +15,16 @@ async function elementsBundler() {
     './dist/element/styles.css',
   );
   await rm('./dist/search-element', {recursive: true});
+
+  //copy the package.json and change the name to element
+  const packageJsonPath = './package.json';
+  const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+  jsonObj.name = '@sourceloop/search-element';
+  delete jsonObj.peerDependencies;
+  writeFileSync(
+    './dist/element/package.json',
+    JSON.stringify(jsonObj, null, 2),
+  );
 }
 
 elementsBundler();
