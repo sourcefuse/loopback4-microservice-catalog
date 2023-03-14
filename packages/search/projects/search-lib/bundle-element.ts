@@ -3,6 +3,7 @@ import {copyFile, rm} from 'fs/promises';
 const concat = require('concat');
 
 async function elementsBundler() {
+  const space = 2;
   const files = [
     './dist/search-element/runtime.js',
     './dist/search-element/polyfills.js',
@@ -23,7 +24,7 @@ async function elementsBundler() {
   delete jsonObj.peerDependencies;
   writeFileSync(
     './dist/element/package.json',
-    JSON.stringify(jsonObj, null, 2),
+    JSON.stringify(jsonObj, null, space),
   );
 }
 
