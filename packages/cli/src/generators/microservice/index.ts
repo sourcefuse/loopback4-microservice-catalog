@@ -20,6 +20,7 @@ import {
   getDependencyVersion,
   JSON_SPACING,
 } from '../../utils';
+const chalk = require('chalk'); //NOSONAR
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -67,9 +68,7 @@ const BACK_TO_ROOT = join('..', '..');
 
 const DEFAULT_NAME = 'microservice';
 
-export default class MicroserviceGenerator extends AppGenerator<
-  MicroserviceOptions
-> {
+export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
   constructor(args: string[], opts: MicroserviceOptions) {
     super(args, opts);
   }
@@ -145,8 +144,8 @@ export default class MicroserviceGenerator extends AppGenerator<
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
       if (type === 'services') {
-        this.projectInfo.baseServiceComponentName = 
-        this._setBaseServiceComponentName();
+        this.projectInfo.baseServiceComponentName =
+          this._setBaseServiceComponentName();
         const baseServiceDSList = this._setDataSourceName();
         this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
           ds => ds.type === 'store',
@@ -212,12 +211,11 @@ export default class MicroserviceGenerator extends AppGenerator<
       scripts['coverage'] = 'nyc npm run test';
       packageJson.scripts = scripts;
       if (this.options.baseService) {
-        packageJson.dependencies[
-          `@sourceloop/${this.options.baseService}`
-        ] = getDependencyVersion(
-          this.projectInfo.dependencies,
-          `@sourceloop/${this.options.baseService}`,
-        );
+        packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
+          getDependencyVersion(
+            this.projectInfo.dependencies,
+            `@sourceloop/${this.options.baseService}`,
+          );
       }
       fs.writeFileSync(
         packageJsonFile,
@@ -426,6 +424,24 @@ export default class MicroserviceGenerator extends AppGenerator<
   private _includeSourceloopMigrations() {
     const name = this.options.name ?? DEFAULT_NAME;
     if (!this.shouldExit() && this.options.baseService) {
+      if (
+        !this.fs.exists(
+          this.destinationPath(
+            join(
+              'services',
+              name,
+              sourceloopMigrationPath(this.options.baseService),
+            ),
+          ),
+        )
+      ) {
+        this.log(
+          chalk.cyan(
+            `Since migrations does not exist in the base service generating without migrations`,
+          ),
+        );
+        return;
+      }
       this.fs.copy(
         this.destinationPath(
           join(
