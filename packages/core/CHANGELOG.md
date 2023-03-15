@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.4.1 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+
+
+
+
+
 ## 7.4.0 (2023-03-06)
 
 * feat(core): add user modify crud repository for sequelize (#1330) ([f22d81e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f22d81e)), closes [#1330](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1330) [#1329](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1329)

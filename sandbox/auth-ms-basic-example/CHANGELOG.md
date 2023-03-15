@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.9.6 (2023-03-15)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
 ## <small>0.9.5 (2023-03-06)</small>
 
 * refactor(chore): resolve sonar code smells (#1264) ([70d3fc5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d3fc5)), closes [#1264](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1264) [#1200](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1200)

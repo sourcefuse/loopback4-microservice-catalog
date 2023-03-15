@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.1.1 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+
+
+
+
+
 ## 9.1.0 (2023-03-06)
 
 * feat(authentication-service): add SAML passport authentication (#1326) ([c45f577](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c45f577)), closes [#1326](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1326)

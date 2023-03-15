@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.10 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+* fix(cli): error handling if the base service does not have migrations (#1128) ([d21b1c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d21b1c1)), closes [#1128](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1128) [#1053](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1053)
+
+
+
+
+
 ## <small>3.0.9 (2023-03-06)</small>
 
 * chore(deps): loopback and sourceloop version update (#1332) ([39e1f7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39e1f7a)), closes [#1332](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1332) [#1331](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1331)
