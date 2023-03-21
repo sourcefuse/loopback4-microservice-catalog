@@ -8,7 +8,7 @@ language_clients:
   - javascript--nodejs: ""
 toc_footers: []
 includes: []
-search: false
+search: true
 highlight_theme: darkula
 headingLevel: 2
 
@@ -3085,7 +3085,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "notification",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -3109,6 +3109,12 @@ notification_users.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[notification_users.ScopeFilter](#schemanotification_users.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|notification|
 
 <h2 id="tocS_notification_users.Filter">notification_users.Filter</h2>
 <!-- backwards compatibility -->
@@ -3138,7 +3144,7 @@ notification_users.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "notification",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -3305,7 +3311,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "notificationUsers",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -3329,6 +3335,12 @@ notifications.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[notifications.ScopeFilter](#schemanotifications.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|notificationUsers|
 
 <h2 id="tocS_notifications.Filter">notifications.Filter</h2>
 <!-- backwards compatibility -->
@@ -3355,7 +3367,7 @@ notifications.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "notificationUsers",
       "scope": {
         "offset": 0,
         "limit": 100,

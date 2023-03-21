@@ -8,7 +8,7 @@ language_clients:
   - javascript--nodejs: ""
 toc_footers: []
 includes: []
-search: false
+search: true
 highlight_theme: darkula
 headingLevel: 2
 
@@ -18528,7 +18528,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "event",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -18552,6 +18552,12 @@ attachments.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[attachments.ScopeFilter](#schemaattachments.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|event|
 
 <h2 id="tocS_attachments.Filter">attachments.Filter</h2>
 <!-- backwards compatibility -->
@@ -18585,7 +18591,7 @@ attachments.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "event",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -18710,7 +18716,7 @@ or
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "event",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -18882,7 +18888,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "event",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -18906,6 +18912,12 @@ attendees.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[attendees.ScopeFilter](#schemaattendees.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|event|
 
 <h2 id="tocS_attendees.Filter">attendees.Filter</h2>
 <!-- backwards compatibility -->
@@ -18940,7 +18952,7 @@ attendees.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "event",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -19067,7 +19079,7 @@ or
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "event",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -19240,7 +19252,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "calendar",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -19264,6 +19276,12 @@ subscriptions.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[subscriptions.ScopeFilter](#schemasubscriptions.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|calendar|
 
 <h2 id="tocS_subscriptions.Filter">subscriptions.Filter</h2>
 <!-- backwards compatibility -->
@@ -19302,7 +19320,7 @@ subscriptions.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "calendar",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -19478,7 +19496,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "events",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -19502,6 +19520,14 @@ calendars.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[calendars.ScopeFilter](#schemacalendars.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|events|
+|relation|workingHours|
+|relation|subscriptions|
 
 <h2 id="tocS_calendars.Filter">calendars.Filter</h2>
 <!-- backwards compatibility -->
@@ -19536,7 +19562,7 @@ calendars.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "events",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -19663,7 +19689,7 @@ or
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "events",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -19836,7 +19862,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "calendar",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -19860,6 +19886,15 @@ events.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[events.ScopeFilter](#schemaevents.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|calendar|
+|relation|parentEvent|
+|relation|attendees|
+|relation|attachments|
 
 <h2 id="tocS_events.Filter">events.Filter</h2>
 <!-- backwards compatibility -->
@@ -19905,7 +19940,7 @@ events.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "calendar",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -20088,7 +20123,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "calendar",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -20112,6 +20147,15 @@ events_attendees_view.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[events_attendees_view.ScopeFilter](#schemaevents_attendees_view.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|calendar|
+|relation|parentEvent|
+|relation|attendees|
+|relation|attachments|
 
 <h2 id="tocS_events_attendees_view.Filter">events_attendees_view.Filter</h2>
 <!-- backwards compatibility -->
@@ -20165,7 +20209,7 @@ events_attendees_view.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "calendar",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -20491,7 +20535,7 @@ xor
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "calendar",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -20844,7 +20888,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "calendar",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -20868,6 +20912,12 @@ working_hours.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[working_hours.ScopeFilter](#schemaworking_hours.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|calendar|
 
 <h2 id="tocS_working_hours.Filter">working_hours.Filter</h2>
 <!-- backwards compatibility -->
@@ -20900,7 +20950,7 @@ working_hours.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "calendar",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -21023,7 +21073,7 @@ or
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "calendar",
       "scope": {
         "offset": 0,
         "limit": 100,

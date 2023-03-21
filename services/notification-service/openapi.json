@@ -1504,7 +1504,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "notification"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/notification_users.ScopeFilter"
@@ -1679,7 +1682,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "notificationUsers"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/notifications.ScopeFilter"
