@@ -1,7 +1,7 @@
 import {Provider} from '@loopback/context';
-import {MessageData, SaveDataFn} from './types';
-export class SaveDataProvider implements Provider<SaveDataFn> {
-  value(): SaveDataFn {
+import {MessageData, SaveUserDataFn} from './types';
+export class SaveUserDataProvider implements Provider<SaveUserDataFn> {
+  value(): SaveUserDataFn {
     return async (data: MessageData) => data;
   }
 }

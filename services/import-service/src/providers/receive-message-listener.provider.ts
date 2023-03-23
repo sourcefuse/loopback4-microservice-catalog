@@ -7,30 +7,28 @@ import {
 import {BindingScope, inject, injectable, Provider} from '@loopback/core';
 import {v4 as uuidv4} from 'uuid';
 import {ImportServiceBindings} from '../keys';
-import {ackQueueUrl, client, dataQueueUrl} from './send-message.provider';
-import {MessageData, SaveDataFn} from './types';
+import {client} from './send-message.provider';
+import {MessageData, SaveUserDataFn} from './types';
 export const fileCount = new Map<string, number>();
 const maxCount = 10;
+export const dataQueueUrl = process.env.DATA_QUEUE as string;
+export const ackQueueUrl = process.env.ACKNOWLEDGE_QUEUE as string;
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ReceiveMessageListenerProvider implements Provider<() => void> {
   constructor(
-    @inject(ImportServiceBindings.SaveDataProvider)
-    private readonly saveData: SaveDataFn,
+    @inject(ImportServiceBindings.SaveUserDataProvider)
+    private readonly saveUserData: SaveUserDataFn,
   ) {}
 
   value() {
-    return () => this.receiveInvoker();
+    return () => this.receiveMessageListener();
   }
 
   receiveInvoker() {
     let count = 0;
     setInterval(() => {
-      if (
-        count < maxCount
-        // &&
-        // count < Math.ceil(remainingMessages / batchSize) + 1
-      ) {
+      if (count < maxCount) {
         count++;
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.receiveMessageListener().then(() => {
@@ -56,12 +54,12 @@ export class ReceiveMessageListenerProvider implements Provider<() => void> {
         data.Messages[0].MessageAttributes?.Count.StringValue as string,
       );
       data.Messages.forEach(message => {
-        const recordData: MessageData = JSON.parse(message.Body as string);
+        const userData: MessageData = JSON.parse(message.Body as string);
 
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        this.saveData(recordData);
+        this.saveUserData(userData);
 
-        const count = (fileCount.get(fileId) ?? 0) + recordData.rows.length;
+        const count = (fileCount.get(fileId) ?? 0) + userData.rows.length;
         fileCount.set(fileId, count);
       });
 
@@ -73,22 +71,28 @@ export class ReceiveMessageListenerProvider implements Provider<() => void> {
           ReceiptHandle: message.ReceiptHandle,
         });
       });
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      client.send(
-        new DeleteMessageBatchCommand({
-          Entries: deleteCommandReceiptHandle,
-          QueueUrl: dataQueueUrl,
-        }),
-      );
+      try {
+        await client.send(
+          new DeleteMessageBatchCommand({
+            Entries: deleteCommandReceiptHandle,
+            QueueUrl: dataQueueUrl,
+          }),
+        );
+      } catch (err) {
+        throw new Error(`Error: ${err}`);
+      }
       const count = fileCount.get(fileId);
       if (count === totalRows) {
         const input = {
           QueueUrl: ackQueueUrl,
           MessageBody: fileId,
         };
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        client.send(new SendMessageCommand(input));
 
+        try {
+          await client.send(new SendMessageCommand(input));
+        } catch (err) {
+          throw new Error(`Error: ${err}`);
+        }
         fileCount.set(fileId, 0);
       }
     }

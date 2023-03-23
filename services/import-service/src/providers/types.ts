@@ -1,8 +1,7 @@
 import * as AWS from 'aws-sdk';
 import {Request, Response} from 'express';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type MessageData = {rows: any[]; types: Record<string, string>[]};
-export interface SaveDataFn {
+export type MessageData = {rows: string[]; types: Record<string, string>[]};
+export interface SaveUserDataFn {
   (data: MessageData): Promise<Object | null>;
 }
 export interface IUploader {
@@ -19,38 +18,26 @@ export interface MulterS3Options {
     | ((
         req: Request,
         file: File,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        callback: (error: any, bucket?: string) => void,
+        callback: (error: Error, bucket?: string) => void,
       ) => void)
     | string;
   key?(
     req: Request,
     file: File,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback: (error: any, key: string) => void,
+    callback: (error: Error, key: string) => void,
   ): void;
   acl?:
     | ((
         req: Request,
         file: File,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        callback: (error: any, acl?: string) => void,
+        callback: (error: Error, acl?: string) => void,
       ) => void)
     | string;
-  // contentType?(
-  //   req: Request,
-  //   file: File,
-  //   callback: (
-  //     error: any,
-  //     mime?: string,
-  //     stream?: NodeJS.ReadableStream,
-  //   ) => void,
-  // ): void;
+
   metadata?(
     req: Request,
     file: File,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback: (error: any, metadata?: any) => void,
+    callback: (error: Error, metadata?: Object) => void,
   ): void;
   // sonarignore:end
 }
@@ -73,8 +60,7 @@ export interface SafeMulterS3Options
     req: Request,
     file: File,
     // sonarignore:start
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback: (err: any, allow?: boolean) => void,
+    callback: (err: Error, allow?: boolean) => void,
     // sonarignore:end
   ) => void;
   key: (
@@ -87,6 +73,4 @@ export interface SafeMulterS3Options
   ) => void;
   acl?: string;
   bucket: string;
-  // tempDir: string;
-  // noServerUpload?: boolean;
 }

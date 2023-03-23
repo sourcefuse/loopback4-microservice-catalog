@@ -8,11 +8,14 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import * as AWS from 'aws-sdk';
 import {AWSS3Bindings} from 'loopback4-s3';
 import {FileUploadBindings} from '../keys';
 import {FileHelperService} from '../services/file-helper.service';
 import {IUploader, SafeMulterS3Options} from '../providers/types';
+import {snakeCase} from 'lodash';
 const bucket = process.env.S3_FILE_BUCKET ?? '';
 export class FileUploadController {
   constructor(
@@ -22,11 +25,11 @@ export class FileUploadController {
     private readonly fileHelperService: FileHelperService,
   ) {}
 
-  // @authenticate(STRATEGY.BEARER, {
-  //   passReqToCallback: true,
-  // })
-  // @authorize({permissions: ['*']})
-  @post('/fileupload', {
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
+  @post('/file-upload', {
     description: 'file upload',
     responses: {
       '200': 'Excel file successfully uploaded on S3',
@@ -51,18 +54,12 @@ export class FileUploadController {
     const safeMulterS3Options: SafeMulterS3Options = {
       s3,
       bucket,
-      // Set public re,ad permissions
-      // acl: 'public-read',
-      //Set key/ filename as original uploaded name
       key: (_req, file, cb) => {
         const fileSplitArr = file.originalname.split('.');
         const fileExt = fileSplitArr[fileSplitArr.length - 1];
         const fileName = fileSplitArr.splice(-1, 1).join('_');
-
-        cb(null, `${Date.now()}_${fileName}.${fileExt}`);
+        cb(null, `${Date.now()}_${snakeCase(fileName)}.${fileExt}`);
       },
-      // contentDisposition: 'attachment',
-      // tempDir: './.tmp',
     };
     // sonarignore:start
     let uploadResp;
@@ -74,6 +71,13 @@ export class FileUploadController {
       );
     } catch (err) {
       throw new HttpErrors.UnprocessableEntity(err.message);
+    }
+    if (
+      !((uploadResp as AnyObject)?.files as Express.Multer.File[])?.every(
+        file => file.filename,
+      )
+    ) {
+      throw new HttpErrors.UnprocessableEntity('Unable to upload files');
     }
     const {filename: fileKey} = (
       (uploadResp as AnyObject).files as Express.Multer.File[]

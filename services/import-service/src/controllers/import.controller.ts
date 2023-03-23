@@ -8,7 +8,7 @@ export class ImportController {
   constructor(
     @inject('services.ExcelService') private excelService: ExcelService,
     @inject('importService.sendMessage.provider')
-    private sendMessageFn: (data: MessageData[][]) => Promise<void>,
+    private sendMessageFn: (data: MessageData[]) => Promise<void>,
   ) {}
   //Need to change the request body (depends on the type of config)
   @get(`${basePath}/{fileKey}`)

@@ -22,10 +22,10 @@ export class SendMessageProvider
 
   value() {
     return (levelWiseBatches: MessageData[][]) =>
-      this.sendMessageLister(levelWiseBatches);
+      this.sendMessageListener(levelWiseBatches);
   }
 
-  async sendMessageLister(levelWiseBatch: MessageData[][]) {
+  async sendMessageListener(levelWiseBatch: MessageData[][]) {
     const fileId = uuidv4();
 
     let i = 0;
@@ -36,11 +36,9 @@ export class SendMessageProvider
         rows += message.rows.length;
       });
       if (levelWiseBatch[i].length) {
-        console.log('sending level ', i);
         this.sendMessage(levelWiseBatch[i], fileId, rows, i);
         // wait for ACK
         await this.waitForACK(fileId);
-        console.log(`level ${i} complete`);
       }
       i++;
     }
@@ -60,7 +58,6 @@ export class SendMessageProvider
       for (let i = 0; i < data.Messages.length; i++) {
         const receivedFileId = data.Messages[i].Body;
         if (receivedFileId === fileId) {
-          console.log(' received ack ', new Date());
           //delete ack from queue
           const input = {
             QueueUrl: ackQueueUrl,
@@ -96,14 +93,6 @@ export class SendMessageProvider
         // MAKE PARAMS CONFIGURABLE
         params.Entries.push({
           MessageAttributes: {
-            Title: {
-              DataType: 'String',
-              StringValue: 'Import from Excel Data',
-            },
-            Author: {
-              DataType: 'String',
-              StringValue: 'Barleen',
-            },
             FileId: {
               DataType: 'String',
               StringValue: fileId,
@@ -114,7 +103,7 @@ export class SendMessageProvider
             },
             Count: {
               DataType: 'Number',
-              StringValue: `${count}`, // count of total number of entries in a level
+              StringValue: `${count}`,
             },
           },
           MessageBody: JSON.stringify(message),
@@ -125,7 +114,6 @@ export class SendMessageProvider
       });
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       client.send(new SendMessageBatchCommand(params));
-
       group++;
     }
   }
