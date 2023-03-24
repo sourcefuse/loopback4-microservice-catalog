@@ -17,7 +17,9 @@ async function elementsBundler() {
   );
   await rm('./dist/search-element', {recursive: true});
 
-  //copy the package.json and change the name to element
+  //copy the package.json and change the name to
+  //so that element can be released separately with different name
+  //the versions will be parallel
   const packageJsonPath = './package.json';
   const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
   jsonObj.name = '@sourceloop/search-element';
