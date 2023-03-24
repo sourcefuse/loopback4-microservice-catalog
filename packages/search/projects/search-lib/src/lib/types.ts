@@ -36,6 +36,23 @@ export interface ISearchService<T extends IReturnType> {
   recentSearchApiRequest?(): Observable<ISearchQuery[]>;
 }
 
+export interface ISearchServiceWithPromises<T extends IReturnType> {
+  searchApiRequestWithPromise(
+    requestParameters: ISearchQuery,
+    saveInRecents: boolean,
+  ): Promise<T[]>;
+  recentSearchApiRequestWithPromise?(): Promise<ISearchQuery[]>;
+}
+
+export function isApiServiceWithPromise(
+  service:
+    | ISearchService<IReturnType>
+    | ISearchServiceWithPromises<IReturnType>,
+): service is ISearchServiceWithPromises<IReturnType> {
+  return !!(service as ISearchServiceWithPromises<IReturnType>)
+    .searchApiRequestWithPromise;
+}
+
 // cant use T extends IReturnType here
 export const SEARCH_SERVICE_TOKEN: InjectionToken<ISearchService<IReturnType>> =
   new InjectionToken<ISearchService<IReturnType>>('Search_Service_Token');
