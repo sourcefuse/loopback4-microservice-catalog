@@ -19,7 +19,7 @@ async function elementsBundler() {
 
   //copy the package.json and change the name to
   //so that element can be released separately with different name
-  //the versions will be parallel
+  //the versions will be same
   const packageJsonPath = './package.json';
   const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
   jsonObj.name = '@sourceloop/search-element';

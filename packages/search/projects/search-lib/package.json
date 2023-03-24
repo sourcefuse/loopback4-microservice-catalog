@@ -46,6 +46,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
-    "directory": "dist"
+    "directory": [
+      "dist/search-lib",
+      "dist/element"
+    ]
   }
 }
