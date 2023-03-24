@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.1.1 (2023-03-24)</small>
+
+* fix(search-client): making the package public to publish it (#1354) ([2618502](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2618502)), closes [#1354](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1354) [#1353](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1353)
+
+
+
+
+
 ## 5.1.0 (2023-03-24)
 
 * feat(search-client): add element support and script for building (#1322) ([b15f3fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b15f3fd)), closes [#1322](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1322) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202)
