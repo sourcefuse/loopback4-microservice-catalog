@@ -67,214 +67,162 @@ TODO: Establish LTS policy or document here that the catalog is still in develop
 | ------- | ------ | --------- | --- |
 |         |        |           |     |
 
-### Documentation
-
-- [LoopBack| LoopBack Documentation](https://loopback.io/doc/en/lb4/)
-- [Extending LoopBack | LoopBack Documentation](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html)
-
 ### Getting Started
 
-For specifics of installing and configuring a particular service, please refer to that service's documentation. The guide here is intended to show the general method for installing and configuring the services. We are going to utilize a fictional service, `@sourceloop/example-service`, as an example. All services load their environment configurations using `dotenv` and `dotenv-extended`.
+For specifics of configuring a particular service, please refer to that service's documentation. The purpose of this guide is to provide a general outline for installation and setting up a new microservices-based API codebase. To illustrate the process, we will be using one of our services that is used for authentication. It's worth noting that all services utilize `dotenv` and `dotenv-extended` to load their environment configurations.
 
-Install the Loopback4 CLI
+Following are the steps to get started with it:
 
-```bash
+#### Step 1: Install NodeJS
+
+Install the latest LTS version from here: https://nodejs.org/en/download/.
+
+#### Step 2: Install Loopback CLI
+
+LoopBack provides a very useful command line utility that help in easily developing loopback applications, models, services, etc. as a boilerplate, which saves a lot of time.
+So, go ahead and install [@loopback/cli](https://www.npmjs.com/package/@loopback/cli).
+
+```sh
 npm install -g @loopback/cli
 ```
 
-Generate an application (If you don't have one already).
+#### Step 3: Install Sourceloop CLI
 
-```bash
-lb4 app
-? Project name: example-application
-? Project description: Example Application For SourceLoop
-? Project root directory: example-application
-? Application class name: ExampleApplicationApplication
-? Select features to enable in the project Enable eslint, Enable prettier, Enable mocha, Enable loopbackBuild, Enable vs
-code, Enable docker, Enable repositories, Enable services
-    force .yo-rc.json
-   create .eslintignore
-   create .eslintrc.js
-   create .mocharc.json
-   create .npmrc
-   create .prettierignore
-   create .prettierrc
-   create DEVELOPING.md
-   create package.json
-   create tsconfig.json
-   create .vscode\launch.json
-   create .vscode\settings.json
-   create .vscode\tasks.json
-   create .gitignore
-   create .dockerignore
-   create Dockerfile
-   create README.md
-   create public\index.html
-   create src\application.ts
-   create src\index.ts
-   create src\migrate.ts
-   create src\openapi-spec.ts
-   create src\sequence.ts
-   create src\controllers\index.ts
-   create src\controllers\ping.controller.ts
-   create src\controllers\README.md
-   create src\datasources\README.md
-   create src\models\README.md
-   create src\repositories\README.md
-   create src\__tests__\README.md
-   create src\__tests__\acceptance\home-page.acceptance.ts
-   create src\__tests__\acceptance\ping.controller.acceptance.ts
-   create src\__tests__\acceptance\test-helper.ts
-npm WARN deprecated debug@4.2.0: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
-npm WARN deprecated fsevents@2.1.3: "Please update to latest v2.3 or v2.2"
-npm notice created a lockfile as package-lock.json. You should commit this file.
-npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@~2.1.2 (node_modules\chokidar\node_modules\fsevents):
-npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
-npm WARN example-application@0.0.1 No license field.
+Similar to LoopBack, Sourceloop also provides a useful command line utility that helps in the quick scaffolding of monorepo (for microservices), individual services, extensions, etc. So, let’s install [@sourceloop/cli](https://www.npmjs.com/package/@sourceloop/cli).
 
-added 637 packages from 816 contributors and audited 646 packages in 16.345s
-
-87 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-
-
-Application example-application was created in example-application.
-
-Next steps:
-
-$ cd example-application
-$ npm start
+```sh
+npm install -g @sourceloop/cli
 ```
 
-Install `dotenv`, `dotenv-extended` and `@sourceloop/example-service`.
+#### Step 4: Scaffold a Monorepo for Microservices
 
-```bash
-cd example-application
-npm i --save dotenv dotenv-extended @sourceloop/example-service
-touch .env.example
+We recommend using a monorepo strategy for maintaining all the microservices, as it helps avoid the clutter of too many repositories to manage and maintain.
+
+We will first scaffold a monorepo with a basic structure and with [Lerna](https://lerna.js.org/) installed as a monorepo manager.
+
+```sh
+sl scaffold my-project
 ```
 
-Update `src/application.ts` to use the new service component and the environment variables. You may also need to bind configurations depending on the service component you are using. You find these configurations in the individual README of the service.
+You will be asked several prompts, as follows:
 
-```typescript
-import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
-import {
-  RestExplorerBindings,
-  RestExplorerComponent,
-} from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {ServiceMixin} from '@loopback/service-proxy';
-import path from 'path';
-import {MySequence} from './sequence';
-
-import {ExampleServiceComponent} from '@sourceloop/example-service';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
-
-export {ApplicationConfig};
-
-const port = 3000;
-export class ExampleApplicationApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    dotenv.config();
-    dotenvExt.load({
-      schema: '.env.example',
-      errorOnMissing: true,
-      includeProcessEnv: true,
-    });
-    options.rest = options.rest || {};
-    options.rest.port = +(process.env.PORT ?? port);
-    options.rest.host = process.env.HOST;
-    super(options);
-
-    // Set up the custom sequence
-    this.sequence(MySequence);
-
-    // Set up default home page
-    this.static('/', path.join(__dirname, '../public'));
-
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
-    });
-    this.component(RestExplorerComponent);
-    this.component(ExampleServiceComponent); // OUR EXAMPLE SERVICE COMPONENT
-
-    this.projectRoot = __dirname;
-    // Customize @loopback/boot Booter Conventions here
-    this.bootOptions = {
-      controllers: {
-        // Customize ControllerBooter Conventions here
-        dirs: ['controllers'],
-        extensions: ['.controller.js'],
-        nested: true,
-      },
-    };
-  }
-}
+```sh
+? Prefix to be used for issues(e.g. GH-) myp
+? Do you want to include backstage integration files? No
+? owner of the repo: Samarpan
+? description of the repo: A sample project based on Sourceloop
 ```
 
-Modify the environment variable file to have the following contents:
+- Prompt #1 – Prefix is used by scaffold to set up commit message linting, checks using [commitizen](https://commitizen-tools.github.io/commitizen/) to ensure [conventional commit message guidelines](https://www.conventionalcommits.org/en/v1.0.0/) are followed. This could be your project key from Jira using which you can also integrate [Smart Commits](https://support.atlassian.com/jira-cloud-administration/docs/enable-smart-commits/) of Jira.
+- Prompt #2 – Sourceloop provides backstage integration too. But this is optional.
+- Prompt #3 – Author/Owner of the repo. This will go into `package.json`.
+- Prompt #4 – Description of the repo. This will go into `package.json`.
+
+After this, it will take a few minutes to set everything up, once that is done, you will see a folder structure generated like below:
 
 ```
-NODE_ENV=dev
+MY-PROJECT
+├── .github
+├── .husky
+├── facades
+├── packages
+├── services
+├── .cz-config.js
+├── .gitignore
+├── commitlint.config.js
+├── DEVELOPING.md
+├── lerna.json
+├── package-lock.json
+├── package.json
+├── README.md
+└── tsconfig.json
 ```
 
-You can now run the example service with `npm start`.
+As can be seen above, scaffold has initialized and set up a lot, such as:
 
-### Config Hidden APIs
+1. GitHub PR template inside `.github`
+2. Conventional commits enablement using commitizen (`.cz-config.js`), commitlint (`commitlint-config.js`) and husky for githooks.
+3. `.gitignore` for ignoring files from source code. Important for secure coding and keeping the repo clean on SCM (git)
+4. `lerna.json` which contains the setup for lerna commands. Lerna is going to be our monorepo manager and build tool going forward. It is one of the most popular monorepo managers in the industry, used by Jest, NestJS, LoopBack, and Nx.
+5. `package.json` and `package-lock.json` for npm to work.
+6. Three folders named `facades`, `packages` and `services`:
+   - Facades will hold facade microservices. These are based on aggregator patterns in microservices composition
+   - Packages will hold a reusable library, extensions etc. which are needed by multiple microservices
+   - Services will hold the actual microservices and will always be completely independent of their own database i.e. one DB per service pattern.
 
-Update `src/application.ts` of each service to use the new hidden api feature. Add the following lines
+#### Step 5: Create an Authentication Microservice
 
-```typescript
-import {OperationSpecEnhancer} from './enhancer/operationSpecEnhancer';
-import {OASBindings} from './keys';
-import {HttpMethod} from './enums/http-oas.enum';
+Now it’s time to set up our first microservice – auth-service. Run the following command in the project folder:
 
-export class ExampleApplicationApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    super(options);
-
-    // Set up the custom sequence
-    this.sequence(MySequence);
-
-    // Set up default home page
-    this.static('/', path.join(__dirname, '../public'));
-
-    // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
-    });
-    this.component(RestExplorerComponent);
-
-    // Bind OASBinding namespace to hide APIs
-    this.bind(OASBindings.HiddenEndpoint).to([
-      {httpMethod: HttpMethod.GET, path: '/ping'},
-      {httpMethod: HttpMethod.POST, path: '/customers/{id}/users'},
-      {httpMethod: HttpMethod.PUT, path: '/roles/{id}'},
-    ]);
-
-    this.projectRoot = __dirname;
-    // Customize @loopback/boot Booter Conventions here
-    this.bootOptions = {
-      controllers: {
-        // Customize ControllerBooter Conventions here
-        dirs: ['controllers'],
-        extensions: ['.controller.js'],
-        nested: true,
-      },
-    };
-  }
-}
+```sh
+sl microservice auth-service
 ```
+
+Again, you will be asked several prompts, as follows:
+
+![prompts](https://i.imgur.com/3svts17.png)
+
+- Prompt #1 – Whether this is a facade microservice or a base microservice
+- Prompt #2 – Whether this microservice is based on an Sourceloop microservice or is an independent one like the project-management-service in our list above. We selected "Yes" because we are using Sourceloop's authentication service.
+- Prompt #3 – Select which Sourceloop microservice you want from the list if "Yes" was selected in the previous prompt.
+
+![services selection](https://i.imgur.com/iqnjd0b.png)
+
+- Prompt #4 – Unique prefix for docker images built for this service. Yes, it already supports docker containers and their CI/CD-related commands are part of package.json scripts.
+- Prompt #5 – Datasource name for DB connection.
+- Prompt #6 – Datasource type. ARC currently supports PostgreSQL and MySQL.
+- Prompts #7 & #8 – Whether to utilize underlying database migrations provided by ARC or use custom migrations. In case of custom migrations, a new folder will be created inside the packages folder named migrations. Custom migrations provide more flexibility and are recommended for production applications.
+- Prompts #9 & #10 – Description and class name to configure in service.
+- Prompt #11 – Setup features needed. These features are provided by LoopBack CLI itself and Sourceloop CLI just exposes it i.e., all the feature support is based on LoopBack.
+
+Once this is done, you will be see something like this:
+
+![sevices created](https://i.imgur.com/Vktb4Lg.png)
+
+That’s all! You are almost ready to run your microservice with pre-built APIs.
+
+#### Step 6: Set up Environment Variables
+
+The final step before running your server is to set up your environment variables in the `.env` file. All of the possible environment variables available are defined in a file `.env.example`. Referring to that, you can create a `.env` file at the same level and provide values.
+
+```
+MY-PROJECT
+├── facades
+├── packages
+├── services
+│   └── auth-service
+│       ├── (...other files)
+│       ├── .env.example
+│       ├── .env.defaults
+│    👉🏻 └── .env
+├── (...other files)
+```
+
+### Step 7: Start the Server
+
+Go to the terminal and change the directory into your service folder:
+
+```sh
+npm start
+```
+
+You'll see a message saying `Server is running at http://[::1]:3000/` open this url in your browser and you should see something like this:
+
+![auth services started](https://i.imgur.com/51SxnsF.png)
+
+Voila! The service is up and running. As you can see, this service comes with openapi spec, an openapi explorer and monitoring enabled by default.
+
+Clicking on `/explorer` opens up the following:
+
+![explorer page](https://i.imgur.com/45tLQxi.png)
+
+You have even got ready-made APIs already connected with DB.
+
+Clicking on `/monitor` opens up swagger-stats, which provides monitoring capabilities to the microservice:
+
+![monitor page](https://i.imgur.com/yQsbwbv.png)
+
+As you can see, with just a few basic commands and steps, you are able to scaffold an entire repo and one pre-built microservice. Similarly, you can add any other Sourceloop microservice as well using the `sl microservice {{service name}}` command.
 
 ### DataSources and Migrations
 
@@ -286,13 +234,21 @@ The migrations required for this service are processed during the installation a
 
 Inside of the `sandbox` folder, you will find example applications and Dockerfiles for each application. The `Sourceloop` is agnostic of the Docker deployment strategy. Deploy the services into the platform of your choice.
 
-## Sandbox
+## Example Implementations
 
-`sandbox` folder contains example applications and docker files that can be run independently to see the services in action. You can use [Docker Compose](https://docs.docker.com/compose/) to run the sandbox applications.
+The `sandbox` folder contains example applications and docker files that can be run independently to see the services in action. You can use [Docker Compose](https://docs.docker.com/compose/) to run the sandbox applications.
 
 ## Sourceloop CLI
 
 The Sourceloop CLI is a command-line interface tool that one use to initialize, develop, scaffold, and maintain sourceloop applications directly from a command shell. Learn more about [Sourceloop CLI](packages/cli/README.md).
+
+### Supporting Documentation
+
+- [LoopBack 4 Documentation](https://loopback.io/doc/en/lb4/)
+- [Extending Loopback](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html)
+- [Monorepo #1](https://fourtheorem.com/monorepo/)
+- [Monorepo #2](https://danoncoding.com/monorepos-for-microservices-part-1-do-or-do-not-a7a9c90ad50e)
+- [Release Management](https://semaphoreci.com/blog/release-management-microservices)
 
 ### Related Projects
 
