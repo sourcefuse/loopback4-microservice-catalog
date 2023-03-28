@@ -425,7 +425,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const name = this.options.name ?? DEFAULT_NAME;
     if (!this.shouldExit() && this.options.baseService) {
       if (
-        !this.fs.exists(
+        !fs.existsSync(
           this.destinationPath(
             join(
               'services',
