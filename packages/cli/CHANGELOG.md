@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.12 (2023-03-28)</small>
+
+* fix(cli): use node's fs to verify if a folder exists instead of yeoman's fs (#1363) ([74c2db9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/74c2db9)), closes [#1363](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1363) [#1358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1358)
+
+
+
+
+
 ## <small>3.0.11 (2023-03-21)</small>
 
 * fix(cli): changed the opentelemetry packages since they are renamed (#1351) ([9ecb78e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ecb78e)), closes [#1351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1351) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347)
