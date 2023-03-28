@@ -20,7 +20,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "dependencies": {
     "@angular/animations": "~13.3.11",
     "@angular/common": "~13.3.11",
