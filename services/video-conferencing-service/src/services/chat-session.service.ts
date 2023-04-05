@@ -51,9 +51,8 @@ export class ChatSessionService {
         errorMessage = 'Schedule time is not set.';
 
         throw new HttpErrors.BadRequest(errorMessage);
-      } else if (isNaN(meetingOptions.scheduleTime.valueOf())) {
+      } else if (!moment(meetingOptions.scheduleTime).isValid()) {
         errorMessage = 'Scheduled time is not in correct format.';
-
         throw new HttpErrors.BadRequest(errorMessage);
       } else if (moment().isAfter(meetingOptions.scheduleTime)) {
         errorMessage = `Meeting can't be scheduled with schedule time in past!`;
