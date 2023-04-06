@@ -495,7 +495,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "workflowVersions"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/workflows.ScopeFilter"

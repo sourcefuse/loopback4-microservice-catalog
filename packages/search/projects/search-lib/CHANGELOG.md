@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.1.2 (2023-03-24)</small>
+
+* fix(search-client): changes to release search element (#1355) ([f88d98e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f88d98e)), closes [#1355](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1355)
+
+
+
+
+
+## <small>5.1.1 (2023-03-24)</small>
+
+* fix(search-client): making the package public to publish it (#1354) ([2618502](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2618502)), closes [#1354](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1354) [#1353](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1353)
+
+
+
+
+
+## 5.1.0 (2023-03-24)
+
+* feat(search-client): add element support and script for building (#1322) ([b15f3fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b15f3fd)), closes [#1322](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1322) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202) [#1202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1202)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>5.0.3 (2022-08-26)</small>
 
 *  test(search-lib): add unit test for search component. (#923) ([e2bb722](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e2bb722)), closes [#923](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/923) [#867](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/867) [#867](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/867)

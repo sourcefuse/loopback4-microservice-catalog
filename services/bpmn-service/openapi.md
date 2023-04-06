@@ -8,7 +8,7 @@ language_clients:
   - javascript--nodejs: ""
 toc_footers: []
 includes: []
-search: false
+search: true
 highlight_theme: darkula
 headingLevel: 2
 
@@ -907,7 +907,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "workflowVersions",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -931,6 +931,12 @@ workflows.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[workflows.ScopeFilter](#schemaworkflows.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|workflowVersions|
 
 <h2 id="tocS_workflows.Filter">workflows.Filter</h2>
 <!-- backwards compatibility -->
@@ -964,7 +970,7 @@ workflows.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "workflowVersions",
       "scope": {
         "offset": 0,
         "limit": 100,

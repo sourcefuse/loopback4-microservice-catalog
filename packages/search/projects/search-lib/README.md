@@ -2,13 +2,15 @@
 
 An Angular module that exports a component that can enable users to search over configured models using the search microservice provided in the sourceloop microservice catalog.
 
-## Installation
+## Angular Module
+
+### Installation
 
 ```sh
 npm i @sourceloop/search-client
 ```
 
-## Usage
+### Usage
 
 Create a new Application using Angular CLI and import the SearchLibModule and add it to the imports array of the module. Also create a new service that implements the ISearchService interface exported by the search library. This service will be used by the exported component to make API calls whenever needed. You will have to update the providers section of your module with { provide: SEARCH_SERVICE_TOKEN, useExisting: Your_Service_Name }
 Your module will then look something like this
@@ -152,3 +154,98 @@ To use the default icons you will have to import the following in your styles.sc
 ```
 
 You can also choose to use your own icons by providing classes for icons in the configuration.
+
+## Web Component
+
+This library is also available as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) so users of frameworks like React and Vue can also integrate this search element in their application with minimal effort.
+
+### Installation
+
+```sh
+npm i @sourceloop/search-client
+```
+
+In the node modules you can find two files relevant to the element - `element/search-element.js` and `element/style.css`. How you serve and include these files in your non Angular project depend on the framework that you are using. For example, for Vanilla JS and HTML you can simply import the js and styles in your HTML ->
+
+```html
+<script type="text/javascript" src="search-element.js"></script>
+```
+
+### Usage
+
+The web component accepts all the same inputs and services as the regular Angular Module, but instead of passing them through bindings and DI, you pass them as properties of the element as shown below.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    ...
+    <link rel="stylesheet" href="assets/icomoon/style.css" />
+    <link rel="stylesheet" href="styles.css" />
+    ...
+  </head>
+  <body>
+    <sourceloop-search-element></sourceloop-search-element>
+    <script type="text/javascript" src="search-element.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const element = document.querySelector('sourceloop-search-element');
+        // Code to set inputs of the component
+        element.searchProvider = {
+          searchApiRequestWithPromise: () =>
+            Promise.resolve([
+              {
+                name: 'Test',
+                description: 'Test',
+                rank: 0.4,
+                source: 'ToDo',
+              },
+              {
+                name: 'Akshat',
+                description: 'Dubey',
+                rank: 0.4,
+                source: 'User',
+              },
+            ]),
+          recentSearchApiRequestWithPromise: () => Promise.resolve([]),
+        };
+        element.config = new SearchConfiguration({
+          displayPropertyName: 'name',
+          models: [
+            {
+              name: 'ToDo',
+              displayName: 'List',
+              imageUrl: 'https://picsum.photos/id/1000/50',
+            },
+            {
+              name: 'User',
+              displayName: 'Users',
+              imageUrl: 'https://picsum.photos/id/1/50',
+            },
+          ],
+          order: [`name ASC`, `description DESC`],
+          hideCategorizeButton: false,
+          placeholder: 'Search Programs, Projects or Dashboards',
+          categorizeResults: true,
+          saveInRecents: true,
+          limit: 4,
+        });
+      });
+    </script>
+  </body>
+</html>
+```
+
+Note that the instance of `SearchService` passed to the element is following a different interface -
+
+```ts
+export interface ISearchServiceWithPromises<T extends IReturnType> {
+  searchApiRequestWithPromise(
+    requestParameters: ISearchQuery,
+    saveInRecents: boolean,
+  ): Promise<T[]>;
+  recentSearchApiRequestWithPromise?(): Promise<ISearchQuery[]>;
+}
+```
+
+This facilitates the use of the `Web Component` without relying on [rxjs](https://rxjs.dev/). You can still use the `Observable` based service if you want by importing the rxjs library manually.

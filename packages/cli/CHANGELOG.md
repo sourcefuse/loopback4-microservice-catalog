@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.12 (2023-03-28)</small>
+
+* fix(cli): use node's fs to verify if a folder exists instead of yeoman's fs (#1363) ([74c2db9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/74c2db9)), closes [#1363](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1363) [#1358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1358)
+
+
+
+
+
+## <small>3.0.11 (2023-03-21)</small>
+
+* fix(cli): changed the opentelemetry packages since they are renamed (#1351) ([9ecb78e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ecb78e)), closes [#1351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1351) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347)
+
+
+
+
+
+## <small>3.0.10 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+* fix(cli): error handling if the base service does not have migrations (#1128) ([d21b1c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d21b1c1)), closes [#1128](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1128) [#1053](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1053)
+
+
+
+
+
+## <small>3.0.9 (2023-03-06)</small>
+
+* chore(deps): loopback and sourceloop version update (#1332) ([39e1f7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39e1f7a)), closes [#1332](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1332) [#1331](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1331)
+
+
+
+
+
+## <small>3.0.8 (2023-02-01)</small>
+
+* chore(cli): update the cli template dependencies to the latest (#1262) ([b44c542](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b44c542)), closes [#1262](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1262) [#1261](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1261)
+
+
+
+
+
 ## <small>3.0.7 (2023-01-23)</small>
 
 * chore(cli): update cli with latest dependencies (#1222) ([8a63596](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8a63596)), closes [#1222](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1222) [#1221](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1221)

@@ -26,6 +26,7 @@ A Loopback Microservice for handling authentications. It provides -
 - Facebook OAuth using [passport-facebook](http://www.passportjs.org/packages/passport-facebook/).
 - Apple OAuth using [passport-apple](https://www.npmjs.com/package/passport-apple).
 - Cognito OAuth using [passport-cognito-oauth2](https://www.npmjs.com/package/passport-cognito-oauth2).
+- SAML Authentication using [@node-saml/passport-saml](https://www.npmjs.com/package/passport-saml).
 - OTP Auth using custom passport otp strategy.
 - Two-Factor Authentication.
 
@@ -338,10 +339,8 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
+export class AuthenticationDbDataSource extends juggler.DataSource
+  implements LifeCycleObserver {
   static dataSourceName = AuthDbSourceName;
   static readonly defaultConfig = config;
 
@@ -395,8 +394,9 @@ Also the verifier function uses Signup provider whose implementation needs to be
 Bind the provider key to its corresponding value.
 
 ```ts
-this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
-  AzureAdSignupProvider;
+this.providers[
+  SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key
+] = AzureAdSignupProvider;
 ```
 
 ```ts
@@ -419,22 +419,22 @@ Also bind `VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER` and `VerifyBindings.AZUR
 
 In order to authenticate JWT token using RSA encrytion, we need to provide JWT_PUBLIC_KEY and JWT_PRIVATE_KEY where the JWT_PUBLIC_KEY and JWT_PRIVATE_KEY are the paths to your public and private keys(.pem files).Steps to create Public key and private key are as follows:
 
--For creating RSA key pair,use the following command in the terminal:
+-For creating RSA key pair,use the following command:
+To generate private key of length 2048:
 
 ```bash
-ssh-keygen -t rsa -m PEM
+openssl genrsa -out private.pem 2048
 ```
 
-- Use the following command and replace the public key provided in the file with the key in the terminal.
+To generate public key:
 
 ```bash
-
-ssh-keygen -f file_name -e -m pem
-
+openssl rsa -in private.pem -pubout -out public.pem
 ```
 
 - Both the files should be in (.pem) format.
-  for example: test-key.pem file for private key and test_key.pub.pem file for public key.
+  for example: private.pem file for private key and public.pem file for public key.
+  (refer [this](https://cryptotools.net/rsagen))
 
 #### Common Headers
 

@@ -45,6 +45,7 @@ import {
   LocalPasswordVerifyProvider,
   OtpVerifyProvider,
   ResourceOwnerVerifyProvider,
+  SamlVerifyProvider,
 } from './modules/auth';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
 import {
@@ -82,6 +83,9 @@ import {
   SignUpBindings,
   SignupTokenHandlerProvider,
   VerifyBindings,
+  SamlPostVerifyProvider,
+  SamlPreVerifyProvider,
+  SamlSignupProvider,
 } from './providers';
 import {AuthCodeGeneratorProvider} from './providers/auth-code-generator.provider';
 import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
@@ -203,6 +207,7 @@ export class AuthenticationServiceComponent implements Component {
       ResourceOwnerVerifyProvider;
     this.providers[Strategies.Passport.GOOGLE_OAUTH2_VERIFIER.key] =
       GoogleOauth2VerifyProvider;
+    this.providers[Strategies.Passport.SAML_VERIFIER.key] = SamlVerifyProvider;
     this.providers[Strategies.Passport.APPLE_OAUTH2_VERIFIER.key] =
       AppleOauth2VerifyProvider;
     this.providers[Strategies.Passport.FACEBOOK_OAUTH2_VERIFIER.key] =
@@ -215,6 +220,8 @@ export class AuthenticationServiceComponent implements Component {
       KeyCloakSignupProvider;
     this.providers[SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key] =
       GoogleOauth2SignupProvider;
+    this.providers[SignUpBindings.SAML_SIGN_UP_PROVIDER.key] =
+      SamlSignupProvider;
     this.providers[SignUpBindings.INSTAGRAM_SIGN_UP_PROVIDER.key] =
       InstagramOauth2SignupProvider;
     this.providers[SignUpBindings.APPLE_SIGN_UP_PROVIDER.key] =
@@ -237,6 +244,10 @@ export class AuthenticationServiceComponent implements Component {
       GooglePreVerifyProvider;
     this.providers[VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER.key] =
       GooglePostVerifyProvider;
+    this.providers[VerifyBindings.SAML_PRE_VERIFY_PROVIDER.key] =
+      SamlPreVerifyProvider;
+    this.providers[VerifyBindings.SAML_POST_VERIFY_PROVIDER.key] =
+      SamlPostVerifyProvider;
     this.providers[VerifyBindings.INSTAGRAM_PRE_VERIFY_PROVIDER.key] =
       InstagramPreVerifyProvider;
     this.providers[VerifyBindings.INSTAGRAM_POST_VERIFY_PROVIDER.key] =

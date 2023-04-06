@@ -1,7 +1,10 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "5.0.3",
+  "version": "5.1.2",
   "description": "A global search component for search microservice.",
+  "files": [
+    "dist/"
+  ],
   "peerDependencies": {
     "@angular/animations": "~13.3.11",
     "@angular/cdk": "~13.3.9",
@@ -21,17 +24,16 @@
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "build": "ng build && cp -r src/assets dist/assets",
+    "libraryBuild": "ng build && cp -r src/assets dist/search-lib/assets",
+    "elementBuild": "ng build search-element && ts-node bundle-element.ts",
+    "build": "npm run libraryBuild && npm run elementBuild",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "tslib": "^2.2.0"
   },
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/public-api.ts"
-    },
-    "dest": "dist"
+  "devDependencies": {
+    "@angular/elements": "^13.3.11"
   },
   "repository": {
     "type": "git",
@@ -40,10 +42,13 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
-    "directory": "dist"
+    "directory": [
+      "dist/search-lib",
+      "dist/element"
+    ]
   }
 }

@@ -6829,7 +6829,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "event"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/attachments.ScopeFilter"
@@ -7165,7 +7168,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "event"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/attendees.ScopeFilter"
@@ -7509,7 +7515,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "calendar"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/subscriptions.ScopeFilter"
@@ -7732,7 +7741,12 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "events",
+              "workingHours",
+              "subscriptions"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/calendars.ScopeFilter"
@@ -8076,7 +8090,13 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "calendar",
+              "parentEvent",
+              "attendees",
+              "attachments"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/events.ScopeFilter"
@@ -8326,7 +8346,13 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "calendar",
+              "parentEvent",
+              "attendees",
+              "attachments"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/events_attendees_view.ScopeFilter"
@@ -9208,7 +9234,10 @@
         "type": "object",
         "properties": {
           "relation": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "calendar"
+            ]
           },
           "scope": {
             "$ref": "#/components/schemas/working_hours.ScopeFilter"

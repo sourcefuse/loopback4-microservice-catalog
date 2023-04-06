@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.1.1 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+
+
+
+
+
+## 9.1.0 (2023-03-06)
+
+* feat(authentication-service): add SAML passport authentication (#1326) ([c45f577](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c45f577)), closes [#1326](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1326)
+* chore(deps): loopback and sourceloop version update (#1332) ([39e1f7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39e1f7a)), closes [#1332](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1332) [#1331](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1331)
+* docs(authentication-service): update readme for authentication service (#1328) ([94b0139](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/94b0139)), closes [#1328](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1328) [#1327](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1327)
+
+
+
+
+
+## <small>9.0.6 (2023-02-01)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>9.0.5 (2023-01-31)</small>
+
+* chore(deps): updating the loopback4-authentication package (#1260) ([99887d6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99887d6)), closes [#1260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1260) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259)
+
+
+
+
+
 ## <small>9.0.4 (2023-01-20)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service
