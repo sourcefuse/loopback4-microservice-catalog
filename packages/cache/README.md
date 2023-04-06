@@ -66,11 +66,10 @@ As shown above, you can configure the cache properties at a Global level. You ca
 
 The following cache options can be passed:
 
-| Property                   | Default Value | Description                                                                                                                                                                                                                                                                                                                                                      |
-| -------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| prefix                     | "sl"          | every cached entry is required to have a prefix in its key. Each repository should have their own unique prefix.                                                                                                                                                                                                                                                 |
-| ttl                        | 60000         | this is the maximum time in milliseconds for which data will remain cached in redis. In other words this can be called the amount of time for which stale data is acceptable.                                                                                                                                                                                    |
-| scanCount (only for redis) | 50            | while clearing the cache using clearCache() function provided, all the keys beginning with the prefix are searched for using the SCAN command. This command can take an additoinal paramter COUNT (here refered to as scanCount) - this is the number of elements returned/deleted at a time. As it is only for redis you can't pass this at the component level |
+| Property | Default Value | Description                                                                                                                                                                   |
+| -------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| prefix   | "sl"          | every cached entry is required to have a prefix in its key. Each repository should have their own unique prefix.                                                              |
+| ttl      | 60000         | this is the maximum time in milliseconds for which data will remain cached in redis. In other words this can be called the amount of time for which stale data is acceptable. |
 
 <br>
 

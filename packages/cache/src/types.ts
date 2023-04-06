@@ -13,6 +13,7 @@ export interface CachePluginComponentOptions {
   // Add the definitions here
   cacheProvider: CacheStrategyTypes;
   prefix: string;
+  ttl: number;
 }
 
 /**
@@ -21,6 +22,7 @@ export interface CachePluginComponentOptions {
 export const DEFAULT_CACHE_PLUGIN_OPTIONS: CachePluginComponentOptions = {
   cacheProvider: CacheStrategyTypes.Redis,
   prefix: 'sl',
+  ttl: 60000,
 };
 
 export interface ICacheMixin<M extends Entity, ID> {
@@ -30,13 +32,11 @@ export interface ICacheMixin<M extends Entity, ID> {
   generateKey(id?: ID, filter?: Filter<M>): Promise<string>;
 }
 
-export interface ICacheMixinOptions {
-  ttl?: number;
-  scanCount?: number;
+export interface CacheEntity<M> {
+  payload: M;
+  insertionTime: number;
 }
-
-export interface ICacheFindOptions {
-  forceUpdate: boolean;
-}
-
-export type CacheOptions = Options & ICacheFindOptions;
+export type RedisConnectorExecuteReturnType = ArrayBuffer | Buffer | number;
+export type SearchInCacheResponse<M> = M | M[] | undefined | null;
+export type SaveInCacheValue<M> = M | M[] | null;
+export type OptionsWithForceUpdate = Options & {forceUpdate?: boolean};

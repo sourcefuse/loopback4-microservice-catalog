@@ -74,7 +74,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     const result1 = await executeRedisCommand('GET', [
       await repository.generateKey(),
     ]);
-    expect(JSON.parse(decoder.decode(result1 as Buffer))).to.match(
+    expect(JSON.parse(decoder.decode(result1 as Buffer)).payload).to.match(
       mockDataArray,
     );
 
@@ -82,7 +82,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     const result2 = await executeRedisCommand('GET', [
       await repository.generateKey(1),
     ]);
-    expect(JSON.parse(decoder.decode(result2 as Buffer))).to.match(
+    expect(JSON.parse(decoder.decode(result2 as Buffer)).payload).to.match(
       mockDataArray[0],
     );
   });
@@ -104,7 +104,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
       await repository.generateKey(undefined, {}),
     ]);
 
-    expect(JSON.parse(decoder.decode(resCache as Buffer))).to.match(
+    expect(JSON.parse(decoder.decode(resCache as Buffer)).payload).to.match(
       mockDataArrayCopy,
     );
 
@@ -129,7 +129,7 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
       await repository.generateKey(1, {}),
     ]);
 
-    expect(JSON.parse(decoder.decode(resCache as Buffer))).to.match(
+    expect(JSON.parse(decoder.decode(resCache as Buffer)).payload).to.match(
       mockDataCopy,
     );
 
@@ -143,8 +143,16 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     await repository.findById(mockDataArray[0].id);
 
     await repository.clearCache();
-    const result = await executeRedisCommand('KEYS', ['product*']);
-    expect(result).to.be.empty();
+
+    // update value and then get to see if we get cached value or fresh value
+    await repository.updateById(mockDataArray[0].id, {quantity: 100});
+    const res1 = await repository.findById(mockDataArray[0].id);
+    expect(res1.quantity).to.equal(100);
+
+    await repository.updateAll({quantity: 200});
+    const res2 = await repository.find();
+    expect(res2[0].quantity).to.equal(200);
+    expect(res2[1].quantity).to.equal(200);
   });
 
   it('should throw error if no cache data source is provided', async () => {

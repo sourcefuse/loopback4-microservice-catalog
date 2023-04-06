@@ -4,22 +4,21 @@
 // https://opensource.org/licenses/MIT
 import {expect, sinon} from '@loopback/testlab';
 import {RedisCacheStrategy} from '../../../strategies';
-import {ICacheMixinOptions} from '../../../types';
+import {CacheStrategyTypes} from '../../../strategy-types.enum';
 import {mockData, mockKey} from '../fixtures/data';
 import {resetCalls} from '../fixtures/default-crud.repository';
 import {TestRedisDataSource} from '../fixtures/redis.datasource';
 
 describe('Unit Test Cases for Redis Strategy', () => {
   const redisStrategy = new RedisCacheStrategy({
+    cacheProvider: CacheStrategyTypes.Redis,
     prefix: 'testPrefix',
+    ttl: 60000,
   });
   const redisDataSourceStub = sinon.createStubInstance(TestRedisDataSource);
   redisStrategy.getCacheDataSource = sinon.stub().resolves(redisDataSourceStub);
   let redisExecuteStub: sinon.SinonStub;
   let searchStub: sinon.SinonStub;
-  const mixinOpts: ICacheMixinOptions = {
-    ttl: 60000,
-  };
 
   afterEach(() => {
     if (redisExecuteStub) {
@@ -34,12 +33,23 @@ describe('Unit Test Cases for Redis Strategy', () => {
   it('should search and return data if present in cache', async () => {
     redisExecuteStub = sinon
       .stub(redisStrategy, 'executeRedisCommand')
-      .resolves(Buffer.from(JSON.stringify(mockData)));
+      .callsFake(async (command: string, args: (string | number)[]) => {
+        if (command === 'GET' && args[0] === 'testPrefix_DELETION_TIME') {
+          return undefined;
+        } else {
+          return Buffer.from(
+            JSON.stringify({payload: mockData, insertionTime: Date.now()}),
+          );
+        }
+      });
 
-    const result = await redisStrategy.searchInCache(mockKey, mixinOpts);
+    const result = await redisStrategy.searchInCache(mockKey);
     expect(mockData).to.match(result);
-    expect(redisExecuteStub.calledOnce).to.be.true();
+    expect(redisExecuteStub.calledTwice).to.be.true();
     expect(redisExecuteStub.calledWith('GET', [mockKey])).to.be.true();
+    expect(
+      redisExecuteStub.calledWith('GET', ['testPrefix_DELETION_TIME']),
+    ).to.be.true();
   });
 
   it('should save data in cache', async () => {
@@ -47,16 +57,18 @@ describe('Unit Test Cases for Redis Strategy', () => {
       .stub(redisStrategy, 'executeRedisCommand')
       .resolves(Buffer.from(JSON.stringify('OK')));
 
-    await redisStrategy.saveInCache(mockKey, mockData, mixinOpts);
-    expect(redisExecuteStub.calledOnce).to.be.true();
-    expect(
-      redisExecuteStub.calledWith('SET', [
-        mockKey,
-        JSON.stringify(mockData),
-        'PX',
-        60000,
-      ]),
-    ).to.be.true();
+    await redisStrategy.saveInCache(mockKey, mockData);
+    sinon.assert.calledOnce(redisExecuteStub);
+    expect(redisExecuteStub.getCalls()[0].args[0]).equal('SET');
+
+    const args = redisExecuteStub.getCalls()[0].args[1];
+    expect(args[0]).to.equal(mockKey);
+    expect(args[2]).to.equal('PX');
+    expect(args[3]).to.equal(60000);
+
+    const value = JSON.parse(args[1]);
+    expect(value.payload).to.containDeep(mockData);
+    sinon.assert.match(value.insertionTime, sinon.match.number);
   });
 
   it('should throw error if unable to save in cache due to any reason', async () => {
@@ -65,7 +77,7 @@ describe('Unit Test Cases for Redis Strategy', () => {
       .throws();
     let errorThrown = false;
     try {
-      await redisStrategy.saveInCache(mockKey, mockData, mixinOpts);
+      await redisStrategy.saveInCache(mockKey, mockData);
     } catch {
       errorThrown = true;
     }
@@ -79,7 +91,7 @@ describe('Unit Test Cases for Redis Strategy', () => {
       .stub(redisStrategy, 'executeRedisCommand')
       .rejects();
     try {
-      await redisStrategy.searchInCache(mockKey, mixinOpts);
+      await redisStrategy.searchInCache(mockKey);
     } catch {
       errorThrown = true;
     }
@@ -93,7 +105,7 @@ describe('Unit Test Cases for Redis Strategy', () => {
       .stub(redisStrategy, 'executeRedisCommand')
       .rejects();
     try {
-      await redisStrategy.clearCache(mixinOpts);
+      await redisStrategy.clearCache();
     } catch {
       errorThrown = true;
     }
@@ -106,8 +118,12 @@ describe('Unit Test Cases for Redis Strategy', () => {
     redisExecuteStub = sinon
       .stub(redisStrategy, 'executeRedisCommand')
       .resolves(cacheEntries);
-    await redisStrategy.clearCache(mixinOpts);
+    await redisStrategy.clearCache();
     expect(redisExecuteStub.calledOnce).to.be.true();
-    expect(redisExecuteStub.getCall(0).args[0]).to.equal('EVAL');
+
+    sinon.assert.calledOnceWithMatch(redisExecuteStub, 'SET', [
+      'testPrefix_DELETION_TIME',
+      sinon.match.number,
+    ]);
   });
 });

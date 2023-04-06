@@ -16,11 +16,10 @@ import * as crypto from 'crypto';
 import {ICacheStrategy, RedisCacheStrategy} from '../strategies';
 import {CacheStrategyTypes} from '../strategy-types.enum';
 import {
-  CacheOptions,
   CachePluginComponentOptions,
   DEFAULT_CACHE_PLUGIN_OPTIONS,
   ICacheMixin,
-  ICacheMixinOptions,
+  OptionsWithForceUpdate,
 } from '../types';
 
 export class CacheManager {
@@ -34,21 +33,23 @@ export class CacheManager {
     R extends MixinTarget<DefaultCrudRepository<M, ID, Relations>>,
   >(
     baseClass: R,
-    cacheOptions: ICacheMixinOptions & Partial<CachePluginComponentOptions>,
+    cacheOptions: Partial<CachePluginComponentOptions>,
   ): R & Constructor<ICacheMixin<M, ID>> {
     class MixedRepository extends baseClass {
       getCacheDataSource: () => Promise<JugglerDataSource>;
       strategy: ICacheStrategy<M>;
+      private allCacheOptions: CachePluginComponentOptions;
 
       /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       constructor(...args: any[]) {
         super(...args);
-
-        const opts = {
-          prefix: cacheOptions.prefix ?? CacheManager.options.prefix,
+        this.allCacheOptions = {
+          ...CacheManager.options,
+          ...cacheOptions,
         };
+
         if (CacheManager.options.cacheProvider === CacheStrategyTypes.Redis) {
-          this.strategy = new RedisCacheStrategy<M>(opts);
+          this.strategy = new RedisCacheStrategy<M>(this.allCacheOptions);
         } else {
           throw new HttpErrors.NotImplemented(
             'Cache strategy is not implemented !',
@@ -61,7 +62,7 @@ export class CacheManager {
       async findById(
         id: ID,
         filter?: FilterExcludingWhere<M>,
-        options?: CacheOptions,
+        options?: OptionsWithForceUpdate,
       ): Promise<M> {
         this.checkDataSource();
         const key = await this.generateKey(id, filter);
@@ -69,19 +70,16 @@ export class CacheManager {
         if (options?.forceUpdate) {
           finalResult = await super.findById(id, filter, options);
           this.strategy
-            .saveInCache(key, finalResult, cacheOptions)
+            .saveInCache(key, finalResult)
             .catch(err => console.error(err)); //NOSONAR
         } else {
-          const result = (await this.strategy.searchInCache(
-            key,
-            cacheOptions,
-          )) as M;
+          const result = (await this.strategy.searchInCache(key)) as M;
           if (result) {
             finalResult = result;
           } else {
             finalResult = await super.findById(id, filter, options);
             this.strategy
-              .saveInCache(key, finalResult, cacheOptions)
+              .saveInCache(key, finalResult)
               .catch(err => console.error(err)); //NOSONAR
           }
         }
@@ -93,7 +91,7 @@ export class CacheManager {
       // @ts-ignore
       async find(
         filter?: Filter<M> | undefined,
-        options?: CacheOptions,
+        options?: OptionsWithForceUpdate,
       ): Promise<M[]> {
         this.checkDataSource();
         const key = await this.generateKey(undefined, filter);
@@ -101,19 +99,16 @@ export class CacheManager {
         if (options?.forceUpdate) {
           finalResult = await super.find(filter, options);
           this.strategy
-            .saveInCache(key, finalResult, cacheOptions)
+            .saveInCache(key, finalResult)
             .catch(err => console.error(err)); //NOSONAR
         } else {
-          const result = (await this.strategy.searchInCache(
-            key,
-            cacheOptions,
-          )) as M[];
+          const result = (await this.strategy.searchInCache(key)) as M[];
           if (result) {
             finalResult = result;
           } else {
             finalResult = await super.find(filter, options);
             this.strategy
-              .saveInCache(key, finalResult, cacheOptions)
+              .saveInCache(key, finalResult)
               .catch(err => console.error(err)); //NOSONAR
           }
         }
@@ -133,20 +128,19 @@ export class CacheManager {
         if (options?.forceUpdate) {
           finalResult = await super.findOne(filter, options);
           this.strategy
-            .saveInCache(key, finalResult, cacheOptions)
+            .saveInCache(key, finalResult)
             .catch(err => console.error(err)); //NOSONAR
         } else {
-          const result = (await this.strategy.searchInCache(
-            key,
-            cacheOptions,
-          )) as (M & Relations) | null;
+          const result = (await this.strategy.searchInCache(key)) as
+            | (M & Relations)
+            | null;
           // check is only for undefined as result of type null can also be stored in cache
           if (result !== undefined) {
             finalResult = result;
           } else {
             finalResult = await super.findOne(filter, options);
             this.strategy
-              .saveInCache(key, finalResult, cacheOptions)
+              .saveInCache(key, finalResult)
               .catch(err => console.error(err)); //NOSONAR
           }
         }
@@ -155,7 +149,7 @@ export class CacheManager {
 
       async clearCache(): Promise<void> {
         this.checkDataSource();
-        return this.strategy.clearCache(cacheOptions);
+        return this.strategy.clearCache();
       }
 
       async generateKey(id?: ID, filter?: Filter<M>): Promise<string> {
@@ -168,7 +162,7 @@ export class CacheManager {
         }
         // hash to reduce key length
         return (
-          cacheOptions.prefix +
+          this.allCacheOptions.prefix +
           crypto.createHash('sha256').update(key).digest('hex')
         );
       }
