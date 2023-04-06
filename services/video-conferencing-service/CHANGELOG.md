@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.18 (2023-04-06)</small>
+
+* fix(cli): changed the opentelemetry packages since they are renamed (#1351) ([9ecb78e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ecb78e)), closes [#1351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1351) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347)
+* fix(video-service): fixed the date validation for meeting link generation (#1370) ([cbefa87](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cbefa87)), closes [#1370](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1370)
+
+
+
+
+
 ## <small>4.1.17 (2023-03-15)</small>
 
 * chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
