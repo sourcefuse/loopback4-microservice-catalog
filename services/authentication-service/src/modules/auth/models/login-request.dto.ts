@@ -21,7 +21,6 @@ export class LoginRequest extends Model {
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
-    required: true,
   })
   client_secret: string; //NOSONAR
 
