@@ -422,7 +422,7 @@ In order to authorize public and private clients separately in your application,
 
 ```typescript
 import { AuthenticationBindings, AuthenticationConfig} from 'loopback4-authentication';
-this.bind(AuthenticationBindings. CONFIG).to({
+this.bind(AuthenticationBindings.CONFIG).to({
 secureClient: true,
 } as Authentication Config);
 ```
