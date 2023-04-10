@@ -339,8 +339,10 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class AuthenticationDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class AuthenticationDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = AuthDbSourceName;
   static readonly defaultConfig = config;
 
@@ -394,9 +396,8 @@ Also the verifier function uses Signup provider whose implementation needs to be
 Bind the provider key to its corresponding value.
 
 ```ts
-this.providers[
-  SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key
-] = AzureAdSignupProvider;
+this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
+  AzureAdSignupProvider;
 ```
 
 ```ts
@@ -414,6 +415,26 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
 ```
 
 Also bind `VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER` and `VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER` to override the basic implementation provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/authentication-service/src/providers).
+
+### Authorizing Public & Private Clients
+
+In order to authorize public and private clients separately in your application, add the following to application.ts before binding AuthenticationComponent
+
+```typescript
+import { AuthenticationBindings, AuthenticationConfig} from 'loopback4-authentication';
+this.bind(AuthenticationBindings. CONFIG).to({
+secureClient: true,
+} as Authentication Config);
+```
+
+#### Authorizing Public & Private Clients-Migrations
+
+add client_type column to auth_clients table with values public/private
+
+```sql
+ALTER TABLE main.auth_clients
+ADD client_type varchar(100) DEFAULT 'public';
+```
 
 ### Authenticating JWT using RSA Encryption
 
