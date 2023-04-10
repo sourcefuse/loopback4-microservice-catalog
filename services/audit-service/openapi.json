@@ -180,6 +180,47 @@
         ],
         "operationId": "AuditController.find"
       }
+    },
+    "/export-logs": {
+      "get": {
+        "x-controller-name": "ExportLogsController",
+        "x-operation-name": "exportAuditLogs",
+        "tags": [
+          "ExportLogsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Export Logs created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "message": "Export Logs created successfully"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ExportLogs   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logs.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ExportLogsController.exportAuditLogs"
+      }
     }
   },
   "components": {

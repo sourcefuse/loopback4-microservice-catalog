@@ -65,7 +65,8 @@
     "loopback4-authentication": "^7.5.1",
     "loopback4-authorization": "^5.1.2",
     "loopback4-soft-delete": "^7.2.1",
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@loopback/build": "^9.0.9",

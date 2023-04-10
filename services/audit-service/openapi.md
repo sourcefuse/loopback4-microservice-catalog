@@ -451,6 +451,91 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+<h1 id="audit-service-exportlogscontroller">ExportLogsController</h1>
+
+## ExportLogsController.exportAuditLogs
+
+<a id="opIdExportLogsController.exportAuditLogs"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/export-logs',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/export-logs',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /export-logs`
+
+| Permissions |
+| ------- |
+| ExportLogs   |
+| 5   |
+
+<h3 id="exportlogscontroller.exportauditlogs-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[audit_logs.Filter1](#schemaaudit_logs.filter1)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+null
+```
+
+<h3 id="exportlogscontroller.exportauditlogs-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Export Logs created successfully|Inline|
+
+<h3 id="exportlogscontroller.exportauditlogs-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 # Schemas
 
 <h2 id="tocS_AuditLog">AuditLog</h2>

@@ -153,4 +153,115 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 
 #### API Details
 
+
+### setting for Export Logs.
+
+User can create the desired logs based on the audit log.
+The export table column names & columnValue object to create the values of this column needs to be provided in the Extension
+The Value returned from the extension will always be a string. 
+
+//ExportColumnExtension1
+```typescript
+import {injectable} from '@loopback/core';
+import {
+  AuditLog,
+  asColumnExtension,
+  IColumnHandler,
+} from '@sourceloop/audit-service';
+@injectable(asColumnExtension)
+export class ExportColumnExtension1 implements IColumnHandler {
+  columnName ='data_update';     // Export table column name to be given.
+
+  columnValueBuilder(auditLog: AuditLog): string{
+  
+  //  columnValue can be a string or a object created from the audit log table.
+    const columnValue = {
+      before: auditLog.before,
+      after: auditLog.after,
+    };
+
+    return JSON.stringify(columnValue);
+  }
+}
+```
+// ExportColumnExtension2
+```typescript
+import {injectable} from '@loopback/core';
+import {
+  AuditLog,
+  asColumnExtension,
+  IColumnHandler,
+} from '@sourceloop/audit-service';
+
+@injectable(asColumnExtension)
+export class ExportColumnExtension2 implements IColumnHandler {
+
+  //column name for export table, can be same or different
+  columnName = 'entityId';
+
+  // method to build the value of the Export Column
+  columnValueBuilder(auditLog: AuditLog): string {
+    let columnValue = '';
+    // User to provide the field/ fields of the Audit-Log tables.
+    columnValue = auditLog.entityId;
+
+    // return value must be string.
+    return JSON.stringify(columnValue);
+  }
+}
+```
+
+all the extensions need to be created in a folder ExportColumnExtensions
+& must be individually be binded in application.ts and also to be added in index.ts of ExportColumnExtensions folder. 
+```typescript
+this.component(AuditServiceComponent);
+this.component(AuthenticationServiceComponent);
+this.add(createBindingFromClass(ExportColumnExtension1));
+this.add(createBindingFromClass(ExportColumnExtension2));
+```
+
+provider needs to be made to provide the logic for saving the export logs at a desired destination. 
+Once the logs will saved at the desired destination, they will be deleted from  the local server. 
+If the provider is not binded or provided then the export file so created will be downloaded in Downloads
+
+```typescript
+import {Provider, ValueOrPromise} from '@loopback/core';
+import {AuditExportServiceBindings} from '@sourceloop/audit-service';
+import * as fs from 'fs';
+import * as path from 'path';
+
+export interface IExportLogsDestinationFn {
+  saveLogs(destination: string): Promise<string>;
+}
+
+export class SaveExportAuditLogsProvider
+  implements Provider<IExportLogsDestinationFn>
+{
+  constructor() {
+    /* Do nothing */
+  }
+
+  value(): ValueOrPromise<IExportLogsDestinationFn> {
+    return {
+      saveLogs: async (destination: string) => {
+       
+       // put your code here
+
+        return 'logs Saved';
+      },
+    };
+  }
+}
+```
+
+the provider needs to be binded in application.ts
+```typescript
+this.bind(AuditExportServiceBindings.SAVE_EXPORT_LOGS.key).toProvider(SaveExportAuditLogsProvider);
+```
+
+set the destination folder path in env where the logs will be temporarily be created.
+```environment
+PATH_TO_EXPORT_FILES_FOLDER =
+```
+
 Visit the [OpenAPI spec docs](./openapi.md)
