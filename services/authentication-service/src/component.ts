@@ -17,12 +17,14 @@ import {
   SECURITY_SCHEME_SPEC,
   SFCoreBindings,
 } from '@sourceloop/core';
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import {
+  AuthenticationBindings,
   AuthenticationComponent,
+  AuthenticationConfig,
   Strategies,
   STRATEGY,
-  AuthenticationBindings,
 } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -46,6 +48,8 @@ import {
   OtpVerifyProvider,
   ResourceOwnerVerifyProvider,
   SamlVerifyProvider,
+  SecureClientPasswordVerifyProvider,
+  SecureResourceOwnerVerifyProvider,
 } from './modules/auth';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
 import {
@@ -80,12 +84,12 @@ import {
   OtpGenerateProvider,
   OtpProvider,
   OtpSenderProvider,
-  SignUpBindings,
-  SignupTokenHandlerProvider,
-  VerifyBindings,
   SamlPostVerifyProvider,
   SamlPreVerifyProvider,
   SamlSignupProvider,
+  SignUpBindings,
+  SignupTokenHandlerProvider,
+  VerifyBindings,
 } from './providers';
 import {AuthCodeGeneratorProvider} from './providers/auth-code-generator.provider';
 import {SignupBearerVerifyProvider} from './providers/bearer-verify.provider';
@@ -98,7 +102,6 @@ import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
-import bodyParser from 'body-parser';
 
 export class AuthenticationServiceComponent implements Component {
   constructor(
@@ -110,6 +113,8 @@ export class AuthenticationServiceComponent implements Component {
     private readonly otpConfig: IOtpConfig,
     @inject(AuthServiceBindings.Config, {optional: true})
     private readonly authConfig?: IAuthServiceConfig,
+    @inject(AuthenticationBindings.CONFIG, {optional: true})
+    private readonly config?: AuthenticationConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -128,7 +133,7 @@ export class AuthenticationServiceComponent implements Component {
     }
 
     // Mount authentication component
-    this.setupAuthenticationComponent();
+    this.setupAuthenticationComponent(this.config?.secureClient);
     this.setupMultiFactorAuthentication();
 
     // Mount authorization component
@@ -193,18 +198,27 @@ export class AuthenticationServiceComponent implements Component {
     this.application.sequence(MySequence);
   }
 
-  setupAuthenticationComponent() {
+  setupAuthenticationComponent(secureClient = false) {
     // Add authentication component
     this.application.component(AuthenticationComponent);
+
     // Customize authentication verify handlers
-    this.providers[Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER.key] =
-      ClientPasswordVerifyProvider;
+
+    if (!secureClient) {
+      this.providers[Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER.key] =
+        ClientPasswordVerifyProvider;
+      this.providers[Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key] =
+        ResourceOwnerVerifyProvider;
+    } else {
+      this.providers[Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER.key] =
+        SecureClientPasswordVerifyProvider;
+      this.providers[Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key] =
+        SecureResourceOwnerVerifyProvider;
+    }
     this.providers[Strategies.Passport.LOCAL_PASSWORD_VERIFIER.key] =
       LocalPasswordVerifyProvider;
     this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
       BearerTokenVerifyProvider;
-    this.providers[Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key] =
-      ResourceOwnerVerifyProvider;
     this.providers[Strategies.Passport.GOOGLE_OAUTH2_VERIFIER.key] =
       GoogleOauth2VerifyProvider;
     this.providers[Strategies.Passport.SAML_VERIFIER.key] = SamlVerifyProvider;

@@ -3383,7 +3383,7 @@ LoginRequest
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |client_id|string|true|none|This property is supposed to be a string and is a required field|
-|client_secret|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|false|none|This property is supposed to be a string and is a required field|
 |username|string|true|none|This property is supposed to be a string and is a required field|
 |password|string|true|none|This property is supposed to be a string and is a required field|
 

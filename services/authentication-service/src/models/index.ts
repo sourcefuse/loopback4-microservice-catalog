@@ -3,11 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {AuthClient} from './auth-client.model';
+import {AuthSecureClient} from './auth-secure-client.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';
 import {LocalUserProfileDto} from './local-user-profile';
-import {Otp} from './otp.model';
 import {OtpCache} from './otp-cache.model';
+import {Otp} from './otp.model';
 import {RefreshTokenRequest} from './refresh-token-request.model';
 import {RefreshToken} from './refresh-token.model';
 import {ResetPasswordWithClient} from './reset-password-with-client.model';
@@ -27,6 +28,7 @@ import {User} from './user.model';
 
 export * from './';
 export * from './auth-client.model';
+export * from './auth-secure-client.model';
 export * from './forget-password-dto.model';
 export * from './forget-password-response-dto.model';
 export * from './local-user-profile';
@@ -54,6 +56,7 @@ export const models = [
   Tenant,
   Role,
   AuthClient,
+  AuthSecureClient,
   UserLevelPermission,
   UserLevelResource,
   RefreshToken,

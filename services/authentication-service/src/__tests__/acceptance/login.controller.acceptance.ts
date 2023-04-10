@@ -368,7 +368,7 @@ describe('Authentication microservice', () => {
       .send(reqData)
       .expect(401);
     expect(response.body.error.message.message).to.be.equal(
-      AuthErrorKeys.ClientInvalid,
+      AuthErrorKeys.ClientVerificationFailed,
     );
   });
 
