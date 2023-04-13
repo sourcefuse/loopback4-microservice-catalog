@@ -137,6 +137,8 @@ JWT_ISSUER=https://authentication.service
 
 ### API Documentation
 
+Visit the [OpenAPI spec docs](./openapi.md)
+
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.

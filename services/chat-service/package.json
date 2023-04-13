@@ -12,7 +12,9 @@
     "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
-    "build": "npm run clean && lb-tsc",
+    "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
+    "build": "npm run clean && lb-tsc && npm run openapi-spec",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run prettier:check && npm run eslint",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
