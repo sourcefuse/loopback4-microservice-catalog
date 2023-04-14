@@ -14,6 +14,9 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "lb-tsc",
+    "postbuild": "npm run openapi-spec",
+    "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
@@ -30,8 +33,6 @@
     "docker:run": "docker run -p 3000:3000 -d user-tenant-service",
     "premigrate": "npm run build",
     "migrate": "node ./dist/migrate",
-    "preopenapi-spec": "npm run build",
-    "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",

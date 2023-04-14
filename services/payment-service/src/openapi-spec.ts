@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {ApplicationConfig} from '@loopback/core';
-import {FeatureToggleServiceApplication} from './application';
+import {PaymentServiceApplication} from './application';
 
 /**
  * Export the OpenAPI spec from the application
@@ -18,7 +18,7 @@ async function exportOpenApiSpec(): Promise<void> {
     },
   };
   const outFile = process.argv[FILEARGVI] ?? 'openapi.json';
-  const app = new FeatureToggleServiceApplication(config);
+  const app = new PaymentServiceApplication(config);
   await app.boot();
   await app.exportOpenApiSpec(outFile);
 }

@@ -391,7 +391,13 @@ Replace value of token with your own user token generated in step 5 from sonar c
 
 Close and reopen VS Code.
 
-## Commit message guidelines
+## Commit Guidelines
+
+### Files to be Commited
+
+- When contributing to any of the services always commit the changes in `openapi.json` and `openapi.md` (they are automatically generated on every new build) or can be generated using `npm run openapi-spec`.
+
+### Commit Message Format
 
 A good commit message should describe what changed and why.
 
@@ -401,8 +407,6 @@ Our commit messages are formatted according to
 convention. These rules lead to more readable messages that are easy to follow
 when looking through the project history. But also, we use the git commit
 messages to generate change logs when publishing new versions.
-
-### Commit Message Format
 
 Each commit message consists of a **header**, a **body** and a **footer**. The
 header has a special format that includes a **type**, an optional **scope** and

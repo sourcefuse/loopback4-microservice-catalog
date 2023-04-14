@@ -1,0 +1,3448 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Chat Service",
+    "version": "1.0.0",
+    "description": "chat-service microservice",
+    "contact": {
+      "name": "Sourcefuse"
+    }
+  },
+  "paths": {
+    "/attach-files/bulk": {
+      "post": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "createBulk",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentFileDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateAttachmentFile   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Attachment Files"
+              }
+            }
+          }
+        },
+        "operationId": "AttachmentFileController.createBulk"
+      }
+    },
+    "/attach-files/count": {
+      "get": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "count",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AttachmentFile model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttachmentFile   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "message_files.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AttachmentFile>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AttachmentFileController.count"
+      }
+    },
+    "/attach-files/{id}": {
+      "put": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttachmentFile   |\n",
+        "responses": {
+          "200": {
+            "description": "Return value of AttachmentFileController.replaceById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "AttachmentFile PUT success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachmentFile"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "AttachmentFileController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "AttachmentFile PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttachmentFile   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachmentFilePartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "AttachmentFileController.updateById"
+      },
+      "get": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "findById",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AttachmentFile model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentFileWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttachmentFile   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_files.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AttachmentFileController.findById"
+      },
+      "delete": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteAttachmentFile   |\n",
+        "responses": {
+          "200": {
+            "description": "Return value of AttachmentFileController.deleteById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Attachment File DELETE success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "AttachmentFileController.deleteById"
+      }
+    },
+    "/attach-files": {
+      "post": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "create",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentFile"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateAttachmentFile   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewAttachmentFile"
+              }
+            }
+          }
+        },
+        "operationId": "AttachmentFileController.create"
+      },
+      "patch": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AttachmentFile PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateAttachmentFile   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "message_files.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AttachmentFile>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachmentFilePartial"
+              }
+            }
+          }
+        },
+        "operationId": "AttachmentFileController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "AttachmentFileController",
+        "x-operation-name": "find",
+        "tags": [
+          "AttachmentFileController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of AttachmentFile model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttachmentFileWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAttachmentFile   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_files.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AttachmentFileController.find"
+      }
+    },
+    "/message-recipients/count": {
+      "get": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "count",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MessageRecipient model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessageRecipient   |\n| 6   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "message_recipients.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<MessageRecipient>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageRecipientController.count"
+      }
+    },
+    "/message-recipients/{id}/message": {
+      "get": {
+        "x-controller-name": "MessageRecipientMessageController",
+        "x-operation-name": "getMessage",
+        "tags": [
+          "MessageRecipientMessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message belonging to MessageRecipient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "MessageRecipientMessageController.getMessage"
+      }
+    },
+    "/message-recipients/{id}": {
+      "put": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "MessageRecipient PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessageRecipient   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRecipient"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageRecipientController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "MessageRecipient PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessageRecipient   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRecipientPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageRecipientController.updateById"
+      },
+      "get": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "findById",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MessageRecipient model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageRecipientWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessageRecipient   |\n| 6   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_recipients.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageRecipientController.findById"
+      },
+      "delete": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "MessageRecipient DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteMessageRecipient   |\n| 8   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "MessageRecipientController.deleteById"
+      }
+    },
+    "/message-recipients": {
+      "post": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "create",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MessageRecipient model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageRecipient"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateMessageRecipient   |\n| 5   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMessageRecipient"
+              }
+            }
+          }
+        },
+        "operationId": "MessageRecipientController.create"
+      },
+      "patch": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MessageRecipient PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessageRecipient   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "message_recipients.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<MessageRecipient>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRecipientPartial"
+              }
+            }
+          }
+        },
+        "operationId": "MessageRecipientController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "MessageRecipientController",
+        "x-operation-name": "find",
+        "tags": [
+          "MessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of MessageRecipient model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MessageRecipientWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessageRecipient   |\n| 6   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_recipients.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageRecipientController.find"
+      }
+    },
+    "/messages/count": {
+      "get": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "count",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "messages.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Message>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageController.count"
+      }
+    },
+    "/messages/{id}/message-recipients": {
+      "post": {
+        "x-controller-name": "MessageMessageRecipientController",
+        "x-operation-name": "create",
+        "tags": [
+          "MessageMessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageRecipient"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateMessageRecipient   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMessageRecipientInMessage"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageMessageRecipientController.create"
+      },
+      "patch": {
+        "x-controller-name": "MessageMessageRecipientController",
+        "x-operation-name": "patch",
+        "tags": [
+          "MessageMessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message.MessageRecipient PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessageRecipient   |\n| 7   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "message_recipients.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<MessageRecipient>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRecipientPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageMessageRecipientController.patch"
+      },
+      "get": {
+        "x-controller-name": "MessageMessageRecipientController",
+        "x-operation-name": "find",
+        "tags": [
+          "MessageMessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Message has many MessageRecipient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MessageRecipient"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessageRecipient   |\n| 6   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageMessageRecipientController.find"
+      },
+      "delete": {
+        "x-controller-name": "MessageMessageRecipientController",
+        "x-operation-name": "delete",
+        "tags": [
+          "MessageMessageRecipientController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message.MessageRecipient DELETE success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteMessageRecipient   |\n| 8   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "message_recipients.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<MessageRecipient>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageMessageRecipientController.delete"
+      }
+    },
+    "/messages/{id}/messages": {
+      "post": {
+        "x-controller-name": "MessageMessageController",
+        "x-operation-name": "create",
+        "tags": [
+          "MessageMessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateMessage   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMessageInMessage"
+              }
+            }
+          },
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageMessageController.create"
+      },
+      "patch": {
+        "x-controller-name": "MessageMessageController",
+        "x-operation-name": "patch",
+        "tags": [
+          "MessageMessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message.Message PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessage   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "messages.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Message>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessagePartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageMessageController.patch"
+      },
+      "get": {
+        "x-controller-name": "MessageMessageController",
+        "x-operation-name": "find",
+        "tags": [
+          "MessageMessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Message has many Message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageMessageController.find"
+      },
+      "delete": {
+        "x-controller-name": "MessageMessageController",
+        "x-operation-name": "delete",
+        "tags": [
+          "MessageMessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message.Message DELETE success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteMessage   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "messages.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Message>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageMessageController.delete"
+      }
+    },
+    "/messages/{id}": {
+      "put": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Message PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessage   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Message PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessage   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessagePartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageController.updateById"
+      },
+      "get": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "findById",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messages.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageController.findById"
+      },
+      "delete": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Message DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteMessage   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "MessageController.deleteById"
+      }
+    },
+    "/messages": {
+      "post": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "create",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateMessage   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMessage"
+              }
+            }
+          }
+        },
+        "operationId": "MessageController.create"
+      },
+      "patch": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateMessage   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "messages.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Message>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessagePartial"
+              }
+            }
+          }
+        },
+        "operationId": "MessageController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "find",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Message model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MessageWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/messages.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageController.find"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Message": {
+        "title": "Message",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body",
+          "channelId",
+          "channelType"
+        ],
+        "additionalProperties": false
+      },
+      "NewMessage": {
+        "title": "NewMessage",
+        "type": "object",
+        "description": "(tsType: Omit<Message, 'id'>, schemaOptions: { title: 'NewMessage', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body",
+          "channelId",
+          "channelType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Message, 'id'>"
+      },
+      "MessageWithRelations": {
+        "title": "MessageWithRelations",
+        "type": "object",
+        "description": "(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "string"
+          },
+          "messageRecipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageRecipientWithRelations"
+            }
+          },
+          "parentMessage": {
+            "$ref": "#/components/schemas/MessageWithRelations"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageWithRelations"
+            }
+          }
+        },
+        "required": [
+          "body",
+          "channelId",
+          "channelType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "MessageWithRelations"
+      },
+      "MessagePartial": {
+        "title": "MessagePartial",
+        "type": "object",
+        "description": "(tsType: Partial<Message>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Message>"
+      },
+      "MessageRecipient": {
+        "title": "MessageRecipient",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "forwardedBy": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isForwarded": {
+            "type": "boolean"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "recipientId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "channelId",
+          "recipientId",
+          "messageId"
+        ],
+        "additionalProperties": false
+      },
+      "NewMessageRecipient": {
+        "title": "NewMessageRecipient",
+        "type": "object",
+        "description": "(tsType: Omit<MessageRecipient, 'id'>, schemaOptions: { title: 'NewMessageRecipient', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "forwardedBy": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isForwarded": {
+            "type": "boolean"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "recipientId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "channelId",
+          "recipientId",
+          "messageId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<MessageRecipient, 'id'>"
+      },
+      "MessageRecipientWithRelations": {
+        "title": "MessageRecipientWithRelations",
+        "type": "object",
+        "description": "(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "forwardedBy": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isForwarded": {
+            "type": "boolean"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "recipientId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "message": {
+            "$ref": "#/components/schemas/MessageWithRelations"
+          }
+        },
+        "required": [
+          "channelId",
+          "recipientId",
+          "messageId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "MessageRecipientWithRelations"
+      },
+      "MessageRecipientPartial": {
+        "title": "MessageRecipientPartial",
+        "type": "object",
+        "description": "(tsType: Partial<MessageRecipient>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "forwardedBy": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isForwarded": {
+            "type": "boolean"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "recipientId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<MessageRecipient>"
+      },
+      "NewMessageInMessage": {
+        "title": "NewMessageInMessage",
+        "type": "object",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Message, 'id'>, 'parentMessageId'>, schemaOptions: { title: 'NewMessageInMessage', exclude: [ 'id' ], optional: [ 'parentMessageId' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body",
+          "channelId",
+          "channelType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Message, 'id'>, 'parentMessageId'>"
+      },
+      "NewMessageRecipientInMessage": {
+        "title": "NewMessageRecipientInMessage",
+        "type": "object",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<MessageRecipient, 'id'>, 'messageId'>, schemaOptions: { title: 'NewMessageRecipientInMessage', exclude: [ 'id' ], optional: [ 'messageId' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "forwardedBy": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isForwarded": {
+            "type": "boolean"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "recipientId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "channelId",
+          "recipientId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<MessageRecipient, 'id'>, 'messageId'>"
+      },
+      "AttachmentFile": {
+        "title": "AttachmentFile",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "fileKey": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewAttachmentFile": {
+        "title": "NewAttachmentFile",
+        "type": "object",
+        "description": "(tsType: Omit<AttachmentFile, 'id'>, schemaOptions: { title: 'NewAttachmentFile', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "fileKey": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<AttachmentFile, 'id'>"
+      },
+      "AttachmentFileDto": {
+        "title": "AttachmentFileDto",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "attachmentFiles": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "attachmentFiles"
+        ],
+        "additionalProperties": true
+      },
+      "New Attachment Files": {
+        "title": "New Attachment Files",
+        "type": "object",
+        "description": "(tsType: AttachmentFileDto, schemaOptions: { title: 'New Attachment Files' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "attachmentFiles": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "attachmentFiles"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "AttachmentFileDto"
+      },
+      "AttachmentFileWithRelations": {
+        "title": "AttachmentFileWithRelations",
+        "type": "object",
+        "description": "(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "fileKey": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          },
+          "message": {
+            "$ref": "#/components/schemas/MessageWithRelations"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "AttachmentFileWithRelations"
+      },
+      "AttachmentFilePartial": {
+        "title": "AttachmentFilePartial",
+        "type": "object",
+        "description": "(tsType: Partial<AttachmentFile>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "fileKey": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<AttachmentFile>"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "message_files.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "message_files.ScopeFilter"
+      },
+      "message_files.IncludeFilter.Items": {
+        "title": "message_files.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "message"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/message_files.ScopeFilter"
+          }
+        }
+      },
+      "message_files.Filter": {
+        "type": "object",
+        "title": "message_files.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "channelId": {
+                    "type": "boolean"
+                  },
+                  "fileKey": {
+                    "type": "boolean"
+                  },
+                  "messageId": {
+                    "type": "boolean"
+                  },
+                  "metaData": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "channelId",
+                    "fileKey",
+                    "messageId",
+                    "metaData"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "message_files.Fields"
+          },
+          "include": {
+            "title": "message_files.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/message_files.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AttachmentFile>"
+      },
+      "message_files.Filter1": {
+        "type": "object",
+        "title": "message_files.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "message_files.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "channelId": {
+                    "type": "boolean"
+                  },
+                  "fileKey": {
+                    "type": "boolean"
+                  },
+                  "messageId": {
+                    "type": "boolean"
+                  },
+                  "metaData": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "channelId",
+                    "fileKey",
+                    "messageId",
+                    "metaData"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "message_files.Fields"
+          },
+          "include": {
+            "title": "message_files.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/message_files.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AttachmentFile>"
+      },
+      "message_recipients.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "message_recipients.ScopeFilter"
+      },
+      "message_recipients.IncludeFilter.Items": {
+        "title": "message_recipients.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "message"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/message_recipients.ScopeFilter"
+          }
+        }
+      },
+      "message_recipients.Filter": {
+        "type": "object",
+        "title": "message_recipients.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "channelId": {
+                    "type": "boolean"
+                  },
+                  "forwardedBy": {
+                    "type": "boolean"
+                  },
+                  "isFavorite": {
+                    "type": "boolean"
+                  },
+                  "isForwarded": {
+                    "type": "boolean"
+                  },
+                  "isRead": {
+                    "type": "boolean"
+                  },
+                  "recipientId": {
+                    "type": "boolean"
+                  },
+                  "messageId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "channelId",
+                    "forwardedBy",
+                    "isFavorite",
+                    "isForwarded",
+                    "isRead",
+                    "recipientId",
+                    "messageId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "message_recipients.Fields"
+          },
+          "include": {
+            "title": "message_recipients.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/message_recipients.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<MessageRecipient>"
+      },
+      "message_recipients.Filter1": {
+        "type": "object",
+        "title": "message_recipients.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "message_recipients.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "channelId": {
+                    "type": "boolean"
+                  },
+                  "forwardedBy": {
+                    "type": "boolean"
+                  },
+                  "isFavorite": {
+                    "type": "boolean"
+                  },
+                  "isForwarded": {
+                    "type": "boolean"
+                  },
+                  "isRead": {
+                    "type": "boolean"
+                  },
+                  "recipientId": {
+                    "type": "boolean"
+                  },
+                  "messageId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "channelId",
+                    "forwardedBy",
+                    "isFavorite",
+                    "isForwarded",
+                    "isRead",
+                    "recipientId",
+                    "messageId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "message_recipients.Fields"
+          },
+          "include": {
+            "title": "message_recipients.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/message_recipients.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<MessageRecipient>"
+      },
+      "messages.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "messages.ScopeFilter"
+      },
+      "messages.IncludeFilter.Items": {
+        "title": "messages.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "messageRecipients",
+              "parentMessage",
+              "messages"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/messages.ScopeFilter"
+          }
+        }
+      },
+      "messages.Filter": {
+        "type": "object",
+        "title": "messages.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "body": {
+                    "type": "boolean"
+                  },
+                  "channelId": {
+                    "type": "boolean"
+                  },
+                  "channelType": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "subject": {
+                    "type": "boolean"
+                  },
+                  "toUserId": {
+                    "type": "boolean"
+                  },
+                  "parentMessageId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "body",
+                    "channelId",
+                    "channelType",
+                    "status",
+                    "subject",
+                    "toUserId",
+                    "parentMessageId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "messages.Fields"
+          },
+          "include": {
+            "title": "messages.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/messages.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Message>"
+      },
+      "messages.Filter1": {
+        "type": "object",
+        "title": "messages.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "messages.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "body": {
+                    "type": "boolean"
+                  },
+                  "channelId": {
+                    "type": "boolean"
+                  },
+                  "channelType": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "subject": {
+                    "type": "boolean"
+                  },
+                  "toUserId": {
+                    "type": "boolean"
+                  },
+                  "parentMessageId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "body",
+                    "channelId",
+                    "channelType",
+                    "status",
+                    "subject",
+                    "toUserId",
+                    "parentMessageId"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "messages.Fields"
+          },
+          "include": {
+            "title": "messages.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/messages.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Message>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
