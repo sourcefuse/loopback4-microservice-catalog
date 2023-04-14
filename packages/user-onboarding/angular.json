@@ -37,6 +37,86 @@
           }
         }
       }
+    },
+   "user-onboarding-element": {
+   "projectType": "application",
+   "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+     },
+    "@schematics/angular:application": {
+      "strict": true
+     }
+   },
+   "root": "projects/user-onboarding-lib",
+   "sourceRoot": "projects/user-onboarding-lib/src",
+   "prefix": "app",
+   "architect": {
+    "build": {
+      "builder": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "projects/user-onboarding-lib/dist/user-onboarding-element",
+        "index": "projects/user-onboarding-lib/src/index.html",
+        "main": "projects/user-onboarding-lib/src/main.ts",
+        "polyfills": "projects/user-onboarding-lib/src/polyfills.ts",
+        "tsConfig": "projects/user-onboarding-lib/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "projects/user-onboarding-lib/src/favicon.ico",
+          "projects/user-onboarding-lib/src/assets"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "10kb"
+            }
+          ],
+          "outputHashing": "none"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "extract-i18n": {
+      "builder": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "UserOnboardingElement:build"
+      }
+    },
+    "test": {
+      "builder": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "projects/user-onboarding-element/src/test.ts",
+        "polyfills": "projects/user-onboarding-element/src/polyfills.ts",
+        "tsConfig": "projects/user-onboarding-element/tsconfig.spec.json",
+        "karmaConfig": "projects/user-onboarding-element/karma.conf.js",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "projects/user-onboarding-element/src/favicon.ico",
+          "projects/user-onboarding-element/src/assets"
+        ],
+        "styles": ["projects/user-onboarding-element/src/styles.scss"],
+        "scripts": []
+      }
     }
+   }
   }
+ }
 }

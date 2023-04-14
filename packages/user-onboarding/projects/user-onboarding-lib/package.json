@@ -19,7 +19,9 @@
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "build": "ng build  && cp -r src/assets dist",
+    "libraryBuild": "ng build userOnboardingLib && cp -r src/assets dist",
+    "elementBuild": "ng build user-onboarding-element && node bundle-element.js",
+    "build": "npm run libraryBuild && npm run elementBuild",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
