@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cli",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Custom Sourceloop CLI",
   "bin": {
     "sl": "./bin/run"
@@ -41,6 +41,7 @@
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.3",
     "@oclif/plugin-autocomplete": "^1.2.0",
+    "@oclif/plugin-help": "^5.2.9",
     "@types/semver": "^7.3.9",
     "ejs-lint": "^1.2.2",
     "inquirer": "^8.2.2",
@@ -51,7 +52,6 @@
     "simple-git": "^3.6.0",
     "sinon": "^14.0.0",
     "tslib": "^2.0.0",
-    "@oclif/plugin-help": "^5.2.9",
     "yeoman-environment": "^3.9.1",
     "yeoman-generator": "^5.6.1",
     "yosay": "^2.0.2"

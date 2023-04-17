@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.13 (2023-04-17)</small>
+
+* fix(cli): add help plugin as main deps (#1379) ([498be71](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/498be71)), closes [#1379](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1379) [#1378](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1378)
+
+
+
+
+
 ## <small>3.0.12 (2023-03-28)</small>
 
 * fix(cli): use node's fs to verify if a folder exists instead of yeoman's fs (#1363) ([74c2db9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/74c2db9)), closes [#1363](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1363) [#1358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1358)
