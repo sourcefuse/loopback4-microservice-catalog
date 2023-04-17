@@ -15,7 +15,7 @@
     "/yarn.lock"
   ],
   "engines": {
-    "node": "12 || 14 || 16 || 17"
+    "node": "12 || 14 || 16 || 17 || 18"
   },
   "scripts": {
     "copydeps": "copyfiles -a --up 1 src/**/templates/** lib ",
@@ -51,6 +51,7 @@
     "simple-git": "^3.6.0",
     "sinon": "^14.0.0",
     "tslib": "^2.0.0",
+    "@oclif/plugin-help": "^5.2.9",
     "yeoman-environment": "^3.9.1",
     "yeoman-generator": "^5.6.1",
     "yosay": "^2.0.2"
@@ -58,7 +59,6 @@
   "devDependencies": {
     "@loopback/eslint-config": "^13.0.4",
     "@oclif/dev-cli": "^1.26.10",
-    "@oclif/plugin-help": "^5.1.12",
     "@oclif/test": "^2.1.0",
     "@oclif/tslint": "^3.1.1",
     "@types/chai": "^4.3.1",
@@ -95,11 +95,9 @@
     "commands": "./lib/commands",
     "bin": "sl",
     "dir": "./lib/commands",
-    "devPlugins": [
-      "@oclif/plugin-help"
-    ],
     "plugins": [
-      "@oclif/plugin-autocomplete"
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-help"
     ]
   },
   "publishConfig": {

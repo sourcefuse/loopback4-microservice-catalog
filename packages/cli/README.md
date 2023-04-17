@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/3.0.12 linux-x64 node-v16.13.1
+@sourceloop/cli/3.0.12 darwin-arm64 node-v18.15.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -31,6 +31,7 @@ USAGE
 <!-- commands -->
 * [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
 * [`sl extension [NAME]`](#sl-extension-name)
+* [`sl help [COMMAND]`](#sl-help-command)
 * [`sl microservice [NAME]`](#sl-microservice-name)
 * [`sl scaffold [NAME]`](#sl-scaffold-name)
 * [`sl update`](#sl-update)
@@ -74,6 +75,23 @@ OPTIONS
 ```
 
 _See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v3.0.12/src/commands/extension.ts)_
+
+## `sl help [COMMAND]`
+
+display help for sl
+
+```
+USAGE
+  $ sl help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.18/src/commands/help.ts)_
 
 ## `sl microservice [NAME]`
 
