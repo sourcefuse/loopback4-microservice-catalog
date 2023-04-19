@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.19 (2023-04-19)</small>
+
+* fix(chat-service): add attachment file relation (#1384) ([b0bbb82](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b0bbb82)), closes [#1384](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1384) [#1383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1383)
+
+
+
+
+
 ## <small>4.2.18 (2023-04-17)</small>
 
 * docs(all-services): add missing openapi docs (#1376) ([bef8a4f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bef8a4f)), closes [#1376](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1376) [#1375](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1375)
