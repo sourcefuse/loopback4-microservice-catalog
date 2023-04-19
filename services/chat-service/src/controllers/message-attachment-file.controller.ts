@@ -27,7 +27,7 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
 import {AttachmentFile} from '../models/attachment-file.model';
 import {AttachmentFileDto} from '../models/attachment-file-dto.model';
-import {AttachmentFileRepository} from '../repositories/attachment.repository';
+import {AttachmentFileRepository} from '../repositories/attachment-file.repository';
 const basePath = '/attach-files';
 export class AttachmentFileController {
   constructor(

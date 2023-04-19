@@ -4,6 +4,10 @@
 // https://opensource.org/licenses/MIT
 import {model, property, hasMany, belongsTo} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
+import {
+  AttachmentFile,
+  AttachmentFilesWithRelations,
+} from './attachment-file.model';
 import {MessageRecipient} from './message-recipient.model';
 
 @model({
@@ -56,7 +60,8 @@ export class Message extends UserModifiableEntity {
 
   @hasMany(() => MessageRecipient, {keyTo: 'messageId'})
   messageRecipients: MessageRecipient[];
-
+  @hasMany(() => AttachmentFile, {keyTo: 'messageId'})
+  attachmentFiles: AttachmentFile[];
   @belongsTo(
     () => Message,
     {name: 'parentMessage'},
@@ -76,6 +81,7 @@ export interface MessageRelations {
   messages: MessageWithRelations[];
   messageRecipients: MessageRecipient;
   parentMessage: MessageWithRelations;
+  messageFiles: AttachmentFilesWithRelations[];
 }
 
 export type MessageWithRelations = Message & MessageRelations;
