@@ -3,7 +3,7 @@ import {setUpApplication} from './helper';
 import {dataMessageFile} from '../mockdata/mockdata';
 import {ChatApplication} from '../application';
 import {token} from '../mockdata/userCredsAndPermission';
-import {AttachmentFileRepository} from '../../repositories/attachment.repository';
+import {AttachmentFileRepository} from '../../repositories/attachment-file.repository';
 describe(`Acceptance Test Cases For ChatApplication's AttachmentFileController `, () => {
   let app: ChatApplication;
   let client: Client;

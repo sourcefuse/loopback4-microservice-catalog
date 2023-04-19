@@ -2,7 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Message, MessageRelations, MessageRecipient} from '../models';
+import {
+  Message,
+  MessageRelations,
+  MessageRecipient,
+  AttachmentFile,
+} from '../models';
 import {
   juggler,
   repository,
@@ -16,6 +21,7 @@ import {
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {MessageRecipientRepository} from './message-recipient.repository';
+import {AttachmentFileRepository} from './attachment-file.repository';
 
 export class MessageRepository extends DefaultUserModifyCrudRepository<
   Message,
@@ -36,6 +42,10 @@ export class MessageRepository extends DefaultUserModifyCrudRepository<
     Message,
     typeof Message.prototype.id
   >;
+  public readonly attachmentFiles: HasManyRepositoryFactory<
+    AttachmentFile,
+    typeof Message.prototype.id
+  >;
 
   constructor(
     @inject('datasources.chatDb') dataSource: juggler.DataSource,
@@ -47,6 +57,8 @@ export class MessageRepository extends DefaultUserModifyCrudRepository<
     protected messageRecipientRepositoryGetter: Getter<MessageRecipientRepository>,
     @repository.getter('MessageRepository')
     protected messageRepositoryGetter: Getter<MessageRepository>,
+    @repository.getter('AttachmentFileRepository')
+    protected attachmentFileRepositoryGetter: Getter<AttachmentFileRepository>,
   ) {
     super(Message, dataSource, getCurrentUser);
 
@@ -72,6 +84,14 @@ export class MessageRepository extends DefaultUserModifyCrudRepository<
     this.registerInclusionResolver(
       'messageRecipients',
       this.messageRecipients.inclusionResolver,
+    );
+    this.attachmentFiles = this.createHasManyRepositoryFactoryFor(
+      'attachmentFiles',
+      attachmentFileRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'attachmentFiles',
+      this.attachmentFiles.inclusionResolver,
     );
   }
 }

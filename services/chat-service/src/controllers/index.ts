@@ -7,4 +7,4 @@ export * from './message-message-recipient.controller';
 export * from './message-message.controller';
 export * from './message.controller';
 export * from './message-recipient.controller';
-export * from './attachment-file.controller';
+export * from './message-attachment-file.controller';
