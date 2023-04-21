@@ -615,6 +615,23 @@ fetch('/attach-files/{id}',
         "message": {}
       }
     ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
+        "message": {}
+      }
+    ],
     "parentMessage": {},
     "messages": [
       {}
@@ -1104,6 +1121,9 @@ fetch('/attach-files',
           "message": {}
         }
       ],
+      "attachmentFiles": [
+        {}
+      ],
       "parentMessage": {},
       "messages": [
         {}
@@ -1173,6 +1193,8 @@ Status Code **200**
 |»»»»» recipientId|string|true|none|none|
 |»»»»» messageId|string|true|none|none|
 |»»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
 |»»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
@@ -1640,6 +1662,23 @@ fetch('/message-recipients/{id}',
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
+        "message": {}
+      }
+    ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
         "message": {}
       }
     ],
@@ -2126,6 +2165,23 @@ fetch('/message-recipients',
       "messageRecipients": [
         {}
       ],
+      "attachmentFiles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "channelId": "string",
+          "fileKey": "string",
+          "messageId": "string",
+          "metaData": {},
+          "message": {}
+        }
+      ],
       "parentMessage": {},
       "messages": [
         {}
@@ -2182,6 +2238,21 @@ Status Code **200**
 |»»» parentMessageId|string|false|none|none|
 |»»» messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» MessageRecipientWithRelations|[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
+|»»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» channelId|string|false|none|none|
+|»»»»» fileKey|string|false|none|none|
+|»»»»» messageId|string|false|none|none|
+|»»»»» metaData|object|false|none|none|
+|»»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
@@ -2775,6 +2846,81 @@ fetch('/messages/{id}',
         "toUserId": "string",
         "parentMessageId": "string",
         "messageRecipients": [],
+        "attachmentFiles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "channelId": "string",
+            "fileKey": "string",
+            "messageId": "string",
+            "metaData": {},
+            "message": {}
+          }
+        ],
+        "parentMessage": {},
+        "messages": [
+          {}
+        ]
+      }
+    }
+  ],
+  "attachmentFiles": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "channelId": "string",
+      "fileKey": "string",
+      "messageId": "string",
+      "metaData": {},
+      "message": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "body": "string",
+        "channelId": "string",
+        "channelType": "string",
+        "status": 0,
+        "subject": "string",
+        "toUserId": "string",
+        "parentMessageId": "string",
+        "messageRecipients": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "channelId": "string",
+            "forwardedBy": "string",
+            "isFavorite": true,
+            "isForwarded": true,
+            "isRead": true,
+            "recipientId": "string",
+            "messageId": "string",
+            "message": {}
+          }
+        ],
+        "attachmentFiles": [],
         "parentMessage": {},
         "messages": [
           {}
@@ -2818,6 +2964,23 @@ fetch('/messages/{id}',
         "message": {}
       }
     ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
+        "message": {}
+      }
+    ],
     "parentMessage": {},
     "messages": [
       {}
@@ -2857,6 +3020,23 @@ fetch('/messages/{id}',
           "isRead": true,
           "recipientId": "string",
           "messageId": "string",
+          "message": {}
+        }
+      ],
+      "attachmentFiles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "channelId": "string",
+          "fileKey": "string",
+          "messageId": "string",
+          "metaData": {},
           "message": {}
         }
       ],
@@ -3343,6 +3523,23 @@ fetch('/messages',
         "message": {}
       }
     ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
+        "message": {}
+      }
+    ],
     "parentMessage": {},
     "messages": [
       {}
@@ -3397,6 +3594,21 @@ Status Code **200**
 |»»»» isRead|boolean|false|none|none|
 |»»»» recipientId|string|true|none|none|
 |»»»» messageId|string|true|none|none|
+|»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
+|»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» deleted|boolean|false|none|none|
+|»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»» deletedBy|string¦null|false|none|none|
+|»»»» createdOn|string(date-time)|false|none|none|
+|»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
+|»»»» id|string|false|none|none|
+|»»»» channelId|string|false|none|none|
+|»»»» fileKey|string|false|none|none|
+|»»»» messageId|string|false|none|none|
+|»»»» metaData|object|false|none|none|
 |»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
@@ -4569,6 +4781,81 @@ NewMessage
         "toUserId": "string",
         "parentMessageId": "string",
         "messageRecipients": [],
+        "attachmentFiles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "channelId": "string",
+            "fileKey": "string",
+            "messageId": "string",
+            "metaData": {},
+            "message": {}
+          }
+        ],
+        "parentMessage": {},
+        "messages": [
+          {}
+        ]
+      }
+    }
+  ],
+  "attachmentFiles": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "channelId": "string",
+      "fileKey": "string",
+      "messageId": "string",
+      "metaData": {},
+      "message": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "body": "string",
+        "channelId": "string",
+        "channelType": "string",
+        "status": 0,
+        "subject": "string",
+        "toUserId": "string",
+        "parentMessageId": "string",
+        "messageRecipients": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "channelId": "string",
+            "forwardedBy": "string",
+            "isFavorite": true,
+            "isForwarded": true,
+            "isRead": true,
+            "recipientId": "string",
+            "messageId": "string",
+            "message": {}
+          }
+        ],
+        "attachmentFiles": [],
         "parentMessage": {},
         "messages": [
           {}
@@ -4609,6 +4896,23 @@ NewMessage
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
+        "message": {}
+      }
+    ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
         "message": {}
       }
     ],
@@ -4654,6 +4958,23 @@ NewMessage
           "message": {}
         }
       ],
+      "attachmentFiles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "channelId": "string",
+          "fileKey": "string",
+          "messageId": "string",
+          "metaData": {},
+          "message": {}
+        }
+      ],
       "parentMessage": {},
       "messages": []
     }
@@ -4684,6 +5005,7 @@ MessageWithRelations
 |toUserId|string|false|none|none|
 |parentMessageId|string|false|none|none|
 |messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|[(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })]|
+|attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|[(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })]|
 |parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|[(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })]|
 
@@ -4892,6 +5214,23 @@ NewMessageRecipient
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
+        "message": {}
+      }
+    ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
         "message": {}
       }
     ],
@@ -5289,6 +5628,23 @@ New Attachment Files
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
+        "message": {}
+      }
+    ],
+    "attachmentFiles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "channelId": "string",
+        "fileKey": "string",
+        "messageId": "string",
+        "metaData": {},
         "message": {}
       }
     ],
@@ -6204,6 +6560,7 @@ messages.IncludeFilter.Items
 |Property|Value|
 |---|---|
 |relation|messageRecipients|
+|relation|attachmentFiles|
 |relation|parentMessage|
 |relation|messages|
 
