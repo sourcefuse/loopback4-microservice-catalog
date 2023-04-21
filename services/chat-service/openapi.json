@@ -1706,6 +1706,12 @@
               "$ref": "#/components/schemas/MessageRecipientWithRelations"
             }
           },
+          "attachmentFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttachmentFileWithRelations"
+            }
+          },
           "parentMessage": {
             "$ref": "#/components/schemas/MessageWithRelations"
           },
@@ -3166,6 +3172,7 @@
             "type": "string",
             "enum": [
               "messageRecipients",
+              "attachmentFiles",
               "parentMessage",
               "messages"
             ]
