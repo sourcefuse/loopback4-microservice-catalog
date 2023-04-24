@@ -76,7 +76,7 @@
     "loopback4-soft-delete": "^7.2.1",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
-    "openapi3-ts": "^2.0.2",
+    "openapi3-ts": "^3.0.0",
     "request-ip": "^3.3.0",
     "swagger-stats": "^0.99.5",
     "tslib": "^2.4.1",
