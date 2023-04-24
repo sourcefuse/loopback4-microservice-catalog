@@ -7,3 +7,4 @@ export * from './keys';
 export * from './razorpay';
 export * from './stripe';
 export * from './types';
+export * from './paypal';
