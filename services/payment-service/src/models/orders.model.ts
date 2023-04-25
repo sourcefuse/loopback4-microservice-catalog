@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {AnyObject, Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: true}})
 export class Orders extends Entity {
@@ -44,7 +44,7 @@ export class Orders extends Entity {
   @property({
     type: 'Object',
   })
-  metaData?: Object;
+  metaData?: AnyObject;
 
   // Define well-known properties here
 

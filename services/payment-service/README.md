@@ -50,6 +50,11 @@ this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
 this.bind(RazorpayBindings.RazorpayConfig).to({dataKey: '', publishKey: ''});
 this.bind(RazorpayBindings.RazorpayHelper).toProvider(RazorpayProvider);
 this.bind(GatewayBindings.GatewayHelper).toProvider(GatewayProvider);
+this.bind(PayPalBindings.PayPalHelper.key).toProvider(PaypalProvider);
+this.bind(PayPalBindings.PayPalConfig).to({
+  clientId: process.env.PAYPAL_CLIENT_ID ?? '',
+  clientSecret: process.env.PAYPAL_CLIENT_SECRET ?? '',
+});
 ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `PaymentDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
@@ -156,6 +161,14 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 404: Entity Not Found
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
+
+### PayPal Payment Integration
+
+Sign up for payPal account at https://www.paypal.com/signin
+login to the developer section and create sandbox accounts
+copy the credentials to the sandbox account and use them to develop payment-service
+
+Order creation , capture and refund is supported right now.
 
 #### API Details
 
