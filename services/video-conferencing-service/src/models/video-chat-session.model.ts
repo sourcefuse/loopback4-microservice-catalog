@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
 
 @model({
@@ -98,3 +98,5 @@ export class VideoChatSession
     super(data);
   }
 }
+
+export interface VideoChatSessionRelation {}

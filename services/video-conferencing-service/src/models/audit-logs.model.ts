@@ -5,6 +5,21 @@
 import {Entity, model, property} from '@loopback/repository';
 import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
+/**
+ * Audit Logs Model
+ * @deprecated Use the {@link AuditLog} instead.
+ * eg.
+ * ```ts
+ * class AuditLogRepository extends DefaultCrudRepository<
+ * AuditLog,
+ * typeof AuditLog.prototype.id
+ * >
+ * {
+ *    // ...
+ * }
+ * ```
+ */
+
 @model({
   name: 'audit_logs',
 })

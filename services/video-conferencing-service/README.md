@@ -101,20 +101,132 @@ JWT_SECRET=super_secret_string
 JWT_ISSUER=https://authentication.service
 ```
 
-| Name          | Required | Default Value | Description                                                                                                                        |
-| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
-| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
-| `HOST`        | Y        |               | Host for the service to run under, i.e. `0.0.0.0`                                                                                  |
-| `PORT`        | Y        | `3000`        | Port for the service to listen on.                                                                                                 |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
-| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
-| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
-| `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
-| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>NODE_ENV</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Node environment value, i.e. <code>dev</code>, <code>test</code>, <code>prod</code></td>
+    </tr>
+    <tr>
+      <td><code>LOG_LEVEL</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Log level value, i.e. <code>error</code>, <code>warn</code>, <code>info</code>, <code>verbose</code>, <code>debug</code></td>
+    </tr>
+    <tr>
+      <td><code>HOST</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Host for the service to run under, i.e. <code>0.0.0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>PORT</code></td>
+      <td>Y</td>
+      <td><code>3000</code></td>
+      <td>Port for the service to listen on.</td>
+    </tr>
+    <tr>
+      <td><code>DB_HOST</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Hostname for the database server.</td>
+    </tr>
+    <tr>
+      <td><code>DB_PORT</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Port for the database server.</td>
+    </tr>
+    <tr>
+      <td><code>DB_USER</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>User for the database.</td>
+    </tr>
+    <tr>
+      <td><code>DB_PASSWORD</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Password for the database user.</td>
+    </tr>
+    <tr>
+      <td><code>DB_DATABASE</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Database to connect to on the database server.</td>
+    </tr>
+    <tr>
+      <td><code>DB_SCHEMA</code></td>
+      <td>Y</td>
+      <td><code>public</code></td>
+      <td>Database schema used for the data source. In PostgreSQL, this will be <code>public</code> unless a schema is made explicitly for the service.</td>
+    </tr>
+    <tr>
+      <td><code>JWT_SECRET</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Symmetric signing key of the JWT token.</td>
+    </tr>
+    <tr>
+      <td><code>JWT_ISSUER</code></td>
+      <td>Y</td>
+      <td></td>
+      <td>Issuer of the JWT token.</td>
+    </tr>
+    <tr>
+      <td><code>ADD_AUDIT_LOG_MIXIN</code></td>
+      <td>N</td>
+      <td><code>false</code></td>
+      <td>Whether to store audit logs for the entities provided by this service. Setting this to true requires the following AUDIT_* env vars to also be set.</td>
+    </tr>
+    <tr>
+      <td><code>AUDIT_DB_HOST</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Hostname of the audit database server</td>
+    </tr>
+    <tr>
+      <td><code>AUDIT_DB_PORT</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Audit Database Server Port</td>
+    </tr>
+     <tr>
+      <td><code>AUDIT_DB_USER</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Username of the audit database server</td>
+    </tr>
+    <tr>
+      <td><code>AUDIT_DB_PASSWORD</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Password of the audit database user</td>
+    </tr>
+    <tr>
+      <td><code>AUDIT_DB_DATABASE</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Audit database name</td>
+    </tr>
+    <tr>
+      <td><code>AUDIT_DB_SCHEMA</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Database schema used for the data source. In PostgreSQL, this will be public unless a schema is made explicitly for the service.</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Setting up a `DataSource`
 
@@ -161,6 +273,52 @@ export class VideoDbDataSource
 ## Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+## Audit Logs
+
+To generate audit logs for video conferencing service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuditDbSourceName} from '@sourceloop/audit-log';
+
+const config = {
+  name: 'audit',
+  connector: 'postgresql',
+  url: '',
+  host: '',
+  port: 0,
+  user: '',
+  password: '',
+  database: '',
+};
+
+@lifeCycleObserver('datasource')
+export class AuditDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuditDbSourceName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.audit', {optional: true})
+    dsConfig: object = config,
+  ) {
+    const auditEnvConfig = {
+      host: process.env.AUDIT_DB_HOST,
+      port: process.env.AUDIT_DB_PORT,
+      user: process.env.AUDIT_DB_USER,
+      password: process.env.AUDIT_DB_PASSWORD,
+      database: process.env.AUDIT_DB_DATABASE,
+      schema: process.env.AUDIT_DB_SCHEMA,
+    };
+    Object.assign(dsConfig, auditEnvConfig);
+    super(dsConfig);
+  }
+}
+```
 
 ## API's Details
 

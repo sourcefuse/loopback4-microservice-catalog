@@ -7,17 +7,36 @@ import {
   Count,
   DataObject,
   DefaultCrudRepository,
+  juggler,
   Options,
   Where,
-  juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
-import {AuditLogs} from '../models';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {VideoConfDatasource} from '../keys';
+import {AuditLogs} from '../models';
 
+/**
+ * Audit Logs Repository
+ *
+ * This repository is usable for those who are using the audit trigger from the default migrations provided by this service.
+ * This is deprecated and will be removed in future releases. Users are advised to utilize the `AuditLogRepository` in case needed (more instructions provided in the Audit Logs section inside README.md).
+ * @deprecated Use the {@link AuditLogRepository} instead.
+ * eg.
+ * ```ts
+ * class MyRepository{
+ *  constructor(
+ *  @repository.getter('AuditLogRepository')
+ *   public getAuditLogRepository: Getter<AuditLogRepository>
+ *  ){
+ *     // ...
+ *  }
+ *  // ...
+ * }
+ * ```
+ */
 export class AuditLogsRepository extends DefaultCrudRepository<
   AuditLogs,
   typeof AuditLogs.prototype.id
