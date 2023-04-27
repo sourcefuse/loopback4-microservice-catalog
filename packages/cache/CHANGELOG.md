@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.9 (2023-04-27)</small>
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+
+
+
+
+
 ## <small>0.4.8 (2023-04-06)</small>
 
 * fix(cache): change clearCache function implementation and add some types (#1251) ([e45d8de](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e45d8de)), closes [#1251](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1251) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.2.18 (2023-04-27)</small>
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+
+
+
+
+
 ## <small>6.2.17 (2023-03-21)</small>
 
 * fix(cli): changed the opentelemetry packages since they are renamed (#1351) ([9ecb78e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ecb78e)), closes [#1351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1351) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347)

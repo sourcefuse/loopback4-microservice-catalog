@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.1 (2023-04-27)</small>
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+
+
+
+
+
 ## 10.0.0 (2023-04-10)
 
 * feat(authentication-service): added clientType column in auth client (#1357) ([aeb8bdc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aeb8bdc)), closes [#1357](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1357) [#1356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1356) [#1356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1356) [#1356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1356)

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.0 (2023-04-27)
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+* feat(video-conferencing-service): add audit log mixin in video conferencing service (#1388) ([d4879a3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d4879a3)), closes [#1388](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1388) [#1368](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1368)
+
+
+
+
+
 ## <small>4.1.18 (2023-04-06)</small>
 
 * fix(cli): changed the opentelemetry packages since they are renamed (#1351) ([9ecb78e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9ecb78e)), closes [#1351](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1351) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347) [#1347](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1347)

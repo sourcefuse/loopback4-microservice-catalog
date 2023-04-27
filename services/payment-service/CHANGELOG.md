@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.1.0 (2023-04-27)
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+* feat(payment-service): add paypal payment gateway (#1389) ([de2bc0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/de2bc0d)), closes [#1389](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1389)
+* docs(chore): openapi docs maintenance (#1385) ([91fbc41](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/91fbc41)), closes [#1385](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1385) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>7.0.8 (2023-04-17)</small>
 
 * docs(all-services): add missing openapi docs (#1376) ([bef8a4f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bef8a4f)), closes [#1376](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1376) [#1375](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1375)
