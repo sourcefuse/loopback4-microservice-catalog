@@ -37,9 +37,16 @@ jobs:
           npx lerna bootstrap
       - name: Build
         run: npx lerna run build
-      #- name: Test
-      #  run: npx lerna run test
+      - name: Test
+        run: npx lerna run test
       - name: Stash Changes
         run: git stash
       - name: Bump Versions
-        run: npx lerna version --yes --ci --conventional-commits --no-push # temporarily adding no push to avoid tags creation
+        # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
+        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
+      - name: Publish to NPM 🚀
+        # To always compare changes from registry
+        # using `from-package` compares version in local package.json with registry and publish it if required.
+        run: npx lerna publish from-package --yes
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
