@@ -51,6 +51,7 @@ const scopes = [
   {name: 'all-services'},
   {name: 'typedoc'},
   {name: 'mkdocs'},
+  {name: 'workflows'},
 ];
 
 /**
