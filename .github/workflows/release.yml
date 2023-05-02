@@ -1,0 +1,43 @@
+name: Release [Manual]
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # fetch-depth is necessary to get all tags
+          # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18.x'
+      - name: Configure CI Git User
+        run: |
+          git config --global user.name '@shubhamp-sf'
+          git config --global user.email 'shubham.prajapat@sourcefuse.com'
+          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/sourcefuse/loopback4-microservice-catalog
+        env:
+          GITHUB_PAT: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
+      - name: Authenticate with Registry
+        run: |
+          echo "@shubhamp-sf:registry=https://registry.npmjs.org/" > .npmrc
+          echo "registry=https://registry.npmjs.org/" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          npm whoami
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Bootstrap
+        run: |
+          npm ci
+          npx lerna bootstrap
+      - name: Build
+        run: npx lerna run build
+      - name: Test
+        run: npx lerna run test
+      - name: Bump Versions
+        run: npx lerna version --yes --ci --conventional-commits --no-push # temporarily adding no push to avoid tags creation
