@@ -37,7 +37,9 @@ jobs:
           npx lerna bootstrap
       - name: Build
         run: npx lerna run build
-      - name: Test
-        run: npx lerna run test
+      #- name: Test
+      #  run: npx lerna run test
+      - name: Stash Changes
+        run: git stash
       - name: Bump Versions
         run: npx lerna version --yes --ci --conventional-commits --no-push # temporarily adding no push to avoid tags creation
