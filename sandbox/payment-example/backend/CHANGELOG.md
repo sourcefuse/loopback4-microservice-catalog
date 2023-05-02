@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2023-05-02)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
 ## 0.4.0 (2023-04-27)
 
 * feat(payment-service): add paypal payment gateway (#1389) ([de2bc0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/de2bc0d)), closes [#1389](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1389)

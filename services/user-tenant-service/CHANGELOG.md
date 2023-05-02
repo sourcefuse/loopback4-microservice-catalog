@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.15 (2023-05-02)</small>
+
+* chore(all-services): openapi docs maintenance (#1399) ([548d0b8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/548d0b8)), closes [#1399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1399)
+
+
+
+
+
 ## <small>0.6.14 (2023-04-27)</small>
 
 * chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
