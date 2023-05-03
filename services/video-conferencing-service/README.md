@@ -320,6 +320,20 @@ export class AuditDataSource
 }
 ```
 
+Configure .env of application in index.ts before exporting application like follows
+
+```ts
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import {
+  ApplicationConfig,
+  VideoConferencingExampleApplication,
+} from './application';
+export * from './application';
+//...
+```
+
 ## API's Details
 
 Visit the [OpenAPI spec docs](./openapi.md)

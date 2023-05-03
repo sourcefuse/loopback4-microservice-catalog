@@ -207,6 +207,63 @@ The migrations required for this service are processed during the installation a
 
 ![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/migrations/scheduler_db_schema.png?raw=true)
 
+## Audit Logs
+
+To generate audit logs for video conferencing service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuditDbSourceName} from '@sourceloop/audit-log';
+
+const config = {
+  name: 'audit',
+  connector: 'postgresql',
+  url: '',
+  host: '',
+  port: 0,
+  user: '',
+  password: '',
+  database: '',
+};
+
+@lifeCycleObserver('datasource')
+export class AuditDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuditDbSourceName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.audit', {optional: true})
+    dsConfig: object = config,
+  ) {
+    const auditEnvConfig = {
+      host: process.env.AUDIT_DB_HOST,
+      port: process.env.AUDIT_DB_PORT,
+      user: process.env.AUDIT_DB_USER,
+      password: process.env.AUDIT_DB_PASSWORD,
+      database: process.env.AUDIT_DB_DATABASE,
+      schema: process.env.AUDIT_DB_SCHEMA,
+    };
+    Object.assign(dsConfig, auditEnvConfig);
+    super(dsConfig);
+  }
+}
+```
+
+Configure .env of application in index.ts before exporting application like follows
+
+```ts
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import {ApplicationConfig, SchedulerExampleApplication} from './application';
+export * from './application';
+//...
+```
+
 ## API's Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
