@@ -10,6 +10,10 @@ import {
   repository,
 } from '@loopback/repository';
 import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
+import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
@@ -18,13 +22,20 @@ import {SchedulerDatasourceName} from '../keys';
 import {Attachment, Attendee, Calendar, Event, EventRelations} from '../models';
 import {AttachmentRepository} from './attachment.repository';
 import {AttendeeRepository} from './attendee.repository';
+import {AuditLogRepository} from './audit.repository';
 import {CalendarRepository} from './calendar.repository';
 
-export class EventRepository extends DefaultUserModifyCrudRepository<
-  Event,
-  typeof Event.prototype.id,
-  EventRelations
-> {
+const EventAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Event_Logs',
+};
+export class EventRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    Event,
+    typeof Event.prototype.id,
+    EventRelations
+  >,
+  EventAuditOpts,
+) {
   public readonly calendar: BelongsToAccessor<
     Calendar,
     typeof Event.prototype.id
@@ -58,6 +69,8 @@ export class EventRepository extends DefaultUserModifyCrudRepository<
     protected attendeeRepositoryGetter: Getter<AttendeeRepository>,
     @repository.getter('AttachmentRepository')
     protected attachmentRepositoryGetter: Getter<AttachmentRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(Event, dataSource, getCurrentUser);
 
