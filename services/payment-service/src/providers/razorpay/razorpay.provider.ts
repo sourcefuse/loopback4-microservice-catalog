@@ -181,25 +181,28 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             async (err: unknown, order: DataObject<{id: string}>) => {
               if (err) {
                 if (typeof err === 'object') {
-                  err = err.toString();
+                  err = JSON.stringify(err);
                 }
                 this.logger.info(`${err}, err`);
+                return;
               }
-              if (order) {
-                payorder.metaData = {
-                  razorpayOrderID: order.id,
-                };
-                const template = Handlebars.compile(
-                  paymentTemplate || razorpayCreateTemplate,
-                );
 
-                const data = {
-                  razorpayKey: this.razorpayKey,
-                  totalAmount: payorder.totalAmount,
-                  orderId: order.id,
-                };
-                razorpayTemplate = template(data);
+              if (!order) {
+                return;
               }
+              payorder.metaData = {
+                razorpayOrderID: order.id,
+              };
+              const template = Handlebars.compile(
+                paymentTemplate || razorpayCreateTemplate,
+              );
+
+              const data = {
+                razorpayKey: this.razorpayKey,
+                totalAmount: payorder.totalAmount,
+                orderId: order.id,
+              };
+              razorpayTemplate = template(data);
             },
           );
           await this.ordersRepository.updateById(payorder.id, {...payorder});
@@ -257,12 +260,8 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             order[0].currency,
             (err: unknown, response: unknown) => {
               if (err) {
-                if (typeof err === 'object') {
-                  err = err.toString();
-                }
+                err = typeof err === 'object' ? JSON.stringify(err) : err;
                 this.logger.info(`${err}, err`);
-              } else {
-                //do nothing
               }
             },
           );
@@ -270,32 +269,34 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             chargeResponse.razorpay_payment_id,
             async (err: unknown, resdata: DataObject<{status: string}>) => {
               if (err) {
-                if (typeof err === 'object') {
-                  err = err.toString();
-                }
+                err = typeof err === 'object' ? JSON.stringify(err) : err;
                 this.logger.info(`${err}, err`);
+                return;
               }
-              if (
+
+              const capturedOrPaid =
                 resdata.status === Status.Captured ||
-                resdata.status === Status.Paid
-              ) {
-                order[0].status = Status.Paid;
-                await this.ordersRepository.updateById(order[0].id, {
-                  ...order[0],
-                });
-                const transactions = await this.transactionsRepository.find({
-                  where: {orderId: order[0].id},
-                });
-                transactions[0].res = {
-                  ...transactions[0].res,
-                  chargeResponse: resdata,
-                };
-                await this.transactionsRepository.updateById(
-                  transactions[0].id,
-                  {...transactions[0]},
-                );
-                chargeComplete = true;
+                resdata.status === Status.Paid;
+
+              if (!capturedOrPaid) {
+                return;
               }
+
+              order[0].status = Status.Paid;
+              await this.ordersRepository.updateById(order[0].id, {
+                ...order[0],
+              });
+              const transactions = await this.transactionsRepository.find({
+                where: {orderId: order[0].id},
+              });
+              transactions[0].res = {
+                ...transactions[0].res,
+                chargeResponse: resdata,
+              };
+              await this.transactionsRepository.updateById(transactions[0].id, {
+                ...transactions[0],
+              });
+              chargeComplete = true;
             },
           );
         }
