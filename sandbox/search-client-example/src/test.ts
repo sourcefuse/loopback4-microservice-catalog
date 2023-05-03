@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -25,9 +25,10 @@ declare const require: {
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting(), {
-    teardown: { destroyAfterEach: false }
-},
+  platformBrowserDynamicTesting(),
+  {
+    teardown: {destroyAfterEach: false},
+  },
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -16,9 +16,7 @@ const tempDeps = configJsonFile.config.templateDependencies;
 
 const packageJsonFile = 'package.json';
 
-export default class UpdateGenerator extends BaseUpdateGenerator<
-  UpdateOptions
-> {
+export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> {
   constructor(public args: string[], public opts: UpdateOptions) {
     super(args, opts);
   }

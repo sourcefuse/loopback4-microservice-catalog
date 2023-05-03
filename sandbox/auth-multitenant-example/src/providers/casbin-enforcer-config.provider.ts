@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -17,7 +17,8 @@ import {
 import {UserLevelResourceRepository} from '../repositories';
 
 export class CasbinEnforcerConfigProvider
-  implements Provider<CasbinEnforcerConfigGetterFn> {
+  implements Provider<CasbinEnforcerConfigGetterFn>
+{
   constructor(
     @inject.getter(AuthorizationBindings.METADATA)
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,

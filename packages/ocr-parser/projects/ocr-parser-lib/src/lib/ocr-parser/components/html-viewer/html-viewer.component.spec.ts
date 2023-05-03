@@ -1,10 +1,10 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HtmlViewerComponent } from './html-viewer.component';
+import {HtmlViewerComponent} from './html-viewer.component';
 
 describe('HtmlViewerComponent', () => {
   let component: HtmlViewerComponent;
@@ -12,9 +12,8 @@ describe('HtmlViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HtmlViewerComponent ]
-    })
-    .compileComponents();
+      declarations: [HtmlViewerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -18,8 +18,10 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class SchedulerDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class SchedulerDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = 'schedulerDb';
   static readonly defaultConfig = config;
 

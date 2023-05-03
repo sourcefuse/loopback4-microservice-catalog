@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -14,7 +14,7 @@ const config = {
   user: process.env.CHAT_DB_USER,
   password: process.env.CHAT_DB_PASSWORD,
   database: process.env.CHAT_DB_DATABASE,
-  schema: process.env.CHAT_DB_SCHEMA
+  schema: process.env.CHAT_DB_SCHEMA,
 };
 
 // Observe application's life cycle to disconnect the datasource when

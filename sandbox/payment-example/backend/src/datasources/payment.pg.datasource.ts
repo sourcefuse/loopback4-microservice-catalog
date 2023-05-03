@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -19,8 +19,10 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class PaymentDbDataSource extends juggler.DataSource
-  implements LifeCycleObserver {
+export class PaymentDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
   static dataSourceName = 'payment';
   static readonly defaultConfig = config;
 
