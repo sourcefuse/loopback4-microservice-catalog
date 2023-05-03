@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -9,9 +9,7 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {
-  featureFlag
-} from '@sourceloop/feature-toggle';
+import {featureFlag} from '@sourceloop/feature-toggle';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
@@ -23,7 +21,7 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featureFlag({
-    featureKey: 'Calendar'
+    featureKey: 'Calendar',
   })
   @authorize({permissions: ['*']})
   @get('/all_3_strategies', {
@@ -47,7 +45,7 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featureFlag({
-    featureKey: 'Calendar'
+    featureKey: 'Calendar',
   })
   @authorize({permissions: ['*']})
   @get('/system_strategy', {
@@ -71,7 +69,7 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featureFlag({
-    featureKey: 'Calendar'
+    featureKey: 'Calendar',
   })
   @authorize({permissions: ['*']})
   @get('/tenant_strategy', {
@@ -95,7 +93,7 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featureFlag({
-    featureKey: 'Calendar'
+    featureKey: 'Calendar',
   })
   @authorize({permissions: ['*']})
   @get('/user_strategy', {
@@ -119,7 +117,7 @@ export class FeatureToggleExampleController {
 
   @authenticate(STRATEGY.BEARER)
   @featureFlag({
-    featureKey: 'Calendar'
+    featureKey: 'Calendar',
   })
   @authorize({permissions: ['*']})
   @get('/skip_all_strategy', {

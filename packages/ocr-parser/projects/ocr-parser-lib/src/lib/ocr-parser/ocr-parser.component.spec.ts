@@ -1,10 +1,9 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { OcrParserComponent } from './ocr-parser.component';
-
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {OcrParserComponent} from './ocr-parser.component';
 
 describe('OcrParserLibComponent', () => {
   let component: OcrParserComponent;
@@ -12,9 +11,8 @@ describe('OcrParserLibComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OcrParserComponent ]
-    })
-    .compileComponents();
+      declarations: [OcrParserComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

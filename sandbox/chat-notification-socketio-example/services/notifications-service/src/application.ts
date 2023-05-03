@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -17,7 +17,7 @@ import {
 } from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
-import { NotificationBindings } from 'loopback4-notifications';
+import {NotificationBindings} from 'loopback4-notifications';
 import {
   SocketIOProvider,
   SocketBindings,

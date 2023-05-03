@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -12,12 +12,10 @@ export class OcrDataService {
     isScroll: false,
     fieldData: new FieldData(),
   });
-  private readonly _updatedClauseValue: BehaviorSubject<
-    string
-  > = new BehaviorSubject('');
-  private readonly _updatedClauseData: BehaviorSubject<
-    FieldData
-  > = new BehaviorSubject(new FieldData());
+  private readonly _updatedClauseValue: BehaviorSubject<string> =
+    new BehaviorSubject('');
+  private readonly _updatedClauseData: BehaviorSubject<FieldData> =
+    new BehaviorSubject(new FieldData());
 
   $getSelectedClauseData = this._selectedClauseData.asObservable();
   $getUpdatedClauseValue = this._updatedClauseValue.asObservable();
