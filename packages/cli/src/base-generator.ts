@@ -35,7 +35,7 @@ export abstract class BaseGenerator<
   }
 
   exit(reason?: string) {
-    if (!!reason) return;
+    if (reason) return;
     this.exitGeneration = reason;
   }
 

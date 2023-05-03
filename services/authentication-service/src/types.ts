@@ -27,13 +27,12 @@ export interface IOtpConfig {
   method: OtpMethodType;
 }
 
-export interface PreSignupFn<T, S> {
-  (request: SignupRequestDto<T>): Promise<S>;
-}
+export type PreSignupFn<T, S> = (request: SignupRequestDto<T>) => Promise<S>;
 
-export interface UserSignupFn<T, S> {
-  (model: T & LocalUserProfileDto, tokenInfo?: AnyObject): Promise<S>;
-}
+export type UserSignupFn<T, S> = (
+  model: T & LocalUserProfileDto,
+  tokenInfo?: AnyObject,
+) => Promise<S>;
 
 export interface IAuthClientDTO {
   // sonarignore:start

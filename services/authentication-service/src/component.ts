@@ -122,7 +122,7 @@ export class AuthenticationServiceComponent implements Component {
     // Mount core component
     this.application.component(CoreComponent);
 
-    if (!!+(process.env.AZURE_AUTH_ENABLED ?? 0)) {
+    if (+(process.env.AZURE_AUTH_ENABLED ?? 0)) {
       const expressMiddlewares =
         this.application.getSync(SFCoreBindings.EXPRESS_MIDDLEWARES) ?? [];
       expressMiddlewares.push(cookieParser());
