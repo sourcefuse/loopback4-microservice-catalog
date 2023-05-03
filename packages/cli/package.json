@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cli",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "Custom Sourceloop CLI",
   "bin": {
     "sl": "./bin/run"

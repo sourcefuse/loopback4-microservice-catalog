@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.9 (2023-05-03)</small>
+
+* refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+
+
+
+
+
 ## <small>0.4.8 (2023-04-27)</small>
 
 * chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)

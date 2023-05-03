@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.2 (2023-05-03)</small>
+
+* refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
+* refactor(chore): fix sonar code smells (#1402) ([9244178](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9244178)), closes [#1402](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1402)
+* refactor(chore): fix sonar code smells (#1403) ([1cd394f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1cd394f)), closes [#1403](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1403)
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+
+
+
+
+
 ## <small>7.1.1 (2023-05-02)</small>
 
 * chore(all-services): openapi docs maintenance (#1399) ([548d0b8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/548d0b8)), closes [#1399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1399)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.5 (2023-05-03)</small>
+
+* refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
+
+
+
+
+
 ## <small>2.1.4 (2023-03-06)</small>
 
 * refactor(chore): resolve sonar code smells (#1264) ([70d3fc5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d3fc5)), closes [#1264](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1264) [#1200](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1200)
