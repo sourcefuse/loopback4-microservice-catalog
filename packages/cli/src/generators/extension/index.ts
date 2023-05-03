@@ -79,7 +79,7 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     const offset = 2;
     const firstPart = czConfig.slice(0, lastScopeIndex + offset);
     const secPart = czConfig.slice(lastScopeIndex + offset);
-    const stringToAdd = `{name: \'${this.options.name}\'}, \n`;
+    const stringToAdd = `{name: '${this.options.name}'}, \n`;
 
     czConfig = firstPart + stringToAdd + secPart;
     fs.writeFile(

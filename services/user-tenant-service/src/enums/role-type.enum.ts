@@ -5,14 +5,14 @@
 import {RoleTypes} from '@sourceloop/core';
 
 export const enum RoleKey {
-  Admin,
+  Admin = 0,
   Default = 2,
-  ProgramManager,
-  GuestBoardViewer,
-  GuestDashboardViewer,
+  ProgramManager = 3,
+  GuestBoardViewer = 4,
+  GuestDashboardViewer = 5,
   Automation = 7,
-  GuestTaskViewer,
-  GuestGroupViewer,
+  GuestTaskViewer = 8,
+  GuestGroupViewer = 9,
   SuperAdmin = 10,
   GuestWorkspaceViewer = 11,
 }

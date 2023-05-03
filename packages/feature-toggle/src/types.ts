@@ -9,13 +9,9 @@ export interface FeatureFlagMetadata {
   options?: Object;
 }
 
-export interface FeatureInterface {
-  (): Promise<boolean>;
-}
+export type FeatureInterface = () => Promise<boolean>;
 
-export interface FeatureFlagFn {
-  (): Promise<boolean>;
-}
+export type FeatureFlagFn = () => Promise<boolean>;
 
 export interface IAuthUserWithDisabledFeat extends IAuthUserWithPermissions {
   disabledFeatures: string[];

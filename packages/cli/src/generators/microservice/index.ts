@@ -257,7 +257,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const suffix = this.options.facade ? 'facade' : 'service';
 
     const stringToAdd =
-      `{name: \'${this.options.name}` + '-' + `${suffix}\'}, \n`;
+      `{name: '${this.options.name}` + '-' + `${suffix}'}, \n`;
 
     czConfig = firstPart + stringToAdd + secPart;
     fs.writeFile(

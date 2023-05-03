@@ -38,17 +38,16 @@ export interface WorflowManager<T = AnyObject, S = AnyObject> {
   ): Promise<WorkflowVersion>;
 }
 
-export interface ExecutionInputValidator<T = AnyObject> {
-  (schema: AnyObject, input: T): Promise<boolean>;
-}
+export type ExecutionInputValidator<T = AnyObject> = (
+  schema: AnyObject,
+  input: T,
+) => Promise<boolean>;
 
-export interface WorkerRegisterFn<T = AnyObject, R = AnyObject> {
-  (
-    bpmnName: string,
-    topicName: string,
-    commandCtor: BPMTask<T, R>,
-  ): Promise<void>;
-}
+export type WorkerRegisterFn<T = AnyObject, R = AnyObject> = (
+  bpmnName: string,
+  topicName: string,
+  commandCtor: BPMTask<T, R>,
+) => Promise<void>;
 
 export type WorkerMap<T = AnyObject, R = AnyObject> = {
   [workflowName: string]: WorkerNameCmdPair<T, R>[];
@@ -60,9 +59,9 @@ export type WorkerNameCmdPair<T = AnyObject, R = AnyObject> = {
   running: boolean;
 };
 
-export interface WorkerImplementationFn<T = AnyObject, R = AnyObject> {
-  (worker: WorkerNameCmdPair<T, R>): Promise<void>;
-}
+export type WorkerImplementationFn<T = AnyObject, R = AnyObject> = (
+  worker: WorkerNameCmdPair<T, R>,
+) => Promise<void>;
 
 export type SuccessResponse = {
   version: number;

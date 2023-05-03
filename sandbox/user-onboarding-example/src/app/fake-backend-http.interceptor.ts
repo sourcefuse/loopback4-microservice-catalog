@@ -29,7 +29,8 @@ export class FakeBackendHttpInterceptor implements HttpInterceptor {
     }
     if (url.includes('heroes/?name=') && method === 'GET') {
       const name = url.split('=')[1];
-      const res = HEROES.filter(hero => hero.name.match(name));
+      let regexp = new RegExp(name);
+      const res = HEROES.filter(hero => regexp.exec(hero.name));
       return of(new HttpResponse({body: res, status: 200}));
     }
     if (url.match(/\/heroes\/.*/) && method === 'GET') {
