@@ -14,6 +14,8 @@ import { UserRepository } from '../repositories/user.repository';
 import ejs from 'ejs';
 import path from 'path';
 import {oidcProvider} from '../services/oidc-service';
+import { STATUS_CODE } from '@sourceloop/core';
+
 
 export class OidcController {
   constructor(
@@ -34,7 +36,7 @@ export class OidcController {
     },
   })
   async interaction() {
-    const {uid, prompt, params, session} =
+    const {uid, prompt, params} =
       await oidcProvider.interactionDetails(
         this.requestContext.request,
         this.requestContext.response,
@@ -54,7 +56,7 @@ export class OidcController {
           },
         );
         this.requestContext.response
-          .status(200)
+          .status(STATUS_CODE.OK)
           .contentType('text/html')
           .send(html);
         return;
@@ -72,7 +74,7 @@ export class OidcController {
           },
         );
         this.requestContext.response
-          .status(200)
+          .status(STATUS_CODE.OK)
           .contentType('text/html')
           .send(html);
         return;
@@ -128,7 +130,7 @@ export class OidcController {
     let {grantId} = interactionDetails;
 
     const {
-      prompt: {name, details},
+      prompt: {details},
       params,
     } = interactionDetails;
 

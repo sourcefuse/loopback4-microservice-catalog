@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
-import Provider, {Configuration} from 'oidc-provider';
+import Provider, {ClaimsParameterMember, Configuration} from 'oidc-provider';
 import express from 'express';
 const oidcProviderApp = express();
 
@@ -29,11 +29,10 @@ const config: Configuration = {
     profile: ['firstname', 'lastname', 'email'],
     scopeA: ['claim1', 'claim2'],
   },
-  async findAccount(ctx:any, sub:any, token:any) {
+  async findAccount(ctx: unknown, sub: string, token: unknown) {
     const app = await oidcProviderApp.get('ctx');
     const userRepo = await app.get('repositories.UserRepository');
     const newUser = await userRepo.find({where:{username:sub}});
-    console.log(newUser[0],'newUser');
     const {email, firstName, lastName} = newUser[0];
     return {
       accountId: sub,
@@ -47,7 +46,7 @@ const config: Configuration = {
       //   "id_token" or "userinfo" (depends on the "use" param)
       // @param rejected {Array[String]} - claim names that were rejected by the end-user, you might
       //   want to skip loading some claims from external resources or through db projection
-      async claims(use:any, scope:any, claims:any, rejected:any) {
+      async claims(use: string, scope: string, claims: {[key: string]: ClaimsParameterMember}, rejected: Array<string>) {
         return {sub: sub, firstname: firstName, lastname: lastName, email: email};
       },
     }
