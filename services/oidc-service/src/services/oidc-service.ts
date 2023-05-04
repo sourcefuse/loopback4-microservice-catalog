@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
-import Provider, {ClaimsParameterMember, Configuration} from 'oidc-provider';
+import Provider, {Configuration} from 'oidc-provider';
 import express from 'express';
 const oidcProviderApp = express();
+oidcProviderApp.disable("x-powered-by");
 
 const config: Configuration = {
   clients: [
@@ -46,7 +47,7 @@ const config: Configuration = {
       //   "id_token" or "userinfo" (depends on the "use" param)
       // @param rejected {Array[String]} - claim names that were rejected by the end-user, you might
       //   want to skip loading some claims from external resources or through db projection
-      async claims(use: string, scope: string, claims: {[key: string]: ClaimsParameterMember}, rejected: Array<string>) {
+      async claims(use: string, scope: string, claims: unknown, rejected: Array<string>) {
         return {sub: sub, firstname: firstName, lastname: lastName, email: email};
       },
     }
