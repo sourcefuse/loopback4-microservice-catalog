@@ -18,7 +18,7 @@ export class ImportController {
     @inject(AWSS3Bindings.AwsS3Provider) s3: AWS.S3,
   ) {
     const LevelWiseBatches = await this.excelService.getData(fileKey, {});
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.sendMessageFn(LevelWiseBatches);
+
+    await this.sendMessageFn(LevelWiseBatches);
   }
 }

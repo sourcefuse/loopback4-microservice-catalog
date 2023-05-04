@@ -1,6 +1,5 @@
 import {BindingScope, injectable, service} from '@loopback/core';
 import {WorkSheet} from 'xlsx';
-import {MessageData} from '../types';
 import {FileHelperService} from './file-helper.service';
 const XLSX = require('xlsx');
 
@@ -22,34 +21,50 @@ export class ExcelService {
       cellStyles: true,
     });
     const sheets: WorkSheet[] = Object.values(file.Sheets);
-    const batches: MessageData[] = [];
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    sheets.forEach(async (sheet: WorkSheet) => {
-      const sheetData = await this.getSheetData(sheet);
-      batches.push({rows: sheetData, types});
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const batches: any[] = [];
+
+    sheets.forEach((sheet: WorkSheet) => {
+      const rowOutlineLevel: number[] = [];
+
+      //find max outline level
+      let maxOutlineLevel = 0;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sheet['!rows']?.forEach((row: any, index: number) => {
+        rowOutlineLevel[index] = row.level;
+        if (row.level > maxOutlineLevel) {
+          maxOutlineLevel = row.level;
+        }
+      });
+      const sheetData = XLSX.utils.sheet_to_json(sheet, {
+        raw: false,
+      });
+
+      for (
+        let currentOutlineLevel = 1;
+        currentOutlineLevel <= maxOutlineLevel;
+        currentOutlineLevel++
+      ) {
+        batches[currentOutlineLevel] = batches[currentOutlineLevel] ?? [];
+
+        const currentLevelRowData: string[] = [];
+
+        for (const [index, rowData] of sheetData.entries()) {
+          if (index === 0) {
+            continue;
+          }
+
+          if (rowOutlineLevel[index] === currentOutlineLevel) {
+            currentLevelRowData.push(rowData);
+          }
+        }
+
+        for (let i = 0; i < currentLevelRowData.length; i += batchSize) {
+          const batch = currentLevelRowData.slice(i, i + batchSize);
+          batches[currentOutlineLevel].push({rows: batch, types});
+        }
+      }
     });
     return batches;
-  }
-  async getSheetData(sheetName: WorkSheet) {
-    const rows: string[] = [];
-    const sheetData = XLSX.utils.sheet_to_json(sheetName, {
-      raw: false,
-    });
-    sheetData.splice(0, 1);
-    for await (const chunk of this.getSheetGenerator(sheetData)) {
-      rows.push(...chunk);
-    }
-    return rows;
-  }
-  async *getSheetGenerator(sheetData: string[]) {
-    let OutlineLevel = 0;
-
-    for (
-      let i = 1;
-      OutlineLevel < sheetData.length;
-      OutlineLevel += batchSize, i++
-    ) {
-      yield sheetData.slice(OutlineLevel, OutlineLevel + batchSize);
-    }
   }
 }

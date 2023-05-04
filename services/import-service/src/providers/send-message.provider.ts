@@ -18,10 +18,8 @@ export const ackQueueUrl = process.env.ACKNOWLEDGE_QUEUE as string;
 export class SendMessageProvider
   implements Provider<(data: MessageData[][]) => Promise<void>>
 {
-  constructor(/* Add @inject to inject parameters */) {}
-
   value() {
-    return (levelWiseBatches: MessageData[][]) =>
+    return async (levelWiseBatches: MessageData[][]) =>
       this.sendMessageListener(levelWiseBatches);
   }
 
@@ -77,9 +75,9 @@ export class SendMessageProvider
     level: number,
   ) {
     let group = 1;
-
-    for (let i = 0; i < data.length; i += 10) {
-      const messageGroup = data.slice(i, i + 10);
+    const inc = 10;
+    for (let i = 0; i < data.length; i += inc) {
+      const messageGroup = data.slice(i, i + inc);
 
       const params: {
         QueueUrl: string;

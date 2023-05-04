@@ -32,7 +32,7 @@ export class FileHelperService {
   }
   async readFile() {
     try {
-      const filePath = path.join(__dirname + '${process.env.FILE_PATH}');
+      const filePath = path.join(__dirname + `${process.env.FILE_PATH}`);
       const fileResponse = readFileSync(filePath);
 
       return {Body: fileResponse};
