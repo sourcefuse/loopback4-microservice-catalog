@@ -10,15 +10,14 @@ async function elementsBundler() {
     './dist/search-element/polyfills.js',
     './dist/search-element/main.js',
   ];
-  //copy the element related js and css file to separate project
-  //so that it can be published individually
-  //and then delete it from library
-  await ensureDir('../search-element');
-  await concat(files, '../search-element/search-element.js');
+
+  await ensureDir('../search-element/dist');
+  await concat(files, '../search-element/dist/search-element.js');
   await copyFile(
     './dist/search-element/styles.css',
-    '../search-element/styles.css',
+    '../search-element/dist/styles.css',
   );
+  await copyFile('./dist/README.md', '../search-element/dist/README.md');
   await rm('./dist/search-element', {recursive: true});
 
   // generate the hash of element file to keep a track of the chnages
@@ -26,13 +25,14 @@ async function elementsBundler() {
   // resulting in changing its hash, so the element will also be published
 
   const file = '../search-element/dist/search-element.js';
-
   try {
     const data = readFileSync(file);
     const hash = crypto.createHash('sha256');
     hash.update(data);
 
     const fileHash = hash.digest('hex');
+    console.log(`The SHA-256 hash of ${file} is: ${fileHash}`);
+
     //update the package.json with the new hashCode
     //if there will be changes in hash then the element will also be published
     const packageJsonPath = '../search-element/package.json';
