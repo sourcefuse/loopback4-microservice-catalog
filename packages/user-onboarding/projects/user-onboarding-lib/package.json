@@ -41,7 +41,6 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
