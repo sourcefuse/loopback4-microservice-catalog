@@ -39,7 +39,12 @@
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
     "directory": "packages/search"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "directory": "dist"
+  },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true
+  "private": false
 }
