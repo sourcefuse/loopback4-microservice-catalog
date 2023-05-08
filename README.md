@@ -1,9 +1,9 @@
-# Sourceloop
-
-#### Notice
+#### Note
 
 This particular branch is to maintain and release @sourceloop/user-onboarding-client that uses angular 13.
 Note that we support angular version 13(via this branch) and 14(via master) for @sourceloop/user-onboarding-client.
+
+# Sourceloop
 
 Everthing else is the same and users can refer the master branch for updtaes on other packages.
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
