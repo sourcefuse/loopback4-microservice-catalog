@@ -1,5 +1,10 @@
 # user-onboarding-client
 
+#### Notice
+
+This particular branch is to maintain and release @sourceloop/user-onboarding-client that uses angular 13.
+Note that we support angular version 13(via this branch) and 14(via master) for @sourceloop/user-onboarding-client.
+
 ## Overview
 
 Microservice for providing a smooth user onboarding experience with the help of step by step application specific tours.
