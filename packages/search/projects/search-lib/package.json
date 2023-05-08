@@ -21,8 +21,9 @@
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "libraryBuild": "ng build && cp -r src/assets dist/assets",
-    "elementBuild": "ng build search-element && ts-node bundle-element.ts",
+    "libraryBuild": "ng build && cp -r src/assets dist/search-lib/assets",
+    "elementBuild": "ng build search-element",
+    "postbuild": "ts-node bundle-element.ts",
     "build": "npm run libraryBuild && npm run elementBuild",
     "prepublishOnly": "npm run build"
   },
@@ -40,10 +41,5 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false,
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "directory": "dist"
-  }
+  "private": true
 }
