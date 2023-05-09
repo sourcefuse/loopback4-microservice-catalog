@@ -5,6 +5,8 @@
     "packages/cache",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
+    "packages/search/projects/search-lib",
+    "packages/search/projects/search-element",
     "services/*",
     "facades/*",
     "sandbox/**"
@@ -85,7 +87,6 @@
         "@sourceloop/chat-notif-example-chat-socket",
         "@sourceloop/chat-notif-example-notif-socket",
         "@sourceloop/example-socketio",
-        "@sourceloop/search-client",
         "@sourceloop/user-onboarding-client",
         "@sourceloop/oauth-example-api",
         "@sourceloop/oauth-example-ui",
@@ -106,8 +107,7 @@
     "**/__tests__/**",
     "**/*.md",
     "packages/core/locales/**",
-    "packages/user-onboarding",
-    "packages/search"
+    "packages/user-onboarding"
   ],
   "version": "independent"
 }
