@@ -35,9 +35,9 @@ jobs:
       - name: Bootstrap
         run: |
           npm ci
-          npx lerna bootstrap
+          npx lerna bootstrap --since
       - name: Test
-        run: npx lerna run test
+        run: npx lerna run test --since
       - name: Stash Changes
         run: git stash
       - name: Bump Versions
