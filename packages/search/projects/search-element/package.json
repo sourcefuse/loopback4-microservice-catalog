@@ -1,6 +1,6 @@
 {
   "name": "@search/search-element",
-  "version": "5.3.0",
+  "version": "5.3.1",
   "description": "A global search element for search microservice.",
   "main": "./search-element.js",
   "private": false,
