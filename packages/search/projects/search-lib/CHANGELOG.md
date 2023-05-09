@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.2.3 (2023-05-09)</small>
+
+* fix(search-client): correcting the package scope in the name field (#1414) ([5247e57](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5247e57)), closes [#1414](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1414) [#1386](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1386)
+
+
+
+
+
 ## <small>5.2.2 (2023-05-09)</small>
 
 * fix(search-client): fix for releasing search-client (#1413) ([347ad23](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347ad23)), closes [#1413](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1413) [#1386](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1386)
