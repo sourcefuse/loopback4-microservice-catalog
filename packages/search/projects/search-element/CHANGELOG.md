@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.4.2 (2023-05-09)</small>
+
+* fix(search-client): added missing test step (#1416) ([1ca700e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1ca700e)), closes [#1416](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1416) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>5.4.1 (2023-05-09)</small>
 
 * chore(core): changing the node version in release workflow (#1415) ([010c2ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/010c2ca)), closes [#1415](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1415) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.7.0 (2023-05-09)
+
+* feat(user-tenant-service): add configurable audit log (#1408) ([c9b2ff0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c9b2ff0)), closes [#1408](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1408) [#1368](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1368)
+
+
+
+
+
 ## <small>0.6.16 (2023-05-03)</small>
 
 * refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
