@@ -5,9 +5,9 @@
 import {Getter, inject} from '@loopback/core';
 import {
   HasManyRepositoryFactory,
-  repository,
   HasOneRepositoryFactory,
   juggler,
+  repository,
 } from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
@@ -15,16 +15,28 @@ import {
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {UserTenantDataSourceName} from '../keys';
 import {Role, RoleRelations, UserTenant, UserView} from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserViewRepository} from './user-view.repository';
 
-export class RoleRepository extends DefaultUserModifyCrudRepository<
-  Role,
-  typeof Role.prototype.id,
-  RoleRelations
-> {
+const RoleAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Role_Logs',
+};
+
+export class RoleRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    Role,
+    typeof Role.prototype.id,
+    RoleRelations
+  >,
+  RoleAuditOpts,
+) {
   public readonly userTenants: HasManyRepositoryFactory<
     UserTenant,
     typeof Role.prototype.id
@@ -51,6 +63,8 @@ export class RoleRepository extends DefaultUserModifyCrudRepository<
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @repository.getter('UserViewRepository')
     protected userViewRepositoryGetter: Getter<UserViewRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(Role, dataSource, getCurrentUser);
     this.modifiedByUser = this.createHasOneRepositoryFactoryFor(

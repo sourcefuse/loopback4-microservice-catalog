@@ -3,7 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/context';
-import {repository, juggler} from '@loopback/repository';
+import {juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -11,13 +15,21 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
 import {GroupUserCountView} from '../models/group-user-count-view.model';
+import {AuditLogRepository} from './audit.repository';
 import {UserGroupRepository} from './user-group.repository';
 
-export class UserGroupCountViewRepository extends DefaultUserModifyCrudRepository<
-  GroupUserCountView,
-  typeof GroupUserCountView.prototype.id,
-  GroupUserCountView
-> {
+const UserGroupCountAuditOpts: IAuditMixinOptions = {
+  actionKey: 'User_Group_Count_Audit_Logs',
+};
+
+export class UserGroupCountViewRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    GroupUserCountView,
+    typeof GroupUserCountView.prototype.id,
+    GroupUserCountView
+  >,
+  UserGroupCountAuditOpts,
+) {
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
@@ -27,6 +39,8 @@ export class UserGroupCountViewRepository extends DefaultUserModifyCrudRepositor
     >,
     @repository.getter('UserGroupRepository')
     protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(GroupUserCountView, dataSource, getCurrentUser);
   }

@@ -4,19 +4,28 @@
 // https://opensource.org/licenses/MIT
 import {Getter} from '@loopback/context';
 import {inject} from '@loopback/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import {juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-import {juggler} from '@loopback/repository';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
 import {UserView} from '../models';
+import {AuditLogRepository} from './audit.repository';
 
-export class UserViewRepository extends DefaultUserModifyCrudRepository<
-  UserView,
-  typeof UserView.prototype.id
-> {
+const UserViewAuditOpts: IAuditMixinOptions = {
+  actionKey: 'User_View_Logs',
+};
+
+export class UserViewRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<UserView, typeof UserView.prototype.id>,
+  UserViewAuditOpts,
+) {
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
@@ -24,6 +33,8 @@ export class UserViewRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(UserView, dataSource, getCurrentUser);
   }

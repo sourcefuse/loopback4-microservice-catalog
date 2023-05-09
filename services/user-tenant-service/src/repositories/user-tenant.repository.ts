@@ -6,32 +6,43 @@ import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   HasManyRepositoryFactory,
-  repository,
   juggler,
+  repository,
 } from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {SoftCrudRepository} from 'loopback4-soft-delete';
 
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {UserTenantDataSourceName} from '../keys';
 import {
   Role,
   Tenant,
   User,
+  UserGroup,
   UserLevelPermission,
   UserTenant,
   UserTenantRelations,
-  UserGroup,
 } from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {RoleRepository} from './role.repository';
 import {TenantRepository} from './tenant.repository';
+import {UserGroupRepository} from './user-group.repository';
 import {UserLevelPermissionRepository} from './user-level-permission.repository';
 import {UserRepository} from './user.repository';
-import {UserGroupRepository} from './user-group.repository';
 
-export class UserTenantRepository extends DefaultSoftCrudRepository<
-  UserTenant,
-  typeof UserTenant.prototype.id,
-  UserTenantRelations
-> {
+const UserTenantAuditOpts: IAuditMixinOptions = {
+  actionKey: 'User_Tenant_Logs',
+};
+export class UserTenantRepository extends ConditionalAuditRepositoryMixin(
+  SoftCrudRepository<
+    UserTenant,
+    typeof UserTenant.prototype.id,
+    UserTenantRelations
+  >,
+  UserTenantAuditOpts,
+) {
   public readonly tenant: BelongsToAccessor<
     Tenant,
     typeof UserTenant.prototype.id
@@ -64,6 +75,8 @@ export class UserTenantRepository extends DefaultSoftCrudRepository<
     protected userLevelPermissionRepositoryGetter: Getter<UserLevelPermissionRepository>,
     @repository.getter('UserGroupRepository')
     protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(UserTenant, dataSource);
     this.userGroups = this.createHasManyRepositoryFactoryFor(

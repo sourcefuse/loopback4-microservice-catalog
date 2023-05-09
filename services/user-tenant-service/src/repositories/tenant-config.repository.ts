@@ -2,22 +2,34 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
-import {TenantConfig, TenantConfigRelations, Tenant} from '../models';
-import {UserTenantDataSourceName} from '../keys';
-import {inject, Getter} from '@loopback/core';
-import {TenantRepository} from './tenant.repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
+import {UserTenantDataSourceName} from '../keys';
+import {Tenant, TenantConfig, TenantConfigRelations} from '../models';
+import {AuditLogRepository} from './audit.repository';
+import {TenantRepository} from './tenant.repository';
 
-export class TenantConfigRepository extends DefaultUserModifyCrudRepository<
-  TenantConfig,
-  typeof TenantConfig.prototype.id,
-  TenantConfigRelations
-> {
+const TenantConfigAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Tenant_Config_Logs',
+};
+
+export class TenantConfigRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    TenantConfig,
+    typeof TenantConfig.prototype.id,
+    TenantConfigRelations
+  >,
+  TenantConfigAuditOpts,
+) {
   public readonly tenant: BelongsToAccessor<
     Tenant,
     typeof TenantConfig.prototype.id
@@ -32,6 +44,8 @@ export class TenantConfigRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(TenantConfig, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(

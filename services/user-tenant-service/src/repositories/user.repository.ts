@@ -15,6 +15,10 @@ import {
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
+import {
   AuthenticateErrorKeys,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -30,16 +34,24 @@ import {
   UserRelations,
   UserTenant,
 } from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 
 const saltRounds = 10;
-export class UserRepository extends DefaultUserModifyCrudRepository<
-  User,
-  typeof User.prototype.id,
-  UserRelations
-> {
+
+const UserAuditOpts: IAuditMixinOptions = {
+  actionKey: 'User_Logs',
+};
+export class UserRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    User,
+    typeof User.prototype.id,
+    UserRelations
+  >,
+  UserAuditOpts,
+) {
   public readonly tenant: BelongsToAccessor<Tenant, typeof User.prototype.id>;
 
   public readonly credentials: HasOneRepositoryFactory<
@@ -67,6 +79,8 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @inject('models.User')
     private readonly user: typeof Entity & {prototype: User},
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(user, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
