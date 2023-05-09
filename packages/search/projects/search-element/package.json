@@ -1,5 +1,5 @@
 {
-  "name": "@search/search-element",
+  "name": "@sourceloop/search-element",
   "version": "5.3.2",
   "description": "A global search element for search microservice",
   "main": "./search-element.js",

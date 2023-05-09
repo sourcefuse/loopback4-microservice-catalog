@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/search-client",
   "version": "5.2.2",
-  "description": "A global search component for search microservice.",
+  "description": "A global search component for search microservice",
   "peerDependencies": {
     "@angular/animations": "~13.3.11",
     "@angular/cdk": "~13.3.9",
