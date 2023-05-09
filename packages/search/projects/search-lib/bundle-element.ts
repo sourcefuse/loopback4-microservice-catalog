@@ -25,24 +25,18 @@ async function elementsBundler() {
   // resulting in changing its hash, so the element will also be published
 
   const file = '../search-element/dist/search-element.js';
-  try {
-    const data = readFileSync(file);
-    const hash = crypto.createHash('sha256');
-    hash.update(data);
+  const data = readFileSync(file);
+  const hash = crypto.createHash('sha256');
+  hash.update(data);
 
-    const fileHash = hash.digest('hex');
+  const fileHash = hash.digest('hex');
 
-    //update the package.json with the new hashCode
-    //if there will be changes in hash then the element will also be published
-    const packageJsonPath = '../search-element/package.json';
-    const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-    jsonObj.hash = fileHash;
-    writeFileSync(packageJsonPath, JSON.stringify(jsonObj, null, space));
-    // sonarignore:start
-  } catch (err: any) {
-    console.error(`An error occurred while reading ${file}: ${err.message}`);
-    // sonarignore:end
-  }
+  //update the package.json with the new hashCode
+  //if there will be changes in hash then the element will also be published
+  const packageJsonPath = '../search-element/package.json';
+  const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+  jsonObj.hash = fileHash;
+  writeFileSync(packageJsonPath, JSON.stringify(jsonObj, null, space));
 }
 
 elementsBundler();
