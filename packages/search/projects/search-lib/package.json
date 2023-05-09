@@ -25,7 +25,9 @@
     "elementBuild": "ng build search-element",
     "postbuild": "ts-node bundle-element.ts",
     "build": "npm run libraryBuild && npm run elementBuild",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "test": "echo \"No tests available !\""
   },
   "dependencies": {
     "tslib": "^2.2.0"
