@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.2.2 (2023-05-09)</small>
+
+* fix(search-client): fix for releasing search-client (#1413) ([347ad23](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347ad23)), closes [#1413](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1413) [#1386](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1386)
+
+
+
+
+
 ## <small>5.2.1 (2023-05-09)</small>
 
 * fix(search-client): changes to publish search client as web component (#1412) ([02c56fa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/02c56fa)), closes [#1412](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1412) [#1386](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1386)
