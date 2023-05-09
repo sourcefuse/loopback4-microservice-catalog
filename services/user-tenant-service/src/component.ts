@@ -4,72 +4,74 @@
 // https://opensource.org/licenses/MIT
 import {
   Application,
-  injectable,
+  Binding,
   Component,
   config,
   ContextTags,
+  ControllerClass,
   CoreBindings,
   inject,
-  ControllerClass,
-  Binding,
+  injectable,
   ProviderMap,
 } from '@loopback/core';
-import {UserTenantServiceComponentBindings} from './keys';
-import {CoreComponent} from '@sourceloop/core';
 import {Class, Model, Repository} from '@loopback/repository';
-import {
-  DEFAULT_USER_TENANT_SERVICE_OPTIONS,
-  UserTenantServiceComponentOptions,
-} from './types';
-import {
-  AuthClient,
-  GroupUserCountView,
-  UserGroupView,
-  Group,
-  Role,
-  TenantConfig,
-  Tenant,
-  UserCredentials,
-  UserDto,
-  UserGroup,
-  UserLevelPermission,
-  UserSignupCheckDto,
-  UserTenantPrefs,
-  UserTenant,
-  UserView,
-  User,
-} from './models';
+import {CoreComponent} from '@sourceloop/core';
 import {
   GroupController,
   HomePageController,
   PingController,
-  RoleUserTenantController,
   RoleController,
-  TenantUserController,
+  RoleUserTenantController,
   TenantController,
+  TenantUserController,
   UserGroupController,
   UserGroupsController,
   UserSignupController,
-  UserTenantPrefsController,
   UserTenantController,
+  UserTenantPrefsController,
 } from './controllers';
+import {UserTenantServiceComponentBindings} from './keys';
 import {
+  AuditLog,
+  AuthClient,
+  Group,
+  GroupUserCountView,
+  Role,
+  Tenant,
+  TenantConfig,
+  User,
+  UserCredentials,
+  UserDto,
+  UserGroup,
+  UserGroupView,
+  UserLevelPermission,
+  UserSignupCheckDto,
+  UserTenant,
+  UserTenantPrefs,
+  UserView,
+} from './models';
+import {
+  AuditLogRepository,
   AuthClientRepository,
-  UserGroupCountViewRepository,
   GroupRepository,
   NonRestrictedUserViewRepository,
   RoleRepository,
   TenantConfigRepository,
   TenantRepository,
   UserCredentialsRepository,
-  UserGroupViewRepository,
+  UserGroupCountViewRepository,
   UserGroupRepository,
+  UserGroupViewRepository,
   UserLevelPermissionRepository,
+  UserRepository,
   UserTenantPrefsRepository,
   UserTenantRepository,
   UserViewRepository,
-  UserRepository,
 } from './repositories';
+import {
+  DEFAULT_USER_TENANT_SERVICE_OPTIONS,
+  UserTenantServiceComponentOptions,
+} from './types';
 
 // Configure the binding for UserTenantServiceComponent
 @injectable({
@@ -100,6 +102,7 @@ export class UserTenantServiceComponent implements Component {
     this.application.component(CoreComponent);
     this.models = [
       AuthClient,
+      AuditLog,
       GroupUserCountView,
       UserGroupView,
       Group,
@@ -132,6 +135,7 @@ export class UserTenantServiceComponent implements Component {
     ];
     this.repositories = [
       AuthClientRepository,
+      AuditLogRepository,
       UserGroupCountViewRepository,
       GroupRepository,
       NonRestrictedUserViewRepository,

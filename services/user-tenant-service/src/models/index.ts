@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+export * from './audit.model';
 export * from './auth-client.model';
 export * from './group-user-count-view.model';
 export * from './group-user-view.model';

@@ -74,6 +74,63 @@ JWT_ISSUER=https://authentication.service
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
 
+## Audit Logs
+
+To generate audit logs for user tenant service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuditDbSourceName} from '@sourceloop/audit-log';
+
+const config = {
+  name: 'audit',
+  connector: 'postgresql',
+  url: '',
+  host: '',
+  port: 0,
+  user: '',
+  password: '',
+  database: '',
+};
+
+@lifeCycleObserver('datasource')
+export class AuditDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuditDbSourceName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.audit', {optional: true})
+    dsConfig: object = config,
+  ) {
+    const auditEnvConfig = {
+      host: process.env.AUDIT_DB_HOST,
+      port: process.env.AUDIT_DB_PORT,
+      user: process.env.AUDIT_DB_USER,
+      password: process.env.AUDIT_DB_PASSWORD,
+      database: process.env.AUDIT_DB_DATABASE,
+      schema: process.env.AUDIT_DB_SCHEMA,
+    };
+    Object.assign(dsConfig, auditEnvConfig);
+    super(dsConfig);
+  }
+}
+```
+
+Configure .env of application in index.ts before exporting application like follows
+
+```ts
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import {ApplicationConfig, UserTenantExampleApplication} from './application';
+export * from './application';
+//...
+```
+
 ### API Documentation
 
 Visit the [OpenAPI spec docs](./openapi.md)

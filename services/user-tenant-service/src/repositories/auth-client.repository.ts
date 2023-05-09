@@ -2,18 +2,29 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {AuthClient} from '../models';
+import {Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository, juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {UserTenantDataSourceName} from '../keys';
-import {inject} from '@loopback/core';
+import {AuthClient} from '../models';
+import {AuditLogRepository} from './audit.repository';
 
-export class AuthClientRepository extends DefaultCrudRepository<
-  AuthClient,
-  typeof AuthClient.prototype.id
-> {
+const AuthClientAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Auth_Client_Logs',
+};
+
+export class AuthClientRepository extends ConditionalAuditRepositoryMixin(
+  DefaultCrudRepository<AuthClient, typeof AuthClient.prototype.id>,
+  AuthClientAuditOpts,
+) {
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(AuthClient, dataSource);
   }

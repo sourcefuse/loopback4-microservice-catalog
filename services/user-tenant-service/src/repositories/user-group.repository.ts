@@ -3,7 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, repository, juggler} from '@loopback/repository';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -11,14 +15,22 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
 import {Group, UserGroup, UserGroupRelations, UserTenant} from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {GroupRepository} from './group.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 
-export class UserGroupRepository extends DefaultUserModifyCrudRepository<
-  UserGroup,
-  typeof UserGroup.prototype.id,
-  UserGroupRelations
-> {
+const UserGroupAuditOpts: IAuditMixinOptions = {
+  actionKey: 'User_Group_Logs',
+};
+
+export class UserGroupRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    UserGroup,
+    typeof UserGroup.prototype.id,
+    UserGroupRelations
+  >,
+  UserGroupAuditOpts,
+) {
   public readonly group: BelongsToAccessor<
     Group,
     typeof UserGroup.prototype.id
@@ -40,6 +52,8 @@ export class UserGroupRepository extends DefaultUserModifyCrudRepository<
     protected groupRepositoryGetter: Getter<GroupRepository>,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(UserGroup, dataSource, getCurrentUser);
     this.userTenant = this.createBelongsToAccessorFor(
