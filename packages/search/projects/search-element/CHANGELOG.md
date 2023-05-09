@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.4.1 (2023-05-09)</small>
+
+* chore(core): changing the node version in release workflow (#1415) ([010c2ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/010c2ca)), closes [#1415](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1415) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 5.4.0 (2023-05-09)
 
 * fix(search-client): changes to publish search client as web component (#1412) ([02c56fa](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/02c56fa)), closes [#1412](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1412) [#1386](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1386)
