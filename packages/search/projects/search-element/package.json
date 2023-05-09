@@ -18,5 +18,6 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "hash": "597dd9432cda05ad201b83833a70647725b7637974bfe4873c3ebcee06466a4b"
+  "hash": "597dd9432cda05ad201b83833a70647725b7637974bfe4873c3ebcee06466a4b",
+  "private": false
 }

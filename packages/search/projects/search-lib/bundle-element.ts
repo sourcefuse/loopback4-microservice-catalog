@@ -31,7 +31,6 @@ async function elementsBundler() {
     hash.update(data);
 
     const fileHash = hash.digest('hex');
-    console.log(`The SHA-256 hash of ${file} is: ${fileHash}`);
 
     //update the package.json with the new hashCode
     //if there will be changes in hash then the element will also be published
