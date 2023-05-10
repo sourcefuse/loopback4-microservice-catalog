@@ -8,10 +8,11 @@
   "peerDependencies": {
     "@angular/common": "~13.3.0",
     "@angular/core": "~13.3.0",
+    "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "rxjs": "~7.5.0",
     "@videogular/ngx-videogular": "^5.0.1",
     "ngx-webstorage-service": "^5.0.0",
-    "rxjs": "~7.5.0",
     "shepherd.js": "^11.0.1",
     "uuid": "^9.0.0"
   },
