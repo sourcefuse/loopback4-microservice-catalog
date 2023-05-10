@@ -206,7 +206,9 @@ constructor(options: ApplicationConfig = {}) {
     });
 ```
 
-# tenant-guard
+# tenant-utilities
+
+## tenant-guard
 
 A Tenant Guard mixin component that prevents cross db operations through a Loopback repository.
 
@@ -214,17 +216,17 @@ A Tenant Guard mixin component that prevents cross db operations through a Loopb
 
 ## Usage
 
-Configure and load TenantGuardComponent in the application constructor
+Configure and load TenantUtilitiesComponent in the application constructor
 as shown below.
 
 ```ts
-import {TenantGuardComponent} from '@sourceloop/core';
+import {TenantUtilitiesComponent} from '@sourceloop/core';
 // ...
 export class MyApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
-    this.component(TenantGuardComponent);
+    this.component(TenantUtilitiesComponent);
     // ...
   }
   // ...
@@ -243,11 +245,8 @@ export class TestModelRepository extends TenantGuardMixin(
     TestModelRelations
   >,
 ) {
-  constructor(
-    @inject('datasources.db') dataSource: DbDataSource,
-    @service(TenantGuardService)
-    public readonly tenantGuard: ITenantGuard<TestModel, string>,
-  ) {
+  tenantGuardService: ITenantGuard<TestModel, string | undefined>;
+  constructor(@inject('datasources.db') dataSource: DbDataSource) {
     super(TestModel, dataSource);
   }
 }
@@ -280,10 +279,10 @@ The `TenantGuardMixin` uses a service of the type `ITenantGuard` to perform the 
 
 #### With Decorator
 
-The decorator uses a binding on key `TenantGuardBindings.GuardService` with the type `ITenantGuard`. It uses a default implementation provided in (`TenantGuardService`)[/src/components/tenant-guard/services/tenant-guard.service.ts], to override this, implement a class from scratch or extending this class, and the binding that class to the `TenantGuardBindings.GuardService` in your `application.ts`-
+The decorator uses a binding on key `TenantUtilitiesBindings.GuardService` with the type `ITenantGuard`. It uses a default implementation provided in (`TenantGuardService`)[/src/components/tenant-utilities/services/tenant-guard.service.ts], to override this, implement a class from scratch or extending this class, and the binding that class to the `TenantUtilitiesBindings.GuardService` in your `application.ts`-
 
 ```ts
-this.bind(TenantGuardBindings.GuardService).toClass(TenantGuardService);
+this.bind(TenantUtilitiesBindings.GuardService).toClass(TenantGuardService);
 ```
 
 ### Decorators
