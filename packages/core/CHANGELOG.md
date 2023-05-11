@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.5.0 (2023-05-11)
+
+* docs(core): remove repetitive loopback logo and title names ([7cc6247](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7cc6247))
+* feat(core): prevent cross tenant operation across a… (#1374) ([98eeead](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/98eeead)), closes [#1374](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1374) [#1373](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1373) [#1373](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1373)
+
+
+
+
+
 ## <small>7.4.3 (2023-05-03)</small>
 
 * refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)

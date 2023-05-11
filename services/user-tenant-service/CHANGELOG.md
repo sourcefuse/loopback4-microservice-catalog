@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.1 (2023-05-11)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
 ## 0.7.0 (2023-05-09)
 
 * feat(user-tenant-service): add configurable audit log (#1408) ([c9b2ff0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c9b2ff0)), closes [#1408](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1408) [#1368](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1368)
