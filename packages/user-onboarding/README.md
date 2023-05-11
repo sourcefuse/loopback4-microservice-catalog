@@ -3,7 +3,7 @@
 #### Note
 
 This particular branch is to maintain and release @sourceloop/user-onboarding-client that uses angular 13.
-Note that we support angular version 13(via this branch) and 14(via master) for @sourceloop/user-onboarding-client.
+Note that we support angular version 13(via user-onboarding-ng13 branch) and 14(via master) for @sourceloop/user-onboarding-client.
 
 ## Overview
 
