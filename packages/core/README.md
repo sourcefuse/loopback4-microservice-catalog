@@ -206,17 +206,15 @@ constructor(options: ApplicationConfig = {}) {
     });
 ```
 
-# tenant-utilities
+# Tenant Utilities
 
-## tenant-guard
+## Tenant Guard
 
-A Tenant Guard mixin component that prevents cross db operations through a Loopback repository.
-
-[![LoopBack](<https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+Tenant Guard prevents cross db operations through a Loopback repository.
 
 ## Usage
 
-Configure and load TenantUtilitiesComponent in the application constructor
+Configure and load `TenantUtilitiesComponent` in the application constructor
 as shown below.
 
 ```ts
@@ -235,7 +233,7 @@ export class MyApplication extends BootMixin(
 
 ### With Mixin
 
-Add the `TenantGuardMixin` mixin to a repository which should not have cross DB operations and provide and service following the `ITenantGuard` with the name `tenantGuardService`-
+Add the `TenantGuardMixin` mixin to a repository on which you want to prevent cross DB operations and provide and service type following the `ITenantGuard` with the name `tenantGuardService` -
 
 ```ts
 export class TestModelRepository extends TenantGuardMixin(
