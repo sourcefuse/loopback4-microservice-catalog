@@ -206,6 +206,85 @@ constructor(options: ApplicationConfig = {}) {
     });
 ```
 
+# tenant-utilities
+
+## tenant-guard
+
+A Tenant Guard mixin component that prevents cross db operations through a Loopback repository.
+
+[![LoopBack](<https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+
+## Usage
+
+Configure and load TenantUtilitiesComponent in the application constructor
+as shown below.
+
+```ts
+import {TenantUtilitiesComponent} from '@sourceloop/core';
+// ...
+export class MyApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    this.component(TenantUtilitiesComponent);
+    // ...
+  }
+  // ...
+}
+```
+
+### With Mixin
+
+Add the `TenantGuardMixin` mixin to a repository which should not have cross DB operations and provide and service following the `ITenantGuard` with the name `tenantGuardService`-
+
+```ts
+export class TestModelRepository extends TenantGuardMixin(
+  DefaultCrudRepository<
+    TestModel,
+    typeof TestModelRelations.prototype.id,
+    TestModelRelations
+  >,
+) {
+  tenantGuardService: ITenantGuard<TestModel, string | undefined>;
+  constructor(@inject('datasources.db') dataSource: DbDataSource) {
+    super(TestModel, dataSource);
+  }
+}
+```
+
+### With Decorator
+
+Add the `tenantGuard()` decorator to your repository class -
+
+```ts
+import {tenantGuard} from '@sourceloop/core';
+// ...
+@tenantGuard()
+export class TestWithoutGuardRepo extends DefaultTransactionalRepository<
+  TestModel,
+  string,
+  {}
+> {
+  constructor(@inject('datasources.db') dataSource: juggler.DataSource) {
+    super(TestModel, dataSource);
+  }
+}
+```
+
+### Service
+
+#### With Mixin
+
+The `TenantGuardMixin` uses a service of the type `ITenantGuard` to perform the modification of requests on a tenant, If you want to modify the modification logic, you can bind any service following this interface in your repo to a property with name `tenantGuardService`.
+
+#### With Decorator
+
+The decorator uses a binding on key `TenantUtilitiesBindings.GuardService` with the type `ITenantGuard`. It uses a default implementation provided in (`TenantGuardService`)[/src/components/tenant-utilities/services/tenant-guard.service.ts], to override this, implement a class from scratch or extending this class, and the binding that class to the `TenantUtilitiesBindings.GuardService` in your `application.ts`-
+
+```ts
+this.bind(TenantUtilitiesBindings.GuardService).toClass(TenantGuardService);
+```
+
 ### Decorators
 
 ## Overview
