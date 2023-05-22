@@ -8,6 +8,7 @@ import {
   ControllerClass,
   CoreBindings,
   inject,
+  ProviderMap,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -16,11 +17,13 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import { oidcProviderApp } from './services/oidc-service';
 import {repositories} from './repositories';
 import {controllers} from './controllers';
-import { models } from './models';
-
+import {models} from './models';
+import {OIDC_PROVIDER, OidcProviderProvider} from './provider/oidc.provider';
+import {OidcInitializerService} from './services';
+import {TemplateBindings} from './keys';
+import path from 'path';
 export class OidcServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
 
@@ -30,6 +33,13 @@ export class OidcServiceComponent implements Component {
    */
   models?: Class<Model>[];
 
+  providers: ProviderMap = {
+    [OIDC_PROVIDER.key]:OidcProviderProvider
+  };
+
+  services = [
+    OidcInitializerService
+  ];
   /**
    * An array of controller classes
    */
@@ -40,11 +50,12 @@ export class OidcServiceComponent implements Component {
     private readonly application: RestApplication,
   ) {
     this.application.component(CoreComponent);
-    oidcProviderApp.set('ctx', this);
-    this.application.mountExpressRouter('/', oidcProviderApp);
     this.models = models;
     this.controllers = controllers;
     this.repositories = repositories;
+    this.bindings = [
+      new Binding(TemplateBindings.TemplateBasePath).to(path.join(__dirname, '../public/views')),
+    ];
     this.application.api({
       openapi: '3.0.0',
       info: {

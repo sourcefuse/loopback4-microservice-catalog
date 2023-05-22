@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {AuthClientRepository} from './auth-client.repository';
 import {OtpRepository} from './otp.repository';
 import {RoleRepository} from './role.repository';
 import {TenantConfigRepository} from './tenant-config.repository';
@@ -19,6 +20,7 @@ export * from './otp.repository';
 export * from './tenant-config.repository';
 export * from './user-tenant.repository';
 export * from './tenant.repository';
+export * from './auth-client.repository';
 
 export const repositories = [
   UserRepository,
@@ -29,4 +31,5 @@ export const repositories = [
   TenantConfigRepository,
   UserTenantRepository,
   TenantRepository,
+  AuthClientRepository
 ];

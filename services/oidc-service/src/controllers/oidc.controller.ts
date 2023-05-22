@@ -1,5 +1,3 @@
-// Uncomment these imports to begin using these cool features!
-
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {
@@ -12,18 +10,19 @@ import {
 } from '@loopback/rest';
 import { UserRepository } from '../repositories/user.repository';
 import ejs from 'ejs';
-import path from 'path';
-import {oidcProvider} from '../services/oidc-service';
-import { STATUS_CODE } from '@sourceloop/core';
-
+import {STATUS_CODE} from '@sourceloop/core';
+import {OIDC_PROVIDER} from '../provider/oidc.provider';
+import OidcProvider from 'oidc-provider';
+import {TemplateBindings} from '../keys';
 
 export class OidcController {
   constructor(
     @inject(RestBindings.Http.CONTEXT) private requestContext: RequestContext,
+    @inject(OIDC_PROVIDER) private oidcProvider: OidcProvider,
+    @inject(TemplateBindings.TemplateBasePath) private templateFilePath: string,
     @repository(UserRepository)
     protected readonly userRepository: UserRepository,
   ) {}
-
 
   @get('/interaction/{uid}', {
     responses: {
@@ -37,16 +36,16 @@ export class OidcController {
   })
   async interaction() {
     const {uid, prompt, params} =
-      await oidcProvider.interactionDetails(
+      await this.oidcProvider.interactionDetails(
         this.requestContext.request,
         this.requestContext.response,
       );
-    const client = await oidcProvider.Client.find(params.client_id as string);
+    const client = await this.oidcProvider.Client.find(params.client_id as string);
+    const basePath = this.templateFilePath;
     switch (prompt.name) {
       case 'login': {
         const html = await ejs.renderFile(
-          // path.join(__dirname, '../../public/views/login.ejs'),
-          path.join(__dirname, '../public/views/login.ejs'),
+          `${basePath}/login.ejs`,
           {
             client,
             uid,
@@ -63,8 +62,7 @@ export class OidcController {
       }
       case 'consent': {
         const html = await ejs.renderFile(
-          // path.join(__dirname, '../../public/views/interaction.ejs'),
-          path.join(__dirname, '../public/views/interaction.ejs'),
+          `${basePath}/interaction.ejs`,
           {
             client,
             uid,
@@ -110,7 +108,7 @@ export class OidcController {
           accountId: username,
         },
       };
-      await oidcProvider.interactionFinished(
+      await this.oidcProvider.interactionFinished(
         this.requestContext.request,
         this.requestContext.response,
         result,
@@ -122,7 +120,7 @@ export class OidcController {
 
   @post('/interaction/{uid}/confirm')
   async confirm() {
-    const interactionDetails = await oidcProvider.interactionDetails(
+    const interactionDetails = await this.oidcProvider.interactionDetails(
       this.requestContext.request,
       this.requestContext.response,
     );
@@ -137,11 +135,11 @@ export class OidcController {
     let grant;
     if (grantId) {
       // modifying existing grant in existing session
-      grant = await oidcProvider.Grant.find(grantId);
+      grant = await this.oidcProvider.Grant.find(grantId);
     } else {
       // establishing a new grant
       const accountId = interactionDetails.session?.accountId;
-      grant = new oidcProvider.Grant({
+      grant = new this.oidcProvider.Grant({
         accountId,
         clientId: params.client_id as string,
       });
@@ -162,7 +160,7 @@ export class OidcController {
     }
 
     const result = {consent};
-    await oidcProvider.interactionFinished(
+    await this.oidcProvider.interactionFinished(
       this.requestContext.request,
       this.requestContext.response,
       result,

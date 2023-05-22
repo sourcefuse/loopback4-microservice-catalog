@@ -44,6 +44,27 @@ export class AuthClient extends UserModifiableEntity implements IAuthClient {
   redirectUrl?: string;
 
   @property({
+    type: 'array',
+    itemType: 'string',
+    name: 'grant_types',
+  })
+  grantTypes?: string[];
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    name: 'response_types',
+  })
+  responseTypes?: string[];
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    name: 'redirect_uris',
+  })
+  redirectUris?: string[];
+
+  @property({
     type: 'number',
     required: true,
     name: 'access_token_expiration',
