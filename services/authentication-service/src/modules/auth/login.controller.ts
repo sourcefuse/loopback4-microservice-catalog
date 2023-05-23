@@ -565,9 +565,11 @@ export class LoginController {
         tokenPayload: {...data, clientId: authClient.clientId},
       });
       this.activeUserRepo.create(activeUser).catch(() => {
+        //sonarignore:start
         console.error(
           `Failed to add the active user => ${JSON.stringify(activeUser)}`,
         );
+        //sonarignore:end
       });
 
       return new TokenResponse({
