@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {ActiveUsersRepository} from './active-users.repository';
 import {AuthClientRepository} from './auth-client.repository';
 import {AuthSecureClientRepository} from './auth-secure-client.repository';
 import {OtpCacheRepository} from './otp-cache.repository';
@@ -31,6 +32,7 @@ export * from './user-level-permission.repository';
 export * from './user-level-resource.repository';
 export * from './user-tenant.repository';
 export * from './user.repository';
+export * from './active-users.repository';
 
 export const repositories = [
   UserRepository,
@@ -47,4 +49,5 @@ export const repositories = [
   UserTenantRepository,
   TenantRepository,
   UserLevelResourceRepository,
+  ActiveUsersRepository,
 ];

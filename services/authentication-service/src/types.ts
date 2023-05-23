@@ -7,7 +7,7 @@ import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
 import {STRATEGY} from 'loopback4-authentication';
 import {OtpMethodType} from './enums';
-import {LocalUserProfileDto} from './models';
+import {LocalUserProfileDto, User} from './models';
 import {SignupRequestDto} from './models/signup-request-dto.model';
 
 // sonarignore:start
@@ -45,3 +45,5 @@ export interface ExternalTokens {
   externalAuthToken?: string;
   externalRefreshToken?: string;
 }
+
+export type ActorId = Extract<keyof User, string>;

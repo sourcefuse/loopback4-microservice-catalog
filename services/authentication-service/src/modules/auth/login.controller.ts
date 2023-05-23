@@ -39,9 +39,9 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {ExternalTokens} from '../../types';
+import {ActorId, ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {AuthClient, RefreshToken, User} from '../../models';
+import {ActiveUsers, AuthClient, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
@@ -51,6 +51,7 @@ import {
 } from '../../providers';
 import * as jwt from 'jsonwebtoken';
 import {
+  ActiveUsersRepository,
   AuthClientRepository,
   OtpCacheRepository,
   RefreshTokenRepository,
@@ -113,6 +114,10 @@ export class LoginController {
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
+    @repository(ActiveUsersRepository)
+    private readonly activeUserRepo: ActiveUsersRepository,
+    @inject(AuthServiceBindings.ActorIdKey)
+    private readonly actorKey: ActorId,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -549,6 +554,22 @@ export class LoginController {
         },
         {ttl: authClient.refreshTokenExpiration * ms},
       );
+
+      // make an entry to mark the active user
+
+      const actor = user[this.actorKey]?.toString() ?? '0';
+      const activeUser = new ActiveUsers({
+        actor,
+        loginTime: new Date(),
+        tenantId: data.tenantId,
+        tokenPayload: {...data, clientId: authClient.clientId},
+      });
+      this.activeUserRepo.create(activeUser).catch(() => {
+        console.error(
+          `Failed to add the active user => ${JSON.stringify(activeUser)}`,
+        );
+      });
+
       return new TokenResponse({
         accessToken,
         refreshToken,

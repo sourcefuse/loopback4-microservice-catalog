@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {ActiveUsers} from './active-users.model';
 import {AuthClient} from './auth-client.model';
 import {AuthSecureClient} from './auth-secure-client.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
@@ -50,6 +51,7 @@ export * from './user-level-permission.model';
 export * from './user-level-resource.model';
 export * from './user-tenant.model';
 export * from './user.model';
+export * from './active-users.model';
 
 export const models = [
   User,
@@ -75,4 +77,5 @@ export const models = [
   SignupRequest,
   SignupWithTokenReponseDto,
   LocalUserProfileDto,
+  ActiveUsers,
 ];

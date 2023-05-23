@@ -5,7 +5,7 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {ForgotPasswordHandlerFn, JwtPayloadFn} from './providers';
-import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
+import {ActorId, IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export namespace AuthServiceBindings {
   export const Config = BindingKey.create<IAuthServiceConfig | null>(
@@ -28,6 +28,10 @@ export namespace AuthServiceBindings {
     BindingKey.create<ForgotPasswordHandlerFn>(
       `${BINDING_PREFIX}.forgetpassword.handler.provider`,
     );
+
+  export const ActorIdKey = BindingKey.create<ActorId>(
+    `${BINDING_PREFIX}.active.users.actorid`,
+  );
 }
 
 export {AuthenticationBindings} from 'loopback4-authentication';

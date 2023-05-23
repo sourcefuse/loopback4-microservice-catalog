@@ -7,6 +7,143 @@
     "contact": {}
   },
   "paths": {
+    "/active-users/count": {
+      "get": {
+        "x-controller-name": "ActiveUsersController",
+        "x-operation-name": "count",
+        "tags": [
+          "ActiveUsersController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ActiveUser model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CheckActiveUser   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "active_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<ActiveUsers>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ActiveUsersController.count"
+      }
+    },
+    "/active-users/{id}": {
+      "get": {
+        "x-controller-name": "ActiveUsersController",
+        "x-operation-name": "findById",
+        "tags": [
+          "ActiveUsersController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ActiveUser model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActiveUsersWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CheckActiveUser   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/active_users.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ActiveUsersController.findById"
+      }
+    },
+    "/active-users": {
+      "get": {
+        "x-controller-name": "ActiveUsersController",
+        "x-operation-name": "find",
+        "tags": [
+          "ActiveUsersController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of ActiveUser model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActiveUsersWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CheckActiveUser   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/active_users.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ActiveUsersController.find"
+      }
+    },
     "/auth/apple-oauth-redirect": {
       "get": {
         "x-controller-name": "AppleLoginController",
@@ -1904,6 +2041,120 @@
           "email"
         ],
         "additionalProperties": false
+      },
+      "ActiveUsersWithRelations": {
+        "title": "ActiveUsersWithRelations",
+        "type": "object",
+        "description": "This is to maintain the daily active users list. (tsType: ActiveUsersWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": "string"
+          },
+          "loginTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tokenPayload": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "active_users.Filter": {
+        "type": "object",
+        "title": "active_users.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "active_users.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "actor": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
+                    "type": "boolean"
+                  },
+                  "loginTime": {
+                    "type": "boolean"
+                  },
+                  "tokenPayload": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "actor",
+                    "tenantId",
+                    "loginTime",
+                    "tokenPayload"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "active_users.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<ActiveUsers>"
       }
     }
   },
