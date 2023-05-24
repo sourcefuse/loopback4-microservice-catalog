@@ -22,12 +22,12 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour} from '../models';
-import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
 import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/working-hours';

@@ -2,12 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {PermissionKey} from '@sourceloop/core';
 import {
   ComposeMailBody,
   PartyTypeMarker,
   StorageMarker,
   ForwardMailBody,
-  PermissionsEnums,
 } from './types';
 export * from './component';
 export * from './keys';
@@ -16,5 +16,5 @@ export {
   PartyTypeMarker,
   ForwardMailBody,
   StorageMarker,
-  PermissionsEnums,
+  PermissionKey,
 };

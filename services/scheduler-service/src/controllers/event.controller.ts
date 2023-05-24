@@ -25,7 +25,6 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attachment, Attendee, Event, EventAttendeeView} from '../models';
-import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventDTO} from '../models/event.dto';
 import {
   AttachmentRepository,
@@ -39,6 +38,7 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {FreeBusyDTO} from '../models/free-busy.dto';
 import {EventService} from '../services';

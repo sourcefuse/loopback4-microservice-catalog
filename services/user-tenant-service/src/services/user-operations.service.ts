@@ -2,11 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey, RoleTypeMap, RoleTypeMapValue} from '../enums';
+import {RoleTypeMap, RoleTypeMapValue} from '../enums';
 import {bind, BindingScope} from '@loopback/core';
 import {Options, repository, Where, WhereBuilder} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {IAuthUserWithPermissions, UserStatus} from '@sourceloop/core';
+import {
+  IAuthUserWithPermissions,
+  UserStatus,
+  PermissionKey,
+} from '@sourceloop/core';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import {
   Role,

@@ -14,6 +14,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   STATUS_CODE,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -21,7 +22,6 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
 
 import {UserView} from '../models';
 import {UserTenantRepository, UserViewRepository} from '../repositories';

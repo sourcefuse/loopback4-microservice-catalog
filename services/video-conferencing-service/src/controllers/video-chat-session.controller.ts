@@ -16,11 +16,11 @@ import {authorize} from 'loopback4-authorization';
 import {MeetingOptions, SessionOptions, SessionResponse} from '../types';
 
 import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {PermissionKeys} from '../enums/permission-keys.enum';
 import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 
 import {VideoChatSession, SessionAttendees} from '../models';
@@ -37,7 +37,9 @@ export class VideoChatSessionController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.CreateSession]})
+  @authorize({
+    permissions: [PermissionKey.CreateSession, PermissionKey.CreateSessionNum],
+  })
   @post('/session', {
     description: `Used for Creating a session with options such as end to end encryption,
      archive mode. 
@@ -61,7 +63,9 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GenerateToken]})
+  @authorize({
+    permissions: [PermissionKey.GenerateToken, PermissionKey.GenerateTokenNum],
+  })
   @post('/session/{meetingLinkId}/token', {
     description: `Used for Generating token,
      which is used for connecting to a room/session on a client side. 
@@ -94,7 +98,9 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.EditMeeting]})
+  @authorize({
+    permissions: [PermissionKey.EditMeeting, PermissionKey.EditMeetingNum],
+  })
   @patch('/session/{meetingLinkId}', {
     description: 'Used for editing the meeting',
     security: OPERATION_SECURITY_SPEC,
@@ -119,7 +125,9 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.StopMeeting]})
+  @authorize({
+    permissions: [PermissionKey.StopMeeting, PermissionKey.StopMeetingNum],
+  })
   @patch('/session/{meetingLinkId}/end', {
     description: `Used to stop the current active meeting. Meeting cannot be stopped again if it is 
       already stopped. Successful execution will add the endTime attribute to a recently 
@@ -166,7 +174,9 @@ export class VideoChatSessionController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GetAttendees]})
+  @authorize({
+    permissions: [PermissionKey.GetAttendees, PermissionKey.GetAttendeesNum],
+  })
   @get('/session/{meetingLinkId}/attendees', {
     security: OPERATION_SECURITY_SPEC,
     parameters: [{name: 'active', schema: {type: 'string'}, in: 'query'}],

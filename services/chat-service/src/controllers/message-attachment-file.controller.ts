@@ -21,10 +21,10 @@ import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  PermissionKey,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
 import {AttachmentFile} from '../models/attachment-file.model';
 import {AttachmentFileDto} from '../models/attachment-file-dto.model';
 import {AttachmentFileRepository} from '../repositories/attachment-file.repository';
@@ -38,7 +38,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateAttachmentFile,
+      PermissionKey.CreateAttachmentFileNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -68,7 +73,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateAttachmentFile,
+      PermissionKey.CreateAttachmentFileNum,
+    ],
+  })
   @post(`${basePath}/bulk`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -101,7 +111,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachmentFile,
+      PermissionKey.ViewAttachmentFileNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -120,7 +135,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachmentFile,
+      PermissionKey.ViewAttachmentFileNum,
+    ],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -148,7 +168,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachmentFile,
+      PermissionKey.UpdateAttachmentFileNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -175,7 +200,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewAttachmentFile,
+      PermissionKey.ViewAttachmentFileNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -200,7 +230,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachmentFile,
+      PermissionKey.UpdateAttachmentFileNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -226,7 +261,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateAttachmentFile,
+      PermissionKey.UpdateAttachmentFileNum,
+    ],
+  })
   @put(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'AttachmentFile PUT success',
@@ -241,7 +281,12 @@ export class AttachmentFileController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteAttachmentFile]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteAttachmentFile,
+      PermissionKey.DeleteAttachmentFileNum,
+    ],
+  })
   @del(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Attachment File DELETE success',

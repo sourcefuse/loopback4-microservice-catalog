@@ -22,6 +22,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -38,7 +39,7 @@ import {
   ThreadRepository,
   ThreadViewRepository,
 } from '../repositories';
-import {PermissionsEnums, VisibilityMarker} from '../types';
+import {VisibilityMarker} from '../types';
 
 const NOT_FOUND_MESSAGE = 'Message identity does not exist';
 const FORBIDDEN_ERROR_MESSAGE =
@@ -64,7 +65,7 @@ export class CollectorController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.GetThread, PermissionsEnums.GetThreadNum],
+    permissions: [PermissionKey.GetThread, PermissionKey.GetThreadNum],
   })
   @get('/threads/{threadId}', {
     security: OPERATION_SECURITY_SPEC,
@@ -130,7 +131,7 @@ export class CollectorController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.GetInMail, PermissionsEnums.GetInMailNum],
+    permissions: [PermissionKey.GetInMail, PermissionKey.GetInMailNum],
   })
   @get('/mails/{messageId}', {
     security: OPERATION_SECURITY_SPEC,
@@ -220,7 +221,7 @@ export class CollectorController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.GetThread, PermissionsEnums.GetThreadNum],
+    permissions: [PermissionKey.GetThread, PermissionKey.GetThreadNum],
   })
   @get('/threads', {
     security: OPERATION_SECURITY_SPEC,
@@ -287,7 +288,7 @@ export class CollectorController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.GetInMails, PermissionsEnums.GetInMailsNum],
+    permissions: [PermissionKey.GetInMails, PermissionKey.GetInMailsNum],
   })
   @get('/mails', {
     security: OPERATION_SECURITY_SPEC,

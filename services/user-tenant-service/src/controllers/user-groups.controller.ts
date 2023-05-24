@@ -2,13 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../enums';
 import {Count, Filter, repository, Where} from '@loopback/repository';
 import {get, getModelSchemaRef, param} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  PermissionKey,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';

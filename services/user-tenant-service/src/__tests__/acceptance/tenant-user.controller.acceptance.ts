@@ -5,7 +5,7 @@
 import {Client, expect} from '@loopback/testlab';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import * as jwt from 'jsonwebtoken';
-import {PermissionKey} from '../../enums';
+import {PermissionKey} from '@sourceloop/core';
 import {UserOperationsService} from '../../services';
 import {UserTenantServiceApplication} from '../application';
 import {setupApplication} from './test-helper';

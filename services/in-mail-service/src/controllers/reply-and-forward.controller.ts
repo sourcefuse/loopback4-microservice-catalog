@@ -16,6 +16,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -30,7 +31,7 @@ import {
   MessageRepository,
   ThreadRepository,
 } from '../repositories';
-import {PartyTypeMarker, PermissionsEnums, StorageMarker} from '../types';
+import {PartyTypeMarker, StorageMarker} from '../types';
 import {
   ComposeMailBody,
   ForwardMailBody,
@@ -109,7 +110,7 @@ export class ReplyAndForwardController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.ReplyMail, PermissionsEnums.ReplyMailNum],
+    permissions: [PermissionKey.ReplyMail, PermissionKey.ReplyMailNum],
   })
   @patch('/threads/{threadId}/mails/{messageId}/replies', {
     security: OPERATION_SECURITY_SPEC,
@@ -271,10 +272,7 @@ export class ReplyAndForwardController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [
-      PermissionsEnums.ComposeMail,
-      PermissionsEnums.ComposeMailNum,
-    ],
+    permissions: [PermissionKey.ComposeMail, PermissionKey.ComposeMailNum],
   })
   @patch('/threads/{threadId}/forward', {
     security: OPERATION_SECURITY_SPEC,

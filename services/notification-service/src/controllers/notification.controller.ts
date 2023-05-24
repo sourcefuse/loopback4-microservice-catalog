@@ -26,12 +26,12 @@ import {
   CONTENT_TYPE,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {INotification, NotificationBindings} from 'loopback4-notifications';
 import {ErrorKeys} from '../enums/error-keys.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
 import {NotifServiceBindings} from '../keys';
 import {Notification, NotificationUser} from '../models';
 import {

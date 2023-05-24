@@ -19,11 +19,11 @@ import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  PermissionKey,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {ErrorKeys} from '../enums/error-keys.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
 import {WorkflowServiceBindings} from '../keys';
 import {Workflow, WorkflowVersion} from '../models';
 import {ExecuteWorkflowDto} from '../models/execute-workflow-dto';

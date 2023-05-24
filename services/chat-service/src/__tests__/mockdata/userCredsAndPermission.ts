@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import {PermissionKey} from '../../enums/permission-key.enum';
+import {PermissionKey} from '@sourceloop/core';
 //User Creds
 const User = {
   username: 'testuser@example.com',

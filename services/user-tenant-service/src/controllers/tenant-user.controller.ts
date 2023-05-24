@@ -29,6 +29,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -36,7 +37,7 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {PermissionKey, RoleKey} from '../enums';
+import {RoleKey} from '../enums';
 
 import {Tenant, UserDto, UserView} from '../models';
 import {

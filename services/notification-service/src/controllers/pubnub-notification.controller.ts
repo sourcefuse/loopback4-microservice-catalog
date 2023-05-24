@@ -25,13 +25,13 @@ import {
   AuthenticationBindings,
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {PermissionKey} from '../enums/permission-key.enum';
 import {
   STATUS_CODE,
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   SuccessResponse,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {AccessResponseDto, NotificationAccess} from '../models';
 import {IChannelManager} from '../types';

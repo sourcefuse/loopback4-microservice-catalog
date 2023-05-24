@@ -24,10 +24,10 @@ import {
   CONTENT_TYPE,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
 
 import {Role, UserTenant} from '../models';
 import {RoleRepository, UserTenantRepository} from '../repositories';

@@ -17,6 +17,7 @@ import {
   IAuthUserWithPermissions,
   STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -39,12 +40,7 @@ import {
   MessageRepository,
   ThreadRepository,
 } from '../repositories';
-import {
-  PartyTypeMarker,
-  PermissionsEnums,
-  StorageMarker,
-  VisibilityMarker,
-} from '../types';
+import {PartyTypeMarker, StorageMarker, VisibilityMarker} from '../types';
 import {ComposeMailBody} from '../types/compose-mail-body.type';
 
 const FORBIDDEN_ERROR_MESSAGE =
@@ -121,10 +117,7 @@ export class OriginatorController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [
-      PermissionsEnums.ComposeMail,
-      PermissionsEnums.ComposeMailNum,
-    ],
+    permissions: [PermissionKey.ComposeMail, PermissionKey.ComposeMailNum],
   })
   @post('/mails', {
     security: OPERATION_SECURITY_SPEC,
@@ -259,7 +252,7 @@ export class OriginatorController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.UpdateMail, PermissionsEnums.UpdateMailNum],
+    permissions: [PermissionKey.UpdateMail, PermissionKey.UpdateMailNum],
   })
   @put('/mails/{messageId}', {
     security: OPERATION_SECURITY_SPEC,
@@ -402,8 +395,8 @@ export class OriginatorController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [
-      PermissionsEnums.AddAttachments,
-      PermissionsEnums.AddAttachmentsNum,
+      PermissionKey.AddAttachments,
+      PermissionKey.AddAttachmentsNum,
     ],
   })
   @post('/mails/{messageId}/attachments', {
@@ -493,8 +486,8 @@ export class OriginatorController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [
-      PermissionsEnums.DeleteAttachment,
-      PermissionsEnums.DeleteAttachmentNum,
+      PermissionKey.DeleteAttachment,
+      PermissionKey.DeleteAttachmentNum,
     ],
   })
   @del('/mails/{messageId}/attachments/{attachmentId}', {
@@ -540,7 +533,7 @@ export class OriginatorController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.TrashMail, PermissionsEnums.TrashMailNum],
+    permissions: [PermissionKey.TrashMail, PermissionKey.TrashMailNum],
   })
   @del('/mails/bulk/{storage}/{action}', {
     security: OPERATION_SECURITY_SPEC,
@@ -622,10 +615,7 @@ export class OriginatorController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [
-      PermissionsEnums.RestoreMail,
-      PermissionsEnums.RestoreMailNum,
-    ],
+    permissions: [PermissionKey.RestoreMail, PermissionKey.RestoreMailNum],
   })
   @patch('/mails/bulk/restore', {
     security: OPERATION_SECURITY_SPEC,
@@ -691,10 +681,7 @@ export class OriginatorController {
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [
-      PermissionsEnums.ComposeMail,
-      PermissionsEnums.ComposeMailNum,
-    ],
+    permissions: [PermissionKey.ComposeMail, PermissionKey.ComposeMailNum],
   })
   @patch('/mails/{messageId}/send', {
     security: OPERATION_SECURITY_SPEC,
@@ -765,7 +752,7 @@ export class OriginatorController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [PermissionsEnums.UpdateMail, PermissionsEnums.UpdateMailNum],
+    permissions: [PermissionKey.UpdateMail, PermissionKey.UpdateMailNum],
   })
   @patch('/mails/marking/{markType}', {
     security: OPERATION_SECURITY_SPEC,

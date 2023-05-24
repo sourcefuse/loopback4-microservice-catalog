@@ -36,10 +36,10 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {inject} from '@loopback/core';
-import {PermissionKey} from '../enums/permission-key.enum';
 
 const basePath = '/notification-users';
 

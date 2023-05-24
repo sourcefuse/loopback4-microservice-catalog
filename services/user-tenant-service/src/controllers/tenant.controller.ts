@@ -2,7 +2,6 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../enums';
 import {inject} from '@loopback/core';
 import {
   Count,
@@ -28,6 +27,7 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   TenantStatus,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,

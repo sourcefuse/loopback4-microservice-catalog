@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../../enums';
+import {PermissionKey} from '@sourceloop/core';
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';

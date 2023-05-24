@@ -21,10 +21,9 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {Subscriptions} from '../models';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE, PermissionKey} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums/permission-key.enum';
 import {SubscriptionsRepository} from '../repositories';
 const subscriptionsRoutePath = '/subscriptions';
 const subscriptionsIdRoutePath = '/subscriptions/{id}';

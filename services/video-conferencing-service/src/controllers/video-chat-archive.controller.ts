@@ -6,12 +6,12 @@ import {inject} from '@loopback/core';
 import {del, get, param, put, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {PermissionKeys} from '../enums/permission-keys.enum';
 
 import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {ChatArchiveService} from '../services/chat-archive.service';
 import {ServiceBindings} from '../keys';
@@ -24,7 +24,9 @@ export class VideoChatArchiveController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GetArchives]})
+  @authorize({
+    permissions: [PermissionKey.GetArchives, PermissionKey.GetArchivesNum],
+  })
   @get('/archives/{archiveId}', {
     description: `Used to fetch a specific archive w.r.t archiveId.
        If archive is not present, it will throw HTTP Not Found Error.`,
@@ -46,7 +48,9 @@ export class VideoChatArchiveController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.GetArchives]})
+  @authorize({
+    permissions: [PermissionKey.GetArchives, PermissionKey.GetArchivesNum],
+  })
   @get('/archives', {
     description:
       'Used to fetch a list of archives (meetings that were recorded).',
@@ -68,7 +72,9 @@ export class VideoChatArchiveController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.DeleteArchive]})
+  @authorize({
+    permissions: [PermissionKey.DeleteArchive, PermissionKey.DeleteArchiveNum],
+  })
   @del('/archives/{archiveId}', {
     description: `Used to delete a specific archive w.r.t archiveId.
        If archive is not present, it will throw HTTP Not Found Error.`,
@@ -92,7 +98,12 @@ export class VideoChatArchiveController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKeys.SetUploadTarget]})
+  @authorize({
+    permissions: [
+      PermissionKey.SetUploadTarget,
+      PermissionKey.SetUploadTargetNum,
+    ],
+  })
   @put('/archives/storage-target', {
     description:
       'Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.',

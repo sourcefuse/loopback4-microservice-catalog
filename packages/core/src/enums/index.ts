@@ -12,3 +12,4 @@ export * from './roles.enum';
 export * from './status-codes.enum';
 export * from './tenant-status.enum';
 export * from './user-status.enum';
+export * from './user-permissions.enum';

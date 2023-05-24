@@ -26,6 +26,7 @@ import {
   STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -34,7 +35,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Subscription} from '../models';
-import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ISchedulerConfig} from '../types';

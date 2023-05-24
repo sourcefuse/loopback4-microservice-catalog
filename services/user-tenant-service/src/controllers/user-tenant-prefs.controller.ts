@@ -2,7 +2,6 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../enums';
 import {inject} from '@loopback/context';
 import {Filter, repository} from '@loopback/repository';
 import {
@@ -17,6 +16,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   STATUS_CODE,
+  PermissionKey,
 } from '@sourceloop/core';
 import {
   authenticate,

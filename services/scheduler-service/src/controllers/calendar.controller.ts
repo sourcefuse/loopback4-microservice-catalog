@@ -29,7 +29,6 @@ import {
 import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour, Subscription, IdentifierType} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
-import {PermissionKey} from '../models/enums/permission-key.enum';
 import {
   CalendarRepository,
   WorkingHourRepository,
@@ -40,6 +39,7 @@ import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  PermissionKey,
 } from '@sourceloop/core';
 import {AccessRoleType} from '../models/enums/access-role.enum';
 import {inject, service} from '@loopback/core';
