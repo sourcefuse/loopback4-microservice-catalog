@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2023-05-25)
+
+* feat(cache): add sequelize support in mixin (#1428) ([ebdd783](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebdd783)), closes [#1428](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1428) [#1427](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1427)
+* refactor(all-services): remove empty and unnecessary folder (#1423) ([15c8235](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/15c8235)), closes [#1423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1423)
+
+
+
+
+
 ## <small>0.4.10 (2023-05-03)</small>
 
 * chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
