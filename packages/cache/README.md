@@ -102,6 +102,8 @@ export class ProductRepository extends CacheManager.CacheRepositoryMixin<
 }
 ```
 
+`CacheRepositoryMixin` starting `v0.5.0` also supports the [SequelizeCrudRepository](https://loopback.io/doc/en/lb4/apidocs.sequelize.sequelizecrudrepository.html).
+
 - If you want entries in the cache to be forcefully updated, you can set forceUpdate true in options while invoking find/findById. Forcefully update will always return data from the original source and update the cache with the new data.
 
   ```ts

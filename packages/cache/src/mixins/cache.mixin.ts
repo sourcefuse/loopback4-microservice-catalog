@@ -2,9 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Constructor, MixinTarget} from '@loopback/core';
 import {
-  DefaultCrudRepository,
   Entity,
   Filter,
   FilterExcludingWhere,
@@ -12,10 +10,13 @@ import {
   Options,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {SequelizeDataSource} from '@loopback/sequelize';
 import * as crypto from 'crypto';
 import {ICacheStrategy, RedisCacheStrategy} from '../strategies';
 import {CacheStrategyTypes} from '../strategy-types.enum';
 import {
+  AbstractConstructor,
+  CacheMixinBase,
   CachePluginComponentOptions,
   DEFAULT_CACHE_PLUGIN_OPTIONS,
   ICacheMixin,
@@ -30,13 +31,15 @@ export class CacheManager {
     M extends Entity,
     ID,
     Relations extends object,
-    R extends MixinTarget<DefaultCrudRepository<M, ID, Relations>>,
+    R extends CacheMixinBase<M, ID, Relations>,
   >(
     baseClass: R,
     cacheOptions: Partial<CachePluginComponentOptions>,
-  ): R & Constructor<ICacheMixin<M, ID>> {
-    class MixedRepository extends baseClass {
-      getCacheDataSource: () => Promise<JugglerDataSource>;
+  ): R & AbstractConstructor<ICacheMixin<M, ID>> {
+    abstract class MixedRepository extends baseClass {
+      getCacheDataSource: () => Promise<
+        JugglerDataSource | SequelizeDataSource
+      >;
       strategy: ICacheStrategy<M>;
       private allCacheOptions: CachePluginComponentOptions;
 
