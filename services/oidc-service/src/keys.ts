@@ -1,5 +1,18 @@
 import {BindingKey} from '@loopback/core';
-
-export namespace TemplateBindings {
-  export const TemplateBasePath = BindingKey.create<string>('template.basePath')
+import {BINDING_PREFIX} from '@sourceloop/core';
+import OidcProvider from 'oidc-provider';
+import {FindAccountProviderFn} from './types';
+export namespace OIDCServiceBindings {
+  export const LoginTemplate = BindingKey.create<string>(
+    `${BINDING_PREFIX}.template.login`,
+  );
+  export const InteractionTemplate = BindingKey.create<string>(
+    `${BINDING_PREFIX}.template.interaction`,
+  );
+  export const OIDC_PROVIDER = BindingKey.create<OidcProvider>(
+    `${BINDING_PREFIX}.oidc.provider`,
+  );
+  export const FIND_ACCOUNT_PROVIDER = BindingKey.create<FindAccountProviderFn>(
+    `${BINDING_PREFIX}.findAccountProvider`,
+  );
 }

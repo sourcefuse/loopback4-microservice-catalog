@@ -30,3 +30,19 @@ export interface ExternalTokens {
   externalAuthToken?: string;
   externalRefreshToken?: string;
 }
+
+export type FindAccountProviderFn = (
+  ctx: unknown,
+  sub: string,
+  token: unknown,
+) => Promise<FindAccountResult>;
+
+export interface FindAccountResult {
+  accountId: string;
+  claims: (
+    use: string,
+    scope: string,
+    claims: unknown,
+    rejected: Array<string>,
+  ) => Promise<{[key: string]: unknown}>;
+}

@@ -19,4 +19,3 @@ export class AuthClientRepository extends DefaultSoftCrudRepository<
     super(AuthClient, dataSource);
   }
 }
-

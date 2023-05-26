@@ -6,20 +6,23 @@ import {
   requestBody,
   RequestContext,
   Response,
-  RestBindings
+  RestBindings,
 } from '@loopback/rest';
-import { UserRepository } from '../repositories/user.repository';
+import {UserRepository} from '../repositories/user.repository';
 import ejs from 'ejs';
 import {STATUS_CODE} from '@sourceloop/core';
-import {OIDC_PROVIDER} from '../provider/oidc.provider';
 import OidcProvider from 'oidc-provider';
-import {TemplateBindings} from '../keys';
+import {OIDCServiceBindings} from '../keys';
 
 export class OidcController {
   constructor(
     @inject(RestBindings.Http.CONTEXT) private requestContext: RequestContext,
-    @inject(OIDC_PROVIDER) private oidcProvider: OidcProvider,
-    @inject(TemplateBindings.TemplateBasePath) private templateFilePath: string,
+    @inject(OIDCServiceBindings.OIDC_PROVIDER)
+    private oidcProvider: OidcProvider,
+    @inject(OIDCServiceBindings.LoginTemplate)
+    private loginTemplateFilePath: string,
+    @inject(OIDCServiceBindings.InteractionTemplate)
+    private interactionTemplateFilePath: string,
     @repository(UserRepository)
     protected readonly userRepository: UserRepository,
   ) {}
@@ -35,25 +38,22 @@ export class OidcController {
     },
   })
   async interaction() {
-    const {uid, prompt, params} =
-      await this.oidcProvider.interactionDetails(
-        this.requestContext.request,
-        this.requestContext.response,
-      );
-    const client = await this.oidcProvider.Client.find(params.client_id as string);
-    const basePath = this.templateFilePath;
+    const {uid, prompt, params} = await this.oidcProvider.interactionDetails(
+      this.requestContext.request,
+      this.requestContext.response,
+    );
+    const client = await this.oidcProvider.Client.find(
+      params.client_id as string,
+    );
     switch (prompt.name) {
       case 'login': {
-        const html = await ejs.renderFile(
-          `${basePath}/login.ejs`,
-          {
-            client,
-            uid,
-            details: prompt.details,
-            params,
-            title: 'Sign-in',
-          },
-        );
+        const html = await ejs.renderFile(this.loginTemplateFilePath, {
+          client,
+          uid,
+          details: prompt.details,
+          params,
+          title: 'Sign-in',
+        });
         this.requestContext.response
           .status(STATUS_CODE.OK)
           .contentType('text/html')
@@ -61,16 +61,13 @@ export class OidcController {
         return;
       }
       case 'consent': {
-        const html = await ejs.renderFile(
-          `${basePath}/interaction.ejs`,
-          {
-            client,
-            uid,
-            details: prompt.details,
-            params,
-            title: 'Authorize',
-          },
-        );
+        const html = await ejs.renderFile(this.interactionTemplateFilePath, {
+          client,
+          uid,
+          details: prompt.details,
+          params,
+          title: 'Authorize',
+        });
         this.requestContext.response
           .status(STATUS_CODE.OK)
           .contentType('text/html')
@@ -95,11 +92,10 @@ export class OidcController {
     },
     @inject(RestBindings.Http.RESPONSE) response2: Response,
   ) {
-    const {username,password} = _requestBody;
+    const {username, password} = _requestBody;
     const user = await this.userRepository.verifyPassword(username, password);
-    if(user === undefined || user === null || !user){
-        return 'user not exist or not authenticated';
-
+    if (user === undefined || user === null || !user) {
+      return 'user not exist or not authenticated';
     }
     //authenticated user enters
     try {

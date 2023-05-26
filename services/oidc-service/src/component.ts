@@ -20,9 +20,9 @@ import {
 import {repositories} from './repositories';
 import {controllers} from './controllers';
 import {models} from './models';
-import {OIDC_PROVIDER, OidcProviderProvider} from './provider/oidc.provider';
+import {OidcProviderProvider, FindAccountProvider} from './providers';
 import {OidcInitializerService} from './services';
-import {TemplateBindings} from './keys';
+import {OIDCServiceBindings} from './keys';
 import path from 'path';
 export class OidcServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -34,12 +34,11 @@ export class OidcServiceComponent implements Component {
   models?: Class<Model>[];
 
   providers: ProviderMap = {
-    [OIDC_PROVIDER.key]:OidcProviderProvider
+    [OIDCServiceBindings.OIDC_PROVIDER.key]: OidcProviderProvider,
+    [OIDCServiceBindings.FIND_ACCOUNT_PROVIDER.key]: FindAccountProvider,
   };
 
-  services = [
-    OidcInitializerService
-  ];
+  services = [OidcInitializerService];
   /**
    * An array of controller classes
    */
@@ -54,7 +53,12 @@ export class OidcServiceComponent implements Component {
     this.controllers = controllers;
     this.repositories = repositories;
     this.bindings = [
-      new Binding(TemplateBindings.TemplateBasePath).to(path.join(__dirname, '../public/views')),
+      new Binding(OIDCServiceBindings.LoginTemplate).to(
+        path.join(__dirname, '../public/views/login.ejs'),
+      ),
+      new Binding(OIDCServiceBindings.InteractionTemplate).to(
+        path.join(__dirname, '../public/views/interaction.ejs'),
+      ),
     ];
     this.application.api({
       openapi: '3.0.0',

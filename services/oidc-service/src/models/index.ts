@@ -9,11 +9,10 @@ import {UserCredentials} from './user-credentials.model';
 import {UserTenant} from './user-tenant.model';
 import {User} from './user.model';
 import {AuthClient} from './auth-client.model';
-import { Role } from './role.model';
-import { TenantConfig } from './tenant-config.model';
-import { UserLevelPermission } from './user-level-permission.model'; 
-import { Otp } from './otp.model';
-
+import {Role} from './role.model';
+import {TenantConfig} from './tenant-config.model';
+import {UserLevelPermission} from './user-level-permission.model';
+import {Otp} from './otp.model';
 
 export * from './tenant.model';
 export * from './user-credentials.model';
@@ -34,5 +33,5 @@ export const models = [
   Role,
   TenantConfig,
   UserLevelPermission,
-  Otp
+  Otp,
 ];

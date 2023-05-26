@@ -31,5 +31,5 @@ export const repositories = [
   TenantConfigRepository,
   UserTenantRepository,
   TenantRepository,
-  AuthClientRepository
+  AuthClientRepository,
 ];

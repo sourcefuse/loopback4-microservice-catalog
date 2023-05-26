@@ -1,0 +1,83 @@
+{
+  "name": "oidc",
+  "version": "0.0.1",
+  "description": "oidc",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "14 || 16 || 18 || 19"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t oidc .",
+    "docker:run": "docker run -p 3000:3000 -d oidc",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "dev": "nodemon src/index.ts",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "watch": [
+      "src/"
+    ],
+    "ignore": [
+      "dist/*"
+    ],
+    "ext": "ts",
+    "exec": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Antriksha Somani <antriksha.somani@sourcefuse.com>",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^5.0.10",
+    "@loopback/core": "^4.0.10",
+    "@loopback/repository": "^5.1.5",
+    "@loopback/rest": "^12.0.10",
+    "@loopback/rest-explorer": "^5.0.10",
+    "@loopback/service-proxy": "^5.0.10",
+    "loopback-connector-postgresql": "^6.0.3",
+    "nodemon": "^2.0.22",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^9.0.10",
+    "@loopback/eslint-config": "^13.0.10",
+    "@loopback/testlab": "^5.0.10",
+    "@types/node": "^14.18.42",
+    "eslint": "^8.38.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.9.5"
+  }
+}
