@@ -3,7 +3,6 @@ import {LoginType} from '../enums/login-type.enum';
 
 @model({
   description: `This is to maintain the daily login activity.`,
-  settings: {strict: true},
   name: 'login_activity',
 })
 export class LoginActivity extends Entity {
