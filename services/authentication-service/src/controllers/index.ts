@@ -15,12 +15,14 @@ import {SignupRequestController} from './signup-request.controller';
 import {AzureLoginController} from '../modules/auth/azure-login.controller';
 import {CognitoLoginController} from '../modules/auth/cognito-login.controller';
 import {SamlLoginController} from '../modules/auth/saml-login.controller';
+import {LoginActivityController} from './login-activity.controller';
 
 export * from '../modules/auth/login.controller';
 export * from '../modules/auth/logout.controller';
 export * from '../modules/auth/otp.controller';
 export * from './forget-password.controller';
 export * from './signup-request.controller';
+export * from './login-activity.controller';
 
 export const controllers = [
   LoginController,
@@ -36,4 +38,5 @@ export const controllers = [
   AzureLoginController,
   CognitoLoginController,
   SamlLoginController,
+  LoginActivityController,
 ];

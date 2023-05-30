@@ -11,6 +11,7 @@ import {
   post,
   Request,
   requestBody,
+  RequestContext,
   RestBindings,
 } from '@loopback/rest';
 import {
@@ -26,15 +27,27 @@ import {
 } from '@sourceloop/core';
 import {encode} from 'base-64';
 import {HttpsProxyAgent} from 'https-proxy-agent';
-import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
+import {
+  authenticate,
+  AuthenticationBindings,
+  AuthErrorKeys,
+  STRATEGY,
+} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import fetch from 'node-fetch';
 import {URLSearchParams} from 'url';
-import {RefreshTokenRequest} from '../../models';
+import {LoginActivity, RefreshTokenRequest} from '../../models';
 import {
+  LoginActivityRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
+  UserRepository,
+  UserTenantRepository,
 } from '../../repositories';
+import {AuthServiceBindings} from '../../keys';
+import {ActorId} from '../../types';
+
+import {AuthClient, JwtPayloadFn, LoginType} from '../..';
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
@@ -53,6 +66,19 @@ export class LogoutController {
     @repository(RefreshTokenRepository)
     public refreshTokenRepo: RefreshTokenRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @repository(LoginActivityRepository)
+    private readonly loginActivityRepo: LoginActivityRepository,
+    @inject(AuthServiceBindings.ActorIdKey)
+    private readonly actorKey: ActorId,
+    @inject.context() private readonly ctx: RequestContext,
+    @repository(UserRepository)
+    public userRepo: UserRepository,
+    @repository(UserTenantRepository)
+    public userTenantRepo: UserTenantRepository,
+    @inject(AuthServiceBindings.JWTPayloadProvider)
+    private readonly getJwtPayload: JwtPayloadFn,
+    @inject(AuthenticationBindings.CURRENT_CLIENT)
+    private readonly client: AuthClient | undefined,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -110,6 +136,35 @@ export class LogoutController {
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
     }
+    const user = await this.userRepo.findById(refreshTokenModel.userId);
+
+    const userTenant = await this.userTenantRepo.findOne({
+      where: {userId: user.id},
+    });
+    let actor: string,
+      tenantId = '0';
+    if (userTenant) {
+      actor = userTenant[this.actorKey]?.toString() ?? '0';
+      tenantId = userTenant.tenantId;
+    } else actor = user['id']?.toString() ?? '0';
+
+    const loginActivity = new LoginActivity({
+      actor,
+      tenantId,
+      loginTime: new Date(),
+      tokenPayload: {...user, clientId: refreshTokenModel.clientId},
+      deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
+      loginType: LoginType.LOGOUT,
+      ipAddress:
+        this.ctx.request.headers['x-forwarded-for']?.toString() ??
+        this.ctx.request.socket.remoteAddress,
+    });
+    this.loginActivityRepo.create(loginActivity).catch(e => {
+      console.log(e.toString());
+      this.logger.error(
+        `Failed to add the login activity => ${JSON.stringify(loginActivity)}`,
+      );
+    });
 
     return new SuccessResponse({
       success: true,

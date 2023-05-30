@@ -13,6 +13,7 @@ import {
   post,
   Request,
   requestBody,
+  RequestContext,
   RestBindings,
 } from '@loopback/rest';
 import {
@@ -41,7 +42,7 @@ import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {ActorId, ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {ActiveUsers, AuthClient, RefreshToken, User} from '../../models';
+import {LoginActivity, AuthClient, RefreshToken, User} from '../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
@@ -51,7 +52,7 @@ import {
 } from '../../providers';
 import * as jwt from 'jsonwebtoken';
 import {
-  ActiveUsersRepository,
+  LoginActivityRepository,
   AuthClientRepository,
   OtpCacheRepository,
   RefreshTokenRepository,
@@ -74,6 +75,7 @@ import {
 import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
+import {LoginType} from '../../enums/login-type.enum';
 
 export class LoginController {
   constructor(
@@ -114,10 +116,11 @@ export class LoginController {
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
-    @repository(ActiveUsersRepository)
-    private readonly activeUserRepo: ActiveUsersRepository,
+    @repository(LoginActivityRepository)
+    private readonly loginActivityRepo: LoginActivityRepository,
     @inject(AuthServiceBindings.ActorIdKey)
     private readonly actorKey: ActorId,
+    @inject.context() private readonly ctx: RequestContext,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -212,7 +215,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.user.id);
       }
 
-      return await this.createJWT(payload, this.client);
+      return await this.createJWT(payload, this.client, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -267,7 +270,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.userId);
       }
 
-      return await this.createJWT(payload, authClient);
+      return await this.createJWT(payload, authClient, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
       if (error.name === 'TokenExpiredError') {
@@ -313,6 +316,7 @@ export class LoginController {
       },
       payload.authClient,
       payload.refreshPayload.tenantId,
+      LoginType.RELOGIN,
     );
   }
 
@@ -503,6 +507,7 @@ export class LoginController {
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
     tenantId?: string,
+    loginType?: LoginType,
   ): Promise<TokenResponse> {
     try {
       const size = 32;
@@ -555,18 +560,32 @@ export class LoginController {
         {ttl: authClient.refreshTokenExpiration * ms},
       );
 
-      // make an entry to mark the active user
-
-      const actor = user[this.actorKey]?.toString() ?? '0';
-      const activeUser = new ActiveUsers({
-        actor,
-        loginTime: new Date(),
-        tenantId: data.tenantId,
-        tokenPayload: {...data, clientId: authClient.clientId},
+      const userTenant = await this.userTenantRepo.findOne({
+        where: {userId: user.id},
       });
-      this.activeUserRepo.create(activeUser).catch(() => {
+
+      // make an entry to mark the users login activity
+      let actor: string;
+      if (userTenant) {
+        actor = userTenant[this.actorKey]?.toString() ?? '0';
+      } else actor = user['id']?.toString() ?? '0';
+      const loginActivity = new LoginActivity({
+        actor,
+        tenantId: data.tenantId,
+        loginTime: new Date(),
+        tokenPayload: {...data, clientId: authClient.clientId},
+        loginType,
+        deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
+        ipAddress:
+          this.ctx.request.headers['x-forwarded-for']?.toString() ??
+          this.ctx.request.socket.remoteAddress,
+      });
+      this.loginActivityRepo.create(loginActivity).catch(e => {
+        console.log(e.toString());
         this.logger.error(
-          `Failed to add the active user => ${JSON.stringify(activeUser)}`,
+          `Failed to add the login activity => ${JSON.stringify(
+            loginActivity,
+          )}`,
         );
       });
 

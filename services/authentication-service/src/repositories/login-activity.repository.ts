@@ -1,16 +1,16 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {AuthDbSourceName} from '../types';
-import {ActiveUsers} from '../models';
+import {LoginActivity} from '../models';
 import {inject} from '@loopback/core';
 
-export class ActiveUsersRepository extends DefaultCrudRepository<
-  ActiveUsers,
-  typeof ActiveUsers.prototype.id
+export class LoginActivityRepository extends DefaultCrudRepository<
+  LoginActivity,
+  typeof LoginActivity.prototype.id
 > {
   constructor(
     @inject(`datasources.${AuthDbSourceName}`)
     dataSource: juggler.DataSource,
   ) {
-    super(ActiveUsers, dataSource);
+    super(LoginActivity, dataSource);
   }
 }

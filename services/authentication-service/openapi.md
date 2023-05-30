@@ -5,12 +5,13 @@ language_tabs:
   - javascript--nodejs: Node.JS
 language_clients:
   - javascript: request
-  - javascript--nodejs: ''
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: true
 highlight_theme: darkula
 headingLevel: 2
+
 ---
 
 <!-- Generator: Widdershins v4.0.1 -->
@@ -23,48 +24,28 @@ Authentication microservice
 
 Base URLs:
 
-- <a href="/">/</a>
+* <a href="/">/</a>
 
 # Authentication
 
-- HTTP Authentication, scheme: bearer
+- HTTP Authentication, scheme: bearer 
 
-<h1 id="authentication-service-activeuserscontroller">ActiveUsersController</h1>
+<h1 id="authentication-service-loginactivitycontroller">LoginActivityController</h1>
 
-## ActiveUsersController.count
+## LoginActivityController.getActiveUsers
 
-<a id="opIdActiveUsersController.count"></a>
+<a id="opIdLoginActivityController.getActiveUsers"></a>
 
 > Code samples
 
 ```javascript
-const headers = {
-  Accept: 'application/json',
-  Authorization: 'Bearer {access-token}',
-};
-
-fetch('/active-users/count', {
-  method: 'GET',
-
-  headers: headers,
-})
-  .then(function (res) {
-    return res.json();
-  })
-  .then(function (body) {
-    console.log(body);
-  });
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/active-users/count',
+fetch('/active-users/{range}',
 {
   method: 'GET',
 
@@ -78,17 +59,123 @@ fetch('/active-users/count',
 
 ```
 
-`GET /active-users/count`
+```javascript--nodejs
+const fetch = require('node-fetch');
 
-| Permissions     |
-| --------------- |
-| CheckActiveUser |
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
 
-<h3 id="activeuserscontroller.count-parameters">Parameters</h3>
+fetch('/active-users/{range}',
+{
+  method: 'GET',
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /active-users/{range}`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.getactiveusers-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|range|path|string|true|none|
+|startDate|query|string(date-time)|false|none|
+|endDate|query|string(date-time)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+null
+```
+
+<h3 id="loginactivitycontroller.getactiveusers-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|LoginActivity model instance|Inline|
+
+<h3 id="loginactivitycontroller.getactiveusers-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## LoginActivityController.count
+
+<a id="opIdLoginActivityController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /login-activity/count`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -100,51 +187,31 @@ fetch('/active-users/count',
 }
 ```
 
-<h3 id="activeuserscontroller.count-responses">Responses</h3>
+<h3 id="loginactivitycontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description            | Schema                                  |
-| ------ | ------------------------------------------------------- | ---------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | ActiveUser model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|LoginActivity model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
 </aside>
 
-## ActiveUsersController.findById
+## LoginActivityController.findById
 
-<a id="opIdActiveUsersController.findById"></a>
+<a id="opIdLoginActivityController.findById"></a>
 
 > Code samples
 
 ```javascript
-const headers = {
-  Accept: 'application/json',
-  Authorization: 'Bearer {access-token}',
-};
-
-fetch('/active-users/{id}', {
-  method: 'GET',
-
-  headers: headers,
-})
-  .then(function (res) {
-    return res.json();
-  })
-  .then(function (body) {
-    console.log(body);
-  });
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/active-users/{id}',
+fetch('/login-activity/{id}',
 {
   method: 'GET',
 
@@ -158,18 +225,40 @@ fetch('/active-users/{id}',
 
 ```
 
-`GET /active-users/{id}`
+```javascript--nodejs
+const fetch = require('node-fetch');
 
-| Permissions     |
-| --------------- |
-| CheckActiveUser |
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
 
-<h3 id="activeuserscontroller.findbyid-parameters">Parameters</h3>
+fetch('/login-activity/{id}',
+{
+  method: 'GET',
 
-| Name   | In    | Type                                              | Required | Description |
-| ------ | ----- | ------------------------------------------------- | -------- | ----------- |
-| id     | path  | string                                            | true     | none        |
-| filter | query | [active_users.Filter](#schemaactive_users.filter) | false    | none        |
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /login-activity/{id}`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[login_activity.Filter](#schemalogin_activity.filter)|false|none|
 
 > Example responses
 
@@ -181,55 +270,38 @@ fetch('/active-users/{id}',
   "actor": "string",
   "tenantId": "string",
   "loginTime": "2019-08-24T14:15:22Z",
-  "tokenPayload": {}
+  "tokenPayload": {},
+  "loginType": "string",
+  "deviceInfo": "string",
+  "ipAddress": "string"
 }
 ```
 
-<h3 id="activeuserscontroller.findbyid-responses">Responses</h3>
+<h3 id="loginactivitycontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description               | Schema                                                      |
-| ------ | ------------------------------------------------------- | ------------------------- | ----------------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | ActiveUser model instance | [ActiveUsersWithRelations](#schemaactiveuserswithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|LoginActivity model instance|[LoginActivityWithRelations](#schemaloginactivitywithrelations)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
 </aside>
 
-## ActiveUsersController.find
+## LoginActivityController.find
 
-<a id="opIdActiveUsersController.find"></a>
+<a id="opIdLoginActivityController.find"></a>
 
 > Code samples
 
 ```javascript
-const headers = {
-  Accept: 'application/json',
-  Authorization: 'Bearer {access-token}',
-};
-
-fetch('/active-users', {
-  method: 'GET',
-
-  headers: headers,
-})
-  .then(function (res) {
-    return res.json();
-  })
-  .then(function (body) {
-    console.log(body);
-  });
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/active-users',
+fetch('/login-activity',
 {
   method: 'GET',
 
@@ -243,17 +315,39 @@ fetch('/active-users',
 
 ```
 
-`GET /active-users`
+```javascript--nodejs
+const fetch = require('node-fetch');
 
-| Permissions     |
-| --------------- |
-| CheckActiveUser |
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
 
-<h3 id="activeuserscontroller.find-parameters">Parameters</h3>
+fetch('/login-activity',
+{
+  method: 'GET',
 
-| Name   | In    | Type                                              | Required | Description |
-| ------ | ----- | ------------------------------------------------- | -------- | ----------- |
-| filter | query | [active_users.Filter](#schemaactive_users.filter) | false    | none        |
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /login-activity`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[login_activity.Filter](#schemalogin_activity.filter)|false|none|
 
 > Example responses
 
@@ -266,30 +360,36 @@ fetch('/active-users',
     "actor": "string",
     "tenantId": "string",
     "loginTime": "2019-08-24T14:15:22Z",
-    "tokenPayload": {}
+    "tokenPayload": {},
+    "loginType": "string",
+    "deviceInfo": "string",
+    "ipAddress": "string"
   }
 ]
 ```
 
-<h3 id="activeuserscontroller.find-responses">Responses</h3>
+<h3 id="loginactivitycontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                         | Schema |
-| ------ | ------------------------------------------------------- | ----------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of ActiveUser model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of LoginActivity model instances|Inline|
 
-<h3 id="activeuserscontroller.find-responseschema">Response Schema</h3>
+<h3 id="loginactivitycontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                       | Type                                                          | Required | Restrictions | Description                                                                                                                      |
-| -------------------------- | ------------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| _anonymous_                | [[ActiveUsersWithRelations](#schemaactiveuserswithrelations)] | false    | none         | [This is to maintain the daily active users list. (tsType: ActiveUsersWithRelations, schemaOptions: { includeRelations: true })] |
-| » ActiveUsersWithRelations | [ActiveUsersWithRelations](#schemaactiveuserswithrelations)   | false    | none         | This is to maintain the daily active users list. (tsType: ActiveUsersWithRelations, schemaOptions: { includeRelations: true })   |
-| »» id                      | string                                                        | false    | none         | none                                                                                                                             |
-| »» actor                   | string                                                        | false    | none         | none                                                                                                                             |
-| »» tenantId                | string                                                        | false    | none         | none                                                                                                                             |
-| »» loginTime               | string(date-time)                                             | false    | none         | none                                                                                                                             |
-| »» tokenPayload            | object                                                        | false    | none         | none                                                                                                                             |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[LoginActivityWithRelations](#schemaloginactivitywithrelations)]|false|none|[This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })]|
+|» LoginActivityWithRelations|[LoginActivityWithRelations](#schemaloginactivitywithrelations)|false|none|This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» actor|string|false|none|none|
+|»» tenantId|string|false|none|none|
+|»» loginTime|string(date-time)|false|none|none|
+|»» tokenPayload|object|false|none|none|
+|»» loginType|string|false|none|none|
+|»» deviceInfo|string|false|none|none|
+|»» ipAddress|string|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -305,21 +405,23 @@ HTTPBearer
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/apple-oauth-redirect', {
+fetch('/auth/apple-oauth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -347,10 +449,10 @@ fetch('/auth/apple-oauth-redirect',
 
 <h3 id="applelogincontroller.applecallback-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| code  | query | string | false    | none        |
-| state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
 
 > Example responses
 
@@ -367,9 +469,9 @@ fetch('/auth/apple-oauth-redirect',
 
 <h3 id="applelogincontroller.applecallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                   | Schema                                |
-| ------ | ------------------------------------------------------- | ----------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Apple Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Apple Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -435,21 +537,22 @@ fetch('/auth/oauth-apple',
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="applelogincontroller.postloginviaapple-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
 <h3 id="applelogincontroller.postloginviaapple-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                     | Schema |
-| ------ | ------------------------------------------------------- | ------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | POST Call for Apple based login | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Apple based login|None|
 
 <h3 id="applelogincontroller.postloginviaapple-responseschema">Response Schema</h3>
 
@@ -523,13 +626,14 @@ POST Call for azure based login
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="azurelogincontroller.postloginviaazure-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -546,9 +650,9 @@ client_secret: string
 
 <h3 id="azurelogincontroller.postloginviaazure-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description          | Schema                                |
-| ------ | ------------------------------------------------------- | -------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Azure Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Azure Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -561,21 +665,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/azure', {
+fetch('/auth/azure',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -605,10 +711,10 @@ POST Call for azure based login
 
 <h3 id="azurelogincontroller.getloginviaazure-parameters">Parameters</h3>
 
-| Name          | In    | Type   | Required | Description |
-| ------------- | ----- | ------ | -------- | ----------- |
-| client_id     | query | string | false    | none        |
-| client_secret | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
 
 > Example responses
 
@@ -625,9 +731,9 @@ POST Call for azure based login
 
 <h3 id="azurelogincontroller.getloginviaazure-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description          | Schema                                |
-| ------ | ------------------------------------------------------- | -------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Azure Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Azure Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -640,21 +746,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/azure-oauth-redirect', {
+fetch('/auth/azure-oauth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -682,11 +790,11 @@ fetch('/auth/azure-oauth-redirect',
 
 <h3 id="azurelogincontroller.azurecallback-parameters">Parameters</h3>
 
-| Name          | In    | Type   | Required | Description |
-| ------------- | ----- | ------ | -------- | ----------- |
-| code          | query | string | false    | none        |
-| state         | query | string | false    | none        |
-| session_state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+|session_state|query|string|false|none|
 
 > Example responses
 
@@ -703,9 +811,9 @@ fetch('/auth/azure-oauth-redirect',
 
 <h3 id="azurelogincontroller.azurecallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                   | Schema                                |
-| ------ | ------------------------------------------------------- | ----------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Azure Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Azure Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -787,16 +895,16 @@ fetch('/auth/change-password',
 
 <h3 id="logincontroller.resetpassword-parameters">Parameters</h3>
 
-| Name          | In     | Type                                                | Required | Description |
-| ------------- | ------ | --------------------------------------------------- | -------- | ----------- |
-| Authorization | header | string                                              | false    | none        |
-| body          | body   | [ResetPasswordPartial](#schemaresetpasswordpartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Authorization|header|string|false|none|
+|body|body|[ResetPasswordPartial](#schemaresetpasswordpartial)|false|none|
 
 <h3 id="logincontroller.resetpassword-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                            | Schema |
-| ------ | ------------------------------------------------------- | -------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | If User password successfully changed. | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|If User password successfully changed.|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -877,21 +985,21 @@ Gets you the code that will be used for getting token (webapps)
 
 <h3 id="logincontroller.login-parameters">Parameters</h3>
 
-| Name | In   | Type                                | Required | Description |
-| ---- | ---- | ----------------------------------- | -------- | ----------- |
-| body | body | [LoginRequest](#schemaloginrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[LoginRequest](#schemaloginrequest)|false|none|
 
 > Example responses
 
 <h3 id="logincontroller.login-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                                                                     | Schema |
-| ------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect.                                                  | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                                                                            | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.                                                            | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect                                                   | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="logincontroller.login-responseschema">Response Schema</h3>
 
@@ -975,9 +1083,9 @@ Gets you refresh token and access token in one hit. (mobile app)
 
 <h3 id="logincontroller.loginwithclientuser-parameters">Parameters</h3>
 
-| Name | In   | Type                                | Required | Description |
-| ---- | ---- | ----------------------------------- | -------- | ----------- |
-| body | body | [LoginRequest](#schemaloginrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[LoginRequest](#schemaloginrequest)|false|none|
 
 > Example responses
 
@@ -994,13 +1102,13 @@ Gets you refresh token and access token in one hit. (mobile app)
 
 <h3 id="logincontroller.loginwithclientuser-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema                                |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Token Response Model                           | [TokenResponse](#schematokenresponse) |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None                                  |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None                                  |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None                                  |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None                                  |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Token Response Model|[TokenResponse](#schematokenresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -1013,21 +1121,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Authorization: 'Bearer {access-token}',
+  'Authorization':'Bearer {access-token}'
 };
 
-fetch('/auth/me', {
+fetch('/auth/me',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1059,13 +1169,13 @@ To get the user details
 
 <h3 id="logincontroller.me-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | User Object                                    | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User Object|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="logincontroller.me-responseschema">Response Schema</h3>
 
@@ -1144,9 +1254,9 @@ Send the code received from the POST /auth/login api and get refresh token and a
 
 <h3 id="logincontroller.gettoken-parameters">Parameters</h3>
 
-| Name | In   | Type                                        | Required | Description |
-| ---- | ---- | ------------------------------------------- | -------- | ----------- |
-| body | body | [AuthTokenRequest](#schemaauthtokenrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AuthTokenRequest](#schemaauthtokenrequest)|false|none|
 
 > Example responses
 
@@ -1163,13 +1273,13 @@ Send the code received from the POST /auth/login api and get refresh token and a
 
 <h3 id="logincontroller.gettoken-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema                                |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Token Response                                 | [TokenResponse](#schematokenresponse) |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None                                  |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None                                  |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None                                  |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None                                  |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Token Response|[TokenResponse](#schematokenresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -1246,11 +1356,11 @@ Gets you a new access and refresh token once your access token is expired
 
 <h3 id="logincontroller.exchangetoken-parameters">Parameters</h3>
 
-| Name          | In     | Type                                                      | Required | Description |
-| ------------- | ------ | --------------------------------------------------------- | -------- | ----------- |
-| device_id     | header | string                                                    | false    | none        |
-| Authorization | header | string                                                    | false    | none        |
-| body          | body   | [AuthRefreshTokenRequest](#schemaauthrefreshtokenrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|device_id|header|string|false|none|
+|Authorization|header|string|false|none|
+|body|body|[AuthRefreshTokenRequest](#schemaauthrefreshtokenrequest)|false|none|
 
 > Example responses
 
@@ -1267,13 +1377,13 @@ Gets you a new access and refresh token once your access token is expired
 
 <h3 id="logincontroller.exchangetoken-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema                                |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | New Token Response                             | [TokenResponse](#schematokenresponse) |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None                                  |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None                                  |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None                                  |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None                                  |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|New Token Response|[TokenResponse](#schematokenresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1289,22 +1399,24 @@ HTTPBearer
 > Code samples
 
 ```javascript
+
 const headers = {
-  code: 'string',
-  clientId: 'string',
+  'code':'string',
+  'clientId':'string'
 };
 
-fetch('/auth/check-qr-code', {
+fetch('/auth/check-qr-code',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1335,22 +1447,22 @@ Returns isGenerated:true if secret_key already exist
 
 <h3 id="otpcontroller.checkqr-parameters">Parameters</h3>
 
-| Name     | In     | Type   | Required | Description |
-| -------- | ------ | ------ | -------- | ----------- |
-| code     | header | string | false    | none        |
-| clientId | header | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|header|string|false|none|
+|clientId|header|string|false|none|
 
 > Example responses
 
 <h3 id="otpcontroller.checkqr-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | secret_key already exists                      | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|secret_key already exists|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="otpcontroller.checkqr-responseschema">Response Schema</h3>
 
@@ -1426,21 +1538,21 @@ Generates a new qrCode for Authenticator App
 
 <h3 id="otpcontroller.createqr-parameters">Parameters</h3>
 
-| Name | In   | Type                                        | Required | Description |
-| ---- | ---- | ------------------------------------------- | -------- | ----------- |
-| body | body | [AuthTokenRequest](#schemaauthtokenrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AuthTokenRequest](#schemaauthtokenrequest)|false|none|
 
 > Example responses
 
 <h3 id="otpcontroller.createqr-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | -------------------------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | qrCode that you can use to generate codes in Authenticator App | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect.                 | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.                           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect                  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|qrCode that you can use to generate codes in Authenticator App|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="otpcontroller.createqr-responseschema">Response Schema</h3>
 
@@ -1519,21 +1631,21 @@ Sends OTP
 
 <h3 id="otpcontroller.sendotp-parameters">Parameters</h3>
 
-| Name | In   | Type                                    | Required | Description |
-| ---- | ---- | --------------------------------------- | -------- | ----------- |
-| body | body | [OtpSendRequest](#schemaotpsendrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[OtpSendRequest](#schemaotpsendrequest)|false|none|
 
 > Example responses
 
 <h3 id="otpcontroller.sendotp-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Sends otp to user                              | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Sends otp to user|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="otpcontroller.sendotp-responseschema">Response Schema</h3>
 
@@ -1609,21 +1721,21 @@ Gets you the code that will be used for getting token (webapps)
 
 <h3 id="otpcontroller.verifyotp-parameters">Parameters</h3>
 
-| Name | In   | Type                                      | Required | Description |
-| ---- | ---- | ----------------------------------------- | -------- | ----------- |
-| body | body | [OtpLoginRequest](#schemaotploginrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[OtpLoginRequest](#schemaotploginrequest)|false|none|
 
 > Example responses
 
 <h3 id="otpcontroller.verifyotp-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                                                                     | Schema |
-| ------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect.                                                  | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                                                                            | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.                                                            | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect                                                   | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <h3 id="otpcontroller.verifyotp-responseschema">Response Schema</h3>
 
@@ -1695,13 +1807,14 @@ fetch('/auth/cognito',
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="cognitologincontroller.postloginviacognito-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -1718,9 +1831,9 @@ client_secret: string
 
 <h3 id="cognitologincontroller.postloginviacognito-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                       | Schema                                |
-| ------ | ------------------------------------------------------- | --------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | POST Call for Cognito based login | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Cognito based login|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1733,21 +1846,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/cognito', {
+fetch('/auth/cognito',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1775,10 +1890,10 @@ fetch('/auth/cognito',
 
 <h3 id="cognitologincontroller.loginviacognito-parameters">Parameters</h3>
 
-| Name          | In    | Type   | Required | Description |
-| ------------- | ----- | ------ | -------- | ----------- |
-| client_id     | query | string | false    | none        |
-| client_secret | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
 
 > Example responses
 
@@ -1795,9 +1910,9 @@ fetch('/auth/cognito',
 
 <h3 id="cognitologincontroller.loginviacognito-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                                                                                                                     | Schema                                |
-| ------ | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint) | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1810,21 +1925,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/cognito-auth-redirect', {
+fetch('/auth/cognito-auth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1852,10 +1969,10 @@ fetch('/auth/cognito-auth-redirect',
 
 <h3 id="cognitologincontroller.cognitocallback-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| code  | query | string | false    | none        |
-| state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
 
 > Example responses
 
@@ -1872,9 +1989,9 @@ fetch('/auth/cognito-auth-redirect',
 
 <h3 id="cognitologincontroller.cognitocallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                     | Schema                                |
-| ------ | ------------------------------------------------------- | ------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Cognito Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Cognito Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1944,13 +2061,14 @@ fetch('/auth/facebook',
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="facebooklogincontroller.postloginviafacebook-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -1967,9 +2085,9 @@ client_secret: string
 
 <h3 id="facebooklogincontroller.postloginviafacebook-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                        | Schema                                |
-| ------ | ------------------------------------------------------- | ---------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | POST Call for Facebook based login | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Facebook based login|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1982,21 +2100,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/facebook-auth-redirect', {
+fetch('/auth/facebook-auth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2024,10 +2144,10 @@ fetch('/auth/facebook-auth-redirect',
 
 <h3 id="facebooklogincontroller.facebookcallback-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| code  | query | string | false    | none        |
-| state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
 
 > Example responses
 
@@ -2044,9 +2164,9 @@ fetch('/auth/facebook-auth-redirect',
 
 <h3 id="facebooklogincontroller.facebookcallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                      | Schema                                |
-| ------ | ------------------------------------------------------- | -------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Facebook Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Facebook Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2125,19 +2245,19 @@ fetch('/auth/forget-password',
 
 <h3 id="forgetpasswordcontroller.forgetpassword-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ForgetPasswordDto](#schemaforgetpassworddto) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ForgetPasswordDto](#schemaforgetpassworddto)|false|none|
 
 <h3 id="forgetpasswordcontroller.forgetpassword-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)          | Success Response.                              | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Success Response.|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2218,15 +2338,15 @@ fetch('/auth/reset-password',
 
 <h3 id="forgetpasswordcontroller.resetpassword-parameters">Parameters</h3>
 
-| Name | In   | Type                                                      | Required | Description |
-| ---- | ---- | --------------------------------------------------------- | -------- | ----------- |
-| body | body | [ResetPasswordWithClient](#schemaresetpasswordwithclient) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ResetPasswordWithClient](#schemaresetpasswordwithclient)|false|none|
 
 <h3 id="forgetpasswordcontroller.resetpassword-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                            | Schema |
-| ------ | --------------------------------------------------------------- | -------------------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | If User password successfully changed. | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|If User password successfully changed.|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2240,15 +2360,18 @@ HTTPBearer
 > Code samples
 
 ```javascript
-fetch('/auth/verify-reset-password-link?token=string', {
-  method: 'GET',
+
+fetch('/auth/verify-reset-password-link?token=string',
+{
+  method: 'GET'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2271,15 +2394,15 @@ fetch('/auth/verify-reset-password-link?token=string',
 
 <h3 id="forgetpasswordcontroller.verifyresetpasswordlink-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| token | query | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|token|query|string|true|none|
 
 <h3 id="forgetpasswordcontroller.verifyresetpasswordlink-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                              | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Check if Token Is Valid and not Expired. | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Check if Token Is Valid and not Expired.|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -2349,13 +2472,14 @@ fetch('/auth/google',
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="googlelogincontroller.postloginviagoogle-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -2372,9 +2496,9 @@ client_secret: string
 
 <h3 id="googlelogincontroller.postloginviagoogle-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                      | Schema                                |
-| ------ | ------------------------------------------------------- | -------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | POST Call for Google based login | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Google based login|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2387,21 +2511,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/google', {
+fetch('/auth/google',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2429,10 +2555,10 @@ fetch('/auth/google',
 
 <h3 id="googlelogincontroller.loginviagoogle-parameters">Parameters</h3>
 
-| Name          | In    | Type   | Required | Description |
-| ------------- | ----- | ------ | -------- | ----------- |
-| client_id     | query | string | false    | none        |
-| client_secret | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
 
 > Example responses
 
@@ -2449,11 +2575,10 @@ fetch('/auth/google',
 
 <h3 id="googlelogincontroller.loginviagoogle-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description            | Schema |
-| ------ | ------------------------------------------------------- | ---------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Google Token Response, |
-
-         (Deprecated: Possible security issue if secret is passed via query params,
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Token Response,
+         (Deprecated: Possible security issue if secret is passed via query params, 
           please use the post endpoint)|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
@@ -2467,21 +2592,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/google-auth-redirect', {
+fetch('/auth/google-auth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2509,10 +2636,10 @@ fetch('/auth/google-auth-redirect',
 
 <h3 id="googlelogincontroller.googlecallback-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| code  | query | string | false    | none        |
-| state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
 
 > Example responses
 
@@ -2529,9 +2656,9 @@ fetch('/auth/google-auth-redirect',
 
 <h3 id="googlelogincontroller.googlecallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                    | Schema                                |
-| ------ | ------------------------------------------------------- | ------------------------------ | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Google Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2601,13 +2728,14 @@ fetch('/auth/instagram',
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="instagramlogincontroller.postloginviainstagram-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -2624,9 +2752,9 @@ client_secret: string
 
 <h3 id="instagramlogincontroller.postloginviainstagram-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                         | Schema                                |
-| ------ | ------------------------------------------------------- | ----------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | POST Call for Instagram based login | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Instagram based login|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2639,21 +2767,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/instagram-auth-redirect', {
+fetch('/auth/instagram-auth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2681,10 +2811,10 @@ fetch('/auth/instagram-auth-redirect',
 
 <h3 id="instagramlogincontroller.instagramcallback-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| code  | query | string | false    | none        |
-| state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
 
 > Example responses
 
@@ -2701,9 +2831,9 @@ fetch('/auth/instagram-auth-redirect',
 
 <h3 id="instagramlogincontroller.instagramcallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                       | Schema                                |
-| ------ | ------------------------------------------------------- | --------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Instagram Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Instagram Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2775,13 +2905,14 @@ POST Call for keycloak based login
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="keycloaklogincontroller.postloginviakeycloak-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -2798,9 +2929,9 @@ client_secret: string
 
 <h3 id="keycloaklogincontroller.postloginviakeycloak-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description             | Schema                                |
-| ------ | ------------------------------------------------------- | ----------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Keycloak Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2813,21 +2944,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/keycloak', {
+fetch('/auth/keycloak',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2855,10 +2988,10 @@ fetch('/auth/keycloak',
 
 <h3 id="keycloaklogincontroller.loginviakeycloak-parameters">Parameters</h3>
 
-| Name          | In    | Type   | Required | Description |
-| ------------- | ----- | ------ | -------- | ----------- |
-| client_id     | query | string | false    | none        |
-| client_secret | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
 
 > Example responses
 
@@ -2875,9 +3008,9 @@ fetch('/auth/keycloak',
 
 <h3 id="keycloaklogincontroller.loginviakeycloak-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description             | Schema                                |
-| ------ | ------------------------------------------------------- | ----------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Keycloak Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2890,21 +3023,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/keycloak-auth-redirect', {
+fetch('/auth/keycloak-auth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2932,10 +3067,10 @@ fetch('/auth/keycloak-auth-redirect',
 
 <h3 id="keycloaklogincontroller.keycloakcallback-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| code  | query | string | false    | none        |
-| state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
 
 > Example responses
 
@@ -2952,9 +3087,9 @@ fetch('/auth/keycloak-auth-redirect',
 
 <h3 id="keycloaklogincontroller.keycloakcallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                      | Schema                                |
-| ------ | ------------------------------------------------------- | -------------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Keycloak Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Keycloak Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3026,13 +3161,14 @@ POST Call for saml based login
 ```yaml
 client_id: string
 client_secret: string
+
 ```
 
 <h3 id="samllogincontroller.postloginviasaml-parameters">Parameters</h3>
 
-| Name | In   | Type                                          | Required | Description |
-| ---- | ---- | --------------------------------------------- | -------- | ----------- |
-| body | body | [ClientAuthRequest](#schemaclientauthrequest) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
 
 > Example responses
 
@@ -3049,9 +3185,9 @@ client_secret: string
 
 <h3 id="samllogincontroller.postloginviasaml-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description         | Schema                                |
-| ------ | ------------------------------------------------------- | ------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Saml Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Saml Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3064,21 +3200,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/auth/saml-auth-redirect', {
+fetch('/auth/saml-auth-redirect',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3106,11 +3244,11 @@ fetch('/auth/saml-auth-redirect',
 
 <h3 id="samllogincontroller.samlcallback-parameters">Parameters</h3>
 
-| Name          | In    | Type   | Required | Description |
-| ------------- | ----- | ------ | -------- | ----------- |
-| code          | query | string | false    | none        |
-| state         | query | string | false    | none        |
-| session_state | query | string | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+|session_state|query|string|false|none|
 
 > Example responses
 
@@ -3127,9 +3265,9 @@ fetch('/auth/saml-auth-redirect',
 
 <h3 id="samllogincontroller.samlcallback-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                  | Schema                                |
-| ------ | ------------------------------------------------------- | ---------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Saml Redirect Token Response | [TokenResponse](#schematokenresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Saml Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3203,19 +3341,19 @@ fetch('/auth/sign-up/create-token',
 
 <h3 id="signuprequestcontroller.requestsignup-parameters">Parameters</h3>
 
-| Name | In   | Type                                        | Required | Description |
-| ---- | ---- | ------------------------------------------- | -------- | ----------- |
-| body | body | [SignupRequestDto](#schemasignuprequestdto) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[SignupRequestDto](#schemasignuprequestdto)|false|none|
 
 <h3 id="signuprequestcontroller.requestsignup-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)          | Sucess Response.                               | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Sucess Response.|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -3291,9 +3429,9 @@ fetch('/auth/sign-up/create-user',
 
 <h3 id="signuprequestcontroller.signupwithtoken-parameters">Parameters</h3>
 
-| Name | In   | Type                                              | Required | Description |
-| ---- | ---- | ------------------------------------------------- | -------- | ----------- |
-| body | body | [LocalUserProfileDto](#schemalocaluserprofiledto) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[LocalUserProfileDto](#schemalocaluserprofiledto)|false|none|
 
 > Example responses
 
@@ -3308,13 +3446,13 @@ fetch('/auth/sign-up/create-user',
 
 <h3 id="signuprequestcontroller.signupwithtoken-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema                                            |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Sucess Response.                               | [LocalUserProfileDto](#schemalocaluserprofiledto) |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None                                              |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None                                              |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None                                              |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None                                              |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Sucess Response.|[LocalUserProfileDto](#schemalocaluserprofiledto)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3328,21 +3466,23 @@ HTTPBearer
 > Code samples
 
 ```javascript
+
 const headers = {
-  Authorization: 'Bearer {access-token}',
+  'Authorization':'Bearer {access-token}'
 };
 
-fetch('/auth/sign-up/verify-token', {
+fetch('/auth/sign-up/verify-token',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3370,13 +3510,13 @@ fetch('/auth/sign-up/verify-token',
 
 <h3 id="signuprequestcontroller.verifyinvitetoken-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Sucess Response.                               | None   |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None   |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None   |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Sucess Response.|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3454,10 +3594,10 @@ This API will log out the user from application as well as keycloak
 
 <h3 id="logoutcontroller.keycloaklogout-parameters">Parameters</h3>
 
-| Name          | In     | Type                                                            | Required | Description                                                      |
-| ------------- | ------ | --------------------------------------------------------------- | -------- | ---------------------------------------------------------------- |
-| Authorization | header | string                                                          | false    | This is the access token which is required to authenticate user. |
-| body          | body   | [RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial) | false    | none                                                             |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Authorization|header|string|false|This is the access token which is required to authenticate user.|
+|body|body|[RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial)|false|none|
 
 > Example responses
 
@@ -3471,13 +3611,13 @@ This API will log out the user from application as well as keycloak
 
 <h3 id="logoutcontroller.keycloaklogout-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema                                    |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ----------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Success Response                               | [SuccessResponse](#schemasuccessresponse) |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None                                      |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None                                      |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None                                      |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None                                      |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success Response|[SuccessResponse](#schemasuccessresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3553,10 +3693,10 @@ To logout
 
 <h3 id="logoutcontroller.logout-parameters">Parameters</h3>
 
-| Name          | In     | Type                                                            | Required | Description                                                      |
-| ------------- | ------ | --------------------------------------------------------------- | -------- | ---------------------------------------------------------------- |
-| Authorization | header | string                                                          | false    | This is the access token which is required to authenticate user. |
-| body          | body   | [RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial) | false    | none                                                             |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Authorization|header|string|false|This is the access token which is required to authenticate user.|
+|body|body|[RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial)|false|none|
 
 > Example responses
 
@@ -3570,13 +3710,13 @@ To logout
 
 <h3 id="logoutcontroller.logout-responses">Responses</h3>
 
-| Status | Meaning                                                                  | Description                                    | Schema                                    |
-| ------ | ------------------------------------------------------------------------ | ---------------------------------------------- | ----------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)                  | Success Response                               | [SuccessResponse](#schemasuccessresponse) |
-| 400    | [Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)         | The syntax of the request entity is incorrect. | None                                      |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)          | Invalid Credentials.                           | None                                      |
-| 404    | [Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)           | The entity requested does not exist.           | None                                      |
-| 422    | [Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3) | The syntax of the request entity is incorrect  | None                                      |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success Response|[SuccessResponse](#schemasuccessresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3599,18 +3739,19 @@ HTTPBearer
   "username": "string",
   "password": "string"
 }
+
 ```
 
 LoginRequest
 
 ### Properties
 
-| Name          | Type   | Required | Restrictions | Description                                                      |
-| ------------- | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| client_id     | string | true     | none         | This property is supposed to be a string and is a required field |
-| client_secret | string | false    | none         | This property is supposed to be a string and is a required field |
-| username      | string | true     | none         | This property is supposed to be a string and is a required field |
-| password      | string | true     | none         | This property is supposed to be a string and is a required field |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|false|none|This property is supposed to be a string and is a required field|
+|username|string|true|none|This property is supposed to be a string and is a required field|
+|password|string|true|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_TokenResponse">TokenResponse</h2>
 <!-- backwards compatibility -->
@@ -3626,18 +3767,19 @@ LoginRequest
   "expires": 0,
   "pubnubToken": "string"
 }
+
 ```
 
 TokenResponse
 
 ### Properties
 
-| Name         | Type   | Required | Restrictions | Description                                                      |
-| ------------ | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| accessToken  | string | true     | none         | This property is supposed to be a string and is a required field |
-| refreshToken | string | true     | none         | This property is supposed to be a string and is a required field |
-| expires      | number | true     | none         | none                                                             |
-| pubnubToken  | string | false    | none         | none                                                             |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|accessToken|string|true|none|This property is supposed to be a string and is a required field|
+|refreshToken|string|true|none|This property is supposed to be a string and is a required field|
+|expires|number|true|none|none|
+|pubnubToken|string|false|none|none|
 
 <h2 id="tocS_AuthTokenRequest">AuthTokenRequest</h2>
 <!-- backwards compatibility -->
@@ -3651,16 +3793,17 @@ TokenResponse
   "code": "string",
   "clientId": "string"
 }
+
 ```
 
 AuthTokenRequest
 
 ### Properties
 
-| Name     | Type   | Required | Restrictions | Description |
-| -------- | ------ | -------- | ------------ | ----------- |
-| code     | string | true     | none         | none        |
-| clientId | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|code|string|true|none|none|
+|clientId|string|true|none|none|
 
 <h2 id="tocS_Function">Function</h2>
 <!-- backwards compatibility -->
@@ -3671,11 +3814,12 @@ AuthTokenRequest
 
 ```json
 null
+
 ```
 
 ### Properties
 
-_None_
+*None*
 
 <h2 id="tocS_AuthRefreshTokenRequest">AuthRefreshTokenRequest</h2>
 <!-- backwards compatibility -->
@@ -3688,15 +3832,16 @@ _None_
 {
   "refreshToken": "string"
 }
+
 ```
 
 AuthRefreshTokenRequest
 
 ### Properties
 
-| Name         | Type   | Required | Restrictions | Description |
-| ------------ | ------ | -------- | ------------ | ----------- |
-| refreshToken | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|true|none|none|
 
 <h2 id="tocS_ResetPasswordPartial">ResetPasswordPartial</h2>
 <!-- backwards compatibility -->
@@ -3712,18 +3857,19 @@ AuthRefreshTokenRequest
   "password": "string",
   "oldPassword": "string"
 }
+
 ```
 
 ResetPasswordPartial
 
 ### Properties
 
-| Name         | Type   | Required | Restrictions | Description                                                      |
-| ------------ | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| refreshToken | string | false    | none         | none                                                             |
-| username     | string | false    | none         | This property is supposed to be a string and is a required field |
-| password     | string | false    | none         | This property is supposed to be a string and is a required field |
-| oldPassword  | string | false    | none         | This property is supposed to be a string and is a required field |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|false|none|none|
+|username|string|false|none|This property is supposed to be a string and is a required field|
+|password|string|false|none|This property is supposed to be a string and is a required field|
+|oldPassword|string|false|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_ResetPassword">ResetPassword</h2>
 <!-- backwards compatibility -->
@@ -3739,18 +3885,19 @@ ResetPasswordPartial
   "password": "string",
   "oldPassword": "string"
 }
+
 ```
 
 ResetPassword
 
 ### Properties
 
-| Name         | Type   | Required | Restrictions | Description                                                      |
-| ------------ | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| refreshToken | string | true     | none         | none                                                             |
-| username     | string | true     | none         | This property is supposed to be a string and is a required field |
-| password     | string | true     | none         | This property is supposed to be a string and is a required field |
-| oldPassword  | string | false    | none         | This property is supposed to be a string and is a required field |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|true|none|none|
+|username|string|true|none|This property is supposed to be a string and is a required field|
+|password|string|true|none|This property is supposed to be a string and is a required field|
+|oldPassword|string|false|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_ClientAuthRequest">ClientAuthRequest</h2>
 <!-- backwards compatibility -->
@@ -3764,16 +3911,17 @@ ResetPassword
   "client_id": "string",
   "client_secret": "string"
 }
+
 ```
 
 ClientAuthRequest
 
 ### Properties
 
-| Name          | Type   | Required | Restrictions | Description                                                      |
-| ------------- | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| client_id     | string | true     | none         | This property is supposed to be a string and is a required field |
-| client_secret | string | true     | none         | This property is supposed to be a string and is a required field |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|true|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_SuccessResponse">SuccessResponse</h2>
 <!-- backwards compatibility -->
@@ -3786,15 +3934,16 @@ ClientAuthRequest
 {
   "success": true
 }
+
 ```
 
 SuccessResponse
 
 ### Properties
 
-| Name    | Type    | Required | Restrictions | Description |
-| ------- | ------- | -------- | ------------ | ----------- |
-| success | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|success|boolean|false|none|none|
 
 <h2 id="tocS_RefreshTokenRequestPartial">RefreshTokenRequestPartial</h2>
 <!-- backwards compatibility -->
@@ -3807,15 +3956,16 @@ SuccessResponse
 {
   "refreshToken": "string"
 }
+
 ```
 
 RefreshTokenRequestPartial
 
 ### Properties
 
-| Name         | Type   | Required | Restrictions | Description |
-| ------------ | ------ | -------- | ------------ | ----------- |
-| refreshToken | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|false|none|none|
 
 <h2 id="tocS_RefreshTokenRequest">RefreshTokenRequest</h2>
 <!-- backwards compatibility -->
@@ -3828,15 +3978,16 @@ RefreshTokenRequestPartial
 {
   "refreshToken": "string"
 }
+
 ```
 
 RefreshTokenRequest
 
 ### Properties
 
-| Name         | Type   | Required | Restrictions | Description |
-| ------------ | ------ | -------- | ------------ | ----------- |
-| refreshToken | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|true|none|none|
 
 <h2 id="tocS_OtpSendRequest">OtpSendRequest</h2>
 <!-- backwards compatibility -->
@@ -3851,17 +4002,18 @@ RefreshTokenRequest
   "client_secret": "string",
   "key": "string"
 }
+
 ```
 
 OtpSendRequest
 
 ### Properties
 
-| Name          | Type   | Required | Restrictions | Description                                                      |
-| ------------- | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| client_id     | string | true     | none         | This property is supposed to be a string and is a required field |
-| client_secret | string | true     | none         | This property is supposed to be a string and is a required field |
-| key           | string | true     | none         | This property is supposed to be a string and is a required field |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|true|none|This property is supposed to be a string and is a required field|
+|key|string|true|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_OtpLoginRequest">OtpLoginRequest</h2>
 <!-- backwards compatibility -->
@@ -3875,16 +4027,17 @@ OtpSendRequest
   "key": "string",
   "otp": "string"
 }
+
 ```
 
 OtpLoginRequest
 
 ### Properties
 
-| Name | Type   | Required | Restrictions | Description                                                      |
-| ---- | ------ | -------- | ------------ | ---------------------------------------------------------------- |
-| key  | string | true     | none         | This property is supposed to be a string and is a required field |
-| otp  | string | true     | none         | This property is supposed to be a string and is a required field |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|key|string|true|none|This property is supposed to be a string and is a required field|
+|otp|string|true|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
 <!-- backwards compatibility -->
@@ -3899,17 +4052,18 @@ OtpLoginRequest
   "client_id": "string",
   "client_secret": "string"
 }
+
 ```
 
 ForgetPasswordDto
 
 ### Properties
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| username      | string | true     | none         | none        |
-| client_id     | string | true     | none         | none        |
-| client_secret | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|username|string|true|none|none|
+|client_id|string|true|none|none|
+|client_secret|string|true|none|none|
 
 <h2 id="tocS_AuthClient">AuthClient</h2>
 <!-- backwards compatibility -->
@@ -3936,29 +4090,30 @@ ForgetPasswordDto
   "refreshTokenExpiration": 0,
   "authCodeExpiration": 0
 }
+
 ```
 
 AuthClient
 
 ### Properties
 
-| Name                   | Type                   | Required | Restrictions | Description                             |
-| ---------------------- | ---------------------- | -------- | ------------ | --------------------------------------- |
-| deleted                | boolean                | false    | none         | none                                    |
-| deletedOn              | string(date-time)¦null | false    | none         | none                                    |
-| deletedBy              | string¦null            | false    | none         | none                                    |
-| createdOn              | string(date-time)      | false    | none         | none                                    |
-| modifiedOn             | string(date-time)      | false    | none         | none                                    |
-| createdBy              | string                 | false    | none         | none                                    |
-| modifiedBy             | string                 | false    | none         | none                                    |
-| id                     | number                 | false    | none         | none                                    |
-| clientId               | string                 | true     | none         | none                                    |
-| clientSecret           | string                 | true     | none         | none                                    |
-| secret                 | string                 | true     | none         | Value can be a string or a private key. |
-| redirectUrl            | string                 | false    | none         | none                                    |
-| accessTokenExpiration  | number                 | true     | none         | none                                    |
-| refreshTokenExpiration | number                 | true     | none         | none                                    |
-| authCodeExpiration     | number                 | true     | none         | none                                    |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|number|false|none|none|
+|clientId|string|true|none|none|
+|clientSecret|string|true|none|none|
+|secret|string|true|none|Value can be a string or a private key.|
+|redirectUrl|string|false|none|none|
+|accessTokenExpiration|number|true|none|none|
+|refreshTokenExpiration|number|true|none|none|
+|authCodeExpiration|number|true|none|none|
 
 <h2 id="tocS_ResetPasswordWithClient">ResetPasswordWithClient</h2>
 <!-- backwards compatibility -->
@@ -3974,18 +4129,19 @@ AuthClient
   "client_id": "string",
   "client_secret": "string"
 }
+
 ```
 
 ResetPasswordWithClient
 
 ### Properties
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| token         | string | true     | none         | none        |
-| password      | string | true     | none         | none        |
-| client_id     | string | true     | none         | none        |
-| client_secret | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|token|string|true|none|none|
+|password|string|true|none|none|
+|client_id|string|true|none|none|
+|client_secret|string|true|none|none|
 
 <h2 id="tocS_SignupRequestDto">SignupRequestDto</h2>
 <!-- backwards compatibility -->
@@ -3999,16 +4155,17 @@ ResetPasswordWithClient
   "email": "string",
   "data": {}
 }
+
 ```
 
 SignupRequestDto
 
 ### Properties
 
-| Name  | Type   | Required | Restrictions | Description |
-| ----- | ------ | -------- | ------------ | ----------- |
-| email | string | true     | none         | none        |
-| data  | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|true|none|none|
+|data|object|false|none|none|
 
 <h2 id="tocS_LocalUserProfileDto">LocalUserProfileDto</h2>
 <!-- backwards compatibility -->
@@ -4022,16 +4179,17 @@ SignupRequestDto
   "email": "string",
   "password": "string"
 }
+
 ```
 
 LocalUserProfileDto
 
 ### Properties
 
-| Name     | Type   | Required | Restrictions | Description |
-| -------- | ------ | -------- | ------------ | ----------- |
-| email    | string | true     | none         | none        |
-| password | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|true|none|none|
+|password|string|true|none|none|
 
 <h2 id="tocS_SignupRequest">SignupRequest</h2>
 <!-- backwards compatibility -->
@@ -4045,23 +4203,24 @@ LocalUserProfileDto
   "email": "string",
   "expiry": "string"
 }
+
 ```
 
 SignupRequest
 
 ### Properties
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| email  | string | true     | none         | none        |
-| expiry | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|true|none|none|
+|expiry|string|false|none|none|
 
-<h2 id="tocS_ActiveUsersWithRelations">ActiveUsersWithRelations</h2>
+<h2 id="tocS_LoginActivityWithRelations">LoginActivityWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemaactiveuserswithrelations"></a>
-<a id="schema_ActiveUsersWithRelations"></a>
-<a id="tocSactiveuserswithrelations"></a>
-<a id="tocsactiveuserswithrelations"></a>
+<a id="schemaloginactivitywithrelations"></a>
+<a id="schema_LoginActivityWithRelations"></a>
+<a id="tocSloginactivitywithrelations"></a>
+<a id="tocsloginactivitywithrelations"></a>
 
 ```json
 {
@@ -4069,21 +4228,44 @@ SignupRequest
   "actor": "string",
   "tenantId": "string",
   "loginTime": "2019-08-24T14:15:22Z",
-  "tokenPayload": {}
+  "tokenPayload": {},
+  "loginType": "string",
+  "deviceInfo": "string",
+  "ipAddress": "string"
 }
+
 ```
 
-ActiveUsersWithRelations
+LoginActivityWithRelations
 
 ### Properties
 
-| Name         | Type              | Required | Restrictions | Description |
-| ------------ | ----------------- | -------- | ------------ | ----------- |
-| id           | string            | false    | none         | none        |
-| actor        | string            | false    | none         | none        |
-| tenantId     | string            | false    | none         | none        |
-| loginTime    | string(date-time) | false    | none         | none        |
-| tokenPayload | object            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|actor|string|false|none|none|
+|tenantId|string|false|none|none|
+|loginTime|string(date-time)|false|none|none|
+|tokenPayload|object|false|none|none|
+|loginType|string|false|none|none|
+|deviceInfo|string|false|none|none|
+|ipAddress|string|false|none|none|
+
+<h2 id="tocS_Date">Date</h2>
+<!-- backwards compatibility -->
+<a id="schemadate"></a>
+<a id="schema_Date"></a>
+<a id="tocSdate"></a>
+<a id="tocsdate"></a>
+
+```json
+null
+
+```
+
+### Properties
+
+*None*
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -4096,22 +4278,23 @@ ActiveUsersWithRelations
 {
   "count": 0
 }
+
 ```
 
 loopback.Count
 
 ### Properties
 
-| Name  | Type   | Required | Restrictions | Description |
-| ----- | ------ | -------- | ------------ | ----------- |
-| count | number | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|count|number|false|none|none|
 
-<h2 id="tocS_active_users.Filter">active_users.Filter</h2>
+<h2 id="tocS_login_activity.Filter">login_activity.Filter</h2>
 <!-- backwards compatibility -->
-<a id="schemaactive_users.filter"></a>
-<a id="schema_active_users.Filter"></a>
-<a id="tocSactive_users.filter"></a>
-<a id="tocsactive_users.filter"></a>
+<a id="schemalogin_activity.filter"></a>
+<a id="schema_login_activity.Filter"></a>
+<a id="tocSlogin_activity.filter"></a>
+<a id="tocslogin_activity.filter"></a>
 
 ```json
 {
@@ -4125,54 +4308,62 @@ loopback.Count
     "actor": true,
     "tenantId": true,
     "loginTime": true,
-    "tokenPayload": true
+    "tokenPayload": true,
+    "loginType": true,
+    "deviceInfo": true,
+    "ipAddress": true
   }
 }
+
 ```
 
-active_users.Filter
+login_activity.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name            | Type    | Required | Restrictions | Description |
-| --------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_   | object  | false    | none         | none        |
-| »» id           | boolean | false    | none         | none        |
-| »» actor        | boolean | false    | none         | none        |
-| »» tenantId     | boolean | false    | none         | none        |
-| »» loginTime    | boolean | false    | none         | none        |
-| »» tokenPayload | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» actor|boolean|false|none|none|
+|»» tenantId|boolean|false|none|none|
+|»» loginTime|boolean|false|none|none|
+|»» tokenPayload|boolean|false|none|none|
+|»» loginType|boolean|false|none|none|
+|»» deviceInfo|boolean|false|none|none|
+|»» ipAddress|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+

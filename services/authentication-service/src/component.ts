@@ -163,7 +163,7 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
     this.application.bind('services.otpService').toClass(OtpService);
-    this.application.bind(AuthServiceBindings.ActorIdKey).to('id');
+    this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
     this.models = models;
 
     this.controllers = controllers;
