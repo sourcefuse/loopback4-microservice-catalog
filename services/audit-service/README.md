@@ -381,6 +381,14 @@ Implementation for this can be seen [here](src/services/export-handler.service.t
   </tbody>
 </table>
 
+
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1. Change the import statements from `@sourceloop/audit-service` to `@sourceloop/audit-service/sequelize`. This can be done easily with your IDEs find and replace feature.
+2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+
 ### API Documentation
 
 #### Common Headers

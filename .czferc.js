@@ -49,6 +49,7 @@ const scopes = [
   {name: 'typedoc'},
   {name: 'mkdocs'},
   {name: 'workflows'},
+  {name: 'sequelize'},
   {name: 'task-service'},
 ];
 

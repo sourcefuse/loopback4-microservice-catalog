@@ -29,7 +29,15 @@ import {authorize} from 'loopback4-authorization';
 import {inject, service} from '@loopback/core';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {OperationKey} from '../enums/operation-key.enum';
+import {inject, service} from '@loopback/core';
+import {FileStatusKey} from '../enums/file-status-key.enum';
+import {OperationKey} from '../enums/operation-key.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
+import {
+  AuditLogExportServiceBindings,
+  ColumnBuilderServiceBindings,
+  ExportToCsvServiceBindings,
+} from '../keys';
 import {
   AuditLogExportServiceBindings,
   ColumnBuilderServiceBindings,
@@ -41,6 +49,7 @@ import {
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
+import {AuditLogRepository as SequelizeAuditLogRepository} from '../repositories/sequelize';
 import {JobProcessingService} from '../services';
 import {
   ArchiveOutput,
@@ -56,7 +65,7 @@ const basePath = '/audit-logs';
 export class AuditController {
   constructor(
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
+    public auditLogRepository: AuditLogRepository | SequelizeAuditLogRepository,
     @repository(JobRepository)
     public jobRepository: JobRepository,
     @service(JobProcessingService)
