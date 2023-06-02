@@ -116,6 +116,7 @@ export interface IDeviceInfo {
 export type JwtPayloadFn = (
   user: IAuthUser,
   authClient: IAuthClient,
+  tenantId?: string,
 ) => Promise<object>;
 
 export type ForgotPasswordHandlerFn = (

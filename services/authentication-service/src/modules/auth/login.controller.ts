@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
+import {AnyObject, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -298,36 +298,16 @@ export class LoginController {
     @param.header.string('device_id') deviceId?: string,
     @param.header.string('Authorization') token?: string,
   ): Promise<TokenResponse> {
-    const refreshPayload: RefreshToken = await this.refreshTokenRepo.get(
-      req.refreshToken,
-    );
-    if (!refreshPayload) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
-    }
-    const authClient = await this.authClientRepository.findOne({
-      where: {
-        clientId: refreshPayload.clientId,
-      },
-    });
-    if (!authClient) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    }
-    const accessToken = token?.split(' ')[1];
-    if (!accessToken || refreshPayload.accessToken !== accessToken) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-    }
-    await this.revokedTokensRepo.set(refreshPayload.accessToken, {
-      token: refreshPayload.accessToken,
-    });
-    await this.refreshTokenRepo.delete(req.refreshToken);
+    const payload = await this.createTokenPayload(req, token);
     return this.createJWT(
       {
-        clientId: refreshPayload.clientId,
-        userId: refreshPayload.userId,
-        externalAuthToken: refreshPayload.externalAuthToken,
-        externalRefreshToken: refreshPayload.externalRefreshToken,
+        clientId: payload.refreshPayload.clientId,
+        userId: payload.refreshPayload.userId,
+        externalAuthToken: payload.refreshPayload.externalAuthToken,
+        externalRefreshToken: payload.refreshPayload.externalRefreshToken,
       },
-      authClient,
+      payload.authClient,
+      payload.refreshPayload.tenantId,
     );
   }
 
@@ -441,9 +421,83 @@ export class LoginController {
     return new AuthUser(this.user);
   }
 
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
+  @post('/auth/switch-token', {
+    security: OPERATION_SECURITY_SPEC,
+    description: 'To switch the access-token',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Switch access token with the tenant id provided.',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {[X_TS_TYPE]: TokenResponse},
+          },
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async switchToken(
+    @requestBody() req: AuthRefreshTokenRequest,
+  ): Promise<TokenResponse> {
+    if (!req.tenantId) {
+      throw new HttpErrors.BadRequest('Tenant ID is required');
+    }
+    if (!this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+
+    const payload = await this.createTokenPayload(req);
+    return this.createJWT(
+      {
+        clientId: payload.refreshPayload.clientId,
+        user: this.user,
+        externalAuthToken: payload.refreshPayload.externalAuthToken,
+        externalRefreshToken: payload.refreshPayload.externalRefreshToken,
+      },
+      payload.authClient,
+      req.tenantId,
+    );
+  }
+
+  private async createTokenPayload(
+    req: AuthRefreshTokenRequest,
+    token?: string,
+  ): Promise<AnyObject> {
+    const refreshPayload: RefreshToken = await this.refreshTokenRepo.get(
+      req.refreshToken,
+    );
+    if (!refreshPayload) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+    const authClient = await this.authClientRepository.findOne({
+      where: {
+        clientId: refreshPayload.clientId,
+      },
+    });
+    if (!authClient) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const accessToken = token?.split(' ')[1];
+    if (!accessToken || refreshPayload.accessToken !== accessToken) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    await this.revokedTokensRepo.set(refreshPayload.accessToken, {
+      token: refreshPayload.accessToken,
+    });
+    await this.refreshTokenRepo.delete(req.refreshToken);
+    return {
+      refreshPayload: refreshPayload,
+      authClient: authClient,
+    };
+  }
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
+    tenantId?: string,
   ): Promise<TokenResponse> {
     try {
       const size = 32;
@@ -472,7 +526,11 @@ export class LoginController {
           AuthenticateErrorKeys.UserDoesNotExist,
         );
       }
-      const data = await this.getJwtPayload(user, authClient);
+      const data: AnyObject = await this.getJwtPayload(
+        user,
+        authClient,
+        tenantId,
+      );
       const accessToken = await this.jwtSigner(data, {
         expiresIn: authClient.accessTokenExpiration,
       });
@@ -487,6 +545,7 @@ export class LoginController {
           accessToken,
           externalAuthToken: (user as AuthUser).externalAuthToken,
           externalRefreshToken: (user as AuthUser).externalRefreshToken,
+          tenantId: data.tenantId,
         },
         {ttl: authClient.refreshTokenExpiration * ms},
       );
