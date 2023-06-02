@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "12 || 14 || 16 || 17"
+    "node": "16 || 17 || 18"
   },
   "scripts": {
     "prebuild": "npm run clean",
@@ -38,8 +38,8 @@
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
     "directory": "services/oidc-service"
   },
-  "author": "",
-  "license": "",
+  "author": "SourceFuse",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",
@@ -79,7 +79,7 @@
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
     "node-fetch": "^2.6.6",
-    "oidc-provider": "^7.12.0",
+    "oidc-provider": "^7.14.3",
     "otplib": "^12.0.1",
     "passport-apple": "^2.0.1",
     "passport-azure-ad": "^4.3.4",

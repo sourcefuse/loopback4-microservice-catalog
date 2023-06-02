@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Welcome! Sign-in</title>
+    <title>Welcome! Sign in</title>
     <style>
       @import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
       body {
@@ -114,7 +114,7 @@
         <input required type="username" name="username" placeholder="Enter an username" <% if (!params.login_hint) { %>autofocus="on"<% } else { %> value="<%= params.login_hint %>" <% } %>>
         <input required type="password" name="password" placeholder="and password" <% if (params.login_hint) { %>autofocus="on"<% } %>>
 
-        <button type="submit" class="login login-submit">Sign-in</button>
+        <button type="submit" class="login login-submit">Sign in</button>
       </form>
       <div class="login-help">
         <a href="/interaction/<%= uid %>/abort">[ Cancel ]</a>

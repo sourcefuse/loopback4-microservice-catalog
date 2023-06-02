@@ -5,7 +5,6 @@ import {
   post,
   requestBody,
   RequestContext,
-  Response,
   RestBindings,
 } from '@loopback/rest';
 import {UserRepository} from '../repositories/user.repository';
@@ -52,7 +51,7 @@ export class OidcController {
           uid,
           details: prompt.details,
           params,
-          title: 'Sign-in',
+          title: 'Sign in',
         });
         this.requestContext.response
           .status(STATUS_CODE.OK)
@@ -86,16 +85,15 @@ export class OidcController {
         'application/x-www-form-urlencoded': {},
       },
     })
-    _requestBody: {
+    requestData: {
       username: string;
       password: string;
     },
-    @inject(RestBindings.Http.RESPONSE) response2: Response,
   ) {
-    const {username, password} = _requestBody;
+    const {username, password} = requestData;
     const user = await this.userRepository.verifyPassword(username, password);
     if (user === undefined || user === null || !user) {
-      return 'user not exist or not authenticated';
+      return 'The user does not exist or is not authenticated.';
     }
     //authenticated user enters
     try {
@@ -109,8 +107,8 @@ export class OidcController {
         this.requestContext.response,
         result,
       );
-    } catch {
-      throw new Error('Something went wrong');
+    } catch (error) {
+      throw new Error(`Something went wrong: ${error.message}`);
     }
   }
 

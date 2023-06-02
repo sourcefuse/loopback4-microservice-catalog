@@ -11,26 +11,30 @@
 
 The OIDC Service is a component built using LoopBack 4 that provides OpenID Connect (OIDC) support for authentication. It allows integration with external identity providers and enables the issuance and verification of JSON Web Tokens (JWTs) using the OIDC protocol. This service provides the following features:
 
-- ### OpenID Connect Support: 
+- ### OpenID Connect Support:
+
   The OIDC service fully supports the OpenID Connect standard, which is an identity layer built on top of the OAuth 2.0 protocol. It allows your application to authenticate and obtain user identity information from external identity providers.
 
 - ### Authentication:
+
   The OIDC service handles the authentication process, allowing users to log in to your application using their credentials from supported identity providers. It supports various authentication flows, including authorization code flow, implicit flow, and hybrid flow.
 
-- ### Authorization: 
+- ### Authorization:
+
   The OIDC service provides authorization capabilities, allowing you to control access to your application's resources based on user roles and permissions. It integrates with LoopBack 4's built-in authorization features, such as decorators and guards, to enforce fine-grained access control.
 
-- ### Token Management: 
+- ### Token Management:
+
   The OIDC service handles the generation, validation, and revocation of access tokens, refresh tokens, and ID tokens. It follows the OAuth 2.0 and OpenID Connect specifications for token-based authentication and authorization.
 
-- ### Extensibility: 
+- ### Extensibility:
+
   The OIDC service is designed to be extensible and customizable. You can extend its functionality by adding custom authentication and authorization providers, implementing custom token handlers, or integrating additional identity management services.
 
-- ### Developer-Friendly APIs: 
+- ### Developer-Friendly APIs:
   The OIDC service provides a developer-friendly API for integrating authentication and authorization into your application. It offers easy-to-use methods and interfaces for handling user authentication, profile management, token management, and other related tasks.
 
-
-To get started with a basic implementation of this service, refer to the `/sandbox/oidc-basic-example` directory. 
+To get started with a basic implementation of this service, see [/sandbox/oidc-basic-example](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/sandbox/oidc-basic-example).
 
 ### Working and Flow
 
@@ -95,7 +99,7 @@ export class OidcApplication extends RestApplication {
     this.component(OidcServiceComponent);
 
     // Modify the template file path for login and interaction screens
-     this.bind(TemplateBindings.LoginTemplate).to(
+    this.bind(TemplateBindings.LoginTemplate).to(
       path.join(__dirname, '../public/views/login.ejs'),
     );
     this.bind(TemplateBindings.InteractionTemplate).to(
@@ -105,96 +109,221 @@ export class OidcApplication extends RestApplication {
     // ...
   }
 }
-
 ```
 
 ### Environment Variables
 
-| Name | Required | Default Value | Description |
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NODE_ENV</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Node environment value, i.e. 'dev', 'test', 'prod'</td>
+    </tr>
+    <tr>
+      <td>LOG_LEVEL</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Log level value, i.e. 'error', 'warn', 'info', 'verbose', 'debug'</td>
+    </tr>
+    <tr>
+      <td>DB_HOST</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Hostname for the database server.</td>
+    </tr>
+    <tr>
+      <td>DB_PORT</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Port for the database server.</td>
+    </tr>
+    <tr>
+      <td>DB_USER</td>
+      <td>Yes</td>
+      <td></td>
+      <td>User for the database.</td>
+    </tr>
+    <tr>
+      <td>DB_PASSWORD</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Password for the database user.</td>
+    </tr>
+    <tr>
+      <td>DB_DATABASE</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Database to connect to on the database server.</td>
+    </tr>
+    <tr>
+      <td>DB_SCHEMA</td>
+      <td>Yes</td>
+      <td>public</td>
+      <td>Database schema used for the data source. In PostgreSQL, this will be 'public' unless a schema is made explicitly for the service.</td>
+    </tr>
+    <tr>
+      <td>REDIS_HOST</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Hostname of the Redis server.</td>
+    </tr>
+    <tr>
+      <td>REDIS_PORT</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Port to connect to the Redis server over.</td>
+    </tr>
+    <tr>
+      <td>REDIS_URL</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Fully composed URL for Redis connection. Used instead of other settings if set.</td>
+    </tr>
+    <tr>
+      <td>REDIS_PASSWORD</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Password for Redis if authentication is enabled.</td>
+    </tr>
+    <tr>
+      <td>REDIS_DATABASE</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Database within Redis to connect to.</td>
+    </tr>
+    <tr>
+      <td>JWT_PRIVATE_KEY</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Asymmetric signing key of the JWT token.</td>
+    </tr>
+    <tr>
+      <td>JWT_PUBLIC_KEY</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Verifying signed JWT Token.</td>
+    </tr>
+    <tr>
+      <td>JWT_SECRET</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Symmetric signing key of the JWT token.</td>
+    </tr>
+    <tr>
+      <td>JWT_ISSUER</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Issuer of the JWT token.</td>
+    </tr>
+    <tr>
+      <td>OIDC_CLAIMS_PROFILE</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Common claims for all the clients.</td>
+    </tr>
+    <tr>
+      <td>OIDC_ISSUER_URL</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Issuer URL.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_KTY</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Key Type. It specifies the type of the key, e.g. 'RSA'.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_ALG</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Algorithm, e.g. RS256.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_USE</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Key Use. It indicates the purpose of the key, e.g. signature.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_D</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Private Exponent. It represents the private exponent of the RSA key.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_DP</td>
+      <td>Yes</td>
+      <td></td>
+      <td>First Factor CRT Exponent. It is the exponent used for the Chinese Remainder Theorem (CRT) calculation.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_DQ</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Second Factor CRT Exponent. It is another exponent used for the CRT calculation.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_E</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Public Exponent. It represents the public exponent of the RSA key.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_N</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Modulus. It is the modulus component of the RSA key.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_P</td>
+      <td>Yes</td>
+      <td></td>
+      <td>First Prime Factor. It represents the first prime factor of the modulus.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_Q</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Second Prime Factor. It is the second prime factor of the modulus.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_QI</td>
+      <td>Yes</td>
+      <td></td>
+      <td>First CRT Coefficient. It is the coefficient used for the CRT calculation.</td>
+    </tr>
+    <tr>
+      <td>OIDC_JWKS_KID</td>
+      <td>Yes</td>
+      <td></td>
+      <td>Key ID. It is an identifier for the key.</td>
+    </tr>
+    <tr>
+      <td>OIDC_COOKIES</td>
+      <td>Yes</td>
+      <td></td>
+      <td>For setting cookie key.</td>
+    </tr>
+  </tbody>
+</table>
 
-
-
-The OIDC Service requires the following environment variables:
-
-| `NODE_ENV` | Node environment value, i.e. `dev`, `test`, `prod` |
-
-| `LOG_LEVEL` | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug` |
-
-| `DB_HOST` | Hostname for the database server. |
-
-| `DB_PORT` | Port for the database server. |
-
-| `DB_USER` | User for the database. |
-
-| `DB_PASSWORD` | Password for the database user. |
-
-| `DB_DATABASE` | Database to connect to on the database server. |
-
-| `DB_SCHEMA` | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-
-| `REDIS_HOST` | Hostname of the Redis server. |
-
-| `REDIS_PORT` | Port to connect to the Redis server over. |
-
-| `REDIS_URL` | Fully composed URL for Redis connection. Used instead of other settings if set. |
-
-| `REDIS_PASSWORD` | Password for Redis if authentication is enabled. |
-
-| `REDIS_DATABASE` | Database within Redis to connect to. |
-
-| `JWT_PRIVATE_KEY` | Asymmetric signing key of the JWT token. |
-
-| `JWT_PUBLIC_KEY` | Verifying signed JWT Token. |
-
-| `JWT_SECRET` | Symmetric signing key of the JWT token. |
-
-| `JWT_ISSUER` | Issuer of the JWT token. |
-
-| `OIDC_CLAIMS_PROFILE` | Common claims for all the clients. |
-
-| `OIDC_CLAIMS_PROFILE` | Common claims for all the clients. |
-
-| `OIDC_ISSUER_URL` | Issuer URL. | 
-
-| `OIDC_JWKS_KTY` | Key Type. It specifies the type of the key, eg. "RSA". | 
-
-| `OIDC_JWKS_ALG` | Algorithm, eg. RS256. | 
-
-| `OIDC_JWKS_USE` | Key Use. It indicates the purpose of the key, e.g. signature. | 
-
-| `OIDC_JWKS_D` | Private Exponent. It represents the private exponent of the RSA key. | 
-
-| `OIDC_JWKS_DP` | First Factor CRT Exponent. It is the exponent used for the Chinese Remainder Theorem (CRT) calculation. | 
-
-| `OIDC_JWKS_DQ` | Second Factor CRT Exponent. It is another exponent used for the CRT calculation. | 
-
-| `OIDC_JWKS_E` | Public Exponent. It represents the public exponent of the RSA key. | 
-
-| `OIDC_JWKS_N` | Modulus. It is the modulus component of the RSA key. | 
-
-| `OIDC_JWKS_P` | First Prime Factor. It represents the first prime factor of the modulus. | 
-
-| `OIDC_JWKS_Q` | Second Prime Factor. It is the second prime factor of the modulus. | 
-
-| `OIDC_JWKS_QI` | First CRT Coefficient. It is the coefficient used for the CRT calculation. | 
-
-| `OIDC_JWKS_KID` | Key ID. It is an identifier for the key. | 
-
-| `OIDC_COOKIES` | For setting cookiee key. | 
-
+Detailed description for above keys here: https://openid.net/specs/openid-connect-core-1_0.html
 
 ### Migrations
-To run the database migrations, use the following command:
 
-```bash
-npm run migrate
-```
+The migrations required for this service are processed during the installation automatically if you set the `OIDC_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databasea, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `OIDC_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
 #### API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
-
-
-
-
-

@@ -8,7 +8,7 @@ dotenvExt.load({
   errorOnMissing: false,
   includeProcessEnv: true,
 });
-const type = 'AUTH';
+const type = 'OIDC';
 
 try {
   if (fs.existsSync('.infolder')) {

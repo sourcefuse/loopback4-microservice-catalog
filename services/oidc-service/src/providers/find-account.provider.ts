@@ -5,7 +5,7 @@ import {User} from '../models';
 import {FindAccountProviderFn, FindAccountResult} from '../types';
 import {OIDCServiceBindings} from '../keys';
 
-const defaultClaims = ['firstName', 'lastName'];
+const defaultClaims = ['firstName', 'lastName', 'email'];
 const claimsProfile =
   process.env.OIDC_CLAIMS_PROFILE?.split(',') ?? defaultClaims;
 

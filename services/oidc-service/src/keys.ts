@@ -4,15 +4,15 @@ import OidcProvider from 'oidc-provider';
 import {FindAccountProviderFn} from './types';
 export namespace OIDCServiceBindings {
   export const LoginTemplate = BindingKey.create<string>(
-    `${BINDING_PREFIX}.template.login`,
+    `${BINDING_PREFIX}.oidc.template.login`,
   );
   export const InteractionTemplate = BindingKey.create<string>(
-    `${BINDING_PREFIX}.template.interaction`,
+    `${BINDING_PREFIX}.oidc.template.interaction`,
   );
   export const OIDC_PROVIDER = BindingKey.create<OidcProvider>(
     `${BINDING_PREFIX}.oidc.provider`,
   );
   export const FIND_ACCOUNT_PROVIDER = BindingKey.create<FindAccountProviderFn>(
-    `${BINDING_PREFIX}.findAccountProvider`,
+    `${BINDING_PREFIX}.oidc.findAccountProvider`,
   );
 }

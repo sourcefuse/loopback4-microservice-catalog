@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -17,13 +17,17 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {repositories} from './repositories';
-import {controllers} from './controllers';
-import {models} from './models';
+import {
+  AuthClientRepository,
+  UserCredentialsRepository,
+  UserRepository,
+} from './repositories';
+import {OidcController} from './controllers';
 import {OidcProviderProvider, FindAccountProvider} from './providers';
 import {OidcInitializerService} from './services';
 import {OIDCServiceBindings} from './keys';
 import path from 'path';
+import {AuthClient, User} from './models';
 export class OidcServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
 
@@ -49,9 +53,13 @@ export class OidcServiceComponent implements Component {
     private readonly application: RestApplication,
   ) {
     this.application.component(CoreComponent);
-    this.models = models;
-    this.controllers = controllers;
-    this.repositories = repositories;
+    this.models = [User, AuthClient];
+    this.controllers = [OidcController];
+    this.repositories = [
+      AuthClientRepository,
+      UserRepository,
+      UserCredentialsRepository,
+    ];
     this.bindings = [
       new Binding(OIDCServiceBindings.LoginTemplate).to(
         path.join(__dirname, '../public/views/login.ejs'),
