@@ -601,52 +601,57 @@ export class LoginController {
     payload: AnyObject,
     loginType: LoginType,
   ) {
-    const size = 32;
+    const size = 16;
     const encryptionKey = process.env.ENCRYPTION_KEY;
-    const iv = crypto.randomBytes(size);
-    const cipher = crypto.createCipheriv(
-      'aes-256-cbc' as crypto.CipherCCMTypes,
-      encryptionKey as crypto.CipherKey,
-      iv,
-    );
 
-    /* encryption of IP Address */
-    const ip =
-      this.ctx.request.headers['x-forwarded-for']?.toString() ??
-      this.ctx.request.socket.remoteAddress?.toString() ??
-      '';
-    let ipAddress = cipher.update(ip, 'utf8', 'hex') + cipher.final('hex');
+    if (encryptionKey) {
+      const iv = crypto.randomBytes(size);
+      const cipherIp = crypto.createCipheriv('aes-256-cbc', encryptionKey, iv);
 
-    /* encryption of Paylolad Address */
+      /* encryption of IP Address */
+      const ip =
+        this.ctx.request.headers['x-forwarded-for']?.toString() ??
+        this.ctx.request.socket.remoteAddress?.toString() ??
+        '';
+      const ipAddress =
+        cipherIp.update(ip, 'utf8', 'hex') + cipherIp.final('hex');
 
-    const activityPayload = JSON.stringify({
-      payload,
-    });
-    let tokenPayload =
-      cipher.update(activityPayload, 'utf8', 'hex') + cipher.final('hex');
-    // make an entry to mark the users login activity
-    let actor: string;
-    let tenantId: string;
-    if (userTenant) {
-      actor = userTenant[this.actorKey]?.toString() ?? '0';
-      tenantId = userTenant.tenantId;
-    } else {
-      actor = user['id']?.toString() ?? '0';
-      tenantId = user.defaultTenantId;
-    }
-    const loginActivity = new LoginActivity({
-      actor,
-      tenantId,
-      loginTime: new Date(),
-      tokenPayload,
-      loginType,
-      deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
-      ipAddress,
-    });
-    this.loginActivityRepo.create(loginActivity).catch(() => {
-      this.logger.error(
-        `Failed to add the login activity => ${JSON.stringify(loginActivity)}`,
+      /* encryption of Paylolad Address */
+      const cipherPayload = crypto.createCipheriv(
+        'aes-256-cbc',
+        encryptionKey,
+        iv,
       );
-    });
+      const activityPayload = JSON.stringify(payload);
+      const tokenPayload =
+        cipherPayload.update(activityPayload, 'utf8', 'hex') +
+        cipherPayload.final('hex');
+      // make an entry to mark the users login activity
+      let actor: string;
+      let tenantId: string;
+      if (userTenant) {
+        actor = userTenant[this.actorKey]?.toString() ?? '0';
+        tenantId = userTenant.tenantId;
+      } else {
+        actor = user['id']?.toString() ?? '0';
+        tenantId = user.defaultTenantId;
+      }
+      const loginActivity = new LoginActivity({
+        actor,
+        tenantId,
+        loginTime: new Date(),
+        tokenPayload,
+        loginType,
+        deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
+        ipAddress,
+      });
+      this.loginActivityRepo.create(loginActivity).catch(() => {
+        this.logger.error(
+          `Failed to add the login activity => ${JSON.stringify(
+            loginActivity,
+          )}`,
+        );
+      });
+    }
   }
 }

@@ -55,6 +55,7 @@ describe('Authentication microservice', () => {
   afterEach(() => {
     delete process.env.JWT_ISSUER;
     delete process.env.JWT_SECRET;
+    delete process.env.ENCRYPTION_KEY;
     helper.reset();
   });
   it('should give status 422 for login request with no client credentials', async () => {
@@ -144,6 +145,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -173,6 +175,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -202,6 +205,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -222,6 +226,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -251,6 +256,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -280,6 +286,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -309,6 +316,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -337,6 +345,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -541,6 +550,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -572,6 +582,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)

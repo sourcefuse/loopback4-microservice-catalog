@@ -26,6 +26,7 @@ import {LoginActivity} from '../models';
 import {ActiceUsersRange, PermissionKey} from '../enums';
 import {ActiveUsersGroupData} from '../types';
 import {inject} from '@loopback/core';
+import moment from 'moment';
 
 const baseUrl = '/login-activity';
 
@@ -150,11 +151,12 @@ export class LoginActivityController {
     const groupByDate: ActiveUsersGroupData = {};
     activeUsersForTime.forEach(item => {
       let date = '';
+      const loginTime = moment(item.loginTime);
       if (range === ActiceUsersRange.DAILY) {
-        date = item.loginTime.toISOString().split('T')[0];
+        date = loginTime.format('YYYY-MM-DD');
       } else if (range === ActiceUsersRange.MONTHLY) {
-        const month = item.loginTime.getMonth() + 1;
-        const year = item.loginTime.getFullYear();
+        const month = loginTime.month() + 1;
+        const year = loginTime.year();
         date = `${year}-${month}`;
       } else {
         //intentional
