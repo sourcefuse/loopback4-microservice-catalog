@@ -46,7 +46,7 @@ import {
 } from '../../repositories';
 import {AuthServiceBindings} from '../../keys';
 import {ActorId} from '../../types';
-
+import crypto from 'crypto';
 import {AuthClient, JwtPayloadFn, LoginType} from '../..';
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
@@ -57,6 +57,8 @@ const getProxyAgent = () => {
   }
   return undefined;
 };
+
+const size = 32;
 
 export class LogoutController {
   constructor(
@@ -141,26 +143,51 @@ export class LogoutController {
     const userTenant = await this.userTenantRepo.findOne({
       where: {userId: user.id},
     });
+
+    const encryptionKey = process.env.ENCRYPTION_KEY;
+    const iv = crypto.randomBytes(size);
+    const cipher = crypto.createCipheriv(
+      'aes-256-cbc' as crypto.CipherCCMTypes,
+      encryptionKey as crypto.CipherKey,
+      iv,
+    );
+
+    /* encryption of IP Address */
+    const ip =
+      this.ctx.request.headers['x-forwarded-for']?.toString() ??
+      this.ctx.request.socket.remoteAddress?.toString() ??
+      '';
+    let ipAddress = cipher.update(ip, 'utf8', 'hex') + cipher.final('hex');
+
+    /* encryption of Paylolad Address */
+
+    const activityPayload = JSON.stringify({
+      ...user,
+      clientId: refreshTokenModel.clientId,
+    });
+    let tokenPayload =
+      cipher.update(activityPayload, 'utf8', 'hex') + cipher.final('hex');
+
     let actor: string,
       tenantId = '0';
     if (userTenant) {
       actor = userTenant[this.actorKey]?.toString() ?? '0';
       tenantId = userTenant.tenantId;
-    } else actor = user['id']?.toString() ?? '0';
+    } else {
+      actor = user['id']?.toString() ?? '0';
+      tenantId = user.defaultTenantId ?? '0';
+    }
 
     const loginActivity = new LoginActivity({
       actor,
       tenantId,
       loginTime: new Date(),
-      tokenPayload: {...user, clientId: refreshTokenModel.clientId},
+      tokenPayload,
       deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
       loginType: LoginType.LOGOUT,
-      ipAddress:
-        this.ctx.request.headers['x-forwarded-for']?.toString() ??
-        this.ctx.request.socket.remoteAddress,
+      ipAddress,
     });
-    this.loginActivityRepo.create(loginActivity).catch(e => {
-      console.log(e.toString());
+    this.loginActivityRepo.create(loginActivity).catch(() => {
       this.logger.error(
         `Failed to add the login activity => ${JSON.stringify(loginActivity)}`,
       );

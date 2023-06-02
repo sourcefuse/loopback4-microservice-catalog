@@ -8,3 +8,8 @@ export const enum LoginType {
   RELOGIN = 'RELOGIN',
   LOGOUT = 'LOGOUT',
 }
+
+export const enum ActiceUsersRange {
+  DAILY = 'daily',
+  MONTHLY = 'monthly',
+}

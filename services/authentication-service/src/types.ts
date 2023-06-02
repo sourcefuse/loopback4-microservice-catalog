@@ -7,9 +7,8 @@ import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
 import {STRATEGY} from 'loopback4-authentication';
 import {OtpMethodType} from './enums';
-import {LocalUserProfileDto, UserTenant} from './models';
+import {LocalUserProfileDto, UserTenant, LoginActivity} from './models';
 import {SignupRequestDto} from './models/signup-request-dto.model';
-import {LoginActivity} from './models';
 
 // sonarignore:start
 export interface IAuthServiceConfig extends IServiceConfig {

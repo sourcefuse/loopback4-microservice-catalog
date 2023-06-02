@@ -2113,7 +2113,7 @@
             "format": "date-time"
           },
           "tokenPayload": {
-            "type": "object"
+            "type": "string"
           },
           "loginType": {
             "type": "string"

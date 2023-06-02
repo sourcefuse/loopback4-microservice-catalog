@@ -29,7 +29,6 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import {randomBytes} from 'crypto';
 import {
   authenticate,
   authenticateClient,
@@ -42,7 +41,13 @@ import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {ActorId, ExternalTokens} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {LoginActivity, AuthClient, RefreshToken, User} from '../../models';
+import {
+  LoginActivity,
+  AuthClient,
+  RefreshToken,
+  User,
+  UserTenant,
+} from '../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
@@ -76,6 +81,7 @@ import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
 import {LoginType} from '../../enums/login-type.enum';
+import crypto from 'crypto';
 
 export class LoginController {
   constructor(
@@ -544,7 +550,7 @@ export class LoginController {
       const accessToken = await this.jwtSigner(data, {
         expiresIn: authClient.accessTokenExpiration,
       });
-      const refreshToken: string = randomBytes(size).toString('hex');
+      const refreshToken: string = crypto.randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
       await this.refreshTokenRepo.set(
         refreshToken,
@@ -564,30 +570,12 @@ export class LoginController {
         where: {userId: user.id},
       });
 
-      // make an entry to mark the users login activity
-      let actor: string;
-      if (userTenant) {
-        actor = userTenant[this.actorKey]?.toString() ?? '0';
-      } else actor = user['id']?.toString() ?? '0';
-      const loginActivity = new LoginActivity({
-        actor,
-        tenantId: data.tenantId,
-        loginTime: new Date(),
-        tokenPayload: {...data, clientId: authClient.clientId},
-        loginType,
-        deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
-        ipAddress:
-          this.ctx.request.headers['x-forwarded-for']?.toString() ??
-          this.ctx.request.socket.remoteAddress,
-      });
-      this.loginActivityRepo.create(loginActivity).catch(e => {
-        console.log(e.toString());
-        this.logger.error(
-          `Failed to add the login activity => ${JSON.stringify(
-            loginActivity,
-          )}`,
-        );
-      });
+      this.markUserActivity(
+        user,
+        userTenant,
+        {...data},
+        loginType ?? LoginType.ACCESS,
+      );
 
       return new TokenResponse({
         accessToken,
@@ -605,5 +593,60 @@ export class LoginController {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
     }
+  }
+
+  private markUserActivity(
+    user: User,
+    userTenant: UserTenant | null,
+    payload: AnyObject,
+    loginType: LoginType,
+  ) {
+    const size = 32;
+    const encryptionKey = process.env.ENCRYPTION_KEY;
+    const iv = crypto.randomBytes(size);
+    const cipher = crypto.createCipheriv(
+      'aes-256-cbc' as crypto.CipherCCMTypes,
+      encryptionKey as crypto.CipherKey,
+      iv,
+    );
+
+    /* encryption of IP Address */
+    const ip =
+      this.ctx.request.headers['x-forwarded-for']?.toString() ??
+      this.ctx.request.socket.remoteAddress?.toString() ??
+      '';
+    let ipAddress = cipher.update(ip, 'utf8', 'hex') + cipher.final('hex');
+
+    /* encryption of Paylolad Address */
+
+    const activityPayload = JSON.stringify({
+      payload,
+    });
+    let tokenPayload =
+      cipher.update(activityPayload, 'utf8', 'hex') + cipher.final('hex');
+    // make an entry to mark the users login activity
+    let actor: string;
+    let tenantId: string;
+    if (userTenant) {
+      actor = userTenant[this.actorKey]?.toString() ?? '0';
+      tenantId = userTenant.tenantId;
+    } else {
+      actor = user['id']?.toString() ?? '0';
+      tenantId = user.defaultTenantId;
+    }
+    const loginActivity = new LoginActivity({
+      actor,
+      tenantId,
+      loginTime: new Date(),
+      tokenPayload,
+      loginType,
+      deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
+      ipAddress,
+    });
+    this.loginActivityRepo.create(loginActivity).catch(() => {
+      this.logger.error(
+        `Failed to add the login activity => ${JSON.stringify(loginActivity)}`,
+      );
+    });
   }
 }

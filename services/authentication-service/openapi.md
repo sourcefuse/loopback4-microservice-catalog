@@ -270,7 +270,7 @@ fetch('/login-activity/{id}',
   "actor": "string",
   "tenantId": "string",
   "loginTime": "2019-08-24T14:15:22Z",
-  "tokenPayload": {},
+  "tokenPayload": "string",
   "loginType": "string",
   "deviceInfo": "string",
   "ipAddress": "string"
@@ -360,7 +360,7 @@ fetch('/login-activity',
     "actor": "string",
     "tenantId": "string",
     "loginTime": "2019-08-24T14:15:22Z",
-    "tokenPayload": {},
+    "tokenPayload": "string",
     "loginType": "string",
     "deviceInfo": "string",
     "ipAddress": "string"
@@ -386,7 +386,7 @@ Status Code **200**
 |»» actor|string|false|none|none|
 |»» tenantId|string|false|none|none|
 |»» loginTime|string(date-time)|false|none|none|
-|»» tokenPayload|object|false|none|none|
+|»» tokenPayload|string|false|none|none|
 |»» loginType|string|false|none|none|
 |»» deviceInfo|string|false|none|none|
 |»» ipAddress|string|false|none|none|
@@ -4228,7 +4228,7 @@ SignupRequest
   "actor": "string",
   "tenantId": "string",
   "loginTime": "2019-08-24T14:15:22Z",
-  "tokenPayload": {},
+  "tokenPayload": "string",
   "loginType": "string",
   "deviceInfo": "string",
   "ipAddress": "string"
@@ -4246,7 +4246,7 @@ LoginActivityWithRelations
 |actor|string|false|none|none|
 |tenantId|string|false|none|none|
 |loginTime|string(date-time)|false|none|none|
-|tokenPayload|object|false|none|none|
+|tokenPayload|string|false|none|none|
 |loginType|string|false|none|none|
 |deviceInfo|string|false|none|none|
 |ipAddress|string|false|none|none|

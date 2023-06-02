@@ -32,10 +32,10 @@ export class LoginActivity extends Entity {
   loginTime: Date;
 
   @property({
-    type: 'object',
+    type: 'string', //encrypted
     name: 'token_payload',
   })
-  tokenPayload?: object;
+  tokenPayload?: string;
 
   @property({
     type: 'string',
