@@ -1,11 +1,12 @@
 {
-  "name": "oidc",
+  "name": "@sourceloop/oidc-basic-example",
   "version": "0.1.0",
   "description": "oidc",
   "keywords": [
     "loopback-application",
     "loopback"
   ],
+  "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
