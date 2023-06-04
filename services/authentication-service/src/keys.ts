@@ -5,7 +5,13 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {ForgotPasswordHandlerFn, JwtPayloadFn} from './providers';
-import {ActorId, IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
+import {
+  ActorId,
+  IAuthServiceConfig,
+  IMfaConfig,
+  IOtpConfig,
+  IUserActivity,
+} from './types';
 
 export namespace AuthServiceBindings {
   export const Config = BindingKey.create<IAuthServiceConfig | null>(
@@ -31,6 +37,10 @@ export namespace AuthServiceBindings {
 
   export const ActorIdKey = BindingKey.create<ActorId>(
     `${BINDING_PREFIX}.active.users.actorid`,
+  );
+
+  export const MarkUserActivity = BindingKey.create<IUserActivity>(
+    `${BINDING_PREFIX}.mark.users.activity`,
   );
 }
 

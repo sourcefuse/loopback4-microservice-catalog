@@ -9,7 +9,7 @@ export const enum LoginType {
   LOGOUT = 'LOGOUT',
 }
 
-export const enum ActiceUsersRange {
+export const enum ActiveUsersRange {
   DAILY = 'daily',
   MONTHLY = 'monthly',
 }

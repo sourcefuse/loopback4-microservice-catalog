@@ -23,6 +23,9 @@ export interface IMfaConfig {
   secondFactor: STRATEGY;
 }
 
+export interface IUserActivity {
+  markUserActivity: boolean;
+}
 export interface IOtpConfig {
   method: OtpMethodType;
 }

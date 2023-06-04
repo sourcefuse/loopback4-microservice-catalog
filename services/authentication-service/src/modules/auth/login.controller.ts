@@ -11,10 +11,8 @@ import {
   param,
   patch,
   post,
-  Request,
   requestBody,
   RequestContext,
-  RestBindings,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -39,7 +37,7 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {ActorId, ExternalTokens} from '../../types';
+import {ActorId, ExternalTokens, IUserActivity} from '../../types';
 import {AuthServiceBindings} from '../../keys';
 import {
   LoginActivity,
@@ -111,8 +109,6 @@ export class LoginController {
     public tenantConfigRepo: TenantConfigRepository,
     @repository(UserCredentialsRepository)
     public userCredsRepository: UserCredentialsRepository,
-    @inject(RestBindings.Http.REQUEST)
-    private readonly req: Request,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
@@ -127,6 +123,8 @@ export class LoginController {
     @inject(AuthServiceBindings.ActorIdKey)
     private readonly actorKey: ActorId,
     @inject.context() private readonly ctx: RequestContext,
+    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
+    private readonly userActivity?: IUserActivity,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -569,13 +567,13 @@ export class LoginController {
       const userTenant = await this.userTenantRepo.findOne({
         where: {userId: user.id},
       });
-
-      this.markUserActivity(
-        user,
-        userTenant,
-        {...data},
-        loginType ?? LoginType.ACCESS,
-      );
+      if (this.userActivity?.markUserActivity)
+        this.markUserActivity(
+          user,
+          userTenant,
+          {...data},
+          loginType ?? LoginType.ACCESS,
+        );
 
       return new TokenResponse({
         accessToken,
@@ -606,26 +604,41 @@ export class LoginController {
 
     if (encryptionKey) {
       const iv = crypto.randomBytes(size);
-      const cipherIp = crypto.createCipheriv('aes-256-cbc', encryptionKey, iv);
 
       /* encryption of IP Address */
+      const cipherIp = crypto.createCipheriv('aes-256-gcm', encryptionKey, iv);
       const ip =
         this.ctx.request.headers['x-forwarded-for']?.toString() ??
         this.ctx.request.socket.remoteAddress?.toString() ??
         '';
-      const ipAddress =
-        cipherIp.update(ip, 'utf8', 'hex') + cipherIp.final('hex');
+      const encyptIp = Buffer.concat([
+        cipherIp.update(ip, 'utf8'),
+        cipherIp.final(),
+      ]);
+      const authTagIp = cipherIp.getAuthTag();
+      const ipAddress = JSON.stringify({
+        iv: iv.toString('hex'),
+        encryptedData: encyptIp.toString('hex'),
+        authTag: authTagIp.toString('hex'),
+      });
 
       /* encryption of Paylolad Address */
       const cipherPayload = crypto.createCipheriv(
-        'aes-256-cbc',
+        'aes-256-gcm',
         encryptionKey,
         iv,
       );
       const activityPayload = JSON.stringify(payload);
-      const tokenPayload =
-        cipherPayload.update(activityPayload, 'utf8', 'hex') +
-        cipherPayload.final('hex');
+      const encyptPayload = Buffer.concat([
+        cipherPayload.update(activityPayload, 'utf8'),
+        cipherPayload.final(),
+      ]);
+      const authTagPayload = cipherIp.getAuthTag();
+      const tokenPayload = JSON.stringify({
+        iv: iv.toString('hex'),
+        encryptedData: encyptPayload.toString('hex'),
+        authTag: authTagPayload.toString('hex'),
+      });
       // make an entry to mark the users login activity
       let actor: string;
       let tenantId: string;

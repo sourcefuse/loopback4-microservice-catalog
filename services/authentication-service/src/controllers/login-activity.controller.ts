@@ -23,7 +23,7 @@ import {
   STATUS_CODE,
 } from '@sourceloop/core';
 import {LoginActivity} from '../models';
-import {ActiceUsersRange, PermissionKey} from '../enums';
+import {ActiveUsersRange, PermissionKey} from '../enums';
 import {ActiveUsersGroupData} from '../types';
 import {inject} from '@loopback/core';
 import moment from 'moment';
@@ -135,7 +135,7 @@ export class LoginActivityController {
     },
   })
   async getActiveUsers(
-    @param.path.string('range') range: ActiceUsersRange,
+    @param.path.string('range') range: ActiveUsersRange,
     @param.query.dateTime('startDate')
     startDate: Date,
     @param.query.dateTime('endDate') endDate: Date,
@@ -152,12 +152,10 @@ export class LoginActivityController {
     activeUsersForTime.forEach(item => {
       let date = '';
       const loginTime = moment(item.loginTime);
-      if (range === ActiceUsersRange.DAILY) {
+      if (range === ActiveUsersRange.DAILY) {
         date = loginTime.format('YYYY-MM-DD');
-      } else if (range === ActiceUsersRange.MONTHLY) {
-        const month = loginTime.month() + 1;
-        const year = loginTime.year();
-        date = `${year}-${month}`;
+      } else if (range === ActiveUsersRange.MONTHLY) {
+        date = loginTime.format('MM-YYYY');
       } else {
         //intentional
       }
