@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.15 (2023-06-05)</small>
+
+* chore(cli): update cli template dependencies to latest (#1435) ([ecd4a54](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ecd4a54)), closes [#1435](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1435) [#1433](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1433)
+
+
+
+
+
 ## <small>3.0.14 (2023-05-03)</small>
 
 * refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
