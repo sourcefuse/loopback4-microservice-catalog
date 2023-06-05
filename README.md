@@ -17,6 +17,7 @@ The current catalog consists of the following services:
 
 - [audit-service](services/audit-service)
 - [authentication-service](services/authentication-service)
+- [oidc-service](services/oidc-service)
 - [in-mail-service](services/in-mail-service)
 - [notification-service](services/notification-service)
 - [scheduler-service](services/scheduler-service)
@@ -32,6 +33,7 @@ This repository also contains a set of example projects in the [sandbox](sandbox
 - [audit-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/audit-ms-example)
 - [auth-multitenant-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/auth-multitenant-example)
 - [auth-ms-basic-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/auth-ms-basic-example)
+- [oidc-basic-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/oidc-basic-example)
 - [notification-socket-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/notification-socket-example)
 - [workflow-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/workflow-ms-example)
 - [audit-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/audit-ms-example)
