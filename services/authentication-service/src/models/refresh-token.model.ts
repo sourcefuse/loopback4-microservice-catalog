@@ -45,6 +45,11 @@ export class RefreshToken extends Entity {
   })
   pubnubToken?: string;
 
+  @property({
+    type: 'string',
+  })
+  tenantId?: string;
+
   constructor(data?: Partial<RefreshToken>) {
     super(data);
   }

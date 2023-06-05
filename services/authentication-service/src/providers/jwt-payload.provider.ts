@@ -44,12 +44,16 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
   ) {}
 
   value() {
-    return async (authUserData: IAuthUser, authClient: IAuthClient) => {
+    return async (
+      authUserData: IAuthUser,
+      authClient: IAuthClient,
+      tenantId?: string,
+    ) => {
       const user = authUserData as User;
       const userTenant = await this.userTenantRepo.findOne({
         where: {
           userId: (user as User).id, //NOSONAR
-          tenantId: user.defaultTenantId,
+          tenantId: tenantId ?? user.defaultTenantId,
         },
       });
 

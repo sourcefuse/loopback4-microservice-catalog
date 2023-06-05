@@ -12,6 +12,11 @@ export class AuthRefreshTokenRequest extends Model {
   })
   refreshToken: string;
 
+  @property({
+    type: 'string',
+  })
+  tenantId?: string;
+
   constructor(data?: Partial<AuthRefreshTokenRequest>) {
     super(data);
   }
