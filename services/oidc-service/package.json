@@ -136,5 +136,19 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/oidc-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    },
+    "settings": {
+      "includeOpenAPIDoc": true
+    }
   }
 }
