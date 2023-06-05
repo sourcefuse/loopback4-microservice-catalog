@@ -3,3 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 export * from './audit-log.model';
+export * from './custom-filter.model';
+export * from './mapping-log.model';
+export * from './job.model';

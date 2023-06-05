@@ -7,8 +7,10 @@ export const enum PermissionKey {
   CreateAudit = 'CreateAudit',
   UpdateAudit = 'UpdateAudit',
   DeleteAudit = 'DeleteAudit',
+  ArchiveLogs = 'ArchiveLogs',
   ViewAuditNum = '1',
   CreateAuditNum = '2',
   UpdateAuditNum = '3',
   DeleteAuditNum = '4',
+  ArchiveLogsNum = '6',
 }

@@ -9,16 +9,29 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import {Filter} from '@loopback/repository';
+
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AuditController} from '../../controllers';
 import {dummyLog} from '../sample-data/dummy-log';
+import {JobRepository} from '../../repositories';
+import {JobProcessingService} from '../../services';
+import {filterAppliedActedAt} from '../sample-data/filters';
+import {Job} from '../../models';
+import {Filter} from '@loopback/repository';
 
 let auditLogRepository: StubbedInstanceWithSinonAccessor<AuditLogRepository>;
+let jobRepository: StubbedInstanceWithSinonAccessor<JobRepository>;
+let jobProcessingService: StubbedInstanceWithSinonAccessor<JobProcessingService>;
 let controller: AuditController;
 const setUpStub = () => {
   auditLogRepository = createStubInstance(AuditLogRepository);
-  controller = new AuditController(auditLogRepository);
+  jobRepository = createStubInstance(JobRepository);
+  jobProcessingService = createStubInstance(JobProcessingService);
+  controller = new AuditController(
+    auditLogRepository,
+    jobRepository,
+    jobProcessingService,
+  );
 };
 
 beforeEach(setUpStub);
@@ -43,15 +56,25 @@ describe('AuditController(unit) ', () => {
   });
 
   describe('GET /audit-logs', () => {
-    it('fetches all audit logs', async () => {
-      const logFetch = auditLogRepository.stubs.find;
-      logFetch.resolves([dummyLog]);
-      const controllerResult = await controller.find();
-      sinon.assert.calledOnce(logFetch);
-      expect(controllerResult).to.have.length(1);
+    it('fetches all audit logs when includeArchivedLogs is true', async () => {
+      const filter = filterAppliedActedAt;
+      const includeArchivedLogs = true;
+      const job: Job = new Job({
+        id: '1',
+        status: 'PENDING',
+        filterUsed: filterAppliedActedAt,
+      });
+      const createjobStub = jobRepository.stubs.create;
+      createjobStub.resolves(job);
+      const controllerResult = await controller.find(
+        includeArchivedLogs,
+        filter,
+      );
+      expect(controllerResult).to.be.deepEqual({jobId: '1'});
     });
+    it('fetches all audit logs when includeArchivedLogs is false', async () => {
+      const includeArchivedLogs = false;
 
-    it('fetches only filtered logs', async () => {
       const logFetch = auditLogRepository.stubs.find;
       const filter: Filter<AuditLog> = {
         where: {
@@ -63,10 +86,15 @@ describe('AuditController(unit) ', () => {
         Object.assign(dummyLog, {id: 1}),
         Object.assign(dummyLog, {id: 2}),
       ]);
-      const controllerResult = await controller.find(filter);
+      const controllerResult = await controller.find(
+        includeArchivedLogs,
+        filter,
+      );
       sinon.assert.calledOnce(logFetch);
       expect(controllerResult).to.have.length(1);
-      const controllerResultWithoutFilter = await controller.find();
+      const controllerResultWithoutFilter = await controller.find(
+        includeArchivedLogs,
+      );
       expect(controllerResultWithoutFilter).to.have.length(2);
     });
   });

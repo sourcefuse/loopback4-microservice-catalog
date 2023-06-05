@@ -7,3 +7,4 @@ export * from './keys';
 export * from './types';
 export * from './repositories';
 export * from './models';
+export * from './services';
