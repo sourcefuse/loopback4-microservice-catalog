@@ -1254,6 +1254,55 @@
         "operationId": "SignupRequestController.verifyInviteToken"
       }
     },
+    "/auth/switch-token": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "switchToken",
+        "tags": [
+          "LoginController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To switch the access-token",
+        "responses": {
+          "200": {
+            "description": "Switch access token with the tenant id provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRefreshTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.switchToken"
+      }
+    },
     "/auth/token": {
       "post": {
         "x-controller-name": "LoginController",
@@ -1774,6 +1823,9 @@
         "type": "object",
         "properties": {
           "refreshToken": {
+            "type": "string"
+          },
+          "tenantId": {
             "type": "string"
           }
         },

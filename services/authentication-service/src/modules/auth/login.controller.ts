@@ -319,8 +319,8 @@ export class LoginController {
         externalRefreshToken: payload.refreshPayload.externalRefreshToken,
       },
       payload.authClient,
-      payload.refreshPayload.tenantId,
       LoginType.RELOGIN,
+      payload.refreshPayload.tenantId,
     );
   }
 
@@ -472,6 +472,7 @@ export class LoginController {
         externalRefreshToken: payload.refreshPayload.externalRefreshToken,
       },
       payload.authClient,
+      LoginType.RELOGIN,
       req.tenantId,
     );
   }
@@ -510,8 +511,8 @@ export class LoginController {
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
+    loginType: LoginType,
     tenantId?: string,
-    loginType?: LoginType,
   ): Promise<TokenResponse> {
     try {
       const size = 32;
@@ -568,12 +569,7 @@ export class LoginController {
         where: {userId: user.id},
       });
       if (this.userActivity?.markUserActivity)
-        this.markUserActivity(
-          user,
-          userTenant,
-          {...data},
-          loginType ?? LoginType.ACCESS,
-        );
+        this.markUserActivity(user, userTenant, {...data}, loginType);
 
       return new TokenResponse({
         accessToken,
