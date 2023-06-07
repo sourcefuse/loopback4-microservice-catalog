@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.4 (2023-06-07)</small>
+
+* fix(authentication-service): fix refresh token api creating access token with default tenant id. (#1 ([1013b13](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1013b13)), closes [#1431](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1431) [#1430](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1430)
+* refactor(all-services): remove empty and unnecessary folder (#1423) ([15c8235](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/15c8235)), closes [#1423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1423)
+
+
+
+
+
 ## <small>10.0.3 (2023-05-11)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service
