@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.25 (2023-06-08)</small>
+
+* refactor(all-services): remove empty and unnecessary folder (#1423) ([15c8235](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/15c8235)), closes [#1423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1423)
+
+
+
+
+
 ## <small>0.3.24 (2023-05-11)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example-notif-socket

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.0 (2023-06-08)
+
+* chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+* feat(chore): remove support for node v14,v12 (#1411) ([eda2051](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eda2051)), closes [#1411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1411) [#1382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1382)
+* refactor(all-services): remove empty and unnecessary folder (#1423) ([15c8235](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/15c8235)), closes [#1423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1423)
+
+
+### BREAKING CHANGE
+
+* End of life of node v14 and node v12
+
+
+
+
 ## <small>4.2.22 (2023-05-11)</small>
 
 * test(chat-service): add test case for attachment file (#1396) ([f4373d4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f4373d4)), closes [#1396](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1396) [#1395](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1395)

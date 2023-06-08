@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.8 (2023-06-08)</small>
+
+**Note:** Version bump only for package @sourceloop/cache-example
+
+
+
+
+
 ## <small>0.3.7 (2023-05-25)</small>
 
 **Note:** Version bump only for package @sourceloop/cache-example

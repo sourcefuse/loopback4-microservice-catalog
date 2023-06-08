@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2023-06-08)
+
+* chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+* feat(chore): remove support for node v14,v12 (#1411) ([eda2051](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eda2051)), closes [#1411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1411) [#1382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1382)
+
+
+### BREAKING CHANGE
+
+* End of life of node v14 and node v12
+
+
+
+
 ## <small>0.4.10 (2023-05-11)</small>
 
 **Note:** Version bump only for package @sourceloop/reporting-service

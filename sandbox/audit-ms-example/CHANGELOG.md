@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.10 (2023-06-08)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
 ## <small>0.6.9 (2023-05-11)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-ms-example

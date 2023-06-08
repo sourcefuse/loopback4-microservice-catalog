@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.4.3 (2023-06-08)</small>
+
+* chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
 ## <small>5.4.2 (2023-05-09)</small>
 
 * fix(search-client): added missing test step (#1416) ([1ca700e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1ca700e)), closes [#1416](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1416) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

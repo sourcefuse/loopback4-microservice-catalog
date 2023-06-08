@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.0 (2023-06-08)
+
+* chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+* feat(chore): remove support for node v14,v12 (#1411) ([eda2051](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eda2051)), closes [#1411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1411) [#1382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1382)
+
+
+### BREAKING CHANGE
+
+* End of life of node v14 and node v12
+
+
+
+
 ## <small>3.0.15 (2023-06-05)</small>
 
 * chore(cli): update cli template dependencies to latest (#1435) ([ecd4a54](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ecd4a54)), closes [#1435](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1435) [#1433](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1433)

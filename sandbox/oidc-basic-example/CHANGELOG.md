@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2023-06-08)</small>
+
+**Note:** Version bump only for package @sourceloop/oidc-basic-example
+
+
+
+
+
 ## 0.2.0 (2023-06-05)
 
 * fix(oidc-example): make the example private (#1432) ([5c1eeba](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c1eeba)), closes [#1432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1432)
