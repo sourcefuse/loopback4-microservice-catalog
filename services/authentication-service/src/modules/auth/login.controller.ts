@@ -11,9 +11,8 @@ import {
   param,
   patch,
   post,
-  Request,
   requestBody,
-  RestBindings,
+  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -28,7 +27,6 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import {randomBytes} from 'crypto';
 import {
   authenticate,
   authenticateClient,
@@ -39,9 +37,15 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {ExternalTokens} from '../../types';
+import {ActorId, ExternalTokens, IUserActivity} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {AuthClient, RefreshToken, User} from '../../models';
+import {
+  LoginActivity,
+  AuthClient,
+  RefreshToken,
+  User,
+  UserTenant,
+} from '../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
@@ -51,6 +55,7 @@ import {
 } from '../../providers';
 import * as jwt from 'jsonwebtoken';
 import {
+  LoginActivityRepository,
   AuthClientRepository,
   OtpCacheRepository,
   RefreshTokenRepository,
@@ -73,6 +78,8 @@ import {
 import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
+import {LoginType} from '../../enums/login-type.enum';
+import crypto from 'crypto';
 
 export class LoginController {
   constructor(
@@ -102,8 +109,6 @@ export class LoginController {
     public tenantConfigRepo: TenantConfigRepository,
     @repository(UserCredentialsRepository)
     public userCredsRepository: UserCredentialsRepository,
-    @inject(RestBindings.Http.REQUEST)
-    private readonly req: Request,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
@@ -113,6 +118,13 @@ export class LoginController {
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
+    @repository(LoginActivityRepository)
+    private readonly loginActivityRepo: LoginActivityRepository,
+    @inject(AuthServiceBindings.ActorIdKey)
+    private readonly actorKey: ActorId,
+    @inject.context() private readonly ctx: RequestContext,
+    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
+    private readonly userActivity?: IUserActivity,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -207,7 +219,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.user.id);
       }
 
-      return await this.createJWT(payload, this.client);
+      return await this.createJWT(payload, this.client, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -262,7 +274,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.userId);
       }
 
-      return await this.createJWT(payload, authClient);
+      return await this.createJWT(payload, authClient, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
       if (error.name === 'TokenExpiredError') {
@@ -307,6 +319,7 @@ export class LoginController {
         externalRefreshToken: payload.refreshPayload.externalRefreshToken,
       },
       payload.authClient,
+      LoginType.RELOGIN,
       payload.refreshPayload.tenantId,
     );
   }
@@ -459,6 +472,7 @@ export class LoginController {
         externalRefreshToken: payload.refreshPayload.externalRefreshToken,
       },
       payload.authClient,
+      LoginType.RELOGIN,
       req.tenantId,
     );
   }
@@ -497,6 +511,7 @@ export class LoginController {
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
+    loginType: LoginType,
     tenantId?: string,
   ): Promise<TokenResponse> {
     try {
@@ -534,7 +549,7 @@ export class LoginController {
       const accessToken = await this.jwtSigner(data, {
         expiresIn: authClient.accessTokenExpiration,
       });
-      const refreshToken: string = randomBytes(size).toString('hex');
+      const refreshToken: string = crypto.randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
       await this.refreshTokenRepo.set(
         refreshToken,
@@ -549,6 +564,13 @@ export class LoginController {
         },
         {ttl: authClient.refreshTokenExpiration * ms},
       );
+
+      const userTenant = await this.userTenantRepo.findOne({
+        where: {userId: user.id},
+      });
+      if (this.userActivity?.markUserActivity)
+        this.markUserActivity(user, userTenant, {...data}, loginType);
+
       return new TokenResponse({
         accessToken,
         refreshToken,
@@ -564,6 +586,81 @@ export class LoginController {
       } else {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
+    }
+  }
+
+  private markUserActivity(
+    user: User,
+    userTenant: UserTenant | null,
+    payload: AnyObject,
+    loginType: LoginType,
+  ) {
+    const size = 16;
+    const encryptionKey = process.env.ENCRYPTION_KEY;
+
+    if (encryptionKey) {
+      const iv = crypto.randomBytes(size);
+
+      /* encryption of IP Address */
+      const cipherIp = crypto.createCipheriv('aes-256-gcm', encryptionKey, iv);
+      const ip =
+        this.ctx.request.headers['x-forwarded-for']?.toString() ??
+        this.ctx.request.socket.remoteAddress?.toString() ??
+        '';
+      const encyptIp = Buffer.concat([
+        cipherIp.update(ip, 'utf8'),
+        cipherIp.final(),
+      ]);
+      const authTagIp = cipherIp.getAuthTag();
+      const ipAddress = JSON.stringify({
+        iv: iv.toString('hex'),
+        encryptedData: encyptIp.toString('hex'),
+        authTag: authTagIp.toString('hex'),
+      });
+
+      /* encryption of Paylolad Address */
+      const cipherPayload = crypto.createCipheriv(
+        'aes-256-gcm',
+        encryptionKey,
+        iv,
+      );
+      const activityPayload = JSON.stringify(payload);
+      const encyptPayload = Buffer.concat([
+        cipherPayload.update(activityPayload, 'utf8'),
+        cipherPayload.final(),
+      ]);
+      const authTagPayload = cipherIp.getAuthTag();
+      const tokenPayload = JSON.stringify({
+        iv: iv.toString('hex'),
+        encryptedData: encyptPayload.toString('hex'),
+        authTag: authTagPayload.toString('hex'),
+      });
+      // make an entry to mark the users login activity
+      let actor: string;
+      let tenantId: string;
+      if (userTenant) {
+        actor = userTenant[this.actorKey]?.toString() ?? '0';
+        tenantId = userTenant.tenantId;
+      } else {
+        actor = user['id']?.toString() ?? '0';
+        tenantId = user.defaultTenantId;
+      }
+      const loginActivity = new LoginActivity({
+        actor,
+        tenantId,
+        loginTime: new Date(),
+        tokenPayload,
+        loginType,
+        deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
+        ipAddress,
+      });
+      this.loginActivityRepo.create(loginActivity).catch(() => {
+        this.logger.error(
+          `Failed to add the login activity => ${JSON.stringify(
+            loginActivity,
+          )}`,
+        );
+      });
     }
   }
 }

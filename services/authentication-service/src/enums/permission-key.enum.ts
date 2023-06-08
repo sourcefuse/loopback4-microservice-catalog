@@ -4,4 +4,5 @@
 // https://opensource.org/licenses/MIT
 export const enum PermissionKey {
   NotAllowed = 'NotAllowed',
+  ViewLoginActivity = 'ViewLoginActivity',
 }

@@ -30,6 +30,372 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
+<h1 id="authentication-service-loginactivitycontroller">LoginActivityController</h1>
+
+## LoginActivityController.getActiveUsers
+
+<a id="opIdLoginActivityController.getActiveUsers"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/active-users/{range}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/active-users/{range}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /active-users/{range}`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.getactiveusers-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|range|path|string|true|none|
+|startDate|query|string(date-time)|false|none|
+|endDate|query|string(date-time)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+null
+```
+
+<h3 id="loginactivitycontroller.getactiveusers-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|LoginActivity model instance|Inline|
+
+<h3 id="loginactivitycontroller.getactiveusers-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## LoginActivityController.count
+
+<a id="opIdLoginActivityController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /login-activity/count`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="loginactivitycontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|LoginActivity model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## LoginActivityController.findById
+
+<a id="opIdLoginActivityController.findById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /login-activity/{id}`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[login_activity.Filter](#schemalogin_activity.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "id": "string",
+  "actor": "string",
+  "tenantId": "string",
+  "loginTime": "2019-08-24T14:15:22Z",
+  "tokenPayload": "string",
+  "loginType": "string",
+  "deviceInfo": "string",
+  "ipAddress": "string"
+}
+```
+
+<h3 id="loginactivitycontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|LoginActivity model instance|[LoginActivityWithRelations](#schemaloginactivitywithrelations)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## LoginActivityController.find
+
+<a id="opIdLoginActivityController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/login-activity',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /login-activity`
+
+| Permissions |
+| ------- |
+| ViewLoginActivity   |
+
+<h3 id="loginactivitycontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[login_activity.Filter](#schemalogin_activity.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "actor": "string",
+    "tenantId": "string",
+    "loginTime": "2019-08-24T14:15:22Z",
+    "tokenPayload": "string",
+    "loginType": "string",
+    "deviceInfo": "string",
+    "ipAddress": "string"
+  }
+]
+```
+
+<h3 id="loginactivitycontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of LoginActivity model instances|Inline|
+
+<h3 id="loginactivitycontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[LoginActivityWithRelations](#schemaloginactivitywithrelations)]|false|none|[This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })]|
+|» LoginActivityWithRelations|[LoginActivityWithRelations](#schemaloginactivitywithrelations)|false|none|This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» actor|string|false|none|none|
+|»» tenantId|string|false|none|none|
+|»» loginTime|string(date-time)|false|none|none|
+|»» tokenPayload|string|false|none|none|
+|»» loginType|string|false|none|none|
+|»» deviceInfo|string|false|none|none|
+|»» ipAddress|string|false|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 <h1 id="authentication-service-applelogincontroller">AppleLoginController</h1>
 
 ## AppleLoginController.appleCallback
@@ -818,6 +1184,110 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## LoginController.switchToken
+
+<a id="opIdLoginController.switchToken"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "refreshToken": "string",
+  "tenantId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/auth/switch-token',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "refreshToken": "string",
+  "tenantId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/auth/switch-token',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/switch-token`
+
+To switch the access-token
+
+> Body parameter
+
+```json
+{
+  "refreshToken": "string",
+  "tenantId": "string"
+}
+```
+
+<h3 id="logincontroller.switchtoken-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AuthRefreshTokenRequest](#schemaauthrefreshtokenrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="logincontroller.switchtoken-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Switch access token with the tenant id provided.|[TokenResponse](#schematokenresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 ## LoginController.getToken
 
 <a id="opIdLoginController.getToken"></a>
@@ -927,7 +1397,8 @@ This operation does not require authentication
 
 ```javascript
 const inputBody = '{
-  "refreshToken": "string"
+  "refreshToken": "string",
+  "tenantId": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -953,7 +1424,8 @@ fetch('/auth/token-refresh',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "refreshToken": "string"
+  "refreshToken": "string",
+  "tenantId": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -984,7 +1456,8 @@ Gets you a new access and refresh token once your access token is expired
 
 ```json
 {
-  "refreshToken": "string"
+  "refreshToken": "string",
+  "tenantId": "string"
 }
 ```
 
@@ -3464,7 +3937,8 @@ null
 
 ```json
 {
-  "refreshToken": "string"
+  "refreshToken": "string",
+  "tenantId": "string"
 }
 
 ```
@@ -3476,6 +3950,7 @@ AuthRefreshTokenRequest
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |refreshToken|string|true|none|none|
+|tenantId|string|false|none|none|
 
 <h2 id="tocS_ResetPasswordPartial">ResetPasswordPartial</h2>
 <!-- backwards compatibility -->
@@ -3848,4 +4323,156 @@ SignupRequest
 |---|---|---|---|---|
 |email|string|true|none|none|
 |expiry|string|false|none|none|
+
+<h2 id="tocS_LoginActivityWithRelations">LoginActivityWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaloginactivitywithrelations"></a>
+<a id="schema_LoginActivityWithRelations"></a>
+<a id="tocSloginactivitywithrelations"></a>
+<a id="tocsloginactivitywithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "actor": "string",
+  "tenantId": "string",
+  "loginTime": "2019-08-24T14:15:22Z",
+  "tokenPayload": "string",
+  "loginType": "string",
+  "deviceInfo": "string",
+  "ipAddress": "string"
+}
+
+```
+
+LoginActivityWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|actor|string|false|none|none|
+|tenantId|string|false|none|none|
+|loginTime|string(date-time)|false|none|none|
+|tokenPayload|string|false|none|none|
+|loginType|string|false|none|none|
+|deviceInfo|string|false|none|none|
+|ipAddress|string|false|none|none|
+
+<h2 id="tocS_Date">Date</h2>
+<!-- backwards compatibility -->
+<a id="schemadate"></a>
+<a id="schema_Date"></a>
+<a id="tocSdate"></a>
+<a id="tocsdate"></a>
+
+```json
+null
+
+```
+
+### Properties
+
+*None*
+
+<h2 id="tocS_loopback.Count">loopback.Count</h2>
+<!-- backwards compatibility -->
+<a id="schemaloopback.count"></a>
+<a id="schema_loopback.Count"></a>
+<a id="tocSloopback.count"></a>
+<a id="tocsloopback.count"></a>
+
+```json
+{
+  "count": 0
+}
+
+```
+
+loopback.Count
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|count|number|false|none|none|
+
+<h2 id="tocS_login_activity.Filter">login_activity.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schemalogin_activity.filter"></a>
+<a id="schema_login_activity.Filter"></a>
+<a id="tocSlogin_activity.filter"></a>
+<a id="tocslogin_activity.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "id": true,
+    "actor": true,
+    "tenantId": true,
+    "loginTime": true,
+    "tokenPayload": true,
+    "loginType": true,
+    "deviceInfo": true,
+    "ipAddress": true
+  }
+}
+
+```
+
+login_activity.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» actor|boolean|false|none|none|
+|»» tenantId|boolean|false|none|none|
+|»» loginTime|boolean|false|none|none|
+|»» tokenPayload|boolean|false|none|none|
+|»» loginType|boolean|false|none|none|
+|»» deviceInfo|boolean|false|none|none|
+|»» ipAddress|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 

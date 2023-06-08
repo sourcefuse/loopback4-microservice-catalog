@@ -29,6 +29,7 @@ A Loopback Microservice for handling authentications. It provides -
 - SAML Authentication using [@node-saml/passport-saml](https://www.npmjs.com/package/passport-saml).
 - OTP Auth using custom passport otp strategy.
 - Two-Factor Authentication.
+- Maintain daily active users.
 
 To get started with a basic implementation of this service, see `/sandbox/auth-basic-example`.
 
@@ -39,6 +40,15 @@ For a more elaborate and custom implementation that overrides the default models
 This module uses the decorators provided by [loopback4-authentication](https://www.npmjs.com/package/loopback4-authentication) and [loopback4-authorization](https://www.npmjs.com/package/loopback4-authorization). For reference, below is the flow for the login code generation that uses the authenticate client, authenticate user and authorization decorators from these npm packages -
 
 ![Login Flow](https://user-images.githubusercontent.com/77672713/126627507-072a056c-de27-4764-9e5b-03d871da2438.png)
+
+#### Maintaining the activity of the users
+
+Whenever a user logins in to the system we make an entry in the login_activity table marking the users login time and his details. The login type can be "ACCESS","RELOGIN","LOGOUT" based on the action taken by the user. This way a track can be maintained. Api to fetch daily/monthly active users is available that gives a list of active users for the provided date range based on users selection.
+The actor field is configurable. The dafault value is user.id but can be changed by binding the appropriate field to `AuthServiceBindings.ActorIdKey`.
+
+```typescript
+this.application.bind(AuthServiceBindings.ActorIdKey).to('id');
+```
 
 ### Installation
 

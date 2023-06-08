@@ -7,7 +7,7 @@ import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
 import {STRATEGY} from 'loopback4-authentication';
 import {OtpMethodType} from './enums';
-import {LocalUserProfileDto} from './models';
+import {LocalUserProfileDto, UserTenant, LoginActivity} from './models';
 import {SignupRequestDto} from './models/signup-request-dto.model';
 
 // sonarignore:start
@@ -23,6 +23,9 @@ export interface IMfaConfig {
   secondFactor: STRATEGY;
 }
 
+export interface IUserActivity {
+  markUserActivity: boolean;
+}
 export interface IOtpConfig {
   method: OtpMethodType;
 }
@@ -44,4 +47,12 @@ export interface IAuthClientDTO {
 export interface ExternalTokens {
   externalAuthToken?: string;
   externalRefreshToken?: string;
+}
+
+export type ActorId = Extract<keyof UserTenant, string>;
+
+export interface ActiveUsersGroupData {
+  [key: string]: {
+    [loginType: string]: Array<LoginActivity>;
+  };
 }
