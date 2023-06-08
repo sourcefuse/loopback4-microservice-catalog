@@ -405,7 +405,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
 
 #### SequelizeUserModifyCrudRepository
 
-Similar to [DefaultUserModifyCrudRepository](#defaultusermodifycrudrepository) for projects using sequelize as the underlying ORM using [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) extension.
+Similar to [DefaultUserModifyCrudRepository](#defaultusermodifycrudrepository) for projects using sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension.
 
 In order to use this follow the below import syntax:
 
@@ -413,7 +413,7 @@ In order to use this follow the below import syntax:
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 ```
 
-and make sure you've [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) installed.
+and make sure you've [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) installed.
 
 ### Sequence Handlers
 

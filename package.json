@@ -16,8 +16,8 @@
     "cz-format-extension": "^1.5.0",
     "husky": "^7.0.4",
     "lerna": "^5.1.5",
-    "typedoc": "^0.23.23",
-    "typedoc-plugin-markdown": "^3.14.0"
+    "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^3.15.3"
   },
   "config": {
     "commitizen": {
