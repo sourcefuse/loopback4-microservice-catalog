@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.1.0 (2023-06-08)
+
+* feat(authentication-service): maintain the entries for active users when a user login to the app (#1 ([0b6fa82](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b6fa82)), closes [#1425](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1425) [#1424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1424)
+
+
+
+
+
 ## 11.0.0 (2023-06-08)
 
 * chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)

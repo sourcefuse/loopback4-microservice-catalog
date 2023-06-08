@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.10.0 (2023-06-08)
+
+* feat(authentication-service): maintain the entries for active users when a user login to the app (#1 ([0b6fa82](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b6fa82)), closes [#1425](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1425) [#1424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1424)
+
+
+
+
+
 ## <small>0.9.12 (2023-06-08)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-ms-basic-example
