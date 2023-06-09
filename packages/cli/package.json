@@ -174,7 +174,7 @@
       "@loopback/openapi-v3": "^9.0.0",
       "@loopback/pooling": "^0.9.0",
       "@loopback/repository": "^6.0.0",
-      "@loopback/repository-json-schema": "^6.0.0",
+      "@loopback/repository-json-schema": "^7.0.0",
       "@loopback/repository-tests": "^0.22.0",
       "@loopback/rest": "^13.0.0",
       "@loopback/rest-crud": "^0.16.0",
