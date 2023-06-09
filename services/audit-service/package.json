@@ -60,6 +60,8 @@
     "@loopback/rest": "^13.0.0",
     "@sourceloop/audit-log": "^5.1.1",
     "@sourceloop/core": "^8.0.0",
+    "aws-sdk": "^2.1360.0",
+    "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^9.0.0",

@@ -20,8 +20,11 @@ import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
 import {PermissionKey} from '../enums/permission-key.enum';
-import {AuditLog} from '../models';
-import {AuditLogRepository} from '../repositories';
+import {AuditLog, Job} from '../models';
+import {AuditLogRepository, JobRepository} from '../repositories';
+import {service} from '@loopback/core';
+import {JobProcessingService} from '../services';
+import {FileStatusKey} from '../enums/file-status-key.enum';
 
 const basePath = '/audit-logs';
 
@@ -29,6 +32,10 @@ export class AuditController {
   constructor(
     @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
+    @repository(JobRepository)
+    public jobRepository: JobRepository,
+    @service(JobProcessingService)
+    public jobProcessingService: JobProcessingService,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -81,6 +88,35 @@ export class AuditController {
   @authorize({
     permissions: [PermissionKey.ViewAudit, PermissionKey.ViewAuditNum],
   })
+  @get(`${basePath}/jobs/{jobId}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of AuditLog model instances',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Job, {includeRelations: true}),
+            },
+          },
+        },
+      },
+    },
+  })
+  async jobStatus(
+    @param.path.string('jobId')
+    jobId: string,
+  ): Promise<Job> {
+    const job: Job = await this.jobRepository.findById(jobId);
+    job.result = JSON.parse(job.result);
+    return job;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewAudit, PermissionKey.ViewAuditNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -98,9 +134,24 @@ export class AuditController {
     },
   })
   async find(
+    @param.query.boolean('includeArchivedLogs')
+    includeArchivedLogs: boolean,
     @param.filter(AuditLog) filter?: Filter<AuditLog>,
-  ): Promise<AuditLog[]> {
-    return this.auditLogRepository.find(filter);
+  ): Promise<AuditLog[] | object> {
+    if (includeArchivedLogs) {
+      const job = (await this.jobRepository.create({
+        filterUsed: filter,
+        status: FileStatusKey.Pending,
+      })) as Job;
+
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.jobProcessingService.start(job.getId());
+
+      return {jobId: job.getId()};
+    } else {
+      const result = await this.auditLogRepository.find(filter);
+      return result;
+    }
   }
 
   @authenticate(STRATEGY.BEARER)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -9,6 +9,7 @@ import {
   CoreBindings,
   inject,
   ProviderMap,
+  ServiceOrProviderClass,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -27,10 +28,23 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 
-import {AuditController} from './controllers';
-import {AuditServiceBindings} from './keys';
-import {AuditLog} from './models';
-import {AuditLogRepository} from './repositories';
+import {AuditController, ArchiveLogController} from './controllers';
+import {
+  AuditServiceBindings,
+  ExportToCsvServiceBindings,
+  QuerySelectedFilesServiceBindings,
+} from './keys';
+import {AuditLog, Job, MappingLog} from './models';
+import {
+  AuditLogRepository,
+  JobRepository,
+  MappingLogRepository,
+} from './repositories';
+import {
+  JobProcessingService,
+  ExportToCsvProvider,
+  QuerySelectedFilesProvider,
+} from './services';
 import {IAuditServiceConfig} from './types';
 
 export class AuditServiceComponent implements Component {
@@ -40,7 +54,6 @@ export class AuditServiceComponent implements Component {
     @inject(AuditServiceBindings.Config, {optional: true})
     private readonly notifConfig?: IAuditServiceConfig,
   ) {
-    this.bindings = [];
     this.providers = {};
 
     // Mount core component
@@ -64,16 +77,29 @@ export class AuditServiceComponent implements Component {
       this.setupSequence();
     }
 
-    this.repositories = [AuditLogRepository];
+    this.services = [JobProcessingService];
 
-    this.models = [AuditLog];
+    this.repositories = [
+      AuditLogRepository,
+      MappingLogRepository,
+      JobRepository,
+    ];
 
-    this.controllers = [AuditController];
+    this.models = [AuditLog, MappingLog, Job];
+
+    this.controllers = [AuditController, ArchiveLogController];
+
+    this.providers[QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS.key] =
+      QuerySelectedFilesProvider;
+    this.providers[ExportToCsvServiceBindings.EXPORT_LOGS.key] =
+      ExportToCsvProvider;
   }
 
   providers?: ProviderMap = {};
 
   bindings?: Binding[] = [];
+
+  services?: ServiceOrProviderClass[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection

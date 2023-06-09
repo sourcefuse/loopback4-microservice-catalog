@@ -30,6 +30,135 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
+<h1 id="audit-service-archivelogcontroller">ArchiveLogController</h1>
+
+## ArchiveLogController.archive
+
+<a id="opIdArchiveLogController.archive"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "date": {
+    "fromDate": "2023-06-09T05:13:22.078Z",
+    "toDate": "2023-06-09T05:13:22.078Z"
+  },
+  "deleted": true,
+  "entityId": "string",
+  "actedOn": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/archive',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "date": {
+    "fromDate": "2023-06-09T05:13:22.078Z",
+    "toDate": "2023-06-09T05:13:22.078Z"
+  },
+  "deleted": true,
+  "entityId": "string",
+  "actedOn": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/archive',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /audit-logs/archive`
+
+| Permissions |
+| ------- |
+| ArchiveLogs   |
+| 6   |
+
+> Body parameter
+
+```json
+{
+  "date": {
+    "fromDate": "2023-06-09T05:13:22.078Z",
+    "toDate": "2023-06-09T05:13:22.078Z"
+  },
+  "deleted": true,
+  "entityId": "string",
+  "actedOn": "string"
+}
+```
+
+<h3 id="archivelogcontroller.archive-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CustomFilter](#schemacustomfilter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "message": "string",
+  "numberOfEntriesArchived": 0,
+  "file": "string"
+}
+```
+
+<h3 id="archivelogcontroller.archive-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model instance|Inline|
+
+<h3 id="archivelogcontroller.archive-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» message|string|false|none|none|
+|» numberOfEntriesArchived|number|false|none|none|
+|» file|string|false|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 <h1 id="audit-service-auditcontroller">AuditController</h1>
 
 ## AuditController.count
@@ -109,6 +238,107 @@ fetch('/audit-logs/count',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## AuditController.jobStatus
+
+<a id="opIdAuditController.jobStatus"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/jobs/{jobId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/jobs/{jobId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /audit-logs/jobs/{jobId}`
+
+| Permissions |
+| ------- |
+| ViewAudit   |
+| 1   |
+
+<h3 id="auditcontroller.jobstatus-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|jobId|path|string|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "status": "string",
+    "filterUsed": {},
+    "result": "string"
+  }
+]
+```
+
+<h3 id="auditcontroller.jobstatus-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
+
+<h3 id="auditcontroller.jobstatus-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[JobWithRelations](#schemajobwithrelations)]|false|none|[(tsType: JobWithRelations, schemaOptions: { includeRelations: true })]|
+|» JobWithRelations|[JobWithRelations](#schemajobwithrelations)|false|none|(tsType: JobWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» status|string|true|none|none|
+|»» filterUsed|object|false|none|none|
+|»» result|string|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -398,6 +628,7 @@ fetch('/audit-logs',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
+|includeArchivedLogs|query|boolean|false|none|
 |filter|query|[audit_logs.Filter1](#schemaaudit_logs.filter1)|false|none|
 
 > Example responses
@@ -531,6 +762,34 @@ NewAuditLog
 |after|object|false|none|none|
 |actionGroup|string|false|none|none|
 
+<h2 id="tocS_JobWithRelations">JobWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemajobwithrelations"></a>
+<a id="schema_JobWithRelations"></a>
+<a id="tocSjobwithrelations"></a>
+<a id="tocsjobwithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "status": "string",
+  "filterUsed": {},
+  "result": "string"
+}
+
+```
+
+JobWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|status|string|true|none|none|
+|filterUsed|object|false|none|none|
+|result|string|false|none|none|
+
 <h2 id="tocS_AuditLogWithRelations">AuditLogWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemaauditlogwithrelations"></a>
@@ -570,6 +829,39 @@ AuditLogWithRelations
 |before|object|false|none|none|
 |after|object|false|none|none|
 |actionGroup|string|false|none|none|
+
+<h2 id="tocS_CustomFilter">CustomFilter</h2>
+<!-- backwards compatibility -->
+<a id="schemacustomfilter"></a>
+<a id="schema_CustomFilter"></a>
+<a id="tocScustomfilter"></a>
+<a id="tocscustomfilter"></a>
+
+```json
+{
+  "date": {
+    "fromDate": "2023-06-09T05:13:22.078Z",
+    "toDate": "2023-06-09T05:13:22.078Z"
+  },
+  "deleted": true,
+  "entityId": "string",
+  "actedOn": "string"
+}
+
+```
+
+CustomFilter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|date|object|false|none|none|
+|» fromDate|string|false|none|none|
+|» toDate|string|false|none|none|
+|deleted|boolean|false|none|none|
+|entityId|string|false|none|none|
+|actedOn|string|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
