@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.12.1 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-service
+
+
+
+
+
 ## 0.12.0 (2023-06-08)
 
 * chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)

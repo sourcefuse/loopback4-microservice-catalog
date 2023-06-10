@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.1 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## 7.0.0 (2023-06-09)
 
 * feat(audit-service): archival and query feature in audit service (#1394) ([748e9c0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/748e9c0)), closes [#1394](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1394) [#1372](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1372)

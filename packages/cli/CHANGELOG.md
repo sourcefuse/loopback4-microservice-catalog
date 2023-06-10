@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.3 (2023-06-10)</small>
+
+* fix(core): use swagger-stats@0.99.5 statically ([49374ba](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/49374ba)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>4.0.2 (2023-06-09)</small>
 
 * chore(cli): update template dependencies (#1444) ([90ea8a9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/90ea8a9)), closes [#1444](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1444) [#1433](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1433)

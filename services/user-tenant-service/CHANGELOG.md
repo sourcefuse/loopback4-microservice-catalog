@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.2 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
 ## <small>0.8.1 (2023-06-08)</small>
 
 * docs(chore): openapi docs maintenance (#1438) ([8efbc6a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8efbc6a)), closes [#1438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1438)

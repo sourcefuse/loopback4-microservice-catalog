@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.2 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle
+
+
+
+
+
 ## <small>0.4.1 (2023-06-09)</small>
 
 * chore(cli): update cli template dependencies (#1441) ([5933080](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5933080)), closes [#1441](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1441) [#1433](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1433)
