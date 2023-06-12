@@ -10,7 +10,7 @@
 
 ## Overview
 
-A LoopBack microservice used for auditing user actions. All the user actions like insert, update and delete can be audited. It uses [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) as a base which provides the same functionality but through a repository mixin. A repository mixin logs all the actions by default. So when we use a repository mixin we have less control over the customization that can be done. So in case where we want to audit only in certain scenario or for a particular case this service can be used. This service exposes APIs to insert and read the audited data so that we have a free hand.
+A LoopBack microservice used for auditing user actions. All the user actions like insert, update and delete can be audited. It uses [@sourceloop/audit-log](https://www.npmjs.com/package/@sourceloop/audit-log) as a base which provides the same functionality but through a repository mixin. A repository mixin logs all the actions by default. So when we use a repository mixin we have less control over the customization that can be done. So in case where we want to audit only in certain scenario or for a particular case this service can be used. This service exposes APIs to insert and read the audited data so that we have a free hand. Also in this service logs can be archived on AWS S3 bucket based on certain filters. At the same time logs can fetched from those S3 buckets and also from the primary database as well
 
 ## Installation
 
@@ -55,6 +55,50 @@ export declare enum Action {
 }
 ```
 
+### Archiving Logs
+
+The logs created through this service can be archived through the REST endpoint[`/audit/archive-logs`](openapi.md#archivelogcontrollerarchive). A custom filter will be provided based on which logs can be archived.It should be noted that either of the 4 filters or none of it. Also the credentials of the AWS account and S3 bucket have to be specified in the env file so as to specify the destination of records to be archived.
+
+Example archival filter
+
+```ts
+{
+  "date": {
+    "fromDate": "2023-06-09T05:20:55.097Z",
+    "toDate": "2023-06-09T05:20:55.097Z"
+  },
+  //date parameter allows user to archive data from a given date to a given date
+  "deleted": true,
+  //deleted flag repesents the 'deleted' property of the 'after' column
+  "entityId": "string",
+  //entityId represents the unique id of a particular entities
+  "actedOn": "Product"
+  //actedOn represents the model class for which audit logs are generated
+}
+```
+
+Sample response after hitting the API
+
+```json
+{
+  "message": "Entries archived successfully",
+  "numberOfEntriesArchived": 1,
+  "key": "audit_logs_2023-06-09T05:44:24.780Z.csv"
+}
+```
+
+Here `key` repesents the name of the file which conatins the archived data
+
+### Get Logs
+
+This feature is used to query the logs present in the original database or the archival database.A default standard filter is provided based on which logs can be fetched. Along with this a boolean variable called `includeArchivedLogs` is also provided.The purpose of this flag is mentioned below
+
+Case1 (If `includeArchivedLogs` is set to true)
+In this case data is to be fetched from both primary database and archival database based on the filter provided as an input but it is not immediately returned, infact a jobId is returned which basically represents the 'GET' operation happening in the background. Now this jobId is provided on a different GET API which expects jobId as input and in the reponse of that API the desired data is returned.
+
+Case2 (If `includeArchivedLogs` is set to false/undefined)
+In this case data is fetched from only primary database based on the filter provided in the input and the desired data is immediately provided .
+
 ### Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
@@ -72,22 +116,32 @@ DB_DATABASE=audit_db
 DB_SCHEMA=public
 JWT_SECRET=super_secret_string
 JWT_ISSUER=https://authentication.service
+AUDIT_DATABASE=
+AUDIT_SCHEMA=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+AWS_S3_BUCKET_NAME=
 ```
 
-| Name          | Required | Default Value | Description                                                                                                                        |
-| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `NODE_ENV`    | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
-| `LOG_LEVEL`   | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
-| `HOST`        | Y        |               | Host for the service to run under, i.e. `0.0.0.0`                                                                                  |
-| `PORT`        | Y        | `3000`        | Port for the service to listen on.                                                                                                 |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
-| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
-| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
-| `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
-| `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
+| Name                    | Required | Default Value | Description                                                                                                                        |
+| ----------------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`              | Y        |               | Node environment value, i.e. `dev`, `test`, `prod`                                                                                 |
+| `LOG_LEVEL`             | Y        |               | Log level value, i.e. `error`, `warn`, `info`, `verbose`, `debug`                                                                  |
+| `HOST`                  | Y        |               | Host for the service to run under, i.e. `0.0.0.0`                                                                                  |
+| `PORT`                  | Y        | `3000`        | Port for the service to listen on.                                                                                                 |
+| `DB_HOST`               | Y        |               | Hostname for the database server.                                                                                                  |
+| `DB_PORT`               | Y        |               | Port for the database server.                                                                                                      |
+| `DB_USER`               | Y        |               | User for the database.                                                                                                             |
+| `DB_PASSWORD`           | Y        |               | Password for the database user.                                                                                                    |
+| `DB_DATABASE`           | Y        |               | Database to connect to on the database server.                                                                                     |
+| `DB_SCHEMA`             | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
+| `JWT_SECRET`            | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
+| `JWT_ISSUER`            | Y        |               | Issuer of the JWT token.                                                                                                           |
+| `AWS_ACCESS_KEY_ID `    | Y        |               | Access key ID associated with your AWS account                                                                                     |
+| `AWS_SECRET_ACCESS_KEY` | Y        |               | Secret access key associated with your AWS account                                                                                 |
+| `AWS_REGION`            | Y        |               | Specifies the AWS region where your AWS S3 bucket is located                                                                       |
+| `AWS_S3_BUCKET_NAME`    | Y        |               | Name of the AWS S3 bucket you want to interact with                                                                                |
 
 ### Setting up a `DataSource`
 
