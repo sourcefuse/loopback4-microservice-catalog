@@ -8,6 +8,7 @@ import {
   Binding,
   inject,
   CoreBindings,
+  ServiceOrProviderClass,
 } from '@loopback/core';
 import {RestApplication} from '@loopback/rest';
 import {CoreComponent} from '@sourceloop/core';
@@ -17,10 +18,12 @@ import {
   FeatureFlagActionProvider,
   FeatureFlagMetadataProvider,
 } from './providers';
+import {FeatureHandlerService} from './services';
 
 export class FeatureToggleComponent implements Component {
   providers?: ProviderMap;
   bindings?: Binding[];
+  services?: ServiceOrProviderClass[];
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
@@ -34,5 +37,6 @@ export class FeatureToggleComponent implements Component {
       [StrategyBindings.FEATURE_FLAG_ACTION.key]: FeatureFlagActionProvider,
       [StrategyBindings.METADATA.key]: FeatureFlagMetadataProvider,
     };
+    this.services = [FeatureHandlerService];
   }
 }
