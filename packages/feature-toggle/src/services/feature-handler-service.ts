@@ -1,5 +1,10 @@
 import {Getter, extensionPoint, extensions} from '@loopback/core';
-import {FeatureHandler, HANDLER_EXTENSION_POINT_NAME} from '../types';
+import {
+  FeatureFlagMetadata,
+  FeatureHandler,
+  HANDLER_EXTENSION_POINT_NAME,
+  IAuthUserWithDisabledFeat,
+} from '../types';
 import {HttpErrors} from '@loopback/rest';
 
 @extensionPoint(HANDLER_EXTENSION_POINT_NAME)
@@ -14,12 +19,19 @@ export class FeatureHandlerService {
     return handlers.find(h => h.handlerName === handlerName);
   }
 
-  async handle(handlerName: string): Promise<void> {
-    const handler = await this.findHandler(handlerName);
-    if (handler) {
-      return handler.handle();
+  async handle(
+    featureMetadata: FeatureFlagMetadata,
+    currentUser: IAuthUserWithDisabledFeat,
+  ): Promise<boolean> {
+    if (featureMetadata.options?.handler) {
+      const handler = await this.findHandler(featureMetadata.options?.handler);
+      if (handler) {
+        return handler.handle(featureMetadata, currentUser);
+      } else {
+        throw new HttpErrors.InternalServerError('No Handler Found');
+      }
     } else {
-      throw new HttpErrors.InternalServerError('No Handler Found');
+      return true;
     }
   }
 }

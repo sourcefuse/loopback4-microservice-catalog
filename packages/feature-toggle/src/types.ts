@@ -32,7 +32,10 @@ export interface IAuthUserWithDisabledFeat extends IAuthUserWithPermissions {
  */
 export interface FeatureHandler {
   handlerName: string;
-  handle(): void;
+  handle(
+    featureMetadata: FeatureFlagMetadata,
+    currentUser: IAuthUserWithDisabledFeat,
+  ): boolean;
 }
 
 /**

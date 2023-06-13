@@ -30,7 +30,7 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
   async action(): Promise<boolean> {
     const metadata: FeatureFlagMetadata = await this.getMetadata();
 
-    if (metadata) {
+    if (metadata && this.user) {
       const featureToCheck: string[] = [metadata.featureKey];
       if (featureToCheck.length && featureToCheck[0] === '*') {
         return true; // skip the check and always return true
@@ -51,7 +51,7 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
         const handler = metadata.options?.handler;
 
         if (handler) {
-          await this.handlerService?.handle(handler);
+          return this.handlerService?.handle(metadata, this.user) ?? true;
         }
         return true;
       }
