@@ -5,13 +5,12 @@ language_tabs:
   - javascript--nodejs: Node.JS
 language_clients:
   - javascript: request
-  - javascript--nodejs: ""
+  - javascript--nodejs: ''
 toc_footers: []
 includes: []
 search: true
 highlight_theme: darkula
 headingLevel: 2
-
 ---
 
 <!-- Generator: Widdershins v4.0.1 -->
@@ -24,11 +23,11 @@ Audit logging microservice
 
 Base URLs:
 
-* <a href="/">/</a>
+- <a href="/">/</a>
 
 # Authentication
 
-- HTTP Authentication, scheme: bearer 
+- HTTP Authentication, scheme: bearer
 
 <h1 id="audit-service-archivelogcontroller">ArchiveLogController</h1>
 
@@ -102,9 +101,9 @@ fetch('/audit-logs/archive',
 `POST /audit-logs/archive`
 
 | Permissions |
-| ------- |
-| ArchiveLogs   |
-| 6   |
+| ----------- |
+| ArchiveLogs |
+| 6           |
 
 > Body parameter
 
@@ -122,9 +121,9 @@ fetch('/audit-logs/archive',
 
 <h3 id="archivelogcontroller.archive-parameters">Parameters</h3>
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[CustomFilter](#schemacustomfilter)|false|none|
+| Name | In   | Type                                | Required | Description |
+| ---- | ---- | ----------------------------------- | -------- | ----------- |
+| body | body | [CustomFilter](#schemacustomfilter) | false    | none        |
 
 > Example responses
 
@@ -140,19 +139,19 @@ fetch('/audit-logs/archive',
 
 <h3 id="archivelogcontroller.archive-responses">Responses</h3>
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model instance|Inline|
+| Status | Meaning                                                 | Description             | Schema |
+| ------ | ------------------------------------------------------- | ----------------------- | ------ |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | AuditLog model instance | Inline |
 
 <h3 id="archivelogcontroller.archive-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» message|string|false|none|none|
-|» numberOfEntriesArchived|number|false|none|none|
-|» file|string|false|none|none|
+| Name                      | Type   | Required | Restrictions | Description |
+| ------------------------- | ------ | -------- | ------------ | ----------- |
+| » message                 | string | false    | none         | none        |
+| » numberOfEntriesArchived | number | false    | none         | none        |
+| » file                    | string | false    | none         | none        |
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -168,24 +167,22 @@ HTTPBearer
 > Code samples
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
+  Accept: 'application/json',
+  Authorization: 'Bearer {access-token}',
 };
 
-fetch('/audit-logs/count',
-{
+fetch('/audit-logs/count', {
   method: 'GET',
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 ```javascript--nodejs
@@ -213,15 +210,15 @@ fetch('/audit-logs/count',
 `GET /audit-logs/count`
 
 | Permissions |
-| ------- |
+| ----------- |
 | ViewAudit   |
-| 1   |
+| 1           |
 
 <h3 id="auditcontroller.count-parameters">Parameters</h3>
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
+| Name  | In    | Type   | Required | Description |
+| ----- | ----- | ------ | -------- | ----------- |
+| where | query | object | false    | none        |
 
 > Example responses
 
@@ -235,9 +232,9 @@ fetch('/audit-logs/count',
 
 <h3 id="auditcontroller.count-responses">Responses</h3>
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model count|[loopback.Count](#schemaloopback.count)|
+| Status | Meaning                                                 | Description          | Schema                                  |
+| ------ | ------------------------------------------------------- | -------------------- | --------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | AuditLog model count | [loopback.Count](#schemaloopback.count) |
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -251,24 +248,22 @@ HTTPBearer
 > Code samples
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
+  Accept: 'application/json',
+  Authorization: 'Bearer {access-token}',
 };
 
-fetch('/audit-logs/jobs/{jobId}',
-{
+fetch('/audit-logs/jobs/{jobId}', {
   method: 'GET',
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 ```javascript--nodejs
@@ -296,15 +291,15 @@ fetch('/audit-logs/jobs/{jobId}',
 `GET /audit-logs/jobs/{jobId}`
 
 | Permissions |
-| ------- |
+| ----------- |
 | ViewAudit   |
-| 1   |
+| 1           |
 
 <h3 id="auditcontroller.jobstatus-parameters">Parameters</h3>
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|jobId|path|string|true|none|
+| Name  | In   | Type   | Required | Description |
+| ----- | ---- | ------ | -------- | ----------- |
+| jobId | path | string | true     | none        |
 
 > Example responses
 
@@ -324,23 +319,22 @@ fetch('/audit-logs/jobs/{jobId}',
 
 <h3 id="auditcontroller.jobstatus-responses">Responses</h3>
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
+| Status | Meaning                                                 | Description                       | Schema |
+| ------ | ------------------------------------------------------- | --------------------------------- | ------ |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of AuditLog model instances | Inline |
 
 <h3 id="auditcontroller.jobstatus-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[JobWithRelations](#schemajobwithrelations)]|false|none|[(tsType: JobWithRelations, schemaOptions: { includeRelations: true })]|
-|» JobWithRelations|[JobWithRelations](#schemajobwithrelations)|false|none|(tsType: JobWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|false|none|none|
-|»» status|string|true|none|none|
-|»» operation|string|false|none|none|
-|»» filterUsed|object|false|none|none|
-|»» result|string|false|none|none|
+| Name               | Type                                          | Required | Restrictions | Description                                                             |
+| ------------------ | --------------------------------------------- | -------- | ------------ | ----------------------------------------------------------------------- |
+| _anonymous_        | [[JobWithRelations](#schemajobwithrelations)] | false    | none         | [(tsType: JobWithRelations, schemaOptions: { includeRelations: true })] |
+| » JobWithRelations | [JobWithRelations](#schemajobwithrelations)   | false    | none         | (tsType: JobWithRelations, schemaOptions: { includeRelations: true })   |
+| »» id              | string                                        | false    | none         | none                                                                    |
+| »» status          | string                                        | true     | none         | none                                                                    |
+| »» filterUsed      | object                                        | false    | none         | none                                                                    |
+| »» result          | string                                        | false    | none         | none                                                                    |
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -354,24 +348,22 @@ HTTPBearer
 > Code samples
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
+  Accept: 'application/json',
+  Authorization: 'Bearer {access-token}',
 };
 
-fetch('/audit-logs/{id}',
-{
+fetch('/audit-logs/{id}', {
   method: 'GET',
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 ```javascript--nodejs
@@ -399,16 +391,16 @@ fetch('/audit-logs/{id}',
 `GET /audit-logs/{id}`
 
 | Permissions |
-| ------- |
+| ----------- |
 | ViewAudit   |
-| 1   |
+| 1           |
 
 <h3 id="auditcontroller.findbyid-parameters">Parameters</h3>
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|[audit_logs.Filter1](#schemaaudit_logs.filter1)|false|none|
+| Name   | In    | Type                                          | Required | Description |
+| ------ | ----- | --------------------------------------------- | -------- | ----------- |
+| id     | path  | string                                        | true     | none        |
+| filter | query | [audit_logs.Filter](#schemaaudit_logs.filter) | false    | none        |
 
 > Example responses
 
@@ -431,9 +423,9 @@ fetch('/audit-logs/{id}',
 
 <h3 id="auditcontroller.findbyid-responses">Responses</h3>
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model instance|[AuditLogWithRelations](#schemaauditlogwithrelations)|
+| Status | Meaning                                                 | Description             | Schema                                                |
+| ------ | ------------------------------------------------------- | ----------------------- | ----------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | AuditLog model instance | [AuditLogWithRelations](#schemaauditlogwithrelations) |
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -514,9 +506,9 @@ fetch('/audit-logs',
 `POST /audit-logs`
 
 | Permissions |
-| ------- |
-| CreateAudit   |
-| 2   |
+| ----------- |
+| CreateAudit |
+| 2           |
 
 > Body parameter
 
@@ -536,9 +528,9 @@ fetch('/audit-logs',
 
 <h3 id="auditcontroller.create-parameters">Parameters</h3>
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[NewAuditLog](#schemanewauditlog)|false|none|
+| Name | In   | Type                              | Required | Description |
+| ---- | ---- | --------------------------------- | -------- | ----------- |
+| body | body | [NewAuditLog](#schemanewauditlog) | false    | none        |
 
 > Example responses
 
@@ -561,9 +553,9 @@ fetch('/audit-logs',
 
 <h3 id="auditcontroller.create-responses">Responses</h3>
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model instance|[AuditLog](#schemaauditlog)|
+| Status | Meaning                                                 | Description             | Schema                      |
+| ------ | ------------------------------------------------------- | ----------------------- | --------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | AuditLog model instance | [AuditLog](#schemaauditlog) |
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -577,24 +569,22 @@ HTTPBearer
 > Code samples
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
+  Accept: 'application/json',
+  Authorization: 'Bearer {access-token}',
 };
 
-fetch('/audit-logs',
-{
+fetch('/audit-logs', {
   method: 'GET',
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 ```javascript--nodejs
@@ -622,16 +612,16 @@ fetch('/audit-logs',
 `GET /audit-logs`
 
 | Permissions |
-| ------- |
+| ----------- |
 | ViewAudit   |
-| 1   |
+| 1           |
 
 <h3 id="auditcontroller.find-parameters">Parameters</h3>
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|includeArchivedLogs|query|boolean|false|none|
-|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
+| Name                | In    | Type                                            | Required | Description |
+| ------------------- | ----- | ----------------------------------------------- | -------- | ----------- |
+| includeArchivedLogs | query | boolean                                         | false    | none        |
+| filter              | query | [audit_logs.Filter1](#schemaaudit_logs.filter1) | false    | none        |
 
 > Example responses
 
@@ -656,144 +646,28 @@ fetch('/audit-logs',
 
 <h3 id="auditcontroller.find-responses">Responses</h3>
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
+| Status | Meaning                                                 | Description                       | Schema |
+| ------ | ------------------------------------------------------- | --------------------------------- | ------ |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of AuditLog model instances | Inline |
 
 <h3 id="auditcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[AuditLogWithRelations](#schemaauditlogwithrelations)]|false|none|[(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })]|
-|» AuditLogWithRelations|[AuditLogWithRelations](#schemaauditlogwithrelations)|false|none|(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|false|none|none|
-|»» action|string|true|none|none|
-|»» actedAt|string(date-time)|true|none|none|
-|»» actedOn|string|false|none|none|
-|»» actionKey|string|true|none|none|
-|»» entityId|string|true|none|none|
-|»» actor|string|true|none|none|
-|»» before|object|false|none|none|
-|»» after|object|false|none|none|
-|»» actionGroup|string|false|none|none|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-<h1 id="audit-service-exportlogscontroller">ExportLogsController</h1>
-
-## ExportLogsController.export
-
-<a id="opIdExportLogsController.export"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs/export',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs/export',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /audit-logs/export`
-
-| Permissions |
-| ------- |
-| ExportLogs   |
-| 5   |
-
-<h3 id="exportlogscontroller.export-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|includeArchivedLogs|query|boolean|false|none|
-|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "id": "string",
-    "action": "string",
-    "actedAt": "2019-08-24T14:15:22Z",
-    "actedOn": "string",
-    "actionKey": "string",
-    "entityId": "string",
-    "actor": "string",
-    "before": {},
-    "after": {},
-    "actionGroup": "string"
-  }
-]
-```
-
-<h3 id="exportlogscontroller.export-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
-
-<h3 id="exportlogscontroller.export-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[AuditLogWithRelations](#schemaauditlogwithrelations)]|false|none|[(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })]|
-|» AuditLogWithRelations|[AuditLogWithRelations](#schemaauditlogwithrelations)|false|none|(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|false|none|none|
-|»» action|string|true|none|none|
-|»» actedAt|string(date-time)|true|none|none|
-|»» actedOn|string|false|none|none|
-|»» actionKey|string|true|none|none|
-|»» entityId|string|true|none|none|
-|»» actor|string|true|none|none|
-|»» before|object|false|none|none|
-|»» after|object|false|none|none|
-|»» actionGroup|string|false|none|none|
+| Name                    | Type                                                    | Required | Restrictions | Description                                                                  |
+| ----------------------- | ------------------------------------------------------- | -------- | ------------ | ---------------------------------------------------------------------------- |
+| _anonymous_             | [[AuditLogWithRelations](#schemaauditlogwithrelations)] | false    | none         | [(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })] |
+| » AuditLogWithRelations | [AuditLogWithRelations](#schemaauditlogwithrelations)   | false    | none         | (tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })   |
+| »» id                   | string                                                  | false    | none         | none                                                                         |
+| »» action               | string                                                  | true     | none         | none                                                                         |
+| »» actedAt              | string(date-time)                                       | true     | none         | none                                                                         |
+| »» actedOn              | string                                                  | false    | none         | none                                                                         |
+| »» actionKey            | string                                                  | true     | none         | none                                                                         |
+| »» entityId             | string                                                  | true     | none         | none                                                                         |
+| »» actor                | string                                                  | true     | none         | none                                                                         |
+| »» before               | object                                                  | false    | none         | none                                                                         |
+| »» after                | object                                                  | false    | none         | none                                                                         |
+| »» actionGroup          | string                                                  | false    | none         | none                                                                         |
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -822,25 +696,24 @@ HTTPBearer
   "after": {},
   "actionGroup": "string"
 }
-
 ```
 
 AuditLog
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|action|string|true|none|none|
-|actedAt|string(date-time)|true|none|none|
-|actedOn|string|false|none|none|
-|actionKey|string|true|none|none|
-|entityId|string|true|none|none|
-|actor|string|true|none|none|
-|before|object|false|none|none|
-|after|object|false|none|none|
-|actionGroup|string|false|none|none|
+| Name        | Type              | Required | Restrictions | Description |
+| ----------- | ----------------- | -------- | ------------ | ----------- |
+| id          | string            | false    | none         | none        |
+| action      | string            | true     | none         | none        |
+| actedAt     | string(date-time) | true     | none         | none        |
+| actedOn     | string            | false    | none         | none        |
+| actionKey   | string            | true     | none         | none        |
+| entityId    | string            | true     | none         | none        |
+| actor       | string            | true     | none         | none        |
+| before      | object            | false    | none         | none        |
+| after       | object            | false    | none         | none        |
+| actionGroup | string            | false    | none         | none        |
 
 <h2 id="tocS_NewAuditLog">NewAuditLog</h2>
 <!-- backwards compatibility -->
@@ -861,24 +734,23 @@ AuditLog
   "after": {},
   "actionGroup": "string"
 }
-
 ```
 
 NewAuditLog
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|action|string|true|none|none|
-|actedAt|string(date-time)|true|none|none|
-|actedOn|string|false|none|none|
-|actionKey|string|true|none|none|
-|entityId|string|true|none|none|
-|actor|string|true|none|none|
-|before|object|false|none|none|
-|after|object|false|none|none|
-|actionGroup|string|false|none|none|
+| Name        | Type              | Required | Restrictions | Description |
+| ----------- | ----------------- | -------- | ------------ | ----------- |
+| action      | string            | true     | none         | none        |
+| actedAt     | string(date-time) | true     | none         | none        |
+| actedOn     | string            | false    | none         | none        |
+| actionKey   | string            | true     | none         | none        |
+| entityId    | string            | true     | none         | none        |
+| actor       | string            | true     | none         | none        |
+| before      | object            | false    | none         | none        |
+| after       | object            | false    | none         | none        |
+| actionGroup | string            | false    | none         | none        |
 
 <h2 id="tocS_JobWithRelations">JobWithRelations</h2>
 <!-- backwards compatibility -->
@@ -895,20 +767,18 @@ NewAuditLog
   "filterUsed": {},
   "result": "string"
 }
-
 ```
 
 JobWithRelations
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|status|string|true|none|none|
-|operation|string|false|none|none|
-|filterUsed|object|false|none|none|
-|result|string|false|none|none|
+| Name       | Type   | Required | Restrictions | Description |
+| ---------- | ------ | -------- | ------------ | ----------- |
+| id         | string | false    | none         | none        |
+| status     | string | true     | none         | none        |
+| filterUsed | object | false    | none         | none        |
+| result     | string | false    | none         | none        |
 
 <h2 id="tocS_AuditLogWithRelations">AuditLogWithRelations</h2>
 <!-- backwards compatibility -->
@@ -930,25 +800,24 @@ JobWithRelations
   "after": {},
   "actionGroup": "string"
 }
-
 ```
 
 AuditLogWithRelations
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|action|string|true|none|none|
-|actedAt|string(date-time)|true|none|none|
-|actedOn|string|false|none|none|
-|actionKey|string|true|none|none|
-|entityId|string|true|none|none|
-|actor|string|true|none|none|
-|before|object|false|none|none|
-|after|object|false|none|none|
-|actionGroup|string|false|none|none|
+| Name        | Type              | Required | Restrictions | Description |
+| ----------- | ----------------- | -------- | ------------ | ----------- |
+| id          | string            | false    | none         | none        |
+| action      | string            | true     | none         | none        |
+| actedAt     | string(date-time) | true     | none         | none        |
+| actedOn     | string            | false    | none         | none        |
+| actionKey   | string            | true     | none         | none        |
+| entityId    | string            | true     | none         | none        |
+| actor       | string            | true     | none         | none        |
+| before      | object            | false    | none         | none        |
+| after       | object            | false    | none         | none        |
+| actionGroup | string            | false    | none         | none        |
 
 <h2 id="tocS_CustomFilter">CustomFilter</h2>
 <!-- backwards compatibility -->
@@ -960,28 +829,27 @@ AuditLogWithRelations
 ```json
 {
   "date": {
-    "fromDate": "2023-06-24T09:15:57.060Z",
-    "toDate": "2023-06-24T09:15:57.060Z"
+    "fromDate": "2023-06-09T05:13:22.078Z",
+    "toDate": "2023-06-09T05:13:22.078Z"
   },
   "deleted": true,
   "entityId": "string",
   "actedOn": "string"
 }
-
 ```
 
 CustomFilter
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|date|object|false|none|none|
-|» fromDate|string|false|none|none|
-|» toDate|string|false|none|none|
-|deleted|boolean|false|none|none|
-|entityId|string|false|none|none|
-|actedOn|string|false|none|none|
+| Name       | Type    | Required | Restrictions | Description |
+| ---------- | ------- | -------- | ------------ | ----------- |
+| date       | object  | false    | none         | none        |
+| » fromDate | string  | false    | none         | none        |
+| » toDate   | string  | false    | none         | none        |
+| deleted    | boolean | false    | none         | none        |
+| entityId   | string  | false    | none         | none        |
+| actedOn    | string  | false    | none         | none        |
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -994,16 +862,15 @@ CustomFilter
 {
   "count": 0
 }
-
 ```
 
 loopback.Count
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|count|number|false|none|none|
+| Name  | Type   | Required | Restrictions | Description |
+| ----- | ------ | -------- | ------------ | ----------- |
+| count | number | false    | none         | none        |
 
 <h2 id="tocS_audit_logs.Filter">audit_logs.Filter</h2>
 <!-- backwards compatibility -->
@@ -1032,60 +899,58 @@ loopback.Count
     "actionGroup": true
   }
 }
-
 ```
 
 audit_logs.Filter
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
+| Name   | Type    | Required | Restrictions | Description |
+| ------ | ------- | -------- | ------------ | ----------- |
+| offset | integer | false    | none         | none        |
+| limit  | integer | false    | none         | none        |
+| skip   | integer | false    | none         | none        |
+| order  | any     | false    | none         | none        |
 
 oneOf
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
+| Name          | Type   | Required | Restrictions | Description |
+| ------------- | ------ | -------- | ------------ | ----------- |
+| » _anonymous_ | string | false    | none         | none        |
 
 xor
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
+| Name          | Type     | Required | Restrictions | Description |
+| ------------- | -------- | -------- | ------------ | ----------- |
+| » _anonymous_ | [string] | false    | none         | none        |
 
 continued
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
+| Name   | Type | Required | Restrictions | Description |
+| ------ | ---- | -------- | ------------ | ----------- |
+| fields | any  | false    | none         | none        |
 
 oneOf
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» id|boolean|false|none|none|
-|»» action|boolean|false|none|none|
-|»» actedAt|boolean|false|none|none|
-|»» actedOn|boolean|false|none|none|
-|»» actionKey|boolean|false|none|none|
-|»» entityId|boolean|false|none|none|
-|»» actor|boolean|false|none|none|
-|»» before|boolean|false|none|none|
-|»» after|boolean|false|none|none|
-|»» actionGroup|boolean|false|none|none|
+| Name           | Type    | Required | Restrictions | Description |
+| -------------- | ------- | -------- | ------------ | ----------- |
+| » _anonymous_  | object  | false    | none         | none        |
+| »» id          | boolean | false    | none         | none        |
+| »» action      | boolean | false    | none         | none        |
+| »» actedAt     | boolean | false    | none         | none        |
+| »» actedOn     | boolean | false    | none         | none        |
+| »» actionKey   | boolean | false    | none         | none        |
+| »» entityId    | boolean | false    | none         | none        |
+| »» actor       | boolean | false    | none         | none        |
+| »» before      | boolean | false    | none         | none        |
+| »» after       | boolean | false    | none         | none        |
+| »» actionGroup | boolean | false    | none         | none        |
 
 xor
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
+| Name          | Type     | Required | Restrictions | Description |
+| ------------- | -------- | -------- | ------------ | ----------- |
+| » _anonymous_ | [string] | false    | none         | none        |
 
 <h2 id="tocS_audit_logs.Filter1">audit_logs.Filter1</h2>
 <!-- backwards compatibility -->
@@ -1113,57 +978,56 @@ xor
     "actionGroup": true
   }
 }
-
 ```
 
 audit_logs.Filter
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
+| Name   | Type    | Required | Restrictions | Description |
+| ------ | ------- | -------- | ------------ | ----------- |
+| offset | integer | false    | none         | none        |
+| limit  | integer | false    | none         | none        |
+| skip   | integer | false    | none         | none        |
+| order  | any     | false    | none         | none        |
 
 oneOf
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
+| Name          | Type   | Required | Restrictions | Description |
+| ------------- | ------ | -------- | ------------ | ----------- |
+| » _anonymous_ | string | false    | none         | none        |
 
 xor
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
+| Name          | Type     | Required | Restrictions | Description |
+| ------------- | -------- | -------- | ------------ | ----------- |
+| » _anonymous_ | [string] | false    | none         | none        |
 
 continued
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fields|any|false|none|none|
+| Name   | Type   | Required | Restrictions | Description |
+| ------ | ------ | -------- | ------------ | ----------- |
+| where  | object | false    | none         | none        |
+| fields | any    | false    | none         | none        |
 
 oneOf
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» id|boolean|false|none|none|
-|»» action|boolean|false|none|none|
-|»» actedAt|boolean|false|none|none|
-|»» actedOn|boolean|false|none|none|
-|»» actionKey|boolean|false|none|none|
-|»» entityId|boolean|false|none|none|
-|»» actor|boolean|false|none|none|
-|»» before|boolean|false|none|none|
-|»» after|boolean|false|none|none|
-|»» actionGroup|boolean|false|none|none|
+| Name           | Type    | Required | Restrictions | Description |
+| -------------- | ------- | -------- | ------------ | ----------- |
+| » _anonymous_  | object  | false    | none         | none        |
+| »» id          | boolean | false    | none         | none        |
+| »» action      | boolean | false    | none         | none        |
+| »» actedAt     | boolean | false    | none         | none        |
+| »» actedOn     | boolean | false    | none         | none        |
+| »» actionKey   | boolean | false    | none         | none        |
+| »» entityId    | boolean | false    | none         | none        |
+| »» actor       | boolean | false    | none         | none        |
+| »» before      | boolean | false    | none         | none        |
+| »» after       | boolean | false    | none         | none        |
+| »» actionGroup | boolean | false    | none         | none        |
 
 xor
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
+| Name          | Type     | Required | Restrictions | Description |
+| ------------- | -------- | -------- | ------------ | ----------- |
+| » _anonymous_ | [string] | false    | none         | none        |
