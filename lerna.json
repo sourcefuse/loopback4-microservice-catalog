@@ -43,7 +43,8 @@
         "@sourceloop/example-socketio",
         "@sourceloop/oauth-example-api",
         "@sourceloop/oauth-example-ui",
-        "@sourceloop/oidc-basic-example"
+        "@sourceloop/oidc-basic-example",
+        "@sourceloop/nestjs-auth-ms-example"
       ],
       "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
     },
@@ -93,7 +94,8 @@
         "@sourceloop/oauth-example-ui",
         "@sourceloop/ocr-service",
         "@sourceloop/ocr-s3-service",
-        "@sourceloop/oidc-basic-example"
+        "@sourceloop/oidc-basic-example",
+        "@sourceloop/nestjs-auth-ms-example"
       ]
     },
     "clean": {
