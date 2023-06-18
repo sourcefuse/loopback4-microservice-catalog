@@ -33,6 +33,7 @@ This repository also contains a set of example projects in the [sandbox](sandbox
 - [audit-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/audit-ms-example)
 - [auth-multitenant-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/auth-multitenant-example)
 - [auth-ms-basic-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/auth-ms-basic-example)
+- [nestjs-auth-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/sandbox/nestjs-auth-ms-example)
 - [oidc-basic-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/oidc-basic-example)
 - [notification-socket-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/notification-socket-example)
 - [workflow-ms-example](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/sandbox/workflow-ms-example)

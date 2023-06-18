@@ -1,0 +1,38 @@
+x-app-config: &app-config
+  DEFAULT_SWAGGER_ROUTE: swagger
+  AUTHDB_HOST: db
+  AUTHDB_PORT: 5432
+  AUTHDB_USER: nestjs
+  AUTHDB_PSWD: super-secret
+  AUTHDB_DB: auth-app
+  AUTHDB_SCHEMA: main
+  JWT_SECRET: secret
+  JWT_ISSUER: sourcefuse
+  USER_TEMP_PASSWORD: 'test123!@#'
+
+x-db-config: &db-config
+  POSTGRES_USER: nestjs
+  POSTGRES_DB: auth-app
+  POSTGRES_PASSWORD: super-secret
+
+services:
+  app:
+    image: node:18-alpine
+    command: sh -c "npm install && npm run db:migrate && npm run start:dev"
+    ports:
+      - 0.0.0.0:3000:4000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment: *app-config
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.3
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+    environment: *db-config
+
+volumes:
+  auth-db-data:

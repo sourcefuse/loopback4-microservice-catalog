@@ -1,0 +1,1 @@
+DROP TABLE main.todos;
