@@ -37,17 +37,17 @@ export class FieldData {
   coordinates?: {x: number; y: number; height: number; width: number};
 
   constructor(data?: FieldData) {
-    this.isSelected = data?.isSelected || false;
+    this.isSelected = data?.isSelected ?? false;
     this.label = data?.label;
     this.pageNum = data?.pageNum;
-    this.score = data?.score || 0;
-    this.value = data?.value || '';
+    this.score = data?.score ?? 0;
+    this.value = data?.value ?? '';
     this.coordinates = data?.coordinates;
-    this.color = data?.color || '';
+    this.color = data?.color ?? '';
     this.id = data?.id;
-    this.previousValue = data?.previousValue || '';
+    this.previousValue = data?.previousValue ?? '';
     this.tabName = data?.tabName;
-    this.supportedText = data?.supportedText || '';
+    this.supportedText = data?.supportedText ?? '';
   }
 }
 

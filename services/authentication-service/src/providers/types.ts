@@ -25,9 +25,9 @@ import {
 import {AuthUser, OtpResponse} from '../modules/auth';
 import {SignOptions, VerifyOptions} from 'jsonwebtoken';
 
-export interface GoogleSignUpFn {
-  (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
-}
+export type GoogleSignUpFn = (
+  profile: GoogleStrategy.Profile,
+) => Promise<(User & UserRelations) | null>;
 
 export type GooglePreVerifyFn = (
   accessToken: string,
