@@ -120,4 +120,8 @@ export class ProductRepository extends CacheManager.CacheRepositoryMixin<
   <br>
   <br>
 
+## Skipping Cache
+
+There are situations where disabling the cache becomes necessary, such as in a test environment or when bypassing it for any specific reason. In such cases, you can set the environment variable `SKIP_CACHE` to `true` to skip the cache functionality altogether.
+
 > _NOTE : The caching is implemented as a key value pair. The key is of the form `prefix_id_filter`. The format of the key plays a very important role in the cache hit ratio. For example: Consider a situation in which you are sending user id in filter with every request. This will generate a new key for every user. So even if same data is returned to all users, caching will not be beneficial until and unless the same user makes the same request multiple times._

@@ -23,6 +23,7 @@ import {
   OptionsWithForceUpdate,
 } from '../types';
 
+const SKIP_CACHE_VALUES = ['1', 'true', 1, true];
 export class CacheManager {
   static options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS;
 
@@ -67,6 +68,9 @@ export class CacheManager {
         filter?: FilterExcludingWhere<M>,
         options?: OptionsWithForceUpdate,
       ): Promise<M> {
+        if (SKIP_CACHE_VALUES.includes(process.env.SKIP_CACHE ?? false)) {
+          return super.findById(id, filter, options);
+        }
         this.checkDataSource();
         const key = await this.generateKey(id, filter);
         let finalResult: M;
@@ -96,6 +100,9 @@ export class CacheManager {
         filter?: Filter<M> | undefined,
         options?: OptionsWithForceUpdate,
       ): Promise<M[]> {
+        if (SKIP_CACHE_VALUES.includes(process.env.SKIP_CACHE ?? false)) {
+          return super.find(filter, options);
+        }
         this.checkDataSource();
         const key = await this.generateKey(undefined, filter);
         let finalResult: M[];
@@ -125,6 +132,9 @@ export class CacheManager {
         filter?: Filter<M>,
         options?: Options,
       ): Promise<(M & Relations) | null> {
+        if (SKIP_CACHE_VALUES.includes(process.env.SKIP_CACHE ?? false)) {
+          return super.findOne(filter, options);
+        }
         this.checkDataSource();
         const key = await this.generateKey(undefined, filter);
         let finalResult: (M & Relations) | null;
