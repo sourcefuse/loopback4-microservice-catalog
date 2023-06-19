@@ -16,7 +16,7 @@ export class Survey extends UserModifiableEntity {
 
   @property({
     type: 'string',
-    name: 'survey_id',
+    name: 'uid',
   })
   uid: string;
 

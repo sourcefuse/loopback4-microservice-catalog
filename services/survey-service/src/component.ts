@@ -24,7 +24,7 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {SurveyServiceBindings} from './keys';
-import {PingController} from './controllers';
+import {PingController, QuestionController} from './controllers';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -40,7 +40,7 @@ export class SurveyServiceComponent implements Component {
 
     this.models = [];
 
-    this.controllers = [PingController];
+    this.controllers = [PingController, QuestionController];
 
     // Mount core component
     this.application.component(CoreComponent);

@@ -1,8 +1,8 @@
-import {model, property, belongsTo} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {TemplateStatus} from '../enum/template.enum';
 
-@model({name: 'template'})
+@model({name: 'question_templates'})
 export class QuestionTemplate extends UserModifiableEntity {
   @property({
     type: 'string',
@@ -13,10 +13,10 @@ export class QuestionTemplate extends UserModifiableEntity {
 
   @property({
     type: 'string',
-    name: 'template_id',
+    name: 'uid',
     description: 'an identifier id to display in UI',
   })
-  templateId: string;
+  uid: string;
 
   @property({
     type: 'string',
@@ -49,7 +49,7 @@ export class QuestionTemplate extends UserModifiableEntity {
   }
 }
 
-export interface questionTemplateRelations {}
+export interface QuestionTemplateRelations {}
 
-export type templateWithRelations = QuestionTemplate &
-  questionTemplateRelations;
+export type QuestionTemplateWithRelations = QuestionTemplate &
+  QuestionTemplateRelations;
