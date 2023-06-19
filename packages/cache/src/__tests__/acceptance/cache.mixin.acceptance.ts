@@ -2,8 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {expect} from '@loopback/testlab';
 import * as dotenv from 'dotenv';
+dotenv.config();
+import {expect} from '@loopback/testlab';
 import sinon from 'sinon';
 import {TextDecoder} from 'util';
 import {mockDataArray} from './fixtures/data';
@@ -11,8 +12,8 @@ import {ProductErrorRepository} from './fixtures/product-error.repository';
 import {ProductRepository} from './fixtures/product.repository';
 import {RedisDataSource} from './fixtures/redis.datasource';
 import {TestDataSource} from './fixtures/test.datasource';
+import {Product} from './fixtures/product.model';
 
-dotenv.config();
 const decoder = new TextDecoder('utf-8');
 
 const redisPort = process.env.REDIS_PORT;
@@ -33,11 +34,16 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
       new TestDataSource(),
       getRedisDataSource,
     );
-    await repository.createAll(mockDataArray);
   });
 
   beforeEach(async () => {
+    await repository.createAll(mockDataArray);
     await executeRedisCommand('FLUSHALL');
+  });
+
+  afterEach(async function () {
+    process.env['SKIP_CACHE'] = undefined;
+    await repository.deleteAll();
   });
 
   it('should return data if not present in cache', async () => {
@@ -47,13 +53,67 @@ describe('Acceptance Test Cases for Cache Mixin', function () {
     expect(result2).to.match(mockDataArray[0]);
   });
 
-  it('should return data if present in cache', async () => {
-    //extra call to store data in cache
+  it('should return cached data if SKIP_CACHE is false', async () => {
+    process.env['SKIP_CACHE'] = 'false';
+    // extra calls to store data in cache
     await repository.find();
-    const result1 = await repository.find();
-    expect(result1).to.match(mockDataArray);
-    const result2 = await repository.findById(mockDataArray[0].id);
-    expect(result2).to.match(mockDataArray[0]);
+    await repository.findById(mockDataArray[0].id);
+    await repository.findOne({where: {id: 3}});
+
+    // new entity that shouldn't be fetched
+    await repository.create({id: 3, name: 'New Product', quantity: 5});
+
+    // results after caching has been done
+    const results = {
+      find: await repository.find(),
+      findById: await repository.findById(mockDataArray[0].id),
+      findOne: await repository.findOne({where: {id: 3}}),
+    };
+
+    // find
+    expect(results.find.length).to.be.eql(2);
+    expect(results.find[0]).to.be.eql(mockDataArray[0]);
+
+    // findById
+    expect(results.findById).to.not.be.undefined();
+    expect(results.findById).to.be.eql(mockDataArray[0]);
+
+    // findOne
+    expect(results.findOne).to.be.null(); // as data was cached before the id#3 entry was created
+  });
+
+  it('should return original data if SKIP_CACHE is true', async () => {
+    process.env['SKIP_CACHE'] = 'true';
+    // extra calls to store data in cache
+    await repository.find();
+    await repository.findById(mockDataArray[0].id);
+    await repository.findOne({where: {id: 3}});
+
+    // new entity which should be fetched because we're skipping the cache
+    const newEntry = await repository.create({
+      id: 3,
+      name: 'New Product',
+      quantity: 5,
+    });
+
+    // results after caching has been done
+    const results = {
+      find: await repository.find(),
+      findById: await repository.findById(mockDataArray[0].id),
+      findOne: await repository.findOne({where: {id: 3}}),
+    };
+
+    // find
+    expect(results.find.length).to.be.eql(3);
+    expect(results.find[0]).to.be.eql(new Product(mockDataArray[0]));
+
+    // findById
+    expect(results.findById).to.not.be.undefined();
+    expect(results.findById).to.be.eql(new Product(mockDataArray[0]));
+
+    // findOne
+    expect(results.findOne).to.not.be.null();
+    expect(results.findOne).to.be.eql(newEntry);
   });
 
   it('should delete from cache after ttl expires', async () => {
