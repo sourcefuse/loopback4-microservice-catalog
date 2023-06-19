@@ -8,4 +8,6 @@ import {IServiceConfig} from '@sourceloop/core';
 export interface ISurveyServiceConfig extends IServiceConfig {
   //do nothing
 }
+export const SurveyDbSourceName = 'SurveyDb';
+
 // sonarignore:end

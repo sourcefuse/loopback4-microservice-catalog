@@ -1,0 +1,136 @@
+import {Options} from './options.model';
+import {
+  model,
+  property,
+  belongsTo,
+  hasMany,
+  hasOne,
+} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
+import {QuestionStatus, QuestionType} from '../enum/question.enum';
+import {Survey} from './survey.model';
+import {SurveyResponseDetail} from './survey-response-detail.model';
+
+@model({name: 'question'})
+export class Question extends UserModifiableEntity {
+  @property({
+    type: 'string',
+    id: true,
+    generated: false,
+  })
+  id?: string;
+
+  @property({
+    type: 'string',
+    required: true,
+    name: 'uid',
+  })
+  uid: string;
+
+  @property({
+    type: 'string',
+    jsonSchema: {
+      maxLength: 1000,
+    },
+  })
+  name?: string;
+
+  @property({
+    type: 'string',
+    required: true,
+    jsonSchema: {
+      enum: [...Object.values(QuestionStatus), null],
+    },
+  })
+  status: QuestionStatus;
+
+  @property({
+    type: 'string',
+    required: true,
+    name: 'question_type',
+    jsonSchema: {
+      enum: [...Object.values(QuestionType), null],
+    },
+  })
+  questionType: QuestionType;
+
+  @property({
+    type: 'boolean',
+    default: false,
+    name: 'is_score_enabled',
+  })
+  isScoreEnabled?: boolean;
+
+  @property({
+    type: 'boolean',
+    default: false,
+    name: 'is_followup_enabled',
+  })
+  isFollowupEnabled?: boolean;
+
+  @property({
+    type: 'object',
+  })
+  validation?: object;
+
+  @belongsTo(
+    () => Question,
+    {
+      keyFrom: 'rootQuestionId',
+      name: 'rootQuestion',
+    },
+    {
+      name: 'root_question_id',
+    },
+  )
+  rootQuestionId?: string;
+
+  @belongsTo(
+    () => Question,
+    {
+      keyFrom: 'parentQuestionId',
+      name: 'parentQuestion',
+    },
+    {
+      name: 'parent_question_id',
+      jsonSchema: {nullable: true},
+    },
+  )
+  parentQuestionId?: string;
+
+  @hasMany(() => Options)
+  options: Options[];
+
+  @hasMany(() => Question, {keyTo: 'parentQuestionId'})
+  followUpQuestions: Question[];
+
+  createdByName?: string;
+  modifiedByName?: string;
+  @hasOne(() => SurveyResponseDetail)
+  surveyResponseDetail?: SurveyResponseDetail;
+
+  @belongsTo(
+    () => Survey,
+    {
+      keyFrom: 'surveyId',
+      name: 'survey',
+    },
+    {
+      name: 'survey_id',
+    },
+  )
+  surveyId: string;
+
+  constructor(data?: Partial<Question>) {
+    super(data);
+  }
+}
+
+export interface QuestionRelations {
+  parentQuestion: Question;
+  rootQuestion: Question;
+  options?: Options[];
+  survey?: Survey;
+}
+
+export type QuestionWithRelations = Question & QuestionRelations;

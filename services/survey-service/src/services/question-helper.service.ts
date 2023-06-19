@@ -1,0 +1,510 @@
+import {Question} from '../models';
+import {injectable, BindingScope, inject, service} from '@loopback/core';
+import {
+  AnyObject,
+  Count,
+  Filter,
+  Where,
+  repository,
+} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
+import {AuthorizeErrorKeys} from 'loopback4-authorization';
+import {QuestionRepository} from '../repositories';
+import {OptionsRepository} from '../repositories/options.repository';
+import {QuestionDto} from '../models/question-dto.model';
+import {
+  QuestionStatus,
+  QuestionType,
+  SurveyStatus,
+} from '../enum/question.enum';
+import {ErrorKeys} from '../enum/error-keys.enum';
+
+const defaultLeadingZero = 5;
+const noOfOptionsByDefault = 4;
+const orderByCreatedOn = 'created_on DESC';
+const MAX_QUESTION_ALLOWED_IN_BATCH = 25;
+
+@injectable({scope: BindingScope.TRANSIENT})
+export class QuestionHelperService {
+  constructor(
+    @repository(QuestionRepository)
+    private questionRepository: QuestionRepository,
+    @repository(OptionsRepository)
+    private optionsRepository: OptionsRepository,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+  ) {}
+
+  async createQuestion(
+    question: QuestionDto,
+    status: QuestionStatus = QuestionStatus.DRAFT,
+  ): Promise<Question> {
+    if (question.status && question.status !== QuestionStatus.ADDED_TO_SURVEY) {
+      throw new HttpErrors.BadRequest(AuthorizeErrorKeys.NotAllowedAccess);
+    }
+
+    if (question.status) {
+      status = question.status;
+    }
+
+    await this.validateParentQuestion(question.parentQuestionId);
+
+    const uid = await this.generateQuestionUuid();
+    const optionId = question.optionId;
+    delete question.optionId;
+
+    const newQuestion = new Question({
+      ...question,
+      status,
+      uid,
+    });
+    if (newQuestion.name) {
+      newQuestion.name = newQuestion.name.trim();
+    }
+    if (optionId) {
+      return this._createFollowupQuestion(newQuestion, optionId);
+    }
+    if (question.questionType === QuestionType.SCALE) {
+      newQuestion.isScoreEnabled = true;
+    }
+
+    await this.questionRepository.create(newQuestion);
+    const createdQuestion = await this.questionRepository.findOne({
+      order: [orderByCreatedOn],
+    });
+    if (!createdQuestion) {
+      throw new HttpErrors.NotFound();
+    }
+
+    if (
+      [
+        QuestionType.MULTI_SELECTION,
+        QuestionType.SINGLE_SELECTION,
+        QuestionType.DROPDOWN,
+        QuestionType.SCALE,
+      ].includes(question.questionType)
+    ) {
+      await this._createDefaultOptions(
+        createdQuestion?.id ?? '',
+        question.questionType,
+      );
+    }
+    return this.findQuestionWithOptions(createdQuestion.id ?? '');
+  }
+
+  private async _createFollowupQuestion(
+    question: Question,
+    optionId: string,
+  ): Promise<Question> {
+    const option = await this.optionsRepository.findOne({
+      where: {
+        id: optionId,
+        questionId: question.id,
+      },
+    });
+    if (!option) {
+      throw new HttpErrors.NotFound('Entity not found');
+    }
+    if (option.followupQuestionId) {
+      throw new HttpErrors.BadRequest(
+        `Option ${option.name ?? ''} already has followup question.`,
+      );
+    }
+    await this.questionRepository.create(question);
+    const createdQuestion = await this.questionRepository.findOne({
+      order: [orderByCreatedOn],
+    });
+    if (!createdQuestion) {
+      throw new HttpErrors.NotFound();
+    }
+    await this.optionsRepository.updateById(optionId, {
+      followupQuestionId: createdQuestion.id,
+    });
+    if (
+      [
+        QuestionType.MULTI_SELECTION,
+        QuestionType.SINGLE_SELECTION,
+        QuestionType.DROPDOWN,
+        QuestionType.SCALE,
+      ].includes(question.questionType)
+    ) {
+      await this._createDefaultOptions(
+        createdQuestion?.id ?? '',
+        question.questionType,
+      );
+    }
+
+    return this.findQuestionWithOptions(createdQuestion.id ?? '');
+  }
+
+  async generateQuestionUuid(questionId?: string): Promise<string> {
+    const questionIdPrefix = 'QR';
+    const sequenceStart = `000001`;
+    if (!questionId) {
+      const lastInsertedQuestion =
+        await this.questionRepository.findOneIncludeSoftDelete({
+          fields: {uid: true},
+          order: [orderByCreatedOn],
+        });
+      questionId = lastInsertedQuestion?.uid;
+    }
+
+    const sequence = parseInt(
+      questionId?.substring(questionIdPrefix.length, questionId?.length) ??
+        sequenceStart,
+    );
+
+    return `${questionIdPrefix}${this._addLeadingZero(
+      sequence + 1,
+      defaultLeadingZero,
+    )}`;
+  }
+
+  private _addLeadingZero(number: number, size: number): string {
+    let valueWithLeadingZero = number.toString();
+    if (valueWithLeadingZero.length === defaultLeadingZero) {
+      size += 1;
+    }
+    while (valueWithLeadingZero.length < size)
+      valueWithLeadingZero = '0' + valueWithLeadingZero;
+    return valueWithLeadingZero;
+  }
+
+  private async _createDefaultOptions(
+    questionId: string,
+    questionType: QuestionType,
+  ): Promise<void> {
+    const options = [];
+    const optionsInScaleType = 11;
+    const noOfOptions =
+      questionType === QuestionType.SCALE
+        ? optionsInScaleType
+        : noOfOptionsByDefault;
+    for (let index = 1; index <= noOfOptions; index++) {
+      if (questionType === QuestionType.SCALE) {
+        options.push({
+          name: '',
+          displayOrder: index,
+          score: index - 1,
+          questionId,
+        });
+      } else {
+        options.push({
+          name: `Option ${index}`,
+          displayOrder: index,
+          questionId,
+        });
+      }
+    }
+    await this.optionsRepository.createAll(options);
+  }
+
+  addDefaultRelation(filter: Filter<Question>): Filter<Question> {
+    filter.include = [
+      {
+        relation: 'questionCategories',
+        scope: {
+          fields: {id: true, questionId: true, categoryId: true},
+          include: [
+            {relation: 'category', scope: {fields: {name: true, id: true}}},
+          ],
+        },
+      },
+      {
+        relation: 'questionDomains',
+        scope: {
+          fields: {id: true, questionId: true, domainId: true},
+          include: [
+            {
+              relation: 'domain',
+              scope: {fields: {name: true, id: true}},
+            },
+          ],
+        },
+      },
+      {
+        relation: 'questionVendorGroups',
+        scope: {
+          fields: {id: true, questionId: true, vendorGroupId: true},
+          include: [
+            {
+              relation: 'vendorGroup',
+              scope: {fields: {name: true, id: true}},
+            },
+          ],
+        },
+      },
+    ];
+    return filter;
+  }
+
+  async deleteQuestion(id: string): Promise<void> {
+    const question = await this.questionRepository.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          relation: 'options',
+          scope: {
+            fields: {id: true, questionId: true},
+          },
+        },
+        {
+          relation: 'questionVendorGroups',
+          scope: {
+            fields: {id: true, questionId: true, vendorGroupId: true},
+          },
+        },
+        {
+          relation: 'questionCategories',
+          scope: {
+            fields: {id: true, questionId: true, categoryId: true},
+          },
+        },
+        {
+          relation: 'questionDomains',
+          scope: {
+            fields: {id: true, questionId: true, domainId: true},
+          },
+        },
+        {
+          relation: 'survey',
+          scope: {
+            fields: {id: true, status: true},
+          },
+        },
+      ],
+    });
+    if (!question) {
+      throw new HttpErrors.NotFound();
+    }
+    if (question.status === QuestionStatus.ADDED_TO_SURVEY) {
+      question.status = this.surveyStatusToQuestionStatus(
+        question.survey?.status,
+      );
+    }
+    //Delete not Allowed if Question used in template or contract
+    // Uncomment after template repository is created
+    // await this.checkIfUsedInTemplateOrSurvey(id);
+
+    await this.questionRepository.deleteById(id);
+    await this._deleteAllOptionsByQuestion(question);
+  }
+
+  private async _deleteAllOptionsByQuestion(question: Question): Promise<void> {
+    if (question.options?.length) {
+      await this.optionsRepository.deleteAllHard({
+        id: {inq: question.options.map(option => option.id)},
+      });
+    }
+  }
+
+  async findQuestionWithOptions(questionId: string): Promise<Question> {
+    return this.questionRepository.findById(questionId, {
+      include: [
+        {
+          relation: 'options',
+          scope: {
+            fields: {
+              id: true,
+              questionId: true,
+              name: true,
+              displayOrder: true,
+            },
+            order: ['displayOrder ASC'],
+          },
+        },
+        {
+          relation: 'questionCategories',
+        },
+        {
+          relation: 'questionDomains',
+        },
+        {
+          relation: 'questionVendorGroups',
+        },
+      ],
+    });
+  }
+
+  async updateQuestion(questionId: string, question: Question) {
+    const {existingQuestion} = await this.checkAndGetIfAllowedQuestionToUpdate(
+      questionId,
+      question,
+    );
+    if (question.name) {
+      question.name = question.name.trim();
+    }
+
+    // if previous and new question type are not same
+    if (
+      question.questionType &&
+      existingQuestion.questionType !== question.questionType
+    ) {
+      await this._handleQuestionTypeChange(
+        question,
+        existingQuestion,
+        questionId,
+      );
+      if (question.questionType === QuestionType.SCALE) {
+        question.isScoreEnabled = true;
+      }
+    }
+
+    await this.questionRepository.updateById(questionId, question);
+
+    if (
+      question.hasOwnProperty('isScoreEnabled') &&
+      question.isScoreEnabled === false
+    ) {
+      await this.optionsRepository.updateAll({score: 0}, {questionId});
+    }
+    await this.handleOnStatusChange(questionId, existingQuestion, question);
+
+    return this.questionRepository.findById(questionId, {include: ['options']});
+  }
+
+  private async _handleQuestionTypeChange(
+    question: Question,
+    existingQuestion: Question,
+    questionId: string,
+  ) {
+    // if previous or new layout is Scale or Text then delete all existing options
+    if (
+      [QuestionType.SCALE, QuestionType.TEXT].includes(question.questionType) ||
+      [QuestionType.SCALE, QuestionType.TEXT].includes(
+        existingQuestion.questionType,
+      )
+    ) {
+      await this._deleteAllOptionsByQuestion(existingQuestion);
+      await this._createDefaultOptions(questionId, question.questionType);
+    }
+  }
+
+  private async updateAllChildStatus(id: string, status: QuestionStatus) {
+    await this.questionRepository.updateAll(
+      {
+        status,
+      },
+      {or: [{parentQuestionId: id}, {rootQuestionId: id}]},
+    );
+  }
+
+  private checkIfAllowedToUpdate(
+    existingQuestion: Question,
+    updateQuestion?: Question,
+  ) {
+    //Update not Allowed if Question existing status is Approved
+    if (existingQuestion.status === QuestionStatus.APPROVED) {
+      throw new HttpErrors.BadRequest(ErrorKeys.NotAuthorised);
+    }
+  }
+
+  // async checkIfUsedInTemplateOrSurvey(questionId: string) {
+  //   const questionnaireQuestionCount =
+  //     await this.questionnaireQuestionRepository.count({
+  //       questionId,
+  //     });
+  //   if (questionnaireQuestionCount?.count > 0) {
+  //     throw new HttpErrors.BadRequest(
+  //       ErrorKeys.DeleteNotAllowedForSurveyOrTemplateUsedEntity,
+  //     );
+  //   }
+  //   const surveyQuestionCount = await this.surveyQuestionRepository.count({
+  //     questionId,
+  //   });
+  //   if (surveyQuestionCount?.count > 0) {
+  //     throw new HttpErrors.BadRequest(
+  //       ErrorKeys.DeleteNotAllowedForSurveyOrTemplateUsedEntity,
+  //     );
+  //   }
+  // }
+
+  private async handleOnStatusChange(
+    id: string,
+    existingQuestion: Question,
+    updateQuestion: Question,
+  ) {
+    if (updateQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
+      if (!existingQuestion.surveyId) {
+        throw new HttpErrors.BadRequest(ErrorKeys.RequiredSurveyParamsMissing);
+      }
+      // check after survey creation service
+      // await this.handleAddedToSurvey(
+      //   id,
+      //   existingQuestion.surveyId,
+      // );
+    } else if (updateQuestion?.status === QuestionStatus.APPROVED) {
+      // await this.handleApprove(id);
+    } else {
+      // do nothing
+    }
+  }
+
+  async validateParentQuestion(parentQuestionId: string | undefined) {
+    if (parentQuestionId) {
+      const parentQuestion = await this.questionRepository.findById(
+        parentQuestionId,
+      );
+      if (!parentQuestion) {
+        throw new HttpErrors.NotFound('Parent question not found');
+      } else if (
+        parentQuestion.followUpQuestions?.length &&
+        [QuestionType.TEXT, QuestionType.SCALE].includes(
+          parentQuestion.questionType,
+        )
+      ) {
+        throw new HttpErrors.BadRequest(
+          `only one child question allow for ${parentQuestion.questionType} question.`,
+        );
+      }
+    }
+  }
+
+  surveyStatusToQuestionStatus(status?: SurveyStatus) {
+    switch (status) {
+      case SurveyStatus.DRAFT:
+        return QuestionStatus.DRAFT;
+      default:
+        return QuestionStatus.APPROVED;
+    }
+  }
+
+  async checkAndGetIfAllowedQuestionToUpdate(
+    questionId: string,
+    question?: Question,
+  ) {
+    const existingQuestion = await this.questionRepository.findOne({
+      where: {
+        id: questionId,
+      },
+      include: [
+        {
+          relation: 'options',
+          scope: {
+            fields: {id: true, questionId: true},
+          },
+        },
+        // {
+        //   relation: 'survey',
+        //   scope: {
+        //     fields: {id: true, status: true},
+        //   },
+        // },
+      ],
+    });
+    if (!existingQuestion) {
+      throw new HttpErrors.NotFound();
+    }
+
+    // if Question status is ADDED_TO_SURVEY then set it has Survey Status for validation
+    if (existingQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
+      existingQuestion.status = this.surveyStatusToQuestionStatus(
+        existingQuestion.survey?.status,
+      );
+    }
+    this.checkIfAllowedToUpdate(existingQuestion, question);
+    return {existingQuestion};
+  }
+}

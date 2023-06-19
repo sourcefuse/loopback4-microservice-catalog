@@ -8,6 +8,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
 import {SurveyServiceComponent} from './component';
+import {RestExplorerBindings} from '@loopback/rest-explorer';
 
 export {ApplicationConfig};
 
