@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.2 (2023-06-19)</small>
+
+* fix(all-services): add missing exports of repositories and enums (#1456) ([411df16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/411df16)), closes [#1456](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1456) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>7.0.1 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-service

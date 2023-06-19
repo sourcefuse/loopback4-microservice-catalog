@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "In mail microservice",
   "keywords": [
     "loopback-extension",

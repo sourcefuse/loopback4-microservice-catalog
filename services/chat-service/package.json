@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/chat-service",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "chat-service microservice",
   "keywords": [
     "loopback-extension",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.2 (2023-06-19)</small>
+
+* fix(chore): sonar code smells (#1453) ([01d64f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/01d64f2)), closes [#1453](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1453)
+
+
+
+
+
 ## <small>11.1.1 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service

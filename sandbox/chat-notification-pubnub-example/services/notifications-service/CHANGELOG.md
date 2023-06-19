@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.13 (2023-06-19)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
 ## <small>0.4.12 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service

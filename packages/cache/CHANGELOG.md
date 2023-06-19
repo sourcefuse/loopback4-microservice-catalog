@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2023-06-19)
+
+* docs(cache): improve documentation and add arc branding (#1458) ([7da898e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7da898e)), closes [#1458](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1458) [#1442](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1442)
+* chore(cache): remove node v14 support (#1457) ([61f45d3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/61f45d3)), closes [#1457](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1457) [#1411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1411) [#1382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1382)
+* feat(cache): add ability to skip cache (#1455) ([f7baa97](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f7baa97)), closes [#1455](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1455) [#1450](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1450)
+
+
+### BREAKING CHANGE
+
+* End of life of node v14
+
+
+
+
 ## <small>0.5.1 (2023-06-08)</small>
 
 * chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
