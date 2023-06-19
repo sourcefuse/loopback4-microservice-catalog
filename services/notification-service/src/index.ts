@@ -7,4 +7,5 @@ export * from './types';
 export * from './keys';
 export * from './providers';
 export * from './repositories';
+export * from './enums';
 export * from './models';
