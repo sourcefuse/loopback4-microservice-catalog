@@ -38,6 +38,7 @@ export class Options extends UserModifiableEntity {
     () => Question,
     {
       keyFrom: 'questionId',
+      keyTo: 'id',
       name: 'question',
     },
     {

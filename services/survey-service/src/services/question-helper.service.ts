@@ -199,45 +199,6 @@ export class QuestionHelperService {
     await this.optionsRepository.createAll(options);
   }
 
-  addDefaultRelation(filter: Filter<Question>): Filter<Question> {
-    filter.include = [
-      {
-        relation: 'questionCategories',
-        scope: {
-          fields: {id: true, questionId: true, categoryId: true},
-          include: [
-            {relation: 'category', scope: {fields: {name: true, id: true}}},
-          ],
-        },
-      },
-      {
-        relation: 'questionDomains',
-        scope: {
-          fields: {id: true, questionId: true, domainId: true},
-          include: [
-            {
-              relation: 'domain',
-              scope: {fields: {name: true, id: true}},
-            },
-          ],
-        },
-      },
-      {
-        relation: 'questionVendorGroups',
-        scope: {
-          fields: {id: true, questionId: true, vendorGroupId: true},
-          include: [
-            {
-              relation: 'vendorGroup',
-              scope: {fields: {name: true, id: true}},
-            },
-          ],
-        },
-      },
-    ];
-    return filter;
-  }
-
   async deleteQuestion(id: string): Promise<void> {
     const question = await this.questionRepository.findOne({
       where: {
@@ -251,24 +212,6 @@ export class QuestionHelperService {
           },
         },
         {
-          relation: 'questionVendorGroups',
-          scope: {
-            fields: {id: true, questionId: true, vendorGroupId: true},
-          },
-        },
-        {
-          relation: 'questionCategories',
-          scope: {
-            fields: {id: true, questionId: true, categoryId: true},
-          },
-        },
-        {
-          relation: 'questionDomains',
-          scope: {
-            fields: {id: true, questionId: true, domainId: true},
-          },
-        },
-        {
           relation: 'survey',
           scope: {
             fields: {id: true, status: true},
@@ -279,11 +222,11 @@ export class QuestionHelperService {
     if (!question) {
       throw new HttpErrors.NotFound();
     }
-    if (question.status === QuestionStatus.ADDED_TO_SURVEY) {
-      question.status = this.surveyStatusToQuestionStatus(
-        question.survey?.status,
-      );
-    }
+    // if (question.status === QuestionStatus.ADDED_TO_SURVEY) {
+    //   question.status = this.surveyStatusToQuestionStatus(
+    //     question.survey?.status,
+    //   );
+    // }
     //Delete not Allowed if Question used in template or contract
     // Uncomment after template repository is created
     // await this.checkIfUsedInTemplateOrSurvey(id);
@@ -315,15 +258,6 @@ export class QuestionHelperService {
             order: ['displayOrder ASC'],
           },
         },
-        {
-          relation: 'questionCategories',
-        },
-        {
-          relation: 'questionDomains',
-        },
-        {
-          relation: 'questionVendorGroups',
-        },
       ],
     });
   }
@@ -354,12 +288,15 @@ export class QuestionHelperService {
 
     await this.questionRepository.updateById(questionId, question);
 
-    if (
-      question.hasOwnProperty('isScoreEnabled') &&
-      question.isScoreEnabled === false
-    ) {
-      await this.optionsRepository.updateAll({score: 0}, {questionId});
-    }
+    /* The above code is checking if a property called "isScoreEnabled" exists in the "question" object
+    and if its value is false. If it is, then it updates all the options in the optionsRepository
+    with a score of 0 for the given questionId. */
+    // if (
+    //   question.hasOwnProperty('isScoreEnabled') &&
+    //   question.isScoreEnabled === false
+    // ) {
+    //   await this.optionsRepository.updateAll({score: 0}, {questionId});
+    // }
     await this.handleOnStatusChange(questionId, existingQuestion, question);
 
     return this.questionRepository.findById(questionId, {include: ['options']});
@@ -427,9 +364,9 @@ export class QuestionHelperService {
     updateQuestion: Question,
   ) {
     if (updateQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
-      if (!existingQuestion.surveyId) {
-        throw new HttpErrors.BadRequest(ErrorKeys.RequiredSurveyParamsMissing);
-      }
+      // if (!existingQuestion.surveyId) {
+      //   throw new HttpErrors.BadRequest(ErrorKeys.RequiredSurveyParamsMissing);
+      // }
       // check after survey creation service
       // await this.handleAddedToSurvey(
       //   id,
@@ -499,11 +436,11 @@ export class QuestionHelperService {
     }
 
     // if Question status is ADDED_TO_SURVEY then set it has Survey Status for validation
-    if (existingQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
-      existingQuestion.status = this.surveyStatusToQuestionStatus(
-        existingQuestion.survey?.status,
-      );
-    }
+    // if (existingQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
+    //   existingQuestion.status = this.surveyStatusToQuestionStatus(
+    //     existingQuestion.survey?.status,
+    //   );
+    // }
     this.checkIfAllowedToUpdate(existingQuestion, question);
     return {existingQuestion};
   }

@@ -5,6 +5,7 @@ import {
   ProviderMap,
   ControllerClass,
   Binding,
+  ServiceOrProviderClass,
 } from '@loopback/core';
 import {RestApplication} from '@loopback/rest';
 import {ISurveyServiceConfig} from './types';
@@ -25,6 +26,14 @@ import {
 } from 'loopback4-authorization';
 import {SurveyServiceBindings} from './keys';
 import {PingController, QuestionController} from './controllers';
+import {QuestionRepository} from './repositories';
+import {OptionsRepository} from './repositories/options.repository';
+import {QuestionDto} from './models/question-dto.model';
+import {Options, Question} from './models';
+import {
+  QuestionDuplicateHelperService,
+  QuestionHelperService,
+} from './services';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -36,9 +45,11 @@ export class SurveyServiceComponent implements Component {
     this.bindings = [];
     this.providers = {};
 
-    this.repositories = [];
+    this.services = [QuestionHelperService, QuestionDuplicateHelperService];
 
-    this.models = [];
+    this.repositories = [QuestionRepository, OptionsRepository];
+
+    this.models = [QuestionDto, Question, Options];
 
     this.controllers = [PingController, QuestionController];
 
@@ -72,6 +83,7 @@ export class SurveyServiceComponent implements Component {
    * via `app.repository()` API.
    */
   repositories?: Class<Repository<Model>>[];
+  services?: ServiceOrProviderClass[];
 
   /**
    * An optional list of Model classes to bind for dependency injection

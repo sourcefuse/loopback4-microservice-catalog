@@ -52,9 +52,9 @@ export class QuestionDuplicateHelperService {
     });
     delete body?.displayOrder;
 
-    if (surveyId) {
-      duplicateQuestionObj.surveyId = surveyId;
-    }
+    // if (surveyId) {
+    //   duplicateQuestionObj.surveyId = surveyId;
+    // }
 
     await this.questionRepository.create(duplicateQuestionObj);
     const createdQuestion = await this.questionRepository.findOne({

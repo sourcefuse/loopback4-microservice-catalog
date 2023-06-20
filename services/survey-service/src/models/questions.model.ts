@@ -11,7 +11,7 @@ import {QuestionStatus, QuestionType} from '../enum/question.enum';
 import {Survey} from './survey.model';
 import {SurveyResponseDetail} from './survey-response-detail.model';
 
-@model({name: 'question'})
+@model({name: 'questions'})
 export class Question extends UserModifiableEntity {
   @property({
     type: 'string',
@@ -98,7 +98,7 @@ export class Question extends UserModifiableEntity {
   )
   parentQuestionId?: string;
 
-  @hasMany(() => Options)
+  @hasMany(() => Options, {keyTo: 'questionId', keyFrom: 'id'})
   options: Options[];
 
   @hasMany(() => Question, {keyTo: 'parentQuestionId'})
@@ -106,20 +106,20 @@ export class Question extends UserModifiableEntity {
 
   createdByName?: string;
   modifiedByName?: string;
-  @hasOne(() => SurveyResponseDetail)
-  surveyResponseDetail?: SurveyResponseDetail;
+  // @hasOne(() => SurveyResponseDetail)
+  // surveyResponseDetail?: SurveyResponseDetail;
 
-  @belongsTo(
-    () => Survey,
-    {
-      keyFrom: 'surveyId',
-      name: 'survey',
-    },
-    {
-      name: 'survey_id',
-    },
-  )
-  surveyId: string;
+  // @belongsTo(
+  //   () => Survey,
+  //   {
+  //     keyFrom: 'surveyId',
+  //     name: 'survey',
+  //   },
+  //   {
+  //     name: 'survey_id',
+  //   },
+  // )
+  // surveyId: string;
 
   constructor(data?: Partial<Question>) {
     super(data);
@@ -130,7 +130,7 @@ export interface QuestionRelations {
   parentQuestion: Question;
   rootQuestion: Question;
   options?: Options[];
-  survey?: Survey;
+  // survey?: Survey;
 }
 
 export type QuestionWithRelations = Question & QuestionRelations;
