@@ -11,4 +11,22 @@ export const enum PermissionKey {
   UpdateAnyQuestion = '6',
   CreateAnyQuestion = '7',
   DeleteAnyQuestion = '8',
+
+  CreateTemplate = '433',
+  ViewTemplate = '434',
+  UpdateTemplate = '435',
+  DeleteTemplate = '436',
+  CreateAnyTemplate = '437',
+  ViewAnyTemplate = '438',
+  UpdateAnyTemplate = '439',
+  DeleteAnyTemplate = '440',
+
+  ViewAnyOption = '541',
+  UpdateAnyOption = '542',
+  CreateAnyOption = '543',
+  DeleteAnyOption = '544',
+  ViewOption = '421',
+  UpdateOption = '422',
+  CreateOption = '423',
+  DeleteOption = '424',
 }

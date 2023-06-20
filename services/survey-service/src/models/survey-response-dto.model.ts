@@ -14,21 +14,6 @@ export class SurveyResponseDto extends Model {
   })
   surveyResponderId: string;
 
-  @property({
-    type: 'string',
-  })
-  vendorId?: string;
-
-  @property({
-    type: 'string',
-  })
-  domainId?: string;
-
-  @property({
-    type: 'string',
-  })
-  businessUnitId?: string;
-
   constructor(data?: Partial<SurveyResponseDto>) {
     super(data);
   }

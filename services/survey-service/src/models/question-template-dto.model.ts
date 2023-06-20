@@ -8,7 +8,7 @@ export class QuestionTemplatesDto extends QuestionTemplate {
     required: true,
     name: 'existing_template_id',
   })
-  existingTemplateId: string;
+  existingTemplateId?: string;
 
   constructor(data?: Partial<QuestionTemplatesDto>) {
     super(data);

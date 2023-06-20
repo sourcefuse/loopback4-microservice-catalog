@@ -13,6 +13,9 @@ import {SurveyQuestion} from '../models/survey-question.model';
 import {SurveyDbSourceName} from '../types';
 import {Getter, inject} from '@loopback/core';
 import {QuestionRepository} from './questions.repository';
+import {SurveyQuestionRepository} from './survey-question.repository';
+import {SurveyCycleRepository} from './survey-cycle.repository';
+import {SurveyResponderRepository} from './survey-responder.repository';
 
 export class SurveyRepository extends DefaultSoftCrudRepository<
   Survey,
@@ -39,40 +42,40 @@ export class SurveyRepository extends DefaultSoftCrudRepository<
   constructor(
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
     @repository.getter('SurveyCycleRepository')
-    // protected surveyCycleRepositoryGetter: Getter<SurveyCycleRepository>,
-    // @repository.getter('SurveyResponderRepository')
-    // protected surveyResponderRepositoryGetter: Getter<SurveyResponderRepository>,
+    protected surveyCycleRepositoryGetter: Getter<SurveyCycleRepository>,
+    @repository.getter('SurveyResponderRepository')
+    protected surveyResponderRepositoryGetter: Getter<SurveyResponderRepository>,
 
-    // @repository.getter('SurveyQuestionRepository')
-    // protected surveyQuestionRepositoryGetter: Getter<SurveyQuestionRepository>,
+    @repository.getter('SurveyQuestionRepository')
+    protected surveyQuestionRepositoryGetter: Getter<SurveyQuestionRepository>,
     @repository.getter('QuestionRepository')
     protected questionRepositoryGetter: Getter<QuestionRepository>,
   ) {
     super(Survey, dataSource);
 
-    // this.questions = this.createHasManyThroughRepositoryFactoryFor(
-    //   'questions',
-    //   questionRepositoryGetter,
-    //   surveyQuestionRepositoryGetter,
-    // );
-    // this.registerInclusionResolver(
-    //   'questions',
-    //   this.questions.inclusionResolver,
-    // );
+    this.questions = this.createHasManyThroughRepositoryFactoryFor(
+      'questions',
+      questionRepositoryGetter,
+      surveyQuestionRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'questions',
+      this.questions.inclusionResolver,
+    );
 
-    // this.surveyResponders = this.createHasManyRepositoryFactoryFor(
-    //   'surveyResponders',
-    //   surveyResponderRepositoryGetter,
-    // );
-    // this.registerInclusionResolver(
-    //   'surveyResponders',
-    //   this.surveyResponders.inclusionResolver,
-    // );
+    this.surveyResponders = this.createHasManyRepositoryFactoryFor(
+      'surveyResponders',
+      surveyResponderRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'surveyResponders',
+      this.surveyResponders.inclusionResolver,
+    );
 
-    // this.surveyCycles = this.createHasManyRepositoryFactoryFor(
-    //   'surveyCycles',
-    //   surveyCycleRepositoryGetter,
-    // );
+    this.surveyCycles = this.createHasManyRepositoryFactoryFor(
+      'surveyCycles',
+      surveyCycleRepositoryGetter,
+    );
     this.registerInclusionResolver(
       'surveyCycles',
       this.surveyCycles.inclusionResolver,

@@ -1,6 +1,6 @@
 import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {TemplateStatus} from '../enum/template.enum';
+import {QuestionTemplateStatus} from '../enum/template.enum';
 
 @model({name: 'question_templates'})
 export class QuestionTemplate extends UserModifiableEntity {
@@ -28,10 +28,10 @@ export class QuestionTemplate extends UserModifiableEntity {
     type: 'string',
     required: true,
     jsonSchema: {
-      enum: [...Object.values(TemplateStatus), null],
+      enum: [...Object.values(QuestionTemplateStatus), null],
     },
   })
-  status: TemplateStatus;
+  status: QuestionTemplateStatus;
 
   @property({
     type: 'boolean',

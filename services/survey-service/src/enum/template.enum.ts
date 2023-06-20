@@ -1,4 +1,4 @@
-export enum TemplateStatus {
+export enum QuestionTemplateStatus {
   DRAFT = 'Draft',
   APPROVED = 'Approved',
 }

@@ -1,5 +1,5 @@
-import { SurveyQuestion } from './survey-question.model';
 import {model, property} from '@loopback/repository';
+import {SurveyQuestion} from './survey-question.model';
 
 @model()
 export class SurveyQuestionDto extends SurveyQuestion {
@@ -12,4 +12,3 @@ export class SurveyQuestionDto extends SurveyQuestion {
     super(data);
   }
 }
-

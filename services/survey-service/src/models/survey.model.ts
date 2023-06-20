@@ -110,8 +110,6 @@ export class Survey extends UserModifiableEntity {
   })
   surveyResponders: SurveyResponder[];
 
-  questions: Question[];
-
   @property({
     type: 'string',
     name: 'base_survey_id',

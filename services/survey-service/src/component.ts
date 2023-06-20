@@ -33,6 +33,7 @@ import {Options, Question} from './models';
 import {
   QuestionDuplicateHelperService,
   QuestionHelperService,
+  QuestionTemplateService,
 } from './services';
 
 export class SurveyServiceComponent implements Component {
@@ -45,7 +46,11 @@ export class SurveyServiceComponent implements Component {
     this.bindings = [];
     this.providers = {};
 
-    this.services = [QuestionHelperService, QuestionDuplicateHelperService];
+    this.services = [
+      QuestionHelperService,
+      QuestionDuplicateHelperService,
+      QuestionTemplateService,
+    ];
 
     this.repositories = [QuestionRepository, OptionsRepository];
 
