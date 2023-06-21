@@ -59,7 +59,7 @@
     "@sourceloop/notification-service": "^7.0.2",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
-    "firebase-admin": "^10.2.0",
+    "firebase-admin": "^11.4.1",
     "loopback4-authorization": "^5.0.9",
     "loopback4-soft-delete": "^7.0.2",
     "nodemailer": "^6.7.5",
