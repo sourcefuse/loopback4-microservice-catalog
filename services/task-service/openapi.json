@@ -1,0 +1,26 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Oidc Service",
+    "version": "1.0.0",
+    "description": "Task microservice",
+    "contact": {
+      "name": "SourceFuse"
+    }
+  },
+  "paths": {},
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
