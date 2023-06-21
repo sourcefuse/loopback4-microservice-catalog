@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {get, Request, RestBindings} from '@loopback/rest';
 import {
@@ -5,31 +9,26 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {
-  featuresFlag,
-  StrategyBindings,
-} from '@sourceloop/feature-toggle-service';
+import {featureFlag} from '@sourceloop/feature-toggle';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
+const desp = 'Array of Feature model instances';
 export class FeatureToggleExampleController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
+  @featureFlag({
     featureKey: 'Calendar',
-    strategies: [
-      StrategyBindings.SYSTEM_STRATEGY,
-      StrategyBindings.TENANT_STRATEGY,
-      StrategyBindings.USER_STRATEGY,
-    ],
   })
   @authorize({permissions: ['*']})
   @get('/all_3_strategies', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -45,16 +44,15 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
+  @featureFlag({
     featureKey: 'Calendar',
-    strategies: [StrategyBindings.SYSTEM_STRATEGY],
   })
   @authorize({permissions: ['*']})
   @get('/system_strategy', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -70,16 +68,15 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
+  @featureFlag({
     featureKey: 'Calendar',
-    strategies: [StrategyBindings.TENANT_STRATEGY],
   })
   @authorize({permissions: ['*']})
   @get('/tenant_strategy', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -95,16 +92,15 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
+  @featureFlag({
     featureKey: 'Calendar',
-    strategies: [StrategyBindings.USER_STRATEGY],
   })
   @authorize({permissions: ['*']})
   @get('/user_strategy', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
@@ -120,16 +116,15 @@ export class FeatureToggleExampleController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @featuresFlag({
+  @featureFlag({
     featureKey: 'Calendar',
-    strategies: ['*'],
   })
   @authorize({permissions: ['*']})
   @get('/skip_all_strategy', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Feature model instances',
+        description: desp,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {

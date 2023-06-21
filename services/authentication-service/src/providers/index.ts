@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export * from './keys';
 export * from './types';
 export * from './google-oauth2-signup.provider';
@@ -30,4 +34,16 @@ export * from './otp.provider';
 export * from './otp-sender.provider';
 export * from './otp-generate.provider';
 export * from './keys';
-export * from './google-authenticator.provider';
+export * from './azure-ad-signup.provider';
+export * from './azure-post-verify.provider';
+export * from './azure-pre-verify.provider';
+export * from './cognito-oauth2-signup.provider';
+export * from './cognito-pre-verify.provider';
+export * from './cognito-post-verify.provider';
+export * from './jwt-asymmetric-signer.provider';
+export * from './jwt-asymmetric-verifier.provider';
+export * from './jwt-symmetric-signer.provider';
+export * from './jwt-symmetric-verifier.provider';
+export * from './saml-signup.provider';
+export * from './saml-post-verify.provider';
+export * from './saml-pre-verify.provider';

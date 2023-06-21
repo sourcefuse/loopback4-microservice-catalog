@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import {PaymentDatasourceName} from '@sourceloop/payment-service';
@@ -5,7 +9,7 @@ import {PaymentDatasourceName} from '@sourceloop/payment-service';
 const config = {
   name: PaymentDatasourceName,
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
@@ -15,7 +19,7 @@ const config = {
 };
 
 @lifeCycleObserver('datasource')
-export class InMailDbDataSource
+export class PaymentDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
@@ -23,7 +27,8 @@ export class InMailDbDataSource
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.inmail' otherwise you might get Errors
+    // You need to set datasource configuration name
+    //as 'datasources.config.inmail' otherwise you might get Errors
     @inject('datasources.config.payment', {optional: true})
     dsConfig: object = config,
   ) {

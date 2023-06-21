@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {CaseDefinition} from './case-definition';
 import {DecisionDefinition} from './decision-definition';
 import {DecisionRequirementDefinition} from './decision-requirements-definition';

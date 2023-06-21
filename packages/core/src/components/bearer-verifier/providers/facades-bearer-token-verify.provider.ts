@@ -1,8 +1,17 @@
-import {inject, Provider} from '@loopback/context';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Constructor, inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';
-import {VerifyFunction} from 'loopback4-authentication';
+import {
+  VerifyFunction,
+  AuthenticationBindings,
+  EntityWithIdentifier,
+  IAuthUser,
+} from 'loopback4-authentication';
 import moment from 'moment';
 
 import {ILogger, LOGGER} from '../../logger-extension';
@@ -16,6 +25,8 @@ export class FacadesBearerTokenVerifyProvider
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(AuthenticationBindings.USER_MODEL, {optional: true})
+    public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
   ) {}
 
   value(): VerifyFunction.BearerFn {
@@ -49,7 +60,12 @@ export class FacadesBearerTokenVerifyProvider
       ) {
         throw new HttpErrors.Unauthorized('PasswordExpiryError');
       }
-      return user;
+
+      if (this.authUserModel) {
+        return new this.authUserModel(user);
+      } else {
+        return user;
+      }
     };
   }
 }

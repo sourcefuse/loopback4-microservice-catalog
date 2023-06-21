@@ -14,7 +14,7 @@ any client application.
 ## Installation
 
 ```bash
-   npm i @sourceloop/in-mail-service
+npm i @sourceloop/in-mail-service
 ```
 
 ## Usage

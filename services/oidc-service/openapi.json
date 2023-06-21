@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Oidc Service",
+    "version": "1.0.0",
+    "description": "Oidc microservice",
+    "contact": {
+      "name": "SourceFuse"
+    }
+  },
+  "paths": {
+    "/interaction/{uid}/confirm": {
+      "post": {
+        "x-controller-name": "OidcController",
+        "x-operation-name": "confirm",
+        "tags": [
+          "OidcController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return value of OidcController.confirm"
+          }
+        },
+        "operationId": "OidcController.confirm"
+      }
+    },
+    "/interaction/{uid}/login": {
+      "post": {
+        "x-controller-name": "OidcController",
+        "x-operation-name": "login",
+        "tags": [
+          "OidcController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return value of OidcController.login"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "OidcController.login"
+      }
+    },
+    "/interaction/{uid}": {
+      "get": {
+        "x-controller-name": "OidcController",
+        "x-operation-name": "interaction",
+        "tags": [
+          "OidcController"
+        ],
+        "responses": {
+          "200": {
+            "description": "login page",
+            "content": {
+              "type": "text/html"
+            }
+          }
+        },
+        "operationId": "OidcController.interaction"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

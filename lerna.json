@@ -3,9 +3,10 @@
     "packages/core/",
     "packages/cli/",
     "packages/cache",
+    "packages/feature-toggle",
     "packages/custom-sf-changelog/",
-    "packages/user-onboarding/projects/user-onboarding-lib/",
-    "packages/search/projects/search-lib/",
+    "packages/search/projects/search-lib",
+    "packages/search/projects/search-element",
     "services/*",
     "facades/*",
     "sandbox/**"
@@ -32,8 +33,20 @@
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
-        "@sourceloop/user-onboarding-example"
-      ]
+        "@sourceloop/user-onboarding-example",
+        "@sourceloop/cache-example",
+        "@sourceloop/user-tenant-example",
+        "@sourceloop/chat-notif-example-facade-socket",
+        "@sourceloop/chat-notif-example-ui-socket",
+        "@sourceloop/chat-notif-example-chat-socket",
+        "@sourceloop/chat-notif-example-notif-socket",
+        "@sourceloop/example-socketio",
+        "@sourceloop/oauth-example-api",
+        "@sourceloop/oauth-example-ui",
+        "@sourceloop/oidc-basic-example",
+        "@sourceloop/nestjs-auth-ms-example"
+      ],
+      "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
     },
     "version": {
       "conventionalCommits": true,
@@ -68,7 +81,19 @@
         "@sourceloop/feature-toggle-example",
         "@sourceloop/payment-example-backend",
         "@sourceloop/payment-example-frontend",
-        "@sourceloop/user-onboarding-example"
+        "@sourceloop/user-onboarding-example",
+        "@sourceloop/cache-example",
+        "@sourceloop/user-tenant-example",
+        "@sourceloop/chat-notif-example-facade-socket",
+        "@sourceloop/chat-notif-example-ui-socket",
+        "@sourceloop/chat-notif-example-chat-socket",
+        "@sourceloop/chat-notif-example-notif-socket",
+        "@sourceloop/example-socketio",
+        "@sourceloop/user-onboarding-client",
+        "@sourceloop/oauth-example-api",
+        "@sourceloop/oauth-example-ui",
+        "@sourceloop/oidc-basic-example",
+        "@sourceloop/nestjs-auth-ms-example"
       ]
     },
     "clean": {
@@ -83,7 +108,8 @@
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**"
+    "packages/core/locales/**",
+    "packages/user-onboarding"
   ],
   "version": "independent"
 }

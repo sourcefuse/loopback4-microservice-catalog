@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -36,7 +40,9 @@ export class MessageController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateMessage]})
+  @authorize({
+    permissions: [PermissionKey.CreateMessage, PermissionKey.CreateMessageNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -63,7 +69,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
+  @authorize({
+    permissions: [PermissionKey.ViewMessage, PermissionKey.ViewMessageNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -78,7 +86,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
+  @authorize({
+    permissions: [PermissionKey.ViewMessage, PermissionKey.ViewMessageNum],
+  })
   @get('/messages', {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -102,7 +112,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
+  @authorize({
+    permissions: [PermissionKey.UpdateMessage, PermissionKey.UpdateMessageNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -127,7 +139,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
+  @authorize({
+    permissions: [PermissionKey.ViewMessage, PermissionKey.ViewMessageNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -150,7 +164,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
+  @authorize({
+    permissions: [PermissionKey.UpdateMessage, PermissionKey.UpdateMessageNum],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -174,7 +190,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateMessage]})
+  @authorize({
+    permissions: [PermissionKey.UpdateMessage, PermissionKey.UpdateMessageNum],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -191,7 +209,9 @@ export class MessageController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteMessage]})
+  @authorize({
+    permissions: [PermissionKey.DeleteMessage, PermissionKey.DeleteMessageNum],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, service} from '@loopback/core';
 import {SignupTokenHandlerFn} from '../../../providers/types';
 import {TestHelperService} from '../services';
@@ -7,7 +11,7 @@ export class TestSignupTokenHandlerProvider
 {
   constructor(
     @service(TestHelperService)
-    private helper: TestHelperService,
+    private readonly helper: TestHelperService,
   ) {}
   value(): SignupTokenHandlerFn {
     return async dto => {

@@ -8,7 +8,7 @@ language_clients:
   - javascript--nodejs: ""
 toc_footers: []
 includes: []
-search: false
+search: true
 highlight_theme: darkula
 headingLevel: 2
 
@@ -92,6 +92,7 @@ fetch('/workflows/{id}/execute',
 | Permissions |
 | ------- |
 | CreateWorkflow   |
+| 2   |
 
 > Body parameter
 
@@ -172,6 +173,7 @@ fetch('/workflows/{id}/version/{version}',
 | Permissions |
 | ------- |
 | DeleteWorkflow   |
+| 4   |
 
 <h3 id="workflowcontroller.deleteversionbyid-parameters">Parameters</h3>
 
@@ -255,6 +257,7 @@ fetch('/workflows/{id}',
 | Permissions |
 | ------- |
 | UpdateWorkflow   |
+| 3   |
 
 > Body parameter
 
@@ -337,6 +340,7 @@ fetch('/workflows/{id}',
 | Permissions |
 | ------- |
 | ViewWorkflow   |
+| 1   |
 
 <h3 id="workflowcontroller.count-parameters">Parameters</h3>
 
@@ -407,6 +411,7 @@ fetch('/workflows/{id}',
 | Permissions |
 | ------- |
 | DeleteWorkflow   |
+| 4   |
 
 <h3 id="workflowcontroller.deletebyid-parameters">Parameters</h3>
 
@@ -491,6 +496,7 @@ fetch('/workflows',
 | Permissions |
 | ------- |
 | CreateWorkflow   |
+| 2   |
 
 > Body parameter
 
@@ -597,6 +603,7 @@ fetch('/workflows',
 | Permissions |
 | ------- |
 | ViewWorkflow   |
+| 1   |
 
 <h3 id="workflowcontroller.find-parameters">Parameters</h3>
 
@@ -900,7 +907,7 @@ continued
 
 ```json
 {
-  "relation": "string",
+  "relation": "workflowVersions",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -924,6 +931,12 @@ workflows.IncludeFilter.Items
 |---|---|---|---|---|
 |relation|string|false|none|none|
 |scope|[workflows.ScopeFilter](#schemaworkflows.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|workflowVersions|
 
 <h2 id="tocS_workflows.Filter">workflows.Filter</h2>
 <!-- backwards compatibility -->
@@ -957,7 +970,7 @@ workflows.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "string",
+      "relation": "workflowVersions",
       "scope": {
         "offset": 0,
         "limit": 100,

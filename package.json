@@ -4,25 +4,20 @@
   "scripts": {
     "prepare": "husky install",
     "postinstall": "patch-package",
-    "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\""
+    "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
+    "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
-    "@commitlint/config-lerna-scopes": "^16.2.2",
-    "@loopback/monorepo": "^0.4.4",
-    "commitizen": "^4.2.4",
+    "commitizen": "^4.2.5",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.3.0",
     "cz-format-extension": "^1.5.0",
     "husky": "^7.0.4",
-    "lerna": "^4.0.0"
-  },
-  "overrides": {
-    "commitizen": {
-      "minimist": "^1.2.6",
-      "cz-conventional-changelog": "^3.3.0"
-    }
+    "lerna": "^5.1.5",
+    "typedoc": "0.23.23",
+    "typedoc-plugin-markdown": "3.14.0"
   },
   "config": {
     "commitizen": {

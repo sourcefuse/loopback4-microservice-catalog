@@ -1,9 +1,15 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AuthClient} from './auth-client.model';
+import {AuthSecureClient} from './auth-secure-client.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';
 import {LocalUserProfileDto} from './local-user-profile';
-import {Otp} from './otp.model';
+import {LoginActivity} from './login-activity.model';
 import {OtpCache} from './otp-cache.model';
+import {Otp} from './otp.model';
 import {RefreshTokenRequest} from './refresh-token-request.model';
 import {RefreshToken} from './refresh-token.model';
 import {ResetPasswordWithClient} from './reset-password-with-client.model';
@@ -23,6 +29,7 @@ import {User} from './user.model';
 
 export * from './';
 export * from './auth-client.model';
+export * from './auth-secure-client.model';
 export * from './forget-password-dto.model';
 export * from './forget-password-response-dto.model';
 export * from './local-user-profile';
@@ -44,12 +51,14 @@ export * from './user-level-permission.model';
 export * from './user-level-resource.model';
 export * from './user-tenant.model';
 export * from './user.model';
+export * from './login-activity.model';
 
 export const models = [
   User,
   Tenant,
   Role,
   AuthClient,
+  AuthSecureClient,
   UserLevelPermission,
   UserLevelResource,
   RefreshToken,
@@ -68,4 +77,5 @@ export const models = [
   SignupRequest,
   SignupWithTokenReponseDto,
   LocalUserProfileDto,
+  LoginActivity,
 ];

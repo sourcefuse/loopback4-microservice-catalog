@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {service} from '@loopback/core';
 import {
   Count,
@@ -58,7 +62,9 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CreateEvent]})
+  @authorize({
+    permissions: [PermissionKey.CreateEvent, PermissionKey.CreateEventNum],
+  })
   @post(basePath, {
     description: `While an organizer creates an event, we get participants details along with it. 
       This api will check for slot availability of all the participants in that particular 
@@ -129,7 +135,12 @@ export class EventController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewAttendee],
+    permissions: [
+      PermissionKey.ViewEvent,
+      PermissionKey.ViewAttendee,
+      PermissionKey.ViewEventNum,
+      PermissionKey.ViewAttendeeNum,
+    ],
   })
   @get('/events/freeBusy', {
     security: OPERATION_SECURITY_SPEC,
@@ -192,7 +203,9 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
+  @authorize({
+    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewEventNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -209,10 +222,12 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
+  @authorize({
+    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewEventNum],
+  })
   @get(basePath, {
-    description:
-      'This api will return the events data, based on the filter provided. Sending the data of participants will be optional and will depend on the query.',
+    description: `This api will return the events data, based on the filter provided.
+       Sending the data of participants will be optional and will depend on the query.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -250,7 +265,9 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
+  @authorize({
+    permissions: [PermissionKey.UpdateEvent, PermissionKey.UpdateEventNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -277,10 +294,12 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.ViewEvent]})
+  @authorize({
+    permissions: [PermissionKey.ViewEvent, PermissionKey.ViewEventNum],
+  })
   @get(`${basePath}/{id}`, {
-    description:
-      'This api will return events data based on the id. Sending the data of participants will be optional and will depend on the query.',
+    description: `This api will return events data based on the id. 
+      Sending the data of participants will be optional and will depend on the query.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -304,10 +323,12 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
+  @authorize({
+    permissions: [PermissionKey.UpdateEvent, PermissionKey.UpdateEventNum],
+  })
   @patch(`${basePath}/{id}`, {
-    description:
-      'This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).',
+    description: `This api will be responsible for making any updates on an event. 
+      This action is only allowed to the organizer or the admin(based on permission).`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -332,10 +353,12 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateEvent]})
+  @authorize({
+    permissions: [PermissionKey.UpdateEvent, PermissionKey.UpdateEventNum],
+  })
   @put(`${basePath}/{id}`, {
-    description:
-      'This api will be responsible for making any updates on an event. This action is only allowed to the organizer or the admin(based on permission).',
+    description: `This api will be responsible for making any updates on an event.
+     This action is only allowed to the organizer or the admin(based on permission).`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -353,10 +376,12 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.DeleteEvent]})
+  @authorize({
+    permissions: [PermissionKey.DeleteEvent, PermissionKey.DeleteEventNum],
+  })
   @del(`${basePath}/{id}`, {
-    description:
-      'Api to delete the event based on id. The action is only allowed to the organiser or the admin(based on permission).',
+    description: `Api to delete the event based on id.
+       The action is only allowed to the organiser or the admin(based on permission).`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -375,7 +400,12 @@ export class EventController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.HardDeleteEvent]})
+  @authorize({
+    permissions: [
+      PermissionKey.HardDeleteEvent,
+      PermissionKey.HardDeleteEventNum,
+    ],
+  })
   @del(`${basePath}/{id}/hard`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

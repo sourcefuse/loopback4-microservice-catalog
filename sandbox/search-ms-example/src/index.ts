@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {ApplicationConfig, SearchMsExampleApplication} from './application';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';

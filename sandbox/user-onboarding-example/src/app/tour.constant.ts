@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {prefix, suffix, TourStep} from '@sourceloop/user-onboarding-client';
 
 const NEXT_BUTTON_CLASS = 'shepherd-button-next';
@@ -276,7 +280,6 @@ export const DEVS_TOUR_STEPS: TourStep[] = [
     prevStepId: DevsTourSteps.Step2,
     nextStepId: '',
     text: `
-        <img class="tour-images" src="assets/sourceloop-tour/some-imgage.gif" alt="no image">
         <div class="tour-step">Step 3 of 3</div>
         <div class="tour-title">Step 3</div>
         <div class="tour-description">

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Constructor} from '@loopback/core';
 import {AnyObject, Model} from '@loopback/repository';
 import {SearchResult} from './models';
@@ -8,7 +12,7 @@ export type SearchFunctionType<T> = (query: SearchQuery) => Promise<T[]>;
 export type SearchableModelsService = {
   add: (model: typeof Model) => Promise<void>;
   delete: (model: typeof Model) => Promise<void>;
-  get: () => Promise<typeof Model[]>;
+  get: () => Promise<(typeof Model)[]>;
 };
 
 export interface Searchable {

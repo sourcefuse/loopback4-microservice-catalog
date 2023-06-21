@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
@@ -19,20 +23,16 @@ import {
   STATUS_CODE,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
   authenticateClient,
   AuthenticationBindings,
   AuthErrorKeys,
-  ClientAuthCode,
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-
-import {User} from '../../models';
-import {AuthCodeBindings, CodeWriterFn} from '../../providers';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
 import {AuthClientRepository} from '../../repositories';
 import {AuthUser} from './models/auth-user.model';
 import {ClientAuthRequest} from './models/client-auth-request.dto';
@@ -51,6 +51,8 @@ export class KeycloakLoginController {
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
+    private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -60,8 +62,10 @@ export class KeycloakLoginController {
       host: process.env.KEYCLOAK_HOST,
       realm: process.env.KEYCLOAK_REALM, //'Tenant1',
       clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
+      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
+      //'http://localhost:3001/auth/keycloak-auth-redirect',
       authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
@@ -90,8 +94,10 @@ export class KeycloakLoginController {
         },
       },
     })
-    clientCreds?: ClientAuthRequest,
-  ): Promise<void> {}
+    clientCreds?: ClientAuthRequest, //NOSONAR
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
@@ -100,8 +106,10 @@ export class KeycloakLoginController {
       host: process.env.KEYCLOAK_HOST,
       realm: process.env.KEYCLOAK_REALM, //'Tenant1',
       clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
+      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
+      //'http://localhost:3001/auth/keycloak-auth-redirect',
       authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
@@ -113,8 +121,9 @@ export class KeycloakLoginController {
   @get('/auth/keycloak', {
     responses: {
       [STATUS_CODE.OK]: {
-        description:
-          'Keycloak Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)',
+        description: 'Keycloak Token Response',
+        // (Deprecated: Possible security issue
+        //if secret is passed via query params, please use the post endpoint)
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -125,10 +134,12 @@ export class KeycloakLoginController {
   })
   async loginViaKeycloak(
     @param.query.string('client_id')
-    clientId?: string,
+    clientId?: string, //NOSONAR
     @param.query.string('client_secret')
-    clientSecret?: string,
-  ): Promise<void> {}
+    clientSecret?: string, //NOSONAR
+  ): Promise<void> {
+    //do nothing
+  }
 
   @authenticate(
     STRATEGY.KEYCLOAK,
@@ -136,8 +147,10 @@ export class KeycloakLoginController {
       host: process.env.KEYCLOAK_HOST,
       realm: process.env.KEYCLOAK_REALM, //'Tenant1',
       clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET, //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL, //'http://localhost:3001/auth/keycloak-auth-redirect',
+      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
+      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
+      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
+      //'http://localhost:3001/auth/keycloak-auth-redirect',
       authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
       tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
       userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
@@ -161,8 +174,6 @@ export class KeycloakLoginController {
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    keycloackCodeWriter: CodeWriterFn,
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
   ): Promise<void> {
@@ -175,22 +186,11 @@ export class KeycloakLoginController {
         clientId,
       },
     });
-    if (!client || !client.redirectUrl) {
+    if (!client?.redirectUrl) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
     try {
-      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId,
-        user: user,
-      };
-      const token = await keycloackCodeWriter(
-        jwt.sign(codePayload, client.secret, {
-          expiresIn: client.authCodeExpiration,
-          audience: clientId,
-          issuer: process.env.JWT_ISSUER,
-          algorithm: 'HS256',
-        }),
-      );
+      const token = await this.getAuthCode(client, user);
       response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);

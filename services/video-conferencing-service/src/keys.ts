@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IArchiveService, ISessionService, VideoChatInterface} from './types';
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX, IServiceConfig} from '@sourceloop/core';

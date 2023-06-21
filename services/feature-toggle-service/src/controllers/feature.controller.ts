@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -35,7 +39,9 @@ export class FeatureController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateFeature]})
+  @authorize({
+    permissions: [PermissionKey.CreateFeature, PermissionKey.CreateFeatureNum],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -61,7 +67,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewFeature]})
+  @authorize({
+    permissions: [PermissionKey.ViewFeature, PermissionKey.ViewFeatureNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -76,7 +84,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewFeature]})
+  @authorize({
+    permissions: [PermissionKey.ViewFeature, PermissionKey.ViewFeatureNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -100,7 +110,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateFeature]})
+  @authorize({
+    permissions: [PermissionKey.UpdateFeature, PermissionKey.UpdateFeatureNum],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -127,7 +139,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewFeature]})
+  @authorize({
+    permissions: [PermissionKey.ViewFeature, PermissionKey.ViewFeatureNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -150,7 +164,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateFeature]})
+  @authorize({
+    permissions: [PermissionKey.UpdateFeature, PermissionKey.UpdateFeatureNum],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -174,7 +190,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateFeature]})
+  @authorize({
+    permissions: [PermissionKey.UpdateFeature, PermissionKey.UpdateFeatureNum],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -191,7 +209,9 @@ export class FeatureController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteFeature]})
+  @authorize({
+    permissions: [PermissionKey.DeleteFeature, PermissionKey.DeleteFeatureNum],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

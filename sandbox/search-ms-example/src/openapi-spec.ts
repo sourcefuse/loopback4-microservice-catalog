@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {ApplicationConfig} from '@loopback/core';
 import {SearchMsExampleApplication} from './application';
 
@@ -20,6 +24,6 @@ async function exportOpenApiSpec(): Promise<void> {
 }
 
 exportOpenApiSpec().catch(err => {
-  console.error('Fail to export OpenAPI spec from the application.', err);
+  console.error('Fail to export OpenAPI spec from the application.', err); //NOSONAR
   process.exit(1);
 });

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IAuthUser} from 'loopback4-authentication';
 import {BindingKey} from '@loopback/context';
 import {BINDING_PREFIX} from '../../constants';
@@ -39,4 +43,5 @@ export interface IAuthUserWithPermissions<
   userTenantId?: UTID;
   passwordExpiryTime?: Date;
   allowedResources?: string[];
+  getIdentifier?(): string | undefined;
 }

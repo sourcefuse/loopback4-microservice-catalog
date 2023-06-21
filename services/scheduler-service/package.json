@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "5.0.2",
+  "version": "6.0.1",
   "description": "Scheduler Microservice",
   "keywords": [
     "loopback-extension",
@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "12 || 14 || 16 || 17"
+    "node": "16 || 17 || 18"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc && npm run openapi-spec && npm run apidocs",
@@ -22,7 +22,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "openapi-spec": "node ./dist/openapi-spec",
-    "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
@@ -55,37 +55,38 @@
     "db-migrate-pg": "^1.2.2"
   },
   "dependencies": {
-    "@loopback/boot": "^5.0.0",
-    "@loopback/context": "^5.0.0",
-    "@loopback/core": "^4.0.0",
-    "@loopback/openapi-v3": "^8.0.0",
-    "@loopback/repository": "^5.0.0",
-    "@loopback/rest": "^12.0.0",
-    "@loopback/rest-explorer": "^5.0.0",
-    "@loopback/service-proxy": "^5.0.0",
-    "@sourceloop/core": "^7.0.2",
-    "dotenv": "^16.0.0",
+    "@loopback/boot": "^6.0.0",
+    "@loopback/context": "^6.0.0",
+    "@loopback/core": "^5.0.0",
+    "@loopback/openapi-v3": "^9.0.0",
+    "@loopback/repository": "^6.0.0",
+    "@loopback/rest": "^13.0.0",
+    "@loopback/rest-explorer": "^6.0.0",
+    "@loopback/service-proxy": "^6.0.0",
+    "@sourceloop/audit-log": "^5.1.1",
+    "@sourceloop/core": "^8.0.1",
+    "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
-    "jsonwebtoken": "^8.5.1",
-    "loopback4-authentication": "^6.1.2",
-    "loopback4-authorization": "^5.0.5",
-    "loopback4-soft-delete": "^5.1.0",
-    "tslib": "^2.4.0"
+    "jsonwebtoken": "^9.0.0",
+    "loopback4-authentication": "^9.0.0",
+    "loopback4-authorization": "^6.0.0",
+    "loopback4-soft-delete": "^8.0.0",
+    "tslib": "^2.4.1"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.0",
-    "@loopback/eslint-config": "^13.0.0",
-    "@loopback/testlab": "^5.0.0",
-    "@types/jsonwebtoken": "^8.5.8",
-    "@types/node": "^12.20.50",
+    "@loopback/build": "^10.0.0",
+    "@loopback/eslint-config": "^14.0.0",
+    "@loopback/testlab": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^18.11.18",
     "db-migrate": "^1.0.0-beta.18",
-    "db-migrate-pg": "1.2.2",
-    "eslint": "^8.14.0",
-    "mocha": "^10.0.0",
+    "db-migrate-pg": "^1.2.2",
+    "eslint": "^8.38.0",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "sinon": "^13.0.2",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.6.4",
+    "typescript": "~4.9.5",
     "widdershins": "^4.0.1"
   },
   "overrides": {
@@ -93,10 +94,45 @@
       "swagger2openapi": "^7.0.8",
       "markdown-it": "^12.3.2",
       "yargs": "^17.4.1"
+    },
+    "body-parser": {
+      "debug": "^4.3.4"
+    },
+    "httpsnippet": {
+      "debug": "^4.3.4"
+    },
+    "send": {
+      "debug": "^4.3.4"
+    },
+    "tunnel-ssh": {
+      "debug": "^4.3.4"
+    },
+    "finalhandler": {
+      "debug": "^4.3.4"
+    },
+    "express": {
+      "debug": "^4.3.4",
+      "finalhandler": "^1.2.0",
+      "send": "^0.18.0",
+      "serve-static": "^1.15.0"
     }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/scheduler-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    },
+    "settings": {
+      "includeOpenAPIDoc": true
+    }
   }
 }

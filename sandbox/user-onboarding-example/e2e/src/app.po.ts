@@ -1,4 +1,8 @@
-import { browser, by, element } from 'protractor';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {browser, by, element} from 'protractor';
 
 export class AppPage {
   navigateTo(): Promise<unknown> {
@@ -6,6 +10,8 @@ export class AppPage {
   }
 
   getTitleText(): Promise<string> {
-    return element(by.css('app-root .content span')).getText() as Promise<string>;
+    return element(
+      by.css('app-root .content span'),
+    ).getText() as Promise<string>;
   }
 }

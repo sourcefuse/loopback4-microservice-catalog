@@ -3,6 +3,345 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.2 (2023-06-19)</small>
+
+* fix(chore): sonar code smells (#1453) ([01d64f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/01d64f2)), closes [#1453](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1453)
+
+
+
+
+
+## <small>11.1.1 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## 11.1.0 (2023-06-08)
+
+* feat(authentication-service): maintain the entries for active users when a user login to the app (#1 ([0b6fa82](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b6fa82)), closes [#1425](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1425) [#1424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1424)
+
+
+
+
+
+## 11.0.0 (2023-06-08)
+
+* chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+* feat(chore): remove support for node v14,v12 (#1411) ([eda2051](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eda2051)), closes [#1411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1411) [#1382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1382)
+
+
+### BREAKING CHANGE
+
+* End of life of node v14 and node v12
+
+
+
+
+## <small>10.0.4 (2023-06-07)</small>
+
+* fix(authentication-service): fix refresh token api creating access token with default tenant id. (#1 ([1013b13](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1013b13)), closes [#1431](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1431) [#1430](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1430)
+* refactor(all-services): remove empty and unnecessary folder (#1423) ([15c8235](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/15c8235)), closes [#1423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1423)
+
+
+
+
+
+## <small>10.0.3 (2023-05-11)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>10.0.2 (2023-05-03)</small>
+
+* refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
+* refactor(chore): fix sonar code smells (#1402) ([9244178](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9244178)), closes [#1402](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1402)
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+
+
+
+
+
+## <small>10.0.1 (2023-04-27)</small>
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+
+
+
+
+
+## 10.0.0 (2023-04-10)
+
+* feat(authentication-service): added clientType column in auth client (#1357) ([aeb8bdc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aeb8bdc)), closes [#1357](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1357) [#1356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1356) [#1356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1356) [#1356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1356)
+
+
+
+
+
+## <small>9.1.1 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+
+
+
+
+
+## 9.1.0 (2023-03-06)
+
+* feat(authentication-service): add SAML passport authentication (#1326) ([c45f577](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c45f577)), closes [#1326](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1326)
+* chore(deps): loopback and sourceloop version update (#1332) ([39e1f7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39e1f7a)), closes [#1332](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1332) [#1331](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1331)
+* docs(authentication-service): update readme for authentication service (#1328) ([94b0139](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/94b0139)), closes [#1328](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1328) [#1327](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1327)
+
+
+
+
+
+## <small>9.0.6 (2023-02-01)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>9.0.5 (2023-01-31)</small>
+
+* chore(deps): updating the loopback4-authentication package (#1260) ([99887d6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99887d6)), closes [#1260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1260) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259)
+
+
+
+
+
+## <small>9.0.4 (2023-01-20)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>9.0.3 (2023-01-17)</small>
+
+* chore(deps): loopback and sourceloop version update (#1211) ([3086a5b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3086a5b)), closes [#1211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1211) [#1206](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1206)
+* fix(authentication-service): fix sql syntax in migrations.  (#1205) ([2a1298b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2a1298b)), closes [#1205](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1205) [#1204](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1204) [#1204](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1204)
+* docs(core): add mkdocs and typedoc configuration (#1193) ([4b348b1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b348b1)), closes [#1193](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1193) [#1192](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1192)
+
+
+
+
+
+## <small>9.0.2 (2023-01-12)</small>
+
+* chore(deps): loopback and sourceloop version update (#1195) ([ea9bb21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ea9bb21)), closes [#1195](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1195) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194)
+
+
+
+
+
+## <small>9.0.1 (2022-12-07)</small>
+
+* chore(deps): update loopback and sourceloop packages (#1101) ([fc6b432](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc6b432)), closes [#1101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1101) [#1100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1100)
+
+
+
+
+
+## 9.0.0 (2022-11-25)
+
+* feat(authentication-service): add asymmetric login in authentication service (#1011) ([92c21fb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/92c21fb)), closes [#1011](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1011) [#1007](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1007)
+* feat(authentication-service): feat(authentication-service): change parent class AuthClient (#1081) ([537cc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/537cc75)), closes [#1081](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1081)
+* chore(deps): loopback version update in services and packages (#1086) ([478668a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/478668a)), closes [#1086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1086)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+
+
+
+
+
+## 8.2.0 (2022-10-17)
+
+* fix(services): sync user-tenant-service properties with auth-service (#1010) ([5c7fce8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c7fce8)), closes [#1010](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1010)
+* feat(authentication-service): add APIs for Cognito OAuth (#1046) ([190f96a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/190f96a)), closes [#1046](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1046) [#1045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1045) [#1046](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1046)
+
+
+
+
+
+## <small>8.1.8 (2022-10-10)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>8.1.7 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>8.1.6 (2022-09-21)</small>
+
+* chore(deps): update loopback4-soft-delete version in services (#1030) ([d386bc1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d386bc1)), closes [#1030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1030) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)
+
+
+
+
+
+## <small>8.1.5 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>8.1.4 (2022-09-20)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>8.1.3 (2022-09-12)</small>
+
+* chore(deps): loopback version update for services (#1017) ([9a9d653](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a9d653)), closes [#1017](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1017) [#1015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1015)
+
+
+
+
+
+## <small>8.1.2 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>8.1.1 (2022-09-02)</small>
+
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 8.1.0 (2022-09-02)
+
+* feat(deps): updated for minor update in loopback4 (#1003) ([b04ebad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b04ebad)), closes [#1003](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1003) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>8.0.1 (2022-08-30)</small>
+
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 8.0.0 (2022-08-26)
+
+* fix(authentication-service): add all variables for azure oauth strategy (#990) ([920c6b6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/920c6b6)), closes [#990](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/990) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(authentication-service): remove device info and auth clients from token (#992) ([880ef40](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/880ef40)), closes [#992](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/992) [#991](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/991)
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+### BREAKING CHANGE
+
+* auth clients in user model made optional
+
+
+
+
+## <small>7.1.2 (2022-08-20)</small>
+
+* fix(authentication-service): fix minor issues in azure oauth (#985) ([af272a6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/af272a6)), closes [#985](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/985) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(user-tenant-service): made user-tenant-service private (#986) ([03c5074](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/03c5074)), closes [#986](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/986) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* docs(authentication-service): readme changes for azure ad (#941) ([9dbe41b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9dbe41b)), closes [#941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/941) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>7.1.1 (2022-08-04)</small>
+
+* fix(sandbox): email present in upn (#939) ([5a21a95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a21a95)), closes [#939](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/939) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 7.1.0 (2022-08-04)
+
+* feat(authentication-service): provide default implementation for azure ad (#932) ([6c6b488](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6c6b488)), closes [#932](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/932) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931) [#931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/931)
+
+
+
+
+
+## <small>7.0.5 (2022-07-27)</small>
+
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
+## <small>7.0.4 (2022-07-11)</small>
+
+* chore(deps): fix vulnerability (#895) ([53004c0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/53004c0)), closes [#895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>7.0.3 (2022-07-06)</small>
+
+* chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+
+
+
+
+
+## <small>7.0.2 (2022-07-06)</small>
+
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+
+
+
+
+
+## <small>7.0.1 (2022-06-30)</small>
+
+* chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)
+
+
+
+
+
+## 7.0.0 (2022-06-24)
+
+* fix(cache): missing return type for mixin ([f685126](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f685126)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(authentication-service): add MFA (#782) ([c252b85](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c252b85)), closes [#782](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/782)
+* perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)
+
+
+
+
+
 ## <small>6.0.2 (2022-05-30)</small>
 
 * chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

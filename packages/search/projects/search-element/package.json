@@ -1,0 +1,23 @@
+{
+  "name": "@sourceloop/search-element",
+  "version": "5.4.4",
+  "description": "A global search element for search microservice",
+  "main": "./search-element.js",
+  "private": false,
+  "scripts": {
+    "prepublishOnly": "cp package.json dist/package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/search"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "directory": "dist"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "hash": "597dd9432cda05ad201b83833a70647725b7637974bfe4873c3ebcee06466a4b"
+}

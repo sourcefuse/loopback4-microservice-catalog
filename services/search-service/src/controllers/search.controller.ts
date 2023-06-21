@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {AnyObject, Model} from '@loopback/repository';
 import {api, get, getModelSchemaRef, HttpErrors, param} from '@loopback/rest';
 import {
@@ -25,6 +29,7 @@ import {SearchFilter} from '..';
 
 const EXCLUDED_COLUMNS: (keyof SearchQuery)[] = ['id', 'recentSearchId'];
 
+const RECENT_COUNT = 3;
 export function defineSearchController<T extends Model>(
   modelCtor: typeof Model,
   options?: SearchControllerConfig,
@@ -32,7 +37,7 @@ export function defineSearchController<T extends Model>(
   const name = options?.name;
   const authorizations = options?.authorizations ?? ['*'];
   const recentsConfig = options?.recents ?? false;
-  const recentCount = options?.recentCount ?? 3;
+  const recentCount = options?.recentCount ?? RECENT_COUNT;
   @api({
     basePath: options?.basePath,
     paths: {},

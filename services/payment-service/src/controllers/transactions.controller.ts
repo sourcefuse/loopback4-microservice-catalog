@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {
   Count,
@@ -21,17 +25,17 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {v4 as uuidv4} from 'uuid';
+import {ResponseMessage, TemplateName, TemplateType} from '../enums';
 import {Orders, Transactions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
 import {
   OrdersRepository,
-  TransactionsRepository,
-  TemplatesRepository,
   PaymentGatewaysRepository,
+  TemplatesRepository,
+  TransactionsRepository,
 } from '../repositories';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {ResponseMessage, TemplateName, TemplateType} from '../enums';
 const transactionsRoutePath = '/transactions';
 const tranasactionsIdRoutePath = '/transactions/{id}';
 const redirectStatusCode = 302;

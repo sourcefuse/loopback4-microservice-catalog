@@ -1,5 +1,9 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
+import {AnyObject, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -7,9 +11,8 @@ import {
   param,
   patch,
   post,
-  Request,
   requestBody,
-  RestBindings,
+  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -24,8 +27,6 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import {randomBytes} from 'crypto';
-import * as jwt from 'jsonwebtoken';
 import {
   authenticate,
   authenticateClient,
@@ -36,21 +37,31 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {ExternalTokens} from '../../types';
+import {ActorId, ExternalTokens, IUserActivity} from '../../types';
 import {AuthServiceBindings} from '../../keys';
-import {AuthClient, RefreshToken, User} from '../../models';
+import {
+  LoginActivity,
+  AuthClient,
+  RefreshToken,
+  User,
+  UserTenant,
+} from '../../models';
 import {
   AuthCodeBindings,
+  AuthCodeGeneratorFn,
   CodeReaderFn,
-  CodeWriterFn,
   JwtPayloadFn,
+  JWTSignerFn,
 } from '../../providers';
+import * as jwt from 'jsonwebtoken';
 import {
+  LoginActivityRepository,
   AuthClientRepository,
   OtpCacheRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
   RoleRepository,
+  UserCredentialsRepository,
   UserLevelPermissionRepository,
   UserLevelResourceRepository,
   UserRepository,
@@ -63,15 +74,12 @@ import {
   AuthTokenRequest,
   CodeResponse,
   LoginRequest,
-  OtpLoginRequest,
-  OtpResponse,
 } from './';
-import {AuthUser, DeviceInfo} from './models/auth-user.model';
+import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-import {OtpSendRequest} from './models/otp-send-request.dto';
-
-const userAgentKey = 'user-agent';
+import {LoginType} from '../../enums/login-type.enum';
+import crypto from 'crypto';
 
 export class LoginController {
   constructor(
@@ -99,13 +107,24 @@ export class LoginController {
     public revokedTokensRepo: RevokedTokenRepository,
     @repository(TenantConfigRepository)
     public tenantConfigRepo: TenantConfigRepository,
-    @inject(RestBindings.Http.REQUEST)
-    private readonly req: Request,
+    @repository(UserCredentialsRepository)
+    public userCredsRepository: UserCredentialsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
+    private readonly getAuthCode: AuthCodeGeneratorFn,
+    @inject(AuthCodeBindings.JWT_SIGNER)
+    private readonly jwtSigner: JWTSignerFn<object>,
+    @repository(LoginActivityRepository)
+    private readonly loginActivityRepo: LoginActivityRepository,
+    @inject(AuthServiceBindings.ActorIdKey)
+    private readonly actorKey: ActorId,
+    @inject.context() private readonly ctx: RequestContext,
+    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
+    private readonly userActivity?: IUserActivity,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -143,16 +162,7 @@ export class LoginController {
         );
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }
-      const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-        clientId: req.client_id,
-        userId: this.user.id,
-      };
-      const token = jwt.sign(codePayload, this.client.secret, {
-        expiresIn: this.client.authCodeExpiration,
-        audience: req.client_id,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      });
+      const token = await this.getAuthCode(this.client, this.user);
       return {
         code: token,
       };
@@ -182,7 +192,6 @@ export class LoginController {
   })
   async loginWithClientUser(
     @requestBody() req: LoginRequest,
-    @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
     await this.loginHelperService.verifyClientUserLogin(
       req,
@@ -210,10 +219,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.user.id);
       }
 
-      return await this.createJWT(payload, this.client, {
-        deviceId,
-        userAgent: this.req.headers[userAgentKey],
-      });
+      return await this.createJWT(payload, this.client, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -240,7 +246,6 @@ export class LoginController {
     @requestBody() req: AuthTokenRequest,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     codeReader: CodeReaderFn,
-    @param.header.string('device_id') deviceId?: string,
   ): Promise<TokenResponse> {
     const authClient = await this.authClientRepository.findOne({
       where: {
@@ -258,6 +263,10 @@ export class LoginController {
         algorithms: ['HS256'],
       }) as ClientAuthCode<User, typeof User.prototype.id>;
 
+      if (payload.mfa) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
+      }
+
       if (
         payload.userId &&
         !(await this.userRepo.firstTimeUser(payload.userId))
@@ -265,10 +274,7 @@ export class LoginController {
         await this.userRepo.updateLastLogin(payload.userId);
       }
 
-      return await this.createJWT(payload, authClient, {
-        deviceId,
-        userAgent: this.req.headers[userAgentKey],
-      });
+      return await this.createJWT(payload, authClient, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
       if (error.name === 'TokenExpiredError') {
@@ -285,7 +291,8 @@ export class LoginController {
   @post('/auth/token-refresh', {
     security: OPERATION_SECURITY_SPEC,
     description:
-      'Gets you a new access and refresh token once your access token is expired. (both mobile and web)\n',
+      'Gets you a new access and refresh token once your access token is expired',
+    //(both mobile and web)
     responses: {
       [STATUS_CODE.OK]: {
         description: 'New Token Response',
@@ -303,40 +310,17 @@ export class LoginController {
     @param.header.string('device_id') deviceId?: string,
     @param.header.string('Authorization') token?: string,
   ): Promise<TokenResponse> {
-    const refreshPayload: RefreshToken = await this.refreshTokenRepo.get(
-      req.refreshToken,
-    );
-    if (!refreshPayload) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
-    }
-    const authClient = await this.authClientRepository.findOne({
-      where: {
-        clientId: refreshPayload.clientId,
-      },
-    });
-    if (!authClient) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    }
-    const accessToken = token?.split(' ')[1];
-    if (!accessToken || refreshPayload.accessToken !== accessToken) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-    }
-    await this.revokedTokensRepo.set(refreshPayload.accessToken, {
-      token: refreshPayload.accessToken,
-    });
-    await this.refreshTokenRepo.delete(req.refreshToken);
+    const payload = await this.createTokenPayload(req, token);
     return this.createJWT(
       {
-        clientId: refreshPayload.clientId,
-        userId: refreshPayload.userId,
-        externalAuthToken: refreshPayload.externalAuthToken,
-        externalRefreshToken: refreshPayload.externalRefreshToken,
+        clientId: payload.refreshPayload.clientId,
+        userId: payload.refreshPayload.userId,
+        externalAuthToken: payload.refreshPayload.externalAuthToken,
+        externalRefreshToken: payload.refreshPayload.externalRefreshToken,
       },
-      authClient,
-      {
-        deviceId,
-        userAgent: this.req.headers[userAgentKey],
-      },
+      payload.authClient,
+      LoginType.RELOGIN,
+      payload.refreshPayload.tenantId,
     );
   }
 
@@ -450,80 +434,85 @@ export class LoginController {
     return new AuthUser(this.user);
   }
 
-  // OTP,Google Authenticator APIs
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.OTP)
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
   @authorize({permissions: ['*']})
-  @post('/auth/send-otp', {
-    description: 'Sends OTP',
+  @post('/auth/switch-token', {
+    security: OPERATION_SECURITY_SPEC,
+    description: 'To switch the access-token',
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Sends otp to user',
+        description: 'Switch access token with the tenant id provided.',
         content: {
-          [CONTENT_TYPE.JSON]: Object,
+          [CONTENT_TYPE.JSON]: {
+            schema: {[X_TS_TYPE]: TokenResponse},
+          },
         },
       },
       ...ErrorCodes,
     },
   })
-  async sendOtp(
-    @requestBody()
-    req: OtpSendRequest,
-    @inject(AuthenticationBindings.CURRENT_CLIENT)
-    client: AuthClient,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser,
-  ): Promise<OtpResponse | void> {}
-
-  @authenticate(STRATEGY.OTP)
-  @authorize({permissions: ['*']})
-  @post('/auth/verify-otp', {
-    description:
-      'Gets you the code that will be used for getting token (webapps)',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description:
-          'Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API',
-        content: {
-          [CONTENT_TYPE.JSON]: Object,
-        },
-      },
-      ...ErrorCodes,
-    },
-  })
-  async verifyOtp(
-    @requestBody()
-    req: OtpLoginRequest,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser | undefined,
-    @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
-    codeWriter: CodeWriterFn,
-  ): Promise<CodeResponse> {
-    const otpCache = await this.otpCacheRepo.get(req.key);
-    if (user?.id) {
-      otpCache.userId = user.id;
+  async switchToken(
+    @requestBody() req: AuthRefreshTokenRequest,
+  ): Promise<TokenResponse> {
+    if (!req.tenantId) {
+      throw new HttpErrors.BadRequest('Tenant ID is required');
     }
-    const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-      clientId: otpCache.clientId,
-      userId: otpCache.userId,
-    };
-    const token = await codeWriter(
-      jwt.sign(codePayload, otpCache.clientSecret, {
-        expiresIn: 180,
-        audience: otpCache.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
-      }),
+    if (!this.user) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+
+    const payload = await this.createTokenPayload(req);
+    return this.createJWT(
+      {
+        clientId: payload.refreshPayload.clientId,
+        user: this.user,
+        externalAuthToken: payload.refreshPayload.externalAuthToken,
+        externalRefreshToken: payload.refreshPayload.externalRefreshToken,
+      },
+      payload.authClient,
+      LoginType.RELOGIN,
+      req.tenantId,
     );
-    return {
-      code: token,
-    };
   }
 
+  private async createTokenPayload(
+    req: AuthRefreshTokenRequest,
+    token?: string,
+  ): Promise<AnyObject> {
+    const refreshPayload: RefreshToken = await this.refreshTokenRepo.get(
+      req.refreshToken,
+    );
+    if (!refreshPayload) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+    const authClient = await this.authClientRepository.findOne({
+      where: {
+        clientId: refreshPayload.clientId,
+      },
+    });
+    if (!authClient) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
+    }
+    const accessToken = token?.split(' ')[1];
+    if (!accessToken || refreshPayload.accessToken !== accessToken) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    await this.revokedTokensRepo.set(refreshPayload.accessToken, {
+      token: refreshPayload.accessToken,
+    });
+    await this.refreshTokenRepo.delete(req.refreshToken);
+    return {
+      refreshPayload: refreshPayload,
+      authClient: authClient,
+    };
+  }
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
-    deviceInfo: DeviceInfo,
+    loginType: LoginType,
+    tenantId?: string,
   ): Promise<TokenResponse> {
     try {
       const size = 32;
@@ -552,13 +541,15 @@ export class LoginController {
           AuthenticateErrorKeys.UserDoesNotExist,
         );
       }
-      const data = await this.getJwtPayload(user, authClient, deviceInfo);
-      const accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
+      const data: AnyObject = await this.getJwtPayload(
+        user,
+        authClient,
+        tenantId,
+      );
+      const accessToken = await this.jwtSigner(data, {
         expiresIn: authClient.accessTokenExpiration,
-        issuer: process.env.JWT_ISSUER,
-        algorithm: 'HS256',
       });
-      const refreshToken: string = randomBytes(size).toString('hex');
+      const refreshToken: string = crypto.randomBytes(size).toString('hex');
       // Set refresh token into redis for later verification
       await this.refreshTokenRepo.set(
         refreshToken,
@@ -569,9 +560,17 @@ export class LoginController {
           accessToken,
           externalAuthToken: (user as AuthUser).externalAuthToken,
           externalRefreshToken: (user as AuthUser).externalRefreshToken,
+          tenantId: data.tenantId,
         },
         {ttl: authClient.refreshTokenExpiration * ms},
       );
+
+      const userTenant = await this.userTenantRepo.findOne({
+        where: {userId: user.id},
+      });
+      if (this.userActivity?.markUserActivity)
+        this.markUserActivity(user, userTenant, {...data}, loginType);
+
       return new TokenResponse({
         accessToken,
         refreshToken,
@@ -587,6 +586,81 @@ export class LoginController {
       } else {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
+    }
+  }
+
+  private markUserActivity(
+    user: User,
+    userTenant: UserTenant | null,
+    payload: AnyObject,
+    loginType: LoginType,
+  ) {
+    const size = 16;
+    const encryptionKey = process.env.ENCRYPTION_KEY;
+
+    if (encryptionKey) {
+      const iv = crypto.randomBytes(size);
+
+      /* encryption of IP Address */
+      const cipherIp = crypto.createCipheriv('aes-256-gcm', encryptionKey, iv);
+      const ip =
+        this.ctx.request.headers['x-forwarded-for']?.toString() ??
+        this.ctx.request.socket.remoteAddress?.toString() ??
+        '';
+      const encyptIp = Buffer.concat([
+        cipherIp.update(ip, 'utf8'),
+        cipherIp.final(),
+      ]);
+      const authTagIp = cipherIp.getAuthTag();
+      const ipAddress = JSON.stringify({
+        iv: iv.toString('hex'),
+        encryptedData: encyptIp.toString('hex'),
+        authTag: authTagIp.toString('hex'),
+      });
+
+      /* encryption of Paylolad Address */
+      const cipherPayload = crypto.createCipheriv(
+        'aes-256-gcm',
+        encryptionKey,
+        iv,
+      );
+      const activityPayload = JSON.stringify(payload);
+      const encyptPayload = Buffer.concat([
+        cipherPayload.update(activityPayload, 'utf8'),
+        cipherPayload.final(),
+      ]);
+      const authTagPayload = cipherIp.getAuthTag();
+      const tokenPayload = JSON.stringify({
+        iv: iv.toString('hex'),
+        encryptedData: encyptPayload.toString('hex'),
+        authTag: authTagPayload.toString('hex'),
+      });
+      // make an entry to mark the users login activity
+      let actor: string;
+      let tenantId: string;
+      if (userTenant) {
+        actor = userTenant[this.actorKey]?.toString() ?? '0';
+        tenantId = userTenant.tenantId;
+      } else {
+        actor = user['id']?.toString() ?? '0';
+        tenantId = user.defaultTenantId;
+      }
+      const loginActivity = new LoginActivity({
+        actor,
+        tenantId,
+        loginTime: new Date(),
+        tokenPayload,
+        loginType,
+        deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
+        ipAddress,
+      });
+      this.loginActivityRepo.create(loginActivity).catch(() => {
+        this.logger.error(
+          `Failed to add the login activity => ${JSON.stringify(
+            loginActivity,
+          )}`,
+        );
+      });
     }
   }
 }

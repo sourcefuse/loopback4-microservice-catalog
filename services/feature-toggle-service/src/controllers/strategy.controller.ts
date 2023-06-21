@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -35,7 +39,12 @@ export class StrategyController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateStrategy]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateStrategy,
+      PermissionKey.CreateStrategyNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -61,7 +70,9 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewStrategy]})
+  @authorize({
+    permissions: [PermissionKey.ViewStrategy, PermissionKey.ViewStrategyNum],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -76,7 +87,9 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewStrategy]})
+  @authorize({
+    permissions: [PermissionKey.ViewStrategy, PermissionKey.ViewStrategyNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -100,7 +113,12 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateStrategy]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateStrategy,
+      PermissionKey.UpdateStrategyNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -125,7 +143,9 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewStrategy]})
+  @authorize({
+    permissions: [PermissionKey.ViewStrategy, PermissionKey.ViewStrategyNum],
+  })
   @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -148,7 +168,12 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateStrategy]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateStrategy,
+      PermissionKey.UpdateStrategyNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -172,7 +197,12 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateStrategy]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateStrategy,
+      PermissionKey.UpdateStrategyNum,
+    ],
+  })
   @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -189,7 +219,12 @@ export class StrategyController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteStrategy]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteStrategy,
+      PermissionKey.DeleteStrategyNum,
+    ],
+  })
   @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -19,16 +23,17 @@ import {
 } from '@loopback/rest';
 import {Queries} from '../models';
 import {QueriesRepository} from '../repositories';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 
+const basepath = '/queries';
 export class QueriesController {
   constructor(
     @repository(QueriesRepository)
     public queriesRepository: QueriesRepository,
   ) {}
 
-  @post('/queries')
-  @response(200, {
+  @post(basepath)
+  @response(STATUS_CODE.OK, {
     description: 'Queries model instance',
     content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Queries)}},
   })
@@ -47,8 +52,8 @@ export class QueriesController {
     return this.queriesRepository.create(queries);
   }
 
-  @get('/queries/count')
-  @response(200, {
+  @get(`${basepath}/count`)
+  @response(STATUS_CODE.OK, {
     description: 'Queries model count',
     content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
@@ -56,8 +61,8 @@ export class QueriesController {
     return this.queriesRepository.count(where);
   }
 
-  @get('/queries')
-  @response(200, {
+  @get(basepath)
+  @response(STATUS_CODE.OK, {
     description: 'Array of Queries model instances',
     content: {
       [CONTENT_TYPE.JSON]: {
@@ -74,8 +79,8 @@ export class QueriesController {
     return this.queriesRepository.find(filter);
   }
 
-  @patch('/queries')
-  @response(200, {
+  @patch(basepath)
+  @response(STATUS_CODE.OK, {
     description: 'Queries PATCH success count',
     content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
   })
@@ -93,8 +98,8 @@ export class QueriesController {
     return this.queriesRepository.updateAll(queries, where);
   }
 
-  @get('/queries/{id}')
-  @response(200, {
+  @get(`${basepath}/{id}`)
+  @response(STATUS_CODE.OK, {
     description: 'Queries model instance',
     content: {
       [CONTENT_TYPE.JSON]: {
@@ -110,8 +115,8 @@ export class QueriesController {
     return this.queriesRepository.findById(id, filter);
   }
 
-  @patch('/queries/{id}')
-  @response(204, {
+  @patch(`${basepath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Queries PATCH success',
   })
   async updateById(
@@ -128,8 +133,8 @@ export class QueriesController {
     await this.queriesRepository.updateById(id, queries);
   }
 
-  @put('/queries/{id}')
-  @response(204, {
+  @put(`${basepath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Queries PUT success',
   })
   async replaceById(
@@ -139,8 +144,8 @@ export class QueriesController {
     await this.queriesRepository.replaceById(id, queries);
   }
 
-  @del('/queries/{id}')
-  @response(204, {
+  @del(`${basepath}/{id}`)
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Queries DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

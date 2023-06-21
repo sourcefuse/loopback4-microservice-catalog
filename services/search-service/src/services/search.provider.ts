@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BindingScope, inject, injectable, Provider} from '@loopback/core';
 import {juggler, Model} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';

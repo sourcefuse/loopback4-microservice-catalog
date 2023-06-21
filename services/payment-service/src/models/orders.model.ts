@@ -1,4 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {AnyObject, Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: true}})
 export class Orders extends Entity {
@@ -40,13 +44,13 @@ export class Orders extends Entity {
   @property({
     type: 'Object',
   })
-  metaData?: Object;
+  metaData?: AnyObject;
 
   // Define well-known properties here
 
   // Indexer property to allow additional data
   // eslint-disable-next-line
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<Orders>) {
     super(data);

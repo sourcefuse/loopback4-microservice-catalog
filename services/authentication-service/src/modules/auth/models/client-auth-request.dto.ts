@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {Model, model, property} from '@loopback/repository';
@@ -12,14 +16,14 @@ export class ClientAuthRequest extends Model {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_id: string;
+  client_id: string; //NOSONAR
 
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
-  client_secret: string;
+  client_secret: string; //NOSONAR
 
   constructor(data?: Partial<ClientAuthRequest>) {
     super(data);

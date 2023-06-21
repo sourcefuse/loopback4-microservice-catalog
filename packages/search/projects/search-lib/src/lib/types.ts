@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {InjectionToken} from '@angular/core';
 import {Observable} from 'rxjs';
 
@@ -30,6 +34,23 @@ export interface ISearchService<T extends IReturnType> {
     saveInRecents: boolean,
   ): Observable<T[]>;
   recentSearchApiRequest?(): Observable<ISearchQuery[]>;
+}
+
+export interface ISearchServiceWithPromises<T extends IReturnType> {
+  searchApiRequestWithPromise(
+    requestParameters: ISearchQuery,
+    saveInRecents: boolean,
+  ): Promise<T[]>;
+  recentSearchApiRequestWithPromise?(): Promise<ISearchQuery[]>;
+}
+
+export function isApiServiceWithPromise(
+  service:
+    | ISearchService<IReturnType>
+    | ISearchServiceWithPromises<IReturnType>,
+): service is ISearchServiceWithPromises<IReturnType> {
+  return !!(service as ISearchServiceWithPromises<IReturnType>)
+    .searchApiRequestWithPromise;
 }
 
 // cant use T extends IReturnType here

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {WorkerRegisterFnProvider} from '../../providers/register-worker.service';
 import {expect} from '@loopback/testlab';
 import {BPMTask, WorkerMap} from '../../types';

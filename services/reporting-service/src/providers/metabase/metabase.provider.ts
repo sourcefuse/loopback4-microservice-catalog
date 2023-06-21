@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {v4 as uuidv4} from 'uuid';
@@ -7,23 +11,27 @@ import axios from 'axios';
 import CircularJSON from 'circular-json';
 import moment from 'moment';
 import {MetabaseReports} from './types';
+import {ILogger, LOGGER} from '@sourceloop/core';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  path: path.join(process.env.INIT_CWD ?? '.', '.env'),
+  defaults: path.join(process.env.INIT_CWD ?? '.', '.env.defaults'),
   errorOnMissing: false,
   includeProcessEnv: true,
 });
 
+const daysDiff13 = 13;
+
 export class MetabaseProvider implements Provider<MetabaseReports> {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
-    private user: DataObject<{role: string}>,
+    private readonly user: DataObject<{role: string}>,
     @repository(QueriesRepository)
     public queriesRepository: QueriesRepository,
     @repository(MetabaseTokenRepository)
     public sessionTokenRepository: MetabaseTokenRepository,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   value() {
@@ -54,7 +62,7 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
           'days',
         );
         let tokenValue = sessionTokenFind?.sessionKey ?? '';
-        if (sessionTokenFind === null || daysDiff > 13) {
+        if (sessionTokenFind === null || daysDiff > daysDiff13) {
           await axios
             .post(`${metabaseBaseUrl}/api/session`, {
               username: `${metabaseUserName}`,
@@ -62,14 +70,14 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
             })
             .then(function (
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-              respon: DataObject<{data: DataObject<{id: string}>}> | any,
+              respon: DataObject<{data: DataObject<{id: string}>}> | any, //NOSONAR
             ) {
               tokenValue = respon.data.id;
             })
             .catch((err: unknown) => {
-              console.log(err);
+              this.logger.error(err as string);
             });
-          if (sessionTokenFind !== null && daysDiff > 13) {
+          if (sessionTokenFind !== null && daysDiff > daysDiff13) {
             await this.sessionTokenRepository.updateById(sessionTokenFind?.id, {
               ...sessionTokenFind,
               sessionKey: tokenValue,
@@ -87,31 +95,32 @@ export class MetabaseProvider implements Provider<MetabaseReports> {
         }
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['X-Metabase-Session'] = tokenValue ?? '';
-        const result = axios({
-          method: 'post',
-          url: `${metabaseBaseUrl}/api/dataset`,
-          data: findQuery.query,
-        })
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .then((res: any) => {
-            const newJson = CircularJSON.stringify(res);
-            const returnObjectUpdated = JSON.parse(newJson);
-            const parsedObject = returnObjectUpdated?.data?.data;
-            return parsedObject;
+        return (
+          axios({
+            method: 'post',
+            url: `${metabaseBaseUrl}/api/dataset`,
+            data: findQuery.query,
           })
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .catch((err: any) => {
-            console.log(
-              ` The error occurred while get Metabase JSON response :  ${err}`,
-            );
-          })
-          // })
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          .catch(function (error: any) {
-            console.log(error);
-          });
-        const returnObject = result;
-        return returnObject;
+            // sonarignore:start
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            .then((res: any) => {
+              const newJson = CircularJSON.stringify(res);
+              const returnObjectUpdated = JSON.parse(newJson);
+              return returnObjectUpdated?.data?.data;
+            })
+
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            .catch((err: any) => {
+              this.logger.error(
+                ` The error occurred while get Metabase JSON response :  ${err}`,
+              );
+            })
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            .catch((error: any) => {
+              this.logger.error(error);
+            })
+          //sonarignore:end
+        );
       },
     };
   }

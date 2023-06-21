@@ -1,5 +1,13 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -7,13 +15,21 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {SchedulerDatasourceName} from '../keys';
 import {Attachment, AttachmentRelations, Event} from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {EventRepository} from './event.repository';
 
-export class AttachmentRepository extends DefaultUserModifyCrudRepository<
-  Attachment,
-  typeof Attachment.prototype.id,
-  AttachmentRelations
-> {
+const AttachementAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Attachement_Logs',
+};
+
+export class AttachmentRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    Attachment,
+    typeof Attachment.prototype.id,
+    AttachmentRelations
+  >,
+  AttachementAuditOpts,
+) {
   public readonly event: BelongsToAccessor<
     Event,
     typeof Attachment.prototype.id
@@ -28,6 +44,8 @@ export class AttachmentRepository extends DefaultUserModifyCrudRepository<
     >,
     @repository.getter('EventRepository')
     protected eventRepositoryGetter: Getter<EventRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(Attachment, dataSource, getCurrentUser);
     this.event = this.createBelongsToAccessorFor(

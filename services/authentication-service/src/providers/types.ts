@@ -1,154 +1,195 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {DataObject} from '@loopback/repository';
-import {IAuthClient, IAuthUser, Keycloak} from 'loopback4-authentication';
+import {
+  Cognito,
+  IAuthClient,
+  IAuthUser,
+  Keycloak,
+} from 'loopback4-authentication';
 import * as AppleStrategy from 'passport-apple';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
+import * as AzureADStrategy from 'passport-azure-ad';
+import * as SamlStrategy from '@node-saml/passport-saml';
 import {
+  AuthClient,
   ForgetPasswordResponseDto,
   SignupRequestResponseDto,
   User,
   UserRelations,
 } from '../models';
-import {OtpResponse} from '../modules/auth';
+import {AuthUser, OtpResponse} from '../modules/auth';
+import {SignOptions, VerifyOptions} from 'jsonwebtoken';
 
-export interface GoogleSignUpFn {
-  (profile: GoogleStrategy.Profile): Promise<(User & UserRelations) | null>;
-}
+export type GoogleSignUpFn = (
+  profile: GoogleStrategy.Profile,
+) => Promise<(User & UserRelations) | null>;
 
-export interface GooglePreVerifyFn {
-  (
-    accessToken: string,
-    refreshToken: string,
-    profile: GoogleStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type GooglePreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: GoogleStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface GooglePostVerifyFn {
-  (
-    profile: GoogleStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type GooglePostVerifyFn = (
+  profile: GoogleStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface InstagramSignUpFn {
-  (profile: InstagramStrategy.Profile): Promise<(User & UserRelations) | null>;
-}
+export type InstagramSignUpFn = (
+  profile: InstagramStrategy.Profile,
+) => Promise<(User & UserRelations) | null>;
 
-export interface InstagramPreVerifyFn {
-  (
-    accessToken: string,
-    refreshToken: string,
-    profile: InstagramStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type InstagramPreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: InstagramStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface InstagramPostVerifyFn {
-  (
-    profile: InstagramStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type InstagramPostVerifyFn = (
+  profile: InstagramStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface AppleSignUpFn {
-  (profile: AppleStrategy.Profile): Promise<(User & UserRelations) | null>;
-}
+export type AppleSignUpFn = (
+  profile: AppleStrategy.Profile,
+) => Promise<(User & UserRelations) | null>;
 
-export interface ApplePreVerifyFn {
-  (
-    accessToken: string,
-    refreshToken: string,
-    profile: AppleStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type ApplePreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: AppleStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface ApplePostVerifyFn {
-  (
-    profile: AppleStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type ApplePostVerifyFn = (
+  profile: AppleStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface FacebookSignUpFn {
-  (profile: FacebookStrategy.Profile): Promise<(User & UserRelations) | null>;
-}
+export type FacebookSignUpFn = (
+  profile: FacebookStrategy.Profile,
+) => Promise<(User & UserRelations) | null>;
 
-export interface FacebookPreVerifyFn {
-  (
-    accessToken: string,
-    refreshToken: string,
-    profile: FacebookStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type FacebookPreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: FacebookStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface FacebookPostVerifyFn {
-  (
-    profile: FacebookStrategy.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type FacebookPostVerifyFn = (
+  profile: FacebookStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface KeyCloakSignUpFn {
-  (profile: Keycloak.Profile): Promise<IAuthUser | null>;
-}
+export type KeyCloakSignUpFn = (
+  profile: Keycloak.Profile,
+) => Promise<IAuthUser | null>;
 
-export interface KeyCloakPreVerifyFn {
-  (
-    accessToken: string,
-    refreshToken: string,
-    profile: Keycloak.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type KeyCloakPreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: Keycloak.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface KeyCloakPostVerifyFn {
-  (
-    profile: Keycloak.Profile,
-    user: IAuthUser | null,
-  ): Promise<IAuthUser | null>;
-}
+export type KeyCloakPostVerifyFn = (
+  profile: Keycloak.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
 
-export interface CodeWriterFn {
-  (token: string): Promise<string>;
-}
-
-export interface CodeReaderFn {
-  (token: string): Promise<string>;
-}
+export type CodeWriterFn = (token: string) => Promise<string>;
+export type CodeReaderFn = (token: string) => Promise<string>;
 
 export interface IDeviceInfo {
   userAgent?: string;
   deviceId?: string;
 }
 
-export interface JwtPayloadFn {
-  (
-    user: IAuthUser,
-    authClient: IAuthClient,
-    deviceInfo?: IDeviceInfo,
-  ): Promise<object>;
-}
+export type JwtPayloadFn = (
+  user: IAuthUser,
+  authClient: IAuthClient,
+  tenantId?: string,
+) => Promise<object>;
 
-export interface ForgotPasswordHandlerFn {
-  (dto: DataObject<ForgetPasswordResponseDto>): Promise<unknown>;
-}
+export type ForgotPasswordHandlerFn = (
+  dto: DataObject<ForgetPasswordResponseDto>,
+) => Promise<unknown>;
 
-export interface OtpGenerateFn {
-  (): Promise<string>;
-}
+export type AuthCodeGeneratorFn = (
+  client: AuthClient,
+  user: AuthUser,
+) => Promise<string>;
 
-export interface OtpFn {
-  (username: string): Promise<OtpResponse>;
-}
+export type MfaCheckFn = (user: AuthUser) => Promise<boolean>;
 
-export interface OtpSenderFn {
-  (otp: string, email: string): Promise<void>;
-}
+export type OtpGenerateFn = (secret: string) => Promise<string>;
 
-export interface SignupTokenHandlerFn {
-  (dto: DataObject<SignupRequestResponseDto>): Promise<void>;
-}
+export type OtpFn = (user: User) => Promise<OtpResponse>;
+
+export type OtpSenderFn = (otp: string, user: User) => Promise<void>;
+
+export type SignupTokenHandlerFn = (
+  dto: DataObject<SignupRequestResponseDto>,
+) => Promise<void>;
+
+export type AzureAdSignUpFn = (
+  profile: AzureADStrategy.IProfile,
+) => Promise<(User & UserRelations) | null>;
+
+export type AzureAdPreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: AzureADStrategy.IProfile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type AzureAdPostVerifyFn = (
+  profile: AzureADStrategy.IProfile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type CognitoPreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: Cognito.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type CognitoPostVerifyFn = (
+  profile: Cognito.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type CognitoSignUpFn = (
+  profile: Cognito.Profile,
+) => Promise<(User & UserRelations) | null>;
+
+export type JWTSignerFn<T> = (
+  payload: T,
+  options: SignOptions,
+) => Promise<string>;
+export type JWTVerifierFn<T> = (
+  token: string,
+  options: VerifyOptions,
+) => Promise<T>;
+export type SamlSignUpFn = (
+  profile: SamlStrategy.Profile,
+) => Promise<(User & UserRelations) | null>;
+
+export type SamlPreVerifyFn = (
+  profile: SamlStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type SamlPostVerifyFn = (
+  profile: SamlStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;

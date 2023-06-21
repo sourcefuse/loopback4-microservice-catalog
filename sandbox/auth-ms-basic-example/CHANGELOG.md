@@ -3,6 +3,320 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.10.2 (2023-06-19)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.10.1 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.10.0 (2023-06-08)
+
+* feat(authentication-service): maintain the entries for active users when a user login to the app (#1 ([0b6fa82](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b6fa82)), closes [#1425](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1425) [#1424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1424)
+
+
+
+
+
+## <small>0.9.12 (2023-06-08)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.11 (2023-06-07)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.10 (2023-05-11)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.9 (2023-05-03)</small>
+
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+
+
+
+
+
+## <small>0.9.8 (2023-04-27)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.7 (2023-04-10)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.6 (2023-03-15)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.5 (2023-03-06)</small>
+
+* refactor(chore): resolve sonar code smells (#1264) ([70d3fc5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/70d3fc5)), closes [#1264](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1264) [#1200](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1200)
+
+
+
+
+
+## <small>0.9.4 (2023-02-01)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.3 (2023-01-31)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.2 (2023-01-20)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.9.1 (2023-01-17)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.9.0 (2023-01-12)
+
+* refactor(chore): changes in the docker-compose (#1123) ([5704835](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5704835)), closes [#1123](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1123) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>0.8.1 (2022-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.8.0 (2022-11-25)
+
+* feat(authentication-service): feat(authentication-service): change parent class AuthClient (#1081) ([537cc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/537cc75)), closes [#1081](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1081)
+* fix(sandbox): add missing migrations to auth-examples (#1079) ([bf9f641](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf9f641)), closes [#1079](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1079)
+
+
+
+
+
+## <small>0.7.5 (2022-10-17)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.4 (2022-10-10)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.3 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.2 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.7.1 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.7.0 (2022-09-20)
+
+* feat(sandbox): Add an example for azure Ad auth in sandbox (#977) ([c67cf7d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c67cf7d)), closes [#977](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/977) [#976](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/976) [#976](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/976)
+
+
+
+
+
+## <small>0.6.6 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.6.5 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.6.4 (2022-09-02)</small>
+
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>0.6.3 (2022-09-02)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.6.2 (2022-08-30)</small>
+
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>0.6.1 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* build(sandbox): update versions in all examples (#996) ([ebafab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ebafab0)), closes [#996](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/996)
+
+
+
+
+
+## 0.6.0 (2022-08-20)
+
+* feat(sandbox): Example of sending push notification via socketio (#935) ([e08cb71](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e08cb71)), closes [#935](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/935) [#934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/934) [#934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/934) [#9934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/9934) [#934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/934)
+
+
+
+
+
+## <small>0.5.7 (2022-08-04)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.5.6 (2022-08-04)</small>
+
+* build(sandbox): upgrade sandbox examples versions (#929) ([2b56e9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2b56e9e)), closes [#929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/929)
+
+
+
+
+
+## <small>0.5.5 (2022-07-27)</small>
+
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
+## <small>0.5.4 (2022-07-11)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.5.3 (2022-07-06)</small>
+
+* chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))
+
+
+
+
+
+## <small>0.5.2 (2022-07-06)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## <small>0.5.1 (2022-06-30)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.5.0 (2022-06-24)
+
+* chore(deps): update deps in sandbox-examples (#832) ([5f38bac](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5f38bac)), closes [#832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/832) [#831](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/831)
+
+
+
+
+
 ## <small>0.4.14 (2022-05-30)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-ms-basic-example

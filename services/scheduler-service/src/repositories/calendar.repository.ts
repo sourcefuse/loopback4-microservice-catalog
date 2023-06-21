@@ -1,9 +1,17 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
   HasManyRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -17,15 +25,23 @@ import {
   Subscription,
   WorkingHour,
 } from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {EventRepository} from './event.repository';
 import {SubscriptionRepository} from './subscription.repository';
 import {WorkingHourRepository} from './working-hour.repository';
 
-export class CalendarRepository extends DefaultUserModifyCrudRepository<
-  Calendar,
-  typeof Calendar.prototype.id,
-  CalendarRelations
-> {
+const CalenderAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Calender_Logs',
+};
+
+export class CalendarRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    Calendar,
+    typeof Calendar.prototype.id,
+    CalendarRelations
+  >,
+  CalenderAuditOpts,
+) {
   public readonly events: HasManyRepositoryFactory<
     Event,
     typeof Calendar.prototype.id
@@ -54,6 +70,8 @@ export class CalendarRepository extends DefaultUserModifyCrudRepository<
     protected workingHourRepositoryGetter: Getter<WorkingHourRepository>,
     @repository.getter('SubscriptionRepository')
     protected SubscriptionRepositoryGetter: Getter<SubscriptionRepository> /* eslint-disable-line @typescript-eslint/naming-convention */,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(Calendar, dataSource, getCurrentUser);
     this.subscriptions = this.createHasManyRepositoryFactoryFor(

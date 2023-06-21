@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {del, get, param, put, requestBody} from '@loopback/rest';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -22,8 +26,8 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GetArchives]})
   @get('/archives/{archiveId}', {
-    description:
-      'Used to fetch a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.',
+    description: `Used to fetch a specific archive w.r.t archiveId.
+       If archive is not present, it will throw HTTP Not Found Error.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -66,8 +70,8 @@ export class VideoChatArchiveController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.DeleteArchive]})
   @del('/archives/{archiveId}', {
-    description:
-      'Used to delete a specific archive w.r.t archiveId. If archive is not present, it will throw HTTP Not Found Error.',
+    description: `Used to delete a specific archive w.r.t archiveId.
+       If archive is not present, it will throw HTTP Not Found Error.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {

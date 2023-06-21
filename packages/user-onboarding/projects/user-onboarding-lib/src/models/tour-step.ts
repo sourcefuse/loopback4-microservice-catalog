@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {TourButton} from './tour-button';
 import {Type} from '@angular/core';
 export interface TourStep {

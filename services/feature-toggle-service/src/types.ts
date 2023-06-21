@@ -1,22 +1,10 @@
-import {BindingKey} from '@loopback/core';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IServiceConfig} from '@sourceloop/core';
 
 export const FeatureToggleDbName = 'FeatureToggleDB';
-
-export interface FeatureFlagMetadata {
-  featureKey: string;
-  strategies: (BindingKey<FeatureInterface> | string)[];
-  options?: Object;
-}
-
-export interface FeatureFlagFn {
-  (): Promise<boolean>;
-}
-
-export interface FeatureInterface {
-  (): Promise<boolean>;
-}
-
 export interface IToggleServiceConfig extends IServiceConfig {
   bindControllers: boolean;
 }

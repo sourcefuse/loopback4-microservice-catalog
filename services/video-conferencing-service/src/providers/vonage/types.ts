@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   ExternalStorageOptions,
   VideoChatFeatures,
@@ -28,10 +32,15 @@ export interface VonageConfig extends IConfig {
 
 /**
  * @interface VonageMeetingOptions
- * @param mediaMode optional parameter used in vonage (not in twilio) for checking mode routed/relayed
- * @param archiveMode optional parameter to enable/disable recordings. Default will be false
- * @param isScheduled parameter to check whether a meeting is booked now if @param isScheduled=false  or scheduled at a later time if @param isScheduled=true.
- * @param scheduleTime not required if @param isScheduled is false, else set a later time for scheduling meeting
+ * @param mediaMode
+ *  optional parameter used in vonage (not in twilio) for checking mode routed/relayed
+ * @param archiveMode
+ * optional parameter to enable/disable recordings. Default will be false
+ * @param isScheduled
+ *  parameter to check whether a meeting is booked now
+ * if @param isScheduled=false  or scheduled at a later time if @param isScheduled=true.
+ * @param scheduleTime
+ *  not required if @param isScheduled is false, else set a later time for scheduling meeting
  *
  */
 export interface VonageMeetingOptions extends MeetingOptions {
@@ -50,7 +59,8 @@ export interface VonageMeetingResponse extends MeetingResponse {
  * @interface VonageSessionOptions
  * @param meetingId unique meetingId which is used inside sharing link urls.
  * @param role optional enum used in vonage (publisher, subscriber, moderator)
- * @param expireTime set the ttl (time to live) for a session created For twilio, it is max 4 hours.
+ * @param expireTime
+ *  set the ttl (time to live) for a session created For twilio, it is max 4 hours.
  * @param data optional string parameter if required for successfully creating session
  */
 export interface VonageSessionOptions extends SessionOptions {
@@ -65,7 +75,8 @@ export interface VonageSessionOptions extends SessionOptions {
  * @param accessKey access key id of aws iam account
  * @param secretKey secret access key of aws iam account
  * @param bucket s3 bucket name
- * @param fallback: optional parameter used for vonage to set fallback if upload fails. if it is none, it will not be available.
+ * @param fallback: optional parameter used for vonage to set fallback if upload fails.
+ * if it is none, it will not be available.
  * setting fallback to "opentok" will make the archive available  at the vonage dashboard
  */
 export interface VonageS3TargetOptions extends ExternalStorageOptions {
@@ -79,7 +90,8 @@ export interface VonageS3TargetOptions extends ExternalStorageOptions {
  * @interface VonageAzureTargetOptions
  * @param accountName The Windows Azure account name
  * @param domain (optional) — The Windows Azure domain in which the container resides.
- * @param fallback optional parameter used for vonage to set fallback if upload fails. if it is none, it will not be available.
+ * @param fallback optional parameter used for vonage to set fallback if upload fails.
+ *  if it is none, it will not be available.
  * setting fallback to "opentok" will make the archive available  at the vonage dashboard
  */
 export interface VonageAzureTargetOptions extends AzureTargetOptions {
@@ -111,8 +123,11 @@ interface VonageConnection {
  *   @param id the stream id
  *   @param connection of type @interface VonageConnection
  *   @param createdAt the timestamp value the stream was created
- *   @param name The name, if there was one, passed in when the publisher associated with this stream was initialized
- *   @param videoType The type of video sent on this stream, either "camera" or "screen" (or undefined for an audio-only stream).
+ *   @param name The name, if there was one,
+ * passed in when the publisher associated with this stream was initialized
+ *   @param videoType
+ * The type of video sent on this stream, either "camera" or "screen"
+ * (or undefined for an audio-only stream).
  */
 export interface VonageSessionWebhookPayload extends WebhookPayloadParameters {
   sessionId: string;

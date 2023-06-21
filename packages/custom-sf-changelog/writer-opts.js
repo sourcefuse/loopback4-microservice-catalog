@@ -65,7 +65,7 @@ function getWriterOpts() {
         if (url) {
           url = `${url}/issues/`
           // Issue URLs.
-          commit.subject = commit.subject.replace(/#([0-9]+)/g, (_, issue) => {
+          commit.subject = commit.subject.replace(/#(\d+)/g,(_, issue) => {
             issues.push(issue)
             return `[#${issue}](${url}${issue})`
           })

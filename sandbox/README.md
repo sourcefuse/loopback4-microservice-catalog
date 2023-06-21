@@ -159,6 +159,8 @@ istio-system   job.batch/istio-grafana-post-install-1.5.1    1/1           82s  
 
 </details>
 
+:exclamation: we have moved `sandbox/k8` to [terraform-sourceloop-apps](https://github.com/sourcefuse/terraform-sourceloop-apps) :exclamation:
+
 Change your working directory to `./sandbox`
 
 Run the build script

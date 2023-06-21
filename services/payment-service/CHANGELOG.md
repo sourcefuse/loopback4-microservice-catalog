@@ -3,6 +3,315 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.0.2 (2023-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>8.0.1 (2023-06-08)</small>
+
+* docs(chore): openapi docs maintenance (#1438) ([8efbc6a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8efbc6a)), closes [#1438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1438)
+
+
+
+
+
+## 8.0.0 (2023-06-08)
+
+* chore(deps): update loopback and sourceloop versions (#1437) ([fafdfd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fafdfd8)), closes [#1437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1437) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+* feat(chore): remove support for node v14,v12 (#1411) ([eda2051](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eda2051)), closes [#1411](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1411) [#1382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1382)
+
+
+### BREAKING CHANGE
+
+* End of life of node v14 and node v12
+
+
+
+
+## <small>7.1.3 (2023-05-11)</small>
+
+* fix(payment-service): added exports (#1420) ([ddfef35](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ddfef35)), closes [#1420](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1420)
+
+
+
+
+
+## <small>7.1.2 (2023-05-03)</small>
+
+* refactor(all-services): add support for node 18 (#1380) ([c195255](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c195255)), closes [#1380](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1380) [#1359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1359)
+* refactor(chore): fix sonar code smells (#1402) ([9244178](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9244178)), closes [#1402](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1402)
+* refactor(chore): fix sonar code smells (#1403) ([1cd394f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1cd394f)), closes [#1403](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1403)
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+
+
+
+
+
+## <small>7.1.1 (2023-05-02)</small>
+
+* chore(all-services): openapi docs maintenance (#1399) ([548d0b8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/548d0b8)), closes [#1399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1399)
+
+
+
+
+
+## 7.1.0 (2023-04-27)
+
+* chore(deps): Loopback and sourceloop version update (#1393) ([ef40a1d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef40a1d)), closes [#1393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1393) [#1392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1392)
+* feat(payment-service): add paypal payment gateway (#1389) ([de2bc0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/de2bc0d)), closes [#1389](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1389)
+* docs(chore): openapi docs maintenance (#1385) ([91fbc41](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/91fbc41)), closes [#1385](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1385) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>7.0.8 (2023-04-17)</small>
+
+* docs(all-services): add missing openapi docs (#1376) ([bef8a4f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bef8a4f)), closes [#1376](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1376) [#1375](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1375)
+
+
+
+
+
+## <small>7.0.7 (2023-03-15)</small>
+
+* chore(deps): loopback and sourceloop packages version update (#1348) ([d823ea4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d823ea4)), closes [#1348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1348) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346) [#1346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1346)
+
+
+
+
+
+## <small>7.0.6 (2023-03-06)</small>
+
+* chore(deps): loopback and sourceloop version update (#1332) ([39e1f7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/39e1f7a)), closes [#1332](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1332) [#1331](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1331)
+
+
+
+
+
+## <small>7.0.5 (2023-02-01)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>7.0.4 (2023-01-31)</small>
+
+* chore(deps): updating the loopback4-authentication package (#1260) ([99887d6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/99887d6)), closes [#1260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1260) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259) [#1259](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1259)
+
+
+
+
+
+## <small>7.0.3 (2023-01-20)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>7.0.2 (2023-01-17)</small>
+
+* chore(deps): loopback and sourceloop version update (#1211) ([3086a5b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3086a5b)), closes [#1211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1211) [#1206](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1206)
+* docs(core): add mkdocs and typedoc configuration (#1193) ([4b348b1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b348b1)), closes [#1193](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1193) [#1192](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1192)
+
+
+
+
+
+## <small>7.0.1 (2023-01-12)</small>
+
+* chore(deps): loopback and sourceloop version update (#1195) ([ea9bb21](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ea9bb21)), closes [#1195](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1195) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194) [#1194](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1194)
+
+
+
+
+
+## 7.0.0 (2022-12-21)
+
+* refactor(chore): changes in the docker-compose (#1123) ([5704835](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5704835)), closes [#1123](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1123) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>6.2.9 (2022-12-07)</small>
+
+* chore(deps): update loopback and sourceloop packages (#1101) ([fc6b432](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc6b432)), closes [#1101](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1101) [#1100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1100)
+
+
+
+
+
+## <small>6.2.8 (2022-11-25)</small>
+
+* chore(deps): loopback version update in services and packages (#1086) ([478668a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/478668a)), closes [#1086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1086)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+
+
+
+
+
+## <small>6.2.7 (2022-10-10)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>6.2.6 (2022-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>6.2.5 (2022-09-21)</small>
+
+* chore(deps): update loopback4-soft-delete version in services (#1030) ([d386bc1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d386bc1)), closes [#1030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1030) [#1026](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1026)
+
+
+
+
+
+## <small>6.2.4 (2022-09-21)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>6.2.3 (2022-09-20)</small>
+
+* docs(payment-service): add db schema in  payment service readme (#975) ([3e4ec07](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3e4ec07)), closes [#975](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/975) [#941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/941) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>6.2.2 (2022-09-12)</small>
+
+* chore(deps): loopback version update for services (#1017) ([9a9d653](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a9d653)), closes [#1017](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1017) [#1015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1015)
+
+
+
+
+
+## <small>6.2.1 (2022-09-12)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## 6.2.0 (2022-09-06)
+
+* feat(all-services): created number as string for permissions (#1006) ([396121b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/396121b)), closes [#1006](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1006) [#994](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/994)
+
+
+
+
+
+## <small>6.1.1 (2022-09-02)</small>
+
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 6.1.0 (2022-09-02)
+
+* feat(deps): updated for minor update in loopback4 (#1003) ([b04ebad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b04ebad)), closes [#1003](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1003) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>6.0.8 (2022-08-30)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>6.0.7 (2022-08-26)</small>
+
+* build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>6.0.6 (2022-07-27)</small>
+
+* chore(core): update license, add copywrite to all ts files (#794) ([8753452](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8753452)), closes [#794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/794) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)
+
+
+
+
+
+## <small>6.0.5 (2022-07-11)</small>
+
+* chore(deps): fix vulnerability (#895) ([53004c0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/53004c0)), closes [#895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>6.0.4 (2022-07-06)</small>
+
+* chore: publish release ([3523386](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3523386))
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+
+
+
+
+
+## <small>6.0.3 (2022-07-06)</small>
+
+* refactor(chore): fix sonar code smells (#873) ([347d2f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/347d2f2)), closes [#873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/873)
+
+
+
+
+
+## <small>6.0.2 (2022-06-30)</small>
+
+* chore(deps): update lb4 dependencies (#844) ([535ba19](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/535ba19)), closes [#844](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/844)
+
+
+
+
+
+## <small>6.0.1 (2022-06-24)</small>
+
+* perf(chore): sonar fixes (#847) ([910cf95](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/910cf95)), closes [#847](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/847) [#845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/845)
+
+
+
+
+
+## 6.0.0 (2022-06-22)
+
+* chore(deps): update deps in sandbox-examples (#832) ([5f38bac](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5f38bac)), closes [#832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/832) [#831](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/831)
+
+
+
+
+
 ## <small>5.0.2 (2022-05-30)</small>
 
 * chore(deps): update loopback4-authorization in all services (#813) ([44d8e67](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/44d8e67)), closes [#813](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/813) [#754](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/754)

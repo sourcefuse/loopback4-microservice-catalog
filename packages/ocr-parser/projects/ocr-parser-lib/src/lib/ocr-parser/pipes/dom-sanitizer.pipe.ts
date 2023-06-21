@@ -1,12 +1,14 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Pipe, PipeTransform} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
-@Pipe({ name: 'noSanitize' })
+@Pipe({name: 'noSanitize'})
 export class NoSanitizePipe implements PipeTransform {
-   constructor(private readonly domSanitizer: DomSanitizer) {
-
-   }
-   transform(html: string): SafeHtml {
-      return this.domSanitizer.bypassSecurityTrustHtml(html);
-   }
+  constructor(private readonly domSanitizer: DomSanitizer) {}
+  transform(html: string): SafeHtml {
+    return this.domSanitizer.bypassSecurityTrustHtml(html);
+  }
 }

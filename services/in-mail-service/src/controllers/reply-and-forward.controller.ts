@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {
   getModelSchemaRef,
@@ -104,7 +108,9 @@ export class ReplyAndForwardController {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ReplyMail]})
+  @authorize({
+    permissions: [PermissionsEnums.ReplyMail, PermissionsEnums.ReplyMailNum],
+  })
   @patch('/threads/{threadId}/mails/{messageId}/replies', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to reply to a single message',
@@ -163,7 +169,7 @@ export class ReplyAndForwardController {
         threadId,
       },
     };
-    if (extId) {
+    if (extId && messageFilter.where) {
       Object.assign(messageFilter.where, {
         extId,
       });
@@ -264,7 +270,12 @@ export class ReplyAndForwardController {
     }
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ComposeMail]})
+  @authorize({
+    permissions: [
+      PermissionsEnums.ComposeMail,
+      PermissionsEnums.ComposeMailNum,
+    ],
+  })
   @patch('/threads/{threadId}/forward', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to forward single message.',

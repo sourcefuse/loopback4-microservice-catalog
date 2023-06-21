@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
@@ -33,7 +37,7 @@ export class PaymentGateways extends Entity {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line
-  [prop: string]: any;
+  [prop: string]: any; //NOSONAR
 
   constructor(data?: Partial<PaymentGateways>) {
     super(data);

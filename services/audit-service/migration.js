@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 let isLocal = false;
 dotenvExt.load({
-  path: path.join(process.env.INIT_CWD, '.env'),
-  defaults: path.join(process.env.INIT_CWD, '.env.defaults'),
+  path: path.join(process.env.INIT_CWD ?? '.', '.env'),
+  defaults: path.join(process.env.INIT_CWD ?? '.', '.env.defaults'),
   errorOnMissing: false,
   includeProcessEnv: true,
 });
@@ -23,7 +23,8 @@ if (isLocal) {
   !(process.env[`${type}_MIGRATION`] || process.env.SOURCELOOP_MIGRATION)
 ) {
   console.warn(
-    `${type}_MIGRATION or SOURCELOOP_MIGRATION variables not found in the environment, skipping automigration.`,
+    `${type}_MIGRATION or SOURCELOOP_MIGRATION variables not found in the environment,
+     skipping automigration.`,
   );
 } else {
   const DBMigrate = require('db-migrate');
@@ -45,7 +46,7 @@ if (
 }
 
 function copyFileSync(source, target) {
-  var targetFile = target;
+  let targetFile = target;
 
   // If target is a directory, a new file with the same name will be created
   if (fs.existsSync(target)) {
@@ -58,10 +59,10 @@ function copyFileSync(source, target) {
 }
 
 function copyFolderRecursiveSync(source, target) {
-  var files = [];
+  let files = [];
 
   // Check if folder needs to be created or integrated
-  var targetFolder = path.join(target, path.basename(source));
+  let targetFolder = path.join(target, path.basename(source));
   if (!fs.existsSync(targetFolder)) {
     fs.mkdirSync(targetFolder);
   }
@@ -70,7 +71,7 @@ function copyFolderRecursiveSync(source, target) {
   if (fs.lstatSync(source).isDirectory()) {
     files = fs.readdirSync(source);
     files.forEach(function (file) {
-      var curSource = path.join(source, file);
+      const curSource = path.join(source, file);
       if (fs.lstatSync(curSource).isDirectory()) {
         copyFolderRecursiveSync(curSource, targetFolder);
       } else {

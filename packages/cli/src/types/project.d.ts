@@ -1,6 +1,12 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+
+// https://opensource.org/licenses/MIT
 declare module '@loopback/cli/lib/project-generator' {
   import BaseGenerator from '@loopback/cli/lib/base-generator';
   import Generator from 'yeoman-generator';
+  type DataSourceMap = import('../enum').DataSourceMap;
   class ProjectGenerator<
     T extends Generator.GeneratorOptions,
   > extends BaseGenerator<T> {
@@ -33,6 +39,8 @@ declare module '@loopback/cli/lib/project-generator' {
       facade?: boolean;
       baseServiceStoreName?: string;
       baseServiceCacheName?: string;
+      baseServiceDSList?: DataSourceMap[];
+      baseServiceComponentName?: string;
     };
     projectOptions: string[];
     promptProjectName(): Promise<void>;
