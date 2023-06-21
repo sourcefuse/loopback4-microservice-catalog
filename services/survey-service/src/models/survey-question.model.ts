@@ -2,6 +2,7 @@ import {model, property, hasOne, belongsTo} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Survey} from './survey.model';
 import {Question} from './questions.model';
+import {Section} from './section.model';
 
 @model({name: 'survey_questions'})
 export class SurveyQuestion extends UserModifiableEntity {
@@ -77,6 +78,17 @@ export class SurveyQuestion extends UserModifiableEntity {
     },
   )
   questionId: string;
+  @belongsTo(
+    () => Section,
+    {
+      keyFrom: 'sectionId',
+      name: 'section',
+    },
+    {
+      name: 'section_id',
+    },
+  )
+  sectionId: string;
 
   constructor(data?: Partial<SurveyQuestion>) {
     super(data);

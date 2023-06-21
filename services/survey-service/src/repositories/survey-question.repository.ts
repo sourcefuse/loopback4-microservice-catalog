@@ -10,6 +10,8 @@ import {Survey} from '../models/survey.model';
 import {QuestionRepository} from './questions.repository';
 import {SurveyRepository} from './survey.repository';
 import {SurveyDbSourceName} from '../types';
+import {Section} from '../models/section.model';
+import {SectionRepository} from './section.repository';
 
 export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
   SurveyQuestion,
@@ -30,6 +32,10 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
     Question,
     typeof SurveyQuestion.prototype.id
   >;
+  public readonly section: BelongsToAccessor<
+    Section,
+    typeof SurveyQuestion.prototype.id
+  >;
 
   constructor(
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
@@ -37,8 +43,15 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
     protected surveyRepositoryGetter: Getter<SurveyRepository>,
     @repository.getter('QuestionRepository')
     protected questionRepositoryGetter: Getter<QuestionRepository>,
+    @repository.getter('SectionRepository')
+    protected sectionRepositoryGetter: Getter<SectionRepository>,
   ) {
     super(SurveyQuestion, dataSource);
+    this.section = this.createBelongsToAccessorFor(
+      'section',
+      sectionRepositoryGetter,
+    );
+    this.registerInclusionResolver('section', this.section.inclusionResolver);
 
     this.question = this.createBelongsToAccessorFor(
       'question',

@@ -38,4 +38,19 @@ export const enum PermissionKey {
   ViewAnyTemplateQuestion = '454',
   UpdateAnyTemplateQuestion = '455',
   DeleteAnyTemplateQuestion = '456',
+
+  CreateSurvey = '457',
+  ViewSurvey = '458',
+  UpdateSurvey = '459',
+  DeleteSurvey = '460',
+  CreateAnySurvey = '461',
+  ViewAnySurvey = '462',
+  UpdateAnySurvey = '463',
+  DeleteAnySurvey = '464',
+
+  ViewOpenSurvey = '533',
+  ViewOpenSurveyQuestion = '534',
+  ViewOpenSurveySection = '535',
+  ViewOpenSurveyResponse = '536',
+  CreateOpenSurveyResponse = '537',
 }

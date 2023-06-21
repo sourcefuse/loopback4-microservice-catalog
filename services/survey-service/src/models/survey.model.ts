@@ -117,7 +117,7 @@ export class Survey extends UserModifiableEntity {
       nullable: true,
     },
   })
-  baseSurveyId: string;
+  baseSurveyId?: string;
 
   createdByUser?: string;
 
