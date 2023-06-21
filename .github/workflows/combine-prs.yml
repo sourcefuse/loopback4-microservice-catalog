@@ -1,4 +1,4 @@
-name: 'Combine PRs'
+name: 'Combine PRs [Manual]'
 
 on:
   workflow_dispatch:
@@ -7,6 +7,10 @@ on:
         description: 'Branch prefix to find combinable PRs based on'
         required: true
         default: 'dependabot'
+      prTitle:
+        description: 'Combined PR Title'
+        required: true
+        default: 'chore(deps): combine dependabot updates'
       mustBeGreen:
         description: 'Only combine PRs that are green (status is success). Set to false if repo does not run checks'
         type: boolean
@@ -144,7 +148,7 @@ jobs:
             await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'Combined PR',
+              title: '${{ github.event.inputs.prTitle }}',
               head: '${{ github.event.inputs.combineBranchName }}',
               base: baseBranch,
               body: body
