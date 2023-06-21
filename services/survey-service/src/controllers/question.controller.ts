@@ -129,7 +129,7 @@ export class QuestionController {
     question: Question,
     @param.where(Question) where?: Where<Question>,
   ): Promise<Count> {
-    return this.questionRepository.updateAll(question);
+    return this.questionRepository.updateAll(question, where);
   }
 
   @authenticate(STRATEGY.BEARER, {

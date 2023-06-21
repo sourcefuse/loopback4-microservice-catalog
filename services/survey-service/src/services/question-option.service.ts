@@ -14,8 +14,8 @@ const MAX_OPTIONS_ALLOWED = 12;
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuestionOptionService {
   constructor(
-    @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository,
+    // @repository(SurveyRepository)
+    // public surveyRepository: SurveyRepository,
     @repository(OptionsRepository)
     public optionsRepository: OptionsRepository,
   ) {}

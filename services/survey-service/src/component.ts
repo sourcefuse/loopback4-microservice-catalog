@@ -25,7 +25,11 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {SurveyServiceBindings} from './keys';
-import {PingController, QuestionController} from './controllers';
+import {
+  OptionController,
+  PingController,
+  QuestionController,
+} from './controllers';
 import {QuestionRepository} from './repositories';
 import {OptionsRepository} from './repositories/options.repository';
 import {QuestionDto} from './models/question-dto.model';
@@ -35,6 +39,7 @@ import {
   QuestionHelperService,
   QuestionTemplateService,
 } from './services';
+import {QuestionOptionService} from './services/question-option.service';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -50,13 +55,14 @@ export class SurveyServiceComponent implements Component {
       QuestionHelperService,
       QuestionDuplicateHelperService,
       QuestionTemplateService,
+      QuestionOptionService,
     ];
 
     this.repositories = [QuestionRepository, OptionsRepository];
 
     this.models = [QuestionDto, Question, Options];
 
-    this.controllers = [PingController, QuestionController];
+    this.controllers = [PingController, QuestionController, OptionController];
 
     // Mount core component
     this.application.component(CoreComponent);

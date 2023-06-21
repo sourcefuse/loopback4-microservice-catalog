@@ -211,12 +211,12 @@ export class QuestionHelperService {
             fields: {id: true, questionId: true},
           },
         },
-        {
-          relation: 'survey',
-          scope: {
-            fields: {id: true, status: true},
-          },
-        },
+        // {
+        //   relation: 'survey',
+        //   scope: {
+        //     fields: {id: true, status: true},
+        //   },
+        // },
       ],
     });
     if (!question) {

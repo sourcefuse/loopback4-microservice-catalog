@@ -29,7 +29,7 @@ import {Options} from '../models';
 import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
 import {QuestionOptionService} from '../services/question-option.service';
 
-const basePath = '/tenants/{tenantId}/question/{questionId}/options';
+const basePath = '/question/{questionId}/options';
 
 export class OptionController {
   constructor(

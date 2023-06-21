@@ -62,15 +62,6 @@ export class Options extends UserModifiableEntity {
   )
   followupQuestionId?: string;
 
-  @property({
-    name: 'item_id',
-    type: 'string',
-    jsonSchema: {
-      nullable: true,
-    },
-  })
-  itemId?: string;
-
   constructor(data?: Partial<Options>) {
     super(data);
   }
