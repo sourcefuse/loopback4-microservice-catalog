@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {HttpErrors} from '@loopback/rest';
 import {
   createStubInstance,
@@ -8,7 +12,11 @@ import {
 import Sinon from 'sinon';
 
 import {VideoChatSessionController} from '../../../controllers';
-import {VonageConfig, VonageProvider} from '../../../providers/vonage';
+import {
+  VonageConfig,
+  VonageProvider,
+  VonageVideoChat,
+} from '../../../providers/vonage';
 import {VonageService} from '../../../providers/vonage/vonage.service';
 import {
   SessionAttendeesRepository,
@@ -31,7 +39,6 @@ import {
   setUpMockProvider,
   stream,
 } from '../../helpers';
-import {VonageVideoChat} from '../../../providers/vonage';
 
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
@@ -157,7 +164,7 @@ describe('Session APIs', () => {
       expect(error).instanceof(Error);
     });
 
-    it('denies if the threshold time to join has not been achieved (scheduling logic)', async () => {
+    it('denies if threshold time to join has not been achieved (scheduling logic)', async () => {
       setUp({
         getToken: sinon.stub().returns(getSessionResponse({})),
       });
@@ -490,9 +497,6 @@ describe('Session APIs', () => {
     };
 
     videoChatSessionRepo = createStubInstance(VideoChatSessionRepository);
-
-    // chatSessionService = createStubInstance(ChatSessionService);
-
     sessionAttendeesRepo = createStubInstance(SessionAttendeesRepository);
     const stubbedProvider = setUpMockProvider(providerStub);
     sinon.stub(VonageProvider.prototype, 'value').returns(stubbedProvider);

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {verify} from 'jsonwebtoken';

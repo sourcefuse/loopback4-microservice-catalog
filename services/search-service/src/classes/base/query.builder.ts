@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   AnyObject,
   DataObject,
@@ -108,7 +112,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
       ) {
         throw new HttpErrors.BadRequest(Errors.INVALID_ORDER);
       }
-      orderQuery = `ORDER BY ${column} ${sortOrder}`;
+      orderQuery = `ORDER BY ${String(column)} ${sortOrder}`;
     } else {
       orderQuery = 'ORDER BY rank DESC';
     }
@@ -573,7 +577,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
 
   private _formatColumnSameInDb(modelColumn: keyof T, dbColumn: string) {
     if (modelColumn !== dbColumn) {
-      return `${dbColumn} as ${modelColumn}`;
+      return `${dbColumn} as ${String(modelColumn)}`;
     } else {
       return modelColumn;
     }

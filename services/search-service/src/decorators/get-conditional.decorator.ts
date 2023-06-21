@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {get, OperationObject} from '@loopback/rest';
 
 export function getOnCondition(
@@ -8,6 +12,6 @@ export function getOnCondition(
   if (condition) {
     return get(path, spec);
   } else {
-    return () => {};
+    return () => {}; //NOSONAR
   }
 }

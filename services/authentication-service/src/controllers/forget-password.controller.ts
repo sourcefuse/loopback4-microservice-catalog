@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {get, HttpErrors, param, patch, post, requestBody} from '@loopback/rest';
@@ -73,7 +77,7 @@ export class ForgetPasswordController {
     } catch (e) {
       return;
     }
-    if (!user || !user.id) {
+    if (!user?.id) {
       this.logger.info(`Forget password attempted for invalid user`);
       return;
     }

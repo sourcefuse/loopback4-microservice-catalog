@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/search-client",
   "version": "0.0.0",
-  "description": "A global search component for search microservice",
+  "description": "A global search component for search microservice.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,7 +20,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "dependencies": {
     "@angular/animations": "~13.3.11",
     "@angular/common": "~13.3.11",
@@ -45,8 +45,11 @@
     "@angular/compiler-cli": "~13.3.11",
     "@angular/flex-layout": "~13.0.0-beta.38",
     "@angular/material": "~13.3.9",
+    "@types/fs-extra": "^11.0.1",
     "@types/jasmine": "~3.8.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "18.7.8",
+    "concat": "^1.0.3",
+    "fs-extra": "^11.1.0",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.16",
     "karma-chrome-launcher": "~3.1.0",
@@ -55,7 +58,8 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^13.3.1",
     "prettier": "^2.4.1",
-    "typescript": "~4.6.4"
+    "ts-node": "^10.9.1",
+    "typescript": "4.6.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

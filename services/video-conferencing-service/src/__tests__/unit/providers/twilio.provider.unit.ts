@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   createStubInstance,
   expect,
@@ -24,7 +28,6 @@ import {
 
 describe('TwilioProvider (unit)', () => {
   const sessionId = 'RM-dummy-meeting-id';
-  // const meetingId = 'RM-dummy-meeting-id';
   const twilioFailureError = new Error('Twilio failure');
   const archiveId = 'RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
   const jwtToken = 'dummy-jwt-token';

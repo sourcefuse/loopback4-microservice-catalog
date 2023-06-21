@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {BindingScope, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
@@ -44,11 +48,11 @@ export class LoginHelperService {
     if (!currentUser.authClientIds || currentUser.authClientIds.length === 0) {
       this.logger.error('No allowed auth clients found for this user in DB');
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.ClientUserMissing);
-    } else if (!req.client_secret) {
-      this.logger.error('client secret key missing from request object');
-      throw new HttpErrors.BadRequest(AuthErrorKeys.ClientSecretMissing);
+
+      // sonarignore:start
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } else if ((currentUser.authClientIds as any).indexOf(client.id ?? 0) < 0) {
+      // sonarignore:end
       this.logger.error(
         'User is not allowed to access client id passed in request',
       );

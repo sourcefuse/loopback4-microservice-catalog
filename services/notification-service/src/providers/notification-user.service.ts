@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
 import {Notification, NotificationUser} from '../models';
 import {INotificationUserManager} from '../types';
@@ -6,8 +10,6 @@ import {INotificationUserManager} from '../types';
 export class NotificationUserProvider
   implements Provider<INotificationUserManager>
 {
-  constructor() {}
-
   value() {
     return {
       getNotifUsers: async (notif: Notification) => {

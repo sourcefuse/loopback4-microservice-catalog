@@ -167,13 +167,13 @@
       "loopback4-authorization": "<%= project.dependencies['loopback4-authorization'] -%>",
       "swagger-stats": "<%= project.dependencies['swagger-stats'] -%>",
       "@opentelemetry/exporter-jaeger": "<%= project.dependencies['@opentelemetry/exporter-jaeger'] -%>",
-      "@opentelemetry/node": "<%= project.dependencies['@opentelemetry/node'] -%>",
+      "@opentelemetry/sdk-trace-node": "<%= project.dependencies['@opentelemetry/sdk-trace-node'] -%>",
       "@opentelemetry/plugin-dns": "<%= project.dependencies['@opentelemetry/plugin-dns'] -%>",
       "@opentelemetry/plugin-http": "<%= project.dependencies['@opentelemetry/plugin-http'] -%>",
       "@opentelemetry/plugin-https": "<%= project.dependencies['@opentelemetry/plugin-https'] -%>",
       "@opentelemetry/plugin-pg": "<%= project.dependencies['@opentelemetry/plugin-pg'] -%>",
       "@opentelemetry/plugin-pg-pool": "<%= project.dependencies['@opentelemetry/plugin-pg-pool'] -%>",
-      "@opentelemetry/tracing": "<%= project.dependencies['@opentelemetry/tracing'] -%>",
+      "@opentelemetry/sdk-trace-base": "<%= project.dependencies['@opentelemetry/sdk-trace-base'] -%>",
       "symlink-resolver": "<%= project.dependencies['symlink-resolver'] -%>",
       "dotenv": "<%= project.dependencies['dotenv'] -%>",
       "dotenv-extended": "<%= project.dependencies['dotenv-extended'] -%>",
@@ -182,6 +182,13 @@
 <% } else if (project.datasourceType === 'mysql') { -%>
       "loopback-connector-mysql": "<%= project.dependencies["loopback-connector-mysql"]%>",
 <% } -%>
+<% } -%>
+<% if (project.facade) { -%>
+      "loopback-connector-kv-redis": "<%= project.dependencies["loopback-connector-kv-redis"]%>",
+      "loopback4-ratelimiter": "<%= project.dependencies["loopback4-ratelimiter"]%>",
+      "loopback4-helmet": "<%= project.dependencies["loopback4-helmet"]%>",
+<% } else if (project.baseServiceCacheName) { -%>
+      "loopback-connector-kv-redis": "<%= project.dependencies["loopback-connector-kv-redis"]%>",
 <% } -%>
       "tslib": "<%= project.dependencies['tslib'] -%>"
     },

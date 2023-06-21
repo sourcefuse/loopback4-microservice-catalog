@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {readdirSync} from 'fs';
 import {mkdir} from 'fs/promises';
 import {join} from 'path';
@@ -31,7 +35,7 @@ export abstract class BaseGenerator<
   }
 
   exit(reason?: string) {
-    if (!!reason) return;
+    if (reason) return;
     this.exitGeneration = reason;
   }
 

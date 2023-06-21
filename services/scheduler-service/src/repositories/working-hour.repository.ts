@@ -1,5 +1,13 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -7,13 +15,21 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {SchedulerDatasourceName} from '../keys';
 import {Calendar, WorkingHour, WorkingHourRelations} from '../models';
+import {AuditLogRepository} from './audit.repository';
 import {CalendarRepository} from './calendar.repository';
 
-export class WorkingHourRepository extends DefaultUserModifyCrudRepository<
-  WorkingHour,
-  typeof WorkingHour.prototype.id,
-  WorkingHourRelations
-> {
+const WorkingHourAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Working_Hours_Logs',
+};
+
+export class WorkingHourRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    WorkingHour,
+    typeof WorkingHour.prototype.id,
+    WorkingHourRelations
+  >,
+  WorkingHourAuditOpts,
+) {
   public readonly calendar: BelongsToAccessor<
     Calendar,
     typeof WorkingHour.prototype.id
@@ -28,6 +44,8 @@ export class WorkingHourRepository extends DefaultUserModifyCrudRepository<
     >,
     @repository.getter('CalendarRepository')
     protected calendarRepositoryGetter: Getter<CalendarRepository>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(WorkingHour, dataSource, getCurrentUser);
 

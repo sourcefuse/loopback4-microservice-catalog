@@ -1,3 +1,7 @@
+﻿﻿// CCopyright (c) 2023Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Observable, of} from 'rxjs';
 import {
   DeleteStateParameters,
@@ -20,6 +24,7 @@ export class SaveSCommand implements SaveStateCommand {
     return of(newTourState);
   }
 }
+
 export class LoadSCommand implements LoadStateCommand {
   constructor(private readonly storage: StorageService) {}
   public parameters: LoadStateParameters;

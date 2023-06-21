@@ -1,9 +1,9 @@
 import {JaegerExporter} from '@opentelemetry/exporter-jaeger';
-import {NodeTracerProvider} from '@opentelemetry/node';
+import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {
   BatchSpanProcessor,
   ConsoleSpanExporter,
-} from '@opentelemetry/tracing';
+} from '@opentelemetry/sdk-trace-base';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 

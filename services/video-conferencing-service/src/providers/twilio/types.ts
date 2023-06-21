@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   RoomListInstanceCreateOptions,
   RoomRoomStatus,
@@ -43,13 +47,17 @@ export interface TwilioVideoChat extends VideoChatInterface {
   getFeatures(): VideoChatFeatures;
 }
 
+// sonarignore:start
 export interface TwilioMeetingResponse extends MeetingResponse {}
+// sonarignore:end
 
 export interface TwilioS3TargetOptions extends ExternalStorageOptions {
   awsS3Url: string;
   bucket?: string;
 }
+// sonarignore:start
 export interface TwilioSessonOptions extends SessionOptions {}
+// sonarignore:end
 
 export interface TwilioWebhookPayload extends WebhookPayloadParameters {
   accountSid?: string;

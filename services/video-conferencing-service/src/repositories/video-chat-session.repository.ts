@@ -1,24 +1,43 @@
-import {juggler} from '@loopback/repository';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {VideoChatSession} from '../models/video-chat-session.model';
+import {juggler, repository} from '@loopback/repository';
 import {
-  IAuthUserWithPermissions,
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
+import {
   DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
 } from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {VideoConfDatasource} from '../keys';
-
-export class VideoChatSessionRepository extends DefaultUserModifyCrudRepository<
+import {
   VideoChatSession,
-  typeof VideoChatSession.prototype.id
-> {
+  VideoChatSessionRelation,
+} from '../models/video-chat-session.model';
+import {AuditLogRepository} from './audit.repository';
+
+const VideoChatSessionAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Video_Chat_Session_Logs',
+};
+export class VideoChatSessionRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    VideoChatSession,
+    typeof VideoChatSession.prototype.id,
+    VideoChatSessionRelation
+  >,
+  VideoChatSessionAuditOpts,
+) {
   constructor(
     @inject(`datasources.${VideoConfDatasource}`)
     dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
+    public getCurrentUser: Getter<IAuthUserWithPermissions>,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(VideoChatSession, dataSource, getCurrentUser);
   }

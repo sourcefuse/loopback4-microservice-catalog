@@ -1,10 +1,15 @@
-import {Entity, model, property} from '@loopback/repository';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({
   name: 'features',
   description: 'The features table',
 })
-export class Feature extends Entity {
+export class Feature extends UserModifiableEntity {
   @property({
     type: 'string',
     id: true,

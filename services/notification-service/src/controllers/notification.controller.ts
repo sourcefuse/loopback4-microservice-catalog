@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
   Count,
@@ -53,7 +57,12 @@ export class NotificationController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
   @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -82,7 +91,7 @@ export class NotificationController {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
     const notif = await this.notificationRepository.create(notification);
-    if (!notif || !notif.id) {
+    if (!notif?.id) {
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
     }
 
@@ -92,7 +101,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
   @post(`${basePath}/bulk`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -131,7 +145,7 @@ export class NotificationController {
     const notifs = await this.notificationRepository.createAll(notifications);
     const notifUsers: NotificationUser[] = [];
     for (const notif of notifs) {
-      if (!notif || !notif.id) {
+      if (!notif?.id) {
         throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
       }
 
@@ -143,7 +157,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -183,7 +202,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.ViewNotification,
+      PermissionKey.ViewNotificationNum,
+    ],
+  })
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -201,7 +225,12 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateNotification,
+      PermissionKey.UpdateNotificationNum,
+    ],
+  })
   @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -229,7 +258,12 @@ export class NotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.UpdateNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateNotification,
+      PermissionKey.UpdateNotificationNum,
+    ],
+  })
   @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -253,7 +287,12 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteNotification]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteNotification,
+      PermissionKey.DeleteNotificationNum,
+    ],
+  })
   @del(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -270,7 +309,7 @@ export class NotificationController {
   }
 
   createNotifUsers(notif: Notification) {
-    if (!notif.receiver || !notif.receiver.to) {
+    if (!notif.receiver?.to) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.ReceiverNotFound);
     }
 

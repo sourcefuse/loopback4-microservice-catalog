@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {WorflowManager} from '../types';

@@ -12,18 +12,12 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "user-onboarding-lib": [
-        "dist"
-      ]
+      "user-onboarding-lib": ["dist"]
     }
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "enableIvy":false
+    "enableI18nLegacyMessageIdFormat": false
   }
 }

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
 import {Event} from './event.model';
 import {ResponseStatusType} from './enums/response-status.enum';

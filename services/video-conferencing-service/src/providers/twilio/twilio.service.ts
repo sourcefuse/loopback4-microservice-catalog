@@ -1,15 +1,17 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {TwilioBindings} from './keys';
 import {TwilioConfig} from './types';
-import twilio from 'twilio';
-import {Twilio as TwilioClient} from 'twilio';
+import twilio, {Twilio as TwilioClient} from 'twilio';
 import {
   RoomInstance,
   RoomListInstanceCreateOptions,
 } from 'twilio/lib/rest/video/v1/room';
 
-import AccessToken from 'twilio/lib/jwt/AccessToken';
-import {VideoGrant} from 'twilio/lib/jwt/AccessToken';
+import AccessToken, {VideoGrant} from 'twilio/lib/jwt/AccessToken';
 import {DataObject, repository} from '@loopback/repository';
 import {ArchiveResponse, SessionResponse, VideoChatFeatures} from '../..';
 import {
@@ -148,7 +150,7 @@ export class TwilioService {
       const event = webhookPayload.statusCallbackEvent;
       const sessionDetail = await this.videoChatSessionRepository.findOne({
         where: {
-          meetingLink: webhookPayload.roomSid!,
+          meetingLink: webhookPayload.roomSid ? webhookPayload.roomSid : '',
         },
       });
       //update archive Id
@@ -197,11 +199,12 @@ export class TwilioService {
           isDeleted: true,
           extMetadata: {webhookPayload},
         };
-
         await this.sessionAttendeesRepository.updateById(
-          sessionAttendessDetail!.id,
+          sessionAttendessDetail?.id,
           updatedAttendee,
         );
+      } else {
+        // do nothing
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError(

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {
@@ -8,17 +12,9 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
-import {
-  NotificationServiceComponent,
-  NotifServiceBindings,
-} from '@sourceloop/notification-service';
-import {
-  NotificationBindings,
-  PubnubBindings,
-  PubNubProvider,
-  SESBindings,
-  SNSBindings,
-} from 'loopback4-notifications';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
+import {NotificationBindings} from 'loopback4-notifications';
+import {PubnubBindings, PubNubProvider} from 'loopback4-notifications/pubnub';
 
 export {ApplicationConfig};
 
@@ -40,19 +36,13 @@ export class PubnubExampleApplication extends BootMixin(
     this.component(RestExplorerComponent);
     this.component(NotificationServiceComponent);
 
-    this.bind(NotifServiceBindings.Config).to({
-      useCustomEmailProvider: false,
-      useCustomSMSProvider: false,
-      useCustomPushProvider: true,
-      useCustomSequence: false,
-    });
-
     /*
       subscribeKey: String - key used for subscribing to a channel (mandatory)
       publishKey: String - key used for publishing messages to a channel (mandatory)
       ssl: Boolean - if true request will be over HTTPS (optional)
       logVerbosity: Boolean - log the HTTP request (optional)
-      uuid: String - set a unique uuid to identify a user or a device that connects to pubnub (mandatory)
+      uuid: String - set a unique uuid to identify a user
+       or a device that connects to pubnub (mandatory)
       apns2Env: String - the environment on which its running (optional)
       apns2BundleId:  String - the bundle id (optional)
     */
@@ -67,8 +57,6 @@ export class PubnubExampleApplication extends BootMixin(
       apns2BundleId: process.env.APP_BUNDLE_ID,
     });
 
-    this.bind(SNSBindings.Config).to({});
-    this.bind(SESBindings.Config).to({});
     this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
 
     this.projectRoot = __dirname;

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Binding,
   Component,
@@ -25,9 +29,19 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {Class, Model, Repository} from '@loopback/repository';
-import {Message, MessageRecipient} from './models';
-import {MessageRecipientRepository, MessageRepository} from './repositories';
 import {
+  AttachmentFile,
+  AttachmentFileDto,
+  Message,
+  MessageRecipient,
+} from './models';
+import {
+  AttachmentFileRepository,
+  MessageRecipientRepository,
+  MessageRepository,
+} from './repositories';
+import {
+  AttachmentFileController,
   MessageController,
   MessageMessageController,
   MessageMessageRecipientController,
@@ -65,10 +79,18 @@ export class ChatServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+    this.repositories = [
+      MessageRepository,
+      MessageRecipientRepository,
+      AttachmentFileRepository,
+    ];
 
-    this.repositories = [MessageRepository, MessageRecipientRepository];
-
-    this.models = [Message, MessageRecipient];
+    this.models = [
+      Message,
+      MessageRecipient,
+      AttachmentFile,
+      AttachmentFileDto,
+    ];
 
     this.controllers = [
       MessageController,
@@ -76,6 +98,7 @@ export class ChatServiceComponent implements Component {
       MessageMessageController,
       MessageRecipientMessageController,
       MessageMessageRecipientController,
+      AttachmentFileController,
     ];
   }
 

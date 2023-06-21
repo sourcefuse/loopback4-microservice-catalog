@@ -1,11 +1,14 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
-
 const config = {
   name: AuditDbSourceName,
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,

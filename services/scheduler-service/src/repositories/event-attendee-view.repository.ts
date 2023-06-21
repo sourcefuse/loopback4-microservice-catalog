@@ -1,19 +1,34 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 
-import {EventAttendeeView} from '../models';
+import {juggler, repository} from '@loopback/repository';
+import {
+  ConditionalAuditRepositoryMixin,
+  IAuditMixinOptions,
+} from '@sourceloop/audit-log';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-import {juggler} from '@loopback/repository';
 import {SchedulerDatasourceName} from '../keys';
+import {EventAttendeeView} from '../models';
+import {AuditLogRepository} from './audit.repository';
 
-export class EventAttendeeViewRepository extends DefaultUserModifyCrudRepository<
-  EventAttendeeView,
-  typeof EventAttendeeView.prototype.id,
-  EventAttendeeView
-> {
+const EventAttendeeViewAuditOpts: IAuditMixinOptions = {
+  actionKey: 'Event_Attendee_View_Logs',
+};
+export class EventAttendeeViewRepository extends ConditionalAuditRepositoryMixin(
+  DefaultUserModifyCrudRepository<
+    EventAttendeeView,
+    typeof EventAttendeeView.prototype.id,
+    EventAttendeeView
+  >,
+  EventAttendeeViewAuditOpts,
+) {
   constructor(
     @inject(`datasources.${SchedulerDatasourceName}`)
     dataSource: juggler.DataSource,
@@ -21,6 +36,8 @@ export class EventAttendeeViewRepository extends DefaultUserModifyCrudRepository
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @repository.getter('AuditLogRepository')
+    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(EventAttendeeView, dataSource, getCurrentUser);
   }

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {
   patch,
@@ -10,10 +14,10 @@ import {
 import {repository} from '@loopback/repository';
 import {
   NotificationBindings,
-  PubNubNotification,
   Config,
   MessageType,
 } from 'loopback4-notifications';
+import {PubNubNotification} from 'loopback4-notifications/pubnub';
 import {NotifServiceBindings} from '../keys';
 import {
   authenticate,
@@ -46,7 +50,12 @@ export class PubnubNotificationController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: [PermissionKey.CanGetNotificationAccess]})
+  @authorize({
+    permissions: [
+      PermissionKey.CanGetNotificationAccess,
+      PermissionKey.CanGetNotificationAccessNum,
+    ],
+  })
   @patch('/notifications/access/{id}', {
     security: OPERATION_SECURITY_SPEC,
     responses: {

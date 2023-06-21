@@ -1,10 +1,15 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {SessionAttendees} from './models/session-attendees.model';
 import {VideoChatSession} from './models/video-chat-session.model';
 import {VonageSessionWebhookPayload} from './providers';
 
 /**
  * @interface ResponseInterface
- * @param message describes sucess/failure or any descriptive message w.r.t any API/function executed
+ * @param message
+ * describes sucess/failure or any descriptive message w.r.t any API/function executed
  */
 export interface ResponseInterface {
   message: string;
@@ -108,10 +113,6 @@ export interface ExternalStorageOptions {
  * @param config object containing azure/s3 details
  * @param bucket s3 bucket name
  */
-// export interface S3TargetOptions extends ExternalStorageOptions {
-//   region: string;
-//   bucket: string;
-// }
 
 export enum ExternalStorageName {
   AWSS3 = 'AWSS3',
@@ -137,8 +138,11 @@ export interface WebhookPayloadParameters {
 /**
  * @interface MeetingOptions
  * @param archiveMode optional parameter to enable/disable recordings. Default will be false
- * @param isScheduled parameter to check whether a meeting is booked now if @param isScheduled=false  or scheduled at a later time if @param isScheduled=true.
- * @param scheduleTime not required if @param isScheduled is false, else set a later time for scheduling meeting
+ * @param isScheduled
+ * parameter to check whether a meeting is booked now if @param isScheduled=false
+ *  or scheduled at a later time if @param isScheduled=true.
+ * @param scheduleTime not required if @param isScheduled is false,
+ *  else set a later time for scheduling meeting
  *
  */
 export interface MeetingOptions {
@@ -155,7 +159,8 @@ export interface MeetingResponse {
 /**
  * @interface SessionOptions
  * @param meetingId unique meetingId which is used inside sharing link urls.
- * @param expireTime set the ttl (time to live) for a session created For twilio, it is max 4 hours.
+ * @param expireTime set the ttl (time to live) for a session created For twilio,
+ *  it is max 4 hours.
  */
 export interface SessionOptions {
   meetingLink?: string;

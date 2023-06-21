@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject, Provider} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import * as casbin from 'casbin';
@@ -36,14 +40,14 @@ export class CasbinEnforcerConfigProvider
     isCasbinPolicy = false,
   ): Promise<CasbinConfig> {
     const resourceIds = resourceValue.split(',');
-    const {permissions}: AuthorizationMetadata = await this.getCasbinMetadata(); // decorator permissions
-
+    // decorator permissions
+    const {permissions}: AuthorizationMetadata = await this.getCasbinMetadata();
     const userPermissions = permissions.filter(permission =>
       authUser.permissions.includes(permission),
     );
     let resourcesAllowed: ResourcePermissionObject[] = [];
-
-    const userResources = await this._getUserResources(authUser); //permissions with the resource value
+    //permissions with the resource value
+    const userResources = await this._getUserResources(authUser);
     resourcesAllowed = userPermissions.map(permission => {
       return {permission: permission, resource: '*'};
     });

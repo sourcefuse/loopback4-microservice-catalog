@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {repository, DataObject} from '@loopback/repository';
 import {
@@ -30,7 +34,12 @@ export class SubscriptionTransactionsController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateSubscription,
+      PermissionKey.CreateSubscriptionNum,
+    ],
+  })
   @post('/create-subscription-and-pay', {
     responses: {
       [redirectStatusCode]: {

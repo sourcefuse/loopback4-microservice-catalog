@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export const DEFAULT_COLUMNS = ['name', 'data'];
 export const DEFAULT_RECENTS = 5;
 export const TWO = 2;

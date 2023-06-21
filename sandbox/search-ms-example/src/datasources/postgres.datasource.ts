@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import {SearchServiceBindings} from '@sourceloop/search-service';
@@ -5,7 +9,7 @@ import {SearchServiceBindings} from '@sourceloop/search-service';
 const config = {
   name: SearchServiceBindings.DATASOURCE_NAME,
   connector: process.env.DB_CONNECTOR ?? 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,

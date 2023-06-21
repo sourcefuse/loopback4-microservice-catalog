@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Model, model, property} from '@loopback/repository';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
@@ -11,7 +15,7 @@ export class OtpSendRequest extends Model {
     required: true,
   })
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  client_id: string;
+  client_id: string; //NOSONAR
 
   @property({
     type: 'string',
@@ -19,7 +23,7 @@ export class OtpSendRequest extends Model {
     required: true,
   })
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  client_secret: string;
+  client_secret: string; //NOSONAR
 
   @property({
     type: 'string',

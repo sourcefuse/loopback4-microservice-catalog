@@ -1,0 +1,5 @@
+node_modules/
+dist/
+coverage/
+.eslintrc.js
+/migrations/20201103141746-init-script.js

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider, service} from '@loopback/core';
 import {VonageSessionWebhookPayload} from '.';
 import {VideoChatFeatures} from '../..';

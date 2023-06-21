@@ -1,11 +1,13 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Logger as WinstonLogger} from 'winston';
 import {ILogger} from '../logger.interface';
 import {LogMessage} from '../types';
 import {LOGGER} from '../keys';
 
 export class WinstonLoggerBase implements ILogger {
-  constructor() {}
-
   logger: WinstonLogger;
 
   log(info: LogMessage): void {

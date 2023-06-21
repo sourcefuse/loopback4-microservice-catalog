@@ -1,10 +1,14 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 
 const config = {
   name: 'schedulerDb',
   connector: 'postgresql',
-  url: '',
+  // url: '',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
@@ -22,7 +26,8 @@ export class SchedulerDbDataSource
   static readonly defaultConfig = config;
 
   constructor(
-    // You need to set datasource configuration name as 'datasources.config.audit' otherwise you might get Errors
+    // You need to set datasource configuration name as
+    //'datasources.config.audit' otherwise you might get Errors
     @inject('datasources.config.schedulerDb', {optional: true})
     dsConfig: object = config,
   ) {

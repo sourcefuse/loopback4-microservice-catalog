@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BindingKey} from '@loopback/context';
 import {ILogger} from './logger.interface';
 import {BINDING_PREFIX} from '../../constants';

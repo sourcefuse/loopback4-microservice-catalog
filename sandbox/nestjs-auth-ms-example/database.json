@@ -1,0 +1,13 @@
+{
+  "defaultEnv": "auth",
+  "auth": {
+    "driver": "pg",
+    "user": { "ENV": "AUTHDB_USER" },
+    "password": { "ENV": "AUTHDB_PSWD" },
+    "host": { "ENV": "AUTHDB_HOST" },
+    "database": { "ENV": "AUTHDB_DB" },
+    "port": { "ENV": "AUTHDB_PORT" },
+    "schema": { "ENV": "AUTHDB_SCHEMA" }
+  },
+  "sql-file": true
+}

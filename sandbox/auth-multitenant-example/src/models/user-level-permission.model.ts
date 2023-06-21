@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {model, property, belongsTo} from '@loopback/repository';
 import {UserPermission} from 'loopback4-authorization';
 import {UserModifiableEntity} from '@sourceloop/core';

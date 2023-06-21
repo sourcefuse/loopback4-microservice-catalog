@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 import {
   getModelSchemaRef,
@@ -116,7 +120,12 @@ export class OriginatorController {
     return String(type === 'user' ? this.user.id : this.user.email);
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ComposeMail]})
+  @authorize({
+    permissions: [
+      PermissionsEnums.ComposeMail,
+      PermissionsEnums.ComposeMailNum,
+    ],
+  })
   @post('/mails', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'ComposeAPI. For drafting, reply on and create new message',
@@ -249,7 +258,9 @@ export class OriginatorController {
     }
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.UpdateMail]})
+  @authorize({
+    permissions: [PermissionsEnums.UpdateMail, PermissionsEnums.UpdateMailNum],
+  })
   @put('/mails/{messageId}', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'Update API. Update draft messages.',
@@ -389,7 +400,12 @@ export class OriginatorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.AddAttachments]})
+  @authorize({
+    permissions: [
+      PermissionsEnums.AddAttachments,
+      PermissionsEnums.AddAttachmentsNum,
+    ],
+  })
   @post('/mails/{messageId}/attachments', {
     security: OPERATION_SECURITY_SPEC,
     summary:
@@ -447,7 +463,7 @@ export class OriginatorController {
         id: messageId,
       },
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
@@ -475,7 +491,12 @@ export class OriginatorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.DeleteAttachment]})
+  @authorize({
+    permissions: [
+      PermissionsEnums.DeleteAttachment,
+      PermissionsEnums.DeleteAttachmentNum,
+    ],
+  })
   @del('/mails/{messageId}/attachments/{attachmentId}', {
     security: OPERATION_SECURITY_SPEC,
     summary:
@@ -500,7 +521,7 @@ export class OriginatorController {
         id: messageId,
       },
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
@@ -518,7 +539,9 @@ export class OriginatorController {
     return {item: attachmentId};
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.TrashMail]})
+  @authorize({
+    permissions: [PermissionsEnums.TrashMail, PermissionsEnums.TrashMailNum],
+  })
   @del('/mails/bulk/{storage}/{action}', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API for moving mails to trash and then delete',
@@ -598,7 +621,12 @@ export class OriginatorController {
     return {items: groups};
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.RestoreMail]})
+  @authorize({
+    permissions: [
+      PermissionsEnums.RestoreMail,
+      PermissionsEnums.RestoreMailNum,
+    ],
+  })
   @patch('/mails/bulk/restore', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides an interface for restore message from trash.',
@@ -662,7 +690,12 @@ export class OriginatorController {
     };
   }
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.ComposeMail]})
+  @authorize({
+    permissions: [
+      PermissionsEnums.ComposeMail,
+      PermissionsEnums.ComposeMailNum,
+    ],
+  })
   @patch('/mails/{messageId}/send', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API for sending a drafted message.',
@@ -687,7 +720,7 @@ export class OriginatorController {
         status: StorageMarker.draft,
       },
     };
-    if (filter) {
+    if (filter && messageFilter.where) {
       Object.assign(messageFilter.where, {
         ...filter,
       });
@@ -731,7 +764,9 @@ export class OriginatorController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionsEnums.UpdateMail]})
+  @authorize({
+    permissions: [PermissionsEnums.UpdateMail, PermissionsEnums.UpdateMailNum],
+  })
   @patch('/mails/marking/{markType}', {
     security: OPERATION_SECURITY_SPEC,
     summary: 'API provides interface to mark read, unread and important',

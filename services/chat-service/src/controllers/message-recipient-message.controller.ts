@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {repository} from '@loopback/repository';
 import {get, getModelSchemaRef, param} from '@loopback/rest';
 import {
@@ -20,7 +24,9 @@ export class MessageRecipientMessageController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.ViewMessage]})
+  @authorize({
+    permissions: [PermissionKey.ViewMessage, PermissionKey.ViewMessageNum],
+  })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

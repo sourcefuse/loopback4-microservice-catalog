@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 declare module '@loopback/cli/lib/base-generator' {
   import Generator, {Questions} from 'yeoman-generator';
   class BaseGenerator<

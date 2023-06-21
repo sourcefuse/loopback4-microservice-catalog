@@ -1,17 +1,22 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
-  StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
+  StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import {
-  RoleRepository,
-  UserLevelPermissionRepository,
-  UserTenantRepository,
-  TenantConfigRepository,
-} from '../../repositories';
+import {ClientType} from 'loopback4-authentication';
+import {UserPermission} from 'loopback4-authorization';
 import sinon from 'sinon';
 import {JwtPayloadProvider} from '../../providers';
-import {UserPermission} from 'loopback4-authorization';
+import {
+  RoleRepository,
+  TenantConfigRepository,
+  UserLevelPermissionRepository,
+  UserTenantRepository,
+} from '../../repositories';
 
 describe('JWT Payload Provider', () => {
   let roleRepo: StubbedInstanceWithSinonAccessor<RoleRepository>;
@@ -29,6 +34,7 @@ describe('JWT Payload Provider', () => {
   const authClient = {
     clientId: 'test_client_id',
     clientSecret: 'test_client_secret',
+    clientType: ClientType.public,
   };
 
   const logger = {

@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Binding,
   Component,
@@ -29,20 +33,22 @@ import {
   AttendeeController,
   CalendarController,
   CalendarEventController,
+  CalendarSubscriptionController,
+  CalendarWorkingHourController,
+  EventAttendeeController,
   EventController,
   SettingsController,
   SubscriptionController,
   ThemeController,
   WorkingHourController,
-  CalendarSubscriptionController,
-  CalendarWorkingHourController,
-  EventAttendeeController,
 } from './controllers';
+import {EventAttachmentController} from './controllers/event-attachment.controller';
 import {SchedulerBindings} from './keys';
 import {
   Attachment,
   Attendee,
   Calendar,
+  ConditionalAuditLog,
   Event,
   Settings,
   Subscription,
@@ -52,18 +58,18 @@ import {
 import {
   AttachmentRepository,
   AttendeeRepository,
+  AuditLogRepository,
   CalendarRepository,
+  EventAttendeeViewRepository,
   EventRepository,
   SettingsRepository,
   SubscriptionRepository,
   ThemeRepository,
   WorkingHourRepository,
-  EventAttendeeViewRepository,
 } from './repositories';
-import {ValidatorService, CalendarEventService} from './services';
-import {EventAttachmentController} from './controllers/event-attachment.controller';
-import {EventService} from './services/event.service';
+import {CalendarEventService, ValidatorService} from './services';
 import {CalendarService} from './services/calendar.service';
+import {EventService} from './services/event.service';
 
 export class SchedulerServiceComponent implements Component {
   constructor(
@@ -111,6 +117,7 @@ export class SchedulerServiceComponent implements Component {
       ThemeRepository,
       WorkingHourRepository,
       EventAttendeeViewRepository,
+      AuditLogRepository,
     ];
 
     this.models = [
@@ -122,6 +129,7 @@ export class SchedulerServiceComponent implements Component {
       Subscription,
       Theme,
       WorkingHour,
+      ConditionalAuditLog,
     ];
 
     this.providers = {};

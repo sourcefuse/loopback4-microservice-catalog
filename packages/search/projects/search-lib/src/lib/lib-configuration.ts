@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {IDefaultReturnType, IModel} from './types';
 export class Configuration<T = IDefaultReturnType> {
   /** property to be displayed in the results */
@@ -24,7 +28,8 @@ export class Configuration<T = IDefaultReturnType> {
   hideRecentSearch?: boolean;
   /** hide the category selection button */
   hideCategorizeButton?: boolean;
-  /** save value in recent search only on enter or change in category, if false, also saved on typing */
+  /** save value in recent search only on enter or change in category,
+   *  if false, also saved on typing */
   saveInRecentsOnlyOnEnter?: boolean;
   /** search only on enter key or when category is changed */
   searchOnlyOnEnter?: boolean;

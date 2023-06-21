@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {WorkflowServiceApplication} from '../../application';
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';

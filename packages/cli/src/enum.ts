@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 export enum SERVICES {
   AUTH = 'authentication-service',
   AUDIT = 'audit-service',
@@ -10,6 +14,7 @@ export enum SERVICES {
   SCHEDULER = 'scheduler-service',
   SEARCH = 'search-service',
   VIDEO_CONF = 'video-conferencing-service',
+  USER_TENANT = 'user-tenant-service',
 }
 
 export enum DATASOURCES {
@@ -38,23 +43,64 @@ export enum MIGRATIONS {
   INCLUDED = 'Include migrations provided by base service',
 }
 
-export type DataSourceMap = {type: 'cache' | 'store'; name: string};
+export type DataSourceMap = {
+  type: 'cache' | 'store';
+  name: string;
+  fileName: string;
+  isNotBase?: boolean;
+};
 
 export const BASESERVICEDSLIST: {
   [key in SERVICES]: Array<DataSourceMap>;
 } = {
   'authentication-service': [
-    {type: 'store', name: 'AuthDbSourceName'},
-    {type: 'cache', name: 'AuthCacheSourceName'},
+    {type: 'store', name: 'AuthDbSourceName', fileName: 'auth'},
+    {type: 'cache', name: 'AuthCacheSourceName', fileName: 'redis'},
   ],
-  'audit-service': [{type: 'store', name: 'AuditSourceName'}],
-  'notification-service': [{type: 'store', name: 'NotifDbSourceName'}],
-  'bpmn-service': [{type: 'store', name: 'WorkflowCacheSourceName'}],
-  'feature-toggle-service': [{type: 'store', name: 'FeatureToggleDbName'}],
-  'in-mail-service': [{type: 'store', name: 'InMailDatasourceName'}],
-  'payment-service': [{type: 'store', name: 'PaymentDatasourceName'}],
-  'scheduler-service': [{type: 'store', name: 'SchedulerDatasourceName'}],
-  'search-service': [{type: 'store', name: 'DATASOURCE_NAME'}],
-  'video-conferencing-service': [{type: 'store', name: 'VideoConfDatasource'}],
+  'audit-service': [
+    {type: 'store', name: 'AuditSourceName', fileName: 'audit'},
+  ],
+  'notification-service': [
+    {type: 'store', name: 'NotifDbSourceName', fileName: 'notif'},
+  ],
+  'bpmn-service': [
+    {type: 'store', name: 'WorkflowCacheSourceName', fileName: 'workflow'},
+  ],
+  'feature-toggle-service': [
+    {type: 'store', name: 'FeatureToggleDbName', fileName: 'featureToggle'},
+  ],
+  'in-mail-service': [
+    {type: 'store', name: 'InMailDatasourceName', fileName: 'mailer'},
+  ],
+  'payment-service': [
+    {type: 'store', name: 'PaymentDatasourceName', fileName: 'payment'},
+  ],
+  'scheduler-service': [
+    {type: 'store', name: 'SchedulerDatasourceName', fileName: 'scheduler'},
+  ],
+  'search-service': [
+    {type: 'store', name: 'DATASOURCE_NAME', fileName: 'search'},
+  ],
+  'video-conferencing-service': [
+    {type: 'store', name: 'VideoConfDatasource', fileName: 'videoConf'},
+  ],
   'chat-service': [],
+  'user-tenant-service': [],
+};
+
+export const BASESERVICECOMPONENTLIST: {
+  [key in SERVICES]: string;
+} = {
+  'authentication-service': 'AuthenticationServiceComponent',
+  'audit-service': 'AuditServiceComponent',
+  'notification-service': 'NotificationServiceComponent',
+  'bpmn-service': 'WorkflowServiceComponent',
+  'feature-toggle-service': 'FeatureToggleServiceComponent',
+  'in-mail-service': 'InMailServiceComponent',
+  'payment-service': 'PaymentServiceComponent',
+  'scheduler-service': 'SchedulerServiceComponent',
+  'search-service': 'SearchServiceComponent',
+  'video-conferencing-service': 'VideoConfServiceComponent',
+  'chat-service': 'ChatServiceComponent',
+  'user-tenant-service': 'UserTenantServiceComponent',
 };

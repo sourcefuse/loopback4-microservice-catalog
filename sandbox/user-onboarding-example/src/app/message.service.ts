@@ -1,6 +1,10 @@
-import { Injectable } from '@angular/core';
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Injectable} from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class MessageService {
   messages: string[] = [];
 

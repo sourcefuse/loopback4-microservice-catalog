@@ -14,7 +14,7 @@ any client application.
 ## Installation
 
 ```bash
-   npm i @sourceloop/payment-service
+npm i @sourceloop/payment-service
 ```
 
 ## Usage
@@ -50,6 +50,11 @@ this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
 this.bind(RazorpayBindings.RazorpayConfig).to({dataKey: '', publishKey: ''});
 this.bind(RazorpayBindings.RazorpayHelper).toProvider(RazorpayProvider);
 this.bind(GatewayBindings.GatewayHelper).toProvider(GatewayProvider);
+this.bind(PayPalBindings.PayPalHelper.key).toProvider(PaypalProvider);
+this.bind(PayPalBindings.PayPalConfig).to({
+  clientId: process.env.PAYPAL_CLIENT_ID ?? '',
+  clientSecret: process.env.PAYPAL_CLIENT_SECRET ?? '',
+});
 ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `PaymentDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
@@ -97,6 +102,10 @@ export class InmailDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `PAYMENT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `PAYMENT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+### Database Schema
+
+![Database Schema](https://user-images.githubusercontent.com/98279679/186740482-496cd283-8073-4db5-b9d1-cd066d85d313.png)
+
 ### Setting Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.
@@ -133,6 +142,8 @@ JWT_ISSUER=https://authentication.service
 
 ### API Documentation
 
+Visit the [OpenAPI spec docs](./openapi.md)
+
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.
@@ -150,6 +161,14 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 404: Entity Not Found
 400: Bad Request (Error message varies w.r.t API)
 201: No content: Empty Response
+
+### PayPal Payment Integration
+
+Sign up for payPal account at https://www.paypal.com/signin
+login to the developer section and create sandbox accounts
+copy the credentials to the sandbox account and use them to develop payment-service
+
+Order creation , capture and refund is supported right now.
 
 #### API Details
 

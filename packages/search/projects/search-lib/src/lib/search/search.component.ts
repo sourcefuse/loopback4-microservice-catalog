@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   ChangeDetectorRef,
   Component,
@@ -7,6 +11,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   PLATFORM_ID,
   TemplateRef,
@@ -31,8 +36,11 @@ import {
   TypeEvent,
   ItemClickedEvent,
   IModel,
+  ISearchServiceWithPromises,
+  isApiServiceWithPromise,
 } from '../types';
 import {isPlatformBrowser} from '@angular/common';
+import {PromiseApiAdapterService} from './promise-api-adapter.service';
 
 const ALL_LABEL = 'All';
 @Component({
@@ -63,6 +71,7 @@ export class SearchComponent<T extends IReturnType>
   public get config(): Configuration<T> {
     return this._config;
   }
+
   @Input()
   public set config(value: Configuration<T>) {
     this._config = value;
@@ -84,26 +93,44 @@ export class SearchComponent<T extends IReturnType>
     }
   }
 
+  @Input()
+  public set searchProvider(
+    value: ISearchService<T> | ISearchServiceWithPromises<T>,
+  ) {
+    if (isApiServiceWithPromise(value)) {
+      value = this.promiseAdapter.adapt(value);
+    }
+    this.searchService = value;
+  }
+
+  public get searchProvider(): ISearchService<T> {
+    return this.searchService;
+  }
+
   @Input() titleTemplate?: TemplateRef<any>;
   @Input() subtitleTemplate?: TemplateRef<any>;
   // emitted when user clicks one of the suggested results (including recent search sugestions)
   @Output() clicked = new EventEmitter<ItemClickedEvent<T>>();
   @Output() searched = new EventEmitter<RecentSearchEvent>();
-  /* emitted when user makes search request (including recent search requests & requests made on change in category from dropdown)
+  /* emitted when user makes search request (including recent search requests
+     & requests made on change in category from dropdown)
   In case of recent search Array of recent Search request result is emitted */
 
-  onChange!: (value: string | undefined) => void;
-  onTouched!: () => void;
+  onChange: (value: string | undefined) => void = () => {};
+  onTouched: () => void = () => {};
   disabled = false;
 
   @ViewChild('searchInput') public searchInputElement!: ElementRef;
 
   constructor(
     @Inject(SEARCH_SERVICE_TOKEN)
-    private readonly searchService: ISearchService<T>,
+    @Optional()
+    private searchService: ISearchService<T>,
     // tslint:disable-next-line:ban-types
-    @Inject(PLATFORM_ID) private readonly platformId: Object,
+    @Inject(PLATFORM_ID)
+    private readonly platformId: Object,
     private readonly cdr: ChangeDetectorRef,
+    private readonly promiseAdapter: PromiseApiAdapterService<T>,
   ) {}
 
   ngOnInit(): void {
@@ -161,7 +188,8 @@ export class SearchComponent<T extends IReturnType>
       }
     }
     /* need to put default value here and not in contructor
-    because sonar was giving code smell with definite assertion as all these parameters are optional */
+    because sonar was giving code smell with definite assertion as all these
+     parameters are optional */
     const requestParameters: ISearchQuery = {
       match: eventValue.input,
       sources: this._categoryToSourceName(this.category),
@@ -206,9 +234,12 @@ export class SearchComponent<T extends IReturnType>
     }
   }
 
-  // event can be KeyBoardEvent or Event of type 'change' fired on change in value of drop down for category
+  //event can be KeyBoardEvent or Event of type 'change'
+  // fired on change in value of drop down for category
+
   hitSearchApi(event?: Event) {
-    // this will happen only in case user searches something and then erases it, we need to update recent search
+    // this will happen only in case user searches something and
+    // then erases it, we need to update recent search
     if (!this.searchBoxInput) {
       this.suggestions = [];
       this.getRecentSearches();
@@ -238,12 +269,15 @@ export class SearchComponent<T extends IReturnType>
   populateValue(suggestion: T, event: MouseEvent) {
     const value = suggestion[
       this.config.displayPropertyName
-    ] as unknown as string; // converted to string to assign value to searchBoxInput
+    ] as unknown as string;
+    // converted to string to assign value to searchBoxInput
     this.searchBoxInput = value;
     this.suggestionsDisplay = false;
-    // ngModelChange doesn't detect change in value when populated from outside, hence calling manually
+    // ngModelChange doesn't detect change in value
+    // when populated from outside, hence calling manually
     this.onChange(this.searchBoxInput);
-    // need to do this to show more search options for selected suggestion - just in case user reopens search input
+    // need to do this to show more search options for selected
+    //suggestion - just in case user reopens search input
     this.getSuggestions({input: this.searchBoxInput, event});
     this.clicked.emit({item: suggestion, event});
   }
@@ -254,7 +288,8 @@ export class SearchComponent<T extends IReturnType>
     this.searchBoxInput = value;
     this.suggestionsDisplay = false;
     this.onChange(this.searchBoxInput);
-    // need to do this to show more search options for selected suggestion - just in case user reopens search input
+    // need to do this to show more search options for selected
+    // suggestion - just in case user reopens search input
     this.getSuggestions({input: this.searchBoxInput, event});
     this.focusInput();
     this.showSuggestions();
@@ -318,7 +353,8 @@ export class SearchComponent<T extends IReturnType>
     this.suggestions = [];
     this.suggestionsDisplay = true;
     this.focusInput();
-    // ngModelChange doesn't detect change in value when populated from outside, hence calling manually
+    // ngModelChange doesn't detect change in value
+    // when populated from outside, hence calling manually
     this.onChange(this.searchBoxInput);
     this.getRecentSearches();
   }

@@ -1,11 +1,15 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
-import {BaseEntity} from '@sourceloop/core';
+import {UserModifiableEntity} from '@sourceloop/core';
 import {IAuthClient} from 'loopback4-authentication';
 
 @model({
   name: 'auth_clients',
 })
-export class AuthClient extends BaseEntity implements IAuthClient {
+export class AuthClient extends UserModifiableEntity implements IAuthClient {
   @property({
     type: 'number',
     id: true,
@@ -28,6 +32,7 @@ export class AuthClient extends BaseEntity implements IAuthClient {
 
   @property({
     type: 'string',
+    description: 'Value can be a string or a private key.',
     required: true,
   })
   secret: string;

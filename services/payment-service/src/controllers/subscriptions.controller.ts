@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -32,7 +36,12 @@ export class SubscriptionsController {
   ) {}
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.CreateSubscription]})
+  @authorize({
+    permissions: [
+      PermissionKey.CreateSubscription,
+      PermissionKey.CreateSubscriptionNum,
+    ],
+  })
   @post(subscriptionsRoutePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -59,7 +68,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.GetSubscriptionCount]})
+  @authorize({
+    permissions: [
+      PermissionKey.GetSubscriptionCount,
+      PermissionKey.GetSubscriptionCountNum,
+    ],
+  })
   @get('/subscriptions/count', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -75,7 +89,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.GetSubscriptions]})
+  @authorize({
+    permissions: [
+      PermissionKey.GetSubscriptions,
+      PermissionKey.GetSubscriptionsNum,
+    ],
+  })
   @get(subscriptionsRoutePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -98,7 +117,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscriptions,
+      PermissionKey.UpdateSubscriptionsNum,
+    ],
+  })
   @patch(subscriptionsRoutePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -122,7 +146,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.GetSubscriptions]})
+  @authorize({
+    permissions: [
+      PermissionKey.GetSubscriptions,
+      PermissionKey.GetSubscriptionsNum,
+    ],
+  })
   @get(subscriptionsIdRoutePath, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -144,7 +173,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscriptions,
+      PermissionKey.UpdateSubscriptionsNum,
+    ],
+  })
   @patch(subscriptionsIdRoutePath, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -167,7 +201,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.UpdateSubscriptions]})
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscriptions,
+      PermissionKey.UpdateSubscriptionsNum,
+    ],
+  })
   @put(subscriptionsIdRoutePath, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -183,7 +222,12 @@ export class SubscriptionsController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [PermissionKey.DeleteSubscriptions]})
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteSubscriptions,
+      PermissionKey.DeleteSubscriptionsNum,
+    ],
+  })
   @del(subscriptionsIdRoutePath, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {

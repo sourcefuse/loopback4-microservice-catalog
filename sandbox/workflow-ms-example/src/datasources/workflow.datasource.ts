@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, LifeCycleObserver, lifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import {WorkflowCacheSourceName} from '@sourceloop/bpmn-service';

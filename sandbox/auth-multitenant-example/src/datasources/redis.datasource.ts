@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import {AuthCacheSourceName} from '@sourceloop/authentication-service';
@@ -8,7 +12,7 @@ const config = {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   password: process.env.REDIS_PASSWORD,
-  db: process.env.REDIS_DATABASE,
+  db: process.env.REDIS_DB,
   url: process.env.REDIS_URL,
 };
 

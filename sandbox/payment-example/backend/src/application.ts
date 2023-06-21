@@ -1,17 +1,25 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {
+  PayPalBindings,
   PaymentServiceComponent,
+  PaypalProvider,
   RazorpayBindings,
   StripeBindings,
 } from '@sourceloop/payment-service';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
 import path from 'path';
 import {MySequence} from './sequence';
 
@@ -21,6 +29,20 @@ export class PaymentExampleBackendApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
+    dotenv.config();
+    if (process?.env?.NODE_ENV && process.env.NODE_ENV !== 'test') {
+      dotenvExt.load({
+        schema: '.env.example',
+        errorOnMissing: true,
+        includeProcessEnv: true,
+      });
+    } else {
+      dotenvExt.load({
+        schema: '.env.example',
+        errorOnMissing: false,
+        includeProcessEnv: true,
+      });
+    }
     super(options);
 
     // Set up the custom sequence
@@ -35,6 +57,11 @@ export class PaymentExampleBackendApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
     this.component(PaymentServiceComponent);
+    this.bind(PayPalBindings.PayPalHelper.key).toProvider(PaypalProvider);
+    this.bind(PayPalBindings.PayPalConfig).to({
+      clientId: process.env.PAYPAL_CLIENT_ID ?? '',
+      clientSecret: process.env.PAYPAL_CLIENT_SECRET ?? '',
+    });
     this.bind(StripeBindings.Config).to({dataKey: '', publishKey: ''});
     this.bind(RazorpayBindings.RazorpayConfig).to({
       dataKey: '',

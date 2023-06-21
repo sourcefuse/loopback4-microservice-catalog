@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 'use strict';
 import {Client, createRestAppClient, expect} from '@loopback/testlab';
 import {AuthenticateErrorKeys, AuthProvider, RoleTypes} from '@sourceloop/core';
@@ -51,6 +55,7 @@ describe('Authentication microservice', () => {
   afterEach(() => {
     delete process.env.JWT_ISSUER;
     delete process.env.JWT_SECRET;
+    delete process.env.ENCRYPTION_KEY;
     helper.reset();
   });
   it('should give status 422 for login request with no client credentials', async () => {
@@ -140,6 +145,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -169,6 +175,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -198,6 +205,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -218,6 +226,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -247,6 +256,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -276,6 +286,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -305,6 +316,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -333,6 +345,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -364,7 +377,7 @@ describe('Authentication microservice', () => {
       .send(reqData)
       .expect(401);
     expect(response.body.error.message.message).to.be.equal(
-      AuthErrorKeys.ClientInvalid,
+      AuthErrorKeys.ClientVerificationFailed,
     );
   });
 
@@ -537,6 +550,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -568,6 +582,7 @@ describe('Authentication microservice', () => {
     };
     process.env.JWT_ISSUER = 'test';
     process.env.JWT_SECRET = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)

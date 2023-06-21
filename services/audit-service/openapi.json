@@ -9,6 +9,54 @@
     }
   },
   "paths": {
+    "/audit-logs/archive": {
+      "post": {
+        "x-controller-name": "ArchiveLogController",
+        "x-operation-name": "archive",
+        "tags": [
+          "ArchiveLogController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AuditLog model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "numberOfEntriesArchived": {
+                      "type": "number"
+                    },
+                    "file": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ArchiveLogs   |\n| 6   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomFilter"
+              }
+            }
+          }
+        },
+        "operationId": "ArchiveLogController.archive"
+      }
+    },
     "/audit-logs/count": {
       "get": {
         "x-controller-name": "AuditController",
@@ -33,7 +81,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
         "parameters": [
           {
             "name": "where",
@@ -51,6 +99,47 @@
           }
         ],
         "operationId": "AuditController.count"
+      }
+    },
+    "/audit-logs/jobs/{jobId}": {
+      "get": {
+        "x-controller-name": "AuditController",
+        "x-operation-name": "jobStatus",
+        "tags": [
+          "AuditController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of AuditLog model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "AuditController.jobStatus"
       }
     },
     "/audit-logs/{id}": {
@@ -77,7 +166,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
         "parameters": [
           {
             "name": "id",
@@ -126,7 +215,7 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateAudit   |\n| 2   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -164,8 +253,15 @@
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewAudit   |\n| 1   |\n",
         "parameters": [
+          {
+            "name": "includeArchivedLogs",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
           {
             "name": "filter",
             "in": "query",
@@ -280,6 +376,30 @@
         "additionalProperties": true,
         "x-typescript-type": "Omit<AuditLog, 'id'>"
       },
+      "JobWithRelations": {
+        "title": "JobWithRelations",
+        "type": "object",
+        "description": "(tsType: JobWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "filterUsed": {
+            "type": "object"
+          },
+          "result": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "JobWithRelations"
+      },
       "AuditLogWithRelations": {
         "title": "AuditLogWithRelations",
         "type": "object",
@@ -326,6 +446,37 @@
         ],
         "additionalProperties": true,
         "x-typescript-type": "AuditLogWithRelations"
+      },
+      "CustomFilter": {
+        "title": "CustomFilter",
+        "type": "object",
+        "description": "(tsType: Omit<CustomFilter, >, schemaOptions: { title: 'CustomFilter', exclude: [] })",
+        "properties": {
+          "date": {
+            "type": "object",
+            "properties": {
+              "fromDate": {
+                "type": "string",
+                "default": "2023-06-09T05:13:22.078Z"
+              },
+              "toDate": {
+                "type": "string",
+                "default": "2023-06-09T05:13:22.078Z"
+              }
+            }
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actedOn": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<CustomFilter, >"
       },
       "loopback.Count": {
         "type": "object",

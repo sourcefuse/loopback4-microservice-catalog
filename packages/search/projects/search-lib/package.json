@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "4.3.2",
+  "version": "5.2.5",
   "description": "A global search component for search microservice.",
   "peerDependencies": {
     "@angular/animations": "~13.3.11",
@@ -21,29 +21,32 @@
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "build": "ng build && cp -r src/assets dist/assets",
-    "prepublishOnly": "npm run build"
+    "libraryBuild": "ng build && cp -r src/assets dist/assets",
+    "elementBuild": "ng build search-element",
+    "postbuild": "ts-node bundle-element.ts",
+    "build": "npm run libraryBuild && npm run elementBuild",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "test": "echo \"No tests available !\""
   },
   "dependencies": {
     "tslib": "^2.2.0"
   },
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/public-api.ts"
-    },
-    "dest": "dist"
+  "devDependencies": {
+    "@angular/elements": "^13.3.11",
+    "@types/fs-extra": "^11.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
     "directory": "packages/search"
   },
-  "author": "Sourcefuse",
-  "license": "MIT",
-  "private": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
     "directory": "dist"
-  }
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "private": false
 }

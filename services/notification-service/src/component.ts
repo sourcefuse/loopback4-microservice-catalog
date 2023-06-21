@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Binding,
   Component,
@@ -22,13 +26,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  NotificationBindings,
-  NotificationsComponent,
-  PubNubProvider,
-  SesProvider,
-  SnsProvider,
-} from 'loopback4-notifications';
+import {NotificationsComponent} from 'loopback4-notifications';
 import {
   NotificationController,
   NotificationNotificationUserController,
@@ -75,25 +73,6 @@ export class NotificationServiceComponent implements Component {
 
     // Mount notifications component
     this.application.component(NotificationsComponent);
-    if (!this.notifConfig?.useCustomEmailProvider) {
-      this.bindings.push(
-        Binding.bind(NotificationBindings.EmailProvider).toProvider(
-          SesProvider,
-        ),
-      );
-    }
-    if (!this.notifConfig?.useCustomPushProvider) {
-      this.bindings.push(
-        Binding.bind(NotificationBindings.PushProvider).toProvider(
-          PubNubProvider,
-        ),
-      );
-    }
-    if (!this.notifConfig?.useCustomSMSProvider) {
-      this.bindings.push(
-        Binding.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider),
-      );
-    }
 
     if (!this.notifConfig?.useCustomSequence) {
       // Mount default sequence if needed

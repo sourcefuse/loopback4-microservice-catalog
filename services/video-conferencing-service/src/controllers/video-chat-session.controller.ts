@@ -1,3 +1,7 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 
 import {
@@ -35,7 +39,8 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.CreateSession]})
   @post('/session', {
-    description: `Used for Creating a session with options such as end to end encryption, archive mode. 
+    description: `Used for Creating a session with options such as end to end encryption,
+     archive mode. 
       Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
       an Error will be thrown. Successful execution will send a meeting link 
       id which can be used to amend in client url.`,
@@ -58,7 +63,8 @@ export class VideoChatSessionController {
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [PermissionKeys.GenerateToken]})
   @post('/session/{meetingLinkId}/token', {
-    description: `Used for Generating token, which is used for connecting to a room/session on a client side. 
+    description: `Used for Generating token,
+     which is used for connecting to a room/session on a client side. 
       In vonage, there are three different roles (Moderator, Subscriber, Publisher). 
       We can use expire time for limited validity of a token. Successful 
       execution will send a token.`,

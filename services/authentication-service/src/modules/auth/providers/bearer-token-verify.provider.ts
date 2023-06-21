@@ -1,10 +1,14 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
 import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
-import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
+import {AuthCodeBindings, JWTVerifierFn} from '../../../providers';
 
 import {RevokedTokenRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
@@ -16,6 +20,8 @@ export class BearerTokenVerifyProvider
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthCodeBindings.JWT_VERIFIER)
+    public jwtVerifier: JWTVerifierFn<AuthUser>,
   ) {}
 
   value(): VerifyFunction.BearerFn {
@@ -27,10 +33,10 @@ export class BearerTokenVerifyProvider
 
       let user: AuthUser;
       try {
-        user = verify(token, process.env.JWT_SECRET as string, {
+        user = await this.jwtVerifier(token, {
           issuer: process.env.JWT_ISSUER,
           algorithms: ['HS256'],
-        }) as AuthUser;
+        });
       } catch (error) {
         this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');
