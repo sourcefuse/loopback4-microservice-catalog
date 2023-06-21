@@ -40,6 +40,13 @@ import {
   QuestionTemplateService,
 } from './services';
 import {QuestionOptionService} from './services/question-option.service';
+import {TemplateQuestionRepository} from './repositories/template-questions.repository';
+import {QuestionTemplateRepository} from './repositories/question-template.repository';
+import {QuestionTemplate} from './models/question-template.model';
+import {QuestionTemplatesDto} from './models/question-template-dto.model';
+import {TemplateQuestion} from './models/template-questions.model';
+import {TemplateQuestionController} from './controllers/template-question.controller';
+import {TemplateController} from './controllers/question-template.controller';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -56,13 +63,32 @@ export class SurveyServiceComponent implements Component {
       QuestionDuplicateHelperService,
       QuestionTemplateService,
       QuestionOptionService,
+      QuestionTemplateService,
     ];
 
-    this.repositories = [QuestionRepository, OptionsRepository];
+    this.repositories = [
+      QuestionRepository,
+      OptionsRepository,
+      TemplateQuestionRepository,
+      QuestionTemplateRepository,
+    ];
 
-    this.models = [QuestionDto, Question, Options];
+    this.models = [
+      QuestionDto,
+      Question,
+      Options,
+      QuestionTemplate,
+      QuestionTemplatesDto,
+      TemplateQuestion,
+    ];
 
-    this.controllers = [PingController, QuestionController, OptionController];
+    this.controllers = [
+      PingController,
+      QuestionController,
+      OptionController,
+      TemplateQuestionController,
+      TemplateController,
+    ];
 
     // Mount core component
     this.application.component(CoreComponent);

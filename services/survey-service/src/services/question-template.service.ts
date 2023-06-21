@@ -281,7 +281,7 @@ export class QuestionTemplateService {
     }
   }
 
-  async checkIfAllowedQuestionnaireQuestionToUpdate(templateId: string) {
+  async checkIfAllowedTemplateQuestionToUpdate(templateId: string) {
     const existingQuestionnaire = await this.questionTemplateRepository.findOne(
       {
         where: {id: templateId},

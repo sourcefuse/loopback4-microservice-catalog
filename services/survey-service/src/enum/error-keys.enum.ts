@@ -4,4 +4,6 @@ export const ErrorKeys = {
   QuestionnaireStatusNotInDraftOrApproved:
     'Questionnaire Status Not In Draft Or Approved',
   MaxOptionsInQuestionReached: 'Max Options InQuestion Reached',
+  DuplicateTemplateQuestionEntry:
+    'This question has already been used in this template',
 };
