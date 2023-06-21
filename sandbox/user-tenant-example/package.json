@@ -65,7 +65,7 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^6.0.0",
     "loopback4-authentication": "^7.2.1",
