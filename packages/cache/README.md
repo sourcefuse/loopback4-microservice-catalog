@@ -1,4 +1,4 @@
-<a href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="120"/></a>
+<a href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
 # [@sourceloop/cache](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/packages/cache)
 
@@ -70,7 +70,7 @@ export class MyApplication extends BootMixin(
       prefix: process.env.CACHE_PREFIX ?? DEFAULT_CACHE_PLUGIN_OPTIONS.prefix,
       ttl: 3000,
     };
-    this.configure(CachePluginComponentBindings.COMPONENT, cacheOptions);
+    this.configure(CachePluginComponentBindings.COMPONENT).to(cacheOptions);
     this.component(CachePluginComponent);
   }
 }
@@ -162,7 +162,7 @@ this.productRepository.findById(3, {}, {forceUpdate: true});
 
 On updating forcefully the `ttl` option gets reset.
 
-## Skip Cache
+### Skip Cache
 
 There are situations where disabling the cache becomes necessary, such as in a test environment or when bypassing it for any specific reason. In such cases, you can set the environment variable `SKIP_CACHE` to `true` to skip the cache functionality altogether.
 
