@@ -510,10 +510,7 @@ export class SurveyService {
     }
   }
 
-  async validateAndGetSurveyWithTenant(
-    surveyId: string,
-    filter: Filter<Survey> = {},
-  ) {
+  async validateAndGetSurvey(surveyId: string, filter: Filter<Survey> = {}) {
     const foundSurvey = await this.surveyRepository.findOne({
       ...filter,
       where: {
