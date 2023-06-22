@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "12 || 14 || 16 || 17"
+    "node": "16 || 17 || 18"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -69,11 +69,11 @@
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^6.0.0",
-    "loopback4-authentication": "^7.2.1",
+    "loopback4-authentication": "^7.6.1",
     "loopback4-authorization": "^5.0.9",
     "loopback4-helmet": "^4.1.4",
     "loopback4-ratelimiter": "^4.1.4",
-    "loopback4-soft-delete": "^7.0.2",
+    "loopback4-soft-delete": "^7.3.2",
     "prom-client": "^14.0.1",
     "tslib": "^2.0.0"
   },
