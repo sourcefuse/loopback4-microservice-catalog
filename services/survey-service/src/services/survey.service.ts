@@ -1,4 +1,4 @@
-import {injectable, BindingScope, inject, service} from '@loopback/core';
+import {injectable, BindingScope, inject} from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';

@@ -53,4 +53,13 @@ export const enum PermissionKey {
   ViewOpenSurveySection = '535',
   ViewOpenSurveyResponse = '536',
   CreateOpenSurveyResponse = '537',
+
+  CreateSurveySection = '490',
+  ViewSurveySection = '491',
+  UpdateSurveySection = '492',
+  DeleteSurveySection = '493',
+  CreateAnySurveySection = '494',
+  ViewAnySurveySection = '495',
+  UpdateAnySurveySection = '496',
+  DeleteAnySurveySection = '497',
 }

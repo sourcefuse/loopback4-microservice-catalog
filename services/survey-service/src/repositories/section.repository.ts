@@ -56,12 +56,12 @@ export class SectionRepository extends DefaultSoftCrudRepository<
     return super.updateAll(data, where);
   }
 
-  async reorder(surveyId: string, displayOrder: number, tenantId: string) {
+  async reorder(surveyId: string, displayOrder: number) {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this._updateSurveyModifiedByAndOn(surveyId).catch(err =>
       this.logger.error(JSON.stringify(err)),
     );
-    const parameters = [surveyId, displayOrder, tenantId];
+    const parameters = [surveyId, displayOrder];
     const query = `
       UPDATE ${process.env.DB_DATABASE}.section
       SET display_order = display_order - 1 
