@@ -1,12 +1,6 @@
 import {Question} from '../models';
 import {injectable, BindingScope, inject, service} from '@loopback/core';
-import {
-  AnyObject,
-  Count,
-  Filter,
-  Where,
-  repository,
-} from '@loopback/repository';
+import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
@@ -19,11 +13,13 @@ import {
   SurveyStatus,
 } from '../enum/question.enum';
 import {ErrorKeys} from '../enum/error-keys.enum';
+import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
+import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
+import {SurveyService} from './survey.service';
 
 const defaultLeadingZero = 5;
 const noOfOptionsByDefault = 4;
 const orderByCreatedOn = 'created_on DESC';
-const MAX_QUESTION_ALLOWED_IN_BATCH = 25;
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuestionHelperService {
@@ -31,6 +27,12 @@ export class QuestionHelperService {
     @repository(QuestionRepository)
     private questionRepository: QuestionRepository,
     @repository(OptionsRepository)
+    @repository(TemplateQuestionRepository)
+    private templateQuestionRepository: TemplateQuestionRepository,
+    @repository(SurveyQuestionRepository)
+    private surveyQuestionRepository: SurveyQuestionRepository,
+    @service(SurveyService)
+    private surveyService: SurveyService,
     private optionsRepository: OptionsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
@@ -211,25 +213,19 @@ export class QuestionHelperService {
             fields: {id: true, questionId: true},
           },
         },
-        // {
-        //   relation: 'survey',
-        //   scope: {
-        //     fields: {id: true, status: true},
-        //   },
-        // },
+        {
+          relation: 'survey',
+          scope: {
+            fields: {id: true, status: true},
+          },
+        },
       ],
     });
     if (!question) {
       throw new HttpErrors.NotFound();
     }
-    // if (question.status === QuestionStatus.ADDED_TO_SURVEY) {
-    //   question.status = this.surveyStatusToQuestionStatus(
-    //     question.survey?.status,
-    //   );
-    // }
-    //Delete not Allowed if Question used in template or contract
-    // Uncomment after template repository is created
-    // await this.checkIfUsedInTemplateOrSurvey(id);
+    //Delete not Allowed if Question used in template
+    await this.checkIfUsedInTemplateOrSurvey(id);
 
     await this.questionRepository.deleteById(id);
     await this._deleteAllOptionsByQuestion(question);
@@ -291,12 +287,12 @@ export class QuestionHelperService {
     /* The above code is checking if a property called "isScoreEnabled" exists in the "question" object
     and if its value is false. If it is, then it updates all the options in the optionsRepository
     with a score of 0 for the given questionId. */
-    // if (
-    //   question.hasOwnProperty('isScoreEnabled') &&
-    //   question.isScoreEnabled === false
-    // ) {
-    //   await this.optionsRepository.updateAll({score: 0}, {questionId});
-    // }
+    if (
+      question.hasOwnProperty('isScoreEnabled') &&
+      question.isScoreEnabled === false
+    ) {
+      await this.optionsRepository.updateAll({score: 0}, {questionId});
+    }
     await this.handleOnStatusChange(questionId, existingQuestion, question);
 
     return this.questionRepository.findById(questionId, {include: ['options']});
@@ -319,6 +315,10 @@ export class QuestionHelperService {
     }
   }
 
+  private async handleApprove(id: string) {
+    await this.updateAllChildStatus(id, QuestionStatus.APPROVED);
+  }
+
   private async updateAllChildStatus(id: string, status: QuestionStatus) {
     await this.questionRepository.updateAll(
       {
@@ -338,25 +338,24 @@ export class QuestionHelperService {
     }
   }
 
-  // async checkIfUsedInTemplateOrSurvey(questionId: string) {
-  //   const questionnaireQuestionCount =
-  //     await this.questionnaireQuestionRepository.count({
-  //       questionId,
-  //     });
-  //   if (questionnaireQuestionCount?.count > 0) {
-  //     throw new HttpErrors.BadRequest(
-  //       ErrorKeys.DeleteNotAllowedForSurveyOrTemplateUsedEntity,
-  //     );
-  //   }
-  //   const surveyQuestionCount = await this.surveyQuestionRepository.count({
-  //     questionId,
-  //   });
-  //   if (surveyQuestionCount?.count > 0) {
-  //     throw new HttpErrors.BadRequest(
-  //       ErrorKeys.DeleteNotAllowedForSurveyOrTemplateUsedEntity,
-  //     );
-  //   }
-  // }
+  async checkIfUsedInTemplateOrSurvey(questionId: string) {
+    const templateQuestion = await this.templateQuestionRepository.count({
+      questionId,
+    });
+    if (templateQuestion?.count > 0) {
+      throw new HttpErrors.BadRequest(
+        ErrorKeys.DeleteNotAllowedForSurveyOrTemplateUsedEntity,
+      );
+    }
+    const surveyQuestionCount = await this.surveyQuestionRepository.count({
+      questionId,
+    });
+    if (surveyQuestionCount?.count > 0) {
+      throw new HttpErrors.BadRequest(
+        ErrorKeys.DeleteNotAllowedForSurveyOrTemplateUsedEntity,
+      );
+    }
+  }
 
   private async handleOnStatusChange(
     id: string,
@@ -364,19 +363,30 @@ export class QuestionHelperService {
     updateQuestion: Question,
   ) {
     if (updateQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
-      // if (!existingQuestion.surveyId) {
-      //   throw new HttpErrors.BadRequest(ErrorKeys.RequiredSurveyParamsMissing);
-      // }
-      // check after survey creation service
+      if (!existingQuestion.surveyId) {
+        throw new HttpErrors.BadRequest(ErrorKeys.RequiredSurveyParamsMissing);
+      }
       // await this.handleAddedToSurvey(
+      //   updateQuestion.displayOrder,
       //   id,
       //   existingQuestion.surveyId,
       // );
     } else if (updateQuestion?.status === QuestionStatus.APPROVED) {
-      // await this.handleApprove(id);
+      await this.handleApprove(id);
     } else {
       // do nothing
     }
+  }
+  async handleAddedToSurvey(
+    displayOrder: number,
+    questionId: string,
+    surveyId: string,
+  ) {
+    // add entry for this question in survey-question table
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.surveyService
+      .addSurveyQuestion(displayOrder, questionId, surveyId)
+      .catch(err => this.logger.error(JSON.stringify(err)));
   }
 
   async validateParentQuestion(parentQuestionId: string | undefined) {
@@ -423,12 +433,12 @@ export class QuestionHelperService {
             fields: {id: true, questionId: true},
           },
         },
-        // {
-        //   relation: 'survey',
-        //   scope: {
-        //     fields: {id: true, status: true},
-        //   },
-        // },
+        {
+          relation: 'survey',
+          scope: {
+            fields: {id: true, status: true},
+          },
+        },
       ],
     });
     if (!existingQuestion) {
@@ -436,11 +446,11 @@ export class QuestionHelperService {
     }
 
     // if Question status is ADDED_TO_SURVEY then set it has Survey Status for validation
-    // if (existingQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
-    //   existingQuestion.status = this.surveyStatusToQuestionStatus(
-    //     existingQuestion.survey?.status,
-    //   );
-    // }
+    if (existingQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
+      existingQuestion.status = this.surveyStatusToQuestionStatus(
+        existingQuestion.survey?.status,
+      );
+    }
     this.checkIfAllowedToUpdate(existingQuestion, question);
     return {existingQuestion};
   }

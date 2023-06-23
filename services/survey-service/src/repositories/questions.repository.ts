@@ -3,6 +3,7 @@ import {Question, QuestionRelations} from '../models/questions.model';
 import {
   BelongsToAccessor,
   HasManyRepositoryFactory,
+  HasOneRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
@@ -10,6 +11,8 @@ import {Options} from '../models/options.model';
 import {Getter, inject} from '@loopback/core';
 import {SurveyDbSourceName} from '../types';
 import {OptionsRepository} from './options.repository';
+import {Survey} from '../models';
+import {SurveyResponseDetail} from '../models/survey-response-detail.model';
 
 export class QuestionRepository extends DefaultSoftCrudRepository<
   Question,
@@ -33,6 +36,15 @@ export class QuestionRepository extends DefaultSoftCrudRepository<
 
   public readonly followUpQuestions: HasManyRepositoryFactory<
     Question,
+    typeof Question.prototype.id
+  >;
+  public readonly surveyResponseDetail: HasOneRepositoryFactory<
+    SurveyResponseDetail,
+    typeof Question.prototype.id
+  >;
+
+  public readonly survey: BelongsToAccessor<
+    Survey,
     typeof Question.prototype.id
   >;
 

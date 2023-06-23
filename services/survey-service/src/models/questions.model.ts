@@ -106,20 +106,20 @@ export class Question extends UserModifiableEntity {
 
   createdByName?: string;
   modifiedByName?: string;
-  // @hasOne(() => SurveyResponseDetail)
-  // surveyResponseDetail?: SurveyResponseDetail;
+  @hasOne(() => SurveyResponseDetail)
+  surveyResponseDetail?: SurveyResponseDetail;
 
-  // @belongsTo(
-  //   () => Survey,
-  //   {
-  //     keyFrom: 'surveyId',
-  //     name: 'survey',
-  //   },
-  //   {
-  //     name: 'survey_id',
-  //   },
-  // )
-  // surveyId: string;
+  @belongsTo(
+    () => Survey,
+    {
+      keyFrom: 'surveyId',
+      name: 'survey',
+    },
+    {
+      name: 'survey_id',
+    },
+  )
+  surveyId: string;
 
   constructor(data?: Partial<Question>) {
     super(data);
@@ -130,7 +130,7 @@ export interface QuestionRelations {
   parentQuestion: Question;
   rootQuestion: Question;
   options?: Options[];
-  // survey?: Survey;
+  survey?: Survey;
 }
 
 export type QuestionWithRelations = Question & QuestionRelations;

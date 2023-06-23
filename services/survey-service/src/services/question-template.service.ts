@@ -111,7 +111,7 @@ export class QuestionTemplateService {
       )
     ) {
       throw new HttpErrors.BadRequest(
-        ErrorKeys.QuestionnaireStatusNotInDraftOrApproved,
+        ErrorKeys.QuestionTemplateStatusNotInDraftOrApproved,
       );
     }
   }

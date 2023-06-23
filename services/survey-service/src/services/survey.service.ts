@@ -196,7 +196,9 @@ export class SurveyService {
         throw new HttpErrors.BadRequest('Invalid Questionnaire Id');
       }
       if (questionnaire.status !== QuestionTemplateStatus.APPROVED) {
-        throw new HttpErrors.BadRequest(ErrorKeys.AddApprovedQuestionnaireId);
+        throw new HttpErrors.BadRequest(
+          ErrorKeys.AddApprovedQuestionTemplateId,
+        );
       }
     }
 
@@ -521,5 +523,28 @@ export class SurveyService {
       throw new HttpErrors.BadRequest('Invalid survey Id');
     }
     return foundSurvey;
+  }
+  async addSurveyQuestion(
+    displayOrder: number,
+    questionId: string,
+    surveyId: string,
+  ) {
+    const surveyQuestion = new SurveyQuestion({
+      displayOrder,
+      questionId,
+    });
+
+    surveyQuestion.surveyId = surveyId;
+    await this.surveyQuestionRepository.create(surveyQuestion);
+
+    // fetch createdSurveyQuestion with id
+    const createdSurveyQuestion = await this.surveyQuestionRepository.findOne({
+      order: [orderByCreatedOn],
+    });
+    if (!createdSurveyQuestion) {
+      throw new HttpErrors.NotFound();
+    }
+
+    return createdSurveyQuestion;
   }
 }
