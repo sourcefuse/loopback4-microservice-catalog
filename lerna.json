@@ -4,11 +4,7 @@
     "packages/cli/",
     "packages/cache",
     "packages/feature-toggle",
-    "packages/custom-sf-changelog/",
-    "packages/search/projects/search-lib",
-    "packages/search/projects/search-element",
     "services/*",
-    "facades/*",
     "sandbox/**"
   ],
   "command": {
@@ -46,7 +42,11 @@
         "@sourceloop/oidc-basic-example",
         "@sourceloop/nestjs-auth-ms-example"
       ],
-      "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
+      "npmClientArgs": [
+        "--loglevel",
+        "verbose",
+        "--no-install-links"
+      ]
     },
     "version": {
       "conventionalCommits": true,

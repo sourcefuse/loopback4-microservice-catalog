@@ -2,20 +2,20 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../../enums';
-import {Client, expect} from '@loopback/testlab';
+import { PermissionKey } from '../../enums';
+import { Client, expect } from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {nanoid} from 'nanoid';
-import {UserTenantServiceApplication} from '../application';
-import {Role, Tenant, User, UserTenant} from '../../models';
+import { AuthenticationBindings } from 'loopback4-authentication';
+import { nanoid } from 'nanoid';
+import { UserTenantServiceApplication } from '../application';
+import { Role, Tenant, User, UserTenant } from '../../models';
 import {
   RoleRepository,
   TenantRepository,
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {setupApplication} from './test-helper';
+import { setupApplication } from './test-helper';
 
 interface USER {
   id: string | undefined;
@@ -28,7 +28,7 @@ interface USER {
 
 describe('UserTenantPrefs Controller', function () {
   /* eslint-disable @typescript-eslint/no-invalid-this */
-  this.timeout(10000);
+  //this.timeout(10000);
   let app: UserTenantServiceApplication;
   let userTenantRepo: UserTenantRepository;
   let roleRepo: RoleRepository;
@@ -52,12 +52,12 @@ describe('UserTenantPrefs Controller', function () {
   };
   const data = {
     userTenantId: '',
-    configValue: {value: 'sample value'},
+    configValue: { value: 'sample value' },
     configKey: 'last-accessd-url',
   };
 
   before('setupApplication', async () => {
-    ({app, client} = await setupApplication());
+    ({ app, client } = await setupApplication());
   });
 
   after(async () => {

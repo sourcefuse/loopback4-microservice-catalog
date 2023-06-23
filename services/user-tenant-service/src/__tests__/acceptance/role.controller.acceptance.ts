@@ -2,18 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Client, expect} from '@loopback/testlab';
+import { Client, expect } from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {PermissionKey} from '../../enums';
-import {Role} from '../../models';
-import {RoleRepository} from '../../repositories';
-import {UserTenantServiceApplication} from '../application';
-import {setupApplication} from './test-helper';
+import { AuthenticationBindings } from 'loopback4-authentication';
+import { PermissionKey } from '../../enums';
+import { Role } from '../../models';
+import { RoleRepository } from '../../repositories';
+import { UserTenantServiceApplication } from '../application';
+import { setupApplication } from './test-helper';
 
 describe('Role Controller', function () {
   /* eslint-disable @typescript-eslint/no-invalid-this */
-  this.timeout(10000);
+  // this.timeout(10000);
   let app: UserTenantServiceApplication;
   let roleRepo: RoleRepository;
   const basePath = '/roles';
@@ -35,7 +35,7 @@ describe('Role Controller', function () {
     ],
   };
   before('setupApplication', async () => {
-    ({app, client} = await setupApplication());
+    ({ app, client } = await setupApplication());
   });
 
   after(async () => {
@@ -115,7 +115,7 @@ describe('Role Controller', function () {
     await client
       .patch(`${basePath}/${role.id}`)
       .set('authorization', `Bearer ${token}`)
-      .send({name: 'new_admin'})
+      .send({ name: 'new_admin' })
       .expect(204);
   });
 

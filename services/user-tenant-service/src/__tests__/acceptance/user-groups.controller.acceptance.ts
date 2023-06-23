@@ -2,17 +2,17 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Client, expect} from '@loopback/testlab';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import { Client, expect } from '@loopback/testlab';
+import { AuthenticationBindings } from 'loopback4-authentication';
 import * as jwt from 'jsonwebtoken';
-import {PermissionKey} from '../../enums';
-import {UserGroupService, UserGroupHelperService} from '../../services';
-import {UserTenantServiceApplication} from '../application';
-import {setupApplication} from './test-helper';
+import { PermissionKey } from '../../enums';
+import { UserGroupService, UserGroupHelperService } from '../../services';
+import { UserTenantServiceApplication } from '../application';
+import { setupApplication } from './test-helper';
 
 describe('UserGroups Controller', function () {
   /* eslint-disable @typescript-eslint/no-invalid-this */
-  this.timeout(10000);
+  // this.timeout(10000);
   let app: UserTenantServiceApplication;
   const id = '9640864d-a84a-e6b4-f20e-918ff280cdaa';
   const basePath = '/user-groups';
@@ -29,7 +29,7 @@ describe('UserGroups Controller', function () {
   };
 
   before('setupApplication', async () => {
-    ({app, client} = await setupApplication());
+    ({ app, client } = await setupApplication());
   });
 
   after(async () => {

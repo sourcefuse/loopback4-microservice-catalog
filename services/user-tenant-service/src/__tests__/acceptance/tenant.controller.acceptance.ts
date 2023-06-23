@@ -2,19 +2,19 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../../enums';
-import {Client, expect} from '@loopback/testlab';
+import { PermissionKey } from '../../enums';
+import { Client, expect } from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {nanoid} from 'nanoid';
-import {UserTenantServiceApplication} from '../application';
-import {Tenant} from '../../models';
-import {TenantRepository} from '../../repositories';
-import {setupApplication} from './test-helper';
+import { AuthenticationBindings } from 'loopback4-authentication';
+import { nanoid } from 'nanoid';
+import { UserTenantServiceApplication } from '../application';
+import { Tenant } from '../../models';
+import { TenantRepository } from '../../repositories';
+import { setupApplication } from './test-helper';
 
 describe('Tenant Controller', function () {
   /* eslint-disable @typescript-eslint/no-invalid-this */
-  this.timeout(10000);
+  // this.timeout(10000);
   let app: UserTenantServiceApplication;
   let tenantRepo: TenantRepository;
   const basePath = '/tenants';
@@ -39,7 +39,7 @@ describe('Tenant Controller', function () {
     ],
   };
   before('setupApplication', async () => {
-    ({app, client} = await setupApplication());
+    ({ app, client } = await setupApplication());
   });
 
   after(async () => {
@@ -126,7 +126,7 @@ describe('Tenant Controller', function () {
     await client
       .patch(`${basePath}/${tenant.id}`)
       .set('authorization', `Bearer ${token}`)
-      .send({name: 'new tenant'})
+      .send({ name: 'new tenant' })
       .expect(204);
   });
 

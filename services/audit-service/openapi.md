@@ -41,8 +41,8 @@ Base URLs:
 ```javascript
 const inputBody = '{
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-23T06:12:50.598Z",
+    "toDate": "2023-06-23T06:12:50.598Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -72,8 +72,8 @@ fetch('/audit-logs/archive',
 const fetch = require('node-fetch');
 const inputBody = {
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-23T06:12:50.598Z",
+    "toDate": "2023-06-23T06:12:50.598Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -111,8 +111,8 @@ fetch('/audit-logs/archive',
 ```json
 {
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-23T06:12:50.598Z",
+    "toDate": "2023-06-23T06:12:50.598Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -840,8 +840,8 @@ AuditLogWithRelations
 ```json
 {
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-23T06:12:50.598Z",
+    "toDate": "2023-06-23T06:12:50.598Z"
   },
   "deleted": true,
   "entityId": "string",

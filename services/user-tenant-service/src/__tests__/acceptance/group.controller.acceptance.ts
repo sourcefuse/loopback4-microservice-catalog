@@ -2,22 +2,22 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Client, expect} from '@loopback/testlab';
+import { Client, expect } from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {PermissionKey} from '../../enums';
-import {Group, GroupUserCountView} from '../../models';
+import { AuthenticationBindings } from 'loopback4-authentication';
+import { PermissionKey } from '../../enums';
+import { Group, GroupUserCountView } from '../../models';
 import {
   GroupRepository,
   UserGroupCountViewRepository,
 } from '../../repositories';
-import {UserGroupHelperService, UserGroupService} from '../../services';
-import {UserTenantServiceApplication} from '../application';
-import {setupApplication} from './test-helper';
+import { UserGroupHelperService, UserGroupService } from '../../services';
+import { UserTenantServiceApplication } from '../application';
+import { setupApplication } from './test-helper';
 
 describe('Group Controller', function () {
   /* eslint-disable @typescript-eslint/no-invalid-this */
-  this.timeout(10000);
+  // this.timeout(10000);
   let app: UserTenantServiceApplication;
   let groupRepo: GroupRepository;
   let userGroupCountRepo: UserGroupCountViewRepository;
@@ -41,7 +41,7 @@ describe('Group Controller', function () {
   };
 
   before('setupApplication', async () => {
-    ({app, client} = await setupApplication());
+    ({ app, client } = await setupApplication());
   });
 
   after(async () => {
@@ -119,7 +119,7 @@ describe('Group Controller', function () {
     await client
       .patch(`${basePath}/${group.id}`)
       .set('authorization', `Bearer ${token}`)
-      .send({name: 'new_admin'})
+      .send({ name: 'new_admin' })
       .expect(204);
   });
 
