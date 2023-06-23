@@ -22,4 +22,5 @@ export const ErrorKeys = {
     'Recurrence end date can not be less than start date',
   SurveyCanNotBeDeleted: 'Survey can not be deleted in this status',
   DisplayOrderMissing: 'Display Order is missing in the request',
+  SurveyIdDoesNotMatch: 'Survey Id in path and body does not match',
 };

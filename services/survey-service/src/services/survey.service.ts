@@ -386,7 +386,7 @@ export class SurveyService {
     }
   }
 
-  async checkIfAllowedToUpdateSurvey(id: string, tenantId: string) {
+  async checkIfAllowedToUpdateSurvey(id: string) {
     const existingSurvey = await this.surveyRepository.findOne({
       where: {id},
     });
