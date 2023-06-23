@@ -48,7 +48,7 @@
   "dependencies": {
     "@loopback/boot": "^5.0.5",
     "@loopback/context": "^5.0.5",
-    "@loopback/core": "^4.0.5",
+    "@loopback/core": "^4.0.10",
     "@loopback/openapi-v3": "^8.0.5",
     "@loopback/repository": "^5.1.0",
     "@loopback/repository-json-schema": "^6.0.5",
