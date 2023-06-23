@@ -22,7 +22,7 @@ describe('job processing service', () => {
     const {jobProcessingService, querySelectedFilesProvider, jobRepository} =
       getTestJobProcessingService();
     const jobDummy: Job = new Job({
-      status: FileStatusKey.Pending,
+      status: FileStatusKey.PENDING,
       filterUsed: filterAppliedActedAt,
     });
     const jobId = (await jobRepository.create(jobDummy)).getId();
@@ -46,7 +46,7 @@ describe('job processing service', () => {
     const {jobProcessingService, querySelectedFilesProvider, jobRepository} =
       getTestJobProcessingService();
     const jobDummy: Job = new Job({
-      status: FileStatusKey.Pending,
+      status: FileStatusKey.PENDING,
       filterUsed: filterAppliedActedOn, //1 May to 08th May
     });
     const jobId = (await jobRepository.create(jobDummy)).getId();
@@ -71,7 +71,7 @@ describe('job processing service', () => {
     const {jobProcessingService, querySelectedFilesProvider, jobRepository} =
       getTestJobProcessingService();
     const jobDummy: Job = new Job({
-      status: FileStatusKey.Pending,
+      status: FileStatusKey.PENDING,
       filterUsed: filterAppliedEntityId,
     });
     const jobId = (await jobRepository.create(jobDummy)).getId();
@@ -96,7 +96,7 @@ describe('job processing service', () => {
     const {jobProcessingService, querySelectedFilesProvider, jobRepository} =
       getTestJobProcessingService();
     const jobDummy: Job = new Job({
-      status: FileStatusKey.Pending,
+      status: FileStatusKey.PENDING,
       filterUsed: {},
     });
     const jobId = (await jobRepository.create(jobDummy)).getId();

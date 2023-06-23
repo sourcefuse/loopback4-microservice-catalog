@@ -5,6 +5,9 @@
 
 import {BindingKey} from '@loopback/core';
 import {
+  AuditLogExportFn,
+  ColumnBuilderFn,
+  ExcelProcessingFn,
   ExportToCsvFn,
   IAuditServiceConfig,
   QuerySelectedFilesFn,
@@ -26,5 +29,20 @@ export namespace QuerySelectedFilesServiceBindings {
 export namespace ExportToCsvServiceBindings {
   export const EXPORT_LOGS = BindingKey.create<ExportToCsvFn | null>(
     `${BINDING_PREFIX}.audit.archiveLogs`,
+  );
+}
+export namespace AuditLogExportServiceBindings {
+  export const EXPORT_AUDIT_LOGS = BindingKey.create<AuditLogExportFn>(
+    `${BINDING_PREFIX}.audit.exportAuditLogs`,
+  );
+}
+export namespace ExcelProcessingServiceBindings {
+  export const PROCESS_EXCEL = BindingKey.create<ExcelProcessingFn>(
+    `${BINDING_PREFIX}.audit.processExcel`,
+  );
+}
+export namespace ColumnBuilderServiceBindings {
+  export const COLUMN_BUILDER = BindingKey.create<ColumnBuilderFn>(
+    `${BINDING_PREFIX}.audit.columnBuilder`,
   );
 }

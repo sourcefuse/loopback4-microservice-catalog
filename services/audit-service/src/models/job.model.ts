@@ -1,4 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
+import {OperationKey} from '../enums/operation-key.enum';
 
 @model({
   name: 'jobs',
@@ -19,6 +20,12 @@ export class Job extends Entity {
     required: true,
   })
   status: string;
+
+  @property({
+    type: 'string',
+  })
+  operation: OperationKey;
+
   @property({
     name: 'filter_used',
     type: 'object',

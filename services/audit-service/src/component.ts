@@ -28,9 +28,12 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 
-import {AuditController, ArchiveLogController} from './controllers';
+import {AuditController} from './controllers';
 import {
+  AuditLogExportServiceBindings,
   AuditServiceBindings,
+  ColumnBuilderServiceBindings,
+  ExcelProcessingServiceBindings,
   ExportToCsvServiceBindings,
   QuerySelectedFilesServiceBindings,
 } from './keys';
@@ -44,6 +47,9 @@ import {
   JobProcessingService,
   ExportToCsvProvider,
   QuerySelectedFilesProvider,
+  AuditLogExportProvider,
+  ColumnBuilderProvider,
+  ExcelProcessingProvider,
 } from './services';
 import {IAuditServiceConfig} from './types';
 
@@ -77,7 +83,11 @@ export class AuditServiceComponent implements Component {
       this.setupSequence();
     }
 
-    this.services = [JobProcessingService];
+    this.services = [
+      JobProcessingService,
+      AuditLogExportProvider,
+      ColumnBuilderProvider,
+    ];
 
     this.repositories = [
       AuditLogRepository,
@@ -87,12 +97,18 @@ export class AuditServiceComponent implements Component {
 
     this.models = [AuditLog, MappingLog, Job];
 
-    this.controllers = [AuditController, ArchiveLogController];
+    this.controllers = [AuditController];
 
     this.providers[QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS.key] =
       QuerySelectedFilesProvider;
     this.providers[ExportToCsvServiceBindings.EXPORT_LOGS.key] =
       ExportToCsvProvider;
+    this.providers[AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS.key] =
+      AuditLogExportProvider;
+    this.providers[ColumnBuilderServiceBindings.COLUMN_BUILDER.key] =
+      ColumnBuilderProvider;
+    this.providers[ExcelProcessingServiceBindings.PROCESS_EXCEL.key] =
+      ExcelProcessingProvider;
   }
 
   providers?: ProviderMap = {};
