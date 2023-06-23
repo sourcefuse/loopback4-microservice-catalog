@@ -62,6 +62,7 @@
     "dotenv-extended": "^2.9.0",
     "jsdom": "^19.0.0",
     "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
     "loopback-connector-postgresql": "^6.0.4",
     "loopback4-authentication": "^9.0.0",
     "loopback4-authorization": "^6.0.0",

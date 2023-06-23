@@ -4,6 +4,8 @@ import {Question} from './questions.model';
 import {SurveyRecurrenceFrequency, SurveyStatus} from '../enum/question.enum';
 import {SurveyCycle} from './survey-cycle.model';
 import {SurveyResponder} from './survey-responder.model';
+import {Section} from './section.model';
+import {SurveyQuestion} from './survey-question.model';
 
 @model({name: 'surveys'})
 export class Survey extends UserModifiableEntity {
@@ -109,6 +111,19 @@ export class Survey extends UserModifiableEntity {
     keyTo: 'surveyId',
   })
   surveyResponders: SurveyResponder[];
+  @hasMany(() => Question, {
+    through: {
+      model: () => SurveyQuestion,
+      keyFrom: 'surveyId',
+      keyTo: 'questionId',
+    },
+  })
+  questions: Question[];
+
+  @hasMany(() => Section, {
+    keyTo: 'surveyId',
+  })
+  sections: Section[];
 
   @property({
     type: 'string',
@@ -128,6 +143,9 @@ export class Survey extends UserModifiableEntity {
   }
 }
 
-export interface SurveyRelations {}
+export interface SurveyRelations {
+  sections?: Section[];
+  questions?: Question[];
+}
 
 export type SurveyWithRelations = Survey & SurveyRelations;

@@ -24,4 +24,5 @@ export const ErrorKeys = {
   DisplayOrderMissing: 'Display Order is missing in the request',
   SurveyIdDoesNotMatch: 'Survey Id in path and body does not match',
   DeleteNotAllowedForSurveyOrTemplateUsedEntity: `Question cannot be deleted as it is already used in a survey or template.`,
+  SurveyResponseDetailNotFound: 'Survey Response Detail Not Found',
 };

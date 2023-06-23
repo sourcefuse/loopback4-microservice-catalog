@@ -83,4 +83,14 @@ export const enum PermissionKey {
 
   CreateResponderReminder = '527',
   CreateSurveyGoingToStartReminder = '528',
+
+  StartSurveyCycle = '515',
+  EndSurveyCycle = '516',
+  EndSurvey = '517',
+  CreateSurveyResponse = '518',
+  ViewSurveyResponse = '519',
+  CreateAnySurveyResponse = '520',
+  ViewAnySurveyResponse = '521',
+  ViewWorkgroupBulkUploadHistory = '522',
+  ViewAnyWorkgroupBulkUploadHistory = '523',
 }
