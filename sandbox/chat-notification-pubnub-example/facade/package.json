@@ -71,7 +71,7 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.2",
+    "@loopback/build": "^9.0.10",
     "@loopback/eslint-config": "^13.0.2",
     "@loopback/testlab": "^5.0.2",
     "@types/jsonwebtoken": "^8.5.8",
