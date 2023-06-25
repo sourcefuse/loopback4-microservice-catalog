@@ -93,4 +93,7 @@ export const enum PermissionKey {
   ViewAnySurveyResponse = '521',
   ViewWorkgroupBulkUploadHistory = '522',
   ViewAnyWorkgroupBulkUploadHistory = '523',
+
+  ViewSurveyResponseDetail = '531',
+  ViewAnySurveyResponseDetail = '532',
 }

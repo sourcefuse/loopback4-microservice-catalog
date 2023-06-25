@@ -33,7 +33,7 @@ import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
 import {SurveyCycleService} from '../services/survey-cycle.service';
 import {SurveyResponseService} from '../services/survey-response.service';
 
-const basePath = '/tenants/{tenantId}/surveys/{surveyId}/survey-responders';
+const basePath = '/surveys/{surveyId}/survey-responders';
 
 export class SurveyResponderController {
   constructor(

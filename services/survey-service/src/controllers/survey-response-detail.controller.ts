@@ -1,0 +1,118 @@
+import {
+  Count,
+  CountSchema,
+  Filter,
+  FilterExcludingWhere,
+  repository,
+  Where,
+} from '@loopback/repository';
+import {
+  param,
+  get,
+  getModelSchemaRef,
+  response,
+  HttpErrors,
+} from '@loopback/rest';
+import {STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
+import {PermissionKey} from '../enum/permission-key.enum';
+import {SurveyResponseDetail} from '../models/survey-response-detail.model';
+
+const basePath = '/survey-cycles/{surveyCycleId}/survey-response-detail-view';
+
+export class SurveyResponseDetailViewController {
+  constructor(
+    @repository(SurveyResponseDetailRepository)
+    private surveyResponseDetailRepository: SurveyResponseDetailRepository,
+  ) {}
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSurveyResponseDetail,
+      PermissionKey.ViewAnySurveyResponseDetail,
+    ],
+  })
+  @get(`${basePath}/count`)
+  @response(STATUS_CODE.OK, {
+    description: 'SurveyResponseDetailView model count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async count(
+    @param.path.string('surveyCycleId') surveyCycleId: string,
+    @param.where(SurveyResponseDetail)
+    where?: Where<SurveyResponseDetail>,
+  ): Promise<Count> {
+    return this.surveyResponseDetailRepository.count(where);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSurveyResponseDetail,
+      PermissionKey.ViewAnySurveyResponseDetail,
+    ],
+  })
+  @get(`${basePath}`)
+  @response(STATUS_CODE.OK, {
+    description: 'Array of SurveyResponseDetaimodel instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(SurveyResponseDetail, {
+            includeRelations: true,
+          }),
+        },
+      },
+    },
+  })
+  async find(
+    @param.path.string('surveyCycleId') surveyCycleId: string,
+    @param.filter(SurveyResponseDetail)
+    filter?: Filter<SurveyResponseDetail>,
+  ): Promise<SurveyResponseDetail[]> {
+    return this.surveyResponseDetailRepository.find(filter);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewSurveyResponseDetail,
+      PermissionKey.ViewAnySurveyResponseDetail,
+    ],
+  })
+  @get(`${basePath}/{id}`)
+  @response(STATUS_CODE.OK, {
+    description: 'SurveyResponseDetailView model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(SurveyResponseDetail, {
+          includeRelations: true,
+        }),
+      },
+    },
+  })
+  async findById(
+    @param.path.string('surveyCycleId') surveyCycleId: string,
+    @param.path.string('id') id: string,
+    @param.filter(SurveyResponseDetail, {exclude: 'where'})
+    filter?: FilterExcludingWhere<SurveyResponseDetail>,
+  ): Promise<SurveyResponseDetail> {
+    const surveyResponse = await this.surveyResponseDetailRepository.findOne(
+      filter,
+    );
+    if (!surveyResponse) {
+      throw new HttpErrors.BadRequest('Entity not found');
+    }
+    return surveyResponse;
+  }
+}

@@ -23,7 +23,7 @@ import {SurveyResponseRepository} from '../repositories/survey-response.reposito
 import {SurveyResponseService} from '../services/survey-response.service';
 import {PermissionKey} from '../enum/permission-key.enum';
 
-const basePath = '/tenants/{tenantId}/surveys/{surveyId}/survey-responses';
+const basePath = '/surveys/{surveyId}/survey-responses';
 
 export class SurveyResponseController {
   constructor(
