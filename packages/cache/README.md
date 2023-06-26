@@ -95,7 +95,7 @@ The following options can be passed:
 <tr>
   <td>cacheProvider</td>
   <td>Redis</td>
-  <td>Prefix is applied in the key of every cached entry when storing it inside caching provider. Each repository should have their own unique prefix.</td>
+  <td>cacheProvider specifies the cache provider to be used. `CacheStrategyTypes.Redis` indicates that Redis is the chosen cache provider.</td>
 </tr>
 <tr>
   <td>prefix</td>
