@@ -259,14 +259,17 @@ export class SurveyService {
         endDate.setMonth(endDate.getMonth() + occurrences);
         break;
       case SurveyRecurrenceFrequency.Quarterly:
+        // eslint-disable-next-line no-case-declarations
         const monthInQuarter = 3;
         endDate.setMonth(endDate.getMonth() + monthInQuarter * occurrences);
         break;
       case SurveyRecurrenceFrequency.Biannually:
+        // eslint-disable-next-line no-case-declarations
         const monthInBiAnnullay = 6;
         endDate.setMonth(endDate.getMonth() + monthInBiAnnullay * occurrences);
         break;
       case SurveyRecurrenceFrequency.Annually:
+        // eslint-disable-next-line no-case-declarations
         const monthInAnnullay = 12;
         endDate.setMonth(endDate.getMonth() + monthInAnnullay * occurrences);
         break;
@@ -352,7 +355,9 @@ export class SurveyService {
   private _checkRecurrenceDateValidations(survey: Survey) {
     // if both passed in a request
     if (
+      // eslint-disable-next-line no-prototype-builtins
       survey.hasOwnProperty('recurrenceEndDate') &&
+      // eslint-disable-next-line no-prototype-builtins
       survey.hasOwnProperty('recurrenceEndAfterOccurrences')
     ) {
       throw new HttpErrors.BadRequest(

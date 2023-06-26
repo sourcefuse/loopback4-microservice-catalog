@@ -27,13 +27,13 @@ export class QuestionHelperService {
     @repository(QuestionRepository)
     private questionRepository: QuestionRepository,
     @repository(OptionsRepository)
+    private optionsRepository: OptionsRepository,
     @repository(TemplateQuestionRepository)
     private templateQuestionRepository: TemplateQuestionRepository,
     @repository(SurveyQuestionRepository)
     private surveyQuestionRepository: SurveyQuestionRepository,
     @service(SurveyService)
     private surveyService: SurveyService,
-    private optionsRepository: OptionsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

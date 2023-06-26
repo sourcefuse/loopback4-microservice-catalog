@@ -14,5 +14,6 @@ export * from './survey-responder.model';
 export * from './survey-response-detail-dto.model';
 export * from './survey-response.model';
 export * from './survey-response-dto.model';
+export * from './survey-response-detail-dto.model';
 export * from './survey.model';
 export * from './template-questions.model';

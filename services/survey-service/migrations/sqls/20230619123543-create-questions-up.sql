@@ -7,6 +7,7 @@ CREATE TABLE questions (
         'Expired',
         'Approved'
     ) NOT NULL,
+    survey_id VARCHAR(50) NULL,
     question_type ENUM(
         'Drop Down',
         'Multi Selection',

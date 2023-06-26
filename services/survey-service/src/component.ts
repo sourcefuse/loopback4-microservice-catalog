@@ -29,15 +29,41 @@ import {
   OptionController,
   PingController,
   QuestionController,
+  SectionController,
+  SurveyCycleController,
 } from './controllers';
-import {QuestionRepository} from './repositories';
+import {
+  QuestionRepository,
+  SectionRepository,
+  SurveyCycleRepository,
+  SurveyQuestionRepository,
+  SurveyResponderRepository,
+  SurveyResponseDetailRepository,
+  SurveyResponseRepository,
+} from './repositories';
 import {OptionsRepository} from './repositories/options.repository';
 import {QuestionDto} from './models/question-dto.model';
-import {Options, Question} from './models';
 import {
+  Options,
+  Question,
+  Section,
+  Survey,
+  SurveyCycle,
+  SurveyQuestion,
+  SurveyQuestionDto,
+  SurveyResponder,
+  SurveyResponse,
+  SurveyResponseDto,
+} from './models';
+import {
+  CreateSurveyHelperService,
   QuestionDuplicateHelperService,
   QuestionHelperService,
   QuestionTemplateService,
+  SectionService,
+  SurveyCycleService,
+  SurveyResponseService,
+  SurveyService,
 } from './services';
 import {QuestionOptionService} from './services/question-option.service';
 import {TemplateQuestionRepository} from './repositories/template-questions.repository';
@@ -47,6 +73,13 @@ import {QuestionTemplatesDto} from './models/question-template-dto.model';
 import {TemplateQuestion} from './models/template-questions.model';
 import {TemplateQuestionController} from './controllers/template-question.controller';
 import {TemplateController} from './controllers/question-template.controller';
+import {SurveyRepository} from './repositories/survey.repository';
+import {SurveyController} from './controllers/survey.controller';
+import {SurveyQuestionController} from './controllers/survey-question.controller';
+import {SurveyResponseDetail} from './models/survey-response-detail.model';
+import {SurveyResponderController} from './controllers/survey-responder.controller';
+import {SurveyResponseController} from './controllers/survey-response.controller';
+import {SurveyResponseDetailViewController} from './controllers/survey-response-detail.controller';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -63,7 +96,11 @@ export class SurveyServiceComponent implements Component {
       QuestionDuplicateHelperService,
       QuestionTemplateService,
       QuestionOptionService,
-      QuestionTemplateService,
+      CreateSurveyHelperService,
+      SurveyService,
+      SectionService,
+      SurveyCycleService,
+      SurveyResponseService,
     ];
 
     this.repositories = [
@@ -71,6 +108,13 @@ export class SurveyServiceComponent implements Component {
       OptionsRepository,
       TemplateQuestionRepository,
       QuestionTemplateRepository,
+      SurveyRepository,
+      SurveyQuestionRepository,
+      SurveyCycleRepository,
+      SurveyResponderRepository,
+      SectionRepository,
+      SurveyResponseRepository,
+      SurveyResponseDetailRepository,
     ];
 
     this.models = [
@@ -80,6 +124,15 @@ export class SurveyServiceComponent implements Component {
       QuestionTemplate,
       QuestionTemplatesDto,
       TemplateQuestion,
+      Survey,
+      SurveyQuestion,
+      Section,
+      SurveyCycle,
+      SurveyQuestionDto,
+      SurveyResponder,
+      SurveyResponse,
+      SurveyResponseDto,
+      SurveyResponseDetail,
     ];
 
     this.controllers = [
@@ -88,6 +141,13 @@ export class SurveyServiceComponent implements Component {
       OptionController,
       TemplateQuestionController,
       TemplateController,
+      SurveyController,
+      SurveyQuestionController,
+      SectionController,
+      SurveyCycleController,
+      SurveyResponderController,
+      SurveyResponseController,
+      SurveyResponseDetailViewController,
     ];
 
     // Mount core component

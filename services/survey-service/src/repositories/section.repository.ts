@@ -21,8 +21,6 @@ export class SectionRepository extends DefaultSoftCrudRepository<
 > {
   constructor(
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
-
-    @repository.getter('UserRepository')
     @repository.getter('SurveyRepository')
     protected surveyRepositoryGetter: Getter<SurveyRepository>,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
@@ -65,7 +63,7 @@ export class SectionRepository extends DefaultSoftCrudRepository<
     const query = `
       UPDATE ${process.env.DB_DATABASE}.section
       SET display_order = display_order - 1 
-      WHERE survey_id = ? AND display_order > ? AND tenant_id = ?`;
+      WHERE survey_id = ? AND display_order > ?`;
     this.execute(query, parameters);
   }
 
@@ -73,7 +71,7 @@ export class SectionRepository extends DefaultSoftCrudRepository<
     try {
       const surveyRepository = await this.surveyRepositoryGetter();
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      surveyRepository.updateById(surveyId, {
+      await surveyRepository.updateById(surveyId, {
         id: surveyId,
       });
     } catch (err) {

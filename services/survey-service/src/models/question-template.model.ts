@@ -49,7 +49,4 @@ export class QuestionTemplate extends UserModifiableEntity {
   }
 }
 
-export interface QuestionTemplateRelations {}
-
-export type QuestionTemplateWithRelations = QuestionTemplate &
-  QuestionTemplateRelations;
+export type QuestionTemplateWithRelations = QuestionTemplate;

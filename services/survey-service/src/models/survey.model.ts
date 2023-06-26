@@ -102,6 +102,15 @@ export class Survey extends UserModifiableEntity {
   })
   isEnableWeights: boolean;
 
+  @hasMany(() => Question, {
+    through: {
+      model: () => SurveyQuestion,
+      keyFrom: 'surveyId',
+      keyTo: 'questionId',
+    },
+  })
+  questions: Question[];
+
   @hasMany(() => SurveyCycle, {
     keyTo: 'surveyId',
   })
@@ -111,14 +120,6 @@ export class Survey extends UserModifiableEntity {
     keyTo: 'surveyId',
   })
   surveyResponders: SurveyResponder[];
-  @hasMany(() => Question, {
-    through: {
-      model: () => SurveyQuestion,
-      keyFrom: 'surveyId',
-      keyTo: 'questionId',
-    },
-  })
-  questions: Question[];
 
   @hasMany(() => Section, {
     keyTo: 'surveyId',

@@ -1,4 +1,4 @@
-import {inject, service} from '@loopback/core';
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -18,7 +18,7 @@ import {
   response,
   HttpErrors,
 } from '@loopback/rest';
-import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {OptionsRepository} from '../repositories/options.repository';

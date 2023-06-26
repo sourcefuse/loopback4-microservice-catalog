@@ -1,6 +1,6 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {DefaultSoftCrudRepository, ILogger, LOGGER} from '@sourceloop/core';
 import {Question} from '../models';
 import {
   SurveyQuestion,
@@ -12,6 +12,7 @@ import {SurveyRepository} from './survey.repository';
 import {SurveyDbSourceName} from '../types';
 import {Section} from '../models/section.model';
 import {SectionRepository} from './section.repository';
+import {HttpErrors} from '@loopback/rest';
 
 export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
   SurveyQuestion,
@@ -45,6 +46,7 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
     protected questionRepositoryGetter: Getter<QuestionRepository>,
     @repository.getter('SectionRepository')
     protected sectionRepositoryGetter: Getter<SectionRepository>,
+    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {
     super(SurveyQuestion, dataSource);
     this.section = this.createBelongsToAccessorFor(
@@ -73,5 +75,31 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
       'dependentOnQuestion',
       this.dependentOnQuestion.inclusionResolver,
     );
+  }
+
+  async reorder(surveyId: string, displayOrder: number) {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this._updateSurveyModifiedByAndOn(surveyId).catch(err =>
+      this.logger.error(JSON.stringify(err)),
+    );
+    const parameters = [surveyId, displayOrder];
+    const query = `
+      UPDATE survey_questions
+      SET display_order = display_order + 1 
+      WHERE survey_id = ? AND display_order >= ?`;
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.execute(query, parameters);
+  }
+
+  async _updateSurveyModifiedByAndOn(surveyId: string) {
+    try {
+      const surveyRepository = await this.surveyRepositoryGetter();
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      await surveyRepository.updateById(surveyId, {
+        id: surveyId,
+      });
+    } catch (err) {
+      throw new HttpErrors.InternalServerError(err);
+    }
   }
 }

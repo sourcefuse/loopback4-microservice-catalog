@@ -1,4 +1,4 @@
-import {model, property, hasOne, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Survey} from './survey.model';
 import {Question} from './questions.model';

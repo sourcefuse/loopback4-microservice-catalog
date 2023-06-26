@@ -96,4 +96,13 @@ export const enum PermissionKey {
 
   ViewSurveyResponseDetail = '531',
   ViewAnySurveyResponseDetail = '532',
+
+  CreateSurveyQuestion = '465',
+  ViewSurveyQuestion = '466',
+  UpdateSurveyQuestion = '467',
+  DeleteSurveyQuestion = '468',
+  CreateAnySurveyQuestion = '469',
+  ViewAnySurveyQuestion = '470',
+  UpdateAnySurveyQuestion = '471',
+  DeleteAnySurveyQuestion = '472',
 }

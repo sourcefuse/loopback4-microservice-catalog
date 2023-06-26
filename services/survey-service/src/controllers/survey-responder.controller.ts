@@ -168,7 +168,6 @@ export class SurveyResponderController {
       },
     })
     responderReminderDto: ResponderReminderDto,
-    @param.path.string('tenantId') tenantId: string,
   ): Promise<void> {
     const where = {
       id: {inq: responderReminderDto.surveyResponderIds},

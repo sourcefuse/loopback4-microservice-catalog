@@ -13,6 +13,7 @@ import {SurveyDbSourceName} from '../types';
 import {OptionsRepository} from './options.repository';
 import {Survey} from '../models';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
+import {SurveyRepository} from './survey.repository';
 
 export class QuestionRepository extends DefaultSoftCrudRepository<
   Question,
@@ -52,8 +53,15 @@ export class QuestionRepository extends DefaultSoftCrudRepository<
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
     @repository.getter('OptionsRepository')
     protected optionsRepositoryGetter: Getter<OptionsRepository>,
+    @repository.getter('SurveyRepository')
+    protected surveyRepositoryGetter: Getter<SurveyRepository>,
   ) {
     super(Question, dataSource);
+    this.survey = this.createBelongsToAccessorFor(
+      'survey',
+      surveyRepositoryGetter,
+    );
+    this.registerInclusionResolver('survey', this.survey.inclusionResolver);
 
     this.followUpQuestions = this.createHasManyRepositoryFactoryFor(
       'followUpQuestions',

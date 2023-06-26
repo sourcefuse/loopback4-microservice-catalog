@@ -234,13 +234,6 @@ export class SectionController {
   ): Promise<void> {
     await this.sectionService.handleDeleteSection(surveyId, sectionId);
 
-    const existingSection = await this.sectionRepository.findOne({
-      where: {
-        id: sectionId,
-        surveyId,
-      },
-    });
-
     const deleteCount = await this.sectionRepository.deleteAllHard({
       id: sectionId,
       surveyId,

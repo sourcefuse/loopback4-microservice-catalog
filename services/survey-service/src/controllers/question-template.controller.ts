@@ -28,7 +28,7 @@ import {QuestionTemplate} from '../models/question-template.model';
 import {QuestionTemplatesDto} from '../models/question-template-dto.model';
 import {QuestionTemplateResponse} from '../models/question-template-response.model';
 
-const basePath = '/tenants/{tenantId}/questionnaires';
+const basePath = '/templates';
 
 export class TemplateController {
   constructor(

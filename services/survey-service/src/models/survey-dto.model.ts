@@ -9,7 +9,6 @@ export class SurveyDto extends Survey {
   createdByName?: string;
   @property({
     type: 'string',
-    required: true,
     name: 'existing_template_id',
   })
   existingTemplateId?: string;

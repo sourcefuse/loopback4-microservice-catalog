@@ -21,6 +21,8 @@ export const ErrorKeys = {
   RecurrenceEndDateCanNotBeLess:
     'Recurrence end date can not be less than start date',
   SurveyCanNotBeDeleted: 'Survey can not be deleted in this status',
+  DuplicateSurveyQuestionEntry:
+    'This question has already been used in this survey',
   DisplayOrderMissing: 'Display Order is missing in the request',
   SurveyIdDoesNotMatch: 'Survey Id in path and body does not match',
   DeleteNotAllowedForSurveyOrTemplateUsedEntity: `Question cannot be deleted as it is already used in a survey or template.`,

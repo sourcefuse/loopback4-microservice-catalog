@@ -1,5 +1,5 @@
 import {Survey} from './survey.model';
-import {model, property, hasOne, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({name: 'survey_cycles'})
@@ -33,12 +33,6 @@ export class SurveyCycle extends UserModifiableEntity {
     default: false,
   })
   isActivated: boolean;
-
-  @property({
-    type: 'string',
-    name: 'tenant_id',
-  })
-  tenantId?: string;
 
   createdByUser?: string;
 

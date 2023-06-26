@@ -5,7 +5,6 @@ import {QuestionTemplate} from './question-template.model';
 export class QuestionTemplatesDto extends QuestionTemplate {
   @property({
     type: 'string',
-    required: true,
     name: 'existing_template_id',
   })
   existingTemplateId?: string;

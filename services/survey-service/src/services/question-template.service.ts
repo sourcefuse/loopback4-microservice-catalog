@@ -25,7 +25,7 @@ export class QuestionTemplateService {
     questionTemplate.status = QuestionTemplateStatus.DRAFT;
 
     // create questionTemplate
-    if (questionTemplate.existingTemplateId) {
+    if (questionTemplate?.existingTemplateId) {
       const existingQuestionnaire =
         await this.questionTemplateRepository.findOne({
           fields: ['isEnableWeight'],
@@ -55,7 +55,7 @@ export class QuestionTemplateService {
     }
 
     // add templateQuestions
-    if (questionTemplate.existingTemplateId) {
+    if (questionTemplate?.existingTemplateId) {
       const existingQuestions = await this.templateQuestionRepository.find({
         where: {templateId: questionTemplate.existingTemplateId},
       });

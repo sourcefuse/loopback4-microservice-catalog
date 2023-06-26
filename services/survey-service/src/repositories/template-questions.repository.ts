@@ -9,7 +9,6 @@ import {Question} from '../models';
 import {QuestionTemplate} from '../models/question-template.model';
 import {SurveyDbSourceName} from '../types';
 import {QuestionRepository} from './questions.repository';
-import {QuestionTemplateRepository} from './question-template.repository';
 
 export class TemplateQuestionRepository extends DefaultSoftCrudRepository<
   TemplateQuestion,
@@ -35,8 +34,6 @@ export class TemplateQuestionRepository extends DefaultSoftCrudRepository<
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
     @repository.getter('QuestionRepository')
     protected questionRepositoryGetter: Getter<QuestionRepository>,
-    @repository.getter('QuestionTemplateRepository')
-    protected questionTemplateRepositoryGetter: Getter<QuestionTemplateRepository>,
   ) {
     super(TemplateQuestion, dataSource);
     this.dependentOnQuestion = this.createBelongsToAccessorFor(
@@ -48,14 +45,6 @@ export class TemplateQuestionRepository extends DefaultSoftCrudRepository<
       this.dependentOnQuestion.inclusionResolver,
     );
 
-    this.questionTemplate = this.createBelongsToAccessorFor(
-      'questionTemplate',
-      questionTemplateRepositoryGetter,
-    );
-    this.registerInclusionResolver(
-      'questionTemplate',
-      this.questionTemplate.inclusionResolver,
-    );
     this.question = this.createBelongsToAccessorFor(
       'question',
       questionRepositoryGetter,
