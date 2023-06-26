@@ -85,11 +85,6 @@ export class SurveyResponder extends UserModifiableEntity {
 
   modifiedByUser?: string;
 
-  @property({
-    type: 'string',
-  })
-  password?: string;
-
   constructor(data?: Partial<SurveyResponder>) {
     super(data);
   }

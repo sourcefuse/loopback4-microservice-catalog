@@ -4,7 +4,7 @@ import {SurveyResponder} from './survey-responder.model';
 import {SurveyCycle} from './survey-cycle.model';
 import {SurveyResponseDetail} from './survey-response-detail.model';
 
-@model({name: 'survey_response'})
+@model({name: 'survey_cycle_responses'})
 export class SurveyResponse extends UserModifiableEntity {
   @property({
     type: 'string',
@@ -43,7 +43,10 @@ export class SurveyResponse extends UserModifiableEntity {
 
   modifiedByUser?: string;
 
-  @hasMany(() => SurveyResponseDetail)
+  @hasMany(() => SurveyResponseDetail, {
+    keyTo: 'surveyResponseId',
+    keyFrom: 'id',
+  })
   surveyResponseDetails?: SurveyResponseDetail[];
 
   constructor(data?: Partial<SurveyResponse>) {

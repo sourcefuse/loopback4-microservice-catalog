@@ -288,6 +288,7 @@ export class QuestionHelperService {
     and if its value is false. If it is, then it updates all the options in the optionsRepository
     with a score of 0 for the given questionId. */
     if (
+      // eslint-disable-next-line no-prototype-builtins
       question.hasOwnProperty('isScoreEnabled') &&
       question.isScoreEnabled === false
     ) {
@@ -362,31 +363,11 @@ export class QuestionHelperService {
     existingQuestion: Question,
     updateQuestion: Question,
   ) {
-    if (updateQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
-      if (!existingQuestion.surveyId) {
-        throw new HttpErrors.BadRequest(ErrorKeys.RequiredSurveyParamsMissing);
-      }
-      // await this.handleAddedToSurvey(
-      //   updateQuestion.displayOrder,
-      //   id,
-      //   existingQuestion.surveyId,
-      // );
-    } else if (updateQuestion?.status === QuestionStatus.APPROVED) {
+    if (updateQuestion?.status === QuestionStatus.APPROVED) {
       await this.handleApprove(id);
     } else {
       // do nothing
     }
-  }
-  async handleAddedToSurvey(
-    displayOrder: number,
-    questionId: string,
-    surveyId: string,
-  ) {
-    // add entry for this question in survey-question table
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.surveyService
-      .addSurveyQuestion(displayOrder, questionId, surveyId)
-      .catch(err => this.logger.error(JSON.stringify(err)));
   }
 
   async validateParentQuestion(parentQuestionId: string | undefined) {

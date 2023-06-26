@@ -4,8 +4,9 @@ CREATE TABLE questions (
     name LONGTEXT NULL,
     status ENUM(
         'Draft',
-        'Expired',
-        'Approved'
+        'Approved',
+        'Added to survey',
+        'Archived'
     ) NOT NULL,
     survey_id VARCHAR(50) NULL,
     question_type ENUM(

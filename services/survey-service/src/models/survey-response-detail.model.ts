@@ -5,7 +5,7 @@ import {Question} from './questions.model';
 import {QuestionType} from '../enum/question.enum';
 import {Options} from './options.model';
 
-@model({name: 'survey_response_detail'})
+@model({name: 'survey_response_details'})
 export class SurveyResponseDetail extends UserModifiableEntity {
   @property({
     type: 'string',

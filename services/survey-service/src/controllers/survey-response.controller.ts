@@ -22,6 +22,7 @@ import {SurveyResponse, SurveyResponseDto} from '../models';
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
 import {SurveyResponseService} from '../services/survey-response.service';
 import {PermissionKey} from '../enum/permission-key.enum';
+import {service} from '@loopback/core';
 
 const basePath = '/surveys/{surveyId}/survey-responses';
 
@@ -29,6 +30,7 @@ export class SurveyResponseController {
   constructor(
     @repository(SurveyResponseRepository)
     private surveyResponseRepository: SurveyResponseRepository,
+    @service(SurveyResponseService)
     private surveyResponseService: SurveyResponseService,
   ) {}
 
@@ -129,11 +131,10 @@ export class SurveyResponseController {
       },
     },
   })
-  async findById(
-    @param.path.string('id') id: string,
-    filter?: FilterExcludingWhere<SurveyResponse>,
-  ): Promise<SurveyResponse> {
-    const surveyResponse = await this.surveyResponseRepository.findOne(filter);
+  async findById(@param.path.string('id') id: string): Promise<SurveyResponse> {
+    const surveyResponse = await this.surveyResponseRepository.findOne({
+      where: {id},
+    });
     if (!surveyResponse) {
       throw new HttpErrors.NotFound('Entity not found');
     }

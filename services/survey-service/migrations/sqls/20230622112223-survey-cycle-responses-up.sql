@@ -16,7 +16,7 @@ CREATE TABLE survey_cycle_responses (
 ALTER TABLE
     survey_cycle_responses
 ADD
-    CONSTRAINT fk_survey_cycle_responses_survey_cycle FOREIGN KEY (survey_cycle_id) REFERENCES survey_cycle_responses (id);
+    CONSTRAINT fk_survey_cycle_responses_survey_cycle FOREIGN KEY (survey_cycle_id) REFERENCES survey_cycles (id);
 
 CREATE TRIGGER survey_cycle_responses_before_insert BEFORE
 INSERT

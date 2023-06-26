@@ -3,7 +3,6 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
@@ -28,6 +27,7 @@ import {QuestionRepository} from '../repositories';
 import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
 import {QuestionDuplicateHelperService} from '../services/question-duplicate-helper.service';
 import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
+import {PermissionKey} from '../enum';
 
 const basePath = '/questions';
 
@@ -45,7 +45,10 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [
+      PermissionKey.CreateQuestion,
+      PermissionKey.CreateAnyQuestion,
+    ],
   })
   @post(basePath)
   @response(STATUS_CODE.OK, {
@@ -72,7 +75,7 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [PermissionKey.ViewQuestion, PermissionKey.ViewAnyQuestion],
   })
   @get(`${basePath}/count`)
   @response(STATUS_CODE.OK, {
@@ -87,7 +90,7 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [PermissionKey.ViewQuestion, PermissionKey.ViewAnyQuestion],
   })
   @get(basePath)
   @response(STATUS_CODE.OK, {
@@ -111,7 +114,10 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [
+      PermissionKey.UpdateQuestion,
+      PermissionKey.UpdateAnyQuestion,
+    ],
   })
   @patch(basePath)
   @response(STATUS_CODE.OK, {
@@ -136,7 +142,7 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [PermissionKey.ViewQuestion, PermissionKey.ViewAnyQuestion],
   })
   @get(`${basePath}/{id}`)
   @response(STATUS_CODE.OK, {
@@ -147,12 +153,8 @@ export class QuestionController {
       },
     },
   })
-  async findById(
-    @param.path.string('id') id: string,
-    @param.filter(Question, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Question>,
-  ): Promise<Question> {
-    const question = await this.questionRepository.findOne(filter);
+  async findById(@param.path.string('id') id: string): Promise<Question> {
+    const question = await this.questionRepository.findOne({where: {id}});
     if (!question) {
       throw new HttpErrors.NotFound();
     }
@@ -163,7 +165,10 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [
+      PermissionKey.UpdateQuestion,
+      PermissionKey.UpdateAnyQuestion,
+    ],
   })
   @patch(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
@@ -187,7 +192,10 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [
+      PermissionKey.DeleteQuestion,
+      PermissionKey.DeleteAnyQuestion,
+    ],
   })
   @del(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
@@ -201,7 +209,10 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [
+      PermissionKey.DeleteQuestion,
+      PermissionKey.DeleteAnyQuestion,
+    ],
   })
   @post(`${basePath}/delete/bulk`)
   @response(STATUS_CODE.NO_CONTENT, {
@@ -233,7 +244,10 @@ export class QuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: ['*'],
+    permissions: [
+      PermissionKey.CreateQuestion,
+      PermissionKey.CreateAnyQuestion,
+    ],
   })
   @post(`${basePath}/{id}/duplicate`)
   @response(STATUS_CODE.OK, {

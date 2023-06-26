@@ -37,19 +37,22 @@ const basePath = '/surveys/{surveyId}/survey-responders';
 
 export class SurveyResponderController {
   constructor(
-    @repository(SurveyRepository) protected surveyRepository: SurveyRepository,
+    @repository(SurveyRepository)
+    protected surveyRepository: SurveyRepository,
     @repository(SurveyResponderRepository)
     protected surveyResponderRepository: SurveyResponderRepository,
     @repository(SurveyResponseRepository)
     protected surveyResponseRepository: SurveyResponseRepository,
     @repository(SurveyCycleRepository)
     protected surveyCycleRepository: SurveyCycleRepository,
+    @service(SurveyResponseService)
     private surveyResponseService: SurveyResponseService,
     @service(SurveyCycleService)
     private surveyCycleService: SurveyCycleService,
     @service(SurveyService)
     private surveyService: SurveyService,
-    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT)
+    public logger: ILogger,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

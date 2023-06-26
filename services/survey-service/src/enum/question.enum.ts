@@ -2,7 +2,7 @@ export enum QuestionStatus {
   DRAFT = 'Draft',
   APPROVED = 'Approved',
   ADDED_TO_SURVEY = 'Added to survey',
-  ARCHIVE = 'Archive',
+  ARCHIVED = 'Archived',
 }
 export enum QuestionType {
   MULTI_SELECTION = 'Multi Selection',

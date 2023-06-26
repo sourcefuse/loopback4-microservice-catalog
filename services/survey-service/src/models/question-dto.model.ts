@@ -49,6 +49,14 @@ export class QuestionDto extends Model {
   })
   status?: QuestionStatus;
 
+  @property({
+    type: 'string',
+    jsonSchema: {
+      maxLength: 1000,
+    },
+  })
+  name?: string;
+
   constructor(data?: Partial<QuestionDto>) {
     super(data);
   }
