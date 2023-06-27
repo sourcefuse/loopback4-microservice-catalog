@@ -95,7 +95,11 @@ The following options can be passed:
 <tr>
   <td>cacheProvider</td>
   <td>Redis</td>
-  <td>cacheProvider specifies the cache provider to be used. `CacheStrategyTypes.Redis` indicates that Redis is the chosen cache provider.</td>
+  <td>
+
+cacheProvider specifies the cache provider to be used. `CacheStrategyTypes.Redis` indicates that Redis is the chosen cache provider.
+
+</td>
 </tr>
 <tr>
   <td>prefix</td>
