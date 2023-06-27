@@ -79,6 +79,7 @@ import {SurveyResponseDetail} from './models/survey-response-detail.model';
 import {SurveyResponderController} from './controllers/survey-responder.controller';
 import {SurveyResponseController} from './controllers/survey-response.controller';
 import {SurveyResponseDetailViewController} from './controllers/survey-response-detail.controller';
+import {SendReminderProvider} from './providers/send-notification.provider';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -88,7 +89,9 @@ export class SurveyServiceComponent implements Component {
     private readonly surveyConfig?: ISurveyServiceConfig,
   ) {
     this.bindings = [];
-    this.providers = {};
+    this.providers = {
+      [SurveyServiceBindings.ReminderFunction.key]: SendReminderProvider,
+    };
 
     this.services = [
       QuestionHelperService,
