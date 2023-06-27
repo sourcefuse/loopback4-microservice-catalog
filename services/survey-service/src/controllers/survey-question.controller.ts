@@ -330,6 +330,6 @@ export class SurveyQuestionController {
     this.surveyQuestionRepository
       .reorder(surveyId, surveyQuestion.displayOrder)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((err: any) => this.logger.error(JSON.stringify(err)));
+      .catch(err => this.logger.error(JSON.stringify(err)));
   }
 }

@@ -148,7 +148,7 @@ export class SurveyResponseService {
     await this.surveyResponseDetailRepository.createAll(surveyResponseDetails);
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.sendSurveyResponseEmail(surveyId, surveyResponder).catch((err: any) =>
+    this.sendSurveyResponseEmail(surveyId, surveyResponder).catch(err =>
       this.logger.error(JSON.stringify(err)),
     );
 

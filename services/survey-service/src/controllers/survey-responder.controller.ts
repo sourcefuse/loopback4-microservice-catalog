@@ -137,7 +137,7 @@ export class SurveyResponderController {
     }
     this.surveyCycleService
       .sendEmailToResponder(surveyResponder, surveyCycle)
-      .catch((err: any) => this.logger.error(JSON.stringify(err)));
+      .catch(err => this.logger.error(JSON.stringify(err)));
   }
 
   async validateSurveyCycle(surveyCycleId: string, surveyId: string) {
@@ -186,7 +186,7 @@ export class SurveyResponderController {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.surveyResponseService
       .sendResponderReminderEmail(surveyId, responderReminderDto)
-      .catch((err: any) => this.logger.error(JSON.stringify(err)));
+      .catch(err => this.logger.error(JSON.stringify(err)));
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -300,7 +300,9 @@ export class SurveyResponderController {
   ): Promise<Count> {
     return this.surveyRepository
       .surveyResponders(surveyId)
-      .patch(surveyResponder, where);
+      .patch(surveyResponder, {
+        id,
+      });
   }
 
   @authenticate(STRATEGY.BEARER, {

@@ -27,7 +27,6 @@ import {
 import {SurveyServiceBindings} from './keys';
 import {
   OptionController,
-  PingController,
   QuestionController,
   SectionController,
   SurveyCycleController,
@@ -136,7 +135,6 @@ export class SurveyServiceComponent implements Component {
     ];
 
     this.controllers = [
-      PingController,
       QuestionController,
       OptionController,
       TemplateQuestionController,

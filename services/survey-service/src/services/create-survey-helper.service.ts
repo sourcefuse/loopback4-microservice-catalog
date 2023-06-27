@@ -86,8 +86,8 @@ export class CreateSurveyHelperService {
         const surveyQuestion = createdSurveyQuestions.find(
           createdSurveyQuestion =>
             createdSurveyQuestion.questionId ===
-              questionIdMap?.get(templateQuestion?.questionId) ??
-            templateQuestion?.questionId,
+            (questionIdMap?.get(templateQuestion?.questionId) ??
+              templateQuestion?.questionId),
         );
 
         updatePromiseArr.push(

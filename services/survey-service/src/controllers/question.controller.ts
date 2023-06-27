@@ -230,10 +230,6 @@ export class QuestionController {
     })
     question: BulkDeleteDto,
   ): Promise<void> {
-    let questions;
-    questions = await this.questionRepository.find({
-      where: {id: {inq: question.ids}},
-    });
     const promiseArr = question.ids.map(id =>
       this.questionHelperService.deleteQuestion(id),
     );

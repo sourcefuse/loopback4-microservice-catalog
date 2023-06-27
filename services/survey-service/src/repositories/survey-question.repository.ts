@@ -2,10 +2,7 @@ import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 import {DefaultSoftCrudRepository, ILogger, LOGGER} from '@sourceloop/core';
 import {Question} from '../models';
-import {
-  SurveyQuestion,
-  SurveyQuestionRelations,
-} from '../models/survey-question.model';
+import {SurveyQuestion} from '../models/survey-question.model';
 import {Survey} from '../models/survey.model';
 import {QuestionRepository} from './questions.repository';
 import {SurveyRepository} from './survey.repository';
@@ -16,8 +13,7 @@ import {HttpErrors} from '@loopback/rest';
 
 export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
   SurveyQuestion,
-  typeof SurveyQuestion.prototype.id,
-  SurveyQuestionRelations
+  typeof SurveyQuestion.prototype.id
 > {
   public readonly dependentOnQuestion: BelongsToAccessor<
     SurveyQuestion,

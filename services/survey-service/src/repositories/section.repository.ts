@@ -7,13 +7,12 @@ import {
   juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {ILogger, LOGGER} from '@sourceloop/core';
+import {DefaultSoftCrudRepository, ILogger, LOGGER} from '@sourceloop/core';
 import {Getter, inject} from '@loopback/core';
 
 import {Section} from '../models/section.model';
 import {SurveyDbSourceName} from '../types';
 import {SurveyRepository} from './survey.repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
 
 export class SectionRepository extends DefaultSoftCrudRepository<
   Section,
