@@ -1,4 +1,4 @@
-import {model, property, hasOne} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({name: 'section'})

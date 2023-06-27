@@ -95,7 +95,4 @@ export class SurveyQuestion extends UserModifiableEntity {
   }
 }
 
-export interface SurveyQuestionRelations {}
-
-export type SurveyQuestionWithRelations = SurveyQuestion &
-  SurveyQuestionRelations;
+export type SurveyQuestionWithRelations = SurveyQuestion;

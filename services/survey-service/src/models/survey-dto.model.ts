@@ -18,6 +18,4 @@ export class SurveyDto extends Survey {
   }
 }
 
-export interface SurveyDtoRelations {}
-
-export type SurveyDtoWithRelations = SurveyDto & SurveyDtoRelations;
+export type SurveyDtoWithRelations = SurveyDto;

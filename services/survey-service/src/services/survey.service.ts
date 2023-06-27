@@ -58,12 +58,12 @@ export class SurveyService {
     if (survey.isPeriodicReassessment && occurrences) {
       survey.recurrenceEndDate = this.calculateRecurrenceEndDate(
         survey.endDate,
-        survey.recurrenceFrequency as SurveyRecurrenceFrequency,
+        survey.recurrenceFrequency as unknown as SurveyRecurrenceFrequency,
         occurrences,
       );
     }
     if (survey.surveyText) {
-      survey.surveyText = unescapeHtml(survey.surveyText) as string;
+      survey.surveyText = unescapeHtml(survey.surveyText) as unknown as string;
       const title = this.getHtmlTextContent(survey.surveyText);
       this.validateTitleLength(title);
     }
@@ -288,7 +288,7 @@ export class SurveyService {
     this.checkIfAllowedToUpdate(existingSurvey, survey);
     // unescape survey text to store in db and validate it
     if (survey.surveyText) {
-      survey.surveyText = unescapeHtml(survey.surveyText) as string;
+      survey.surveyText = unescapeHtml(survey.surveyText) as unknown as string;
       const title = this.getHtmlTextContent(survey.surveyText);
       this.validateTitleLength(title);
     }
@@ -343,7 +343,7 @@ export class SurveyService {
         existingSurvey.recurrenceFrequency;
       surveyToUpdate.recurrenceEndDate = this.calculateRecurrenceEndDate(
         endDate,
-        recurrenceFrequency as SurveyRecurrenceFrequency,
+        recurrenceFrequency as unknown as SurveyRecurrenceFrequency,
         surveyToUpdate.recurrenceEndAfterOccurrences,
       );
     } else {
@@ -400,7 +400,7 @@ export class SurveyService {
     if (!existingSurvey) {
       throw new HttpErrors.NotFound('Invalid survey Id!');
     }
-    this.checkIfAllowedToUpdate(existingSurvey, undefined);
+    this.checkIfAllowedToUpdate(existingSurvey);
   }
 
   private async handleSurveyStatus(
@@ -475,8 +475,6 @@ export class SurveyService {
   }
 
   async deleteRelatedObjects(surveyId: string) {
-    const survey = await this.surveyRepository.findById(surveyId);
-
     // delete related survey questions
     const surveyQuestions = await this.surveyQuestionRepository.find({
       where: {surveyId},

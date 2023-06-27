@@ -294,7 +294,7 @@ export class QuestionHelperService {
     ) {
       await this.optionsRepository.updateAll({score: 0}, {questionId});
     }
-    await this.handleOnStatusChange(questionId, existingQuestion, question);
+    await this.handleOnStatusChange(questionId, question);
 
     return this.questionRepository.findById(questionId, {include: ['options']});
   }
@@ -358,11 +358,7 @@ export class QuestionHelperService {
     }
   }
 
-  private async handleOnStatusChange(
-    id: string,
-    existingQuestion: Question,
-    updateQuestion: Question,
-  ) {
+  private async handleOnStatusChange(id: string, updateQuestion: Question) {
     if (updateQuestion?.status === QuestionStatus.APPROVED) {
       await this.handleApprove(id);
     } else {
@@ -386,16 +382,9 @@ export class QuestionHelperService {
         throw new HttpErrors.BadRequest(
           `only one child question allow for ${parentQuestion.questionType} question.`,
         );
+      } else {
+        // do nothing
       }
-    }
-  }
-
-  surveyStatusToQuestionStatus(status?: SurveyStatus) {
-    switch (status) {
-      case SurveyStatus.DRAFT:
-        return QuestionStatus.DRAFT;
-      default:
-        return QuestionStatus.APPROVED;
     }
   }
 
@@ -426,12 +415,6 @@ export class QuestionHelperService {
       throw new HttpErrors.NotFound();
     }
 
-    // if Question status is ADDED_TO_SURVEY then set it has Survey Status for validation
-    if (existingQuestion.status === QuestionStatus.ADDED_TO_SURVEY) {
-      existingQuestion.status = this.surveyStatusToQuestionStatus(
-        existingQuestion.survey?.status,
-      );
-    }
     this.checkIfAllowedToUpdate(existingQuestion, question);
     return {existingQuestion};
   }

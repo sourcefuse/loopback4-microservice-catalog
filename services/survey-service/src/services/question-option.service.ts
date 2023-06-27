@@ -6,7 +6,6 @@ import {
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {OptionsRepository} from '../repositories/options.repository';
-import {SurveyRepository} from '../repositories/survey.repository';
 import {ErrorKeys} from '../enum/error-keys.enum';
 
 const MAX_OPTIONS_ALLOWED = 12;
