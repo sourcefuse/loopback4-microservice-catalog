@@ -156,16 +156,9 @@ export class LoginActivityController {
     filter?: ActiveUsersFilter,
   ): Promise<ActiveUsersGroupData> {
     let optionalWhere = {};
-    console.log(filter);
     if (filter) {
       optionalWhere = await this.buildActiveUsersFilter(filter);
     }
-    console.log(optionalWhere);
-
-    console.log({
-      loginTime: {between: [startDate, endDate]},
-      ...optionalWhere,
-    });
     const activeUsersForTime = await this.loginActivityRepo.find({
       where: {
         loginTime: {between: [startDate, endDate]},
@@ -240,7 +233,7 @@ export class LoginActivityController {
       }
     }
     //include userIds
-    if (!!+filter.inclusion) {
+    if (filter.inclusion) {
       return {actor: {inq: actorIds}};
       //exclude userIds
     } else {
