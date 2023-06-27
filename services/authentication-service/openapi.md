@@ -94,6 +94,7 @@ fetch('/active-users/{range}',
 |range|path|string|true|none|
 |startDate|query|string(date-time)|false|none|
 |endDate|query|string(date-time)|false|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -4375,6 +4376,32 @@ null
 ### Properties
 
 *None*
+
+<h2 id="tocS_ActiveUsersFilter">ActiveUsersFilter</h2>
+<!-- backwards compatibility -->
+<a id="schemaactiveusersfilter"></a>
+<a id="schema_ActiveUsersFilter"></a>
+<a id="tocSactiveusersfilter"></a>
+<a id="tocsactiveusersfilter"></a>
+
+```json
+{
+  "inclusion": true,
+  "userIdentity": "string",
+  "userIdentifier": {}
+}
+
+```
+
+ActiveUsersFilter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|inclusion|boolean|true|none|none|
+|userIdentity|string|true|none|none|
+|userIdentifier|object|true|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

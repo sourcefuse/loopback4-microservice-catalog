@@ -26,6 +26,7 @@ import {UserLevelPermission} from './user-level-permission.model';
 import {UserLevelResource} from './user-level-resource.model';
 import {UserTenant} from './user-tenant.model';
 import {User} from './user.model';
+import {ActiveUsersFilter} from './active-users-filter.model';
 
 export * from './';
 export * from './auth-client.model';
@@ -52,6 +53,7 @@ export * from './user-level-resource.model';
 export * from './user-tenant.model';
 export * from './user.model';
 export * from './login-activity.model';
+export * from './active-users-filter.model';
 
 export const models = [
   User,
@@ -78,4 +80,5 @@ export const models = [
   SignupWithTokenReponseDto,
   LocalUserProfileDto,
   LoginActivity,
+  ActiveUsersFilter,
 ];

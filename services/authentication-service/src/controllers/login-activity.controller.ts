@@ -1,11 +1,16 @@
 import {
+  AnyObject,
   Count,
   CountSchema,
   Filter,
   Where,
   repository,
 } from '@loopback/repository';
-import {LoginActivityRepository} from '../repositories';
+import {
+  LoginActivityRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '../repositories';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {
@@ -23,10 +28,12 @@ import {
   STATUS_CODE,
 } from '@sourceloop/core';
 import {LoginActivity} from '../models';
-import {ActiveUsersRange, PermissionKey} from '../enums';
-import {ActiveUsersGroupData} from '../types';
+import {ActiveUsersRange, PermissionKey, UserIdentity} from '../enums';
+import {ActiveUsersGroupData, ActorId} from '../types';
 import {inject} from '@loopback/core';
 import moment from 'moment';
+import {ActiveUsersFilter} from '../models/active-users-filter.model';
+import {AuthServiceBindings} from '../keys';
 
 const baseUrl = '/login-activity';
 
@@ -35,6 +42,12 @@ export class LoginActivityController {
     @repository(LoginActivityRepository)
     private readonly loginActivityRepo: LoginActivityRepository,
     @inject(RestBindings.Http.RESPONSE) private response: ResponseObject,
+    @inject(AuthServiceBindings.ActorIdKey)
+    private readonly actorKey: ActorId,
+    @repository(UserRepository)
+    public userRepo: UserRepository,
+    @repository(UserTenantRepository)
+    public userTenantRepo: UserTenantRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -139,10 +152,24 @@ export class LoginActivityController {
     @param.query.dateTime('startDate')
     startDate: Date,
     @param.query.dateTime('endDate') endDate: Date,
+    @param.query.object('filter')
+    filter?: ActiveUsersFilter,
   ): Promise<ActiveUsersGroupData> {
+    let optionalWhere = {};
+    console.log(filter);
+    if (filter) {
+      optionalWhere = await this.buildActiveUsersFilter(filter);
+    }
+    console.log(optionalWhere);
+
+    console.log({
+      loginTime: {between: [startDate, endDate]},
+      ...optionalWhere,
+    });
     const activeUsersForTime = await this.loginActivityRepo.find({
       where: {
         loginTime: {between: [startDate, endDate]},
+        ...optionalWhere,
       },
     });
 
@@ -178,5 +205,46 @@ export class LoginActivityController {
     });
 
     return groupByDate;
+  }
+
+  private async buildActiveUsersFilter(
+    filter: ActiveUsersFilter,
+  ): Promise<AnyObject> {
+    let actorIds: string[] = [];
+    if (filter.userIdentity === UserIdentity.ACTOR_ID) {
+      actorIds = filter.userIdentifier;
+    } else {
+      // check if actor is userTenantId
+      if (this.actorKey === 'id') {
+        const users = await this.userRepo.findAll({
+          where: {username: {inq: filter.userIdentifier}},
+        });
+        const userIds = users.map(u => u.id ?? '0');
+        if (userIds.length <= 0) {
+          return {};
+        }
+        const userTenants = await this.userTenantRepo.findAll({
+          where: {
+            userId: {inq: userIds},
+          },
+        });
+        actorIds = userTenants.map(ut => ut.id ?? '0');
+
+        // else actor is userId
+      } else {
+        // get list of user Id based on username
+        const users = await this.userRepo.findAll({
+          where: {username: {inq: filter.userIdentifier}},
+        });
+        actorIds = users.map(u => u.id ?? '0');
+      }
+    }
+    //include userIds
+    if (!!+filter.inclusion) {
+      return {actor: {inq: actorIds}};
+      //exclude userIds
+    } else {
+      return {actor: {nin: actorIds}};
+    }
   }
 }
