@@ -8,6 +8,10 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
 import {TaskServiceComponent} from './component';
+import {
+  RestExplorerBindings,
+  RestExplorerComponent,
+} from '@loopback/rest-explorer';
 
 export {ApplicationConfig};
 
@@ -20,6 +24,13 @@ export class TaskServiceApplication extends BootMixin(
     this.component(TaskServiceComponent);
 
     this.projectRoot = __dirname;
+
+    // Customize @loopback/rest-explorer configuration here
+    this.configure(RestExplorerBindings.COMPONENT).to({
+      path: '/explorer',
+    });
+    this.component(RestExplorerComponent);
+
     this.bootOptions = {
       controllers: {
         dirs: ['controllers'],
