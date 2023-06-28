@@ -1,19 +1,17 @@
 import {injectable, BindingScope, Provider, inject} from '@loopback/core';
-import {AuditLogExportFn, ExcelProcessingFn} from '../types';
+import {AuditLogExportFn, FileProcessingFn} from '../types';
 import * as XLSX from 'xlsx';
-import path from 'path';
-import * as fs from 'fs';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AnyObject} from '@loopback/repository';
-import {ExcelProcessingServiceBindings} from '../keys';
+import {FileProcessingServiceBindings} from '../keys';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT)
     public logger: ILogger,
-    @inject(ExcelProcessingServiceBindings.PROCESS_EXCEL)
-    public excelProcessing: ExcelProcessingFn,
+    @inject(FileProcessingServiceBindings.PROCESS_FILE)
+    public excelProcessing: FileProcessingFn,
   ) {}
 
   value(): AuditLogExportFn {
@@ -25,26 +23,6 @@ export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
     if (data.length === 0) {
       return;
     }
-    const targetDirectoryPath = process.env.PATH_TO_EXPORT_FILES_FOLDER;
-    if (!targetDirectoryPath) {
-      throw new Error(
-        'Path to the target directory to export the file is not defined.',
-      );
-    }
-    const targetDirectory = path.join(targetDirectoryPath, '/export-logs/');
-    try {
-      fs.mkdirSync(targetDirectory, {recursive: true});
-      this.logger.info('Target Directory Created!');
-    } catch (error) {
-      if (error.code !== 'EEXIST') {
-        const errorMessage = `An error occurred while creating export logs directory: ${error.toString()}`;
-        this.logger.error(errorMessage);
-        throw new Error(errorMessage);
-      }
-      this.logger.info('Target Directory Already Exists!');
-    }
-    const fileName = `audit-logs-${new Date().toISOString()}.xlsx`;
-    const filepath = path.join(targetDirectory, fileName);
     const worksheetName = 'Audit Logs';
     const worksheetColumnNames = Object.keys(data[0]);
 
@@ -63,7 +41,7 @@ export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
     const workBook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
     XLSX.utils.book_append_sheet(workBook, worksheet, worksheetName);
-    XLSX.writeFile(workBook, path.resolve(filepath));
-    await this.excelProcessing(workBook);
+    const fileBuffer = XLSX.write(workBook, {type: 'buffer'});
+    await this.excelProcessing(fileBuffer);
   }
 }

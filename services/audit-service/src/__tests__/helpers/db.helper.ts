@@ -14,7 +14,7 @@ import {
 import {createStubInstance} from '@loopback/testlab';
 import {listMappingLogs, uploaderResponse} from '../sample-data/mapping-log';
 import {AuditServiceApplication} from '../../application';
-import {ExportToCsvFn, AuditLogExportFn, ExcelProcessingFn} from '../../types';
+import {ExportToCsvFn, AuditLogExportFn, FileProcessingFn} from '../../types';
 import {Logger} from '../logger';
 import {ColumnBuilderProvider} from '../fixtures/providers/column-builder.service';
 import * as XLSX from 'xlsx';
@@ -87,7 +87,7 @@ export function getTestJobProcessingService() {
     myApplication,
   );
   const logger = new Logger();
-  const excelProcessingService: ExcelProcessingFn = (
+  const excelProcessingService: FileProcessingFn = (
     workbook: XLSX.WorkBook,
   ) => {
     return Promise.resolve();

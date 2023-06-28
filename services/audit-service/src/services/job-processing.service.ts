@@ -85,13 +85,14 @@ export class JobProcessingService {
       }
       //logs from db
       finalData.push(...(await this.auditLogRepository.find(filter)));
-      job.status = FileStatusKey.COMPLETED;
-      job.result = JSON.stringify(finalData);
-      await this.jobRepository.updateById(jobId, job);
+
       if (job.operation === OperationKey.EXPORT) {
         const customColumnData = await this.columnBuilder(finalData);
         await this.auditLogExport(customColumnData);
       }
+      job.status = FileStatusKey.COMPLETED;
+      job.result = JSON.stringify(finalData);
+      await this.jobRepository.updateById(jobId, job);
     } catch (error) {
       job.status = FileStatusKey.COMPLETED;
       await this.jobRepository.updateById(jobId, job);

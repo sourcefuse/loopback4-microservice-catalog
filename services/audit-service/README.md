@@ -247,17 +247,17 @@ export class ColumnBuilderProvider implements Provider<ColumnBuilderFn> {
 }
 ```
 
-#### Export audit logs
+#### Process audit logs
 
-This provides a function that is used to export file at location specified in the `PATH_TO_EXPORT_FILES_FOLDER` variable of `env` file. By default file is exported in excel format which also can be overwitten in this provider
+This provides a function that takes excel file buffer as an input and any whatever desired operation can be performed on the excel file buffer.
 
 ```ts
-this.bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS.key).toProvider(
-  AuditLogExportProvider,
+this.bind(FileProcessingServiceBindings.PROCESS_FILE.key).toProvider(
+  FileProcessingProvider,
 );
 ```
 
-Implementation for this can be seen [here](src/services/audit-log-export.service.ts)
+Implementation for this can be seen [here](src/services/file-processing.service.ts)
 
 ### Environment Variables
 
