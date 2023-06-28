@@ -63,7 +63,6 @@
     "@loopback/rest-explorer": "^5.0.10",
     "@loopback/service-proxy": "^5.0.10",
     "@sourceloop/core": "^7.5.0",
-    "aws-sdk": "^2.1401.0",
     "body-parser": "^1.20.0",
     "check-code-coverage": "^1.10.0",
     "dotenv": "^16.0.3",
@@ -112,7 +111,7 @@
       "entryPoints": [
         "src/index.ts"
       ],
-      "out": "services/oidc-service",
+      "out": "services/task-service",
       "plugin": [
         "typedoc-plugin-markdown"
       ]

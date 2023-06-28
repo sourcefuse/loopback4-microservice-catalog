@@ -17,6 +17,10 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {EventQueueService} from './services';
+import {SQSConnector} from './providers';
+import * as controllers from './controllers';
+import * as services from './services';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -29,12 +33,21 @@ export class TaskServiceComponent implements Component {
 
   providers: ProviderMap = {};
 
-  // services = [OidcInitializerService];
+  services = [services.EventQueueService];
   /**
    * An array of controller classes
    */
   controllers?: ControllerClass[];
-  bindings?: Binding[];
+  bindings?: Binding[] = [
+    Binding.bind('sqs.config').to({
+      accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_SQS_SECRET_KEY,
+      region: process.env.AWS_SQS_REGION,
+      queueUrl: process.env.AWS_SQS_URL,
+    }),
+    Binding.bind('event-queue.connector').toProvider(SQSConnector),
+    Binding.bind('services.EventQueueService').toClass(EventQueueService),
+  ];
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
@@ -44,7 +57,7 @@ export class TaskServiceComponent implements Component {
     this.application.api({
       openapi: '3.0.0',
       info: {
-        title: 'Oidc Service',
+        title: 'Task Service',
         version: '1.0.0',
       },
       paths: {},
@@ -53,6 +66,7 @@ export class TaskServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
+    this.controllers = [controllers.EventQueueController];
   }
 
   /**
