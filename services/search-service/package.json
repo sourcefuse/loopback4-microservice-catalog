@@ -67,7 +67,7 @@
     "tslib": "^2.4.1"
   },
   "peerDependencies": {
-    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate": "^1.0.0-beta.21",
     "db-migrate-pg": "^1.2.2"
   },
   "devDependencies": {
@@ -77,7 +77,7 @@
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.18",
     "@types/sinon": "^10.0.11",
-    "db-migrate": "^1.0.0-beta.18",
+    "db-migrate": "^1.0.0-beta.21",
     "eslint": "^8.38.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
