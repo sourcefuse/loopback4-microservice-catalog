@@ -79,7 +79,7 @@ export class OptionController {
     const created = await this.optionsRepository.create(options);
     const foundOption = await this.optionsRepository.findOne({
       order: ['created_on DESC'],
-      where: {},
+      where: {questionId},
     });
     return foundOption ?? created;
   }
@@ -206,13 +206,7 @@ export class OptionController {
     await this.questionHelperService.checkAndGetIfAllowedQuestionToUpdate(
       questionId,
     );
-    const existingOption = await this.optionsRepository.findOne({
-      where: {id, questionId},
-    });
-    if (!existingOption) {
-      throw new HttpErrors.NotFound();
-    }
-    await this.optionsRepository.updateById(id, options);
+    await this.questionRepository.options(questionId).patch(options, {id});
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -229,13 +223,7 @@ export class OptionController {
     @param.path.string('questionId') questionId: string,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    const existingOption = await this.optionsRepository.findOne({
-      where: {id, questionId},
-    });
-    if (!existingOption) {
-      throw new HttpErrors.NotFound();
-    }
-    await this.optionsRepository.deleteById(id);
+    await this.questionRepository.options(questionId).delete({id});
   }
 
   @authenticate(STRATEGY.BEARER, {

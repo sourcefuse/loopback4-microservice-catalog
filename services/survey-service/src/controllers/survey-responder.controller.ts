@@ -108,16 +108,20 @@ export class SurveyResponderController {
       },
     );
 
-    if (createdSurveyResponder && createdSurveyResponder.surveyCycleId) {
-      this.checkIfResponderAddedInActiveCycle(createdSurveyResponder).catch(
-        err => this.logger.error(JSON.stringify(err)),
-      );
+    if (createdSurveyResponder) {
+      if (createdSurveyResponder.surveyCycleId) {
+        this.checkIfResponderAddedInActiveCycle(createdSurveyResponder).catch(
+          err => this.logger.error(JSON.stringify(err)),
+        );
+      }
     }
 
     return resp;
   }
 
-  async checkIfResponderAddedInActiveCycle(surveyResponder: SurveyResponder) {
+  private async checkIfResponderAddedInActiveCycle(
+    surveyResponder: SurveyResponder,
+  ) {
     const surveyCycle = await this.surveyCycleRepository.findById(
       surveyResponder.surveyCycleId,
       {

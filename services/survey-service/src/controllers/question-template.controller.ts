@@ -186,11 +186,6 @@ export class TemplateController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.questionTemplateService.checkDeleteValidation(id);
     await this.questionTemplateService.deleteRelatedObjects(id);
-    const deleteCount = await this.questionTemplateRepository.deleteAll({
-      id,
-    });
-    if (deleteCount.count === 0) {
-      throw new HttpErrors.BadRequest('Entity not found.');
-    }
+    await this.questionTemplateRepository.deleteById(id);
   }
 }

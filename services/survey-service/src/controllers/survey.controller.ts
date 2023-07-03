@@ -201,11 +201,6 @@ export class SurveyController {
     this.surveyService
       .deleteRelatedObjects(id)
       .catch(err => this.logger.error(JSON.stringify(err)));
-    const deleteCount = await this.surveyRepository.deleteAll({
-      id,
-    });
-    if (deleteCount.count === 0) {
-      throw new HttpErrors.BadRequest('Entity not found.');
-    }
+    await this.surveyRepository.deleteById(id);
   }
 }

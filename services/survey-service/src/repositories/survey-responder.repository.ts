@@ -60,12 +60,12 @@ export class SurveyResponderRepository extends DefaultSoftCrudRepository<
     entity: DataObject<SurveyResponder>,
     options?: Options | undefined,
   ): Promise<SurveyResponder> {
-    const existingReponderCount = await super.count({
+    const existingResponderCount = await super.count({
       surveyCycleId: entity.surveyCycleId,
       surveyId: entity.surveyId,
       email: entity.email,
     });
-    if (existingReponderCount.count) {
+    if (existingResponderCount.count) {
       throw new HttpErrors.BadRequest('Responder Already Added');
     }
     return super.create(entity);

@@ -26,6 +26,7 @@ import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SectionService} from '../services/section.service';
 import {PermissionKey} from '../enum/permission-key.enum';
+import {SurveyRepository} from '../repositories';
 
 const basePath = '/surveys/{surveyId}/sections';
 const orderByCreatedOn = 'created_on DESC';
@@ -34,6 +35,8 @@ export class SectionController {
   constructor(
     @repository(SectionRepository)
     private sectionRepository: SectionRepository,
+    @repository(SurveyRepository)
+    private surveyRepository: SurveyRepository,
     @repository(SurveyQuestionRepository)
     private surveyQuestionRepository: SurveyQuestionRepository,
 
@@ -71,24 +74,24 @@ export class SectionController {
     @param.path.string('surveyId') surveyId: string,
   ): Promise<Section> {
     await this.sectionService.checkBasicSectionValidation(surveyId);
-    const existingSections = await this.sectionRepository.find({
-      where: {surveyId},
+    const existingSections = await this.sectionRepository.count({
+      surveyId,
     });
     section.surveyId = surveyId;
     section.name = section.name ?? 'Untitled Section';
-    section.displayOrder = existingSections.length + 1;
+    section.displayOrder = existingSections.count + 1;
     await this.sectionRepository.create(section);
 
     // fetch createdSection with id
     const createdSection = await this.sectionRepository.findOne({
       order: [orderByCreatedOn],
-      where: {},
+      where: {surveyId},
     });
     if (!createdSection) {
       throw new HttpErrors.NotFound();
     }
 
-    if (!existingSections.length) {
+    if (!existingSections.count) {
       this.surveyQuestionRepository
         .updateAll({sectionId: createdSection.id}, {surveyId})
         .catch(err => this.logger.error(JSON.stringify(err)));

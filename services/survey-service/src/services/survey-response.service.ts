@@ -58,7 +58,9 @@ export class SurveyResponseService {
   async sendSurveyResponseEmail(
     surveyId: string,
     surveyResponder: SurveyResponder,
-  ) {}
+  ) {
+    // Need to provide handler for this
+  }
 
   async createResponse(surveyId: string, surveyResponseDto: SurveyResponseDto) {
     const surveyResponseDetailsDto =
