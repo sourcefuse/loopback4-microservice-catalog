@@ -4,12 +4,12 @@ import {ColumnBuilderFn} from '../../../types';
 import {AnyObject} from '@loopback/repository';
 
 export class ColumnBuilderProvider implements Provider<ColumnBuilderFn> {
-  constructor() {}
+  constructor() {
+    //this is intentional
+  }
 
   value(): ColumnBuilderFn {
-    return async (auditLogs: AuditLog[]) => {
-      return this.columnBuilder(auditLogs);
-    };
+    return async (auditLogs: AuditLog[]) => this.columnBuilder(auditLogs);
   }
   async columnBuilder(auditLogs: AuditLog[]): Promise<AnyObject[]> {
     return auditLogs.map(log => ({

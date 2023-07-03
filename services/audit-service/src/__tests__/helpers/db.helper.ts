@@ -14,10 +14,9 @@ import {
 import {createStubInstance} from '@loopback/testlab';
 import {listMappingLogs, uploaderResponse} from '../sample-data/mapping-log';
 import {AuditServiceApplication} from '../../application';
-import {ExportToCsvFn, AuditLogExportFn, FileProcessingFn} from '../../types';
-import {Logger} from '../logger';
+import {ExportToCsvFn, AuditLogExportFn, ExportHandlerFn} from '../../types';
+import {AnyObject} from '@loopback/repository';
 import {ColumnBuilderProvider} from '../fixtures/providers/column-builder.service';
-import * as XLSX from 'xlsx';
 
 export async function givenEmptyTestDB() {
   // clear the DB and set sequence counter to default 1
@@ -42,8 +41,7 @@ export function getTestDBRepositories() {
 }
 
 export function getTestAuditController() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let auditLogExportParam: any[];
+  let auditLogExportParam: AnyObject[];
   function getAuditLogExportParameter() {
     return auditLogExportParam;
   }
@@ -56,8 +54,7 @@ export function getTestAuditController() {
   const {jobProcessingService} = getTestJobProcessingService();
   const columnBuilderProvider = new ColumnBuilderProvider();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const auditLogExport: AuditLogExportFn = (data: any[]) => {
+  const auditLogExport: AuditLogExportFn = (data: AnyObject[]) => {
     auditLogExportParam = data;
     return Promise.resolve();
   };
@@ -86,17 +83,10 @@ export function getTestJobProcessingService() {
   const querySelectedFilesProvider = new QuerySelectedFilesProvider(
     myApplication,
   );
-  const logger = new Logger();
-  const excelProcessingService: FileProcessingFn = (
-    workbook: XLSX.WorkBook,
-  ) => {
-    return Promise.resolve();
-  };
+  const excelProcessingService: ExportHandlerFn = (fileBuffer: Buffer) =>
+    Promise.resolve();
   const columnBuilderProvider = new ColumnBuilderProvider();
-  const auditLogExport = new AuditLogExportProvider(
-    logger,
-    excelProcessingService,
-  );
+  const auditLogExport = new AuditLogExportProvider(excelProcessingService);
   const auditLogRepository = new AuditLogRepository(testDB);
   const mappingLogRepository = new MappingLogRepository(testDB);
   const jobRepository = new JobRepository(testDB);

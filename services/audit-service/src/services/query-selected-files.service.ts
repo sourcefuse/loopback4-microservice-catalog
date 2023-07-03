@@ -48,6 +48,7 @@ export class QuerySelectedFilesProvider
       typeof AuditLog.prototype.id,
       {}
     >(AuditLog);
+    Object.defineProperty(CSVRepo, 'name', {value: 'CsvRepo'});
     inject(`datasources.${csvDataSource.name}`)(CSVRepo, undefined, 0);
     this.application.repository(CSVRepo);
 

@@ -33,7 +33,7 @@ import {
   AuditLogExportServiceBindings,
   AuditServiceBindings,
   ColumnBuilderServiceBindings,
-  FileProcessingServiceBindings,
+  ExportHandlerServiceBindings,
   ExportToCsvServiceBindings,
   QuerySelectedFilesServiceBindings,
 } from './keys';
@@ -49,7 +49,7 @@ import {
   QuerySelectedFilesProvider,
   AuditLogExportProvider,
   ColumnBuilderProvider,
-  FileProcessingProvider,
+  ExportHandlerProvider,
 } from './services';
 import {IAuditServiceConfig} from './types';
 
@@ -107,8 +107,8 @@ export class AuditServiceComponent implements Component {
       AuditLogExportProvider;
     this.providers[ColumnBuilderServiceBindings.COLUMN_BUILDER.key] =
       ColumnBuilderProvider;
-    this.providers[FileProcessingServiceBindings.PROCESS_FILE.key] =
-      FileProcessingProvider;
+    this.providers[ExportHandlerServiceBindings.PROCESS_FILE.key] =
+      ExportHandlerProvider;
   }
 
   providers?: ProviderMap = {};

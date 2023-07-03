@@ -10,6 +10,9 @@ import {
   populateTestDB,
 } from '../helpers/db.helper';
 
+const testFromDate = new Date('2023-05-06T09:35:07.826Z');
+const testToDate = new Date('2023-05-10T09:35:07.826Z');
+
 describe('POST /audit-logs/archive', () => {
   beforeEach(async () => {
     await givenEmptyTestDB();
@@ -18,8 +21,8 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when all 3 parameters are provided and deleted is false', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: false,
       actedOn: 'Product',
@@ -46,8 +49,8 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when all 3 parameters are provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: true,
       actedOn: 'Product',
@@ -90,8 +93,8 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when deleted parameter is not provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       actedOn: 'Product',
     });
@@ -113,8 +116,8 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when actedOn parameter is not provided and deleted is false', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: false,
     });
@@ -139,8 +142,8 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when actedOn parameter is not provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: true,
     });
@@ -162,8 +165,8 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when only actedOn parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();

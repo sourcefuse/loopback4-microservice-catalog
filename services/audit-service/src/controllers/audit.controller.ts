@@ -46,7 +46,7 @@ import {
   ArchiveOutput,
   AuditLogExportFn,
   ColumnBuilderFn,
-  ExportControllerResponse,
+  ExportResponse,
   ExportToCsvFn,
 } from '../types';
 import {constructWhere} from '../utils/construct-where';
@@ -233,7 +233,7 @@ export class AuditController {
     },
   })
   @response(STATUS_CODE.OK, {
-    description: 'AuditLog model instance',
+    description: 'Archive logs status',
     content: {
       'application/json': {
         schema: {
@@ -365,7 +365,7 @@ export class AuditController {
     @param.query.boolean('includeArchivedLogs')
     includeArchivedLogs: boolean,
     @param.filter(AuditLog) filter?: Filter<AuditLog>,
-  ): Promise<ExportControllerResponse> {
+  ): Promise<ExportResponse> {
     if (includeArchivedLogs) {
       const job = await this.jobRepository.create({
         filterUsed: filter,
@@ -378,7 +378,7 @@ export class AuditController {
       return {jobId: job.getId()};
     } else {
       const result = await this.auditLogRepository.find(filter);
-      if (!result) {
+      if (result.length === 0) {
         return {message: 'No data to be exported'};
       }
       const customColumnData = await this.columnBuilderService(result);

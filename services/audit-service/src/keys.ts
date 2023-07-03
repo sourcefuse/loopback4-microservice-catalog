@@ -7,7 +7,7 @@ import {BindingKey} from '@loopback/core';
 import {
   AuditLogExportFn,
   ColumnBuilderFn,
-  FileProcessingFn,
+  ExportHandlerFn,
   ExportToCsvFn,
   IAuditServiceConfig,
   QuerySelectedFilesFn,
@@ -36,9 +36,9 @@ export namespace AuditLogExportServiceBindings {
     `${BINDING_PREFIX}.audit.exportAuditLogs`,
   );
 }
-export namespace FileProcessingServiceBindings {
-  export const PROCESS_FILE = BindingKey.create<FileProcessingFn>(
-    `${BINDING_PREFIX}.audit.processExcel`,
+export namespace ExportHandlerServiceBindings {
+  export const PROCESS_FILE = BindingKey.create<ExportHandlerFn>(
+    `${BINDING_PREFIX}.audit.processFile`,
   );
 }
 export namespace ColumnBuilderServiceBindings {

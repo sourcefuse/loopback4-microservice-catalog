@@ -252,12 +252,12 @@ export class ColumnBuilderProvider implements Provider<ColumnBuilderFn> {
 This provides a function that takes excel file buffer as an input and any whatever desired operation can be performed on the excel file buffer.
 
 ```ts
-this.bind(FileProcessingServiceBindings.PROCESS_FILE.key).toProvider(
-  FileProcessingProvider,
+this.bind(ExportHandlerServiceBindings.PROCESS_FILE.key).toProvider(
+  ExportHandlerProvider,
 );
 ```
 
-Implementation for this can be seen [here](src/services/file-processing.service.ts)
+Implementation for this can be seen [here](src/services/export-handler.service.ts)
 
 ### Environment Variables
 
