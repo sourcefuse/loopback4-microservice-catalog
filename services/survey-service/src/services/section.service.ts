@@ -7,11 +7,11 @@ import {
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {SurveyStatus} from '../enum/question.enum';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
 import {ErrorKeys} from '../enum/error-keys.enum';
+import {SurveyStatus} from '../enum';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SectionService {

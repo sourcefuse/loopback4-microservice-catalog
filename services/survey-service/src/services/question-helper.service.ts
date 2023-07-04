@@ -7,11 +7,7 @@ import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import {QuestionRepository} from '../repositories';
 import {OptionsRepository} from '../repositories/options.repository';
 import {QuestionDto} from '../models/question-dto.model';
-import {
-  QuestionStatus,
-  QuestionType,
-  SurveyStatus,
-} from '../enum/question.enum';
+import {QuestionStatus, QuestionType} from '../enum/question.enum';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';

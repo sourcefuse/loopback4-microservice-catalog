@@ -1,11 +1,11 @@
 import {model, property, hasMany} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Question} from './questions.model';
-import {SurveyRecurrenceFrequency, SurveyStatus} from '../enum/question.enum';
 import {SurveyCycle} from './survey-cycle.model';
 import {SurveyResponder} from './survey-responder.model';
 import {Section} from './section.model';
 import {SurveyQuestion} from './survey-question.model';
+import {SurveyStatus, SurveyRecurrenceFrequency} from '../enum';
 
 @model({name: 'surveys'})
 export class Survey extends UserModifiableEntity {
@@ -147,6 +147,7 @@ export class Survey extends UserModifiableEntity {
 export interface SurveyRelations {
   sections?: Section[];
   questions?: Question[];
+  surveyCycles?: SurveyCycle[];
 }
 
 export type SurveyWithRelations = Survey & SurveyRelations;

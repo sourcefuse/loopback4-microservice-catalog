@@ -59,7 +59,6 @@ export class SurveyResponseService {
     const res = await this.getReminderResponse.sendReminder(surveyId, {
       responderIds: responderReminderDto,
     });
-    console.log(res);
   }
 
   async sendSurveyResponseEmail(
@@ -69,7 +68,6 @@ export class SurveyResponseService {
     const res = await this.getReminderResponse.sendReminder(surveyId, {
       surveyResponder: surveyResponder,
     });
-    console.log(res);
   }
 
   async createResponse(surveyId: string, surveyResponseDto: SurveyResponseDto) {
@@ -203,13 +201,13 @@ export class SurveyResponseService {
         QuestionType.SCALE,
         QuestionType.DROPDOWN,
         QuestionType.SINGLE_SELECTION,
-      ].includes(question.questionType)
+      ].includes(question?.questionType)
     ) {
       surveyResponseDetails.push(
         this.handleAnswer(
           surveyResponseDetailDto,
           surveyResponseId,
-          question.questionType,
+          question?.questionType,
           undefined,
           surveyResponseDetailDto.answer.optionId,
         ),

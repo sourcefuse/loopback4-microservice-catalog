@@ -13,7 +13,7 @@ export class SurveyResponseDetailDto {
     type: 'object',
     required: true,
   })
-  answer: {optionId: string; optionIds: string[]; text: string};
+  answer: {optionId: string; optionIds?: string[]; text?: string};
 
   @property({
     type: 'string',
