@@ -7,10 +7,12 @@ export const enum PermissionKey {
   CreateAudit = 'CreateAudit',
   UpdateAudit = 'UpdateAudit',
   DeleteAudit = 'DeleteAudit',
+  ExportLogs = 'ExportLogs',
   ArchiveLogs = 'ArchiveLogs',
   ViewAuditNum = '1',
   CreateAuditNum = '2',
   UpdateAuditNum = '3',
   DeleteAuditNum = '4',
+  ExportAuditNum = '5',
   ArchiveLogsNum = '6',
 }

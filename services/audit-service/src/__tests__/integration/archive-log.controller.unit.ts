@@ -4,11 +4,14 @@ import {archiveLogs} from '../sample-data/archive-log';
 import {mappingLog} from '../sample-data/mapping-log';
 import {CustomFilter} from '../../models';
 import {
-  getTestControllers,
+  getTestAuditController,
   getTestDBRepositories,
   givenEmptyTestDB,
   populateTestDB,
 } from '../helpers/db.helper';
+
+const testFromDate = new Date('2023-05-06T09:35:07.826Z');
+const testToDate = new Date('2023-05-10T09:35:07.826Z');
 
 describe('POST /audit-logs/archive', () => {
   beforeEach(async () => {
@@ -18,22 +21,19 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when all 3 parameters are provided and deleted is false', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: false,
       actedOn: 'Product',
     });
 
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
-
-    // const exportResult = exportToCsvService.stubs.exportToCsv;
-    // exportResult.resolves(uploaderResponse);
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
 
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
@@ -49,21 +49,18 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when all 3 parameters are provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: true,
       actedOn: 'Product',
     });
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
-
-    // const exportResult = exportToCsvService.stubs.exportToCsv;
-    // exportResult.resolves(uploaderResponse);
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
     const expectedIds = ['3', '6'];
@@ -78,15 +75,12 @@ describe('POST /audit-logs/archive', () => {
       deleted: true,
       actedOn: 'Product',
     });
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
-
-    // const exportResult = exportToCsvService.stubs.exportToCsv;
-    // exportResult.resolves(uploaderResponse);
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
     const expectedIds = ['3', '6'];
@@ -99,20 +93,17 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when deleted parameter is not provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       actedOn: 'Product',
     });
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
-
-    // const exportResult = exportToCsvService.stubs.exportToCsv;
-    // exportResult.resolves(uploaderResponse);
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
     const expectedIds = ['3', '5', '6'];
@@ -125,21 +116,18 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when actedOn parameter is not provided and deleted is false', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: false,
     });
 
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
-
-    // const exportResult = exportToCsvService.stubs.exportToCsv;
-    // exportResult.resolves(uploaderResponse);
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
 
     const {auditLogRepository} = getTestDBRepositories();
 
@@ -154,17 +142,17 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when actedOn parameter is not provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
       deleted: true,
     });
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
     const expectedIds = ['3', '6'];
@@ -177,16 +165,16 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when only actedOn parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
-        fromDate: new Date('2023-05-06T09:35:07.826Z'),
-        toDate: new Date('2023-05-10T09:35:07.826Z'),
+        fromDate: testFromDate,
+        toDate: testToDate,
       },
     });
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
     const expectedIds = ['3', '5'];
@@ -198,12 +186,12 @@ describe('POST /audit-logs/archive', () => {
   });
   it('archive logs when none of the parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({});
-    const {archiveLogController, mappingLogRepository} = getTestControllers();
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;
     mappingLogFetch.resolves(mappingLog);
 
-    const controllerResult = await archiveLogController.archive(customFilter);
+    const controllerResult = await auditLogController.archive(customFilter);
     const {auditLogRepository} = getTestDBRepositories();
     const actualResult = await auditLogRepository.find();
     expect(
