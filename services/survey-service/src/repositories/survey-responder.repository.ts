@@ -14,11 +14,15 @@ import {
   SurveyResponderRelations,
 } from '../models/survey-responder.model';
 import {SurveyDbSourceName} from '../types';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 import {Survey} from '../models/survey.model';
 import {SurveyCycle} from '../models/survey-cycle.model';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
-export class SurveyResponderRepository extends DefaultSoftCrudRepository<
+export class SurveyResponderRepository extends DefaultUserModifyCrudRepository<
   SurveyResponder,
   typeof SurveyResponder.prototype.id,
   SurveyResponderRelations
@@ -39,8 +43,10 @@ export class SurveyResponderRepository extends DefaultSoftCrudRepository<
     protected surveyRepositoryGetter: Getter<SurveyRepository>,
     @repository.getter('SurveyCycleRepository')
     protected surveyCycleRepositoryGetter: Getter<SurveyCycleRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(SurveyResponder, dataSource);
+    super(SurveyResponder, dataSource, getCurrentUser);
     this.surveyCycle = this.createBelongsToAccessorFor(
       'surveyCycle',
       surveyCycleRepositoryGetter,

@@ -1,10 +1,10 @@
-import {injectable, BindingScope, inject} from '@loopback/core';
-import {Filter, repository} from '@loopback/repository';
+import {injectable, BindingScope, inject, service} from '@loopback/core';
+import {AnyObject, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import moment from 'moment';
 import {Survey, SurveyDto, SurveyQuestion} from '../models';
-import {SurveyRecurrenceFrequency, SurveyStatus} from '../enum/question.enum';
+import {QuestionStatus} from '../enum/question.enum';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {SurveyRepository} from '../repositories/survey.repository';
 import {QuestionTemplateRepository} from '../repositories/question-template.repository';
@@ -16,6 +16,9 @@ import {CreateSurveyHelperService} from './create-survey-helper.service';
 import {QuestionTemplateStatus} from '../enum/template.enum';
 import {unescapeHtml} from '../utils/html.utils';
 import jsdom from 'jsdom';
+import {SurveyCycleService} from './survey-cycle.service';
+import {QuestionRepository} from '../repositories';
+import {SurveyStatus, SurveyRecurrenceFrequency} from '../enum';
 const {JSDOM} = jsdom;
 
 const orderByCreatedOn = 'created_on DESC';
@@ -38,8 +41,13 @@ export class SurveyService {
     private surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyResponderRepository)
     protected surveyResponderRepository: SurveyResponderRepository,
+    @repository(QuestionRepository)
+    protected questionRepository: QuestionRepository,
+
     @inject('services.CreateSurveyHelperService')
     private createSurveyHelperService: CreateSurveyHelperService,
+    @service(SurveyCycleService)
+    private surveyCycleService: SurveyCycleService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -113,7 +121,8 @@ export class SurveyService {
         surveyQuestion.surveyId = createdSurvey.id as string;
         surveyQuestionsToCreate.push(surveyQuestion);
       });
-      await this.surveyQuestionRepository.createAll(surveyQuestionsToCreate);
+      if (surveyQuestionsToCreate.length)
+        await this.surveyQuestionRepository.createAll(surveyQuestionsToCreate);
 
       await this.createSurveyHelperService.addDependentOnQuestionId(
         createdSurvey.id as string,
@@ -431,9 +440,44 @@ export class SurveyService {
       } else {
         // do nothing
       }
+    } else if (updateSurvey.status === SurveyStatus.APPROVED) {
+      this.handleSurveyApprove(id);
     } else {
       // do nothing
     }
+  }
+  async handleSurveyApprove(id: string) {
+    const survey = await this.surveyRepository.findById(id);
+    // start date can not be in past
+    if (moment().isAfter(new Date(survey.startDate), 'day')) {
+      throw new HttpErrors.BadRequest(ErrorKeys.PastDateNotAllowed);
+    }
+    await Promise.all([
+      this.handleSurveyStatusApprove(id, SurveyStatus.APPROVED),
+      this.approveSurveyQuestions(id),
+      this.surveyCycleService.createFirstSurveyCycle(id),
+    ]);
+  }
+
+  async handleSurveyStatusApprove(id: string, status: SurveyStatus) {
+    const resp = await this.surveyRepository.updateById(id, {
+      status,
+    });
+    return resp;
+  }
+
+  async approveSurveyQuestions(surveyId: string) {
+    const promiseArr: AnyObject[] = [];
+    let updateObj: AnyObject = {status: QuestionStatus.APPROVED};
+
+    promiseArr.push(
+      this.questionRepository.updateAll(updateObj, {
+        surveyId,
+        status: QuestionStatus.ADDED_TO_SURVEY,
+      }),
+    );
+
+    await Promise.all(promiseArr);
   }
 
   async generateSurveyId(): Promise<string> {
@@ -446,9 +490,9 @@ export class SurveyService {
       });
 
     const sequence = parseInt(
-      lastInsertedSurvey?.uid.substring(
+      lastInsertedSurvey?.uid?.substring(
         surveyIdPrefix.length,
-        lastInsertedSurvey?.uid.length,
+        lastInsertedSurvey?.uid?.length,
       ) ?? sequenceStart,
     );
 

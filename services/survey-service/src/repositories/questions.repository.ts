@@ -1,4 +1,7 @@
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 import {Question, QuestionRelations} from '../models/questions.model';
 import {
   BelongsToAccessor,
@@ -14,8 +17,9 @@ import {OptionsRepository} from './options.repository';
 import {Survey} from '../models';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
 import {SurveyRepository} from './survey.repository';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
-export class QuestionRepository extends DefaultSoftCrudRepository<
+export class QuestionRepository extends DefaultUserModifyCrudRepository<
   Question,
   typeof Question.prototype.id,
   QuestionRelations
@@ -55,8 +59,10 @@ export class QuestionRepository extends DefaultSoftCrudRepository<
     protected optionsRepositoryGetter: Getter<OptionsRepository>,
     @repository.getter('SurveyRepository')
     protected surveyRepositoryGetter: Getter<SurveyRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(Question, dataSource);
+    super(Question, dataSource, getCurrentUser);
     this.survey = this.createBelongsToAccessorFor(
       'survey',
       surveyRepositoryGetter,

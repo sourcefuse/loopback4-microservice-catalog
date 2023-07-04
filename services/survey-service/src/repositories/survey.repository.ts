@@ -4,7 +4,10 @@ import {
   HasManyRepositoryFactory,
   juggler,
 } from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 import {Survey, SurveyRelations} from '../models/survey.model';
 import {SurveyCycle} from '../models/survey-cycle.model';
 import {SurveyResponder} from '../models/survey-responder.model';
@@ -17,8 +20,9 @@ import {SurveyQuestionRepository} from './survey-question.repository';
 import {SurveyCycleRepository} from './survey-cycle.repository';
 import {SurveyResponderRepository} from './survey-responder.repository';
 import {SectionRepository} from './section.repository';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
-export class SurveyRepository extends DefaultSoftCrudRepository<
+export class SurveyRepository extends DefaultUserModifyCrudRepository<
   Survey,
   typeof Survey.prototype.id,
   SurveyRelations
@@ -57,8 +61,10 @@ export class SurveyRepository extends DefaultSoftCrudRepository<
     protected questionRepositoryGetter: Getter<QuestionRepository>,
     @repository.getter('SectionRepository')
     protected sectionRepositoryGetter: Getter<SectionRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(Survey, dataSource);
+    super(Survey, dataSource, getCurrentUser);
 
     this.sections = this.createHasManyRepositoryFactoryFor(
       'sections',

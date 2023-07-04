@@ -30,6 +30,82 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
+<h1 id="survey-service-pingcontroller">PingController</h1>
+
+## PingController.ping
+
+<a id="opIdPingController.ping"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/ping',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/ping',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /ping`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "greeting": "string",
+  "date": "string",
+  "url": "string",
+  "headers": {
+    "Content-Type": "string"
+  }
+}
+```
+
+<h3 id="pingcontroller.ping-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ping Response|[PingResponse](#schemapingresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 <h1 id="survey-service-optioncontroller">OptionController</h1>
 
 ## OptionController.count
@@ -83,8 +159,8 @@ fetch('/question/{questionId}/options/count',
 
 | Permissions |
 | ------- |
-| 21   |
-| 17   |
+| 421   |
+| 541   |
 
 <h3 id="optioncontroller.count-parameters">Parameters</h3>
 
@@ -174,8 +250,8 @@ fetch('/question/{questionId}/options/delete/bulk',
 
 | Permissions |
 | ------- |
-| 24   |
-| 20   |
+| 424   |
+| 544   |
 
 > Body parameter
 
@@ -307,8 +383,8 @@ fetch('/question/{questionId}/options/many',
 
 | Permissions |
 | ------- |
-| 22   |
-| 18   |
+| 422   |
+| 542   |
 
 > Body parameter
 
@@ -448,8 +524,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 22   |
-| 18   |
+| 422   |
+| 542   |
 
 > Body parameter
 
@@ -558,8 +634,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 21   |
-| 17   |
+| 421   |
+| 541   |
 
 <h3 id="optioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -1452,8 +1528,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 24   |
-| 20   |
+| 424   |
+| 544   |
 
 <h3 id="optioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -1569,8 +1645,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 23   |
-| 19   |
+| 423   |
+| 543   |
 
 > Body parameter
 
@@ -1711,8 +1787,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 22   |
-| 18   |
+| 422   |
+| 542   |
 
 > Body parameter
 
@@ -1813,8 +1889,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 21   |
-| 17   |
+| 421   |
+| 541   |
 
 <h3 id="optioncontroller.find-parameters">Parameters</h3>
 
@@ -2823,8 +2899,8 @@ fetch('/question-template/{templateId}/template-questions/count',
 
 | Permissions |
 | ------- |
-| 26   |
-| 30   |
+| 450   |
+| 454   |
 
 <h3 id="templatequestioncontroller.count-parameters">Parameters</h3>
 
@@ -2936,8 +3012,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 27   |
-| 31   |
+| 451   |
+| 455   |
 
 > Body parameter
 
@@ -3047,8 +3123,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 26   |
-| 30   |
+| 450   |
+| 454   |
 
 <h3 id="templatequestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -3987,8 +4063,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 28   |
-| 32   |
+| 452   |
+| 456   |
 
 <h3 id="templatequestioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -4106,8 +4182,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 25   |
-| 29   |
+| 449   |
+| 453   |
 
 > Body parameter
 
@@ -4256,8 +4332,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 27   |
-| 31   |
+| 451   |
+| 455   |
 
 > Body parameter
 
@@ -4351,8 +4427,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 26   |
-| 30   |
+| 450   |
+| 454   |
 
 <h3 id="templatequestioncontroller.find-parameters">Parameters</h3>
 
@@ -5073,8 +5149,8 @@ fetch('/questions/count',
 
 | Permissions |
 | ------- |
-| 1   |
-| 5   |
+| 389   |
+| 393   |
 
 <h3 id="questioncontroller.count-parameters">Parameters</h3>
 
@@ -5163,8 +5239,8 @@ fetch('/questions/delete/bulk',
 
 | Permissions |
 | ------- |
-| 4   |
-| 8   |
+| 392   |
+| 396   |
 
 > Body parameter
 
@@ -5269,8 +5345,8 @@ fetch('/questions/{id}/duplicate',
 
 | Permissions |
 | ------- |
-| 3   |
-| 7   |
+| 391   |
+| 395   |
 
 > Body parameter
 
@@ -5416,8 +5492,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 2   |
-| 6   |
+| 390   |
+| 394   |
 
 > Body parameter
 
@@ -5530,8 +5606,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 1   |
-| 5   |
+| 389   |
+| 393   |
 
 <h3 id="questioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -8560,8 +8636,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 4   |
-| 8   |
+| 392   |
+| 396   |
 
 <h3 id="questioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -8666,8 +8742,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 3   |
-| 7   |
+| 391   |
+| 395   |
 
 > Body parameter
 
@@ -8817,8 +8893,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 2   |
-| 6   |
+| 390   |
+| 394   |
 
 > Body parameter
 
@@ -8923,8 +8999,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 1   |
-| 5   |
+| 389   |
+| 393   |
 
 <h3 id="questioncontroller.find-parameters">Parameters</h3>
 
@@ -9581,8 +9657,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/count',
 
 | Permissions |
 | ------- |
-| 81   |
-| 82   |
+| 531   |
+| 532   |
 
 <h3 id="surveyresponsedetailviewcontroller.count-parameters">Parameters</h3>
 
@@ -9662,8 +9738,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
 
 | Permissions |
 | ------- |
-| 81   |
-| 82   |
+| 531   |
+| 532   |
 
 <h3 id="surveyresponsedetailviewcontroller.findbyid-parameters">Parameters</h3>
 
@@ -11785,8 +11861,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
 
 | Permissions |
 | ------- |
-| 81   |
-| 82   |
+| 531   |
+| 532   |
 
 <h3 id="surveyresponsedetailviewcontroller.find-parameters">Parameters</h3>
 
@@ -12819,8 +12895,8 @@ fetch('/surveys/count',
 
 | Permissions |
 | ------- |
-| 34   |
-| 38   |
+| 458   |
+| 462   |
 
 <h3 id="surveycontroller.count-parameters">Parameters</h3>
 
@@ -12947,8 +13023,8 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 39   |
-| 35   |
+| 463   |
+| 459   |
 
 > Body parameter
 
@@ -13065,9 +13141,9 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 38   |
-| 34   |
-| 41   |
+| 462   |
+| 458   |
+| 533   |
 
 <h3 id="surveycontroller.findbyid-parameters">Parameters</h3>
 
@@ -14105,8 +14181,8 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 36   |
-| 40   |
+| 460   |
+| 464   |
 
 <h3 id="surveycontroller.deletebyid-parameters">Parameters</h3>
 
@@ -14239,8 +14315,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 33   |
-| 37   |
+| 457   |
+| 461   |
 
 > Body parameter
 
@@ -14410,8 +14486,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 39   |
-| 35   |
+| 463   |
+| 459   |
 
 > Body parameter
 
@@ -14518,8 +14594,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 34   |
-| 38   |
+| 458   |
+| 462   |
 
 <h3 id="surveycontroller.find-parameters">Parameters</h3>
 
@@ -15774,8 +15850,8 @@ fetch('/surveys/{surveyId}/sections/count',
 
 | Permissions |
 | ------- |
-| 47   |
-| 51   |
+| 491   |
+| 495   |
 
 <h3 id="sectioncontroller.count-parameters">Parameters</h3>
 
@@ -15880,8 +15956,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 52   |
-| 48   |
+| 496   |
+| 492   |
 
 > Body parameter
 
@@ -15988,8 +16064,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 51   |
-| 47   |
+| 495   |
+| 491   |
 
 <h3 id="sectioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -16080,8 +16156,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 49   |
-| 53   |
+| 493   |
+| 497   |
 
 <h3 id="sectioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -16193,8 +16269,8 @@ fetch('/surveys/{surveyId}/sections',
 
 | Permissions |
 | ------- |
-| 46   |
-| 50   |
+| 490   |
+| 494   |
 
 > Body parameter
 
@@ -16301,9 +16377,9 @@ fetch('/surveys/{surveyId}/sections',
 
 | Permissions |
 | ------- |
-| 47   |
-| 51   |
-| 43   |
+| 491   |
+| 495   |
+| 535   |
 
 <h3 id="sectioncontroller.find-parameters">Parameters</h3>
 
@@ -16417,8 +16493,8 @@ fetch('/surveys/{surveyId}/survey-cycles/count',
 
 | Permissions |
 | ------- |
-| 55   |
-| 59   |
+| 474   |
+| 478   |
 
 <h3 id="surveycyclecontroller.count-parameters">Parameters</h3>
 
@@ -16526,8 +16602,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 60   |
-| 56   |
+| 479   |
+| 475   |
 
 > Body parameter
 
@@ -16635,8 +16711,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 59   |
-| 55   |
+| 478   |
+| 474   |
 
 <h3 id="surveycyclecontroller.findbyid-parameters">Parameters</h3>
 
@@ -16961,8 +17037,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 57   |
-| 61   |
+| 476   |
+| 480   |
 
 <h3 id="surveycyclecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -17076,8 +17152,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 54   |
-| 58   |
+| 473   |
+| 477   |
 
 > Body parameter
 
@@ -17214,8 +17290,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 60   |
-| 56   |
+| 479   |
+| 475   |
 
 > Body parameter
 
@@ -17315,8 +17391,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 55   |
-| 59   |
+| 474   |
+| 478   |
 
 <h3 id="surveycyclecontroller.find-parameters">Parameters</h3>
 
@@ -17765,8 +17841,8 @@ fetch('/surveys/{surveyId}/survey-questions/count',
 
 | Permissions |
 | ------- |
-| 84   |
-| 88   |
+| 466   |
+| 470   |
 
 <h3 id="surveyquestioncontroller.count-parameters">Parameters</h3>
 
@@ -17880,8 +17956,8 @@ fetch('/surveys/{surveyId}/survey-questions/reorder',
 
 | Permissions |
 | ------- |
-| 89   |
-| 85   |
+| 471   |
+| 467   |
 
 > Body parameter
 
@@ -18008,8 +18084,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 89   |
-| 85   |
+| 471   |
+| 467   |
 
 > Body parameter
 
@@ -18120,8 +18196,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 88   |
-| 84   |
+| 470   |
+| 466   |
 
 <h3 id="surveyquestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -19526,8 +19602,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 86   |
-| 90   |
+| 468   |
+| 472   |
 
 <h3 id="surveyquestioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -19649,8 +19725,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 83   |
-| 87   |
+| 465   |
+| 469   |
 
 > Body parameter
 
@@ -19801,8 +19877,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 89   |
-| 85   |
+| 471   |
+| 467   |
 
 > Body parameter
 
@@ -19905,8 +19981,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 84   |
-| 88   |
+| 466   |
+| 470   |
 
 <h3 id="surveyquestioncontroller.find-parameters">Parameters</h3>
 
@@ -20847,8 +20923,8 @@ fetch('/surveys/{surveyId}/survey-responders/count',
 
 | Permissions |
 | ------- |
-| 63   |
-| 67   |
+| 483   |
+| 487   |
 
 <h3 id="surveyrespondercontroller.count-parameters">Parameters</h3>
 
@@ -20938,7 +21014,7 @@ fetch('/surveys/{surveyId}/survey-responders/reminder',
 
 | Permissions |
 | ------- |
-| 70   |
+| 527   |
 
 > Body parameter
 
@@ -21070,8 +21146,8 @@ fetch('/surveys/{surveyId}/survey-responders/{id}',
 
 | Permissions |
 | ------- |
-| 68   |
-| 64   |
+| 488   |
+| 484   |
 
 > Body parameter
 
@@ -21210,8 +21286,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 62   |
-| 66   |
+| 482   |
+| 486   |
 
 > Body parameter
 
@@ -21360,8 +21436,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 68   |
-| 64   |
+| 488   |
+| 484   |
 
 > Body parameter
 
@@ -21467,8 +21543,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 63   |
-| 67   |
+| 483   |
+| 487   |
 
 <h3 id="surveyrespondercontroller.find-parameters">Parameters</h3>
 
@@ -22065,8 +22141,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 65   |
-| 69   |
+| 485   |
+| 489   |
 
 <h3 id="surveyrespondercontroller.delete-parameters">Parameters</h3>
 
@@ -22151,8 +22227,8 @@ fetch('/surveys/{surveyId}/survey-responses/count',
 
 | Permissions |
 | ------- |
-| 76   |
-| 78   |
+| 519   |
+| 521   |
 
 <h3 id="surveyresponsecontroller.count-parameters">Parameters</h3>
 
@@ -22231,8 +22307,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
 
 | Permissions |
 | ------- |
-| 76   |
-| 78   |
+| 519   |
+| 521   |
 
 <h3 id="surveyresponsecontroller.findbyid-parameters">Parameters</h3>
 
@@ -23623,9 +23699,9 @@ fetch('/surveys/{surveyId}/survey-responses',
 
 | Permissions |
 | ------- |
-| 75   |
-| 77   |
-| 45   |
+| 518   |
+| 520   |
+| 537   |
 
 > Body parameter
 
@@ -23725,9 +23801,9 @@ fetch('/surveys/{surveyId}/survey-responses',
 
 | Permissions |
 | ------- |
-| 76   |
-| 78   |
-| 44   |
+| 519   |
+| 521   |
+| 536   |
 
 <h3 id="surveyresponsecontroller.find-parameters">Parameters</h3>
 
@@ -24861,8 +24937,8 @@ fetch('/templates/count',
 
 | Permissions |
 | ------- |
-| 10   |
-| 14   |
+| 434   |
+| 438   |
 
 <h3 id="templatecontroller.count-parameters">Parameters</h3>
 
@@ -24971,8 +25047,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 11   |
-| 15   |
+| 435   |
+| 439   |
 
 > Body parameter
 
@@ -25080,8 +25156,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 10   |
-| 14   |
+| 434   |
+| 438   |
 
 <h3 id="templatecontroller.findbyid-parameters">Parameters</h3>
 
@@ -25172,8 +25248,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 12   |
-| 16   |
+| 436   |
+| 440   |
 
 <h3 id="templatecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -25288,8 +25364,8 @@ fetch('/templates',
 
 | Permissions |
 | ------- |
-| 9   |
-| 13   |
+| 433   |
+| 437   |
 
 > Body parameter
 
@@ -25398,8 +25474,8 @@ fetch('/templates',
 
 | Permissions |
 | ------- |
-| 10   |
-| 14   |
+| 434   |
+| 438   |
 
 <h3 id="templatecontroller.find-parameters">Parameters</h3>
 
@@ -39815,6 +39891,37 @@ SurveyResponseDto
 |---|---|---|---|---|
 |surveyResponseDetailArray|[object]|false|none|none|
 |surveyResponderId|string|false|none|none|
+
+<h2 id="tocS_PingResponse">PingResponse</h2>
+<!-- backwards compatibility -->
+<a id="schemapingresponse"></a>
+<a id="schema_PingResponse"></a>
+<a id="tocSpingresponse"></a>
+<a id="tocspingresponse"></a>
+
+```json
+{
+  "greeting": "string",
+  "date": "string",
+  "url": "string",
+  "headers": {
+    "Content-Type": "string"
+  }
+}
+
+```
+
+PingResponse
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|greeting|string|false|none|none|
+|date|string|false|none|none|
+|url|string|false|none|none|
+|headers|object|false|none|none|
+|» Content-Type|string|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

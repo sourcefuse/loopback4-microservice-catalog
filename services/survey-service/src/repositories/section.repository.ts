@@ -7,14 +7,20 @@ import {
   juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {DefaultSoftCrudRepository, ILogger, LOGGER} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
+} from '@sourceloop/core';
 import {Getter, inject} from '@loopback/core';
 
 import {Section} from '../models/section.model';
 import {SurveyDbSourceName} from '../types';
 import {SurveyRepository} from './survey.repository';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
-export class SectionRepository extends DefaultSoftCrudRepository<
+export class SectionRepository extends DefaultUserModifyCrudRepository<
   Section,
   typeof Section.prototype.id
 > {
@@ -23,8 +29,10 @@ export class SectionRepository extends DefaultSoftCrudRepository<
     @repository.getter('SurveyRepository')
     protected surveyRepositoryGetter: Getter<SurveyRepository>,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(Section, dataSource);
+    super(Section, dataSource, getCurrentUser);
   }
 
   async create(

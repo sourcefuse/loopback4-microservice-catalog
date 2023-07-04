@@ -9,6 +9,29 @@
     }
   },
   "paths": {
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "PingController.ping"
+      }
+    },
     "/question/{questionId}/options/count": {
       "get": {
         "x-controller-name": "OptionController",
@@ -16,7 +39,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 21   |\n| 17   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 421   |\n| 541   |\n",
         "responses": {
           "200": {
             "description": "Options model count",
@@ -63,7 +86,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 24   |\n| 20   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 424   |\n| 544   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.deleteAllOptions",
@@ -109,7 +132,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 22   |\n| 18   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 422   |\n| 542   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.updateMany",
@@ -158,7 +181,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 22   |\n| 18   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 422   |\n| 542   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.updateById",
@@ -211,7 +234,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 21   |\n| 17   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 421   |\n| 541   |\n",
         "responses": {
           "200": {
             "description": "Options model instance",
@@ -261,7 +284,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 24   |\n| 20   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 424   |\n| 544   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.deleteById",
@@ -306,7 +329,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 23   |\n| 19   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 423   |\n| 543   |\n",
         "responses": {
           "200": {
             "description": "Options model instance",
@@ -346,7 +369,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 22   |\n| 18   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 422   |\n| 542   |\n",
         "responses": {
           "200": {
             "description": "Options PATCH success count",
@@ -400,7 +423,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 21   |\n| 17   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 421   |\n| 541   |\n",
         "responses": {
           "200": {
             "description": "Array of Options model instances",
@@ -447,7 +470,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 26   |\n| 30   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 450   |\n| 454   |\n",
         "responses": {
           "200": {
             "description": "Question model count",
@@ -494,7 +517,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 27   |\n| 31   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 451   |\n| 455   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateQuestionController.updateById",
@@ -547,7 +570,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 26   |\n| 30   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 450   |\n| 454   |\n",
         "responses": {
           "200": {
             "description": "Question Question model instance",
@@ -597,7 +620,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 28   |\n| 32   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 452   |\n| 456   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateQuestionController.deleteById",
@@ -642,7 +665,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 25   |\n| 29   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 449   |\n| 453   |\n",
         "responses": {
           "200": {
             "description": "Template Question model instance",
@@ -692,7 +715,7 @@
             "description": "Template Question PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 27   |\n| 31   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 451   |\n| 455   |\n",
         "parameters": [
           {
             "name": "templateId",
@@ -723,7 +746,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 26   |\n| 30   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 450   |\n| 454   |\n",
         "responses": {
           "200": {
             "description": "Array of Template Question model instances",
@@ -770,7 +793,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 1   |\n| 5   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 389   |\n| 393   |\n",
         "responses": {
           "200": {
             "description": "Question model count",
@@ -809,7 +832,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 4   |\n| 8   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 392   |\n| 396   |\n",
         "responses": {
           "200": {
             "description": "Return value of QuestionController.deleteAllQuestions",
@@ -845,7 +868,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 3   |\n| 7   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 391   |\n| 395   |\n",
         "responses": {
           "200": {
             "description": "Question Duplicate model instance",
@@ -888,7 +911,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 2   |\n| 6   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 390   |\n| 394   |\n",
         "responses": {
           "200": {
             "description": "Return value of QuestionController.updateById",
@@ -933,7 +956,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 1   |\n| 5   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 389   |\n| 393   |\n",
         "responses": {
           "200": {
             "description": "Question model instance",
@@ -964,7 +987,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 4   |\n| 8   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 392   |\n| 396   |\n",
         "responses": {
           "200": {
             "description": "Return value of QuestionController.deleteById",
@@ -1001,7 +1024,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 3   |\n| 7   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 391   |\n| 395   |\n",
         "responses": {
           "200": {
             "description": "Question model instance",
@@ -1031,7 +1054,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 2   |\n| 6   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 390   |\n| 394   |\n",
         "responses": {
           "200": {
             "description": "Question PATCH success count",
@@ -1077,7 +1100,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 1   |\n| 5   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 389   |\n| 393   |\n",
         "responses": {
           "200": {
             "description": "Array of Question model instances",
@@ -1116,7 +1139,7 @@
         "tags": [
           "SurveyResponseDetailViewController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 81   |\n| 82   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 531   |\n| 532   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponseDetailView model count",
@@ -1163,7 +1186,7 @@
         "tags": [
           "SurveyResponseDetailViewController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 81   |\n| 82   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 531   |\n| 532   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponseDetailView model instance",
@@ -1215,7 +1238,7 @@
         "tags": [
           "SurveyResponseDetailViewController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 81   |\n| 82   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 531   |\n| 532   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyResponseDetaimodel instances",
@@ -1262,7 +1285,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 34   |\n| 38   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 458   |\n| 462   |\n",
         "responses": {
           "200": {
             "description": "Survey model count",
@@ -1301,7 +1324,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 47   |\n| 51   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 491   |\n| 495   |\n",
         "responses": {
           "200": {
             "description": "Section model count",
@@ -1340,7 +1363,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 52   |\n| 48   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 496   |\n| 492   |\n",
         "responses": {
           "200": {
             "description": "Return value of SectionController.updateById",
@@ -1392,7 +1415,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 51   |\n| 47   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 495   |\n| 491   |\n",
         "responses": {
           "200": {
             "description": "Section model instance",
@@ -1442,7 +1465,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 49   |\n| 53   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 493   |\n| 497   |\n",
         "responses": {
           "200": {
             "description": "Return value of SectionController.deleteById",
@@ -1487,7 +1510,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 46   |\n| 50   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 490   |\n| 494   |\n",
         "responses": {
           "200": {
             "description": "Section model instance",
@@ -1527,7 +1550,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 47   |\n| 51   |\n| 43   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 491   |\n| 495   |\n| 535   |\n",
         "responses": {
           "200": {
             "description": "Array of Section model instances",
@@ -1574,7 +1597,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 55   |\n| 59   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 474   |\n| 478   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle model count",
@@ -1621,7 +1644,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 60   |\n| 56   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 479   |\n| 475   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyCycleController.updateById",
@@ -1674,7 +1697,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 59   |\n| 55   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 478   |\n| 474   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle model instance",
@@ -1724,7 +1747,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 57   |\n| 61   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 476   |\n| 480   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyCycleController.deleteById",
@@ -1769,7 +1792,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 54   |\n| 58   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 473   |\n| 477   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle model instance",
@@ -1809,7 +1832,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 60   |\n| 56   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 479   |\n| 475   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle PATCH success count",
@@ -1864,7 +1887,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 55   |\n| 59   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 474   |\n| 478   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyCycle model instances",
@@ -1911,7 +1934,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 84   |\n| 88   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 466   |\n| 470   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model count",
@@ -1968,7 +1991,7 @@
             "description": "Survey Question order PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 89   |\n| 85   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 471   |\n| 467   |\n",
         "parameters": [
           {
             "name": "surveyId",
@@ -1999,7 +2022,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 89   |\n| 85   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 471   |\n| 467   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyQuestionController.updateById",
@@ -2051,7 +2074,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 88   |\n| 84   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 470   |\n| 466   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model instance",
@@ -2101,7 +2124,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 86   |\n| 90   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 468   |\n| 472   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyQuestionController.deleteById",
@@ -2146,7 +2169,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 83   |\n| 87   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 465   |\n| 469   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model instance",
@@ -2186,7 +2209,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 89   |\n| 85   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 471   |\n| 467   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion PATCH success count",
@@ -2240,7 +2263,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 84   |\n| 88   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 466   |\n| 470   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyQuestion model instances",
@@ -2287,7 +2310,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 63   |\n| 67   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 483   |\n| 487   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponder model count",
@@ -2332,7 +2355,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 70   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 527   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.sendReminder",
@@ -2379,7 +2402,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 68   |\n| 64   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 488   |\n| 484   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.updateById",
@@ -2448,7 +2471,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 62   |\n| 66   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 482   |\n| 486   |\n",
         "responses": {
           "200": {
             "description": "Survey model instance",
@@ -2489,7 +2512,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 68   |\n| 64   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 488   |\n| 484   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.updateAll",
@@ -2548,7 +2571,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 63   |\n| 67   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 483   |\n| 487   |\n",
         "responses": {
           "200": {
             "description": "Array of Survey has many SurveyResponder",
@@ -2594,7 +2617,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 65   |\n| 69   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 485   |\n| 489   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.delete",
@@ -2645,7 +2668,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 76   |\n| 78   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 519   |\n| 521   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponse model count",
@@ -2684,7 +2707,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 76   |\n| 78   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 519   |\n| 521   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponse model instance",
@@ -2717,7 +2740,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 75   |\n| 77   |\n| 45   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 518   |\n| 520   |\n| 537   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponse model instance",
@@ -2757,7 +2780,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 76   |\n| 78   |\n| 44   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 519   |\n| 521   |\n| 536   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyResponse model instances",
@@ -2796,7 +2819,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 39   |\n| 35   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 463   |\n| 459   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyController.updateById",
@@ -2841,7 +2864,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 38   |\n| 34   |\n| 41   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 462   |\n| 458   |\n| 533   |\n",
         "responses": {
           "200": {
             "description": "Survey model instance",
@@ -2883,7 +2906,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 36   |\n| 40   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 460   |\n| 464   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyController.deleteById",
@@ -2920,7 +2943,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 33   |\n| 37   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 457   |\n| 461   |\n",
         "responses": {
           "200": {
             "description": "Survey model instance",
@@ -2950,7 +2973,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 39   |\n| 35   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 463   |\n| 459   |\n",
         "responses": {
           "200": {
             "description": "Survey PATCH success count",
@@ -2996,7 +3019,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 34   |\n| 38   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 458   |\n| 462   |\n",
         "responses": {
           "200": {
             "description": "Array of Survey model instances",
@@ -3035,7 +3058,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 10   |\n| 14   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 434   |\n| 438   |\n",
         "responses": {
           "200": {
             "description": "Template model count",
@@ -3074,7 +3097,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 11   |\n| 15   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 435   |\n| 439   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateController.updateById",
@@ -3119,7 +3142,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 10   |\n| 14   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 434   |\n| 438   |\n",
         "responses": {
           "200": {
             "description": "QuestionTemplate model instance",
@@ -3161,7 +3184,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 12   |\n| 16   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 436   |\n| 440   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateController.deleteById",
@@ -3198,7 +3221,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 9   |\n| 13   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 433   |\n| 437   |\n",
         "responses": {
           "200": {
             "description": "Template model instance",
@@ -3228,7 +3251,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 10   |\n| 14   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 434   |\n| 438   |\n",
         "responses": {
           "200": {
             "description": "Array of Template model instances",
@@ -6478,6 +6501,30 @@
           }
         },
         "additionalProperties": false
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
       },
       "loopback.Count": {
         "type": "object",

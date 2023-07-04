@@ -1,6 +1,11 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
-import {DefaultSoftCrudRepository, ILogger, LOGGER} from '@sourceloop/core';
+import {
+  DefaultSoftCrudRepository,
+  IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
+} from '@sourceloop/core';
 import {Question} from '../models';
 import {SurveyQuestion} from '../models/survey-question.model';
 import {Survey} from '../models/survey.model';
@@ -10,6 +15,7 @@ import {SurveyDbSourceName} from '../types';
 import {Section} from '../models/section.model';
 import {SectionRepository} from './section.repository';
 import {HttpErrors} from '@loopback/rest';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
   SurveyQuestion,
@@ -43,8 +49,10 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
     @repository.getter('SectionRepository')
     protected sectionRepositoryGetter: Getter<SectionRepository>,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(SurveyQuestion, dataSource);
+    super(SurveyQuestion, dataSource, getCurrentUser);
     this.section = this.createBelongsToAccessorFor(
       'section',
       sectionRepositoryGetter,

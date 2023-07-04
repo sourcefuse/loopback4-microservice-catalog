@@ -3,10 +3,14 @@ import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
 import {SurveyCycle, SurveyCycleRelations} from '../models/survey-cycle.model';
 import {Survey} from '../models/survey.model';
 import {SurveyDbSourceName} from '../types';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 import {SurveyRepository} from './survey.repository';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
-export class SurveyCycleRepository extends DefaultSoftCrudRepository<
+export class SurveyCycleRepository extends DefaultUserModifyCrudRepository<
   SurveyCycle,
   typeof SurveyCycle.prototype.id,
   SurveyCycleRelations
@@ -20,8 +24,10 @@ export class SurveyCycleRepository extends DefaultSoftCrudRepository<
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
     @repository.getter('SurveyRepository')
     protected surveyRepositoryGetter: Getter<SurveyRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(SurveyCycle, dataSource);
+    super(SurveyCycle, dataSource, getCurrentUser);
     this.survey = this.createBelongsToAccessorFor(
       'survey',
       surveyRepositoryGetter,

@@ -1,6 +1,9 @@
 import {Getter, inject} from '@loopback/core';
 import {repository, BelongsToAccessor, juggler} from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 import {
   TemplateQuestion,
   TemplateQuestionRelations,
@@ -9,8 +12,9 @@ import {Question} from '../models';
 import {QuestionTemplate} from '../models/question-template.model';
 import {SurveyDbSourceName} from '../types';
 import {QuestionRepository} from './questions.repository';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
-export class TemplateQuestionRepository extends DefaultSoftCrudRepository<
+export class TemplateQuestionRepository extends DefaultUserModifyCrudRepository<
   TemplateQuestion,
   typeof TemplateQuestion.prototype.id,
   TemplateQuestionRelations
@@ -34,8 +38,10 @@ export class TemplateQuestionRepository extends DefaultSoftCrudRepository<
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
     @repository.getter('QuestionRepository')
     protected questionRepositoryGetter: Getter<QuestionRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
-    super(TemplateQuestion, dataSource);
+    super(TemplateQuestion, dataSource, getCurrentUser);
     this.dependentOnQuestion = this.createBelongsToAccessorFor(
       'dependentOnQuestion',
       Getter.fromValue(this),

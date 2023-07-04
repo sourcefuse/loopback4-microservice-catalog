@@ -1,4 +1,4 @@
-import {REGEX} from '../enum/question.enum';
+import {REGEX} from '../utils';
 import {SurveyCycle} from './survey-cycle.model';
 import {Survey} from './survey.model';
 import {model, property, belongsTo} from '@loopback/repository';

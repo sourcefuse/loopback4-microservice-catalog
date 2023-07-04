@@ -6,7 +6,7 @@ import {
   juggler,
 } from '@loopback/repository';
 import {
-  DefaultSoftCrudRepository,
+  DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
@@ -22,7 +22,7 @@ import {SurveyResponderRepository} from './survey-responder.repository';
 import {SurveyDbSourceName} from '../types';
 import {SurveyResponseDetailRepository} from './survey-response-detail.repository';
 
-export class SurveyResponseRepository extends DefaultSoftCrudRepository<
+export class SurveyResponseRepository extends DefaultUserModifyCrudRepository<
   SurveyResponse,
   typeof SurveyResponse.prototype.id,
   SurveyResponseRelations
@@ -45,14 +45,14 @@ export class SurveyResponseRepository extends DefaultSoftCrudRepository<
   constructor(
     @inject(`datasources.${SurveyDbSourceName}`) dataSource: juggler.DataSource,
 
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @repository.getter('SurveyCycleRepository')
     protected surveyCycleRepositoryGetter: Getter<SurveyCycleRepository>,
     @repository.getter('SurveyResponseDetailRepository')
     protected surveyResponseDetailRepositoryGetter: Getter<SurveyResponseDetailRepository>,
     @repository.getter('SurveyResponderRepository')
     protected surveyResponderRepositoryGetter: Getter<SurveyResponderRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
     super(SurveyResponse, dataSource, getCurrentUser);
     this.surveyResponder = this.createBelongsToAccessorFor(
