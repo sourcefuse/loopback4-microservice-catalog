@@ -1,4 +1,4 @@
-import {Model, model, property} from '@loopback/repository';
+import {AnyObject, Model, model, property} from '@loopback/repository';
 import {QuestionStatus, QuestionType} from '../enum/question.enum';
 
 @model()
@@ -56,6 +56,18 @@ export class QuestionDto extends Model {
     },
   })
   name?: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<QuestionDto>) {
     super(data);

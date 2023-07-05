@@ -1,5 +1,5 @@
 import {SurveyResponseDetailDto} from './survey-response-detail-dto.model';
-import {Model, model, property} from '@loopback/repository';
+import {AnyObject, Model, model, property} from '@loopback/repository';
 
 @model()
 export class SurveyResponseDto extends Model {
@@ -13,6 +13,18 @@ export class SurveyResponseDto extends Model {
     type: 'string',
   })
   surveyResponderId: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<SurveyResponseDto>) {
     super(data);

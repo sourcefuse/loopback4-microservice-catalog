@@ -11,7 +11,7 @@ import {
 import {SurveyServiceApplication} from '../application';
 import {setUpApplication} from './helper';
 import {token} from '../datasources/userCredsAndPermission';
-import {SurveyCycle, SurveyResponder} from '../../models';
+import {SurveyResponder} from '../../models';
 import moment from 'moment';
 import {SurveyStatus} from '../../enum';
 
@@ -81,35 +81,35 @@ describe('Survey Responder Controller', () => {
     expect(response.body.count).to.be.equal(1);
   });
 
-  //   it('will update the survey responder where id matches and return 204', async () => {
-  //     const surveyResponderToUpdate = {
-  //       firstName: 'testPatch',
-  //     };
-  //     await createSurvey();
-  //     const surveyCycle = await addSurveyCycle();
-  //     const responder = await addSurveyResponder(surveyCycle.body.id);
-  //     await client
-  //       .patch(`${basePath}/${responder.body.id}`)
-  //       .set('authorization', `Bearer ${token}`)
-  //       .send(surveyResponderToUpdate)
-  //       .expect(200);
-  //     const response = await client
-  //       .get(`${basePath}/${responder.body.id}`)
-  //       .set('authorization', `Bearer ${token}`)
-  //       .expect(200);
-  //     console.log(response.body);
-  //     expect(response.body.firstName).to.be.equal('testPatch');
-  //   });
+  it('will update the survey responder where id matches and return 204', async () => {
+    const surveyResponderToUpdate = {
+      firstName: 'testPatch',
+    };
+    await createSurvey();
+    const surveyCycle = await addSurveyCycle();
+    const responder = await addSurveyResponder(surveyCycle.body.id);
+    await client
+      .patch(`${basePath}/${responder.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(surveyResponderToUpdate)
+      .expect(200);
+    const response = await client
+      .get(`${basePath}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+    console.log(response.body[0]);
+    expect(response.body[0].firstName).to.be.equal('testPatch');
+  });
 
-  //   it('deletes a survey responder successfully', async () => {
-  //     await createSurvey();
-  //     const reqToAddSurveyCycle = await addSurveyCycle();
-  //     const responder = await addSurveyResponder(reqToAddSurveyCycle.body.id);
-  //     await client
-  //       .del(`${basePath}/${responder.body.id}`)
-  //       .set('authorization', `Bearer ${token}`)
-  //       .expect(200);
-  //   });
+  it('deletes a survey responder successfully', async () => {
+    await createSurvey();
+    const reqToAddSurveyCycle = await addSurveyCycle();
+    await addSurveyResponder(reqToAddSurveyCycle.body.id);
+    await client
+      .del(`${basePath}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
 
   async function addSurveyCycle() {
     const currentDate = new Date();

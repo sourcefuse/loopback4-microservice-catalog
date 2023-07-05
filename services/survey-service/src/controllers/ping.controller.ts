@@ -8,6 +8,8 @@ import {
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 
+const TWO_HUNDERED = 200;
+
 /**
  * OpenAPI response for ping()
  */
@@ -47,7 +49,7 @@ export class PingController {
     permissions: ['*'],
   })
   @get('/ping')
-  @response(200, PING_RESPONSE)
+  @response(TWO_HUNDERED, PING_RESPONSE)
   ping(): object {
     // Reply with a greeting, the current time, the url, and request headers
     return {

@@ -3,11 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
-import {
-  QuestionRepository,
-  SurveyQuestionRepository,
-  SurveyRepository,
-} from '../../repositories';
+import {SurveyQuestionRepository, SurveyRepository} from '../../repositories';
 import {SurveyServiceApplication} from '../application';
 import {setUpApplication} from './helper';
 import {token} from '../datasources/userCredsAndPermission';

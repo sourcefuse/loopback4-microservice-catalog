@@ -7,7 +7,7 @@ import {SurveyCycleRepository, SurveyRepository} from '../../repositories';
 import {SurveyServiceApplication} from '../application';
 import {setUpApplication} from './helper';
 import {token} from '../datasources/userCredsAndPermission';
-import {SurveyCycle, SurveyQuestionDto} from '../../models';
+import {SurveyCycle} from '../../models';
 import moment from 'moment';
 import {SurveyStatus} from '../../enum';
 
@@ -75,7 +75,7 @@ describe('Survey Cycle Controller', () => {
   it('should return count', async () => {
     await createSurvey();
     await addSurveyCycle();
-    const response = await client
+    await client
       .get(`${basePath}/count`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);

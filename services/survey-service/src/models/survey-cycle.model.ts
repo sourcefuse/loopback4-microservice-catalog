@@ -1,5 +1,5 @@
 import {Survey} from './survey.model';
-import {model, property, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo, AnyObject} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({name: 'survey_cycles'})
@@ -49,6 +49,18 @@ export class SurveyCycle extends UserModifiableEntity {
     },
   )
   surveyId: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<SurveyCycle>) {
     super(data);

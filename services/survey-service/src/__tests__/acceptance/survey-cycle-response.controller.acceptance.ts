@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
 import {
-  QuestionRepository,
   SurveyQuestionRepository,
   SurveyRepository,
   SurveyResponderRepository,
@@ -15,7 +14,7 @@ import {setUpApplication} from './helper';
 import {token} from '../datasources/userCredsAndPermission';
 import {SurveyResponseDto} from '../../models';
 import moment from 'moment';
-import {QuestionType, SurveyStatus} from '../../enum';
+import {SurveyStatus} from '../../enum';
 
 describe('Survey Cycle Response Controller', () => {
   let app: SurveyServiceApplication;

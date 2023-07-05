@@ -23,7 +23,7 @@ export const enum PermissionKey {
 
   ViewAnyOption = '15016',
   UpdateAnyOption = '15017',
-  CreateAnyOption = '150118',
+  CreateAnyOption = '15018',
   DeleteAnyOption = '15019',
   ViewOption = '15020',
   UpdateOption = '15021',
@@ -39,7 +39,7 @@ export const enum PermissionKey {
   UpdateAnyTemplateQuestion = '15030',
   DeleteAnyTemplateQuestion = '15031',
 
-  CreateSurvey = '15033',
+  CreateSurvey = '15032',
   ViewSurvey = '15033',
   UpdateSurvey = '15034',
   DeleteSurvey = '15035',

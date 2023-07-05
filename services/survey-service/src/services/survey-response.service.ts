@@ -56,7 +56,7 @@ export class SurveyResponseService {
     surveyId: string,
     responderReminderDto: ResponderReminderDto,
   ) {
-    const res = await this.getReminderResponse.sendReminder(surveyId, {
+    await this.getReminderResponse.sendReminder(surveyId, {
       responderIds: responderReminderDto,
     });
   }
@@ -65,7 +65,7 @@ export class SurveyResponseService {
     surveyId: string,
     surveyResponder: SurveyResponder,
   ) {
-    const res = await this.getReminderResponse.sendReminder(surveyId, {
+    await this.getReminderResponse.sendReminder(surveyId, {
       surveyResponder: surveyResponder,
     });
   }

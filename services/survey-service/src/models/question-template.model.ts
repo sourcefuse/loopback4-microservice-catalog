@@ -1,4 +1,4 @@
-import {model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {QuestionTemplateStatus} from '../enum/template.enum';
 
@@ -43,6 +43,18 @@ export class QuestionTemplate extends UserModifiableEntity {
   createdByUser?: string;
 
   modifiedByUser?: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<QuestionTemplate>) {
     super(data);

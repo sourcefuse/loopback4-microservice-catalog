@@ -5,6 +5,7 @@ import {
   belongsTo,
   hasMany,
   hasOne,
+  AnyObject,
 } from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {QuestionStatus, QuestionType} from '../enum/question.enum';
@@ -53,6 +54,18 @@ export class Question extends UserModifiableEntity {
     },
   })
   questionType: QuestionType;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: AnyObject;
 
   @property({
     type: 'boolean',

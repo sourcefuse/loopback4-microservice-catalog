@@ -159,8 +159,8 @@ fetch('/question/{questionId}/options/count',
 
 | Permissions |
 | ------- |
-| 421   |
-| 541   |
+| 15020   |
+| 15016   |
 
 <h3 id="optioncontroller.count-parameters">Parameters</h3>
 
@@ -250,8 +250,8 @@ fetch('/question/{questionId}/options/delete/bulk',
 
 | Permissions |
 | ------- |
-| 424   |
-| 544   |
+| 15023   |
+| 15019   |
 
 > Body parameter
 
@@ -319,7 +319,9 @@ const inputBody = '[
     "displayOrder": 0,
     "score": 0,
     "questionId": "string",
-    "followupQuestionId": "string"
+    "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ]';
 const headers = {
@@ -357,7 +359,9 @@ const inputBody = [
     "displayOrder": 0,
     "score": 0,
     "questionId": "string",
-    "followupQuestionId": "string"
+    "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ];
 const headers = {
@@ -383,8 +387,8 @@ fetch('/question/{questionId}/options/many',
 
 | Permissions |
 | ------- |
-| 422   |
-| 542   |
+| 15021   |
+| 15017   |
 
 > Body parameter
 
@@ -403,7 +407,9 @@ fetch('/question/{questionId}/options/many',
     "displayOrder": 0,
     "score": 0,
     "questionId": "string",
-    "followupQuestionId": "string"
+    "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ]
 ```
@@ -463,7 +469,9 @@ const inputBody = '{
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -499,7 +507,9 @@ const inputBody = {
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -524,8 +534,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 422   |
-| 542   |
+| 15021   |
+| 15017   |
 
 > Body parameter
 
@@ -543,7 +553,9 @@ fetch('/question/{questionId}/options/{id}',
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -634,8 +646,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 421   |
-| 541   |
+| 15020   |
+| 15016   |
 
 <h3 id="optioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -664,6 +676,8 @@ fetch('/question/{questionId}/options/{id}',
   "score": 0,
   "questionId": "string",
   "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "question": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -677,6 +691,8 @@ fetch('/question/{questionId}/options/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -700,6 +716,8 @@ fetch('/question/{questionId}/options/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -722,6 +740,8 @@ fetch('/question/{questionId}/options/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -733,6 +753,8 @@ fetch('/question/{questionId}/options/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -749,6 +771,8 @@ fetch('/question/{questionId}/options/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -770,6 +794,8 @@ fetch('/question/{questionId}/options/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -787,6 +813,8 @@ fetch('/question/{questionId}/options/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -805,7 +833,9 @@ fetch('/question/{questionId}/options/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -822,6 +852,8 @@ fetch('/question/{questionId}/options/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -843,6 +875,8 @@ fetch('/question/{questionId}/options/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -864,7 +898,9 @@ fetch('/question/{questionId}/options/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -883,6 +919,8 @@ fetch('/question/{questionId}/options/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -904,6 +942,8 @@ fetch('/question/{questionId}/options/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -927,6 +967,8 @@ fetch('/question/{questionId}/options/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -943,7 +985,9 @@ fetch('/question/{questionId}/options/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -967,6 +1011,8 @@ fetch('/question/{questionId}/options/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -992,6 +1038,8 @@ fetch('/question/{questionId}/options/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -1009,6 +1057,8 @@ fetch('/question/{questionId}/options/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -1029,6 +1079,8 @@ fetch('/question/{questionId}/options/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -1043,6 +1095,8 @@ fetch('/question/{questionId}/options/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -1059,7 +1113,9 @@ fetch('/question/{questionId}/options/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -1077,6 +1133,8 @@ fetch('/question/{questionId}/options/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -1100,6 +1158,8 @@ fetch('/question/{questionId}/options/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -1122,6 +1182,8 @@ fetch('/question/{questionId}/options/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -1133,6 +1195,8 @@ fetch('/question/{questionId}/options/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -1149,6 +1213,8 @@ fetch('/question/{questionId}/options/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -1170,6 +1236,8 @@ fetch('/question/{questionId}/options/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -1187,6 +1255,8 @@ fetch('/question/{questionId}/options/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -1205,7 +1275,9 @@ fetch('/question/{questionId}/options/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -1222,6 +1294,8 @@ fetch('/question/{questionId}/options/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -1243,6 +1317,8 @@ fetch('/question/{questionId}/options/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -1264,7 +1340,9 @@ fetch('/question/{questionId}/options/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -1283,6 +1361,8 @@ fetch('/question/{questionId}/options/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -1304,6 +1384,8 @@ fetch('/question/{questionId}/options/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -1327,6 +1409,8 @@ fetch('/question/{questionId}/options/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -1343,7 +1427,9 @@ fetch('/question/{questionId}/options/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -1367,6 +1453,8 @@ fetch('/question/{questionId}/options/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -1392,6 +1480,8 @@ fetch('/question/{questionId}/options/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -1409,6 +1499,8 @@ fetch('/question/{questionId}/options/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -1429,6 +1521,8 @@ fetch('/question/{questionId}/options/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -1443,6 +1537,8 @@ fetch('/question/{questionId}/options/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -1459,7 +1555,9 @@ fetch('/question/{questionId}/options/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -1528,8 +1626,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 424   |
-| 544   |
+| 15023   |
+| 15019   |
 
 <h3 id="optioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -1585,7 +1683,9 @@ const inputBody = '{
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1620,7 +1720,9 @@ const inputBody = {
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1645,8 +1747,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 423   |
-| 543   |
+| 15022   |
+| 15018   |
 
 > Body parameter
 
@@ -1663,7 +1765,9 @@ fetch('/question/{questionId}/options',
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -1692,7 +1796,9 @@ fetch('/question/{questionId}/options',
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -1726,7 +1832,9 @@ const inputBody = '{
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1762,7 +1870,9 @@ const inputBody = {
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1787,8 +1897,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 422   |
-| 542   |
+| 15021   |
+| 15017   |
 
 > Body parameter
 
@@ -1806,7 +1916,9 @@ fetch('/question/{questionId}/options',
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -1889,8 +2001,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 421   |
-| 541   |
+| 15020   |
+| 15016   |
 
 <h3 id="optioncontroller.find-parameters">Parameters</h3>
 
@@ -1919,6 +2031,8 @@ fetch('/question/{questionId}/options',
     "score": 0,
     "questionId": "string",
     "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "question": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -1932,6 +2046,8 @@ fetch('/question/{questionId}/options',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -1961,6 +2077,8 @@ fetch('/question/{questionId}/options',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -1972,6 +2090,8 @@ fetch('/question/{questionId}/options',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -1988,6 +2108,8 @@ fetch('/question/{questionId}/options',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2009,6 +2131,8 @@ fetch('/question/{questionId}/options',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -2026,6 +2150,8 @@ fetch('/question/{questionId}/options',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -2044,7 +2170,9 @@ fetch('/question/{questionId}/options',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -2061,6 +2189,8 @@ fetch('/question/{questionId}/options',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -2082,6 +2212,8 @@ fetch('/question/{questionId}/options',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -2103,7 +2235,9 @@ fetch('/question/{questionId}/options',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -2122,6 +2256,8 @@ fetch('/question/{questionId}/options',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2143,6 +2279,8 @@ fetch('/question/{questionId}/options',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -2166,6 +2304,8 @@ fetch('/question/{questionId}/options',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -2182,7 +2322,9 @@ fetch('/question/{questionId}/options',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -2215,6 +2357,8 @@ fetch('/question/{questionId}/options',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -2232,6 +2376,8 @@ fetch('/question/{questionId}/options',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -2252,6 +2398,8 @@ fetch('/question/{questionId}/options',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -2266,6 +2414,8 @@ fetch('/question/{questionId}/options',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -2282,7 +2432,9 @@ fetch('/question/{questionId}/options',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -2300,6 +2452,8 @@ fetch('/question/{questionId}/options',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -2329,6 +2483,8 @@ fetch('/question/{questionId}/options',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -2340,6 +2496,8 @@ fetch('/question/{questionId}/options',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -2356,6 +2514,8 @@ fetch('/question/{questionId}/options',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2377,6 +2537,8 @@ fetch('/question/{questionId}/options',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -2394,6 +2556,8 @@ fetch('/question/{questionId}/options',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -2412,7 +2576,9 @@ fetch('/question/{questionId}/options',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -2429,6 +2595,8 @@ fetch('/question/{questionId}/options',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -2450,6 +2618,8 @@ fetch('/question/{questionId}/options',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -2471,7 +2641,9 @@ fetch('/question/{questionId}/options',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -2490,6 +2662,8 @@ fetch('/question/{questionId}/options',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2511,6 +2685,8 @@ fetch('/question/{questionId}/options',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -2534,6 +2710,8 @@ fetch('/question/{questionId}/options',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -2550,7 +2728,9 @@ fetch('/question/{questionId}/options',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -2583,6 +2763,8 @@ fetch('/question/{questionId}/options',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -2600,6 +2782,8 @@ fetch('/question/{questionId}/options',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -2620,6 +2804,8 @@ fetch('/question/{questionId}/options',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -2634,6 +2820,8 @@ fetch('/question/{questionId}/options',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -2650,7 +2838,9 @@ fetch('/question/{questionId}/options',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -2686,6 +2876,8 @@ Status Code **200**
 |»» score|number¦null|false|none|none|
 |»» questionId|string|false|none|none|
 |»» followupQuestionId|string¦null|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -2699,6 +2891,8 @@ Status Code **200**
 |»»» name|string|false|none|none|
 |»»» status|string|true|none|none|
 |»»» questionType|string|true|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» isScoreEnabled|boolean|false|none|none|
 |»»» isFollowupEnabled|boolean|false|none|none|
 |»»» validation|object|false|none|none|
@@ -2726,6 +2920,8 @@ Status Code **200**
 |»»»» responseType|string|true|none|none|
 |»»»» textAnswer|string|false|none|none|
 |»»»» optionId|string|false|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -2737,6 +2933,8 @@ Status Code **200**
 |»»»»» id|string|false|none|none|
 |»»»»» surveyResponderId|string|true|none|none|
 |»»»»» surveyCycleId|string|true|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
 |»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -2753,6 +2951,8 @@ Status Code **200**
 |»»»»»» userId|string¦null|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
 |»»»»»» surveyCycleId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -2774,6 +2974,8 @@ Status Code **200**
 |»»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»»» baseSurveyId|string¦null|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
@@ -2790,6 +2992,8 @@ Status Code **200**
 |»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» SurveyResponderWithRelations|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
@@ -2806,6 +3010,8 @@ Status Code **200**
 |»»»»»»»»» name|string|false|none|none|
 |»»»»»»»»» displayOrder|number|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -2899,8 +3105,8 @@ fetch('/question-template/{templateId}/template-questions/count',
 
 | Permissions |
 | ------- |
-| 450   |
-| 454   |
+| 15025   |
+| 15029   |
 
 <h3 id="templatequestioncontroller.count-parameters">Parameters</h3>
 
@@ -2950,7 +3156,9 @@ const inputBody = '{
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -2987,7 +3195,9 @@ const inputBody = {
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -3012,8 +3222,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 451   |
-| 455   |
+| 15026   |
+| 15030   |
 
 > Body parameter
 
@@ -3032,7 +3242,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -3123,8 +3335,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 450   |
-| 454   |
+| 15025   |
+| 15029   |
 
 <h3 id="templatequestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -3154,6 +3366,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
   "templateId": "string",
   "questionId": "string",
   "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "template": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -3166,7 +3380,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
     "uid": "string",
     "name": "string",
     "status": "Draft",
-    "isEnableWeight": true
+    "isEnableWeight": true,
+    "extId": "string",
+    "extMetadata": {}
   },
   "question": {
     "deleted": true,
@@ -3181,6 +3397,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -3204,6 +3422,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -3226,6 +3446,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -3237,6 +3459,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -3253,6 +3477,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3274,6 +3500,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -3291,6 +3519,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -3309,7 +3539,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -3326,6 +3558,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3347,6 +3581,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -3368,7 +3604,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -3387,6 +3625,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3408,6 +3648,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -3431,6 +3673,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -3447,7 +3691,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -3471,6 +3717,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -3496,6 +3744,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -3513,6 +3763,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -3533,6 +3785,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -3547,6 +3801,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -3563,7 +3819,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -3583,6 +3841,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
     "templateId": "string",
     "questionId": "string",
     "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "template": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -3595,7 +3855,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "uid": "string",
       "name": "string",
       "status": "Draft",
-      "isEnableWeight": true
+      "isEnableWeight": true,
+      "extId": "string",
+      "extMetadata": {}
     },
     "question": {
       "deleted": true,
@@ -3610,6 +3872,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -3633,6 +3897,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -3655,6 +3921,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -3666,6 +3934,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3682,6 +3952,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3703,6 +3975,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -3720,6 +3994,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -3738,7 +4014,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -3755,6 +4033,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -3776,6 +4056,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -3797,7 +4079,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -3816,6 +4100,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3837,6 +4123,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -3860,6 +4148,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -3876,7 +4166,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -3900,6 +4192,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -3925,6 +4219,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -3942,6 +4238,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -3962,6 +4260,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -3976,6 +4276,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -3992,7 +4294,9 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -4063,8 +4367,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 452   |
-| 456   |
+| 15027   |
+| 15031   |
 
 <h3 id="templatequestioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -4121,7 +4425,9 @@ const inputBody = '{
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -4157,7 +4463,9 @@ const inputBody = {
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -4182,8 +4490,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 449   |
-| 453   |
+| 15024   |
+| 15028   |
 
 > Body parameter
 
@@ -4201,7 +4509,9 @@ fetch('/question-template/{templateId}/template-questions',
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -4231,7 +4541,9 @@ fetch('/question-template/{templateId}/template-questions',
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -4267,7 +4579,9 @@ const inputBody = '[
     "weight": 100,
     "templateId": "string",
     "questionId": "string",
-    "dependentOnQuestionId": "string"
+    "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ]';
 const headers = {
@@ -4306,7 +4620,9 @@ const inputBody = [
     "weight": 100,
     "templateId": "string",
     "questionId": "string",
-    "dependentOnQuestionId": "string"
+    "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ];
 const headers = {
@@ -4332,8 +4648,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 451   |
-| 455   |
+| 15026   |
+| 15030   |
 
 > Body parameter
 
@@ -4353,7 +4669,9 @@ fetch('/question-template/{templateId}/template-questions',
     "weight": 100,
     "templateId": "string",
     "questionId": "string",
-    "dependentOnQuestionId": "string"
+    "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ]
 ```
@@ -4427,8 +4745,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 450   |
-| 454   |
+| 15025   |
+| 15029   |
 
 <h3 id="templatequestioncontroller.find-parameters">Parameters</h3>
 
@@ -4458,6 +4776,8 @@ fetch('/question-template/{templateId}/template-questions',
     "templateId": "string",
     "questionId": "string",
     "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "template": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -4470,7 +4790,9 @@ fetch('/question-template/{templateId}/template-questions',
       "uid": "string",
       "name": "string",
       "status": "Draft",
-      "isEnableWeight": true
+      "isEnableWeight": true,
+      "extId": "string",
+      "extMetadata": {}
     },
     "question": {
       "deleted": true,
@@ -4485,6 +4807,8 @@ fetch('/question-template/{templateId}/template-questions',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -4508,6 +4832,8 @@ fetch('/question-template/{templateId}/template-questions',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -4530,6 +4856,8 @@ fetch('/question-template/{templateId}/template-questions',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -4541,6 +4869,8 @@ fetch('/question-template/{templateId}/template-questions',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4557,6 +4887,8 @@ fetch('/question-template/{templateId}/template-questions',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -4578,6 +4910,8 @@ fetch('/question-template/{templateId}/template-questions',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -4595,6 +4929,8 @@ fetch('/question-template/{templateId}/template-questions',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -4613,7 +4949,9 @@ fetch('/question-template/{templateId}/template-questions',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -4630,6 +4968,8 @@ fetch('/question-template/{templateId}/template-questions',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -4651,6 +4991,8 @@ fetch('/question-template/{templateId}/template-questions',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -4672,7 +5014,9 @@ fetch('/question-template/{templateId}/template-questions',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -4691,6 +5035,8 @@ fetch('/question-template/{templateId}/template-questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -4712,6 +5058,8 @@ fetch('/question-template/{templateId}/template-questions',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -4735,6 +5083,8 @@ fetch('/question-template/{templateId}/template-questions',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -4751,7 +5101,9 @@ fetch('/question-template/{templateId}/template-questions',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -4775,6 +5127,8 @@ fetch('/question-template/{templateId}/template-questions',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -4800,6 +5154,8 @@ fetch('/question-template/{templateId}/template-questions',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -4817,6 +5173,8 @@ fetch('/question-template/{templateId}/template-questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -4837,6 +5195,8 @@ fetch('/question-template/{templateId}/template-questions',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -4851,6 +5211,8 @@ fetch('/question-template/{templateId}/template-questions',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -4867,7 +5229,9 @@ fetch('/question-template/{templateId}/template-questions',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -4905,6 +5269,8 @@ Status Code **200**
 |»» templateId|string|false|none|none|
 |»» questionId|string|false|none|none|
 |»» dependentOnQuestionId|string¦null|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» template|[QuestionTemplateWithRelations](#schemaquestiontemplatewithrelations)|false|none|(tsType: QuestionTemplateWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -4918,6 +5284,8 @@ Status Code **200**
 |»»» name|string|true|none|none|
 |»»» status|string|true|none|none|
 |»»» isEnableWeight|boolean|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -4931,6 +5299,8 @@ Status Code **200**
 |»»» name|string|false|none|none|
 |»»» status|string|true|none|none|
 |»»» questionType|string|true|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» isScoreEnabled|boolean|false|none|none|
 |»»» isFollowupEnabled|boolean|false|none|none|
 |»»» validation|object|false|none|none|
@@ -4954,6 +5324,8 @@ Status Code **200**
 |»»»»» score|number¦null|false|none|none|
 |»»»»» questionId|string|false|none|none|
 |»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -4973,6 +5345,8 @@ Status Code **200**
 |»»»» responseType|string|true|none|none|
 |»»»» textAnswer|string|false|none|none|
 |»»»» optionId|string|false|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -4984,6 +5358,8 @@ Status Code **200**
 |»»»»» id|string|false|none|none|
 |»»»»» surveyResponderId|string|true|none|none|
 |»»»»» surveyCycleId|string|true|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
 |»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -5000,6 +5376,8 @@ Status Code **200**
 |»»»»»» userId|string¦null|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
 |»»»»»» surveyCycleId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -5021,6 +5399,8 @@ Status Code **200**
 |»»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»»» baseSurveyId|string¦null|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
@@ -5037,6 +5417,8 @@ Status Code **200**
 |»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» SurveyResponderWithRelations|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
@@ -5053,6 +5435,8 @@ Status Code **200**
 |»»»»»»»»» name|string|false|none|none|
 |»»»»»»»»» displayOrder|number|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -5149,8 +5533,8 @@ fetch('/questions/count',
 
 | Permissions |
 | ------- |
-| 389   |
-| 393   |
+| 15000   |
+| 15004   |
 
 <h3 id="questioncontroller.count-parameters">Parameters</h3>
 
@@ -5239,8 +5623,8 @@ fetch('/questions/delete/bulk',
 
 | Permissions |
 | ------- |
-| 392   |
-| 396   |
+| 15003   |
+| 15007   |
 
 > Body parameter
 
@@ -5295,7 +5679,9 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "includeBatchId": true,
-  "displayOrder": 0
+  "displayOrder": 0,
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -5320,7 +5706,9 @@ fetch('/questions/{id}/duplicate',
 const fetch = require('node-fetch');
 const inputBody = {
   "includeBatchId": true,
-  "displayOrder": 0
+  "displayOrder": 0,
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -5345,15 +5733,17 @@ fetch('/questions/{id}/duplicate',
 
 | Permissions |
 | ------- |
-| 391   |
-| 395   |
+| 15002   |
+| 15006   |
 
 > Body parameter
 
 ```json
 {
   "includeBatchId": true,
-  "displayOrder": 0
+  "displayOrder": 0,
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -5382,6 +5772,8 @@ fetch('/questions/{id}/duplicate',
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -5421,6 +5813,8 @@ const inputBody = '{
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -5462,6 +5856,8 @@ const inputBody = {
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -5492,8 +5888,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 390   |
-| 394   |
+| 15001   |
+| 15005   |
 
 > Body parameter
 
@@ -5511,6 +5907,8 @@ fetch('/questions/{id}',
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -5606,8 +6004,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 389   |
-| 393   |
+| 15000   |
+| 15004   |
 
 <h3 id="questioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -5633,6 +6031,8 @@ fetch('/questions/{id}',
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -5652,6 +6052,8 @@ fetch('/questions/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -5675,6 +6077,8 @@ fetch('/questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -5697,6 +6101,8 @@ fetch('/questions/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -5708,6 +6114,8 @@ fetch('/questions/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -5724,6 +6132,8 @@ fetch('/questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -5745,6 +6155,8 @@ fetch('/questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -5762,6 +6174,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -5780,7 +6194,9 @@ fetch('/questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -5797,6 +6213,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -5818,6 +6236,8 @@ fetch('/questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -5839,7 +6259,9 @@ fetch('/questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -5858,6 +6280,8 @@ fetch('/questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -5879,6 +6303,8 @@ fetch('/questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -5902,6 +6328,8 @@ fetch('/questions/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -5918,7 +6346,9 @@ fetch('/questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -5942,6 +6372,8 @@ fetch('/questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -5967,6 +6399,8 @@ fetch('/questions/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -5984,6 +6418,8 @@ fetch('/questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -6004,6 +6440,8 @@ fetch('/questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -6018,6 +6456,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -6034,7 +6474,9 @@ fetch('/questions/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -6052,6 +6494,8 @@ fetch('/questions/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -6075,6 +6519,8 @@ fetch('/questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -6097,6 +6543,8 @@ fetch('/questions/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -6108,6 +6556,8 @@ fetch('/questions/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -6124,6 +6574,8 @@ fetch('/questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -6145,6 +6597,8 @@ fetch('/questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -6162,6 +6616,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -6180,7 +6636,9 @@ fetch('/questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -6197,6 +6655,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -6218,6 +6678,8 @@ fetch('/questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -6239,7 +6701,9 @@ fetch('/questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -6258,6 +6722,8 @@ fetch('/questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -6279,6 +6745,8 @@ fetch('/questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -6302,6 +6770,8 @@ fetch('/questions/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -6318,7 +6788,9 @@ fetch('/questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -6342,6 +6814,8 @@ fetch('/questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -6367,6 +6841,8 @@ fetch('/questions/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -6384,6 +6860,8 @@ fetch('/questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -6404,6 +6882,8 @@ fetch('/questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -6418,6 +6898,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -6434,7 +6916,9 @@ fetch('/questions/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -6454,6 +6938,8 @@ fetch('/questions/{id}',
       "score": 0,
       "questionId": "string",
       "followupQuestionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "question": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -6467,6 +6953,8 @@ fetch('/questions/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -6494,6 +6982,8 @@ fetch('/questions/{id}',
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -6505,6 +6995,8 @@ fetch('/questions/{id}',
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -6521,6 +7013,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -6542,6 +7036,8 @@ fetch('/questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -6559,6 +7055,8 @@ fetch('/questions/{id}',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 ],
@@ -6577,7 +7075,9 @@ fetch('/questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               },
@@ -6594,6 +7094,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -6615,6 +7117,8 @@ fetch('/questions/{id}',
                   "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "questions": [
                     {}
                   ],
@@ -6643,6 +7147,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -6664,6 +7170,8 @@ fetch('/questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -6687,6 +7195,8 @@ fetch('/questions/{id}',
                     "userId": "string",
                     "surveyId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {},
                     "surveyCycle": {}
                   }
@@ -6703,7 +7213,9 @@ fetch('/questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -6736,6 +7248,8 @@ fetch('/questions/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -6753,6 +7267,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -6773,6 +7289,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -6787,6 +7305,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -6803,7 +7323,9 @@ fetch('/questions/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -6821,6 +7343,8 @@ fetch('/questions/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -6848,6 +7372,8 @@ fetch('/questions/{id}',
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -6859,6 +7385,8 @@ fetch('/questions/{id}',
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -6875,6 +7403,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -6896,6 +7426,8 @@ fetch('/questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -6913,6 +7445,8 @@ fetch('/questions/{id}',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 ],
@@ -6931,7 +7465,9 @@ fetch('/questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               },
@@ -6948,6 +7484,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -6969,6 +7507,8 @@ fetch('/questions/{id}',
                   "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "questions": [
                     {}
                   ],
@@ -6997,6 +7537,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -7018,6 +7560,8 @@ fetch('/questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -7041,6 +7585,8 @@ fetch('/questions/{id}',
                     "userId": "string",
                     "surveyId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {},
                     "surveyCycle": {}
                   }
@@ -7057,7 +7603,9 @@ fetch('/questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -7090,6 +7638,8 @@ fetch('/questions/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -7107,6 +7657,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -7127,6 +7679,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -7141,6 +7695,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -7157,7 +7713,9 @@ fetch('/questions/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -7178,6 +7736,8 @@ fetch('/questions/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -7201,6 +7761,8 @@ fetch('/questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -7221,6 +7783,8 @@ fetch('/questions/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -7232,6 +7796,8 @@ fetch('/questions/{id}',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -7248,6 +7814,8 @@ fetch('/questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -7269,6 +7837,8 @@ fetch('/questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -7286,6 +7856,8 @@ fetch('/questions/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -7304,7 +7876,9 @@ fetch('/questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -7321,6 +7895,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -7342,6 +7918,8 @@ fetch('/questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -7363,7 +7941,9 @@ fetch('/questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -7382,6 +7962,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -7403,6 +7985,8 @@ fetch('/questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -7426,6 +8010,8 @@ fetch('/questions/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -7442,7 +8028,9 @@ fetch('/questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -7466,6 +8054,8 @@ fetch('/questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -7491,6 +8081,8 @@ fetch('/questions/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -7508,6 +8100,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -7528,6 +8122,8 @@ fetch('/questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -7542,6 +8138,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -7558,7 +8156,9 @@ fetch('/questions/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -7579,6 +8179,8 @@ fetch('/questions/{id}',
     "responseType": "Multi Selection",
     "textAnswer": "string",
     "optionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "surveyResponse": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -7590,6 +8192,8 @@ fetch('/questions/{id}',
       "id": "string",
       "surveyResponderId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponder": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -7606,6 +8210,8 @@ fetch('/questions/{id}',
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -7627,6 +8233,8 @@ fetch('/questions/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -7641,6 +8249,8 @@ fetch('/questions/{id}',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -7664,6 +8274,8 @@ fetch('/questions/{id}',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -7689,6 +8301,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -7707,7 +8321,9 @@ fetch('/questions/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         },
@@ -7724,6 +8340,8 @@ fetch('/questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -7745,6 +8363,8 @@ fetch('/questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -7759,6 +8379,8 @@ fetch('/questions/{id}',
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -7782,6 +8404,8 @@ fetch('/questions/{id}',
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -7811,7 +8435,9 @@ fetch('/questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -7830,6 +8456,8 @@ fetch('/questions/{id}',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -7851,6 +8479,8 @@ fetch('/questions/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -7865,6 +8495,8 @@ fetch('/questions/{id}',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -7888,6 +8520,8 @@ fetch('/questions/{id}',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -7919,6 +8553,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {}
             }
@@ -7935,7 +8571,9 @@ fetch('/questions/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -7957,6 +8595,8 @@ fetch('/questions/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -7980,6 +8620,8 @@ fetch('/questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -8009,6 +8651,8 @@ fetch('/questions/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -8026,6 +8670,8 @@ fetch('/questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -8046,6 +8692,8 @@ fetch('/questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -8060,6 +8708,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -8076,7 +8726,9 @@ fetch('/questions/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -8095,6 +8747,8 @@ fetch('/questions/{id}',
       "score": 0,
       "questionId": "string",
       "followupQuestionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "question": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -8108,6 +8762,8 @@ fetch('/questions/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -8144,6 +8800,8 @@ fetch('/questions/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -8161,6 +8819,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -8181,6 +8841,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -8195,6 +8857,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -8211,7 +8875,9 @@ fetch('/questions/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -8229,6 +8895,8 @@ fetch('/questions/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -8265,6 +8933,8 @@ fetch('/questions/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -8282,6 +8952,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -8302,6 +8974,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -8316,6 +8990,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -8332,7 +9008,9 @@ fetch('/questions/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -8360,6 +9038,8 @@ fetch('/questions/{id}',
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -8374,6 +9054,8 @@ fetch('/questions/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -8397,6 +9079,8 @@ fetch('/questions/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -8419,6 +9103,8 @@ fetch('/questions/{id}',
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -8430,6 +9116,8 @@ fetch('/questions/{id}',
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -8446,6 +9134,8 @@ fetch('/questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -8460,6 +9150,8 @@ fetch('/questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -8476,6 +9168,8 @@ fetch('/questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -8497,6 +9191,8 @@ fetch('/questions/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -8518,6 +9214,8 @@ fetch('/questions/{id}',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -8538,6 +9236,8 @@ fetch('/questions/{id}',
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -8552,6 +9252,8 @@ fetch('/questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -8568,7 +9270,9 @@ fetch('/questions/{id}',
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   }
@@ -8636,8 +9340,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 392   |
-| 396   |
+| 15003   |
+| 15007   |
 
 <h3 id="questioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -8687,7 +9391,9 @@ const inputBody = '{
   "optionId": "string",
   "surveyId": "string",
   "status": "Draft",
-  "name": "string"
+  "name": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -8717,7 +9423,9 @@ const inputBody = {
   "optionId": "string",
   "surveyId": "string",
   "status": "Draft",
-  "name": "string"
+  "name": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -8742,8 +9450,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 391   |
-| 395   |
+| 15002   |
+| 15006   |
 
 > Body parameter
 
@@ -8755,7 +9463,9 @@ fetch('/questions',
   "optionId": "string",
   "surveyId": "string",
   "status": "Draft",
-  "name": "string"
+  "name": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -8783,6 +9493,8 @@ fetch('/questions',
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -8822,6 +9534,8 @@ const inputBody = '{
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -8863,6 +9577,8 @@ const inputBody = {
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -8893,8 +9609,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 390   |
-| 394   |
+| 15001   |
+| 15005   |
 
 > Body parameter
 
@@ -8912,6 +9628,8 @@ fetch('/questions',
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -8999,8 +9717,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 389   |
-| 393   |
+| 15000   |
+| 15004   |
 
 <h3 id="questioncontroller.find-parameters">Parameters</h3>
 
@@ -9027,6 +9745,8 @@ fetch('/questions',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -9050,6 +9770,8 @@ fetch('/questions',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -9072,6 +9794,8 @@ fetch('/questions',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -9083,6 +9807,8 @@ fetch('/questions',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -9099,6 +9825,8 @@ fetch('/questions',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -9120,6 +9848,8 @@ fetch('/questions',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -9137,6 +9867,8 @@ fetch('/questions',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -9155,7 +9887,9 @@ fetch('/questions',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -9172,6 +9906,8 @@ fetch('/questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -9193,6 +9929,8 @@ fetch('/questions',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -9214,7 +9952,9 @@ fetch('/questions',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -9233,6 +9973,8 @@ fetch('/questions',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -9254,6 +9996,8 @@ fetch('/questions',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -9277,6 +10021,8 @@ fetch('/questions',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -9293,7 +10039,9 @@ fetch('/questions',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -9317,6 +10065,8 @@ fetch('/questions',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -9342,6 +10092,8 @@ fetch('/questions',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -9359,6 +10111,8 @@ fetch('/questions',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -9379,6 +10133,8 @@ fetch('/questions',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -9393,6 +10149,8 @@ fetch('/questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -9409,7 +10167,9 @@ fetch('/questions',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -9443,6 +10203,8 @@ Status Code **200**
 |»» name|string|false|none|none|
 |»» status|string|true|none|none|
 |»» questionType|string|true|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» isScoreEnabled|boolean|false|none|none|
 |»» isFollowupEnabled|boolean|false|none|none|
 |»» validation|object|false|none|none|
@@ -9466,6 +10228,8 @@ Status Code **200**
 |»»»» score|number¦null|false|none|none|
 |»»»» questionId|string|false|none|none|
 |»»»» followupQuestionId|string¦null|false|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -9485,6 +10249,8 @@ Status Code **200**
 |»»» responseType|string|true|none|none|
 |»»» textAnswer|string|false|none|none|
 |»»» optionId|string|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -9496,6 +10262,8 @@ Status Code **200**
 |»»»» id|string|false|none|none|
 |»»»» surveyResponderId|string|true|none|none|
 |»»»» surveyCycleId|string|true|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -9512,6 +10280,8 @@ Status Code **200**
 |»»»»» userId|string¦null|false|none|none|
 |»»»»» surveyId|string|false|none|none|
 |»»»»» surveyCycleId|string|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
 |»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -9533,6 +10303,8 @@ Status Code **200**
 |»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»» baseSurveyId|string¦null|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
@@ -9549,6 +10321,8 @@ Status Code **200**
 |»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» SurveyResponderWithRelations|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
@@ -9565,6 +10339,8 @@ Status Code **200**
 |»»»»»»»» name|string|false|none|none|
 |»»»»»»»» displayOrder|number|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -9657,8 +10433,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/count',
 
 | Permissions |
 | ------- |
-| 531   |
-| 532   |
+| 15080   |
+| 15081   |
 
 <h3 id="surveyresponsedetailviewcontroller.count-parameters">Parameters</h3>
 
@@ -9738,8 +10514,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
 
 | Permissions |
 | ------- |
-| 531   |
-| 532   |
+| 15080   |
+| 15081   |
 
 <h3 id="surveyresponsedetailviewcontroller.findbyid-parameters">Parameters</h3>
 
@@ -9769,6 +10545,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
   "responseType": "Multi Selection",
   "textAnswer": "string",
   "optionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "surveyResponse": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -9780,6 +10558,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
     "id": "string",
     "surveyResponderId": "string",
     "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "surveyResponder": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -9796,6 +10576,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "userId": "string",
       "surveyId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -9817,6 +10599,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -9831,6 +10615,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -9854,6 +10640,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -9876,6 +10664,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {},
               "question": {},
               "option": {
@@ -9892,6 +10682,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -9913,6 +10705,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -9931,7 +10725,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       },
@@ -9948,6 +10744,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -9969,6 +10767,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -9983,6 +10783,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -10006,6 +10808,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -10028,6 +10832,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {},
                 "question": {},
                 "option": {
@@ -10044,6 +10850,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -10069,7 +10877,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -10088,6 +10898,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -10109,6 +10921,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -10123,6 +10937,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -10146,6 +10962,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -10168,6 +10986,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {},
               "question": {},
               "option": {
@@ -10184,6 +11004,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -10211,6 +11033,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {}
           }
@@ -10227,7 +11051,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -10248,6 +11074,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {},
         "question": {
           "deleted": true,
@@ -10262,6 +11090,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -10285,6 +11115,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -10314,6 +11146,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -10331,6 +11165,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -10351,6 +11187,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -10365,6 +11203,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -10381,7 +11221,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -10400,6 +11242,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10413,6 +11257,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -10449,6 +11295,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -10466,6 +11314,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -10486,6 +11336,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -10500,6 +11352,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 }
@@ -10516,7 +11370,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -10534,6 +11390,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -10570,6 +11428,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -10587,6 +11447,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -10607,6 +11469,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -10621,6 +11485,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 }
@@ -10637,7 +11503,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -10659,6 +11527,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -10682,6 +11552,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -10704,6 +11576,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -10715,6 +11589,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -10731,6 +11607,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10752,6 +11630,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -10769,6 +11649,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -10787,7 +11669,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -10804,6 +11688,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -10825,6 +11711,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -10846,7 +11734,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -10865,6 +11755,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10886,6 +11778,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -10909,6 +11803,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -10925,7 +11821,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -10949,6 +11847,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -10974,6 +11874,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -10991,6 +11893,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -11011,6 +11915,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -11025,6 +11931,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -11041,7 +11949,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -11060,6 +11970,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
     "score": 0,
     "questionId": "string",
     "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "question": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -11073,6 +11985,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -11102,6 +12016,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -11113,6 +12029,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -11129,6 +12047,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -11150,6 +12070,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -11167,6 +12089,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -11185,7 +12109,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -11202,6 +12128,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -11223,6 +12151,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -11244,7 +12174,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -11263,6 +12195,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -11284,6 +12218,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -11307,6 +12243,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -11323,7 +12261,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -11356,6 +12296,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -11373,6 +12315,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -11393,6 +12337,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -11407,6 +12353,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -11423,7 +12371,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -11441,6 +12391,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -11470,6 +12422,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -11481,6 +12435,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -11497,6 +12453,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -11518,6 +12476,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -11535,6 +12495,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -11553,7 +12515,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -11570,6 +12534,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -11591,6 +12557,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -11612,7 +12580,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -11631,6 +12601,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -11652,6 +12624,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -11675,6 +12649,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -11691,7 +12667,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -11724,6 +12702,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -11741,6 +12721,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -11761,6 +12743,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -11775,6 +12759,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -11791,7 +12777,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -11861,8 +12849,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
 
 | Permissions |
 | ------- |
-| 531   |
-| 532   |
+| 15080   |
+| 15081   |
 
 <h3 id="surveyresponsedetailviewcontroller.find-parameters">Parameters</h3>
 
@@ -11892,6 +12880,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
     "responseType": "Multi Selection",
     "textAnswer": "string",
     "optionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "surveyResponse": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -11903,6 +12893,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
       "id": "string",
       "surveyResponderId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponder": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -11919,6 +12911,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -11940,6 +12934,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -11954,6 +12950,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -11977,6 +12975,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -12002,6 +13002,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -12020,7 +13022,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         },
@@ -12037,6 +13041,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -12058,6 +13064,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -12072,6 +13080,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -12095,6 +13105,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -12124,7 +13136,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -12143,6 +13157,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -12164,6 +13180,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -12178,6 +13196,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -12201,6 +13221,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -12232,6 +13254,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {}
             }
@@ -12248,7 +13272,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -12270,6 +13296,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -12293,6 +13321,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -12322,6 +13352,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -12339,6 +13371,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -12359,6 +13393,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -12373,6 +13409,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -12389,7 +13427,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -12408,6 +13448,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
       "score": 0,
       "questionId": "string",
       "followupQuestionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "question": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -12421,6 +13463,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -12457,6 +13501,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -12474,6 +13520,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -12494,6 +13542,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -12508,6 +13558,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -12524,7 +13576,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -12542,6 +13596,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -12578,6 +13634,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -12595,6 +13653,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -12615,6 +13675,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -12629,6 +13691,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -12645,7 +13709,9 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -12683,6 +13749,8 @@ Status Code **200**
 |»» responseType|string|true|none|none|
 |»» textAnswer|string|false|none|none|
 |»» optionId|string|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -12694,6 +13762,8 @@ Status Code **200**
 |»»» id|string|false|none|none|
 |»»» surveyResponderId|string|true|none|none|
 |»»» surveyCycleId|string|true|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -12710,6 +13780,8 @@ Status Code **200**
 |»»»» userId|string¦null|false|none|none|
 |»»»» surveyId|string|false|none|none|
 |»»»» surveyCycleId|string|false|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -12731,6 +13803,8 @@ Status Code **200**
 |»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»» baseSurveyId|string¦null|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
@@ -12745,6 +13819,8 @@ Status Code **200**
 |»»»»»»» name|string|false|none|none|
 |»»»»»»» status|string|true|none|none|
 |»»»»»»» questionType|string|true|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» isScoreEnabled|boolean|false|none|none|
 |»»»»»»» isFollowupEnabled|boolean|false|none|none|
 |»»»»»»» validation|object|false|none|none|
@@ -12768,6 +13844,8 @@ Status Code **200**
 |»»»»»»»»» score|number¦null|false|none|none|
 |»»»»»»»»» questionId|string|false|none|none|
 |»»»»»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -12788,6 +13866,8 @@ Status Code **200**
 |»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»» surveyId|string|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» SurveyResponderWithRelations|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
@@ -12804,6 +13884,8 @@ Status Code **200**
 |»»»»»»» name|string|false|none|none|
 |»»»»»»» displayOrder|number|false|none|none|
 |»»»»»»» surveyId|string|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -12895,8 +13977,8 @@ fetch('/surveys/count',
 
 | Permissions |
 | ------- |
-| 458   |
-| 462   |
+| 15033   |
+| 15037   |
 
 <h3 id="surveycontroller.count-parameters">Parameters</h3>
 
@@ -12952,6 +14034,8 @@ const inputBody = '{
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }';
@@ -12997,6 +14081,8 @@ const inputBody = {
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 };
@@ -13023,8 +14109,8 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 463   |
-| 459   |
+| 15038   |
+| 15034   |
 
 > Body parameter
 
@@ -13050,6 +14136,8 @@ fetch('/surveys/{id}',
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }
@@ -13141,9 +14229,9 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 462   |
-| 458   |
-| 533   |
+| 15037   |
+| 15033   |
+| 15040   |
 
 <h3 id="surveycontroller.findbyid-parameters">Parameters</h3>
 
@@ -13178,6 +14266,8 @@ fetch('/surveys/{id}',
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "questions": [
     {
       "deleted": true,
@@ -13192,6 +14282,8 @@ fetch('/surveys/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -13215,6 +14307,8 @@ fetch('/surveys/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -13237,6 +14331,8 @@ fetch('/surveys/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -13248,6 +14344,8 @@ fetch('/surveys/{id}',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -13264,6 +14362,8 @@ fetch('/surveys/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -13285,6 +14385,8 @@ fetch('/surveys/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [],
               "surveyCycles": [
                 {
@@ -13300,6 +14402,8 @@ fetch('/surveys/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -13318,7 +14422,9 @@ fetch('/surveys/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -13335,6 +14441,8 @@ fetch('/surveys/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -13356,6 +14464,8 @@ fetch('/surveys/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [],
                 "surveyCycles": [
                   {}
@@ -13375,7 +14485,9 @@ fetch('/surveys/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -13394,6 +14506,8 @@ fetch('/surveys/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -13415,6 +14529,8 @@ fetch('/surveys/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [],
               "surveyCycles": [
                 {}
@@ -13436,6 +14552,8 @@ fetch('/surveys/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -13452,7 +14570,9 @@ fetch('/surveys/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -13476,6 +14596,8 @@ fetch('/surveys/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -13501,6 +14623,8 @@ fetch('/surveys/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [],
         "surveyCycles": [
           {
@@ -13516,6 +14640,8 @@ fetch('/surveys/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -13536,6 +14662,8 @@ fetch('/surveys/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -13550,6 +14678,8 @@ fetch('/surveys/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -13566,7 +14696,9 @@ fetch('/surveys/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -13586,6 +14718,8 @@ fetch('/surveys/{id}',
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -13607,6 +14741,8 @@ fetch('/surveys/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -13621,6 +14757,8 @@ fetch('/surveys/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -13644,6 +14782,8 @@ fetch('/surveys/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -13666,6 +14806,8 @@ fetch('/surveys/{id}',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -13677,6 +14819,8 @@ fetch('/surveys/{id}',
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -13693,6 +14837,8 @@ fetch('/surveys/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 },
@@ -13716,6 +14862,8 @@ fetch('/surveys/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -13741,6 +14889,8 @@ fetch('/surveys/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {}
           }
@@ -13757,7 +14907,9 @@ fetch('/surveys/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -13780,6 +14932,8 @@ fetch('/surveys/{id}',
       "userId": "string",
       "surveyId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -13801,6 +14955,8 @@ fetch('/surveys/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -13815,6 +14971,8 @@ fetch('/surveys/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -13838,6 +14996,8 @@ fetch('/surveys/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -13860,6 +15020,8 @@ fetch('/surveys/{id}',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -13871,6 +15033,8 @@ fetch('/surveys/{id}',
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -13885,6 +15049,8 @@ fetch('/surveys/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 },
                 "surveyResponseDetails": [
@@ -13906,6 +15072,8 @@ fetch('/surveys/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -13927,6 +15095,8 @@ fetch('/surveys/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -13943,7 +15113,9 @@ fetch('/surveys/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       },
@@ -13960,6 +15132,8 @@ fetch('/surveys/{id}',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -13981,6 +15155,8 @@ fetch('/surveys/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -13995,6 +15171,8 @@ fetch('/surveys/{id}',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -14018,6 +15196,8 @@ fetch('/surveys/{id}',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -14040,6 +15220,8 @@ fetch('/surveys/{id}',
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -14051,6 +15233,8 @@ fetch('/surveys/{id}',
                   "id": "string",
                   "surveyResponderId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "surveyResponder": {},
                   "surveyCycle": {},
                   "surveyResponseDetails": [
@@ -14072,6 +15256,8 @@ fetch('/surveys/{id}',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -14095,7 +15281,9 @@ fetch('/surveys/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -14114,7 +15302,9 @@ fetch('/surveys/{id}',
       "id": "string",
       "name": "string",
       "displayOrder": 0,
-      "surveyId": "string"
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
     }
   ]
 }
@@ -14181,8 +15371,8 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 460   |
-| 464   |
+| 15035   |
+| 15039   |
 
 <h3 id="surveycontroller.deletebyid-parameters">Parameters</h3>
 
@@ -14245,6 +15435,8 @@ const inputBody = '{
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }';
@@ -14289,6 +15481,8 @@ const inputBody = {
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 };
@@ -14315,8 +15509,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 457   |
-| 461   |
+| 15032   |
+| 15036   |
 
 > Body parameter
 
@@ -14341,6 +15535,8 @@ fetch('/surveys',
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }
@@ -14377,7 +15573,9 @@ fetch('/surveys',
   "recurrenceEndDate": "string",
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
-  "baseSurveyId": "string"
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -14418,7 +15616,9 @@ const inputBody = '{
   "recurrenceEndDate": "string",
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
-  "baseSurveyId": "string"
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -14461,7 +15661,9 @@ const inputBody = {
   "recurrenceEndDate": "string",
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
-  "baseSurveyId": "string"
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -14486,8 +15688,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 463   |
-| 459   |
+| 15038   |
+| 15034   |
 
 > Body parameter
 
@@ -14512,7 +15714,9 @@ fetch('/surveys',
   "recurrenceEndDate": "string",
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
-  "baseSurveyId": "string"
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -14594,8 +15798,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 458   |
-| 462   |
+| 15033   |
+| 15037   |
 
 <h3 id="surveycontroller.find-parameters">Parameters</h3>
 
@@ -14630,6 +15834,8 @@ fetch('/surveys',
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "createdByName": "string",
     "existingTemplateId": "string",
     "questions": [
@@ -14646,6 +15852,8 @@ fetch('/surveys',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -14669,6 +15877,8 @@ fetch('/surveys',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -14691,6 +15901,8 @@ fetch('/surveys',
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -14702,6 +15914,8 @@ fetch('/surveys',
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -14718,6 +15932,8 @@ fetch('/surveys',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -14739,6 +15955,8 @@ fetch('/surveys',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -14756,6 +15974,8 @@ fetch('/surveys',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 ],
@@ -14774,7 +15994,9 @@ fetch('/surveys',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               },
@@ -14791,6 +16013,8 @@ fetch('/surveys',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -14812,6 +16036,8 @@ fetch('/surveys',
                   "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "questions": [
                     {}
                   ],
@@ -14840,6 +16066,8 @@ fetch('/surveys',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -14861,6 +16089,8 @@ fetch('/surveys',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -14884,6 +16114,8 @@ fetch('/surveys',
                     "userId": "string",
                     "surveyId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {},
                     "surveyCycle": {}
                   }
@@ -14900,7 +16132,9 @@ fetch('/surveys',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -14924,6 +16158,8 @@ fetch('/surveys',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -14949,6 +16185,8 @@ fetch('/surveys',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -14966,6 +16204,8 @@ fetch('/surveys',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -14986,6 +16226,8 @@ fetch('/surveys',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -15000,6 +16242,8 @@ fetch('/surveys',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -15016,7 +16260,9 @@ fetch('/surveys',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -15036,6 +16282,8 @@ fetch('/surveys',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -15057,6 +16305,8 @@ fetch('/surveys',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -15071,6 +16321,8 @@ fetch('/surveys',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -15094,6 +16346,8 @@ fetch('/surveys',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -15116,6 +16370,8 @@ fetch('/surveys',
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -15127,6 +16383,8 @@ fetch('/surveys',
                   "id": "string",
                   "surveyResponderId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "surveyResponder": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -15143,6 +16401,8 @@ fetch('/surveys',
                     "userId": "string",
                     "surveyId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {},
                     "surveyCycle": {}
                   },
@@ -15166,6 +16426,8 @@ fetch('/surveys',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -15193,6 +16455,8 @@ fetch('/surveys',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {}
             }
@@ -15209,7 +16473,9 @@ fetch('/surveys',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -15232,6 +16498,8 @@ fetch('/surveys',
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -15253,6 +16521,8 @@ fetch('/surveys',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -15267,6 +16537,8 @@ fetch('/surveys',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -15290,6 +16562,8 @@ fetch('/surveys',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -15312,6 +16586,8 @@ fetch('/surveys',
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -15323,6 +16599,8 @@ fetch('/surveys',
                   "id": "string",
                   "surveyResponderId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "surveyResponder": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -15337,6 +16615,8 @@ fetch('/surveys',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   },
                   "surveyResponseDetails": [
@@ -15358,6 +16638,8 @@ fetch('/surveys',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -15379,6 +16661,8 @@ fetch('/surveys',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -15397,7 +16681,9 @@ fetch('/surveys',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         },
@@ -15414,6 +16700,8 @@ fetch('/surveys',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -15435,6 +16723,8 @@ fetch('/surveys',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -15449,6 +16739,8 @@ fetch('/surveys',
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -15472,6 +16764,8 @@ fetch('/surveys',
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -15494,6 +16788,8 @@ fetch('/surveys',
                   "responseType": "Multi Selection",
                   "textAnswer": "string",
                   "optionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "surveyResponse": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -15505,6 +16801,8 @@ fetch('/surveys',
                     "id": "string",
                     "surveyResponderId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "surveyResponder": {},
                     "surveyCycle": {},
                     "surveyResponseDetails": []
@@ -15524,6 +16822,8 @@ fetch('/surveys',
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -15549,7 +16849,9 @@ fetch('/surveys',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -15568,7 +16870,9 @@ fetch('/surveys',
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   }
@@ -15609,6 +16913,8 @@ Status Code **200**
 |»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»» isEnableWeights|boolean|false|none|none|
 |»» baseSurveyId|string¦null|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» createdByName|string|false|none|none|
 |»» existingTemplateId|string|false|none|none|
 |»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|[(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })]|
@@ -15625,6 +16931,8 @@ Status Code **200**
 |»»»» name|string|false|none|none|
 |»»»» status|string|true|none|none|
 |»»»» questionType|string|true|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» isScoreEnabled|boolean|false|none|none|
 |»»»» isFollowupEnabled|boolean|false|none|none|
 |»»»» validation|object|false|none|none|
@@ -15648,6 +16956,8 @@ Status Code **200**
 |»»»»»» score|number¦null|false|none|none|
 |»»»»»» questionId|string|false|none|none|
 |»»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -15667,6 +16977,8 @@ Status Code **200**
 |»»»»» responseType|string|true|none|none|
 |»»»»» textAnswer|string|false|none|none|
 |»»»»» optionId|string|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
 |»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -15678,6 +16990,8 @@ Status Code **200**
 |»»»»»» id|string|false|none|none|
 |»»»»»» surveyResponderId|string|true|none|none|
 |»»»»»» surveyCycleId|string|true|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -15694,6 +17008,8 @@ Status Code **200**
 |»»»»»»» userId|string¦null|false|none|none|
 |»»»»»»» surveyId|string|false|none|none|
 |»»»»»»» surveyCycleId|string|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -15715,6 +17031,8 @@ Status Code **200**
 |»»»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»»»» baseSurveyId|string¦null|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
@@ -15731,6 +17049,8 @@ Status Code **200**
 |»»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»»» SurveyResponderWithRelations|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
@@ -15747,6 +17067,8 @@ Status Code **200**
 |»»»»»»»»»» name|string|false|none|none|
 |»»»»»»»»»» displayOrder|number|false|none|none|
 |»»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -15850,8 +17172,8 @@ fetch('/surveys/{surveyId}/sections/count',
 
 | Permissions |
 | ------- |
-| 491   |
-| 495   |
+| 15046   |
+| 15050   |
 
 <h3 id="sectioncontroller.count-parameters">Parameters</h3>
 
@@ -15897,7 +17219,9 @@ const inputBody = '{
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -15931,7 +17255,9 @@ const inputBody = {
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -15956,8 +17282,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 496   |
-| 492   |
+| 15051   |
+| 15047   |
 
 > Body parameter
 
@@ -15973,7 +17299,9 @@ fetch('/surveys/{surveyId}/sections/{id}',
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -16064,8 +17392,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 495   |
-| 491   |
+| 15050   |
+| 15046   |
 
 <h3 id="sectioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -16091,7 +17419,9 @@ fetch('/surveys/{surveyId}/sections/{id}',
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -16156,8 +17486,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 493   |
-| 497   |
+| 15048   |
+| 15052   |
 
 <h3 id="sectioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -16211,7 +17541,9 @@ const inputBody = '{
   "modifiedBy": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -16244,7 +17576,9 @@ const inputBody = {
   "modifiedBy": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -16269,8 +17603,8 @@ fetch('/surveys/{surveyId}/sections',
 
 | Permissions |
 | ------- |
-| 490   |
-| 494   |
+| 15045   |
+| 15049   |
 
 > Body parameter
 
@@ -16285,7 +17619,9 @@ fetch('/surveys/{surveyId}/sections',
   "modifiedBy": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -16312,7 +17648,9 @@ fetch('/surveys/{surveyId}/sections',
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -16377,9 +17715,9 @@ fetch('/surveys/{surveyId}/sections',
 
 | Permissions |
 | ------- |
-| 491   |
-| 495   |
-| 535   |
+| 15046   |
+| 15050   |
+| 15042   |
 
 <h3 id="sectioncontroller.find-parameters">Parameters</h3>
 
@@ -16405,7 +17743,9 @@ fetch('/surveys/{surveyId}/sections',
     "id": "string",
     "name": "string",
     "displayOrder": 0,
-    "surveyId": "string"
+    "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 ]
 ```
@@ -16435,6 +17775,8 @@ Status Code **200**
 |»» name|string|false|none|none|
 |»» displayOrder|number|false|none|none|
 |»» surveyId|string|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 
 <aside class="success">
 This operation does not require authentication
@@ -16493,8 +17835,8 @@ fetch('/surveys/{surveyId}/survey-cycles/count',
 
 | Permissions |
 | ------- |
-| 474   |
-| 478   |
+| 15054   |
+| 15058   |
 
 <h3 id="surveycyclecontroller.count-parameters">Parameters</h3>
 
@@ -16542,7 +17884,9 @@ const inputBody = '{
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -16577,7 +17921,9 @@ const inputBody = {
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -16602,8 +17948,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 479   |
-| 475   |
+| 15059   |
+| 15055   |
 
 > Body parameter
 
@@ -16620,7 +17966,9 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -16711,8 +18059,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 478   |
-| 474   |
+| 15058   |
+| 15054   |
 
 <h3 id="surveycyclecontroller.findbyid-parameters">Parameters</h3>
 
@@ -16740,6 +18088,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
   "endDate": "string",
   "isActivated": true,
   "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "survey": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -16761,6 +18111,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -16775,6 +18127,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -16798,6 +18152,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -16820,6 +18176,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -16831,6 +18189,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -16847,6 +18207,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -16861,6 +18223,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -16877,6 +18241,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -16898,6 +18264,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -16919,6 +18287,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -16939,6 +18309,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -16953,6 +18325,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -16969,7 +18343,9 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   }
@@ -17037,8 +18413,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 476   |
-| 480   |
+| 15056   |
+| 15060   |
 
 <h3 id="surveycyclecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -17093,7 +18469,9 @@ const inputBody = '{
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -17127,7 +18505,9 @@ const inputBody = {
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -17152,8 +18532,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 473   |
-| 477   |
+| 15053   |
+| 15057   |
 
 > Body parameter
 
@@ -17169,7 +18549,9 @@ fetch('/surveys/{surveyId}/survey-cycles',
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -17197,7 +18579,9 @@ fetch('/surveys/{surveyId}/survey-cycles',
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -17230,7 +18614,9 @@ const inputBody = '{
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -17265,7 +18651,9 @@ const inputBody = {
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -17290,8 +18678,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 479   |
-| 475   |
+| 15059   |
+| 15055   |
 
 > Body parameter
 
@@ -17308,7 +18696,9 @@ fetch('/surveys/{surveyId}/survey-cycles',
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -17391,8 +18781,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 474   |
-| 478   |
+| 15054   |
+| 15058   |
 
 <h3 id="surveycyclecontroller.find-parameters">Parameters</h3>
 
@@ -17420,6 +18810,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
     "endDate": "string",
     "isActivated": true,
     "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -17441,6 +18833,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -17455,6 +18849,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -17478,6 +18874,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -17500,6 +18898,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -17511,6 +18911,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -17527,6 +18929,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               },
@@ -17550,6 +18954,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -17577,6 +18983,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {}
         }
@@ -17593,7 +19001,9 @@ fetch('/surveys/{surveyId}/survey-cycles',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -17627,6 +19037,8 @@ Status Code **200**
 |»» endDate|string|true|none|End date of the first survey cycle|
 |»» isActivated|boolean|false|none|none|
 |»» surveyId|string|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -17648,6 +19060,8 @@ Status Code **200**
 |»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»» isEnableWeights|boolean|false|none|none|
 |»»» baseSurveyId|string¦null|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
@@ -17662,6 +19076,8 @@ Status Code **200**
 |»»»»» name|string|false|none|none|
 |»»»»» status|string|true|none|none|
 |»»»»» questionType|string|true|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» isScoreEnabled|boolean|false|none|none|
 |»»»»» isFollowupEnabled|boolean|false|none|none|
 |»»»»» validation|object|false|none|none|
@@ -17685,6 +19101,8 @@ Status Code **200**
 |»»»»»»» score|number¦null|false|none|none|
 |»»»»»»» questionId|string|false|none|none|
 |»»»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -17704,6 +19122,8 @@ Status Code **200**
 |»»»»»» responseType|string|true|none|none|
 |»»»»»» textAnswer|string|false|none|none|
 |»»»»»» optionId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -17715,6 +19135,8 @@ Status Code **200**
 |»»»»»»» id|string|false|none|none|
 |»»»»»»» surveyResponderId|string|true|none|none|
 |»»»»»»» surveyCycleId|string|true|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -17731,6 +19153,8 @@ Status Code **200**
 |»»»»»»»» userId|string¦null|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»» surveyCycleId|string|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
@@ -17756,6 +19180,8 @@ Status Code **200**
 |»»»»» name|string|false|none|none|
 |»»»»» displayOrder|number|false|none|none|
 |»»»»» surveyId|string|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 
 #### Enumerated Values
 
@@ -17841,8 +19267,8 @@ fetch('/surveys/{surveyId}/survey-questions/count',
 
 | Permissions |
 | ------- |
-| 466   |
-| 470   |
+| 15083   |
+| 15087   |
 
 <h3 id="surveyquestioncontroller.count-parameters">Parameters</h3>
 
@@ -17893,7 +19319,9 @@ const inputBody = '{
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -17931,7 +19359,9 @@ const inputBody = {
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -17956,8 +19386,8 @@ fetch('/surveys/{surveyId}/survey-questions/reorder',
 
 | Permissions |
 | ------- |
-| 471   |
-| 467   |
+| 15088   |
+| 15084   |
 
 > Body parameter
 
@@ -17977,7 +19407,9 @@ fetch('/surveys/{surveyId}/survey-questions/reorder',
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -18021,7 +19453,9 @@ const inputBody = '{
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -18059,7 +19493,9 @@ const inputBody = {
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -18084,8 +19520,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 471   |
-| 467   |
+| 15088   |
+| 15084   |
 
 > Body parameter
 
@@ -18105,7 +19541,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -18196,8 +19634,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 470   |
-| 466   |
+| 15087   |
+| 15083   |
 
 <h3 id="surveyquestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -18228,6 +19666,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "dependentOnQuestion": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -18244,6 +19684,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
     "surveyId": "string",
     "questionId": "string",
     "sectionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "dependentOnQuestion": {},
     "survey": {
       "deleted": true,
@@ -18266,6 +19708,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -18280,6 +19724,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -18303,6 +19749,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -18325,6 +19773,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -18336,6 +19786,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -18352,6 +19804,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -18366,6 +19820,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               },
@@ -18382,6 +19838,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               },
               "surveyResponseDetails": [
@@ -18403,6 +19861,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -18424,6 +19884,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -18444,6 +19906,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -18458,6 +19922,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -18474,7 +19940,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     },
@@ -18491,6 +19959,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -18514,6 +19984,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -18536,6 +20008,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -18547,6 +20021,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18563,6 +20039,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -18584,6 +20062,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -18601,6 +20081,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -18619,7 +20101,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -18636,6 +20120,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -18657,6 +20143,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -18678,7 +20166,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -18697,6 +20187,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -18718,6 +20210,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -18741,6 +20235,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -18757,7 +20253,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -18781,6 +20279,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -18806,6 +20306,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -18823,6 +20325,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -18843,6 +20347,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -18857,6 +20363,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -18873,7 +20381,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -18889,7 +20399,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "id": "string",
       "name": "string",
       "displayOrder": 0,
-      "surveyId": "string"
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
     }
   },
   "survey": {
@@ -18913,6 +20425,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -18927,6 +20441,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -18950,6 +20466,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -18972,6 +20490,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18983,6 +20503,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -18999,6 +20521,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -19013,6 +20537,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -19029,6 +20555,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -19050,6 +20578,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -19071,6 +20601,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -19091,6 +20623,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -19105,6 +20639,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -19121,7 +20657,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   },
@@ -19138,6 +20676,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -19161,6 +20701,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -19183,6 +20725,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -19194,6 +20738,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -19210,6 +20756,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -19231,6 +20779,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -19248,6 +20798,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -19266,7 +20818,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -19283,6 +20837,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -19304,6 +20860,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -19325,7 +20883,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -19344,6 +20904,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -19365,6 +20927,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -19388,6 +20952,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -19404,7 +20970,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -19428,6 +20996,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -19453,6 +21023,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -19470,6 +21042,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -19490,6 +21064,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -19504,6 +21080,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -19520,7 +21098,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -19536,7 +21116,9 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
     "id": "string",
     "name": "string",
     "displayOrder": 0,
-    "surveyId": "string"
+    "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 }
 ```
@@ -19602,8 +21184,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 468   |
-| 472   |
+| 15085   |
+| 15089   |
 
 <h3 id="surveyquestioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -19662,6 +21244,8 @@ const inputBody = '{
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "isPredefined": true
 }';
 const headers = {
@@ -19700,6 +21284,8 @@ const inputBody = {
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "isPredefined": true
 };
 const headers = {
@@ -19725,8 +21311,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 465   |
-| 469   |
+| 15082   |
+| 15086   |
 
 > Body parameter
 
@@ -19746,6 +21332,8 @@ fetch('/surveys/{surveyId}/survey-questions',
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "isPredefined": true
 }
 ```
@@ -19778,6 +21366,8 @@ fetch('/surveys/{surveyId}/survey-questions',
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "isPredefined": true
 }
 ```
@@ -19814,7 +21404,9 @@ const inputBody = '{
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -19852,7 +21444,9 @@ const inputBody = {
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -19877,8 +21471,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 471   |
-| 467   |
+| 15088   |
+| 15084   |
 
 > Body parameter
 
@@ -19898,7 +21492,9 @@ fetch('/surveys/{surveyId}/survey-questions',
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -19981,8 +21577,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 466   |
-| 470   |
+| 15083   |
+| 15087   |
 
 <h3 id="surveyquestioncontroller.find-parameters">Parameters</h3>
 
@@ -20013,6 +21609,8 @@ fetch('/surveys/{surveyId}/survey-questions',
     "surveyId": "string",
     "questionId": "string",
     "sectionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "dependentOnQuestion": {},
     "survey": {
       "deleted": true,
@@ -20035,6 +21633,8 @@ fetch('/surveys/{surveyId}/survey-questions',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -20049,6 +21649,8 @@ fetch('/surveys/{surveyId}/survey-questions',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -20072,6 +21674,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -20094,6 +21698,8 @@ fetch('/surveys/{surveyId}/survey-questions',
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -20105,6 +21711,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20121,6 +21729,8 @@ fetch('/surveys/{surveyId}/survey-questions',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -20135,6 +21745,8 @@ fetch('/surveys/{surveyId}/survey-questions',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               },
@@ -20151,6 +21763,8 @@ fetch('/surveys/{surveyId}/survey-questions',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               },
               "surveyResponseDetails": [
@@ -20172,6 +21786,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -20193,6 +21809,8 @@ fetch('/surveys/{surveyId}/survey-questions',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -20213,6 +21831,8 @@ fetch('/surveys/{surveyId}/survey-questions',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -20227,6 +21847,8 @@ fetch('/surveys/{surveyId}/survey-questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -20243,7 +21865,9 @@ fetch('/surveys/{surveyId}/survey-questions',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     },
@@ -20260,6 +21884,8 @@ fetch('/surveys/{surveyId}/survey-questions',
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -20283,6 +21909,8 @@ fetch('/surveys/{surveyId}/survey-questions',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -20305,6 +21933,8 @@ fetch('/surveys/{surveyId}/survey-questions',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -20316,6 +21946,8 @@ fetch('/surveys/{surveyId}/survey-questions',
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -20332,6 +21964,8 @@ fetch('/surveys/{surveyId}/survey-questions',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -20353,6 +21987,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -20370,6 +22006,8 @@ fetch('/surveys/{surveyId}/survey-questions',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -20388,7 +22026,9 @@ fetch('/surveys/{surveyId}/survey-questions',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -20405,6 +22045,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20426,6 +22068,8 @@ fetch('/surveys/{surveyId}/survey-questions',
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -20447,7 +22091,9 @@ fetch('/surveys/{surveyId}/survey-questions',
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -20466,6 +22112,8 @@ fetch('/surveys/{surveyId}/survey-questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -20487,6 +22135,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -20510,6 +22160,8 @@ fetch('/surveys/{surveyId}/survey-questions',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -20526,7 +22178,9 @@ fetch('/surveys/{surveyId}/survey-questions',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -20550,6 +22204,8 @@ fetch('/surveys/{surveyId}/survey-questions',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -20575,6 +22231,8 @@ fetch('/surveys/{surveyId}/survey-questions',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -20592,6 +22250,8 @@ fetch('/surveys/{surveyId}/survey-questions',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -20612,6 +22272,8 @@ fetch('/surveys/{surveyId}/survey-questions',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -20626,6 +22288,8 @@ fetch('/surveys/{surveyId}/survey-questions',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -20642,7 +22306,9 @@ fetch('/surveys/{surveyId}/survey-questions',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -20658,7 +22324,9 @@ fetch('/surveys/{surveyId}/survey-questions',
       "id": "string",
       "name": "string",
       "displayOrder": 0,
-      "surveyId": "string"
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
     }
   }
 ]
@@ -20693,6 +22361,8 @@ Status Code **200**
 |»» surveyId|string|false|none|none|
 |»» questionId|string|false|none|none|
 |»» sectionId|string|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» dependentOnQuestion|[SurveyQuestionWithRelations](#schemasurveyquestionwithrelations)|false|none|(tsType: SurveyQuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
@@ -20715,6 +22385,8 @@ Status Code **200**
 |»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»» isEnableWeights|boolean|false|none|none|
 |»»» baseSurveyId|string¦null|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
@@ -20729,6 +22401,8 @@ Status Code **200**
 |»»»»» name|string|false|none|none|
 |»»»»» status|string|true|none|none|
 |»»»»» questionType|string|true|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» isScoreEnabled|boolean|false|none|none|
 |»»»»» isFollowupEnabled|boolean|false|none|none|
 |»»»»» validation|object|false|none|none|
@@ -20752,6 +22426,8 @@ Status Code **200**
 |»»»»»»» score|number¦null|false|none|none|
 |»»»»»»» questionId|string|false|none|none|
 |»»»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -20771,6 +22447,8 @@ Status Code **200**
 |»»»»»» responseType|string|true|none|none|
 |»»»»»» textAnswer|string|false|none|none|
 |»»»»»» optionId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -20782,6 +22460,8 @@ Status Code **200**
 |»»»»»»» id|string|false|none|none|
 |»»»»»»» surveyResponderId|string|true|none|none|
 |»»»»»»» surveyCycleId|string|true|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -20798,6 +22478,8 @@ Status Code **200**
 |»»»»»»»» userId|string¦null|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»» surveyCycleId|string|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»»» deleted|boolean|false|none|none|
@@ -20812,6 +22494,8 @@ Status Code **200**
 |»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»»» extId|string|false|none|none|
+|»»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -20836,6 +22520,8 @@ Status Code **200**
 |»»»»» name|string|false|none|none|
 |»»»»» displayOrder|number|false|none|none|
 |»»»»» surveyId|string|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»» section|[SectionWithRelations](#schemasectionwithrelations)|false|none|(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })|
 
@@ -20923,8 +22609,8 @@ fetch('/surveys/{surveyId}/survey-responders/count',
 
 | Permissions |
 | ------- |
-| 483   |
-| 487   |
+| 15062   |
+| 15066   |
 
 <h3 id="surveyrespondercontroller.count-parameters">Parameters</h3>
 
@@ -21014,7 +22700,7 @@ fetch('/surveys/{surveyId}/survey-responders/reminder',
 
 | Permissions |
 | ------- |
-| 527   |
+| 15069   |
 
 > Body parameter
 
@@ -21083,7 +22769,9 @@ const inputBody = '{
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -21121,7 +22809,9 @@ const inputBody = {
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -21146,8 +22836,8 @@ fetch('/surveys/{surveyId}/survey-responders/{id}',
 
 | Permissions |
 | ------- |
-| 488   |
-| 484   |
+| 15067   |
+| 15063   |
 
 > Body parameter
 
@@ -21167,7 +22857,9 @@ fetch('/surveys/{surveyId}/survey-responders/{id}',
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -21224,7 +22916,9 @@ const inputBody = '{
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -21261,7 +22955,9 @@ const inputBody = {
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -21286,8 +22982,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 482   |
-| 486   |
+| 15061   |
+| 15065   |
 
 > Body parameter
 
@@ -21306,7 +23002,9 @@ fetch('/surveys/{surveyId}/survey-responders',
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -21337,7 +23035,9 @@ fetch('/surveys/{surveyId}/survey-responders',
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -21373,7 +23073,9 @@ const inputBody = '{
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -21411,7 +23113,9 @@ const inputBody = {
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -21436,8 +23140,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 488   |
-| 484   |
+| 15067   |
+| 15063   |
 
 > Body parameter
 
@@ -21457,7 +23161,9 @@ fetch('/surveys/{surveyId}/survey-responders',
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -21543,8 +23249,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 483   |
-| 487   |
+| 15062   |
+| 15066   |
 
 <h3 id="surveyrespondercontroller.find-parameters">Parameters</h3>
 
@@ -21575,6 +23281,8 @@ fetch('/surveys/{surveyId}/survey-responders',
     "userId": "string",
     "surveyId": "string",
     "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -21596,6 +23304,8 @@ fetch('/surveys/{surveyId}/survey-responders',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -21610,6 +23320,8 @@ fetch('/surveys/{surveyId}/survey-responders',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -21633,6 +23345,8 @@ fetch('/surveys/{surveyId}/survey-responders',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -21655,6 +23369,8 @@ fetch('/surveys/{surveyId}/survey-responders',
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -21666,6 +23382,8 @@ fetch('/surveys/{surveyId}/survey-responders',
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {},
               "surveyCycle": {
                 "deleted": true,
@@ -21680,6 +23398,8 @@ fetch('/surveys/{surveyId}/survey-responders',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               },
               "surveyResponseDetails": [
@@ -21701,6 +23421,8 @@ fetch('/surveys/{surveyId}/survey-responders',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -21722,6 +23444,8 @@ fetch('/surveys/{surveyId}/survey-responders',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -21740,7 +23464,9 @@ fetch('/surveys/{surveyId}/survey-responders',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     },
@@ -21757,6 +23483,8 @@ fetch('/surveys/{surveyId}/survey-responders',
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -21778,6 +23506,8 @@ fetch('/surveys/{surveyId}/survey-responders',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -21792,6 +23522,8 @@ fetch('/surveys/{surveyId}/survey-responders',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -21815,6 +23547,8 @@ fetch('/surveys/{surveyId}/survey-responders',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -21837,6 +23571,8 @@ fetch('/surveys/{surveyId}/survey-responders',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21848,6 +23584,8 @@ fetch('/surveys/{surveyId}/survey-responders',
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {},
                 "surveyCycle": {},
                 "surveyResponseDetails": [
@@ -21869,6 +23607,8 @@ fetch('/surveys/{surveyId}/survey-responders',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -21894,7 +23634,9 @@ fetch('/surveys/{surveyId}/survey-responders',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -21932,6 +23674,8 @@ Status Code **200**
 |»» userId|string¦null|false|none|none|
 |»» surveyId|string|false|none|none|
 |»» surveyCycleId|string|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -21953,6 +23697,8 @@ Status Code **200**
 |»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»» isEnableWeights|boolean|false|none|none|
 |»»» baseSurveyId|string¦null|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
@@ -21967,6 +23713,8 @@ Status Code **200**
 |»»»»» name|string|false|none|none|
 |»»»»» status|string|true|none|none|
 |»»»»» questionType|string|true|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»»»»» isScoreEnabled|boolean|false|none|none|
 |»»»»» isFollowupEnabled|boolean|false|none|none|
 |»»»»» validation|object|false|none|none|
@@ -21990,6 +23738,8 @@ Status Code **200**
 |»»»»»»» score|number¦null|false|none|none|
 |»»»»»»» questionId|string|false|none|none|
 |»»»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -22009,6 +23759,8 @@ Status Code **200**
 |»»»»»» responseType|string|true|none|none|
 |»»»»»» textAnswer|string|false|none|none|
 |»»»»»» optionId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -22020,6 +23772,8 @@ Status Code **200**
 |»»»»»»» id|string|false|none|none|
 |»»»»»»» surveyResponderId|string|true|none|none|
 |»»»»»»» surveyCycleId|string|true|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» deleted|boolean|false|none|none|
@@ -22034,6 +23788,8 @@ Status Code **200**
 |»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» SurveyResponseDetailWithRelations|[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -22057,6 +23813,8 @@ Status Code **200**
 |»»»»» name|string|false|none|none|
 |»»»»» displayOrder|number|false|none|none|
 |»»»»» surveyId|string|false|none|none|
+|»»»»» extId|string|false|none|none|
+|»»»»» extMetadata|object|false|none|none|
 |»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 
 #### Enumerated Values
@@ -22141,8 +23899,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 485   |
-| 489   |
+| 15064   |
+| 15068   |
 
 <h3 id="surveyrespondercontroller.delete-parameters">Parameters</h3>
 
@@ -22227,8 +23985,8 @@ fetch('/surveys/{surveyId}/survey-responses/count',
 
 | Permissions |
 | ------- |
-| 519   |
-| 521   |
+| 15075   |
+| 15077   |
 
 <h3 id="surveyresponsecontroller.count-parameters">Parameters</h3>
 
@@ -22307,8 +24065,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
 
 | Permissions |
 | ------- |
-| 519   |
-| 521   |
+| 15075   |
+| 15077   |
 
 <h3 id="surveyresponsecontroller.findbyid-parameters">Parameters</h3>
 
@@ -22332,6 +24090,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
   "id": "string",
   "surveyResponderId": "string",
   "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "surveyResponder": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -22348,6 +24108,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
     "userId": "string",
     "surveyId": "string",
     "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -22369,6 +24131,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -22383,6 +24147,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -22406,6 +24172,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -22428,6 +24196,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22439,6 +24209,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {},
               "surveyCycle": {
                 "deleted": true,
@@ -22453,6 +24225,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               },
               "surveyResponseDetails": [
@@ -22474,6 +24248,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -22495,6 +24271,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -22513,7 +24291,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     },
@@ -22530,6 +24310,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -22551,6 +24333,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -22565,6 +24349,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -22588,6 +24374,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -22610,6 +24398,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -22621,6 +24411,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {},
                 "surveyCycle": {},
                 "surveyResponseDetails": [
@@ -22642,6 +24434,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -22667,7 +24461,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -22686,6 +24482,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
     "endDate": "string",
     "isActivated": true,
     "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -22707,6 +24505,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -22721,6 +24521,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -22744,6 +24546,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -22766,6 +24570,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22777,6 +24583,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -22793,6 +24601,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               },
@@ -22816,6 +24626,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -22843,6 +24655,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {}
         }
@@ -22859,7 +24673,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -22880,6 +24696,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -22891,6 +24709,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -22907,6 +24727,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -22928,6 +24750,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -22942,6 +24766,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -22965,6 +24791,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -22990,6 +24818,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -23008,7 +24838,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -23025,6 +24857,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -23046,6 +24880,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {
                   "deleted": true,
@@ -23060,6 +24896,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                   "name": "string",
                   "status": "Draft",
                   "questionType": "Multi Selection",
+                  "extId": "string",
+                  "extMetadata": {},
                   "isScoreEnabled": true,
                   "isFollowupEnabled": true,
                   "validation": {},
@@ -23096,7 +24934,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -23115,6 +24955,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -23136,6 +24978,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -23150,6 +24994,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -23173,6 +25019,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -23204,6 +25052,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -23220,7 +25070,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -23240,6 +25092,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -23263,6 +25117,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -23292,6 +25148,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -23309,6 +25167,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -23329,6 +25189,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -23343,6 +25205,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -23359,7 +25223,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -23378,6 +25244,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -23391,6 +25259,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -23427,6 +25297,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -23444,6 +25316,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -23464,6 +25338,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -23478,6 +25354,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -23494,7 +25372,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -23512,6 +25392,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -23548,6 +25430,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -23565,6 +25449,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -23585,6 +25471,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -23599,6 +25487,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -23615,7 +25505,9 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -23647,7 +25539,9 @@ const inputBody = '{
   "surveyResponseDetailArray": [
     {}
   ],
-  "surveyResponderId": "string"
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -23674,7 +25568,9 @@ const inputBody = {
   "surveyResponseDetailArray": [
     {}
   ],
-  "surveyResponderId": "string"
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -23699,9 +25595,9 @@ fetch('/surveys/{surveyId}/survey-responses',
 
 | Permissions |
 | ------- |
-| 518   |
-| 520   |
-| 537   |
+| 15074   |
+| 15076   |
+| 15044   |
 
 > Body parameter
 
@@ -23710,7 +25606,9 @@ fetch('/surveys/{surveyId}/survey-responses',
   "surveyResponseDetailArray": [
     {}
   ],
-  "surveyResponderId": "string"
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -23736,7 +25634,9 @@ fetch('/surveys/{surveyId}/survey-responses',
   "modifiedBy": "string",
   "id": "string",
   "surveyResponderId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -23801,9 +25701,9 @@ fetch('/surveys/{surveyId}/survey-responses',
 
 | Permissions |
 | ------- |
-| 519   |
-| 521   |
-| 536   |
+| 15075   |
+| 15077   |
+| 15043   |
 
 <h3 id="surveyresponsecontroller.find-parameters">Parameters</h3>
 
@@ -23828,6 +25728,8 @@ fetch('/surveys/{surveyId}/survey-responses',
     "id": "string",
     "surveyResponderId": "string",
     "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "surveyResponder": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -23844,6 +25746,8 @@ fetch('/surveys/{surveyId}/survey-responses',
       "userId": "string",
       "surveyId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -23865,6 +25769,8 @@ fetch('/surveys/{surveyId}/survey-responses',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -23879,6 +25785,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -23902,6 +25810,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -23924,6 +25834,8 @@ fetch('/surveys/{surveyId}/survey-responses',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {},
               "question": {},
               "option": {
@@ -23940,6 +25852,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -23961,6 +25875,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -23979,7 +25895,9 @@ fetch('/surveys/{surveyId}/survey-responses',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       },
@@ -23996,6 +25914,8 @@ fetch('/surveys/{surveyId}/survey-responses',
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -24017,6 +25937,8 @@ fetch('/surveys/{surveyId}/survey-responses',
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -24031,6 +25953,8 @@ fetch('/surveys/{surveyId}/survey-responses',
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -24054,6 +25978,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -24076,6 +26002,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {},
                 "question": {},
                 "option": {
@@ -24092,6 +26020,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -24117,7 +26047,9 @@ fetch('/surveys/{surveyId}/survey-responses',
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -24136,6 +26068,8 @@ fetch('/surveys/{surveyId}/survey-responses',
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -24157,6 +26091,8 @@ fetch('/surveys/{surveyId}/survey-responses',
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -24171,6 +26107,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -24194,6 +26132,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -24216,6 +26156,8 @@ fetch('/surveys/{surveyId}/survey-responses',
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {},
               "question": {},
               "option": {
@@ -24232,6 +26174,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -24259,6 +26203,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {}
           }
@@ -24275,7 +26221,9 @@ fetch('/surveys/{surveyId}/survey-responses',
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -24296,6 +26244,8 @@ fetch('/surveys/{surveyId}/survey-responses',
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {},
         "question": {
           "deleted": true,
@@ -24310,6 +26260,8 @@ fetch('/surveys/{surveyId}/survey-responses',
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -24333,6 +26285,8 @@ fetch('/surveys/{surveyId}/survey-responses',
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -24362,6 +26316,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -24379,6 +26335,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -24399,6 +26357,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -24413,6 +26373,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -24429,7 +26391,9 @@ fetch('/surveys/{surveyId}/survey-responses',
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -24448,6 +26412,8 @@ fetch('/surveys/{surveyId}/survey-responses',
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -24461,6 +26427,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -24497,6 +26465,8 @@ fetch('/surveys/{surveyId}/survey-responses',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -24514,6 +26484,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -24534,6 +26506,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -24548,6 +26522,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 }
@@ -24564,7 +26540,9 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -24582,6 +26560,8 @@ fetch('/surveys/{surveyId}/survey-responses',
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -24618,6 +26598,8 @@ fetch('/surveys/{surveyId}/survey-responses',
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -24635,6 +26617,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -24655,6 +26639,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -24669,6 +26655,8 @@ fetch('/surveys/{surveyId}/survey-responses',
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 }
@@ -24685,7 +26673,9 @@ fetch('/surveys/{surveyId}/survey-responses',
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -24721,6 +26711,8 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» surveyResponderId|string|true|none|none|
 |»» surveyCycleId|string|true|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -24737,6 +26729,8 @@ Status Code **200**
 |»»» userId|string¦null|false|none|none|
 |»»» surveyId|string|false|none|none|
 |»»» surveyCycleId|string|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
 |»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -24758,6 +26752,8 @@ Status Code **200**
 |»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»» isEnableWeights|boolean|false|none|none|
 |»»»» baseSurveyId|string¦null|false|none|none|
+|»»»» extId|string|false|none|none|
+|»»»» extMetadata|object|false|none|none|
 |»»»» questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» QuestionWithRelations|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
@@ -24772,6 +26768,8 @@ Status Code **200**
 |»»»»»» name|string|false|none|none|
 |»»»»»» status|string|true|none|none|
 |»»»»»» questionType|string|true|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» isScoreEnabled|boolean|false|none|none|
 |»»»»»» isFollowupEnabled|boolean|false|none|none|
 |»»»»»» validation|object|false|none|none|
@@ -24795,6 +26793,8 @@ Status Code **200**
 |»»»»»»»» score|number¦null|false|none|none|
 |»»»»»»»» questionId|string|false|none|none|
 |»»»»»»»» followupQuestionId|string¦null|false|none|none|
+|»»»»»»»» extId|string|false|none|none|
+|»»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» followUpQuestions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -24814,6 +26814,8 @@ Status Code **200**
 |»»»»»»» responseType|string|true|none|none|
 |»»»»»»» textAnswer|string|false|none|none|
 |»»»»»»» optionId|string|false|none|none|
+|»»»»»»» extId|string|false|none|none|
+|»»»»»»» extMetadata|object|false|none|none|
 |»»»»»»» surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» option|[OptionsWithRelations](#schemaoptionswithrelations)|false|none|(tsType: OptionsWithRelations, schemaOptions: { includeRelations: true })|
@@ -24832,6 +26834,8 @@ Status Code **200**
 |»»»»»» endDate|string|true|none|End date of the first survey cycle|
 |»»»»»» isActivated|boolean|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»»»»» survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» SurveyResponderWithRelations|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
@@ -24848,6 +26852,8 @@ Status Code **200**
 |»»»»»» name|string|false|none|none|
 |»»»»»» displayOrder|number|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
+|»»»»»» extId|string|false|none|none|
+|»»»»»» extMetadata|object|false|none|none|
 |»»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»» surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |»» surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })|
@@ -24937,8 +26943,8 @@ fetch('/templates/count',
 
 | Permissions |
 | ------- |
-| 434   |
-| 438   |
+| 15009   |
+| 15013   |
 
 <h3 id="templatecontroller.count-parameters">Parameters</h3>
 
@@ -24986,6 +26992,8 @@ const inputBody = '{
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }';
 const headers = {
@@ -25022,6 +27030,8 @@ const inputBody = {
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 };
 const headers = {
@@ -25047,8 +27057,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 435   |
-| 439   |
+| 15010   |
+| 15014   |
 
 > Body parameter
 
@@ -25066,6 +27076,8 @@ fetch('/templates/{id}',
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }
 ```
@@ -25156,8 +27168,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 434   |
-| 438   |
+| 15009   |
+| 15013   |
 
 <h3 id="templatecontroller.findbyid-parameters">Parameters</h3>
 
@@ -25183,7 +27195,9 @@ fetch('/templates/{id}',
   "uid": "string",
   "name": "string",
   "status": "Draft",
-  "isEnableWeight": true
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -25248,8 +27262,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 436   |
-| 440   |
+| 15011   |
+| 15015   |
 
 <h3 id="templatecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -25304,6 +27318,8 @@ const inputBody = '{
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }';
 const headers = {
@@ -25339,6 +27355,8 @@ const inputBody = {
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 };
 const headers = {
@@ -25364,8 +27382,8 @@ fetch('/templates',
 
 | Permissions |
 | ------- |
-| 433   |
-| 437   |
+| 15008   |
+| 15012   |
 
 > Body parameter
 
@@ -25382,6 +27400,8 @@ fetch('/templates',
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }
 ```
@@ -25409,7 +27429,9 @@ fetch('/templates',
   "uid": "string",
   "name": "string",
   "status": "Draft",
-  "isEnableWeight": true
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {}
 }
 ```
 
@@ -25474,8 +27496,8 @@ fetch('/templates',
 
 | Permissions |
 | ------- |
-| 434   |
-| 438   |
+| 15009   |
+| 15013   |
 
 <h3 id="templatecontroller.find-parameters">Parameters</h3>
 
@@ -25502,6 +27524,8 @@ fetch('/templates',
     "name": "string",
     "status": "Draft",
     "isEnableWeight": true,
+    "extId": "string",
+    "extMetadata": {},
     "createdByName": "string"
   }
 ]
@@ -25533,6 +27557,8 @@ Status Code **200**
 |»» name|string|true|none|none|
 |»» status|string|true|none|none|
 |»» isEnableWeight|boolean|false|none|none|
+|»» extId|string|false|none|none|
+|»» extMetadata|object|false|none|none|
 |»» createdByName|string|false|none|none|
 
 #### Enumerated Values
@@ -25570,6 +27596,8 @@ This operation does not require authentication
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -25598,6 +27626,8 @@ Question
 |name|string|false|none|none|
 |status|string|true|none|none|
 |questionType|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |isScoreEnabled|boolean|false|none|none|
 |isFollowupEnabled|boolean|false|none|none|
 |validation|object|false|none|none|
@@ -25636,7 +27666,9 @@ Question
   "optionId": "string",
   "surveyId": "string",
   "status": "Draft",
-  "name": "string"
+  "name": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -25654,6 +27686,8 @@ NewQuestion
 |surveyId|string|false|none|none|
 |status|string|false|none|none|
 |name|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 #### Enumerated Values
 
@@ -25686,6 +27720,8 @@ NewQuestion
   "endDate": "string",
   "isActivated": true,
   "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "survey": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -25707,6 +27743,8 @@ NewQuestion
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -25721,6 +27759,8 @@ NewQuestion
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -25744,6 +27784,8 @@ NewQuestion
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -25766,6 +27808,8 @@ NewQuestion
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -25777,6 +27821,8 @@ NewQuestion
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -25793,6 +27839,8 @@ NewQuestion
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -25807,6 +27855,8 @@ NewQuestion
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -25823,6 +27873,8 @@ NewQuestion
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -25844,6 +27896,8 @@ NewQuestion
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -25865,6 +27919,8 @@ NewQuestion
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -25885,6 +27941,8 @@ NewQuestion
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -25899,6 +27957,8 @@ NewQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -25915,7 +27975,9 @@ NewQuestion
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   }
@@ -25941,6 +28003,8 @@ SurveyCycleWithRelations
 |endDate|string|true|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 
 <h2 id="tocS_SectionWithRelations">SectionWithRelations</h2>
@@ -25962,7 +28026,9 @@ SurveyCycleWithRelations
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -25984,6 +28050,8 @@ SectionWithRelations
 |name|string|false|none|none|
 |displayOrder|number|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyWithRelations">SurveyWithRelations</h2>
 <!-- backwards compatibility -->
@@ -26014,6 +28082,8 @@ SectionWithRelations
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "questions": [
     {
       "deleted": true,
@@ -26028,6 +28098,8 @@ SectionWithRelations
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -26051,6 +28123,8 @@ SectionWithRelations
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -26073,6 +28147,8 @@ SectionWithRelations
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -26084,6 +28160,8 @@ SectionWithRelations
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -26100,6 +28178,8 @@ SectionWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -26121,6 +28201,8 @@ SectionWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [],
               "surveyCycles": [
                 {
@@ -26136,6 +28218,8 @@ SectionWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -26154,7 +28238,9 @@ SectionWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -26171,6 +28257,8 @@ SectionWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -26192,6 +28280,8 @@ SectionWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [],
                 "surveyCycles": [
                   {}
@@ -26211,7 +28301,9 @@ SectionWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -26230,6 +28322,8 @@ SectionWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -26251,6 +28345,8 @@ SectionWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [],
               "surveyCycles": [
                 {}
@@ -26272,6 +28368,8 @@ SectionWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -26288,7 +28386,9 @@ SectionWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -26312,6 +28412,8 @@ SectionWithRelations
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -26337,6 +28439,8 @@ SectionWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [],
         "surveyCycles": [
           {
@@ -26352,6 +28456,8 @@ SectionWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -26372,6 +28478,8 @@ SectionWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -26386,6 +28494,8 @@ SectionWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -26402,7 +28512,9 @@ SectionWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -26422,6 +28534,8 @@ SectionWithRelations
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -26443,6 +28557,8 @@ SectionWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -26457,6 +28573,8 @@ SectionWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -26480,6 +28598,8 @@ SectionWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -26502,6 +28622,8 @@ SectionWithRelations
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -26513,6 +28635,8 @@ SectionWithRelations
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -26529,6 +28653,8 @@ SectionWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 },
@@ -26552,6 +28678,8 @@ SectionWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -26577,6 +28705,8 @@ SectionWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {}
           }
@@ -26593,7 +28723,9 @@ SectionWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -26616,6 +28748,8 @@ SectionWithRelations
       "userId": "string",
       "surveyId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -26637,6 +28771,8 @@ SectionWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -26651,6 +28787,8 @@ SectionWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -26674,6 +28812,8 @@ SectionWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -26696,6 +28836,8 @@ SectionWithRelations
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -26707,6 +28849,8 @@ SectionWithRelations
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -26721,6 +28865,8 @@ SectionWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 },
                 "surveyResponseDetails": [
@@ -26742,6 +28888,8 @@ SectionWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -26763,6 +28911,8 @@ SectionWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -26779,7 +28929,9 @@ SectionWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       },
@@ -26796,6 +28948,8 @@ SectionWithRelations
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -26817,6 +28971,8 @@ SectionWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -26831,6 +28987,8 @@ SectionWithRelations
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -26854,6 +29012,8 @@ SectionWithRelations
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -26876,6 +29036,8 @@ SectionWithRelations
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -26887,6 +29049,8 @@ SectionWithRelations
                   "id": "string",
                   "surveyResponderId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "surveyResponder": {},
                   "surveyCycle": {},
                   "surveyResponseDetails": [
@@ -26908,6 +29072,8 @@ SectionWithRelations
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -26931,7 +29097,9 @@ SectionWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -26950,7 +29118,9 @@ SectionWithRelations
       "id": "string",
       "name": "string",
       "displayOrder": 0,
-      "surveyId": "string"
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
     }
   ]
 }
@@ -26983,6 +29153,8 @@ SurveyWithRelations
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|[(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })]|
 |surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|[(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })]|
 |surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|[(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })]|
@@ -27022,6 +29194,8 @@ SurveyWithRelations
   "userId": "string",
   "surveyId": "string",
   "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "survey": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -27043,6 +29217,8 @@ SurveyWithRelations
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -27057,6 +29233,8 @@ SurveyWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -27080,6 +29258,8 @@ SurveyWithRelations
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -27102,6 +29282,8 @@ SurveyWithRelations
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -27113,6 +29295,8 @@ SurveyWithRelations
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -27129,6 +29313,8 @@ SurveyWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -27143,6 +29329,8 @@ SurveyWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -27159,6 +29347,8 @@ SurveyWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -27180,6 +29370,8 @@ SurveyWithRelations
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -27201,6 +29393,8 @@ SurveyWithRelations
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -27221,6 +29415,8 @@ SurveyWithRelations
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -27235,6 +29431,8 @@ SurveyWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -27251,7 +29449,9 @@ SurveyWithRelations
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   },
@@ -27268,6 +29468,8 @@ SurveyWithRelations
     "endDate": "string",
     "isActivated": true,
     "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -27289,6 +29491,8 @@ SurveyWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -27303,6 +29507,8 @@ SurveyWithRelations
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -27326,6 +29532,8 @@ SurveyWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -27348,6 +29556,8 @@ SurveyWithRelations
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -27359,6 +29569,8 @@ SurveyWithRelations
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -27375,6 +29587,8 @@ SurveyWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               },
@@ -27398,6 +29612,8 @@ SurveyWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -27425,6 +29641,8 @@ SurveyWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {}
         }
@@ -27441,7 +29659,9 @@ SurveyWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -27471,6 +29691,8 @@ SurveyResponderWithRelations
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
 |surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 
@@ -27493,6 +29715,8 @@ SurveyResponderWithRelations
   "id": "string",
   "surveyResponderId": "string",
   "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "surveyResponder": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -27509,6 +29733,8 @@ SurveyResponderWithRelations
     "userId": "string",
     "surveyId": "string",
     "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -27530,6 +29756,8 @@ SurveyResponderWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -27544,6 +29772,8 @@ SurveyResponderWithRelations
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -27567,6 +29797,8 @@ SurveyResponderWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -27589,6 +29821,8 @@ SurveyResponderWithRelations
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -27600,6 +29834,8 @@ SurveyResponderWithRelations
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {},
               "surveyCycle": {
                 "deleted": true,
@@ -27614,6 +29850,8 @@ SurveyResponderWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               },
               "surveyResponseDetails": [
@@ -27635,6 +29873,8 @@ SurveyResponderWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -27656,6 +29896,8 @@ SurveyResponderWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -27674,7 +29916,9 @@ SurveyResponderWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     },
@@ -27691,6 +29935,8 @@ SurveyResponderWithRelations
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -27712,6 +29958,8 @@ SurveyResponderWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -27726,6 +29974,8 @@ SurveyResponderWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -27749,6 +29999,8 @@ SurveyResponderWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -27771,6 +30023,8 @@ SurveyResponderWithRelations
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -27782,6 +30036,8 @@ SurveyResponderWithRelations
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {},
                 "surveyCycle": {},
                 "surveyResponseDetails": [
@@ -27803,6 +30059,8 @@ SurveyResponderWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -27828,7 +30086,9 @@ SurveyResponderWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -27847,6 +30107,8 @@ SurveyResponderWithRelations
     "endDate": "string",
     "isActivated": true,
     "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -27868,6 +30130,8 @@ SurveyResponderWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -27882,6 +30146,8 @@ SurveyResponderWithRelations
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -27905,6 +30171,8 @@ SurveyResponderWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -27927,6 +30195,8 @@ SurveyResponderWithRelations
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -27938,6 +30208,8 @@ SurveyResponderWithRelations
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -27954,6 +30226,8 @@ SurveyResponderWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               },
@@ -27977,6 +30251,8 @@ SurveyResponderWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -28004,6 +30280,8 @@ SurveyResponderWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {}
         }
@@ -28020,7 +30298,9 @@ SurveyResponderWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -28041,6 +30321,8 @@ SurveyResponderWithRelations
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -28052,6 +30334,8 @@ SurveyResponderWithRelations
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -28068,6 +30352,8 @@ SurveyResponderWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -28089,6 +30375,8 @@ SurveyResponderWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -28103,6 +30391,8 @@ SurveyResponderWithRelations
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -28126,6 +30416,8 @@ SurveyResponderWithRelations
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -28151,6 +30443,8 @@ SurveyResponderWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -28169,7 +30463,9 @@ SurveyResponderWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -28186,6 +30482,8 @@ SurveyResponderWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -28207,6 +30505,8 @@ SurveyResponderWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {
                   "deleted": true,
@@ -28221,6 +30521,8 @@ SurveyResponderWithRelations
                   "name": "string",
                   "status": "Draft",
                   "questionType": "Multi Selection",
+                  "extId": "string",
+                  "extMetadata": {},
                   "isScoreEnabled": true,
                   "isFollowupEnabled": true,
                   "validation": {},
@@ -28257,7 +30559,9 @@ SurveyResponderWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -28276,6 +30580,8 @@ SurveyResponderWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -28297,6 +30603,8 @@ SurveyResponderWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -28311,6 +30619,8 @@ SurveyResponderWithRelations
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -28334,6 +30644,8 @@ SurveyResponderWithRelations
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -28365,6 +30677,8 @@ SurveyResponderWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -28381,7 +30695,9 @@ SurveyResponderWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -28401,6 +30717,8 @@ SurveyResponderWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -28424,6 +30742,8 @@ SurveyResponderWithRelations
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -28453,6 +30773,8 @@ SurveyResponderWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -28470,6 +30792,8 @@ SurveyResponderWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -28490,6 +30814,8 @@ SurveyResponderWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -28504,6 +30830,8 @@ SurveyResponderWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -28520,7 +30848,9 @@ SurveyResponderWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -28539,6 +30869,8 @@ SurveyResponderWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -28552,6 +30884,8 @@ SurveyResponderWithRelations
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -28588,6 +30922,8 @@ SurveyResponderWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -28605,6 +30941,8 @@ SurveyResponderWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -28625,6 +30963,8 @@ SurveyResponderWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -28639,6 +30979,8 @@ SurveyResponderWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -28655,7 +30997,9 @@ SurveyResponderWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -28673,6 +31017,8 @@ SurveyResponderWithRelations
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -28709,6 +31055,8 @@ SurveyResponderWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -28726,6 +31074,8 @@ SurveyResponderWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -28746,6 +31096,8 @@ SurveyResponderWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -28760,6 +31112,8 @@ SurveyResponderWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -28776,7 +31130,9 @@ SurveyResponderWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -28804,6 +31160,8 @@ SurveyResponseWithRelations
 |id|string|false|none|none|
 |surveyResponderId|string|true|none|none|
 |surveyCycleId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
 |surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 |surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|[(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })]|
@@ -28830,6 +31188,8 @@ SurveyResponseWithRelations
   "score": 0,
   "questionId": "string",
   "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "question": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -28843,6 +31203,8 @@ SurveyResponseWithRelations
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -28866,6 +31228,8 @@ SurveyResponseWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -28888,6 +31252,8 @@ SurveyResponseWithRelations
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -28899,6 +31265,8 @@ SurveyResponseWithRelations
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -28915,6 +31283,8 @@ SurveyResponseWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -28936,6 +31306,8 @@ SurveyResponseWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -28953,6 +31325,8 @@ SurveyResponseWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -28971,7 +31345,9 @@ SurveyResponseWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -28988,6 +31364,8 @@ SurveyResponseWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -29009,6 +31387,8 @@ SurveyResponseWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -29030,7 +31410,9 @@ SurveyResponseWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -29049,6 +31431,8 @@ SurveyResponseWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -29070,6 +31454,8 @@ SurveyResponseWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -29093,6 +31479,8 @@ SurveyResponseWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -29109,7 +31497,9 @@ SurveyResponseWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -29133,6 +31523,8 @@ SurveyResponseWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -29158,6 +31550,8 @@ SurveyResponseWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -29175,6 +31569,8 @@ SurveyResponseWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -29195,6 +31591,8 @@ SurveyResponseWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -29209,6 +31607,8 @@ SurveyResponseWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -29225,7 +31625,9 @@ SurveyResponseWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -29243,6 +31645,8 @@ SurveyResponseWithRelations
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -29266,6 +31670,8 @@ SurveyResponseWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -29288,6 +31694,8 @@ SurveyResponseWithRelations
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -29299,6 +31707,8 @@ SurveyResponseWithRelations
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -29315,6 +31725,8 @@ SurveyResponseWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -29336,6 +31748,8 @@ SurveyResponseWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -29353,6 +31767,8 @@ SurveyResponseWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -29371,7 +31787,9 @@ SurveyResponseWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -29388,6 +31806,8 @@ SurveyResponseWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -29409,6 +31829,8 @@ SurveyResponseWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -29430,7 +31852,9 @@ SurveyResponseWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -29449,6 +31873,8 @@ SurveyResponseWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -29470,6 +31896,8 @@ SurveyResponseWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -29493,6 +31921,8 @@ SurveyResponseWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -29509,7 +31939,9 @@ SurveyResponseWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -29533,6 +31965,8 @@ SurveyResponseWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -29558,6 +31992,8 @@ SurveyResponseWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -29575,6 +32011,8 @@ SurveyResponseWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -29595,6 +32033,8 @@ SurveyResponseWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -29609,6 +32049,8 @@ SurveyResponseWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -29625,7 +32067,9 @@ SurveyResponseWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -29653,6 +32097,8 @@ OptionsWithRelations
 |score|number¦null|false|none|none|
 |questionId|string|false|none|none|
 |followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 
@@ -29679,6 +32125,8 @@ OptionsWithRelations
   "responseType": "Multi Selection",
   "textAnswer": "string",
   "optionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "surveyResponse": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -29690,6 +32138,8 @@ OptionsWithRelations
     "id": "string",
     "surveyResponderId": "string",
     "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "surveyResponder": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -29706,6 +32156,8 @@ OptionsWithRelations
       "userId": "string",
       "surveyId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -29727,6 +32179,8 @@ OptionsWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -29741,6 +32195,8 @@ OptionsWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -29764,6 +32220,8 @@ OptionsWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -29786,6 +32244,8 @@ OptionsWithRelations
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {},
               "question": {},
               "option": {
@@ -29802,6 +32262,8 @@ OptionsWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -29823,6 +32285,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -29841,7 +32305,9 @@ OptionsWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       },
@@ -29858,6 +32324,8 @@ OptionsWithRelations
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -29879,6 +32347,8 @@ OptionsWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -29893,6 +32363,8 @@ OptionsWithRelations
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -29916,6 +32388,8 @@ OptionsWithRelations
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -29938,6 +32412,8 @@ OptionsWithRelations
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {},
                 "question": {},
                 "option": {
@@ -29954,6 +32430,8 @@ OptionsWithRelations
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -29979,7 +32457,9 @@ OptionsWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -29998,6 +32478,8 @@ OptionsWithRelations
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -30019,6 +32501,8 @@ OptionsWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -30033,6 +32517,8 @@ OptionsWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -30056,6 +32542,8 @@ OptionsWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -30078,6 +32566,8 @@ OptionsWithRelations
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {},
               "question": {},
               "option": {
@@ -30094,6 +32584,8 @@ OptionsWithRelations
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -30121,6 +32613,8 @@ OptionsWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {}
           }
@@ -30137,7 +32631,9 @@ OptionsWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -30158,6 +32654,8 @@ OptionsWithRelations
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {},
         "question": {
           "deleted": true,
@@ -30172,6 +32670,8 @@ OptionsWithRelations
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -30195,6 +32695,8 @@ OptionsWithRelations
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -30224,6 +32726,8 @@ OptionsWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -30241,6 +32745,8 @@ OptionsWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -30261,6 +32767,8 @@ OptionsWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -30275,6 +32783,8 @@ OptionsWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               }
@@ -30291,7 +32801,9 @@ OptionsWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -30310,6 +32822,8 @@ OptionsWithRelations
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -30323,6 +32837,8 @@ OptionsWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -30359,6 +32875,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -30376,6 +32894,8 @@ OptionsWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -30396,6 +32916,8 @@ OptionsWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -30410,6 +32932,8 @@ OptionsWithRelations
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 }
@@ -30426,7 +32950,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -30444,6 +32970,8 @@ OptionsWithRelations
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -30480,6 +33008,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -30497,6 +33027,8 @@ OptionsWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -30517,6 +33049,8 @@ OptionsWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {
                     "deleted": true,
@@ -30531,6 +33065,8 @@ OptionsWithRelations
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 }
@@ -30547,7 +33083,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -30569,6 +33107,8 @@ OptionsWithRelations
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -30592,6 +33132,8 @@ OptionsWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -30614,6 +33156,8 @@ OptionsWithRelations
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -30625,6 +33169,8 @@ OptionsWithRelations
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -30641,6 +33187,8 @@ OptionsWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -30662,6 +33210,8 @@ OptionsWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -30679,6 +33229,8 @@ OptionsWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -30697,7 +33249,9 @@ OptionsWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -30714,6 +33268,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -30735,6 +33291,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -30756,7 +33314,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -30775,6 +33335,8 @@ OptionsWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -30796,6 +33358,8 @@ OptionsWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -30819,6 +33383,8 @@ OptionsWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -30835,7 +33401,9 @@ OptionsWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -30859,6 +33427,8 @@ OptionsWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -30884,6 +33454,8 @@ OptionsWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -30901,6 +33473,8 @@ OptionsWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -30921,6 +33495,8 @@ OptionsWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -30935,6 +33511,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -30951,7 +33529,9 @@ OptionsWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -30970,6 +33550,8 @@ OptionsWithRelations
     "score": 0,
     "questionId": "string",
     "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "question": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -30983,6 +33565,8 @@ OptionsWithRelations
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -31012,6 +33596,8 @@ OptionsWithRelations
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -31023,6 +33609,8 @@ OptionsWithRelations
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -31039,6 +33627,8 @@ OptionsWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -31060,6 +33650,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -31077,6 +33669,8 @@ OptionsWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -31095,7 +33689,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -31112,6 +33708,8 @@ OptionsWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -31133,6 +33731,8 @@ OptionsWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -31154,7 +33754,9 @@ OptionsWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -31173,6 +33775,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -31194,6 +33798,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -31217,6 +33823,8 @@ OptionsWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -31233,7 +33841,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -31266,6 +33876,8 @@ OptionsWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -31283,6 +33895,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -31303,6 +33917,8 @@ OptionsWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -31317,6 +33933,8 @@ OptionsWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -31333,7 +33951,9 @@ OptionsWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -31351,6 +33971,8 @@ OptionsWithRelations
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -31380,6 +34002,8 @@ OptionsWithRelations
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -31391,6 +34015,8 @@ OptionsWithRelations
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -31407,6 +34033,8 @@ OptionsWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -31428,6 +34056,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -31445,6 +34075,8 @@ OptionsWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -31463,7 +34095,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -31480,6 +34114,8 @@ OptionsWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -31501,6 +34137,8 @@ OptionsWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -31522,7 +34160,9 @@ OptionsWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -31541,6 +34181,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -31562,6 +34204,8 @@ OptionsWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -31585,6 +34229,8 @@ OptionsWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -31601,7 +34247,9 @@ OptionsWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -31634,6 +34282,8 @@ OptionsWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -31651,6 +34301,8 @@ OptionsWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -31671,6 +34323,8 @@ OptionsWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -31685,6 +34339,8 @@ OptionsWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -31701,7 +34357,9 @@ OptionsWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -31731,6 +34389,8 @@ SurveyResponseDetailWithRelations
 |responseType|string|true|none|none|
 |textAnswer|string|false|none|none|
 |optionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
 |question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |option|[OptionsWithRelations](#schemaoptionswithrelations)|false|none|(tsType: OptionsWithRelations, schemaOptions: { includeRelations: true })|
@@ -31767,6 +34427,8 @@ SurveyResponseDetailWithRelations
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -31786,6 +34448,8 @@ SurveyResponseDetailWithRelations
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -31809,6 +34473,8 @@ SurveyResponseDetailWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -31831,6 +34497,8 @@ SurveyResponseDetailWithRelations
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -31842,6 +34510,8 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -31858,6 +34528,8 @@ SurveyResponseDetailWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -31879,6 +34551,8 @@ SurveyResponseDetailWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -31896,6 +34570,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -31914,7 +34590,9 @@ SurveyResponseDetailWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -31931,6 +34609,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -31952,6 +34632,8 @@ SurveyResponseDetailWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -31973,7 +34655,9 @@ SurveyResponseDetailWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -31992,6 +34676,8 @@ SurveyResponseDetailWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -32013,6 +34699,8 @@ SurveyResponseDetailWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -32036,6 +34724,8 @@ SurveyResponseDetailWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -32052,7 +34742,9 @@ SurveyResponseDetailWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -32076,6 +34768,8 @@ SurveyResponseDetailWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -32101,6 +34795,8 @@ SurveyResponseDetailWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -32118,6 +34814,8 @@ SurveyResponseDetailWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -32138,6 +34836,8 @@ SurveyResponseDetailWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -32152,6 +34852,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -32168,7 +34870,9 @@ SurveyResponseDetailWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -32186,6 +34890,8 @@ SurveyResponseDetailWithRelations
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -32209,6 +34915,8 @@ SurveyResponseDetailWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -32231,6 +34939,8 @@ SurveyResponseDetailWithRelations
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -32242,6 +34952,8 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -32258,6 +34970,8 @@ SurveyResponseDetailWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -32279,6 +34993,8 @@ SurveyResponseDetailWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -32296,6 +35012,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -32314,7 +35032,9 @@ SurveyResponseDetailWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -32331,6 +35051,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -32352,6 +35074,8 @@ SurveyResponseDetailWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -32373,7 +35097,9 @@ SurveyResponseDetailWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -32392,6 +35118,8 @@ SurveyResponseDetailWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -32413,6 +35141,8 @@ SurveyResponseDetailWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -32436,6 +35166,8 @@ SurveyResponseDetailWithRelations
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -32452,7 +35184,9 @@ SurveyResponseDetailWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -32476,6 +35210,8 @@ SurveyResponseDetailWithRelations
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -32501,6 +35237,8 @@ SurveyResponseDetailWithRelations
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -32518,6 +35256,8 @@ SurveyResponseDetailWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -32538,6 +35278,8 @@ SurveyResponseDetailWithRelations
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -32552,6 +35294,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -32568,7 +35312,9 @@ SurveyResponseDetailWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -32588,6 +35334,8 @@ SurveyResponseDetailWithRelations
       "score": 0,
       "questionId": "string",
       "followupQuestionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "question": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -32601,6 +35349,8 @@ SurveyResponseDetailWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -32628,6 +35378,8 @@ SurveyResponseDetailWithRelations
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -32639,6 +35391,8 @@ SurveyResponseDetailWithRelations
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -32655,6 +35409,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -32676,6 +35432,8 @@ SurveyResponseDetailWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -32693,6 +35451,8 @@ SurveyResponseDetailWithRelations
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 ],
@@ -32711,7 +35471,9 @@ SurveyResponseDetailWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               },
@@ -32728,6 +35490,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -32749,6 +35513,8 @@ SurveyResponseDetailWithRelations
                   "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "questions": [
                     {}
                   ],
@@ -32777,6 +35543,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -32798,6 +35566,8 @@ SurveyResponseDetailWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -32821,6 +35591,8 @@ SurveyResponseDetailWithRelations
                     "userId": "string",
                     "surveyId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {},
                     "surveyCycle": {}
                   }
@@ -32837,7 +35609,9 @@ SurveyResponseDetailWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -32870,6 +35644,8 @@ SurveyResponseDetailWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -32887,6 +35663,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -32907,6 +35685,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -32921,6 +35701,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -32937,7 +35719,9 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -32955,6 +35739,8 @@ SurveyResponseDetailWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -32982,6 +35768,8 @@ SurveyResponseDetailWithRelations
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -32993,6 +35781,8 @@ SurveyResponseDetailWithRelations
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -33009,6 +35799,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -33030,6 +35822,8 @@ SurveyResponseDetailWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -33047,6 +35841,8 @@ SurveyResponseDetailWithRelations
                     "endDate": "string",
                     "isActivated": true,
                     "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {}
                   }
                 ],
@@ -33065,7 +35861,9 @@ SurveyResponseDetailWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               },
@@ -33082,6 +35880,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -33103,6 +35903,8 @@ SurveyResponseDetailWithRelations
                   "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "questions": [
                     {}
                   ],
@@ -33131,6 +35933,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -33152,6 +35956,8 @@ SurveyResponseDetailWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -33175,6 +35981,8 @@ SurveyResponseDetailWithRelations
                     "userId": "string",
                     "surveyId": "string",
                     "surveyCycleId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "survey": {},
                     "surveyCycle": {}
                   }
@@ -33191,7 +35999,9 @@ SurveyResponseDetailWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -33224,6 +36034,8 @@ SurveyResponseDetailWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -33241,6 +36053,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -33261,6 +36075,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -33275,6 +36091,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -33291,7 +36109,9 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -33312,6 +36132,8 @@ SurveyResponseDetailWithRelations
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -33335,6 +36157,8 @@ SurveyResponseDetailWithRelations
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -33355,6 +36179,8 @@ SurveyResponseDetailWithRelations
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -33366,6 +36192,8 @@ SurveyResponseDetailWithRelations
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -33382,6 +36210,8 @@ SurveyResponseDetailWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -33403,6 +36233,8 @@ SurveyResponseDetailWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -33420,6 +36252,8 @@ SurveyResponseDetailWithRelations
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -33438,7 +36272,9 @@ SurveyResponseDetailWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -33455,6 +36291,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -33476,6 +36314,8 @@ SurveyResponseDetailWithRelations
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -33497,7 +36337,9 @@ SurveyResponseDetailWithRelations
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -33516,6 +36358,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -33537,6 +36381,8 @@ SurveyResponseDetailWithRelations
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -33560,6 +36406,8 @@ SurveyResponseDetailWithRelations
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -33576,7 +36424,9 @@ SurveyResponseDetailWithRelations
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -33600,6 +36450,8 @@ SurveyResponseDetailWithRelations
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -33625,6 +36477,8 @@ SurveyResponseDetailWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -33642,6 +36496,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -33662,6 +36518,8 @@ SurveyResponseDetailWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -33676,6 +36534,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -33692,7 +36552,9 @@ SurveyResponseDetailWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -33713,6 +36575,8 @@ SurveyResponseDetailWithRelations
     "responseType": "Multi Selection",
     "textAnswer": "string",
     "optionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "surveyResponse": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -33724,6 +36588,8 @@ SurveyResponseDetailWithRelations
       "id": "string",
       "surveyResponderId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponder": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -33740,6 +36606,8 @@ SurveyResponseDetailWithRelations
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -33761,6 +36629,8 @@ SurveyResponseDetailWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -33775,6 +36645,8 @@ SurveyResponseDetailWithRelations
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -33798,6 +36670,8 @@ SurveyResponseDetailWithRelations
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -33823,6 +36697,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -33841,7 +36717,9 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         },
@@ -33858,6 +36736,8 @@ SurveyResponseDetailWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -33879,6 +36759,8 @@ SurveyResponseDetailWithRelations
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {
                 "deleted": true,
@@ -33893,6 +36775,8 @@ SurveyResponseDetailWithRelations
                 "name": "string",
                 "status": "Draft",
                 "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
                 "isScoreEnabled": true,
                 "isFollowupEnabled": true,
                 "validation": {},
@@ -33916,6 +36800,8 @@ SurveyResponseDetailWithRelations
                     "score": 0,
                     "questionId": "string",
                     "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
                     "question": {},
                     "followupQuestion": {}
                   }
@@ -33945,7 +36831,9 @@ SurveyResponseDetailWithRelations
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -33964,6 +36852,8 @@ SurveyResponseDetailWithRelations
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -33985,6 +36875,8 @@ SurveyResponseDetailWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -33999,6 +36891,8 @@ SurveyResponseDetailWithRelations
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -34022,6 +36916,8 @@ SurveyResponseDetailWithRelations
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -34053,6 +36949,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {}
             }
@@ -34069,7 +36967,9 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -34091,6 +36991,8 @@ SurveyResponseDetailWithRelations
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -34114,6 +37016,8 @@ SurveyResponseDetailWithRelations
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -34143,6 +37047,8 @@ SurveyResponseDetailWithRelations
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -34160,6 +37066,8 @@ SurveyResponseDetailWithRelations
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -34180,6 +37088,8 @@ SurveyResponseDetailWithRelations
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -34194,6 +37104,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -34210,7 +37122,9 @@ SurveyResponseDetailWithRelations
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -34229,6 +37143,8 @@ SurveyResponseDetailWithRelations
       "score": 0,
       "questionId": "string",
       "followupQuestionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "question": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -34242,6 +37158,8 @@ SurveyResponseDetailWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -34278,6 +37196,8 @@ SurveyResponseDetailWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -34295,6 +37215,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -34315,6 +37237,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -34329,6 +37253,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -34345,7 +37271,9 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -34363,6 +37291,8 @@ SurveyResponseDetailWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -34399,6 +37329,8 @@ SurveyResponseDetailWithRelations
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {}
           ],
@@ -34416,6 +37348,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           ],
@@ -34436,6 +37370,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -34450,6 +37386,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             }
@@ -34466,7 +37404,9 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -34494,6 +37434,8 @@ SurveyResponseDetailWithRelations
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -34508,6 +37450,8 @@ SurveyResponseDetailWithRelations
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -34531,6 +37475,8 @@ SurveyResponseDetailWithRelations
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -34553,6 +37499,8 @@ SurveyResponseDetailWithRelations
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -34564,6 +37512,8 @@ SurveyResponseDetailWithRelations
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -34580,6 +37530,8 @@ SurveyResponseDetailWithRelations
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -34594,6 +37546,8 @@ SurveyResponseDetailWithRelations
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -34610,6 +37564,8 @@ SurveyResponseDetailWithRelations
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -34631,6 +37587,8 @@ SurveyResponseDetailWithRelations
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -34652,6 +37610,8 @@ SurveyResponseDetailWithRelations
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -34672,6 +37632,8 @@ SurveyResponseDetailWithRelations
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -34686,6 +37648,8 @@ SurveyResponseDetailWithRelations
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -34702,7 +37666,9 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   }
@@ -34728,6 +37694,8 @@ QuestionWithRelations
 |name|string|false|none|none|
 |status|string|true|none|none|
 |questionType|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |isScoreEnabled|boolean|false|none|none|
 |isFollowupEnabled|boolean|false|none|none|
 |validation|object|false|none|none|
@@ -34778,6 +37746,8 @@ QuestionWithRelations
   "name": "string",
   "status": "Draft",
   "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
   "isScoreEnabled": true,
   "isFollowupEnabled": true,
   "validation": {},
@@ -34806,6 +37776,8 @@ QuestionPartial
 |name|string|false|none|none|
 |status|string|false|none|none|
 |questionType|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |isScoreEnabled|boolean|false|none|none|
 |isFollowupEnabled|boolean|false|none|none|
 |validation|object|false|none|none|
@@ -34887,7 +37859,9 @@ BulkDeleteDto
 ```json
 {
   "includeBatchId": true,
-  "displayOrder": 0
+  "displayOrder": 0,
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -34900,6 +37874,8 @@ QuestionDuplicateDto
 |---|---|---|---|---|
 |includeBatchId|boolean|false|none|none|
 |displayOrder|number|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_Options">Options</h2>
 <!-- backwards compatibility -->
@@ -34922,7 +37898,9 @@ QuestionDuplicateDto
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -34946,6 +37924,8 @@ Options
 |score|number¦null|false|none|none|
 |questionId|string|false|none|none|
 |followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_NewOptions">NewOptions</h2>
 <!-- backwards compatibility -->
@@ -34967,7 +37947,9 @@ Options
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -34990,6 +37972,8 @@ NewOptions
 |score|number¦null|false|none|none|
 |questionId|string|false|none|none|
 |followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_OptionsPartial">OptionsPartial</h2>
 <!-- backwards compatibility -->
@@ -35012,7 +37996,9 @@ NewOptions
   "displayOrder": 0,
   "score": 0,
   "questionId": "string",
-  "followupQuestionId": "string"
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -35036,6 +38022,8 @@ OptionsPartial
 |score|number¦null|false|none|none|
 |questionId|string|false|none|none|
 |followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_BulkDeleteOption">BulkDeleteOption</h2>
 <!-- backwards compatibility -->
@@ -35083,7 +38071,9 @@ BulkDeleteOption
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -35108,6 +38098,8 @@ TemplateQuestion
 |templateId|string|false|none|none|
 |questionId|string|false|none|none|
 |dependentOnQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_NewTemplateQuestion">NewTemplateQuestion</h2>
 <!-- backwards compatibility -->
@@ -35130,7 +38122,9 @@ TemplateQuestion
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -35154,6 +38148,8 @@ NewTemplateQuestion
 |templateId|string|false|none|none|
 |questionId|string|false|none|none|
 |dependentOnQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_TemplateQuestionWithRelations">TemplateQuestionWithRelations</h2>
 <!-- backwards compatibility -->
@@ -35178,6 +38174,8 @@ NewTemplateQuestion
   "templateId": "string",
   "questionId": "string",
   "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "template": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -35190,7 +38188,9 @@ NewTemplateQuestion
     "uid": "string",
     "name": "string",
     "status": "Draft",
-    "isEnableWeight": true
+    "isEnableWeight": true,
+    "extId": "string",
+    "extMetadata": {}
   },
   "question": {
     "deleted": true,
@@ -35205,6 +38205,8 @@ NewTemplateQuestion
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -35228,6 +38230,8 @@ NewTemplateQuestion
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -35250,6 +38254,8 @@ NewTemplateQuestion
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -35261,6 +38267,8 @@ NewTemplateQuestion
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -35277,6 +38285,8 @@ NewTemplateQuestion
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -35298,6 +38308,8 @@ NewTemplateQuestion
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -35315,6 +38327,8 @@ NewTemplateQuestion
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -35333,7 +38347,9 @@ NewTemplateQuestion
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -35350,6 +38366,8 @@ NewTemplateQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -35371,6 +38389,8 @@ NewTemplateQuestion
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -35392,7 +38412,9 @@ NewTemplateQuestion
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -35411,6 +38433,8 @@ NewTemplateQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -35432,6 +38456,8 @@ NewTemplateQuestion
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -35455,6 +38481,8 @@ NewTemplateQuestion
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -35471,7 +38499,9 @@ NewTemplateQuestion
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -35495,6 +38525,8 @@ NewTemplateQuestion
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -35520,6 +38552,8 @@ NewTemplateQuestion
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -35537,6 +38571,8 @@ NewTemplateQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -35557,6 +38593,8 @@ NewTemplateQuestion
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -35571,6 +38609,8 @@ NewTemplateQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -35587,7 +38627,9 @@ NewTemplateQuestion
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -35607,6 +38649,8 @@ NewTemplateQuestion
     "templateId": "string",
     "questionId": "string",
     "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "template": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -35619,7 +38663,9 @@ NewTemplateQuestion
       "uid": "string",
       "name": "string",
       "status": "Draft",
-      "isEnableWeight": true
+      "isEnableWeight": true,
+      "extId": "string",
+      "extMetadata": {}
     },
     "question": {
       "deleted": true,
@@ -35634,6 +38680,8 @@ NewTemplateQuestion
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -35657,6 +38705,8 @@ NewTemplateQuestion
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -35679,6 +38729,8 @@ NewTemplateQuestion
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -35690,6 +38742,8 @@ NewTemplateQuestion
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -35706,6 +38760,8 @@ NewTemplateQuestion
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -35727,6 +38783,8 @@ NewTemplateQuestion
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -35744,6 +38802,8 @@ NewTemplateQuestion
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -35762,7 +38822,9 @@ NewTemplateQuestion
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -35779,6 +38841,8 @@ NewTemplateQuestion
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -35800,6 +38864,8 @@ NewTemplateQuestion
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -35821,7 +38887,9 @@ NewTemplateQuestion
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -35840,6 +38908,8 @@ NewTemplateQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -35861,6 +38931,8 @@ NewTemplateQuestion
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -35884,6 +38956,8 @@ NewTemplateQuestion
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -35900,7 +38974,9 @@ NewTemplateQuestion
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -35924,6 +39000,8 @@ NewTemplateQuestion
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -35949,6 +39027,8 @@ NewTemplateQuestion
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -35966,6 +39046,8 @@ NewTemplateQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -35986,6 +39068,8 @@ NewTemplateQuestion
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -36000,6 +39084,8 @@ NewTemplateQuestion
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -36016,7 +39102,9 @@ NewTemplateQuestion
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -36047,6 +39135,8 @@ TemplateQuestionWithRelations
 |templateId|string|false|none|none|
 |questionId|string|false|none|none|
 |dependentOnQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |template|[QuestionTemplateWithRelations](#schemaquestiontemplatewithrelations)|false|none|(tsType: QuestionTemplateWithRelations, schemaOptions: { includeRelations: true })|
 |question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
 |dependentOnQuestion|[TemplateQuestionWithRelations](#schematemplatequestionwithrelations)|false|none|(tsType: TemplateQuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -36073,7 +39163,9 @@ TemplateQuestionWithRelations
   "weight": 100,
   "templateId": "string",
   "questionId": "string",
-  "dependentOnQuestionId": "string"
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -36098,6 +39190,8 @@ TemplateQuestionPartial
 |templateId|string|false|none|none|
 |questionId|string|false|none|none|
 |dependentOnQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_QuestionTemplate">QuestionTemplate</h2>
 <!-- backwards compatibility -->
@@ -36119,7 +39213,9 @@ TemplateQuestionPartial
   "uid": "string",
   "name": "string",
   "status": "Draft",
-  "isEnableWeight": true
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -36142,6 +39238,8 @@ QuestionTemplate
 |name|string|true|none|none|
 |status|string|true|none|none|
 |isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 #### Enumerated Values
 
@@ -36171,6 +39269,8 @@ QuestionTemplate
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }
 
@@ -36193,6 +39293,8 @@ NewTemplate
 |name|string|true|none|none|
 |status|string|true|none|none|
 |isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |existingTemplateId|string|false|none|none|
 
 #### Enumerated Values
@@ -36224,6 +39326,8 @@ NewTemplate
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string"
 }
 
@@ -36247,6 +39351,8 @@ QuestionTemplateResponseWithRelations
 |name|string|true|none|none|
 |status|string|true|none|none|
 |isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 
 #### Enumerated Values
@@ -36277,7 +39383,9 @@ QuestionTemplateResponseWithRelations
   "uid": "string",
   "name": "string",
   "status": "Draft",
-  "isEnableWeight": true
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -36300,6 +39408,8 @@ QuestionTemplateWithRelations
 |name|string|true|none|none|
 |status|string|true|none|none|
 |isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 #### Enumerated Values
 
@@ -36330,6 +39440,8 @@ QuestionTemplateWithRelations
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }
 
@@ -36353,6 +39465,8 @@ QuestionTemplatesDtoPartial
 |name|string|false|none|none|
 |status|string|false|none|none|
 |isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |existingTemplateId|string|false|none|none|
 
 #### Enumerated Values
@@ -36384,6 +39498,8 @@ QuestionTemplatesDtoPartial
   "name": "string",
   "status": "Draft",
   "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
   "existingTemplateId": "string"
 }
 
@@ -36407,6 +39523,8 @@ QuestionTemplatesDto
 |name|string|true|none|none|
 |status|string|true|none|none|
 |isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |existingTemplateId|string|false|none|none|
 
 #### Enumerated Values
@@ -36445,7 +39563,9 @@ QuestionTemplatesDto
   "recurrenceEndDate": "string",
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
-  "baseSurveyId": "string"
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -36476,6 +39596,8 @@ Survey
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 #### Enumerated Values
 
@@ -36515,6 +39637,8 @@ Survey
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }
@@ -36546,6 +39670,8 @@ NewSurvey
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
 
@@ -36588,6 +39714,8 @@ NewSurvey
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string",
   "questions": [
@@ -36604,6 +39732,8 @@ NewSurvey
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -36627,6 +39757,8 @@ NewSurvey
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -36649,6 +39781,8 @@ NewSurvey
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -36660,6 +39794,8 @@ NewSurvey
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -36676,6 +39812,8 @@ NewSurvey
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -36697,6 +39835,8 @@ NewSurvey
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -36714,6 +39854,8 @@ NewSurvey
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -36732,7 +39874,9 @@ NewSurvey
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -36749,6 +39893,8 @@ NewSurvey
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -36770,6 +39916,8 @@ NewSurvey
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -36791,7 +39939,9 @@ NewSurvey
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -36810,6 +39960,8 @@ NewSurvey
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -36831,6 +39983,8 @@ NewSurvey
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -36854,6 +40008,8 @@ NewSurvey
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -36870,7 +40026,9 @@ NewSurvey
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -36894,6 +40052,8 @@ NewSurvey
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -36919,6 +40079,8 @@ NewSurvey
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -36936,6 +40098,8 @@ NewSurvey
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -36956,6 +40120,8 @@ NewSurvey
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -36970,6 +40136,8 @@ NewSurvey
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -36986,7 +40154,9 @@ NewSurvey
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -37006,6 +40176,8 @@ NewSurvey
       "endDate": "string",
       "isActivated": true,
       "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -37027,6 +40199,8 @@ NewSurvey
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -37041,6 +40215,8 @@ NewSurvey
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -37064,6 +40240,8 @@ NewSurvey
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -37086,6 +40264,8 @@ NewSurvey
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -37097,6 +40277,8 @@ NewSurvey
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -37113,6 +40295,8 @@ NewSurvey
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 },
@@ -37136,6 +40320,8 @@ NewSurvey
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -37163,6 +40349,8 @@ NewSurvey
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {}
           }
@@ -37179,7 +40367,9 @@ NewSurvey
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -37202,6 +40392,8 @@ NewSurvey
       "userId": "string",
       "surveyId": "string",
       "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "survey": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -37223,6 +40415,8 @@ NewSurvey
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {
             "deleted": true,
@@ -37237,6 +40431,8 @@ NewSurvey
             "name": "string",
             "status": "Draft",
             "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
             "isScoreEnabled": true,
             "isFollowupEnabled": true,
             "validation": {},
@@ -37260,6 +40456,8 @@ NewSurvey
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -37282,6 +40480,8 @@ NewSurvey
               "responseType": "Multi Selection",
               "textAnswer": "string",
               "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponse": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -37293,6 +40493,8 @@ NewSurvey
                 "id": "string",
                 "surveyResponderId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponder": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -37307,6 +40509,8 @@ NewSurvey
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 },
                 "surveyResponseDetails": [
@@ -37328,6 +40532,8 @@ NewSurvey
                 "score": 0,
                 "questionId": "string",
                 "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "question": {},
                 "followupQuestion": {}
               }
@@ -37349,6 +40555,8 @@ NewSurvey
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -37367,7 +40575,9 @@ NewSurvey
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       },
@@ -37384,6 +40594,8 @@ NewSurvey
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -37405,6 +40617,8 @@ NewSurvey
           "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "questions": [
             {
               "deleted": true,
@@ -37419,6 +40633,8 @@ NewSurvey
               "name": "string",
               "status": "Draft",
               "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
               "isScoreEnabled": true,
               "isFollowupEnabled": true,
               "validation": {},
@@ -37442,6 +40658,8 @@ NewSurvey
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -37464,6 +40682,8 @@ NewSurvey
                 "responseType": "Multi Selection",
                 "textAnswer": "string",
                 "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "surveyResponse": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -37475,6 +40695,8 @@ NewSurvey
                   "id": "string",
                   "surveyResponderId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "surveyResponder": {},
                   "surveyCycle": {},
                   "surveyResponseDetails": [
@@ -37496,6 +40718,8 @@ NewSurvey
                   "score": 0,
                   "questionId": "string",
                   "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "question": {},
                   "followupQuestion": {}
                 }
@@ -37521,7 +40745,9 @@ NewSurvey
               "id": "string",
               "name": "string",
               "displayOrder": 0,
-              "surveyId": "string"
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
             }
           ]
         }
@@ -37540,7 +40766,9 @@ NewSurvey
       "id": "string",
       "name": "string",
       "displayOrder": 0,
-      "surveyId": "string"
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
     }
   ]
 }
@@ -37573,6 +40801,8 @@ SurveyDtoWithRelations
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
 |questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|[(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })]|
@@ -37618,7 +40848,9 @@ SurveyDtoWithRelations
   "recurrenceEndDate": "string",
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
-  "baseSurveyId": "string"
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -37649,6 +40881,8 @@ SurveyPartial
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 #### Enumerated Values
 
@@ -37689,6 +40923,8 @@ SurveyPartial
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }
@@ -37721,6 +40957,8 @@ SurveyDtoPartial
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
 
@@ -37763,6 +41001,8 @@ SurveyDtoPartial
   "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "createdByName": "string",
   "existingTemplateId": "string"
 }
@@ -37795,6 +41035,8 @@ SurveyDto
 |recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
 
@@ -37832,6 +41074,8 @@ SurveyDto
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "isPredefined": true
 }
 
@@ -37858,6 +41102,8 @@ SurveyQuestionDto
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
 |sectionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |isPredefined|boolean|false|none|none|
 
 <h2 id="tocS_NewSurveyQuestion">NewSurveyQuestion</h2>
@@ -37883,6 +41129,8 @@ SurveyQuestionDto
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "isPredefined": true
 }
 
@@ -37908,6 +41156,8 @@ NewSurveyQuestion
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
 |sectionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |isPredefined|boolean|false|none|none|
 
 <h2 id="tocS_SurveyQuestionWithRelations">SurveyQuestionWithRelations</h2>
@@ -37934,6 +41184,8 @@ NewSurveyQuestion
   "surveyId": "string",
   "questionId": "string",
   "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {},
   "dependentOnQuestion": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -37950,6 +41202,8 @@ NewSurveyQuestion
     "surveyId": "string",
     "questionId": "string",
     "sectionId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "dependentOnQuestion": {},
     "survey": {
       "deleted": true,
@@ -37972,6 +41226,8 @@ NewSurveyQuestion
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {
           "deleted": true,
@@ -37986,6 +41242,8 @@ NewSurveyQuestion
           "name": "string",
           "status": "Draft",
           "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
           "isScoreEnabled": true,
           "isFollowupEnabled": true,
           "validation": {},
@@ -38009,6 +41267,8 @@ NewSurveyQuestion
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -38031,6 +41291,8 @@ NewSurveyQuestion
             "responseType": "Multi Selection",
             "textAnswer": "string",
             "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponse": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -38042,6 +41304,8 @@ NewSurveyQuestion
               "id": "string",
               "surveyResponderId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "surveyResponder": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -38058,6 +41322,8 @@ NewSurveyQuestion
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {
                   "deleted": true,
@@ -38072,6 +41338,8 @@ NewSurveyQuestion
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               },
@@ -38088,6 +41356,8 @@ NewSurveyQuestion
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               },
               "surveyResponseDetails": [
@@ -38109,6 +41379,8 @@ NewSurveyQuestion
               "score": 0,
               "questionId": "string",
               "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "question": {},
               "followupQuestion": {}
             }
@@ -38130,6 +41402,8 @@ NewSurveyQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -38150,6 +41424,8 @@ NewSurveyQuestion
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -38164,6 +41440,8 @@ NewSurveyQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -38180,7 +41458,9 @@ NewSurveyQuestion
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     },
@@ -38197,6 +41477,8 @@ NewSurveyQuestion
       "name": "string",
       "status": "Draft",
       "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
       "isScoreEnabled": true,
       "isFollowupEnabled": true,
       "validation": {},
@@ -38220,6 +41502,8 @@ NewSurveyQuestion
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -38242,6 +41526,8 @@ NewSurveyQuestion
         "responseType": "Multi Selection",
         "textAnswer": "string",
         "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponse": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -38253,6 +41539,8 @@ NewSurveyQuestion
           "id": "string",
           "surveyResponderId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponder": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -38269,6 +41557,8 @@ NewSurveyQuestion
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -38290,6 +41580,8 @@ NewSurveyQuestion
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -38307,6 +41599,8 @@ NewSurveyQuestion
                   "endDate": "string",
                   "isActivated": true,
                   "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {}
                 }
               ],
@@ -38325,7 +41619,9 @@ NewSurveyQuestion
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             },
@@ -38342,6 +41638,8 @@ NewSurveyQuestion
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -38363,6 +41661,8 @@ NewSurveyQuestion
                 "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "questions": [
                   {}
                 ],
@@ -38384,7 +41684,9 @@ NewSurveyQuestion
                     "id": "string",
                     "name": "string",
                     "displayOrder": 0,
-                    "surveyId": "string"
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
                   }
                 ]
               }
@@ -38403,6 +41705,8 @@ NewSurveyQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -38424,6 +41728,8 @@ NewSurveyQuestion
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -38447,6 +41753,8 @@ NewSurveyQuestion
                   "userId": "string",
                   "surveyId": "string",
                   "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
                   "survey": {},
                   "surveyCycle": {}
                 }
@@ -38463,7 +41771,9 @@ NewSurveyQuestion
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -38487,6 +41797,8 @@ NewSurveyQuestion
           "score": 0,
           "questionId": "string",
           "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "question": {},
           "followupQuestion": {}
         }
@@ -38512,6 +41824,8 @@ NewSurveyQuestion
         "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "questions": [
           {}
         ],
@@ -38529,6 +41843,8 @@ NewSurveyQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         ],
@@ -38549,6 +41865,8 @@ NewSurveyQuestion
             "userId": "string",
             "surveyId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {},
             "surveyCycle": {
               "deleted": true,
@@ -38563,6 +41881,8 @@ NewSurveyQuestion
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             }
           }
@@ -38579,7 +41899,9 @@ NewSurveyQuestion
             "id": "string",
             "name": "string",
             "displayOrder": 0,
-            "surveyId": "string"
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
           }
         ]
       }
@@ -38595,7 +41917,9 @@ NewSurveyQuestion
       "id": "string",
       "name": "string",
       "displayOrder": 0,
-      "surveyId": "string"
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
     }
   },
   "survey": {
@@ -38619,6 +41943,8 @@ NewSurveyQuestion
     "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "questions": [
       {
         "deleted": true,
@@ -38633,6 +41959,8 @@ NewSurveyQuestion
         "name": "string",
         "status": "Draft",
         "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
         "isScoreEnabled": true,
         "isFollowupEnabled": true,
         "validation": {},
@@ -38656,6 +41984,8 @@ NewSurveyQuestion
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -38678,6 +42008,8 @@ NewSurveyQuestion
           "responseType": "Multi Selection",
           "textAnswer": "string",
           "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "surveyResponse": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -38689,6 +42021,8 @@ NewSurveyQuestion
             "id": "string",
             "surveyResponderId": "string",
             "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "surveyResponder": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -38705,6 +42039,8 @@ NewSurveyQuestion
               "userId": "string",
               "surveyId": "string",
               "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {},
               "surveyCycle": {
                 "deleted": true,
@@ -38719,6 +42055,8 @@ NewSurveyQuestion
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             },
@@ -38735,6 +42073,8 @@ NewSurveyQuestion
               "endDate": "string",
               "isActivated": true,
               "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "survey": {}
             },
             "surveyResponseDetails": [
@@ -38756,6 +42096,8 @@ NewSurveyQuestion
             "score": 0,
             "questionId": "string",
             "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "question": {},
             "followupQuestion": {}
           }
@@ -38777,6 +42119,8 @@ NewSurveyQuestion
         "endDate": "string",
         "isActivated": true,
         "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {}
       }
     ],
@@ -38797,6 +42141,8 @@ NewSurveyQuestion
         "userId": "string",
         "surveyId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "survey": {},
         "surveyCycle": {
           "deleted": true,
@@ -38811,6 +42157,8 @@ NewSurveyQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       }
@@ -38827,7 +42175,9 @@ NewSurveyQuestion
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "surveyId": "string"
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
       }
     ]
   },
@@ -38844,6 +42194,8 @@ NewSurveyQuestion
     "name": "string",
     "status": "Draft",
     "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": {},
@@ -38867,6 +42219,8 @@ NewSurveyQuestion
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -38889,6 +42243,8 @@ NewSurveyQuestion
       "responseType": "Multi Selection",
       "textAnswer": "string",
       "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "surveyResponse": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -38900,6 +42256,8 @@ NewSurveyQuestion
         "id": "string",
         "surveyResponderId": "string",
         "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -38916,6 +42274,8 @@ NewSurveyQuestion
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -38937,6 +42297,8 @@ NewSurveyQuestion
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -38954,6 +42316,8 @@ NewSurveyQuestion
                 "endDate": "string",
                 "isActivated": true,
                 "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {}
               }
             ],
@@ -38972,7 +42336,9 @@ NewSurveyQuestion
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           },
@@ -38989,6 +42355,8 @@ NewSurveyQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -39010,6 +42378,8 @@ NewSurveyQuestion
               "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
               "questions": [
                 {}
               ],
@@ -39031,7 +42401,9 @@ NewSurveyQuestion
                   "id": "string",
                   "name": "string",
                   "displayOrder": 0,
-                  "surveyId": "string"
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
                 }
               ]
             }
@@ -39050,6 +42422,8 @@ NewSurveyQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -39071,6 +42445,8 @@ NewSurveyQuestion
             "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "questions": [
               {}
             ],
@@ -39094,6 +42470,8 @@ NewSurveyQuestion
                 "userId": "string",
                 "surveyId": "string",
                 "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
                 "survey": {},
                 "surveyCycle": {}
               }
@@ -39110,7 +42488,9 @@ NewSurveyQuestion
                 "id": "string",
                 "name": "string",
                 "displayOrder": 0,
-                "surveyId": "string"
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
               }
             ]
           }
@@ -39134,6 +42514,8 @@ NewSurveyQuestion
         "score": 0,
         "questionId": "string",
         "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
         "followupQuestion": {}
       }
@@ -39159,6 +42541,8 @@ NewSurveyQuestion
       "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
       "questions": [
         {}
       ],
@@ -39176,6 +42560,8 @@ NewSurveyQuestion
           "endDate": "string",
           "isActivated": true,
           "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {}
         }
       ],
@@ -39196,6 +42582,8 @@ NewSurveyQuestion
           "userId": "string",
           "surveyId": "string",
           "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
           "survey": {},
           "surveyCycle": {
             "deleted": true,
@@ -39210,6 +42598,8 @@ NewSurveyQuestion
             "endDate": "string",
             "isActivated": true,
             "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
             "survey": {}
           }
         }
@@ -39226,7 +42616,9 @@ NewSurveyQuestion
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "surveyId": "string"
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
         }
       ]
     }
@@ -39242,7 +42634,9 @@ NewSurveyQuestion
     "id": "string",
     "name": "string",
     "displayOrder": 0,
-    "surveyId": "string"
+    "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {}
   }
 }
 
@@ -39269,6 +42663,8 @@ SurveyQuestionWithRelations
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
 |sectionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 |dependentOnQuestion|[SurveyQuestionWithRelations](#schemasurveyquestionwithrelations)|false|none|(tsType: SurveyQuestionWithRelations, schemaOptions: { includeRelations: true })|
 |survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -39297,7 +42693,9 @@ SurveyQuestionWithRelations
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39323,6 +42721,8 @@ SurveyQuestionPartial
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
 |sectionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyQuestion">SurveyQuestion</h2>
 <!-- backwards compatibility -->
@@ -39347,7 +42747,9 @@ SurveyQuestionPartial
   "weight": 100,
   "surveyId": "string",
   "questionId": "string",
-  "sectionId": "string"
+  "sectionId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39373,6 +42775,8 @@ SurveyQuestion
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
 |sectionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_Section">Section</h2>
 <!-- backwards compatibility -->
@@ -39393,7 +42797,9 @@ SurveyQuestion
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39415,6 +42821,8 @@ Section
 |name|string|false|none|none|
 |displayOrder|number|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_NewSection">NewSection</h2>
 <!-- backwards compatibility -->
@@ -39434,7 +42842,9 @@ Section
   "modifiedBy": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39455,6 +42865,8 @@ NewSection
 |name|string|false|none|none|
 |displayOrder|number|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SectionPartial">SectionPartial</h2>
 <!-- backwards compatibility -->
@@ -39475,7 +42887,9 @@ NewSection
   "id": "string",
   "name": "string",
   "displayOrder": 0,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39497,6 +42911,8 @@ SectionPartial
 |name|string|false|none|none|
 |displayOrder|number|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyCycle">SurveyCycle</h2>
 <!-- backwards compatibility -->
@@ -39518,7 +42934,9 @@ SectionPartial
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39541,6 +42959,8 @@ SurveyCycle
 |endDate|string|true|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_NewSurveyCycle">NewSurveyCycle</h2>
 <!-- backwards compatibility -->
@@ -39561,7 +42981,9 @@ SurveyCycle
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39583,6 +43005,8 @@ NewSurveyCycle
 |endDate|string|true|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyCyclePartial">SurveyCyclePartial</h2>
 <!-- backwards compatibility -->
@@ -39604,7 +43028,9 @@ NewSurveyCycle
   "startDate": "string",
   "endDate": "string",
   "isActivated": true,
-  "surveyId": "string"
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39627,6 +43053,8 @@ SurveyCyclePartial
 |endDate|string|false|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyResponder">SurveyResponder</h2>
 <!-- backwards compatibility -->
@@ -39651,7 +43079,9 @@ SurveyCyclePartial
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39677,6 +43107,8 @@ SurveyResponder
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
 |surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_NewSurveyResponderInSurvey">NewSurveyResponderInSurvey</h2>
 <!-- backwards compatibility -->
@@ -39700,7 +43132,9 @@ SurveyResponder
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39725,6 +43159,8 @@ NewSurveyResponderInSurvey
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
 |surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_ResponderReminderDto">ResponderReminderDto</h2>
 <!-- backwards compatibility -->
@@ -39773,7 +43209,9 @@ ResponderReminderDto
   "fullName": "string",
   "userId": "string",
   "surveyId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39799,6 +43237,8 @@ SurveyResponderPartial
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
 |surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyResponse">SurveyResponse</h2>
 <!-- backwards compatibility -->
@@ -39818,7 +43258,9 @@ SurveyResponderPartial
   "modifiedBy": "string",
   "id": "string",
   "surveyResponderId": "string",
-  "surveyCycleId": "string"
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39839,6 +43281,8 @@ SurveyResponse
 |id|string|false|none|none|
 |surveyResponderId|string|true|none|none|
 |surveyCycleId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_NewSurveyResponse">NewSurveyResponse</h2>
 <!-- backwards compatibility -->
@@ -39852,7 +43296,9 @@ SurveyResponse
   "surveyResponseDetailArray": [
     {}
   ],
-  "surveyResponderId": "string"
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39865,6 +43311,8 @@ NewSurveyResponse
 |---|---|---|---|---|
 |surveyResponseDetailArray|[object]|false|none|none|
 |surveyResponderId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyResponseDto">SurveyResponseDto</h2>
 <!-- backwards compatibility -->
@@ -39878,7 +43326,9 @@ NewSurveyResponse
   "surveyResponseDetailArray": [
     {}
   ],
-  "surveyResponderId": "string"
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
 }
 
 ```
@@ -39891,6 +43341,8 @@ SurveyResponseDto
 |---|---|---|---|---|
 |surveyResponseDetailArray|[object]|false|none|none|
 |surveyResponderId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_PingResponse">PingResponse</h2>
 <!-- backwards compatibility -->
@@ -40082,7 +43534,9 @@ question_options.IncludeFilter.Items
     "displayOrder": true,
     "score": true,
     "questionId": true,
-    "followupQuestionId": true
+    "followupQuestionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -40151,6 +43605,8 @@ oneOf
 |»» score|boolean|false|none|none|
 |»» questionId|boolean|false|none|none|
 |»» followupQuestionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -40203,7 +43659,9 @@ or
     "displayOrder": true,
     "score": true,
     "questionId": true,
-    "followupQuestionId": true
+    "followupQuestionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -40273,6 +43731,8 @@ oneOf
 |»» score|boolean|false|none|none|
 |»» questionId|boolean|false|none|none|
 |»» followupQuestionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -40437,7 +43897,9 @@ template_questions.IncludeFilter.Items
     "weight": true,
     "templateId": true,
     "questionId": true,
-    "dependentOnQuestionId": true
+    "dependentOnQuestionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -40507,6 +43969,8 @@ oneOf
 |»» templateId|boolean|false|none|none|
 |»» questionId|boolean|false|none|none|
 |»» dependentOnQuestionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -40560,7 +44024,9 @@ or
     "weight": true,
     "templateId": true,
     "questionId": true,
-    "dependentOnQuestionId": true
+    "dependentOnQuestionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -40631,6 +44097,8 @@ oneOf
 |»» templateId|boolean|false|none|none|
 |»» questionId|boolean|false|none|none|
 |»» dependentOnQuestionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -40798,6 +44266,8 @@ questions.IncludeFilter.Items
     "name": true,
     "status": true,
     "questionType": true,
+    "extId": true,
+    "extMetadata": true,
     "isScoreEnabled": true,
     "isFollowupEnabled": true,
     "validation": true,
@@ -40872,6 +44342,8 @@ oneOf
 |»» name|boolean|false|none|none|
 |»» status|boolean|false|none|none|
 |»» questionType|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 |»» isScoreEnabled|boolean|false|none|none|
 |»» isFollowupEnabled|boolean|false|none|none|
 |»» validation|boolean|false|none|none|
@@ -41042,7 +44514,9 @@ survey_response_details.IncludeFilter.Items
     "score": true,
     "responseType": true,
     "textAnswer": true,
-    "optionId": true
+    "optionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -41112,6 +44586,8 @@ oneOf
 |»» responseType|boolean|false|none|none|
 |»» textAnswer|boolean|false|none|none|
 |»» optionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -41165,7 +44641,9 @@ or
     "score": true,
     "responseType": true,
     "textAnswer": true,
-    "optionId": true
+    "optionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -41236,6 +44714,8 @@ oneOf
 |»» responseType|boolean|false|none|none|
 |»» textAnswer|boolean|false|none|none|
 |»» optionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -41285,7 +44765,9 @@ or
     "id": true,
     "name": true,
     "displayOrder": true,
-    "surveyId": true
+    "surveyId": true,
+    "extId": true,
+    "extMetadata": true
   }
 }
 
@@ -41336,6 +44818,8 @@ oneOf
 |»» name|boolean|false|none|none|
 |»» displayOrder|boolean|false|none|none|
 |»» surveyId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -41368,7 +44852,9 @@ xor
     "id": true,
     "name": true,
     "displayOrder": true,
-    "surveyId": true
+    "surveyId": true,
+    "extId": true,
+    "extMetadata": true
   }
 }
 
@@ -41420,6 +44906,8 @@ oneOf
 |»» name|boolean|false|none|none|
 |»» displayOrder|boolean|false|none|none|
 |»» surveyId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -41562,7 +45050,9 @@ survey_cycles.IncludeFilter.Items
     "startDate": true,
     "endDate": true,
     "isActivated": true,
-    "surveyId": true
+    "surveyId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -41630,6 +45120,8 @@ oneOf
 |»» endDate|boolean|false|none|none|
 |»» isActivated|boolean|false|none|none|
 |»» surveyId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -41681,7 +45173,9 @@ or
     "startDate": true,
     "endDate": true,
     "isActivated": true,
-    "surveyId": true
+    "surveyId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -41750,6 +45244,8 @@ oneOf
 |»» endDate|boolean|false|none|none|
 |»» isActivated|boolean|false|none|none|
 |»» surveyId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -41916,7 +45412,9 @@ survey_questions.IncludeFilter.Items
     "weight": true,
     "surveyId": true,
     "questionId": true,
-    "sectionId": true
+    "sectionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -41987,6 +45485,8 @@ oneOf
 |»» surveyId|boolean|false|none|none|
 |»» questionId|boolean|false|none|none|
 |»» sectionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -42041,7 +45541,9 @@ or
     "weight": true,
     "surveyId": true,
     "questionId": true,
-    "sectionId": true
+    "sectionId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -42113,6 +45615,8 @@ oneOf
 |»» surveyId|boolean|false|none|none|
 |»» questionId|boolean|false|none|none|
 |»» sectionId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -42274,7 +45778,9 @@ survey_cycle_responses.IncludeFilter.Items
     "modifiedBy": true,
     "id": true,
     "surveyResponderId": true,
-    "surveyCycleId": true
+    "surveyCycleId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -42341,6 +45847,8 @@ oneOf
 |»» id|boolean|false|none|none|
 |»» surveyResponderId|boolean|false|none|none|
 |»» surveyCycleId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -42512,7 +46020,9 @@ surveys.IncludeFilter.Items
     "recurrenceEndDate": true,
     "recurrenceEndAfterOccurrences": true,
     "isEnableWeights": true,
-    "baseSurveyId": true
+    "baseSurveyId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -42588,6 +46098,8 @@ oneOf
 |»» recurrenceEndAfterOccurrences|boolean|false|none|none|
 |»» isEnableWeights|boolean|false|none|none|
 |»» baseSurveyId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -42647,7 +46159,9 @@ or
     "recurrenceEndDate": true,
     "recurrenceEndAfterOccurrences": true,
     "isEnableWeights": true,
-    "baseSurveyId": true
+    "baseSurveyId": true,
+    "extId": true,
+    "extMetadata": true
   },
   "include": [
     {
@@ -42724,6 +46238,8 @@ oneOf
 |»» recurrenceEndAfterOccurrences|boolean|false|none|none|
 |»» isEnableWeights|boolean|false|none|none|
 |»» baseSurveyId|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -42774,7 +46290,9 @@ or
     "uid": true,
     "name": true,
     "status": true,
-    "isEnableWeight": true
+    "isEnableWeight": true,
+    "extId": true,
+    "extMetadata": true
   }
 }
 
@@ -42826,6 +46344,8 @@ oneOf
 |»» name|boolean|false|none|none|
 |»» status|boolean|false|none|none|
 |»» isEnableWeight|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 
@@ -42859,7 +46379,9 @@ xor
     "uid": true,
     "name": true,
     "status": true,
-    "isEnableWeight": true
+    "isEnableWeight": true,
+    "extId": true,
+    "extMetadata": true
   }
 }
 
@@ -42912,6 +46434,8 @@ oneOf
 |»» name|boolean|false|none|none|
 |»» status|boolean|false|none|none|
 |»» isEnableWeight|boolean|false|none|none|
+|»» extId|boolean|false|none|none|
+|»» extMetadata|boolean|false|none|none|
 
 xor
 

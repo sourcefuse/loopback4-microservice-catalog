@@ -48,9 +48,8 @@ describe('Survey Controller', () => {
   });
 
   it('will return all the values with status 200', async () => {
-    const reqToAddSurvey = await addSurvey();
-
-    const response = await client
+    await addSurvey();
+    await client
       .get(`${basePath}`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);

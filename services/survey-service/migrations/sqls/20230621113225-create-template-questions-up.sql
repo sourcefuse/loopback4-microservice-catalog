@@ -13,6 +13,8 @@ CREATE TABLE template_questions (
     modified_by varchar(50),
     deleted_on timestamp NULL,
     deleted_by varchar(50),
+    ext_id varchar(100),
+    ext_metadata json,
     PRIMARY KEY (id)
 );
 

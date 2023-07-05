@@ -11,6 +11,8 @@ CREATE TABLE question_templates (
     deleted_on timestamp NULL,
     deleted_by varchar(50),
     is_enable_weight TINYINT(1) DEFAULT FALSE,
+    ext_id varchar(100),
+    ext_metadata json,
     PRIMARY KEY (id)
 );
 

@@ -1,4 +1,4 @@
-import {model, property, belongsTo} from '@loopback/repository';
+import {model, property, belongsTo, AnyObject} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Question} from './questions.model';
 import {QuestionTemplate} from './question-template.model';
@@ -69,6 +69,18 @@ export class TemplateQuestion extends UserModifiableEntity {
     },
   )
   dependentOnQuestionId: string;
+
+  @property({
+    type: 'string',
+    name: 'ext_id',
+  })
+  extId?: string;
+
+  @property({
+    type: 'object',
+    name: 'ext_metadata',
+  })
+  extMetadata?: AnyObject;
 
   constructor(data?: Partial<TemplateQuestion>) {
     super(data);
