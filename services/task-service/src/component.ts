@@ -18,9 +18,10 @@ import {
   ServiceSequence,
 } from '@sourceloop/core';
 import {EventQueueService} from './services';
-import {SQSConnector} from './providers';
+import {Connector} from './providers';
 import * as controllers from './controllers';
 import * as services from './services';
+import {TaskServiceBindings} from './keys';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -31,23 +32,16 @@ export class TaskServiceComponent implements Component {
    */
   models?: Class<Model>[];
 
-  providers: ProviderMap = {};
+  providers: ProviderMap = {
+    [TaskServiceBindings.TASK_PROVIDER.key]: Connector,
+  };
 
-  services = [services.EventQueueService];
+  services = [services.EventQueueService, services.EventProcessorService];
   /**
    * An array of controller classes
    */
   controllers?: ControllerClass[];
-  bindings?: Binding[] = [
-    Binding.bind('sqs.config').to({
-      accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SQS_SECRET_KEY,
-      region: process.env.AWS_SQS_REGION,
-      queueUrl: process.env.AWS_SQS_URL,
-    }),
-    Binding.bind('event-queue.connector').toProvider(SQSConnector),
-    Binding.bind('services.EventQueueService').toClass(EventQueueService),
-  ];
+  bindings?: Binding[] = [];
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,

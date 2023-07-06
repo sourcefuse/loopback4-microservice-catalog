@@ -1,8 +1,15 @@
-import {post, get, requestBody, HttpErrors} from '@loopback/rest';
+import {
+  post,
+  get,
+  requestBody,
+  HttpErrors,
+  getModelSchemaRef,
+} from '@loopback/rest';
 import {inject} from '@loopback/core';
 import {EventQueueService} from '../services/event-queue.service';
 import {Event} from '../types';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {EventModel} from '../models';
 
 const baseUrl = '/event-queue';
 
@@ -14,6 +21,12 @@ export class EventQueueController {
 
   @post(`${baseUrl}/enqueue-event`, {
     responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Enque model instance',
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(EventModel)},
+        },
+      },
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Event enqueued successfully',
       },
@@ -22,10 +35,22 @@ export class EventQueueController {
       },
     },
   })
-  async enqueueEvent(@requestBody() event: Event): Promise<void> {
+  async enqueueEvent(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(EventModel, {
+            title: 'EventModel',
+          }),
+        },
+      },
+    })
+    eventModel: Omit<EventModel, 'id'>,
+  ): Promise<void> {
     try {
-      await this.eventQueueService.enqueueEvent(event);
+      await this.eventQueueService.enqueueEvent(eventModel);
     } catch (error) {
+      console.log('Enque error', error);
       throw new HttpErrors.InternalServerError('Failed to enqueue event');
     }
   }
