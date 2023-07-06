@@ -1,7 +1,7 @@
 import {model, property} from '@loopback/repository';
 
 @model()
-export class Event {
+export class EventModel {
   @property({
     type: 'string',
     required: true,

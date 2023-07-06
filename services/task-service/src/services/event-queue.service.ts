@@ -1,7 +1,9 @@
 import {BindingScope, inject, injectable} from '@loopback/context';
 import {EventQueueConnector, Event} from '../types';
 import {asLifeCycleObserver} from '@loopback/core';
-import {SQSConnector} from '../providers';
+import {TaskServiceBindings} from '../keys';
+import {EventModel} from '../models';
+import {EventProcessorService} from './index';
 
 @injectable(
   {
@@ -10,24 +12,21 @@ import {SQSConnector} from '../providers';
   asLifeCycleObserver,
 )
 export class EventQueueService {
-  private connector: EventQueueConnector;
-
-  constructor(@inject('sqs.config') private sqsSettings: any) {
-    this.connector = new SQSConnector('SQSConnector', this.sqsSettings);
+  constructor(
+    @inject('config') private queueSettings: any,
+    @inject(TaskServiceBindings.TASK_PROVIDER)
+    private connector: EventQueueConnector,
+    @inject('services.EventProcessorService')
+    public eventProcessorService: EventProcessorService,
+  ) {
+    this.listenForEvents();
   }
 
-  async enqueueEvent(event: Event): Promise<void> {
-    // Enqueue the event using the underlying event queue system
-    // Implementation logic goes here
-    console.log(`Enqueuing event: ${JSON.stringify(event)}`);
-    // Example: enqueue event using the connector
+  async enqueueEvent(event: Partial<EventModel>): Promise<void> {
     const connection = await this.connector.connect(this.connector.settings);
-    console.log('Checking connenction', connection);
-    // Example: enqueue the event using the connection
-    // await connection.sendMessage('event');
     const params = {
-      MessageBody: 'messageBody',
-      QueueUrl: process.env.AWS_SQS_URL,
+      MessageBody: JSON.stringify(event.payload),
+      QueueUrl: process.env.AWS_QUEUE_URL,
     };
     await connection.sendMessage(params, (err: any, data: any) => {
       if (err) {
@@ -36,39 +35,68 @@ export class EventQueueService {
         console.log('Message sent:', data.MessageId);
       }
     });
-    // Disconnect from the underlying system (optional)
-    console.log('All done');
+    // Todo: Disconnect from the underlying system (optional)
   }
 
   async startListening(): Promise<void> {
-    // Start listening to the event queue system for incoming events
-    // Implementation logic goes here
-    console.log('Start listening to event queue', this);
-    // Example: connect to the event queue system
     const connection = await this.connector.connect(this.connector.settings);
-    // Example: listen to incoming events using the connection
     connection.onEvent((event: Event) => {
-      // Process the incoming event
       console.log(`Received event: ${JSON.stringify(event)}`);
-      // Handle the event as needed
     });
   }
 
   async stopListening(): Promise<void> {
-    // Stop listening to the event queue system
-    // Implementation logic goes here
-    console.log('Stop listening to event queue');
-    // Example: disconnect from the event queue system
     await this.connector.disconnect(this.connector.settings);
   }
 
+  listenForEvents(): void {
+    // Start listening to the SQS queue for incoming events
+    const queueUrl = this.connector.settings.queueUrl;
+
+    const receiveParams = {
+      QueueUrl: queueUrl,
+      MaxNumberOfMessages: 10,
+      WaitTimeSeconds: 20,
+    };
+
+    const receiveMessages = async () => {
+      try {
+        const connection = await this.connector.connect(
+          this.connector.settings,
+        );
+        const data = await connection.receiveMessage(receiveParams).promise();
+        const messages = data.Messages;
+        if (messages && messages.length) {
+          for (const message of messages) {
+            const event: Event = JSON.parse(message.Body || '{}');
+
+            // Logic to process this event
+            this.eventProcessorService.processEvent(event);
+
+            // Delete the processed message from the SQS queue
+            await connection
+              .deleteMessage({
+                QueueUrl: queueUrl,
+                ReceiptHandle: message.ReceiptHandle!,
+              })
+              .promise();
+          }
+        }
+      } catch (error) {
+        console.error('Error receiving message from SQS:', error);
+      }
+
+      // Call the function recursively to continuously listen for new messages
+      receiveMessages();
+    };
+
+    // Start listening for events
+    receiveMessages();
+  }
+
   async healthCheck(): Promise<any> {
-    // Perform a health check on the event queue system
-    // Implementation logic goes here
     console.log('Performing health check on event queue');
-    // Example: perform health check using the connector
     const healthCheckResponse = await this.connector.ping();
-    // Return the health check response
     return healthCheckResponse;
   }
 }

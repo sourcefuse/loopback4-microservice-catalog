@@ -1,20 +1,146 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Oidc Service",
+    "title": "Task Service",
     "version": "1.0.0",
     "description": "Task microservice",
     "contact": {
       "name": "SourceFuse"
     }
   },
-  "paths": {},
+  "paths": {
+    "/event-queue/enqueue-event": {
+      "post": {
+        "x-controller-name": "EventQueueController",
+        "x-operation-name": "enqueueEvent",
+        "tags": [
+          "EventQueueController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Enque model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventModel"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Event enqueued successfully"
+          },
+          "500": {
+            "description": "Failed to enqueue event"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventModel"
+              }
+            }
+          }
+        },
+        "operationId": "EventQueueController.enqueueEvent"
+      }
+    },
+    "/event-queue/health-check": {
+      "get": {
+        "x-controller-name": "EventQueueController",
+        "x-operation-name": "healthCheck",
+        "tags": [
+          "EventQueueController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Health check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to perform health check"
+          }
+        },
+        "operationId": "EventQueueController.healthCheck"
+      }
+    },
+    "/event-queue/start-listening": {
+      "get": {
+        "x-controller-name": "EventQueueController",
+        "x-operation-name": "startListening",
+        "tags": [
+          "EventQueueController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Started listening to events"
+          },
+          "500": {
+            "description": "Failed to start listening to events"
+          }
+        },
+        "operationId": "EventQueueController.startListening"
+      }
+    },
+    "/event-queue/stop-listening": {
+      "get": {
+        "x-controller-name": "EventQueueController",
+        "x-operation-name": "stopListening",
+        "tags": [
+          "EventQueueController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Stopped listening to events"
+          },
+          "500": {
+            "description": "Failed to stop listening to events"
+          }
+        },
+        "operationId": "EventQueueController.stopListening"
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "HTTPBearer": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "EventModel": {
+        "title": "EventModel",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "description",
+          "source",
+          "payload"
+        ],
+        "additionalProperties": false
       }
     }
   },

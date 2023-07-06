@@ -1,1 +1,1 @@
-export * from './sqs-connector.provider';
+export * from './connector.provider';
