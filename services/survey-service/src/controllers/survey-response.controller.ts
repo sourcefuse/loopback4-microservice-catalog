@@ -13,6 +13,8 @@ import {
   response,
   post,
   HttpErrors,
+  RestBindings,
+  Request,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -21,7 +23,10 @@ import {SurveyResponse, SurveyResponseDto} from '../models';
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
 import {SurveyResponseService} from '../services/survey-response.service';
 import {PermissionKey} from '../enum/permission-key.enum';
-import {service} from '@loopback/core';
+import {inject, service} from '@loopback/core';
+import {Secret, verify, JwtPayload} from 'jsonwebtoken';
+import {SurveyRepository} from '../repositories';
+import {ErrorKeys} from '../enum';
 
 const basePath = '/surveys/{surveyId}/survey-responses';
 
@@ -31,6 +36,10 @@ export class SurveyResponseController {
     private surveyResponseRepository: SurveyResponseRepository,
     @service(SurveyResponseService)
     private surveyResponseService: SurveyResponseService,
+    @inject(RestBindings.Http.REQUEST)
+    private readonly request: Request,
+    @repository(SurveyRepository)
+    private surveyRepository: SurveyRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -61,6 +70,27 @@ export class SurveyResponseController {
     surveyResponse: SurveyResponseDto,
     @param.path.string('surveyId') surveyId: string,
   ): Promise<SurveyResponse> {
+    const token = this.request.headers.authorization?.split(' ')[1] as string;
+    const secret = process.env.JWT_SECRET as Secret;
+    const decodedToken = verify(token, secret) as JwtPayload;
+    if (decodedToken.surveyCycleId) {
+      const responders = await this.surveyRepository
+        .surveyResponders(surveyId)
+        .find({
+          where: {
+            surveyCycleId: decodedToken.surveyCycleId,
+          },
+        });
+      const responderEmails: string[] = [];
+      responders.forEach(responder => {
+        responderEmails.push(responder.email);
+      });
+      const validUser = responderEmails.includes(decodedToken.email);
+      if (!validUser) {
+        throw new HttpErrors.Unauthorized(ErrorKeys.NotAuthorised);
+      }
+    }
+
     return this.surveyResponseService.createResponse(surveyId, surveyResponse);
   }
 

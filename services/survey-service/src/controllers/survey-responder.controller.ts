@@ -20,7 +20,7 @@ import {
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyResponder} from '../models';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
@@ -31,7 +31,7 @@ import {SurveyResponseRepository} from '../repositories/survey-response.reposito
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
 import {SurveyCycleService} from '../services/survey-cycle.service';
-import {SurveyResponseService} from '../services/survey-response.service';
+import {SurveyResponderService} from '../services/survey-responder.service';
 
 const basePath = '/surveys/{surveyId}/survey-responders';
 
@@ -45,12 +45,12 @@ export class SurveyResponderController {
     protected surveyResponseRepository: SurveyResponseRepository,
     @repository(SurveyCycleRepository)
     protected surveyCycleRepository: SurveyCycleRepository,
-    @service(SurveyResponseService)
-    private surveyResponseService: SurveyResponseService,
     @service(SurveyCycleService)
     private surveyCycleService: SurveyCycleService,
     @service(SurveyService)
     private surveyService: SurveyService,
+    @service(SurveyResponderService)
+    private surveyResponderService: SurveyResponderService,
     @inject(LOGGER.LOGGER_INJECT)
     public logger: ILogger,
   ) {}
@@ -159,13 +159,13 @@ export class SurveyResponderController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.CreateResponderReminder],
+    permissions: ['*'],
   })
-  @post(`${basePath}/reminder`)
+  @post(`${basePath}/token`)
   @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Send responders reminder',
+    description: 'Send Token for Responders',
   })
-  async sendReminder(
+  async getToken(
     @param.path.string('surveyId') surveyId: string,
     @requestBody({
       content: {
@@ -175,22 +175,21 @@ export class SurveyResponderController {
       },
     })
     responderReminderDto: ResponderReminderDto,
-  ): Promise<void> {
+  ) {
     const where = {
       id: {inq: responderReminderDto.surveyResponderIds},
-      surveyId,
     };
-    const surveyResponders = await this.surveyResponderRepository.count(where);
-    if (
-      surveyResponders.count !== responderReminderDto.surveyResponderIds.length
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.surveyResponseService
-      .sendResponderReminderEmail(surveyId, responderReminderDto)
-      .catch(err => this.logger.error(JSON.stringify(err)));
+    const filter = {
+      where,
+    };
+    const surveyResponders = await this.surveyRepository
+      .surveyResponders(surveyId)
+      .find(filter);
+    const tokens = await this.surveyResponderService.getAccessToken(
+      surveyResponders,
+      surveyId,
+    );
+    return tokens;
   }
 
   @authenticate(STRATEGY.BEARER, {

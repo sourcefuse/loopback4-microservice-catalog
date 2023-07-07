@@ -61,6 +61,7 @@ import {
   QuestionTemplateService,
   SectionService,
   SurveyCycleService,
+  SurveyResponderService,
   SurveyResponseService,
   SurveyService,
 } from './services';
@@ -103,6 +104,7 @@ export class SurveyServiceComponent implements Component {
       SectionService,
       SurveyCycleService,
       SurveyResponseService,
+      SurveyResponderService,
     ];
 
     this.repositories = [

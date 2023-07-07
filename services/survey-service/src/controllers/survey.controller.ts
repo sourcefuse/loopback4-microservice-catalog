@@ -3,7 +3,6 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
@@ -17,6 +16,8 @@ import {
   response,
   post,
   HttpErrors,
+  RestBindings,
+  Request,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
@@ -25,10 +26,14 @@ import {SurveyRepository} from '../repositories/survey.repository';
 import {SurveyService} from '../services/survey.service';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {Survey, SurveyDto} from '../models';
+import {JwtPayload, Secret, verify} from 'jsonwebtoken';
+import {ErrorKeys} from '../enum';
 
 const basePath = '/surveys';
 export class SurveyController {
   constructor(
+    @inject(RestBindings.Http.REQUEST)
+    private readonly request: Request,
     @repository(SurveyRepository)
     private surveyRepository: SurveyRepository,
     @service(SurveyService)
@@ -149,8 +154,27 @@ export class SurveyController {
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Survey, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Survey>,
+    filter?: Filter<Survey>,
   ): Promise<Survey> {
+    const token = this.request.headers.authorization?.split(' ')[1] as string;
+    const secret = process.env.JWT_SECRET as Secret;
+    const decodedToken = verify(token, secret) as JwtPayload;
+    if (decodedToken.surveyCycleId) {
+      const responders = await this.surveyRepository.surveyResponders(id).find({
+        where: {
+          surveyCycleId: decodedToken.surveyCycleId,
+        },
+      });
+      const responderEmails: string[] = [];
+      responders.forEach(responder => {
+        responderEmails.push(responder.email);
+      });
+      const validUser = responderEmails.includes(decodedToken.email);
+      if (!validUser) {
+        throw new HttpErrors.Unauthorized(ErrorKeys.NotAuthorised);
+      }
+    }
+
     const survey = await this.surveyRepository.findOne({
       ...filter,
       where: {id},

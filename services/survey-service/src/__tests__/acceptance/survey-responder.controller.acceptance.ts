@@ -14,6 +14,7 @@ import {token} from '../datasources/userCredsAndPermission';
 import {SurveyResponder} from '../../models';
 import moment from 'moment';
 import {SurveyStatus} from '../../enum';
+import '../../load-env';
 
 describe('Survey Responder Controller', () => {
   let app: SurveyServiceApplication;
@@ -23,6 +24,7 @@ describe('Survey Responder Controller', () => {
   let surveyCycleRepo: SurveyCycleRepository;
   const basePath = '/surveys/1/survey-responders';
   const cyclebasePath = '/surveys/1/survey-cycles';
+  const basePathSurvey = '/surveys';
 
   before('setupApplication', async () => {
     ({app, client} = await setUpApplication());
@@ -57,6 +59,47 @@ describe('Survey Responder Controller', () => {
 
     expect(response).to.have.property('error');
   });
+  it('gives access token for responders and verify it at the time of get survey', async () => {
+    await createSurvey();
+    const cycle = await addSurveyCycle();
+    const responders = await addSurveyResponder(cycle.body.id);
+    const responderIds = [];
+    responderIds.push(responders.body.id);
+    const response = await client
+      .post(`${basePath}/token`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        surveyResponderIds: responderIds,
+      })
+      .expect(200);
+    expect(response.body).to.have.property('accessToken');
+    console.log('ENV', process.env.JWT_SECRET);
+    console.log('t', response.body);
+    const responseSurvey = await client
+      .get(`${basePathSurvey}/1?token=${response.body.accessToken}`)
+      .set('authorization', `Bearer ${response.body.accessToken}`)
+      .expect(200);
+    console.log(responseSurvey.body);
+  });
+  // it('gives 401 if responder is not added to survey', async () => {
+  //   await createSurvey();
+  //   const cycle = await addSurveyCycle();
+  //   const responders = await addSurveyResponder(cycle.body.id);
+  //   const responderIds = [];
+  //   responderIds.push(responders.body.id);
+  //   const response = await client
+  //     .post(`${basePath}/token`)
+  //     .set('Authorization', `Bearer ${token}`)
+  //     .send({
+  //       surveyResponderIds: responderIds,
+  //     })
+  //     .expect(200);
+  //   expect(response.body).to.have.property('accessToken');
+  //   const responseSurvey = await client
+  //     .get(`${basePathSurvey}/2?token=${response.body.accessToken}`)
+  //     .set('authorization', `Bearer ${token}`)
+  //     .expect(401);
+  // });
 
   it('will return all the values with status 200', async () => {
     await createSurvey();
@@ -149,6 +192,18 @@ describe('Survey Responder Controller', () => {
       {
         id: '1',
         name: 'Survey 1',
+        startDate: moment(currentDate).format(),
+        endDate: moment(
+          currentDate.setDate(currentDate.getDate() + 10),
+        ).format(),
+        isPeriodicReassessment: false,
+        surveyText:
+          'JTNDcCUzRWludHJvZHVjdGlvbi4lMjB0byUyMHN1cnZleSUzQyUyRnAlM0U=',
+        status: SurveyStatus.DRAFT,
+      },
+      {
+        id: '2',
+        name: 'Survey 2',
         startDate: moment(currentDate).format(),
         endDate: moment(
           currentDate.setDate(currentDate.getDate() + 10),

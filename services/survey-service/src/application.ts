@@ -8,6 +8,8 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
 import {SurveyServiceComponent} from './component';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
 
 export {ApplicationConfig};
 
