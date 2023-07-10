@@ -8,7 +8,7 @@ import {
   AnyObject,
 } from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {QuestionStatus, QuestionType} from '../enum/question.enum';
+import {QuestionType} from '../enum/question.enum';
 import {Survey} from './survey.model';
 import {SurveyResponseDetail} from './survey-response-detail.model';
 
@@ -39,11 +39,8 @@ export class Question extends UserModifiableEntity {
   @property({
     type: 'string',
     required: true,
-    jsonSchema: {
-      enum: [...Object.values(QuestionStatus), null],
-    },
   })
-  status: QuestionStatus;
+  status: string;
 
   @property({
     type: 'string',

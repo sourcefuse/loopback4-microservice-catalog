@@ -7,7 +7,6 @@ import {
 import {ILogger, LOGGER} from '@sourceloop/core';
 
 import {repository, Where} from '@loopback/repository';
-import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import moment from 'moment';
 import {QuestionType} from '../enum/question.enum';
@@ -17,7 +16,6 @@ import {
   Question,
   SurveyCycle,
   SurveyResponseDetailDto,
-  SurveyResponder,
 } from '../models';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
 import {HttpErrors} from '@loopback/rest';
@@ -28,8 +26,6 @@ import {SurveyRepository} from '../repositories/survey.repository';
 import {isArray} from 'lodash';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
-import {SurveyServiceBindings} from '../keys';
-import {SendReminderFunction} from '../types';
 
 const dateFormat = 'DD MMM YYYY';
 const sqlDateFormat = 'YYYY-MM-DD';
@@ -48,27 +44,7 @@ export class SurveyResponseService {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(SurveyResponderRepository)
     protected surveyResponderRepository: SurveyResponderRepository,
-    @inject(SurveyServiceBindings.ReminderFunction)
-    private readonly getReminderResponse: SendReminderFunction,
   ) {}
-
-  async sendResponderReminderEmail(
-    surveyId: string,
-    responderReminderDto: ResponderReminderDto,
-  ) {
-    await this.getReminderResponse.sendReminder(surveyId, {
-      responderIds: responderReminderDto,
-    });
-  }
-
-  async sendSurveyResponseEmail(
-    surveyId: string,
-    surveyResponder: SurveyResponder,
-  ) {
-    await this.getReminderResponse.sendReminder(surveyId, {
-      surveyResponder: surveyResponder,
-    });
-  }
 
   async createResponse(surveyId: string, surveyResponseDto: SurveyResponseDto) {
     const surveyResponseDetailsDto =
@@ -156,11 +132,6 @@ export class SurveyResponseService {
     );
 
     await this.surveyResponseDetailRepository.createAll(surveyResponseDetails);
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.sendSurveyResponseEmail(surveyId, surveyResponder).catch(err =>
-      this.logger.error(JSON.stringify(err)),
-    );
 
     return createdSurveyResponse;
   }

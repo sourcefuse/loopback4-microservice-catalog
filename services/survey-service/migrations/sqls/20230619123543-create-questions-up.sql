@@ -2,12 +2,7 @@ CREATE TABLE questions (
     id varchar(50) NOT NULL,
     uid VARCHAR(20) NOT NULL,
     name LONGTEXT NULL,
-    status ENUM(
-        'Draft',
-        'Approved',
-        'Added to survey',
-        'Archived'
-    ) NOT NULL,
+    status varchar(50) NOT NULL,
     survey_id VARCHAR(50) NULL,
     question_type ENUM(
         'Drop Down',

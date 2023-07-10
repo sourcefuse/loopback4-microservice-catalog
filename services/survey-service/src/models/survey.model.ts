@@ -5,7 +5,6 @@ import {SurveyCycle} from './survey-cycle.model';
 import {SurveyResponder} from './survey-responder.model';
 import {Section} from './section.model';
 import {SurveyQuestion} from './survey-question.model';
-import {SurveyStatus, SurveyRecurrenceFrequency} from '../enum';
 
 @model({name: 'surveys'})
 export class Survey extends UserModifiableEntity {
@@ -41,17 +40,15 @@ export class Survey extends UserModifiableEntity {
 
   @property({
     type: 'string',
-    required: true,
     name: 'start_date',
-    description: 'Start date of the first survey cycle',
+    description: 'Start date of the survey',
   })
   startDate: string;
 
   @property({
     type: 'string',
-    required: true,
     name: 'end_date',
-    description: 'End date of the first survey cycle',
+    description: 'End date of the survey',
   })
   endDate: string;
 
@@ -59,41 +56,7 @@ export class Survey extends UserModifiableEntity {
     type: 'string',
     required: true,
   })
-  status: SurveyStatus;
-
-  @property({
-    type: 'boolean',
-    required: true,
-    name: 'is_periodic_reassessment',
-  })
-  isPeriodicReassessment: boolean;
-
-  @property({
-    name: 'recurrence_frequency',
-    type: 'string',
-    jsonSchema: {
-      nullable: true,
-      enum: [...Object.values(SurveyRecurrenceFrequency), null],
-    },
-  })
-  recurrenceFrequency?: SurveyRecurrenceFrequency | null;
-
-  @property({
-    type: 'string',
-    name: 'recurrence_end_date',
-    jsonSchema: {nullable: true},
-  })
-  recurrenceEndDate?: string | null;
-
-  @property({
-    type: 'number',
-    name: 'recurrence_end_after_occurrences',
-    jsonSchema: {
-      minimum: 0,
-      maximum: 25,
-    },
-  })
-  recurrenceEndAfterOccurrences?: number | null;
+  status: string;
 
   @property({
     type: 'boolean',

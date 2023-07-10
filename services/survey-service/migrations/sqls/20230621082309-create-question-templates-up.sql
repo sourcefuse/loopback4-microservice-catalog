@@ -2,7 +2,7 @@ CREATE TABLE question_templates (
     id varchar(50) NOT NULL,
     uid varchar(20) NOT NULL,
     name VARCHAR(500) NOT NULL,
-    status ENUM('Draft', 'Approved') NOT NULL,
+    status varchar(50) NOT NULL,
     created_on timestamp DEFAULT current_timestamp,
     modified_on timestamp DEFAULT current_timestamp,
     deleted TINYINT(1) DEFAULT FALSE,

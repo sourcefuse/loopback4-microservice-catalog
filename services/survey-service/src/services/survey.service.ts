@@ -18,7 +18,7 @@ import {unescapeHtml} from '../utils/html.utils';
 import jsdom from 'jsdom';
 import {SurveyCycleService} from './survey-cycle.service';
 import {QuestionRepository} from '../repositories';
-import {SurveyStatus, SurveyRecurrenceFrequency} from '../enum';
+import {SurveyStatus} from '../enum';
 const {JSDOM} = jsdom;
 
 const orderByCreatedOn = 'created_on DESC';
@@ -54,22 +54,9 @@ export class SurveyService {
   async createSurvey(survey: Omit<SurveyDto, 'id'>) {
     const templateId = survey.existingTemplateId;
     survey = await this.createSurveyHelperService.copyFromBaseSurvey(survey);
-
-    if (survey.status !== SurveyStatus.DRAFT) {
-      throw new HttpErrors.BadRequest(ErrorKeys.InvalidStatus);
-    }
     await this._checkBasicSurveyValidations(survey);
-    this._checkRecurrenceDateValidations(survey);
 
     // create survey
-    const occurrences = survey.recurrenceEndAfterOccurrences;
-    if (survey.isPeriodicReassessment && occurrences) {
-      survey.recurrenceEndDate = this.calculateRecurrenceEndDate(
-        survey.endDate,
-        survey.recurrenceFrequency as unknown as SurveyRecurrenceFrequency,
-        occurrences,
-      );
-    }
     if (survey.surveyText) {
       survey.surveyText = unescapeHtml(survey.surveyText) as unknown as string;
       const title = this.getHtmlTextContent(survey.surveyText);
@@ -86,7 +73,7 @@ export class SurveyService {
     }
     const surveyId = await this.generateSurveyId();
     survey.uid = surveyId;
-    survey.status = SurveyStatus.DRAFT;
+    survey.status = survey.status;
     delete survey.existingTemplateId;
     await this.surveyRepository.create(survey);
 
@@ -97,6 +84,10 @@ export class SurveyService {
     if (!createdSurvey) {
       throw new HttpErrors.NotFound();
     }
+
+    this.handleSurveyStatus(createdSurvey.id as string, createdSurvey).catch(
+      err => this.logger.error(JSON.stringify(err)),
+    );
 
     const questionIdMap: Map<string, string> = new Map();
     //key contains old question id     //value contains new question id
@@ -153,31 +144,26 @@ export class SurveyService {
     return createdSurvey;
   }
 
-  private async _checkDateValidationForPatchCase(
+  private _checkDateValidationForPatchCase(
     survey: Survey,
     existingSurvey: Survey,
   ) {
     // means patch request contains at least one date change
-    if (
-      !(survey.startDate || survey.endDate || survey.recurrenceEndDate) &&
-      !survey.status
-    ) {
-      return;
+    if (survey.startDate && !survey.status) {
+      throw new HttpErrors.BadRequest(
+        ErrorKeys.SurveyStartDateShouldBeCurrentDate,
+      );
     }
 
     survey.startDate =
       survey.startDate ??
       moment(new Date(existingSurvey.startDate)).format(DATE_FORMAT);
+
     survey.endDate =
       survey.endDate ??
       moment(new Date(existingSurvey.endDate)).format(DATE_FORMAT);
-    if (!survey.recurrenceEndDate && existingSurvey.recurrenceEndDate) {
-      survey.recurrenceEndDate = moment(
-        new Date(existingSurvey.recurrenceEndDate),
-      ).format(DATE_FORMAT);
-    }
 
-    await this._checkSurveyDateValidations(survey);
+    this._checkSurveyDateValidations(survey);
   }
 
   private async _checkBasicSurveyValidations(
@@ -186,9 +172,9 @@ export class SurveyService {
   ) {
     const survey = new SurveyDto(surveyRequest);
     if (existingSurvey) {
-      await this._checkDateValidationForPatchCase(survey, existingSurvey);
+      this._checkDateValidationForPatchCase(survey, existingSurvey);
     } else {
-      await this._checkSurveyDateValidations(survey);
+      this._checkSurveyDateValidations(survey);
     }
 
     // name should not contain all spaces
@@ -202,7 +188,7 @@ export class SurveyService {
         where: {id: survey.existingTemplateId},
       });
       if (!questionnaire) {
-        throw new HttpErrors.BadRequest('Invalid Questionnaire Id');
+        throw new HttpErrors.BadRequest('Invalid Template Id');
       }
       if (questionnaire.status !== QuestionTemplateStatus.APPROVED) {
         throw new HttpErrors.BadRequest(
@@ -210,38 +196,63 @@ export class SurveyService {
         );
       }
     }
-
-    // recurrenceEndAfterOccurrences should not be in decimal
-    if (
-      survey.recurrenceEndAfterOccurrences &&
-      !Number.isInteger(survey.recurrenceEndAfterOccurrences)
-    ) {
-      throw new HttpErrors.BadRequest(ErrorKeys.DecimalValueNotSupported);
-    }
   }
 
-  private async _checkSurveyDateValidations(survey: Survey) {
-    // do not check date validations when marking survey expired
-    if (survey.status && survey.status === SurveyStatus.Expired) {
-      return;
+  private _checkSurveyDateValidations(survey: Survey) {
+    //CASE 1 -> Only start date is present.
+    if (survey?.startDate && survey?.status === SurveyStatus.ACTIVE) {
+      if (
+        moment(survey.startDate).format(DATE_FORMAT) !==
+        moment().format(DATE_FORMAT)
+      ) {
+        //start date should be current date only and status active.
+        throw new HttpErrors.BadRequest(
+          ErrorKeys.SurveyStartDateShouldBeCurrentDate,
+        );
+      }
     }
 
-    // end date can not be less than start date
-    if (survey.startDate > survey.endDate) {
-      throw new HttpErrors.BadRequest(ErrorKeys.EndDateCanNotBeLess);
+    //CASE 2 -> Both start date and end date are present
+    if (survey?.startDate && survey?.endDate) {
+      // end date can not be less than start date
+      if (survey?.startDate > survey?.endDate) {
+        throw new HttpErrors.BadRequest(ErrorKeys.EndDateCanNotBeLess);
+      }
     }
 
-    // recurrence end date can not be less than start date
+    // CASE 3 -> Only end date is present.
     if (
-      survey.recurrenceEndDate &&
-      survey.startDate > survey.recurrenceEndDate
+      survey?.endDate &&
+      !survey?.startDate &&
+      survey.status === SurveyStatus.ACTIVE
     ) {
-      throw new HttpErrors.BadRequest(ErrorKeys.RecurrenceEndDateCanNotBeLess);
+      throw new HttpErrors.BadRequest(ErrorKeys.SurveyCannotBeActivated);
     }
 
-    // start date can not be in past
-    if (survey.startDate < moment().format(DATE_FORMAT)) {
-      throw new HttpErrors.BadRequest(ErrorKeys.PastDateNotAllowed);
+    //CASE 4 -> If neither end date nor start date is present
+
+    if (
+      !survey?.endDate &&
+      !survey?.startDate &&
+      survey?.status === SurveyStatus.ACTIVE
+    ) {
+      throw new HttpErrors.BadRequest(ErrorKeys.SurveyCannotBeActivated);
+    }
+
+    //CASE 5 -> start date cannot be present with status draft
+    if (survey?.startDate && survey?.status === SurveyStatus.DRAFT) {
+      throw new HttpErrors.BadRequest(
+        ErrorKeys.SurveyCannotBeActivatedInDraftState,
+      );
+    }
+
+    // CASE 6 --> Status can't be active without a start date.
+    if (!survey?.startDate && survey?.status === SurveyStatus.ACTIVE) {
+      throw new HttpErrors.BadRequest(ErrorKeys.SurveyCannotBeActivated);
+    }
+
+    if (moment(survey?.endDate).isBefore(moment())) {
+      throw new HttpErrors.BadRequest(ErrorKeys.EndDateCannotBeInPast);
     }
   }
 
@@ -256,36 +267,6 @@ export class SurveyService {
     }
   }
 
-  calculateRecurrenceEndDate(
-    surveyEndDate: string,
-    recurrenceFrequency: SurveyRecurrenceFrequency,
-    occurrences: number,
-  ) {
-    // means we need to calculate recurrenceEndDate based on recurrenceEndAfterOccurrences
-    const endDate = new Date(surveyEndDate);
-    switch (recurrenceFrequency) {
-      case SurveyRecurrenceFrequency.Monthly:
-        endDate.setMonth(endDate.getMonth() + occurrences);
-        break;
-      case SurveyRecurrenceFrequency.Quarterly:
-        // eslint-disable-next-line no-case-declarations
-        const monthInQuarter = 3;
-        endDate.setMonth(endDate.getMonth() + monthInQuarter * occurrences);
-        break;
-      case SurveyRecurrenceFrequency.Biannually:
-        // eslint-disable-next-line no-case-declarations
-        const monthInBiAnnullay = 6;
-        endDate.setMonth(endDate.getMonth() + monthInBiAnnullay * occurrences);
-        break;
-      case SurveyRecurrenceFrequency.Annually:
-        // eslint-disable-next-line no-case-declarations
-        const monthInAnnullay = 12;
-        endDate.setMonth(endDate.getMonth() + monthInAnnullay * occurrences);
-        break;
-    }
-    return moment(endDate).format(DATE_FORMAT);
-  }
-
   async updateSurvey(id: string, survey: SurveyDto) {
     const existingSurvey = await this.surveyRepository.findOne({
       where: {id},
@@ -294,7 +275,6 @@ export class SurveyService {
       throw new HttpErrors.NotFound();
     }
     await this._checkBasicSurveyValidations(survey, existingSurvey);
-    this.checkIfAllowedToUpdate(existingSurvey, survey);
     // unescape survey text to store in db and validate it
     if (survey.surveyText) {
       survey.surveyText = unescapeHtml(survey.surveyText) as unknown as string;
@@ -302,104 +282,17 @@ export class SurveyService {
       this.validateTitleLength(title);
     }
 
-    survey = this._handleRecurrenceDateChanges(existingSurvey, survey);
-
-    if (survey.status && survey.status === SurveyStatus.Expired) {
+    if (survey.status) {
       const todayDate = moment().format(moment.HTML5_FMT.DATE);
-      if (existingSurvey.isPeriodicReassessment) {
-        survey.recurrenceEndDate = todayDate;
-      }
       if (new Date(existingSurvey.endDate) > new Date(todayDate)) {
         survey.endDate = todayDate;
       }
     }
 
     await this.surveyRepository.updateById(id, survey);
-    this.handleSurveyStatus(id, existingSurvey, survey).catch(err =>
+    this.handleSurveyStatus(id, survey).catch(err =>
       this.logger.error(JSON.stringify(err)),
     );
-  }
-
-  private _handleRecurrenceDateChanges(
-    existingSurvey: Survey,
-    surveyToUpdate: SurveyDto,
-  ) {
-    this._checkRecurrenceDateValidations(surveyToUpdate);
-
-    if (surveyToUpdate.isPeriodicReassessment === false) {
-      surveyToUpdate.recurrenceEndAfterOccurrences = null;
-      surveyToUpdate.recurrenceEndDate = null;
-      surveyToUpdate.recurrenceFrequency = null;
-      return surveyToUpdate;
-    }
-
-    // when user select no end date then UI should pass recurrenceEndDate: null
-    // or when user selects a recurrence end date
-    if (
-      surveyToUpdate.recurrenceEndDate === null ||
-      surveyToUpdate.recurrenceEndDate
-    ) {
-      surveyToUpdate.recurrenceEndAfterOccurrences = null;
-    }
-    // case: user set number of occurrences
-    else if (
-      surveyToUpdate.recurrenceEndAfterOccurrences === 0 ||
-      surveyToUpdate.recurrenceEndAfterOccurrences
-    ) {
-      const endDate = surveyToUpdate.endDate ?? existingSurvey.endDate;
-      const recurrenceFrequency =
-        surveyToUpdate.recurrenceFrequency ??
-        existingSurvey.recurrenceFrequency;
-      surveyToUpdate.recurrenceEndDate = this.calculateRecurrenceEndDate(
-        endDate,
-        recurrenceFrequency as unknown as SurveyRecurrenceFrequency,
-        surveyToUpdate.recurrenceEndAfterOccurrences,
-      );
-    } else {
-      // do nothing
-    }
-    return surveyToUpdate;
-  }
-
-  private _checkRecurrenceDateValidations(survey: Survey) {
-    // if both passed in a request
-    if (
-      // eslint-disable-next-line no-prototype-builtins
-      survey.hasOwnProperty('recurrenceEndDate') &&
-      // eslint-disable-next-line no-prototype-builtins
-      survey.hasOwnProperty('recurrenceEndAfterOccurrences')
-    ) {
-      throw new HttpErrors.BadRequest(
-        ErrorKeys.PassOneOfSurveyRecurrenceDateOrOccurrences,
-      );
-    }
-
-    if (survey.isPeriodicReassessment) {
-      // if isPeriodicReassessment is true and frequency is missing
-      if (!survey.recurrenceFrequency) {
-        throw new HttpErrors.BadRequest(
-          ErrorKeys.SurveyRecurrenceFrequencyMissing,
-        );
-      }
-      // if isPeriodicReassessment is true and neither recurrenceEndDate nor recurrenceEndAfterOccurrences is passed
-      if (
-        !survey.hasOwnProperty('recurrenceEndDate') &&
-        !survey.hasOwnProperty('recurrenceEndAfterOccurrences')
-      ) {
-        throw new HttpErrors.BadRequest(
-          ErrorKeys.PassOneOfSurveyRecurrenceDateOrOccurrences,
-        );
-      }
-    } else if (
-      survey.isPeriodicReassessment === false &&
-      (survey.hasOwnProperty('recurrenceFrequency') ||
-        survey.hasOwnProperty('recurrenceEndDate') ||
-        survey.hasOwnProperty('recurrenceEndAfterOccurrences'))
-    ) {
-      throw new HttpErrors.BadRequest(ErrorKeys.RemoveExtraParams);
-    } else {
-      // do nothing
-    }
   }
 
   async checkIfAllowedToUpdateSurvey(id: string) {
@@ -409,51 +302,18 @@ export class SurveyService {
     if (!existingSurvey) {
       throw new HttpErrors.NotFound('Invalid survey Id!');
     }
-    this.checkIfAllowedToUpdate(existingSurvey);
   }
 
-  private async handleSurveyStatus(
-    id: string,
-    existingSurvey: Survey,
-    updateSurvey: Survey,
-  ) {
-    if (updateSurvey.status === SurveyStatus.Expired) {
-      if (
-        [SurveyStatus.APPROVED, SurveyStatus.COMPLETED].includes(
-          existingSurvey.status,
-        )
-      ) {
-        // delete the next cycle which is not started yet
-        this.surveyCycleRepository.deleteAll({
-          surveyId: existingSurvey.id,
-          isActivated: false,
-        });
-      } else if (existingSurvey.status === SurveyStatus.ACTIVE) {
-        // update end date to today's date of current cycle
-        this.surveyCycleRepository.updateAll(
-          {endDate: moment().format(moment.HTML5_FMT.DATE)},
-          {
-            surveyId: existingSurvey.id,
-            endDate: {gt: moment().format(moment.HTML5_FMT.DATE)},
-          },
-        );
-      } else {
-        // do nothing
-      }
-    } else if (updateSurvey.status === SurveyStatus.APPROVED) {
-      this.handleSurveyApprove(id);
+  private async handleSurveyStatus(id: string, survey: Survey) {
+    if (survey.status === SurveyStatus.ACTIVE) {
+      this.handleSurveyApprove(id, survey);
     } else {
       // do nothing
     }
   }
-  async handleSurveyApprove(id: string) {
-    const survey = await this.surveyRepository.findById(id);
-    // start date can not be in past
-    if (moment().isAfter(new Date(survey.startDate), 'day')) {
-      throw new HttpErrors.BadRequest(ErrorKeys.PastDateNotAllowed);
-    }
+  async handleSurveyApprove(id: string, updateSurvey: Survey) {
     await Promise.all([
-      this.handleSurveyStatusApprove(id, SurveyStatus.APPROVED),
+      this.handleSurveyStatusApprove(id, SurveyStatus.ACTIVE),
       this.approveSurveyQuestions(id),
       this.surveyCycleService.createFirstSurveyCycle(id),
     ]);
@@ -511,13 +371,6 @@ export class SurveyService {
     return valueWithLeadingZero;
   }
 
-  async checkDeleteValidation(surveyId: string) {
-    const survey = await this.surveyRepository.findById(surveyId);
-    if (![SurveyStatus.DRAFT, SurveyStatus.APPROVED].includes(survey.status)) {
-      throw new HttpErrors.BadRequest(ErrorKeys.SurveyCanNotBeDeleted);
-    }
-  }
-
   async deleteRelatedObjects(surveyId: string) {
     // delete related survey questions
     const surveyQuestions = await this.surveyQuestionRepository.find({
@@ -540,23 +393,6 @@ export class SurveyService {
     await this.surveyRepository.updateById(surveyId, {
       id: surveyId,
     });
-  }
-
-  private checkIfAllowedToUpdate(
-    existingSurvey: Survey,
-    updateSurvey?: Survey,
-  ) {
-    // if marking survey as expired in any status other than active, completed or approved throw error
-    if (
-      updateSurvey?.status === SurveyStatus.Expired &&
-      ![
-        SurveyStatus.ACTIVE,
-        SurveyStatus.APPROVED,
-        SurveyStatus.COMPLETED,
-      ].includes(existingSurvey.status)
-    ) {
-      throw new HttpErrors.BadRequest(ErrorKeys.NotAuthorised);
-    }
   }
 
   async validateAndGetSurvey(surveyId: string, filter: Filter<Survey> = {}) {

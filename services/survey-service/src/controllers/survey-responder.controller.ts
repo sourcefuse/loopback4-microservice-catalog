@@ -30,7 +30,6 @@ import {SurveyService} from '../services/survey.service';
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
-import {SurveyCycleService} from '../services/survey-cycle.service';
 import {SurveyResponderService} from '../services/survey-responder.service';
 
 const basePath = '/surveys/{surveyId}/survey-responders';
@@ -45,8 +44,6 @@ export class SurveyResponderController {
     protected surveyResponseRepository: SurveyResponseRepository,
     @repository(SurveyCycleRepository)
     protected surveyCycleRepository: SurveyCycleRepository,
-    @service(SurveyCycleService)
-    private surveyCycleService: SurveyCycleService,
     @service(SurveyService)
     private surveyService: SurveyService,
     @service(SurveyResponderService)
@@ -139,9 +136,6 @@ export class SurveyResponderController {
     if (!surveyCycle?.isActivated) {
       return;
     }
-    this.surveyCycleService
-      .sendEmailToResponder(surveyResponder, surveyCycle)
-      .catch(err => this.logger.error(JSON.stringify(err)));
   }
 
   async validateSurveyCycle(surveyCycleId: string, surveyId: string) {

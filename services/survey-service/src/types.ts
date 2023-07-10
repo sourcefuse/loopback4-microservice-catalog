@@ -9,10 +9,6 @@ export interface ISurveyServiceConfig extends IServiceConfig {
   //do nothing
 }
 
-export interface SendReminderFunction {
-  sendReminder(surveyId: string, reuiredData: any): Promise<object>;
-}
-
 export const SurveyDbSourceName = 'SurveyDb';
 
 // sonarignore:end

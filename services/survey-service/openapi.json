@@ -39,7 +39,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15020   |\n| 15016   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 421   |\n| 541   |\n",
         "responses": {
           "200": {
             "description": "Options model count",
@@ -86,7 +86,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15023   |\n| 15019   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 424   |\n| 544   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.deleteAllOptions",
@@ -132,7 +132,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15021   |\n| 15017   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 422   |\n| 542   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.updateMany",
@@ -181,7 +181,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15021   |\n| 15017   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 422   |\n| 542   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.updateById",
@@ -234,7 +234,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15020   |\n| 15016   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 421   |\n| 541   |\n",
         "responses": {
           "200": {
             "description": "Options model instance",
@@ -284,7 +284,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15023   |\n| 15019   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 424   |\n| 544   |\n",
         "responses": {
           "200": {
             "description": "Return value of OptionController.deleteById",
@@ -329,7 +329,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15022   |\n| 15018   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 423   |\n| 543   |\n",
         "responses": {
           "200": {
             "description": "Options model instance",
@@ -369,7 +369,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15021   |\n| 15017   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 422   |\n| 542   |\n",
         "responses": {
           "200": {
             "description": "Options PATCH success count",
@@ -423,7 +423,7 @@
         "tags": [
           "OptionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15020   |\n| 15016   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 421   |\n| 541   |\n",
         "responses": {
           "200": {
             "description": "Array of Options model instances",
@@ -470,7 +470,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15025   |\n| 15029   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 450   |\n| 454   |\n",
         "responses": {
           "200": {
             "description": "Question model count",
@@ -517,7 +517,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15026   |\n| 15030   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 451   |\n| 455   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateQuestionController.updateById",
@@ -570,7 +570,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15025   |\n| 15029   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 450   |\n| 454   |\n",
         "responses": {
           "200": {
             "description": "Question Question model instance",
@@ -620,7 +620,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15027   |\n| 15031   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 452   |\n| 456   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateQuestionController.deleteById",
@@ -665,7 +665,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15024   |\n| 15028   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 449   |\n| 453   |\n",
         "responses": {
           "200": {
             "description": "Template Question model instance",
@@ -715,7 +715,7 @@
             "description": "Template Question PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 15026   |\n| 15030   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 451   |\n| 455   |\n",
         "parameters": [
           {
             "name": "templateId",
@@ -746,7 +746,7 @@
         "tags": [
           "TemplateQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15025   |\n| 15029   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 450   |\n| 454   |\n",
         "responses": {
           "200": {
             "description": "Array of Template Question model instances",
@@ -793,7 +793,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15000   |\n| 15004   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 389   |\n| 393   |\n",
         "responses": {
           "200": {
             "description": "Question model count",
@@ -832,7 +832,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15003   |\n| 15007   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 392   |\n| 396   |\n",
         "responses": {
           "200": {
             "description": "Return value of QuestionController.deleteAllQuestions",
@@ -868,7 +868,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15002   |\n| 15006   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 391   |\n| 395   |\n",
         "responses": {
           "200": {
             "description": "Question Duplicate model instance",
@@ -911,7 +911,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15001   |\n| 15005   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 390   |\n| 394   |\n",
         "responses": {
           "200": {
             "description": "Return value of QuestionController.updateById",
@@ -956,7 +956,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15000   |\n| 15004   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 389   |\n| 393   |\n",
         "responses": {
           "200": {
             "description": "Question model instance",
@@ -987,7 +987,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15003   |\n| 15007   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 392   |\n| 396   |\n",
         "responses": {
           "200": {
             "description": "Return value of QuestionController.deleteById",
@@ -1024,7 +1024,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15002   |\n| 15006   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 391   |\n| 395   |\n",
         "responses": {
           "200": {
             "description": "Question model instance",
@@ -1054,7 +1054,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15001   |\n| 15005   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 390   |\n| 394   |\n",
         "responses": {
           "200": {
             "description": "Question PATCH success count",
@@ -1100,7 +1100,7 @@
         "tags": [
           "QuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15000   |\n| 15004   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 389   |\n| 393   |\n",
         "responses": {
           "200": {
             "description": "Array of Question model instances",
@@ -1139,7 +1139,7 @@
         "tags": [
           "SurveyResponseDetailViewController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15080   |\n| 15081   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 531   |\n| 532   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponseDetailView model count",
@@ -1186,7 +1186,7 @@
         "tags": [
           "SurveyResponseDetailViewController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15080   |\n| 15081   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 531   |\n| 532   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponseDetailView model instance",
@@ -1238,7 +1238,7 @@
         "tags": [
           "SurveyResponseDetailViewController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15080   |\n| 15081   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 531   |\n| 532   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyResponseDetaimodel instances",
@@ -1285,7 +1285,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15033   |\n| 15037   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 458   |\n| 462   |\n",
         "responses": {
           "200": {
             "description": "Survey model count",
@@ -1324,7 +1324,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15046   |\n| 15050   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 491   |\n| 495   |\n",
         "responses": {
           "200": {
             "description": "Section model count",
@@ -1363,7 +1363,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15051   |\n| 15047   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 496   |\n| 492   |\n",
         "responses": {
           "200": {
             "description": "Return value of SectionController.updateById",
@@ -1415,7 +1415,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15050   |\n| 15046   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 495   |\n| 491   |\n",
         "responses": {
           "200": {
             "description": "Section model instance",
@@ -1465,7 +1465,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15048   |\n| 15052   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 493   |\n| 497   |\n",
         "responses": {
           "200": {
             "description": "Return value of SectionController.deleteById",
@@ -1510,7 +1510,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15045   |\n| 15049   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 490   |\n| 494   |\n",
         "responses": {
           "200": {
             "description": "Section model instance",
@@ -1550,7 +1550,7 @@
         "tags": [
           "SectionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15046   |\n| 15050   |\n| 15042   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 491   |\n| 495   |\n| 535   |\n",
         "responses": {
           "200": {
             "description": "Array of Section model instances",
@@ -1597,7 +1597,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15054   |\n| 15058   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 474   |\n| 478   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle model count",
@@ -1644,7 +1644,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15059   |\n| 15055   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 479   |\n| 475   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyCycleController.updateById",
@@ -1697,7 +1697,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15058   |\n| 15054   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 478   |\n| 474   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle model instance",
@@ -1747,7 +1747,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15056   |\n| 15060   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 476   |\n| 480   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyCycleController.deleteById",
@@ -1788,11 +1788,11 @@
     "/surveys/{surveyId}/survey-cycles": {
       "post": {
         "x-controller-name": "SurveyCycleController",
-        "x-operation-name": "create",
+        "x-operation-name": "createSurveyCycle",
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15053   |\n| 15057   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 473   |\n| 477   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle model instance",
@@ -1824,7 +1824,7 @@
             }
           }
         },
-        "operationId": "SurveyCycleController.create"
+        "operationId": "SurveyCycleController.createSurveyCycle"
       },
       "patch": {
         "x-controller-name": "SurveyCycleController",
@@ -1832,7 +1832,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15059   |\n| 15055   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 479   |\n| 475   |\n",
         "responses": {
           "200": {
             "description": "SurveyCycle PATCH success count",
@@ -1887,7 +1887,7 @@
         "tags": [
           "SurveyCycleController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15054   |\n| 15058   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 474   |\n| 478   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyCycle model instances",
@@ -1934,7 +1934,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15083   |\n| 15087   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 466   |\n| 470   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model count",
@@ -1991,7 +1991,7 @@
             "description": "Survey Question order PATCH success"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 15088   |\n| 15084   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 471   |\n| 467   |\n",
         "parameters": [
           {
             "name": "surveyId",
@@ -2022,7 +2022,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15088   |\n| 15084   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 471   |\n| 467   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyQuestionController.updateById",
@@ -2074,7 +2074,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15087   |\n| 15083   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 470   |\n| 466   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model instance",
@@ -2124,7 +2124,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15085   |\n| 15089   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 468   |\n| 472   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyQuestionController.deleteById",
@@ -2169,7 +2169,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15082   |\n| 15086   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 465   |\n| 469   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model instance",
@@ -2209,7 +2209,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15088   |\n| 15084   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 471   |\n| 467   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion PATCH success count",
@@ -2263,7 +2263,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15083   |\n| 15087   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 466   |\n| 470   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyQuestion model instances",
@@ -2310,7 +2310,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15062   |\n| 15066   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 483   |\n| 487   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponder model count",
@@ -2348,17 +2348,17 @@
         "operationId": "SurveyResponderController.count"
       }
     },
-    "/surveys/{surveyId}/survey-responders/reminder": {
+    "/surveys/{surveyId}/survey-responders/token": {
       "post": {
         "x-controller-name": "SurveyResponderController",
-        "x-operation-name": "sendReminder",
+        "x-operation-name": "getToken",
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15069   |\n",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Return value of SurveyResponderController.sendReminder",
+            "description": "Return value of SurveyResponderController.getToken",
             "content": {}
           },
           "204": {
@@ -2366,7 +2366,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "Send responders reminder"
+                  "description": "Send Token for Responders"
                 }
               }
             }
@@ -2392,7 +2392,7 @@
           },
           "x-parameter-index": 1
         },
-        "operationId": "SurveyResponderController.sendReminder"
+        "operationId": "SurveyResponderController.getToken"
       }
     },
     "/surveys/{surveyId}/survey-responders/{id}": {
@@ -2402,7 +2402,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15067   |\n| 15063   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 488   |\n| 484   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.updateById",
@@ -2471,7 +2471,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15061   |\n| 15065   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 482   |\n| 486   |\n",
         "responses": {
           "200": {
             "description": "Survey model instance",
@@ -2512,7 +2512,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15067   |\n| 15063   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 488   |\n| 484   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.updateAll",
@@ -2571,7 +2571,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15062   |\n| 15066   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 483   |\n| 487   |\n",
         "responses": {
           "200": {
             "description": "Array of Survey has many SurveyResponder",
@@ -2617,7 +2617,7 @@
         "tags": [
           "SurveyResponderController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15064   |\n| 15068   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 485   |\n| 489   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyResponderController.delete",
@@ -2668,7 +2668,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15075   |\n| 15077   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 519   |\n| 521   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponse model count",
@@ -2707,7 +2707,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15075   |\n| 15077   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 519   |\n| 521   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponse model instance",
@@ -2740,7 +2740,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15074   |\n| 15076   |\n| 15044   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 518   |\n| 520   |\n| 537   |\n",
         "responses": {
           "200": {
             "description": "SurveyResponse model instance",
@@ -2780,7 +2780,7 @@
         "tags": [
           "SurveyResponseController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15075   |\n| 15077   |\n| 15043   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 519   |\n| 521   |\n| 536   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyResponse model instances",
@@ -2819,7 +2819,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15038   |\n| 15034   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 463   |\n| 459   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyController.updateById",
@@ -2864,7 +2864,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15037   |\n| 15033   |\n| 15040   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 462   |\n| 458   |\n| 533   |\n",
         "responses": {
           "200": {
             "description": "Survey model instance",
@@ -2906,7 +2906,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15035   |\n| 15039   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 460   |\n| 464   |\n",
         "responses": {
           "200": {
             "description": "Return value of SurveyController.deleteById",
@@ -2943,7 +2943,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15032   |\n| 15036   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 457   |\n| 461   |\n",
         "responses": {
           "200": {
             "description": "Survey model instance",
@@ -2973,7 +2973,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15038   |\n| 15034   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 463   |\n| 459   |\n",
         "responses": {
           "200": {
             "description": "Survey PATCH success count",
@@ -3019,7 +3019,7 @@
         "tags": [
           "SurveyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15033   |\n| 15037   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 458   |\n| 462   |\n",
         "responses": {
           "200": {
             "description": "Array of Survey model instances",
@@ -3058,7 +3058,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15009   |\n| 15013   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 434   |\n| 438   |\n",
         "responses": {
           "200": {
             "description": "Template model count",
@@ -3097,7 +3097,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15010   |\n| 15014   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 435   |\n| 439   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateController.updateById",
@@ -3142,7 +3142,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15009   |\n| 15013   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 434   |\n| 438   |\n",
         "responses": {
           "200": {
             "description": "QuestionTemplate model instance",
@@ -3184,7 +3184,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15011   |\n| 15015   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 436   |\n| 440   |\n",
         "responses": {
           "200": {
             "description": "Return value of TemplateController.deleteById",
@@ -3221,7 +3221,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15008   |\n| 15012   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 433   |\n| 437   |\n",
         "responses": {
           "200": {
             "description": "Template model instance",
@@ -3251,7 +3251,7 @@
         "tags": [
           "TemplateController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15009   |\n| 15013   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 434   |\n| 438   |\n",
         "responses": {
           "200": {
             "description": "Array of Template model instances",
@@ -3334,14 +3334,7 @@
             "maxLength": 1000
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              "Added to survey",
-              "Archived",
-              null
-            ]
+            "type": "string"
           },
           "questionType": {
             "type": "string",
@@ -3408,14 +3401,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              "Added to survey",
-              "Archived",
-              null
-            ]
+            "type": "string"
           },
           "name": {
             "type": "string",
@@ -3600,37 +3586,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -3673,10 +3636,7 @@
         "required": [
           "name",
           "surveyText",
-          "startDate",
-          "endDate",
-          "status",
-          "isPeriodicReassessment"
+          "status"
         ],
         "additionalProperties": false,
         "x-typescript-type": "SurveyWithRelations"
@@ -4026,14 +3986,7 @@
             "maxLength": 1000
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              "Added to survey",
-              "Archived",
-              null
-            ]
+            "type": "string"
           },
           "questionType": {
             "type": "string",
@@ -4146,14 +4099,7 @@
             "maxLength": 1000
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              "Added to survey",
-              "Archived",
-              null
-            ]
+            "type": "string"
           },
           "questionType": {
             "type": "string",
@@ -4760,12 +4706,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              null
-            ]
+            "type": "string"
           },
           "isEnableWeight": {
             "type": "boolean"
@@ -4822,12 +4763,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              null
-            ]
+            "type": "string"
           },
           "isEnableWeight": {
             "type": "boolean"
@@ -4891,12 +4827,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              null
-            ]
+            "type": "string"
           },
           "isEnableWeight": {
             "type": "boolean"
@@ -4960,12 +4891,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              null
-            ]
+            "type": "string"
           },
           "isEnableWeight": {
             "type": "boolean"
@@ -5026,12 +4952,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              null
-            ]
+            "type": "string"
           },
           "isEnableWeight": {
             "type": "boolean"
@@ -5090,12 +5011,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "Draft",
-              "Approved",
-              null
-            ]
+            "type": "string"
           },
           "isEnableWeight": {
             "type": "boolean"
@@ -5162,37 +5078,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -5211,10 +5104,7 @@
         "required": [
           "name",
           "surveyText",
-          "startDate",
-          "endDate",
-          "status",
-          "isPeriodicReassessment"
+          "status"
         ],
         "additionalProperties": false
       },
@@ -5262,37 +5152,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -5317,10 +5184,7 @@
         "required": [
           "name",
           "surveyText",
-          "startDate",
-          "endDate",
-          "status",
-          "isPeriodicReassessment"
+          "status"
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<SurveyDto, 'id'>"
@@ -5372,37 +5236,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -5451,10 +5292,7 @@
         "required": [
           "name",
           "surveyText",
-          "startDate",
-          "endDate",
-          "status",
-          "isPeriodicReassessment"
+          "status"
         ],
         "additionalProperties": false,
         "x-typescript-type": "SurveyDtoWithRelations"
@@ -5506,37 +5344,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -5602,37 +5417,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -5703,37 +5495,14 @@
           },
           "startDate": {
             "type": "string",
-            "description": "Start date of the first survey cycle"
+            "description": "Start date of the survey"
           },
           "endDate": {
             "type": "string",
-            "description": "End date of the first survey cycle"
+            "description": "End date of the survey"
           },
           "status": {
             "type": "string"
-          },
-          "isPeriodicReassessment": {
-            "type": "boolean"
-          },
-          "recurrenceFrequency": {
-            "type": "string",
-            "nullable": true,
-            "enum": [
-              "Monthly",
-              "Quarterly",
-              "Biannually",
-              "Annually",
-              null
-            ]
-          },
-          "recurrenceEndDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "recurrenceEndAfterOccurrences": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 25
           },
           "isEnableWeights": {
             "type": "boolean"
@@ -5758,10 +5527,7 @@
         "required": [
           "name",
           "surveyText",
-          "startDate",
-          "endDate",
-          "status",
-          "isPeriodicReassessment"
+          "status"
         ],
         "additionalProperties": false
       },
@@ -9361,18 +9127,6 @@
                   "status": {
                     "type": "boolean"
                   },
-                  "isPeriodicReassessment": {
-                    "type": "boolean"
-                  },
-                  "recurrenceFrequency": {
-                    "type": "boolean"
-                  },
-                  "recurrenceEndDate": {
-                    "type": "boolean"
-                  },
-                  "recurrenceEndAfterOccurrences": {
-                    "type": "boolean"
-                  },
                   "isEnableWeights": {
                     "type": "boolean"
                   },
@@ -9407,10 +9161,6 @@
                     "startDate",
                     "endDate",
                     "status",
-                    "isPeriodicReassessment",
-                    "recurrenceFrequency",
-                    "recurrenceEndDate",
-                    "recurrenceEndAfterOccurrences",
                     "isEnableWeights",
                     "baseSurveyId",
                     "extId",
@@ -9523,18 +9273,6 @@
                   "status": {
                     "type": "boolean"
                   },
-                  "isPeriodicReassessment": {
-                    "type": "boolean"
-                  },
-                  "recurrenceFrequency": {
-                    "type": "boolean"
-                  },
-                  "recurrenceEndDate": {
-                    "type": "boolean"
-                  },
-                  "recurrenceEndAfterOccurrences": {
-                    "type": "boolean"
-                  },
                   "isEnableWeights": {
                     "type": "boolean"
                   },
@@ -9569,10 +9307,6 @@
                     "startDate",
                     "endDate",
                     "status",
-                    "isPeriodicReassessment",
-                    "recurrenceFrequency",
-                    "recurrenceEndDate",
-                    "recurrenceEndAfterOccurrences",
                     "isEnableWeights",
                     "baseSurveyId",
                     "extId",

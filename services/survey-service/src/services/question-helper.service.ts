@@ -35,7 +35,7 @@ export class QuestionHelperService {
 
   async createQuestion(
     question: QuestionDto,
-    status: QuestionStatus = QuestionStatus.DRAFT,
+    status: string = QuestionStatus.DRAFT,
   ): Promise<Question> {
     if (question.status && question.status !== QuestionStatus.ADDED_TO_SURVEY) {
       throw new HttpErrors.BadRequest(AuthorizeErrorKeys.NotAllowedAccess);

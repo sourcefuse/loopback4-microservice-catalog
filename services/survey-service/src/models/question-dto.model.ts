@@ -1,5 +1,5 @@
 import {AnyObject, Model, model, property} from '@loopback/repository';
-import {QuestionStatus, QuestionType} from '../enum/question.enum';
+import {QuestionType} from '../enum/question.enum';
 
 @model()
 export class QuestionDto extends Model {
@@ -43,11 +43,8 @@ export class QuestionDto extends Model {
   @property({
     type: 'string',
     required: false,
-    jsonSchema: {
-      enum: [...Object.values(QuestionStatus), null],
-    },
   })
-  status?: QuestionStatus;
+  status?: string;
 
   @property({
     type: 'string',

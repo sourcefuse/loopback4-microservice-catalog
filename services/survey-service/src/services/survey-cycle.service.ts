@@ -26,16 +26,6 @@ export class SurveyCycleService {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
-  async sendEmailToResponder(
-    surveyCycleResponder: SurveyResponder | undefined,
-    surveyCycle: SurveyCycleWithRelations,
-  ) {
-    // Need to provide this as handler function
-  }
-  async sendReminderEmailOnApproval(surveyCycle: SurveyCycle) {
-    // provide handle for this
-  }
-
   async createFirstSurveyCycle(surveyId: string) {
     const survey = await this.surveyRepository.findById(surveyId);
     await this.surveyRepository.surveyCycles(surveyId).create({
@@ -46,13 +36,6 @@ export class SurveyCycleService {
     const surveyCycle = await this.surveyCycleRepository.findOne({
       where: {surveyId},
     });
-
-    if (surveyCycle) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.sendReminderEmailOnApproval(surveyCycle).catch(err =>
-        this.logger.error(JSON.stringify(err)),
-      );
-    }
 
     return Promise.all([
       this.surveyRepository

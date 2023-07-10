@@ -26,7 +26,6 @@ import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SectionService} from '../services/section.service';
 import {PermissionKey} from '../enum/permission-key.enum';
-import {SurveyRepository} from '../repositories';
 
 const basePath = '/surveys/{surveyId}/sections';
 const orderByCreatedOn = 'created_on DESC';
@@ -35,8 +34,6 @@ export class SectionController {
   constructor(
     @repository(SectionRepository)
     private sectionRepository: SectionRepository,
-    @repository(SurveyRepository)
-    private surveyRepository: SurveyRepository,
     @repository(SurveyQuestionRepository)
     private surveyQuestionRepository: SurveyQuestionRepository,
 

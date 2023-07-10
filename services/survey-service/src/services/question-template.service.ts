@@ -104,16 +104,6 @@ export class QuestionTemplateService {
     if (!template) {
       throw new HttpErrors.NotFound('Entity not found');
     }
-
-    if (
-      ![QuestionTemplateStatus.DRAFT, QuestionTemplateStatus.APPROVED].includes(
-        template.status,
-      )
-    ) {
-      throw new HttpErrors.BadRequest(
-        ErrorKeys.QuestionTemplateStatusNotInDraftOrApproved,
-      );
-    }
   }
 
   async deleteRelatedObjects(templateId: string) {

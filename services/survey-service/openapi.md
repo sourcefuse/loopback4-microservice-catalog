@@ -159,8 +159,8 @@ fetch('/question/{questionId}/options/count',
 
 | Permissions |
 | ------- |
-| 15020   |
-| 15016   |
+| 421   |
+| 541   |
 
 <h3 id="optioncontroller.count-parameters">Parameters</h3>
 
@@ -250,8 +250,8 @@ fetch('/question/{questionId}/options/delete/bulk',
 
 | Permissions |
 | ------- |
-| 15023   |
-| 15019   |
+| 424   |
+| 544   |
 
 > Body parameter
 
@@ -387,8 +387,8 @@ fetch('/question/{questionId}/options/many',
 
 | Permissions |
 | ------- |
-| 15021   |
-| 15017   |
+| 422   |
+| 542   |
 
 > Body parameter
 
@@ -534,8 +534,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 15021   |
-| 15017   |
+| 422   |
+| 542   |
 
 > Body parameter
 
@@ -646,8 +646,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 15020   |
-| 15016   |
+| 421   |
+| 541   |
 
 <h3 id="optioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -689,7 +689,7 @@ fetch('/question/{questionId}/options/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -788,10 +788,6 @@ fetch('/question/{questionId}/options/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -869,10 +865,6 @@ fetch('/question/{questionId}/options/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -936,10 +928,6 @@ fetch('/question/{questionId}/options/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -1032,10 +1020,6 @@ fetch('/question/{questionId}/options/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -1131,7 +1115,7 @@ fetch('/question/{questionId}/options/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -1230,10 +1214,6 @@ fetch('/question/{questionId}/options/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -1311,10 +1291,6 @@ fetch('/question/{questionId}/options/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -1378,10 +1354,6 @@ fetch('/question/{questionId}/options/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -1474,10 +1446,6 @@ fetch('/question/{questionId}/options/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -1626,8 +1594,8 @@ fetch('/question/{questionId}/options/{id}',
 
 | Permissions |
 | ------- |
-| 15023   |
-| 15019   |
+| 424   |
+| 544   |
 
 <h3 id="optioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -1747,8 +1715,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 15022   |
-| 15018   |
+| 423   |
+| 543   |
 
 > Body parameter
 
@@ -1897,8 +1865,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 15021   |
-| 15017   |
+| 422   |
+| 542   |
 
 > Body parameter
 
@@ -2001,8 +1969,8 @@ fetch('/question/{questionId}/options',
 
 | Permissions |
 | ------- |
-| 15020   |
-| 15016   |
+| 421   |
+| 541   |
 
 <h3 id="optioncontroller.find-parameters">Parameters</h3>
 
@@ -2044,7 +2012,7 @@ fetch('/question/{questionId}/options',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -2125,10 +2093,6 @@ fetch('/question/{questionId}/options',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -2206,10 +2170,6 @@ fetch('/question/{questionId}/options',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -2273,10 +2233,6 @@ fetch('/question/{questionId}/options',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -2351,10 +2307,6 @@ fetch('/question/{questionId}/options',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -2450,7 +2402,7 @@ fetch('/question/{questionId}/options',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -2531,10 +2483,6 @@ fetch('/question/{questionId}/options',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -2612,10 +2560,6 @@ fetch('/question/{questionId}/options',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -2679,10 +2623,6 @@ fetch('/question/{questionId}/options',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -2757,10 +2697,6 @@ fetch('/question/{questionId}/options',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -2965,13 +2901,9 @@ Status Code **200**
 |»»»»»»» uid|string|false|none|none|
 |»»»»»»» name|string|true|none|none|
 |»»»»»»» surveyText|string|true|none|none|
-|»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»» startDate|string|false|none|Start date of the survey|
+|»»»»»»» endDate|string|false|none|End date of the survey|
 |»»»»»»» status|string|true|none|none|
-|»»»»»»» isPeriodicReassessment|boolean|true|none|none|
-|»»»»»»» recurrenceFrequency|string¦null|false|none|none|
-|»»»»»»» recurrenceEndDate|string¦null|false|none|none|
-|»»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»»» baseSurveyId|string¦null|false|none|none|
 |»»»»»»» extId|string|false|none|none|
@@ -3025,11 +2957,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -3042,11 +2969,6 @@ Status Code **200**
 |responseType|Text|
 |responseType|Drop Down|
 |responseType|null|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <aside class="success">
 This operation does not require authentication
@@ -3105,8 +3027,8 @@ fetch('/question-template/{templateId}/template-questions/count',
 
 | Permissions |
 | ------- |
-| 15025   |
-| 15029   |
+| 450   |
+| 454   |
 
 <h3 id="templatequestioncontroller.count-parameters">Parameters</h3>
 
@@ -3222,8 +3144,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 15026   |
-| 15030   |
+| 451   |
+| 455   |
 
 > Body parameter
 
@@ -3335,8 +3257,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 15025   |
-| 15029   |
+| 450   |
+| 454   |
 
 <h3 id="templatequestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -3379,7 +3301,7 @@ fetch('/question-template/{templateId}/template-questions/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "isEnableWeight": true,
     "extId": "string",
     "extMetadata": {}
@@ -3395,7 +3317,7 @@ fetch('/question-template/{templateId}/template-questions/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -3494,10 +3416,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -3575,10 +3493,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -3642,10 +3556,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -3738,10 +3648,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -3854,7 +3760,7 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "isEnableWeight": true,
       "extId": "string",
       "extMetadata": {}
@@ -3870,7 +3776,7 @@ fetch('/question-template/{templateId}/template-questions/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -3969,10 +3875,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -4050,10 +3952,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -4117,10 +4015,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -4213,10 +4107,6 @@ fetch('/question-template/{templateId}/template-questions/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -4367,8 +4257,8 @@ fetch('/question-template/{templateId}/template-questions/{id}',
 
 | Permissions |
 | ------- |
-| 15027   |
-| 15031   |
+| 452   |
+| 456   |
 
 <h3 id="templatequestioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -4490,8 +4380,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 15024   |
-| 15028   |
+| 449   |
+| 453   |
 
 > Body parameter
 
@@ -4648,8 +4538,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 15026   |
-| 15030   |
+| 451   |
+| 455   |
 
 > Body parameter
 
@@ -4745,8 +4635,8 @@ fetch('/question-template/{templateId}/template-questions',
 
 | Permissions |
 | ------- |
-| 15025   |
-| 15029   |
+| 450   |
+| 454   |
 
 <h3 id="templatequestioncontroller.find-parameters">Parameters</h3>
 
@@ -4789,7 +4679,7 @@ fetch('/question-template/{templateId}/template-questions',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "isEnableWeight": true,
       "extId": "string",
       "extMetadata": {}
@@ -4805,7 +4695,7 @@ fetch('/question-template/{templateId}/template-questions',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -4904,10 +4794,6 @@ fetch('/question-template/{templateId}/template-questions',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -4985,10 +4871,6 @@ fetch('/question-template/{templateId}/template-questions',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -5052,10 +4934,6 @@ fetch('/question-template/{templateId}/template-questions',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -5148,10 +5026,6 @@ fetch('/question-template/{templateId}/template-questions',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -5390,13 +5264,9 @@ Status Code **200**
 |»»»»»»» uid|string|false|none|none|
 |»»»»»»» name|string|true|none|none|
 |»»»»»»» surveyText|string|true|none|none|
-|»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»» startDate|string|false|none|Start date of the survey|
+|»»»»»»» endDate|string|false|none|End date of the survey|
 |»»»»»»» status|string|true|none|none|
-|»»»»»»» isPeriodicReassessment|boolean|true|none|none|
-|»»»»»»» recurrenceFrequency|string¦null|false|none|none|
-|»»»»»»» recurrenceEndDate|string¦null|false|none|none|
-|»»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»»» baseSurveyId|string¦null|false|none|none|
 |»»»»»»» extId|string|false|none|none|
@@ -5450,14 +5320,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -5470,11 +5332,6 @@ Status Code **200**
 |responseType|Text|
 |responseType|Drop Down|
 |responseType|null|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <aside class="success">
 This operation does not require authentication
@@ -5533,8 +5390,8 @@ fetch('/questions/count',
 
 | Permissions |
 | ------- |
-| 15000   |
-| 15004   |
+| 389   |
+| 393   |
 
 <h3 id="questioncontroller.count-parameters">Parameters</h3>
 
@@ -5623,8 +5480,8 @@ fetch('/questions/delete/bulk',
 
 | Permissions |
 | ------- |
-| 15003   |
-| 15007   |
+| 392   |
+| 396   |
 
 > Body parameter
 
@@ -5733,8 +5590,8 @@ fetch('/questions/{id}/duplicate',
 
 | Permissions |
 | ------- |
-| 15002   |
-| 15006   |
+| 391   |
+| 395   |
 
 > Body parameter
 
@@ -5770,7 +5627,7 @@ fetch('/questions/{id}/duplicate',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -5811,7 +5668,7 @@ const inputBody = '{
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -5854,7 +5711,7 @@ const inputBody = {
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -5888,8 +5745,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 15001   |
-| 15005   |
+| 390   |
+| 394   |
 
 > Body parameter
 
@@ -5905,7 +5762,7 @@ fetch('/questions/{id}',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -6004,8 +5861,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 15000   |
-| 15004   |
+| 389   |
+| 393   |
 
 <h3 id="questioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -6029,7 +5886,7 @@ fetch('/questions/{id}',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -6050,7 +5907,7 @@ fetch('/questions/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -6149,10 +6006,6 @@ fetch('/questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -6230,10 +6083,6 @@ fetch('/questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -6297,10 +6146,6 @@ fetch('/questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -6393,10 +6238,6 @@ fetch('/questions/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -6492,7 +6333,7 @@ fetch('/questions/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -6591,10 +6432,6 @@ fetch('/questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -6672,10 +6509,6 @@ fetch('/questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -6739,10 +6572,6 @@ fetch('/questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -6835,10 +6664,6 @@ fetch('/questions/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -6951,7 +6776,7 @@ fetch('/questions/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -7030,10 +6855,6 @@ fetch('/questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -7111,10 +6932,6 @@ fetch('/questions/{id}',
                   "startDate": "string",
                   "endDate": "string",
                   "status": "string",
-                  "isPeriodicReassessment": true,
-                  "recurrenceFrequency": "Monthly",
-                  "recurrenceEndDate": "string",
-                  "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
                   "extId": "string",
@@ -7164,10 +6981,6 @@ fetch('/questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -7242,10 +7055,6 @@ fetch('/questions/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -7341,7 +7150,7 @@ fetch('/questions/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -7420,10 +7229,6 @@ fetch('/questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -7501,10 +7306,6 @@ fetch('/questions/{id}',
                   "startDate": "string",
                   "endDate": "string",
                   "status": "string",
-                  "isPeriodicReassessment": true,
-                  "recurrenceFrequency": "Monthly",
-                  "recurrenceEndDate": "string",
-                  "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
                   "extId": "string",
@@ -7554,10 +7355,6 @@ fetch('/questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -7632,10 +7429,6 @@ fetch('/questions/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -7734,7 +7527,7 @@ fetch('/questions/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -7831,10 +7624,6 @@ fetch('/questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -7912,10 +7701,6 @@ fetch('/questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -7979,10 +7764,6 @@ fetch('/questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -8075,10 +7856,6 @@ fetch('/questions/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -8227,10 +8004,6 @@ fetch('/questions/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -8247,7 +8020,7 @@ fetch('/questions/{id}',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -8357,10 +8130,6 @@ fetch('/questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -8377,7 +8146,7 @@ fetch('/questions/{id}',
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -8473,10 +8242,6 @@ fetch('/questions/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -8493,7 +8258,7 @@ fetch('/questions/{id}',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -8593,7 +8358,7 @@ fetch('/questions/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -8645,10 +8410,6 @@ fetch('/questions/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -8760,7 +8521,7 @@ fetch('/questions/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -8794,10 +8555,6 @@ fetch('/questions/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -8893,7 +8650,7 @@ fetch('/questions/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -8927,10 +8684,6 @@ fetch('/questions/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -9032,10 +8785,6 @@ fetch('/questions/{id}',
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -9052,7 +8801,7 @@ fetch('/questions/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -9340,8 +9089,8 @@ fetch('/questions/{id}',
 
 | Permissions |
 | ------- |
-| 15003   |
-| 15007   |
+| 392   |
+| 396   |
 
 <h3 id="questioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -9390,7 +9139,7 @@ const inputBody = '{
   "parentQuestionId": "string",
   "optionId": "string",
   "surveyId": "string",
-  "status": "Draft",
+  "status": "string",
   "name": "string",
   "extId": "string",
   "extMetadata": {}
@@ -9422,7 +9171,7 @@ const inputBody = {
   "parentQuestionId": "string",
   "optionId": "string",
   "surveyId": "string",
-  "status": "Draft",
+  "status": "string",
   "name": "string",
   "extId": "string",
   "extMetadata": {}
@@ -9450,8 +9199,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 15002   |
-| 15006   |
+| 391   |
+| 395   |
 
 > Body parameter
 
@@ -9462,7 +9211,7 @@ fetch('/questions',
   "parentQuestionId": "string",
   "optionId": "string",
   "surveyId": "string",
-  "status": "Draft",
+  "status": "string",
   "name": "string",
   "extId": "string",
   "extMetadata": {}
@@ -9491,7 +9240,7 @@ fetch('/questions',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -9532,7 +9281,7 @@ const inputBody = '{
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -9575,7 +9324,7 @@ const inputBody = {
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -9609,8 +9358,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 15001   |
-| 15005   |
+| 390   |
+| 394   |
 
 > Body parameter
 
@@ -9626,7 +9375,7 @@ fetch('/questions',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -9717,8 +9466,8 @@ fetch('/questions',
 
 | Permissions |
 | ------- |
-| 15000   |
-| 15004   |
+| 389   |
+| 393   |
 
 <h3 id="questioncontroller.find-parameters">Parameters</h3>
 
@@ -9743,7 +9492,7 @@ fetch('/questions',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -9842,10 +9591,6 @@ fetch('/questions',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -9923,10 +9668,6 @@ fetch('/questions',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -9990,10 +9731,6 @@ fetch('/questions',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -10086,10 +9823,6 @@ fetch('/questions',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -10294,13 +10027,9 @@ Status Code **200**
 |»»»»»» uid|string|false|none|none|
 |»»»»»» name|string|true|none|none|
 |»»»»»» surveyText|string|true|none|none|
-|»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»» startDate|string|false|none|Start date of the survey|
+|»»»»»» endDate|string|false|none|End date of the survey|
 |»»»»»» status|string|true|none|none|
-|»»»»»» isPeriodicReassessment|boolean|true|none|none|
-|»»»»»» recurrenceFrequency|string¦null|false|none|none|
-|»»»»»» recurrenceEndDate|string¦null|false|none|none|
-|»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»» baseSurveyId|string¦null|false|none|none|
 |»»»»»» extId|string|false|none|none|
@@ -10353,11 +10082,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -10370,11 +10094,6 @@ Status Code **200**
 |responseType|Text|
 |responseType|Drop Down|
 |responseType|null|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <aside class="success">
 This operation does not require authentication
@@ -10433,8 +10152,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/count',
 
 | Permissions |
 | ------- |
-| 15080   |
-| 15081   |
+| 531   |
+| 532   |
 
 <h3 id="surveyresponsedetailviewcontroller.count-parameters">Parameters</h3>
 
@@ -10514,8 +10233,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
 
 | Permissions |
 | ------- |
-| 15080   |
-| 15081   |
+| 531   |
+| 532   |
 
 <h3 id="surveyresponsedetailviewcontroller.findbyid-parameters">Parameters</h3>
 
@@ -10593,10 +10312,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -10613,7 +10328,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -10761,10 +10476,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -10781,7 +10492,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -10915,10 +10626,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -10935,7 +10642,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -11088,7 +10795,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -11140,10 +10847,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -11255,7 +10958,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -11289,10 +10992,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -11388,7 +11087,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -11422,10 +11121,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -11525,7 +11220,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -11624,10 +11319,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -11705,10 +11396,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -11772,10 +11459,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -11868,10 +11551,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -11983,7 +11662,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -12064,10 +11743,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -12145,10 +11820,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -12212,10 +11883,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -12290,10 +11957,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -12389,7 +12052,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -12470,10 +12133,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -12551,10 +12210,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -12618,10 +12273,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -12696,10 +12347,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -12849,8 +12496,8 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
 
 | Permissions |
 | ------- |
-| 15080   |
-| 15081   |
+| 531   |
+| 532   |
 
 <h3 id="surveyresponsedetailviewcontroller.find-parameters">Parameters</h3>
 
@@ -12928,10 +12575,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -12948,7 +12591,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -13058,10 +12701,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -13078,7 +12717,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -13174,10 +12813,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -13194,7 +12829,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -13294,7 +12929,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -13346,10 +12981,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -13461,7 +13092,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -13495,10 +13126,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -13594,7 +13221,7 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -13628,10 +13255,6 @@ fetch('/survey-cycles/{surveyCycleId}/survey-response-detail-view',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -13794,13 +13417,9 @@ Status Code **200**
 |»»»»» uid|string|false|none|none|
 |»»»»» name|string|true|none|none|
 |»»»»» surveyText|string|true|none|none|
-|»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»» startDate|string|false|none|Start date of the survey|
+|»»»»» endDate|string|false|none|End date of the survey|
 |»»»»» status|string|true|none|none|
-|»»»»» isPeriodicReassessment|boolean|true|none|none|
-|»»»»» recurrenceFrequency|string¦null|false|none|none|
-|»»»»» recurrenceEndDate|string¦null|false|none|none|
-|»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»» baseSurveyId|string¦null|false|none|none|
 |»»»»» extId|string|false|none|none|
@@ -13903,16 +13522,6 @@ Status Code **200**
 |responseType|Text|
 |responseType|Drop Down|
 |responseType|null|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -13977,8 +13586,8 @@ fetch('/surveys/count',
 
 | Permissions |
 | ------- |
-| 15033   |
-| 15037   |
+| 458   |
+| 462   |
 
 <h3 id="surveycontroller.count-parameters">Parameters</h3>
 
@@ -14028,10 +13637,6 @@ const inputBody = '{
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -14075,10 +13680,6 @@ const inputBody = {
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -14109,8 +13710,8 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 15038   |
-| 15034   |
+| 463   |
+| 459   |
 
 > Body parameter
 
@@ -14130,10 +13731,6 @@ fetch('/surveys/{id}',
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -14229,9 +13826,9 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 15037   |
-| 15033   |
-| 15040   |
+| 462   |
+| 458   |
+| 533   |
 
 <h3 id="surveycontroller.findbyid-parameters">Parameters</h3>
 
@@ -14260,10 +13857,6 @@ fetch('/surveys/{id}',
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -14280,7 +13873,7 @@ fetch('/surveys/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -14379,10 +13972,6 @@ fetch('/surveys/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -14458,10 +14047,6 @@ fetch('/surveys/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -14523,10 +14108,6 @@ fetch('/surveys/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -14617,10 +14198,6 @@ fetch('/surveys/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -14735,10 +14312,6 @@ fetch('/surveys/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -14755,7 +14328,7 @@ fetch('/surveys/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -14949,10 +14522,6 @@ fetch('/surveys/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -14969,7 +14538,7 @@ fetch('/surveys/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -15149,10 +14718,6 @@ fetch('/surveys/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -15169,7 +14734,7 @@ fetch('/surveys/{id}',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -15371,8 +14936,8 @@ fetch('/surveys/{id}',
 
 | Permissions |
 | ------- |
-| 15035   |
-| 15039   |
+| 460   |
+| 464   |
 
 <h3 id="surveycontroller.deletebyid-parameters">Parameters</h3>
 
@@ -15429,10 +14994,6 @@ const inputBody = '{
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15475,10 +15036,6 @@ const inputBody = {
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15509,8 +15066,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 15032   |
-| 15036   |
+| 457   |
+| 461   |
 
 > Body parameter
 
@@ -15529,10 +15086,6 @@ fetch('/surveys',
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15568,10 +15121,6 @@ fetch('/surveys',
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15611,10 +15160,6 @@ const inputBody = '{
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15656,10 +15201,6 @@ const inputBody = {
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15688,8 +15229,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 15038   |
-| 15034   |
+| 463   |
+| 459   |
 
 > Body parameter
 
@@ -15709,10 +15250,6 @@ fetch('/surveys',
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -15798,8 +15335,8 @@ fetch('/surveys',
 
 | Permissions |
 | ------- |
-| 15033   |
-| 15037   |
+| 458   |
+| 462   |
 
 <h3 id="surveycontroller.find-parameters">Parameters</h3>
 
@@ -15828,10 +15365,6 @@ fetch('/surveys',
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -15850,7 +15383,7 @@ fetch('/surveys',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -15949,10 +15482,6 @@ fetch('/surveys',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -16030,10 +15559,6 @@ fetch('/surveys',
                   "startDate": "string",
                   "endDate": "string",
                   "status": "string",
-                  "isPeriodicReassessment": true,
-                  "recurrenceFrequency": "Monthly",
-                  "recurrenceEndDate": "string",
-                  "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
                   "extId": "string",
@@ -16083,10 +15608,6 @@ fetch('/surveys',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -16179,10 +15700,6 @@ fetch('/surveys',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -16299,10 +15816,6 @@ fetch('/surveys',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -16319,7 +15832,7 @@ fetch('/surveys',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -16515,10 +16028,6 @@ fetch('/surveys',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -16535,7 +16044,7 @@ fetch('/surveys',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -16717,10 +16226,6 @@ fetch('/surveys',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -16737,7 +16242,7 @@ fetch('/surveys',
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -16904,13 +16409,9 @@ Status Code **200**
 |»» uid|string|false|none|none|
 |»» name|string|true|none|none|
 |»» surveyText|string|true|none|none|
-|»» startDate|string|true|none|Start date of the first survey cycle|
-|»» endDate|string|true|none|End date of the first survey cycle|
+|»» startDate|string|false|none|Start date of the survey|
+|»» endDate|string|false|none|End date of the survey|
 |»» status|string|true|none|none|
-|»» isPeriodicReassessment|boolean|true|none|none|
-|»» recurrenceFrequency|string¦null|false|none|none|
-|»» recurrenceEndDate|string¦null|false|none|none|
-|»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»» isEnableWeights|boolean|false|none|none|
 |»» baseSurveyId|string¦null|false|none|none|
 |»» extId|string|false|none|none|
@@ -17022,13 +16523,9 @@ Status Code **200**
 |»»»»»»»» uid|string|false|none|none|
 |»»»»»»»» name|string|true|none|none|
 |»»»»»»»» surveyText|string|true|none|none|
-|»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»» startDate|string|false|none|Start date of the survey|
+|»»»»»»»» endDate|string|false|none|End date of the survey|
 |»»»»»»»» status|string|true|none|none|
-|»»»»»»»» isPeriodicReassessment|boolean|true|none|none|
-|»»»»»»»» recurrenceFrequency|string¦null|false|none|none|
-|»»»»»»»» recurrenceEndDate|string¦null|false|none|none|
-|»»»»»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»»»»»» isEnableWeights|boolean|false|none|none|
 |»»»»»»»» baseSurveyId|string¦null|false|none|none|
 |»»»»»»»» extId|string|false|none|none|
@@ -17087,16 +16584,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -17109,11 +16596,6 @@ Status Code **200**
 |responseType|Text|
 |responseType|Drop Down|
 |responseType|null|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <aside class="success">
 This operation does not require authentication
@@ -17172,8 +16654,8 @@ fetch('/surveys/{surveyId}/sections/count',
 
 | Permissions |
 | ------- |
-| 15046   |
-| 15050   |
+| 491   |
+| 495   |
 
 <h3 id="sectioncontroller.count-parameters">Parameters</h3>
 
@@ -17282,8 +16764,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 15051   |
-| 15047   |
+| 496   |
+| 492   |
 
 > Body parameter
 
@@ -17392,8 +16874,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 15050   |
-| 15046   |
+| 495   |
+| 491   |
 
 <h3 id="sectioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -17486,8 +16968,8 @@ fetch('/surveys/{surveyId}/sections/{id}',
 
 | Permissions |
 | ------- |
-| 15048   |
-| 15052   |
+| 493   |
+| 497   |
 
 <h3 id="sectioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -17603,8 +17085,8 @@ fetch('/surveys/{surveyId}/sections',
 
 | Permissions |
 | ------- |
-| 15045   |
-| 15049   |
+| 490   |
+| 494   |
 
 > Body parameter
 
@@ -17715,9 +17197,9 @@ fetch('/surveys/{surveyId}/sections',
 
 | Permissions |
 | ------- |
-| 15046   |
-| 15050   |
-| 15042   |
+| 491   |
+| 495   |
+| 535   |
 
 <h3 id="sectioncontroller.find-parameters">Parameters</h3>
 
@@ -17835,8 +17317,8 @@ fetch('/surveys/{surveyId}/survey-cycles/count',
 
 | Permissions |
 | ------- |
-| 15054   |
-| 15058   |
+| 474   |
+| 478   |
 
 <h3 id="surveycyclecontroller.count-parameters">Parameters</h3>
 
@@ -17948,8 +17430,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 15059   |
-| 15055   |
+| 479   |
+| 475   |
 
 > Body parameter
 
@@ -18059,8 +17541,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 15058   |
-| 15054   |
+| 478   |
+| 474   |
 
 <h3 id="surveycyclecontroller.findbyid-parameters">Parameters</h3>
 
@@ -18105,10 +17587,6 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -18125,7 +17603,7 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -18413,8 +17891,8 @@ fetch('/surveys/{surveyId}/survey-cycles/{id}',
 
 | Permissions |
 | ------- |
-| 15056   |
-| 15060   |
+| 476   |
+| 480   |
 
 <h3 id="surveycyclecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -18451,9 +17929,9 @@ Status Code **204**
 This operation does not require authentication
 </aside>
 
-## SurveyCycleController.create
+## SurveyCycleController.createSurveyCycle
 
-<a id="opIdSurveyCycleController.create"></a>
+<a id="opIdSurveyCycleController.createSurveyCycle"></a>
 
 > Code samples
 
@@ -18532,8 +18010,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 15053   |
-| 15057   |
+| 473   |
+| 477   |
 
 > Body parameter
 
@@ -18555,7 +18033,7 @@ fetch('/surveys/{surveyId}/survey-cycles',
 }
 ```
 
-<h3 id="surveycyclecontroller.create-parameters">Parameters</h3>
+<h3 id="surveycyclecontroller.createsurveycycle-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -18585,7 +18063,7 @@ fetch('/surveys/{surveyId}/survey-cycles',
 }
 ```
 
-<h3 id="surveycyclecontroller.create-responses">Responses</h3>
+<h3 id="surveycyclecontroller.createsurveycycle-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -18678,8 +18156,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 15059   |
-| 15055   |
+| 479   |
+| 475   |
 
 > Body parameter
 
@@ -18781,8 +18259,8 @@ fetch('/surveys/{surveyId}/survey-cycles',
 
 | Permissions |
 | ------- |
-| 15054   |
-| 15058   |
+| 474   |
+| 478   |
 
 <h3 id="surveycyclecontroller.find-parameters">Parameters</h3>
 
@@ -18827,10 +18305,6 @@ fetch('/surveys/{surveyId}/survey-cycles',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -18847,7 +18321,7 @@ fetch('/surveys/{surveyId}/survey-cycles',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -19051,13 +18525,9 @@ Status Code **200**
 |»»» uid|string|false|none|none|
 |»»» name|string|true|none|none|
 |»»» surveyText|string|true|none|none|
-|»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»» endDate|string|true|none|End date of the first survey cycle|
+|»»» startDate|string|false|none|Start date of the survey|
+|»»» endDate|string|false|none|End date of the survey|
 |»»» status|string|true|none|none|
-|»»» isPeriodicReassessment|boolean|true|none|none|
-|»»» recurrenceFrequency|string¦null|false|none|none|
-|»»» recurrenceEndDate|string¦null|false|none|none|
-|»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»» isEnableWeights|boolean|false|none|none|
 |»»» baseSurveyId|string¦null|false|none|none|
 |»»» extId|string|false|none|none|
@@ -19187,16 +18657,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -19267,8 +18727,8 @@ fetch('/surveys/{surveyId}/survey-questions/count',
 
 | Permissions |
 | ------- |
-| 15083   |
-| 15087   |
+| 466   |
+| 470   |
 
 <h3 id="surveyquestioncontroller.count-parameters">Parameters</h3>
 
@@ -19386,8 +18846,8 @@ fetch('/surveys/{surveyId}/survey-questions/reorder',
 
 | Permissions |
 | ------- |
-| 15088   |
-| 15084   |
+| 471   |
+| 467   |
 
 > Body parameter
 
@@ -19520,8 +18980,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 15088   |
-| 15084   |
+| 471   |
+| 467   |
 
 > Body parameter
 
@@ -19634,8 +19094,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 15087   |
-| 15083   |
+| 470   |
+| 466   |
 
 <h3 id="surveyquestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -19702,10 +19162,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -19722,7 +19178,7 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -19957,7 +19413,7 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -20056,10 +19512,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -20137,10 +19589,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -20204,10 +19652,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -20300,10 +19744,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -20419,10 +19859,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -20439,7 +19875,7 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -20674,7 +20110,7 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -20773,10 +20209,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -20854,10 +20286,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -20921,10 +20349,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -21017,10 +20441,6 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -21184,8 +20604,8 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 
 | Permissions |
 | ------- |
-| 15085   |
-| 15089   |
+| 468   |
+| 472   |
 
 <h3 id="surveyquestioncontroller.deletebyid-parameters">Parameters</h3>
 
@@ -21311,8 +20731,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 15082   |
-| 15086   |
+| 465   |
+| 469   |
 
 > Body parameter
 
@@ -21471,8 +20891,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 15088   |
-| 15084   |
+| 471   |
+| 467   |
 
 > Body parameter
 
@@ -21577,8 +20997,8 @@ fetch('/surveys/{surveyId}/survey-questions',
 
 | Permissions |
 | ------- |
-| 15083   |
-| 15087   |
+| 466   |
+| 470   |
 
 <h3 id="surveyquestioncontroller.find-parameters">Parameters</h3>
 
@@ -21627,10 +21047,6 @@ fetch('/surveys/{surveyId}/survey-questions',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -21647,7 +21063,7 @@ fetch('/surveys/{surveyId}/survey-questions',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -21882,7 +21298,7 @@ fetch('/surveys/{surveyId}/survey-questions',
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -21981,10 +21397,6 @@ fetch('/surveys/{surveyId}/survey-questions',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -22062,10 +21474,6 @@ fetch('/surveys/{surveyId}/survey-questions',
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -22129,10 +21537,6 @@ fetch('/surveys/{surveyId}/survey-questions',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -22225,10 +21629,6 @@ fetch('/surveys/{surveyId}/survey-questions',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -22376,13 +21776,9 @@ Status Code **200**
 |»»» uid|string|false|none|none|
 |»»» name|string|true|none|none|
 |»»» surveyText|string|true|none|none|
-|»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»» endDate|string|true|none|End date of the first survey cycle|
+|»»» startDate|string|false|none|Start date of the survey|
+|»»» endDate|string|false|none|End date of the survey|
 |»»» status|string|true|none|none|
-|»»» isPeriodicReassessment|boolean|true|none|none|
-|»»» recurrenceFrequency|string¦null|false|none|none|
-|»»» recurrenceEndDate|string¦null|false|none|none|
-|»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»» isEnableWeights|boolean|false|none|none|
 |»»» baseSurveyId|string¦null|false|none|none|
 |»»» extId|string|false|none|none|
@@ -22529,16 +21925,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -22609,8 +21995,8 @@ fetch('/surveys/{surveyId}/survey-responders/count',
 
 | Permissions |
 | ------- |
-| 15062   |
-| 15066   |
+| 483   |
+| 487   |
 
 <h3 id="surveyrespondercontroller.count-parameters">Parameters</h3>
 
@@ -22639,9 +22025,9 @@ fetch('/surveys/{surveyId}/survey-responders/count',
 This operation does not require authentication
 </aside>
 
-## SurveyResponderController.sendReminder
+## SurveyResponderController.getToken
 
-<a id="opIdSurveyResponderController.sendReminder"></a>
+<a id="opIdSurveyResponderController.getToken"></a>
 
 > Code samples
 
@@ -22656,7 +22042,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/surveys/{surveyId}/survey-responders/reminder',
+fetch('/surveys/{surveyId}/survey-responders/token',
 {
   method: 'POST',
   body: inputBody,
@@ -22682,7 +22068,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/surveys/{surveyId}/survey-responders/reminder',
+fetch('/surveys/{surveyId}/survey-responders/token',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -22696,11 +22082,7 @@ fetch('/surveys/{surveyId}/survey-responders/reminder',
 
 ```
 
-`POST /surveys/{surveyId}/survey-responders/reminder`
-
-| Permissions |
-| ------- |
-| 15069   |
+`POST /surveys/{surveyId}/survey-responders/token`
 
 > Body parameter
 
@@ -22712,7 +22094,7 @@ fetch('/surveys/{surveyId}/survey-responders/reminder',
 }
 ```
 
-<h3 id="surveyrespondercontroller.sendreminder-parameters">Parameters</h3>
+<h3 id="surveyrespondercontroller.gettoken-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -22727,18 +22109,18 @@ fetch('/surveys/{surveyId}/survey-responders/reminder',
 null
 ```
 
-<h3 id="surveyrespondercontroller.sendreminder-responses">Responses</h3>
+<h3 id="surveyrespondercontroller.gettoken-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of SurveyResponderController.sendReminder|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of SurveyResponderController.getToken|None|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
 
-<h3 id="surveyrespondercontroller.sendreminder-responseschema">Response Schema</h3>
+<h3 id="surveyrespondercontroller.gettoken-responseschema">Response Schema</h3>
 
 Status Code **204**
 
-*Send responders reminder*
+*Send Token for Responders*
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
@@ -22836,8 +22218,8 @@ fetch('/surveys/{surveyId}/survey-responders/{id}',
 
 | Permissions |
 | ------- |
-| 15067   |
-| 15063   |
+| 488   |
+| 484   |
 
 > Body parameter
 
@@ -22982,8 +22364,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 15061   |
-| 15065   |
+| 482   |
+| 486   |
 
 > Body parameter
 
@@ -23140,8 +22522,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 15067   |
-| 15063   |
+| 488   |
+| 484   |
 
 > Body parameter
 
@@ -23249,8 +22631,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 15062   |
-| 15066   |
+| 483   |
+| 487   |
 
 <h3 id="surveyrespondercontroller.find-parameters">Parameters</h3>
 
@@ -23298,10 +22680,6 @@ fetch('/surveys/{surveyId}/survey-responders',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -23318,7 +22696,7 @@ fetch('/surveys/{surveyId}/survey-responders',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -23500,10 +22878,6 @@ fetch('/surveys/{surveyId}/survey-responders',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -23520,7 +22894,7 @@ fetch('/surveys/{surveyId}/survey-responders',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -23688,13 +23062,9 @@ Status Code **200**
 |»»» uid|string|false|none|none|
 |»»» name|string|true|none|none|
 |»»» surveyText|string|true|none|none|
-|»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»» endDate|string|true|none|End date of the first survey cycle|
+|»»» startDate|string|false|none|Start date of the survey|
+|»»» endDate|string|false|none|End date of the survey|
 |»»» status|string|true|none|none|
-|»»» isPeriodicReassessment|boolean|true|none|none|
-|»»» recurrenceFrequency|string¦null|false|none|none|
-|»»» recurrenceEndDate|string¦null|false|none|none|
-|»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»» isEnableWeights|boolean|false|none|none|
 |»»» baseSurveyId|string¦null|false|none|none|
 |»»» extId|string|false|none|none|
@@ -23821,16 +23191,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -23899,8 +23259,8 @@ fetch('/surveys/{surveyId}/survey-responders',
 
 | Permissions |
 | ------- |
-| 15064   |
-| 15068   |
+| 485   |
+| 489   |
 
 <h3 id="surveyrespondercontroller.delete-parameters">Parameters</h3>
 
@@ -23985,8 +23345,8 @@ fetch('/surveys/{surveyId}/survey-responses/count',
 
 | Permissions |
 | ------- |
-| 15075   |
-| 15077   |
+| 519   |
+| 521   |
 
 <h3 id="surveyresponsecontroller.count-parameters">Parameters</h3>
 
@@ -24065,8 +23425,8 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
 
 | Permissions |
 | ------- |
-| 15075   |
-| 15077   |
+| 519   |
+| 521   |
 
 <h3 id="surveyresponsecontroller.findbyid-parameters">Parameters</h3>
 
@@ -24125,10 +23485,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -24145,7 +23501,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -24327,10 +23683,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -24347,7 +23699,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -24499,10 +23851,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -24519,7 +23867,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -24744,10 +24092,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -24764,7 +24108,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -24874,10 +24218,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -24894,7 +24234,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                   "id": "string",
                   "uid": "string",
                   "name": "string",
-                  "status": "Draft",
+                  "status": "string",
                   "questionType": "Multi Selection",
                   "extId": "string",
                   "extMetadata": {},
@@ -24972,10 +24312,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -24992,7 +24328,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -25090,7 +24426,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -25142,10 +24478,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -25257,7 +24589,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -25291,10 +24623,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -25390,7 +24718,7 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -25424,10 +24752,6 @@ fetch('/surveys/{surveyId}/survey-responses/{id}',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -25595,9 +24919,9 @@ fetch('/surveys/{surveyId}/survey-responses',
 
 | Permissions |
 | ------- |
-| 15074   |
-| 15076   |
-| 15044   |
+| 518   |
+| 520   |
+| 537   |
 
 > Body parameter
 
@@ -25701,9 +25025,9 @@ fetch('/surveys/{surveyId}/survey-responses',
 
 | Permissions |
 | ------- |
-| 15075   |
-| 15077   |
-| 15043   |
+| 519   |
+| 521   |
+| 536   |
 
 <h3 id="surveyresponsecontroller.find-parameters">Parameters</h3>
 
@@ -25763,10 +25087,6 @@ fetch('/surveys/{surveyId}/survey-responses',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -25783,7 +25103,7 @@ fetch('/surveys/{surveyId}/survey-responses',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -25931,10 +25251,6 @@ fetch('/surveys/{surveyId}/survey-responses',
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -25951,7 +25267,7 @@ fetch('/surveys/{surveyId}/survey-responses',
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -26085,10 +25401,6 @@ fetch('/surveys/{surveyId}/survey-responses',
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -26105,7 +25417,7 @@ fetch('/surveys/{surveyId}/survey-responses',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -26258,7 +25570,7 @@ fetch('/surveys/{surveyId}/survey-responses',
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -26310,10 +25622,6 @@ fetch('/surveys/{surveyId}/survey-responses',
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -26425,7 +25733,7 @@ fetch('/surveys/{surveyId}/survey-responses',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -26459,10 +25767,6 @@ fetch('/surveys/{surveyId}/survey-responses',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -26558,7 +25862,7 @@ fetch('/surveys/{surveyId}/survey-responses',
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -26592,10 +25896,6 @@ fetch('/surveys/{surveyId}/survey-responses',
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -26743,13 +26043,9 @@ Status Code **200**
 |»»»» uid|string|false|none|none|
 |»»»» name|string|true|none|none|
 |»»»» surveyText|string|true|none|none|
-|»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»» startDate|string|false|none|Start date of the survey|
+|»»»» endDate|string|false|none|End date of the survey|
 |»»»» status|string|true|none|none|
-|»»»» isPeriodicReassessment|boolean|true|none|none|
-|»»»» recurrenceFrequency|string¦null|false|none|none|
-|»»»» recurrenceEndDate|string¦null|false|none|none|
-|»»»» recurrenceEndAfterOccurrences|number|false|none|none|
 |»»»» isEnableWeights|boolean|false|none|none|
 |»»»» baseSurveyId|string¦null|false|none|none|
 |»»»» extId|string|false|none|none|
@@ -26863,16 +26159,6 @@ Status Code **200**
 
 |Property|Value|
 |---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -26943,8 +26229,8 @@ fetch('/templates/count',
 
 | Permissions |
 | ------- |
-| 15009   |
-| 15013   |
+| 434   |
+| 438   |
 
 <h3 id="templatecontroller.count-parameters">Parameters</h3>
 
@@ -26990,7 +26276,7 @@ const inputBody = '{
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -27028,7 +26314,7 @@ const inputBody = {
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -27057,8 +26343,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 15010   |
-| 15014   |
+| 435   |
+| 439   |
 
 > Body parameter
 
@@ -27074,7 +26360,7 @@ fetch('/templates/{id}',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -27168,8 +26454,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 15009   |
-| 15013   |
+| 434   |
+| 438   |
 
 <h3 id="templatecontroller.findbyid-parameters">Parameters</h3>
 
@@ -27194,7 +26480,7 @@ fetch('/templates/{id}',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {}
@@ -27262,8 +26548,8 @@ fetch('/templates/{id}',
 
 | Permissions |
 | ------- |
-| 15011   |
-| 15015   |
+| 436   |
+| 440   |
 
 <h3 id="templatecontroller.deletebyid-parameters">Parameters</h3>
 
@@ -27316,7 +26602,7 @@ const inputBody = '{
   "modifiedBy": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -27353,7 +26639,7 @@ const inputBody = {
   "modifiedBy": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -27382,8 +26668,8 @@ fetch('/templates',
 
 | Permissions |
 | ------- |
-| 15008   |
-| 15012   |
+| 433   |
+| 437   |
 
 > Body parameter
 
@@ -27398,7 +26684,7 @@ fetch('/templates',
   "modifiedBy": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -27428,7 +26714,7 @@ fetch('/templates',
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {}
@@ -27496,8 +26782,8 @@ fetch('/templates',
 
 | Permissions |
 | ------- |
-| 15009   |
-| 15013   |
+| 434   |
+| 438   |
 
 <h3 id="templatecontroller.find-parameters">Parameters</h3>
 
@@ -27522,7 +26808,7 @@ fetch('/templates',
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "isEnableWeight": true,
     "extId": "string",
     "extMetadata": {},
@@ -27561,14 +26847,6 @@ Status Code **200**
 |»» extMetadata|object|false|none|none|
 |»» createdByName|string|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <aside class="success">
 This operation does not require authentication
 </aside>
@@ -27594,7 +26872,7 @@ This operation does not require authentication
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -27639,11 +26917,6 @@ Question
 
 |Property|Value|
 |---|---|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -27665,7 +26938,7 @@ Question
   "parentQuestionId": "string",
   "optionId": "string",
   "surveyId": "string",
-  "status": "Draft",
+  "status": "string",
   "name": "string",
   "extId": "string",
   "extMetadata": {}
@@ -27688,16 +26961,6 @@ NewQuestion
 |name|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 
 <h2 id="tocS_SurveyCycleWithRelations">SurveyCycleWithRelations</h2>
 <!-- backwards compatibility -->
@@ -27737,10 +27000,6 @@ NewQuestion
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -27757,7 +27016,7 @@ NewQuestion
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -28076,10 +27335,6 @@ SectionWithRelations
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -28096,7 +27351,7 @@ SectionWithRelations
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -28195,10 +27450,6 @@ SectionWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -28274,10 +27525,6 @@ SectionWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -28339,10 +27586,6 @@ SectionWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -28433,10 +27676,6 @@ SectionWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -28551,10 +27790,6 @@ SectionWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -28571,7 +27806,7 @@ SectionWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -28765,10 +28000,6 @@ SectionWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -28785,7 +28016,7 @@ SectionWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -28965,10 +28196,6 @@ SectionWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -28985,7 +28212,7 @@ SectionWithRelations
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -29144,13 +28371,9 @@ SurveyWithRelations
 |uid|string|false|none|none|
 |name|string|true|none|none|
 |surveyText|string|true|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|true|none|none|
-|isPeriodicReassessment|boolean|true|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
@@ -29159,16 +28382,6 @@ SurveyWithRelations
 |surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|[(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })]|
 |surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|[(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })]|
 |sections|[[SectionWithRelations](#schemasectionwithrelations)]|false|none|[(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })]|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_SurveyResponderWithRelations">SurveyResponderWithRelations</h2>
 <!-- backwards compatibility -->
@@ -29211,10 +28424,6 @@ SurveyWithRelations
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -29231,7 +28440,7 @@ SurveyWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -29485,10 +28694,6 @@ SurveyWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -29505,7 +28710,7 @@ SurveyWithRelations
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -29750,10 +28955,6 @@ SurveyResponderWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -29770,7 +28971,7 @@ SurveyResponderWithRelations
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -29952,10 +29153,6 @@ SurveyResponderWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -29972,7 +29169,7 @@ SurveyResponderWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -30124,10 +29321,6 @@ SurveyResponderWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -30144,7 +29337,7 @@ SurveyResponderWithRelations
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -30369,10 +29562,6 @@ SurveyResponderWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -30389,7 +29578,7 @@ SurveyResponderWithRelations
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -30499,10 +29688,6 @@ SurveyResponderWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -30519,7 +29704,7 @@ SurveyResponderWithRelations
                   "id": "string",
                   "uid": "string",
                   "name": "string",
-                  "status": "Draft",
+                  "status": "string",
                   "questionType": "Multi Selection",
                   "extId": "string",
                   "extMetadata": {},
@@ -30597,10 +29782,6 @@ SurveyResponderWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -30617,7 +29798,7 @@ SurveyResponderWithRelations
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -30715,7 +29896,7 @@ SurveyResponderWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -30767,10 +29948,6 @@ SurveyResponderWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -30882,7 +30059,7 @@ SurveyResponderWithRelations
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -30916,10 +30093,6 @@ SurveyResponderWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -31015,7 +30188,7 @@ SurveyResponderWithRelations
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -31049,10 +30222,6 @@ SurveyResponderWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -31201,7 +30370,7 @@ SurveyResponseWithRelations
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -31300,10 +30469,6 @@ SurveyResponseWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -31381,10 +30546,6 @@ SurveyResponseWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -31448,10 +30609,6 @@ SurveyResponseWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -31544,10 +30701,6 @@ SurveyResponseWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -31643,7 +30796,7 @@ SurveyResponseWithRelations
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -31742,10 +30895,6 @@ SurveyResponseWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -31823,10 +30972,6 @@ SurveyResponseWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -31890,10 +31035,6 @@ SurveyResponseWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -31986,10 +31127,6 @@ SurveyResponseWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -32173,10 +31310,6 @@ OptionsWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -32193,7 +31326,7 @@ OptionsWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -32341,10 +31474,6 @@ OptionsWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -32361,7 +31490,7 @@ OptionsWithRelations
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -32495,10 +31624,6 @@ OptionsWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -32515,7 +31640,7 @@ OptionsWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -32668,7 +31793,7 @@ OptionsWithRelations
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -32720,10 +31845,6 @@ OptionsWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -32835,7 +31956,7 @@ OptionsWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -32869,10 +31990,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -32968,7 +32085,7 @@ OptionsWithRelations
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -33002,10 +32119,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -33105,7 +32218,7 @@ OptionsWithRelations
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -33204,10 +32317,6 @@ OptionsWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -33285,10 +32394,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -33352,10 +32457,6 @@ OptionsWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -33448,10 +32549,6 @@ OptionsWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -33563,7 +32660,7 @@ OptionsWithRelations
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -33644,10 +32741,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -33725,10 +32818,6 @@ OptionsWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -33792,10 +32881,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -33870,10 +32955,6 @@ OptionsWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -33969,7 +33050,7 @@ OptionsWithRelations
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -34050,10 +33131,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -34131,10 +33208,6 @@ OptionsWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -34198,10 +33271,6 @@ OptionsWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -34276,10 +33345,6 @@ OptionsWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -34425,7 +33490,7 @@ SurveyResponseDetailWithRelations
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -34446,7 +33511,7 @@ SurveyResponseDetailWithRelations
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -34545,10 +33610,6 @@ SurveyResponseDetailWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -34626,10 +33687,6 @@ SurveyResponseDetailWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -34693,10 +33750,6 @@ SurveyResponseDetailWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -34789,10 +33842,6 @@ SurveyResponseDetailWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -34888,7 +33937,7 @@ SurveyResponseDetailWithRelations
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -34987,10 +34036,6 @@ SurveyResponseDetailWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -35068,10 +34113,6 @@ SurveyResponseDetailWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -35135,10 +34176,6 @@ SurveyResponseDetailWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -35231,10 +34268,6 @@ SurveyResponseDetailWithRelations
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -35347,7 +34380,7 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -35426,10 +34459,6 @@ SurveyResponseDetailWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -35507,10 +34536,6 @@ SurveyResponseDetailWithRelations
                   "startDate": "string",
                   "endDate": "string",
                   "status": "string",
-                  "isPeriodicReassessment": true,
-                  "recurrenceFrequency": "Monthly",
-                  "recurrenceEndDate": "string",
-                  "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
                   "extId": "string",
@@ -35560,10 +34585,6 @@ SurveyResponseDetailWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -35638,10 +34659,6 @@ SurveyResponseDetailWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -35737,7 +34754,7 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -35816,10 +34833,6 @@ SurveyResponseDetailWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -35897,10 +34910,6 @@ SurveyResponseDetailWithRelations
                   "startDate": "string",
                   "endDate": "string",
                   "status": "string",
-                  "isPeriodicReassessment": true,
-                  "recurrenceFrequency": "Monthly",
-                  "recurrenceEndDate": "string",
-                  "recurrenceEndAfterOccurrences": 25,
                   "isEnableWeights": true,
                   "baseSurveyId": "string",
                   "extId": "string",
@@ -35950,10 +34959,6 @@ SurveyResponseDetailWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -36028,10 +35033,6 @@ SurveyResponseDetailWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -36130,7 +35131,7 @@ SurveyResponseDetailWithRelations
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -36227,10 +35228,6 @@ SurveyResponseDetailWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -36308,10 +35305,6 @@ SurveyResponseDetailWithRelations
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -36375,10 +35368,6 @@ SurveyResponseDetailWithRelations
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -36471,10 +35460,6 @@ SurveyResponseDetailWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -36623,10 +35608,6 @@ SurveyResponseDetailWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -36643,7 +35624,7 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -36753,10 +35734,6 @@ SurveyResponseDetailWithRelations
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -36773,7 +35750,7 @@ SurveyResponseDetailWithRelations
                 "id": "string",
                 "uid": "string",
                 "name": "string",
-                "status": "Draft",
+                "status": "string",
                 "questionType": "Multi Selection",
                 "extId": "string",
                 "extMetadata": {},
@@ -36869,10 +35846,6 @@ SurveyResponseDetailWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -36889,7 +35862,7 @@ SurveyResponseDetailWithRelations
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -36989,7 +35962,7 @@ SurveyResponseDetailWithRelations
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -37041,10 +36014,6 @@ SurveyResponseDetailWithRelations
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -37156,7 +36125,7 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -37190,10 +36159,6 @@ SurveyResponseDetailWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -37289,7 +36254,7 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -37323,10 +36288,6 @@ SurveyResponseDetailWithRelations
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -37428,10 +36389,6 @@ SurveyResponseDetailWithRelations
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -37448,7 +36405,7 @@ SurveyResponseDetailWithRelations
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -37713,11 +36670,6 @@ QuestionWithRelations
 
 |Property|Value|
 |---|---|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -37744,7 +36696,7 @@ QuestionWithRelations
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "questionType": "Multi Selection",
   "extId": "string",
   "extMetadata": {},
@@ -37789,11 +36741,6 @@ QuestionPartial
 
 |Property|Value|
 |---|---|
-|status|Draft|
-|status|Approved|
-|status|Added to survey|
-|status|Archived|
-|status|null|
 |questionType|Multi Selection|
 |questionType|Scale|
 |questionType|Single Selection|
@@ -38187,7 +37134,7 @@ NewTemplateQuestion
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "isEnableWeight": true,
     "extId": "string",
     "extMetadata": {}
@@ -38203,7 +37150,7 @@ NewTemplateQuestion
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -38302,10 +37249,6 @@ NewTemplateQuestion
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -38383,10 +37326,6 @@ NewTemplateQuestion
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -38450,10 +37389,6 @@ NewTemplateQuestion
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -38546,10 +37481,6 @@ NewTemplateQuestion
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -38662,7 +37593,7 @@ NewTemplateQuestion
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "isEnableWeight": true,
       "extId": "string",
       "extMetadata": {}
@@ -38678,7 +37609,7 @@ NewTemplateQuestion
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -38777,10 +37708,6 @@ NewTemplateQuestion
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -38858,10 +37785,6 @@ NewTemplateQuestion
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -38925,10 +37848,6 @@ NewTemplateQuestion
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -39021,10 +37940,6 @@ NewTemplateQuestion
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -39212,7 +38127,7 @@ TemplateQuestionPartial
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {}
@@ -39241,14 +38156,6 @@ QuestionTemplate
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <h2 id="tocS_NewTemplate">NewTemplate</h2>
 <!-- backwards compatibility -->
 <a id="schemanewtemplate"></a>
@@ -39267,7 +38174,7 @@ QuestionTemplate
   "modifiedBy": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -39297,14 +38204,6 @@ NewTemplate
 |extMetadata|object|false|none|none|
 |existingTemplateId|string|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <h2 id="tocS_QuestionTemplateResponseWithRelations">QuestionTemplateResponseWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemaquestiontemplateresponsewithrelations"></a>
@@ -39324,7 +38223,7 @@ NewTemplate
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -39355,14 +38254,6 @@ QuestionTemplateResponseWithRelations
 |extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <h2 id="tocS_QuestionTemplateWithRelations">QuestionTemplateWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemaquestiontemplatewithrelations"></a>
@@ -39382,7 +38273,7 @@ QuestionTemplateResponseWithRelations
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {}
@@ -39411,14 +38302,6 @@ QuestionTemplateWithRelations
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <h2 id="tocS_QuestionTemplatesDtoPartial">QuestionTemplatesDtoPartial</h2>
 <!-- backwards compatibility -->
 <a id="schemaquestiontemplatesdtopartial"></a>
@@ -39438,7 +38321,7 @@ QuestionTemplateWithRelations
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -39469,14 +38352,6 @@ QuestionTemplatesDtoPartial
 |extMetadata|object|false|none|none|
 |existingTemplateId|string|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <h2 id="tocS_QuestionTemplatesDto">QuestionTemplatesDto</h2>
 <!-- backwards compatibility -->
 <a id="schemaquestiontemplatesdto"></a>
@@ -39496,7 +38371,7 @@ QuestionTemplatesDtoPartial
   "id": "string",
   "uid": "string",
   "name": "string",
-  "status": "Draft",
+  "status": "string",
   "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {},
@@ -39527,14 +38402,6 @@ QuestionTemplatesDto
 |extMetadata|object|false|none|none|
 |existingTemplateId|string|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|Draft|
-|status|Approved|
-|status|null|
-
 <h2 id="tocS_Survey">Survey</h2>
 <!-- backwards compatibility -->
 <a id="schemasurvey"></a>
@@ -39558,10 +38425,6 @@ QuestionTemplatesDto
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -39587,27 +38450,13 @@ Survey
 |uid|string|false|none|none|
 |name|string|true|none|none|
 |surveyText|string|true|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|true|none|none|
-|isPeriodicReassessment|boolean|true|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_NewSurvey">NewSurvey</h2>
 <!-- backwards compatibility -->
@@ -39631,10 +38480,6 @@ Survey
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -39661,29 +38506,15 @@ NewSurvey
 |uid|string|false|none|none|
 |name|string|true|none|none|
 |surveyText|string|true|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|true|none|none|
-|isPeriodicReassessment|boolean|true|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_SurveyDtoWithRelations">SurveyDtoWithRelations</h2>
 <!-- backwards compatibility -->
@@ -39708,10 +38539,6 @@ NewSurvey
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -39730,7 +38557,7 @@ NewSurvey
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -39829,10 +38656,6 @@ NewSurvey
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -39910,10 +38733,6 @@ NewSurvey
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -39977,10 +38796,6 @@ NewSurvey
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -40073,10 +38888,6 @@ NewSurvey
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -40193,10 +39004,6 @@ NewSurvey
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -40213,7 +39020,7 @@ NewSurvey
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -40409,10 +39216,6 @@ NewSurvey
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -40429,7 +39232,7 @@ NewSurvey
             "id": "string",
             "uid": "string",
             "name": "string",
-            "status": "Draft",
+            "status": "string",
             "questionType": "Multi Selection",
             "extId": "string",
             "extMetadata": {},
@@ -40611,10 +39414,6 @@ NewSurvey
           "startDate": "string",
           "endDate": "string",
           "status": "string",
-          "isPeriodicReassessment": true,
-          "recurrenceFrequency": "Monthly",
-          "recurrenceEndDate": "string",
-          "recurrenceEndAfterOccurrences": 25,
           "isEnableWeights": true,
           "baseSurveyId": "string",
           "extId": "string",
@@ -40631,7 +39430,7 @@ NewSurvey
               "id": "string",
               "uid": "string",
               "name": "string",
-              "status": "Draft",
+              "status": "string",
               "questionType": "Multi Selection",
               "extId": "string",
               "extMetadata": {},
@@ -40792,13 +39591,9 @@ SurveyDtoWithRelations
 |uid|string|false|none|none|
 |name|string|true|none|none|
 |surveyText|string|true|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|true|none|none|
-|isPeriodicReassessment|boolean|true|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
@@ -40809,16 +39604,6 @@ SurveyDtoWithRelations
 |surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|[(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })]|
 |surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|[(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })]|
 |sections|[[SectionWithRelations](#schemasectionwithrelations)]|false|none|[(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })]|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_SurveyPartial">SurveyPartial</h2>
 <!-- backwards compatibility -->
@@ -40843,10 +39628,6 @@ SurveyDtoWithRelations
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -40872,27 +39653,13 @@ SurveyPartial
 |uid|string|false|none|none|
 |name|string|false|none|none|
 |surveyText|string|false|none|none|
-|startDate|string|false|none|Start date of the first survey cycle|
-|endDate|string|false|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|false|none|none|
-|isPeriodicReassessment|boolean|false|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_SurveyDtoPartial">SurveyDtoPartial</h2>
 <!-- backwards compatibility -->
@@ -40917,10 +39684,6 @@ SurveyPartial
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -40948,29 +39711,15 @@ SurveyDtoPartial
 |uid|string|false|none|none|
 |name|string|false|none|none|
 |surveyText|string|false|none|none|
-|startDate|string|false|none|Start date of the first survey cycle|
-|endDate|string|false|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|false|none|none|
-|isPeriodicReassessment|boolean|false|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_SurveyDto">SurveyDto</h2>
 <!-- backwards compatibility -->
@@ -40995,10 +39744,6 @@ SurveyDtoPartial
   "startDate": "string",
   "endDate": "string",
   "status": "string",
-  "isPeriodicReassessment": true,
-  "recurrenceFrequency": "Monthly",
-  "recurrenceEndDate": "string",
-  "recurrenceEndAfterOccurrences": 25,
   "isEnableWeights": true,
   "baseSurveyId": "string",
   "extId": "string",
@@ -41026,29 +39771,15 @@ SurveyDto
 |uid|string|false|none|none|
 |name|string|true|none|none|
 |surveyText|string|true|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
 |status|string|true|none|none|
-|isPeriodicReassessment|boolean|true|none|none|
-|recurrenceFrequency|string¦null|false|none|none|
-|recurrenceEndDate|string¦null|false|none|none|
-|recurrenceEndAfterOccurrences|number|false|none|none|
 |isEnableWeights|boolean|false|none|none|
 |baseSurveyId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|recurrenceFrequency|Monthly|
-|recurrenceFrequency|Quarterly|
-|recurrenceFrequency|Biannually|
-|recurrenceFrequency|Annually|
-|recurrenceFrequency|null|
 
 <h2 id="tocS_SurveyQuestionDto">SurveyQuestionDto</h2>
 <!-- backwards compatibility -->
@@ -41220,10 +39951,6 @@ NewSurveyQuestion
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -41240,7 +39967,7 @@ NewSurveyQuestion
           "id": "string",
           "uid": "string",
           "name": "string",
-          "status": "Draft",
+          "status": "string",
           "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
@@ -41475,7 +40202,7 @@ NewSurveyQuestion
       "id": "string",
       "uid": "string",
       "name": "string",
-      "status": "Draft",
+      "status": "string",
       "questionType": "Multi Selection",
       "extId": "string",
       "extMetadata": {},
@@ -41574,10 +40301,6 @@ NewSurveyQuestion
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -41655,10 +40378,6 @@ NewSurveyQuestion
                 "startDate": "string",
                 "endDate": "string",
                 "status": "string",
-                "isPeriodicReassessment": true,
-                "recurrenceFrequency": "Monthly",
-                "recurrenceEndDate": "string",
-                "recurrenceEndAfterOccurrences": 25,
                 "isEnableWeights": true,
                 "baseSurveyId": "string",
                 "extId": "string",
@@ -41722,10 +40441,6 @@ NewSurveyQuestion
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -41818,10 +40533,6 @@ NewSurveyQuestion
         "startDate": "string",
         "endDate": "string",
         "status": "string",
-        "isPeriodicReassessment": true,
-        "recurrenceFrequency": "Monthly",
-        "recurrenceEndDate": "string",
-        "recurrenceEndAfterOccurrences": 25,
         "isEnableWeights": true,
         "baseSurveyId": "string",
         "extId": "string",
@@ -41937,10 +40648,6 @@ NewSurveyQuestion
     "startDate": "string",
     "endDate": "string",
     "status": "string",
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": "Monthly",
-    "recurrenceEndDate": "string",
-    "recurrenceEndAfterOccurrences": 25,
     "isEnableWeights": true,
     "baseSurveyId": "string",
     "extId": "string",
@@ -41957,7 +40664,7 @@ NewSurveyQuestion
         "id": "string",
         "uid": "string",
         "name": "string",
-        "status": "Draft",
+        "status": "string",
         "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
@@ -42192,7 +40899,7 @@ NewSurveyQuestion
     "id": "string",
     "uid": "string",
     "name": "string",
-    "status": "Draft",
+    "status": "string",
     "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
@@ -42291,10 +40998,6 @@ NewSurveyQuestion
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -42372,10 +41075,6 @@ NewSurveyQuestion
               "startDate": "string",
               "endDate": "string",
               "status": "string",
-              "isPeriodicReassessment": true,
-              "recurrenceFrequency": "Monthly",
-              "recurrenceEndDate": "string",
-              "recurrenceEndAfterOccurrences": 25,
               "isEnableWeights": true,
               "baseSurveyId": "string",
               "extId": "string",
@@ -42439,10 +41138,6 @@ NewSurveyQuestion
             "startDate": "string",
             "endDate": "string",
             "status": "string",
-            "isPeriodicReassessment": true,
-            "recurrenceFrequency": "Monthly",
-            "recurrenceEndDate": "string",
-            "recurrenceEndAfterOccurrences": 25,
             "isEnableWeights": true,
             "baseSurveyId": "string",
             "extId": "string",
@@ -42535,10 +41230,6 @@ NewSurveyQuestion
       "startDate": "string",
       "endDate": "string",
       "status": "string",
-      "isPeriodicReassessment": true,
-      "recurrenceFrequency": "Monthly",
-      "recurrenceEndDate": "string",
-      "recurrenceEndAfterOccurrences": 25,
       "isEnableWeights": true,
       "baseSurveyId": "string",
       "extId": "string",
@@ -46015,10 +44706,6 @@ surveys.IncludeFilter.Items
     "startDate": true,
     "endDate": true,
     "status": true,
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": true,
-    "recurrenceEndDate": true,
-    "recurrenceEndAfterOccurrences": true,
     "isEnableWeights": true,
     "baseSurveyId": true,
     "extId": true,
@@ -46092,10 +44779,6 @@ oneOf
 |»» startDate|boolean|false|none|none|
 |»» endDate|boolean|false|none|none|
 |»» status|boolean|false|none|none|
-|»» isPeriodicReassessment|boolean|false|none|none|
-|»» recurrenceFrequency|boolean|false|none|none|
-|»» recurrenceEndDate|boolean|false|none|none|
-|»» recurrenceEndAfterOccurrences|boolean|false|none|none|
 |»» isEnableWeights|boolean|false|none|none|
 |»» baseSurveyId|boolean|false|none|none|
 |»» extId|boolean|false|none|none|
@@ -46154,10 +44837,6 @@ or
     "startDate": true,
     "endDate": true,
     "status": true,
-    "isPeriodicReassessment": true,
-    "recurrenceFrequency": true,
-    "recurrenceEndDate": true,
-    "recurrenceEndAfterOccurrences": true,
     "isEnableWeights": true,
     "baseSurveyId": true,
     "extId": true,
@@ -46232,10 +44911,6 @@ oneOf
 |»» startDate|boolean|false|none|none|
 |»» endDate|boolean|false|none|none|
 |»» status|boolean|false|none|none|
-|»» isPeriodicReassessment|boolean|false|none|none|
-|»» recurrenceFrequency|boolean|false|none|none|
-|»» recurrenceEndDate|boolean|false|none|none|
-|»» recurrenceEndAfterOccurrences|boolean|false|none|none|
 |»» isEnableWeights|boolean|false|none|none|
 |»» baseSurveyId|boolean|false|none|none|
 |»» extId|boolean|false|none|none|
