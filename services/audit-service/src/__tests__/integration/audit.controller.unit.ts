@@ -13,27 +13,37 @@ import {
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AuditController} from '../../controllers';
 import {dummyLog} from '../sample-data/dummy-log';
-import {JobRepository} from '../../repositories';
-import {JobProcessingService} from '../../services';
+import {JobRepository, MappingLogRepository} from '../../repositories';
+import {ColumnBuilderProvider, JobProcessingService} from '../../services';
 import {filterAppliedActedAt} from '../sample-data/filters';
 import {Job} from '../../models';
 import {Filter} from '@loopback/repository';
+import {FileStatusKey} from '../../enums/file-status-key.enum';
+import {getTestAuditController} from '../helpers/db.helper';
 
 let auditLogRepository: StubbedInstanceWithSinonAccessor<AuditLogRepository>;
 let jobRepository: StubbedInstanceWithSinonAccessor<JobRepository>;
 let jobProcessingService: StubbedInstanceWithSinonAccessor<JobProcessingService>;
+let mappingLogRepository: StubbedInstanceWithSinonAccessor<MappingLogRepository>;
+
 let controller: AuditController;
 const setUpStub = () => {
   auditLogRepository = createStubInstance(AuditLogRepository);
   jobRepository = createStubInstance(JobRepository);
   jobProcessingService = createStubInstance(JobProcessingService);
+  mappingLogRepository = createStubInstance(MappingLogRepository);
+  const columnBuilderProvider = new ColumnBuilderProvider();
+  const {auditLogExport, exportToCsvService} = getTestAuditController();
   controller = new AuditController(
     auditLogRepository,
     jobRepository,
     jobProcessingService,
+    mappingLogRepository,
+    exportToCsvService,
+    auditLogExport,
+    columnBuilderProvider.value(),
   );
 };
-
 beforeEach(setUpStub);
 
 describe('AuditController(unit) ', () => {
@@ -61,7 +71,7 @@ describe('AuditController(unit) ', () => {
       const includeArchivedLogs = true;
       const job: Job = new Job({
         id: '1',
-        status: 'PENDING',
+        status: FileStatusKey.PENDING,
         filterUsed: filterAppliedActedAt,
       });
       const createjobStub = jobRepository.stubs.create;

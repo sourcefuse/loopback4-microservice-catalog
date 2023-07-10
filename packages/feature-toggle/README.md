@@ -7,6 +7,9 @@ A simple loopback-next extension for checking the disabled features. Here a new 
 ## Working and Flow
 
 This extension provides a method level decorator `@featureFlag` that takes the name of the feature that needs to be checked as metadata and verifies if that particular feature is allowed or not. What it expects is that a list of disabled features is saved for the current user of the type `IAuthUserWithDisabledFeat` and compares that with the one passed in the metadata of the decorator.
+The metadata also accepts an optional options that has a handler name parameter. If that handler name is provided that using an extendion point `HandlerService` appropriate handler is called. All the handlers must implement `FeatureHandler` interface.
+
+Only feature check
 
 ```ts
  @featureFlag({featureKey: 'feature_key'})
@@ -16,6 +19,30 @@ If you want to skip the check:
 
 ```ts
 @featureFlag({featureKey: '*'})
+```
+
+Feature Check plus handler call
+
+```ts
+@featureFlag({
+    featureKey: 'feature_key',
+    options: {
+      handler: 'handler_name',
+    },
+  })
+```
+
+This particular handler_name will be matched with the one in handler
+
+```ts
+@injectable(asFeatureHandler)
+export class MyHandler implements FeatureHandler {
+  handlerName = 'handler_name';
+
+  handle(): void {
+    // your logic here
+  }
+}
 ```
 
 A good practice is to keep all feature strings in a separate enum file like this.
@@ -54,6 +81,12 @@ import {FeatureToggleComponent} from '@sourceloop/feature-toggle';
 
 // add Component for FeatureToggle
 this.component(FeatureToggleComponent);
+```
+
+- Adding handlers to the extension points
+
+```ts
+this.add(createBindingFromClass(MyHandler));
 ```
 
 - Then add the decorator over all the APIs where feature needs to be checked. As shown above.

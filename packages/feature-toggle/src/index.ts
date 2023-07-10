@@ -7,3 +7,4 @@ export * from './keys';
 export * from './types';
 export * from './decorators';
 export * from './providers';
+export * from './services';

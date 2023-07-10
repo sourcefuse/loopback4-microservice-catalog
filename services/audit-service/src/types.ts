@@ -5,7 +5,7 @@
 import {AuditDbSourceName} from '@sourceloop/audit-log';
 import {IServiceConfig} from '@sourceloop/core';
 import {AuditLog} from './models';
-import {Filter} from '@loopback/repository';
+import {AnyObject, Filter} from '@loopback/repository';
 
 // sonarignore:start
 export interface IAuditServiceConfig extends IServiceConfig {
@@ -20,16 +20,18 @@ export type QuerySelectedFilesFn = (
 export type ExportToCsvFn = (
   selectedAuditLogs: AuditLog[],
 ) => Promise<AWS.S3.ManagedUpload.SendData>;
-
+export type ExportHandlerFn = (fileBuffer: Buffer) => Promise<void>;
+export type AuditLogExportFn = (data: AnyObject[]) => Promise<void>;
+export type ColumnBuilderFn = (auditLogs: AuditLog[]) => Promise<AnyObject[]>;
 export interface ArchiveOutput {
   message: string;
   numberOfEntriesArchived: number;
   key: string;
 }
+export interface ExportResponse {
+  jobId?: string;
+  message?: string;
+}
 // sonarignore:end
 
 export const AuditSourceName = AuditDbSourceName;
-export interface IColumnHandler {
-  columnName: string;
-  columnValueBuilder(auditLog: AuditLog): string;
-}

@@ -101,6 +101,57 @@
         "operationId": "AuditController.count"
       }
     },
+    "/audit-logs/export": {
+      "get": {
+        "x-controller-name": "ExportLogsController",
+        "x-operation-name": "export",
+        "tags": [
+          "ExportLogsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of AuditLog model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuditLogWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ExportLogs   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "includeArchivedLogs",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logs.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "ExportLogsController.export"
+      }
+    },
     "/audit-logs/jobs/{jobId}": {
       "get": {
         "x-controller-name": "AuditController",
@@ -182,7 +233,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/audit_logs.Filter"
+                  "$ref": "#/components/schemas/audit_logs.Filter1"
                 }
               }
             }
@@ -268,7 +319,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/audit_logs.Filter1"
+                  "$ref": "#/components/schemas/audit_logs.Filter"
                 }
               }
             }
@@ -387,6 +438,9 @@
           "status": {
             "type": "string"
           },
+          "operation": {
+            "type": "string"
+          },
           "filterUsed": {
             "type": "object"
           },
@@ -457,11 +511,11 @@
             "properties": {
               "fromDate": {
                 "type": "string",
-                "default": "2023-06-09T05:13:22.078Z"
+                "default": "2023-06-24T09:15:57.060Z"
               },
               "toDate": {
                 "type": "string",
-                "default": "2023-06-09T05:13:22.078Z"
+                "default": "2023-06-24T09:15:57.060Z"
               }
             }
           },
@@ -517,6 +571,11 @@
                 }
               }
             ]
+          },
+          "where": {
+            "title": "audit_logs.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
           },
           "fields": {
             "oneOf": [
@@ -600,11 +659,6 @@
                 }
               }
             ]
-          },
-          "where": {
-            "title": "audit_logs.WhereFilter",
-            "type": "object",
-            "additionalProperties": true
           },
           "fields": {
             "oneOf": [

@@ -11,7 +11,7 @@ export function featureFlag(metadata: FeatureFlagMetadata) {
     FEATURE_FLAG_METADATA_ACCESSOR,
     {
       featureKey: metadata.featureKey,
-      options: metadata.options ?? {},
+      options: metadata.options,
     },
   );
 }

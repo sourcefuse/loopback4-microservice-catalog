@@ -41,8 +41,8 @@ Base URLs:
 ```javascript
 const inputBody = '{
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-24T09:15:57.060Z",
+    "toDate": "2023-06-24T09:15:57.060Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -72,8 +72,8 @@ fetch('/audit-logs/archive',
 const fetch = require('node-fetch');
 const inputBody = {
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-24T09:15:57.060Z",
+    "toDate": "2023-06-24T09:15:57.060Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -111,8 +111,8 @@ fetch('/audit-logs/archive',
 ```json
 {
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-24T09:15:57.060Z",
+    "toDate": "2023-06-24T09:15:57.060Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -315,6 +315,7 @@ fetch('/audit-logs/jobs/{jobId}',
   {
     "id": "string",
     "status": "string",
+    "operation": "string",
     "filterUsed": {},
     "result": "string"
   }
@@ -337,6 +338,7 @@ Status Code **200**
 |» JobWithRelations|[JobWithRelations](#schemajobwithrelations)|false|none|(tsType: JobWithRelations, schemaOptions: { includeRelations: true })|
 |»» id|string|false|none|none|
 |»» status|string|true|none|none|
+|»» operation|string|false|none|none|
 |»» filterUsed|object|false|none|none|
 |»» result|string|false|none|none|
 
@@ -406,7 +408,7 @@ fetch('/audit-logs/{id}',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
-|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
+|filter|query|[audit_logs.Filter1](#schemaaudit_logs.filter1)|false|none|
 
 > Example responses
 
@@ -629,7 +631,7 @@ fetch('/audit-logs',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |includeArchivedLogs|query|boolean|false|none|
-|filter|query|[audit_logs.Filter1](#schemaaudit_logs.filter1)|false|none|
+|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
 
 > Example responses
 
@@ -659,6 +661,122 @@ fetch('/audit-logs',
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
 
 <h3 id="auditcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[AuditLogWithRelations](#schemaauditlogwithrelations)]|false|none|[(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })]|
+|» AuditLogWithRelations|[AuditLogWithRelations](#schemaauditlogwithrelations)|false|none|(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» action|string|true|none|none|
+|»» actedAt|string(date-time)|true|none|none|
+|»» actedOn|string|false|none|none|
+|»» actionKey|string|true|none|none|
+|»» entityId|string|true|none|none|
+|»» actor|string|true|none|none|
+|»» before|object|false|none|none|
+|»» after|object|false|none|none|
+|»» actionGroup|string|false|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+<h1 id="audit-service-exportlogscontroller">ExportLogsController</h1>
+
+## ExportLogsController.export
+
+<a id="opIdExportLogsController.export"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/export',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/export',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /audit-logs/export`
+
+| Permissions |
+| ------- |
+| ExportLogs   |
+| 5   |
+
+<h3 id="exportlogscontroller.export-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|includeArchivedLogs|query|boolean|false|none|
+|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "action": "string",
+    "actedAt": "2019-08-24T14:15:22Z",
+    "actedOn": "string",
+    "actionKey": "string",
+    "entityId": "string",
+    "actor": "string",
+    "before": {},
+    "after": {},
+    "actionGroup": "string"
+  }
+]
+```
+
+<h3 id="exportlogscontroller.export-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
+
+<h3 id="exportlogscontroller.export-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -773,6 +891,7 @@ NewAuditLog
 {
   "id": "string",
   "status": "string",
+  "operation": "string",
   "filterUsed": {},
   "result": "string"
 }
@@ -787,6 +906,7 @@ JobWithRelations
 |---|---|---|---|---|
 |id|string|false|none|none|
 |status|string|true|none|none|
+|operation|string|false|none|none|
 |filterUsed|object|false|none|none|
 |result|string|false|none|none|
 
@@ -840,8 +960,8 @@ AuditLogWithRelations
 ```json
 {
   "date": {
-    "fromDate": "2023-06-09T05:13:22.078Z",
-    "toDate": "2023-06-09T05:13:22.078Z"
+    "fromDate": "2023-06-24T09:15:57.060Z",
+    "toDate": "2023-06-24T09:15:57.060Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -898,86 +1018,6 @@ loopback.Count
   "limit": 100,
   "skip": 0,
   "order": "string",
-  "fields": {
-    "id": true,
-    "action": true,
-    "actedAt": true,
-    "actedOn": true,
-    "actionKey": true,
-    "entityId": true,
-    "actor": true,
-    "before": true,
-    "after": true,
-    "actionGroup": true
-  }
-}
-
-```
-
-audit_logs.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» id|boolean|false|none|none|
-|»» action|boolean|false|none|none|
-|»» actedAt|boolean|false|none|none|
-|»» actedOn|boolean|false|none|none|
-|»» actionKey|boolean|false|none|none|
-|»» entityId|boolean|false|none|none|
-|»» actor|boolean|false|none|none|
-|»» before|boolean|false|none|none|
-|»» after|boolean|false|none|none|
-|»» actionGroup|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-<h2 id="tocS_audit_logs.Filter1">audit_logs.Filter1</h2>
-<!-- backwards compatibility -->
-<a id="schemaaudit_logs.filter1"></a>
-<a id="schema_audit_logs.Filter1"></a>
-<a id="tocSaudit_logs.filter1"></a>
-<a id="tocsaudit_logs.filter1"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
   "where": {},
   "fields": {
     "id": true,
@@ -1023,6 +1063,86 @@ continued
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» action|boolean|false|none|none|
+|»» actedAt|boolean|false|none|none|
+|»» actedOn|boolean|false|none|none|
+|»» actionKey|boolean|false|none|none|
+|»» entityId|boolean|false|none|none|
+|»» actor|boolean|false|none|none|
+|»» before|boolean|false|none|none|
+|»» after|boolean|false|none|none|
+|»» actionGroup|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_audit_logs.Filter1">audit_logs.Filter1</h2>
+<!-- backwards compatibility -->
+<a id="schemaaudit_logs.filter1"></a>
+<a id="schema_audit_logs.Filter1"></a>
+<a id="tocSaudit_logs.filter1"></a>
+<a id="tocsaudit_logs.filter1"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "id": true,
+    "action": true,
+    "actedAt": true,
+    "actedOn": true,
+    "actionKey": true,
+    "entityId": true,
+    "actor": true,
+    "before": true,
+    "after": true,
+    "actionGroup": true
+  }
+}
+
+```
+
+audit_logs.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
 |fields|any|false|none|none|
 
 oneOf
