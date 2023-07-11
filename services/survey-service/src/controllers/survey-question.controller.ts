@@ -42,7 +42,6 @@ export class SurveyQuestionController {
     private surveyQuestionRepository: SurveyQuestionRepository,
     @service(SurveyService)
     private surveyService: SurveyService,
-    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -242,9 +241,6 @@ export class SurveyQuestionController {
     @param.path.string('surveyId') surveyId: string,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    const existingSurveyQuestion = await this.surveyQuestionRepository.findById(
-      id,
-    );
     const updatedCount = await this.surveyQuestionRepository.updateAll(
       surveyQuestion,
       {
@@ -255,15 +251,10 @@ export class SurveyQuestionController {
     if (updatedCount.count === 0) {
       throw new HttpErrors.BadRequest('Entity not found.');
     }
-    this.updateModifiedByAndAddLog(surveyId, existingSurveyQuestion).catch(
-      err => this.logger.error(JSON.stringify(err)),
-    );
+    this.updateModifiedBy(surveyId);
   }
 
-  async updateModifiedByAndAddLog(
-    surveyId: string,
-    existingSurveyQuestion: SurveyQuestion,
-  ) {
+  async updateModifiedBy(surveyId: string) {
     await this.surveyService.updateModifiedByAndOn(surveyId);
   }
 
@@ -327,9 +318,9 @@ export class SurveyQuestionController {
       throw new HttpErrors.BadRequest(ErrorKeys.DisplayOrderMissing);
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.surveyQuestionRepository
-      .reorder(surveyId, surveyQuestion.displayOrder)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch(err => this.logger.error(JSON.stringify(err)));
+    this.surveyQuestionRepository.reorder(
+      surveyId,
+      surveyQuestion.displayOrder,
+    );
   }
 }

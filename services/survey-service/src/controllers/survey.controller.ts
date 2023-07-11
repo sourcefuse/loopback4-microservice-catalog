@@ -166,7 +166,7 @@ export class SurveyController {
         },
       });
       const responderEmails: string[] = [];
-      responders.forEach(responder => {
+      responders?.forEach(responder => {
         responderEmails.push(responder.email);
       });
       const validUser = responderEmails.includes(decodedToken.email);
@@ -220,6 +220,7 @@ export class SurveyController {
     description: 'Survey DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.surveyService.checkDeleteValidation(id);
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.surveyService
       .deleteRelatedObjects(id)

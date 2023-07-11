@@ -43,6 +43,21 @@ describe('Survey Cycle Controller', () => {
     expect(response).to.have.property('body');
   });
 
+  it('it gives 400 when wrong survey id is passed', async () => {
+    const currentDate = new Date();
+    const surveyCycleToCreate = new SurveyCycle({
+      startDate: moment(currentDate).format(),
+      endDate: moment(currentDate.setDate(currentDate.getDate() + 10)).format(),
+      isActivated: true,
+    });
+    await createSurvey();
+    const response = await client
+      .post(`/surveys/id/survey-cycles`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(surveyCycleToCreate)
+      .expect(400);
+  });
+
   it('will return all the values with status 200', async () => {
     await createSurvey();
     await addSurveyCycle();
@@ -64,6 +79,17 @@ describe('Survey Cycle Controller', () => {
     expect(response.body)
       .to.have.property('id')
       .to.be.equal(`${surveyCycle.body.id}`);
+  });
+
+  it('will return 404 if id does not matches', async () => {
+    await createSurvey();
+    await addSurveyCycle();
+
+    const response = await client
+      .get(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(404);
+    expect(response.body.error.message).to.be.equal('Entity not found');
   });
 
   it('gives status 401 when no token is passed', async () => {
@@ -100,6 +126,20 @@ describe('Survey Cycle Controller', () => {
     expect(response.body.isActivated).to.be.equal(false);
   });
 
+  it('will return 400 if wrong id is passed', async () => {
+    const surveyCycleToUpdate = {
+      isActivated: false,
+    };
+    await createSurvey();
+    await addSurveyCycle();
+
+    await client
+      .patch(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .send(surveyCycleToUpdate)
+      .expect(400);
+  });
+
   it('deletes a survey cycle successfully', async () => {
     await createSurvey();
     const reqToAddSurveyCycle = await addSurveyCycle();
@@ -107,6 +147,15 @@ describe('Survey Cycle Controller', () => {
       .del(`${basePath}/${reqToAddSurveyCycle.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(204);
+  });
+
+  it('return 400 if wrong id is paased on deletion', async () => {
+    await createSurvey();
+    await addSurveyCycle();
+    await client
+      .del(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(400);
   });
 
   async function addSurveyCycle() {

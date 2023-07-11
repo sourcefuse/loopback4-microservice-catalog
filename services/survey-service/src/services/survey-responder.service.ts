@@ -23,7 +23,7 @@ export class SurveyResponderService {
         surveyResponders[0].surveyCycleId,
       );
       const emails: string[] = [];
-      surveyResponders.forEach(responder => {
+      surveyResponders?.forEach(responder => {
         emails.push(responder.email);
       });
       const tokens: string[] = [];
@@ -34,7 +34,7 @@ export class SurveyResponderService {
         PermissionKey.ViewOpenSurveyResponse,
         PermissionKey.CreateOpenSurveyResponse,
       ];
-      emails.forEach(email => {
+      emails?.forEach(email => {
         const user = {
           email,
           surveyId: surveyId,
@@ -44,7 +44,7 @@ export class SurveyResponderService {
 
         const accessToken = sign(user, process.env.JWT_SECRET as string, {
           expiresIn: this._getExpiresInSeconds(surveyCycle.endDate),
-          issuer: 'rakuten_auth',
+          issuer: process.env.JWT_ISSUER,
           algorithm: 'HS256',
         });
 

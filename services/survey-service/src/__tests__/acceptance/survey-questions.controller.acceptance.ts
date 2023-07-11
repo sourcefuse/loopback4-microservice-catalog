@@ -64,6 +64,13 @@ describe('Survey Question Controller', () => {
       .to.have.property('id')
       .to.be.equal(`${surveyQuestion.body.id}`);
   });
+  it('will throw error if id does not matches', async () => {
+    await createSurvey();
+    const response = await client
+      .get(`${basePath}/2`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(404);
+  });
 
   it('gives status 401 when no token is passed', async () => {
     const response = await client.get(basePath).expect(401);
@@ -99,6 +106,41 @@ describe('Survey Question Controller', () => {
       .expect(200);
     expect(response.body.displayOrder).to.be.equal(4);
   });
+  it('will return 404 if no survey question found', async () => {
+    const surveyToUpdate = {
+      displayOrder: 4,
+    };
+    await createSurvey();
+    await addSurveyQuestion();
+
+    await client
+      .patch(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .send(surveyToUpdate)
+      .expect(400);
+  });
+
+  it('will update all the survey question and return 200', async () => {
+    const questionToUpdate = {
+      createdBy: 'update_by',
+      modifiedBy: 'update_by',
+    };
+    await createSurvey();
+    await addSurveyQuestion();
+    await client
+      .patch(`${basePath}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(questionToUpdate)
+      .expect(200);
+
+    const response = await client
+      .get(`${basePath}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(response.body[0]).to.have.properties(['createdBy']);
+    expect(response.body[0].createdBy).to.be.equal('update_by');
+  });
 
   it('deletes a survey questions successfully', async () => {
     await createSurvey();
@@ -107,6 +149,40 @@ describe('Survey Question Controller', () => {
       .del(`${basePath}/${reqToAddSurveyQuestion.body.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(204);
+  });
+  it('return 400 if entity not found', async () => {
+    await createSurvey();
+    await addSurveyQuestion();
+    await client
+      .del(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(400);
+  });
+
+  it('should increase display order by 1', async () => {
+    await createSurvey();
+    const surveyQuestion = await addSurveyQuestion();
+    await client
+      .patch(`${basePath}/reorder`)
+      .set('authorization', `Bearer ${token}`)
+      .send(surveyQuestion.body)
+      .expect(204);
+    await client
+      .get(`${basePath}/${surveyQuestion.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+  });
+  it('should return 400 if no display order exist for survey question', async () => {
+    await createSurvey();
+    const surveyQuestion = surveyQuestionRepo.create({
+      id: 'id',
+      questionId: '3',
+    });
+    await client
+      .patch(`${basePath}/reorder`)
+      .set('authorization', `Bearer ${token}`)
+      .send(surveyQuestion)
+      .expect(400);
   });
 
   async function addSurveyQuestion() {

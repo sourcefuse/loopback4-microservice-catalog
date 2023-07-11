@@ -38,6 +38,18 @@ describe('Survey Section Controller', () => {
     expect(response.statusCode).have.equal(200);
     expect(response).to.have.property('body');
   });
+  it('it gives 400 survey status in not Draft', async () => {
+    const surveySectionToCreate = new Section({
+      name: 'test section',
+    });
+    await createSurvey();
+    const response = await client
+      .post('/surveys/2/sections')
+      .set('Authorization', `Bearer ${token}`)
+      .send(surveySectionToCreate)
+      .expect(400);
+    expect(response.statusCode).have.equal(400);
+  });
 
   it('will return all the values with status 200', async () => {
     await createSurvey();
@@ -61,6 +73,15 @@ describe('Survey Section Controller', () => {
     expect(response.body)
       .to.have.property('id')
       .to.be.equal(`${section.body.id}`);
+  });
+
+  it('will return 404 if section does not exist', async () => {
+    await createSurvey();
+    await addSection();
+    await client
+      .get(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(400);
   });
 
   it('gives status 401 when no token is passed', async () => {
@@ -106,6 +127,28 @@ describe('Survey Section Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .expect(204);
   });
+  it('gives error on delete when section has no display order', async () => {
+    await createSurvey();
+    await addSectionWithRepo();
+    await client
+      .del(`${basePath}/2`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(400);
+  });
+
+  it('should increase display order by 1', async () => {
+    await createSurvey();
+    await addSectionWithRepo();
+    await client
+      .del(`${basePath}/1`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(204);
+    const response = await client
+      .get(`${basePath}/3`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+    expect(response.body.displayOrder).to.be.equal(3);
+  });
 
   async function addSection() {
     return client.post(basePath).set('authorization', `Bearer ${token}`).send({
@@ -131,6 +174,40 @@ describe('Survey Section Controller', () => {
         surveyText:
           'JTNDcCUzRWludHJvZHVjdGlvbi4lMjB0byUyMHN1cnZleSUzQyUyRnAlM0U=',
         status: SurveyStatus.DRAFT,
+      },
+      {
+        id: '2',
+        name: 'Survey 2',
+        startDate: moment(currentDate).format(),
+        endDate: moment(
+          currentDate.setDate(currentDate.getDate() + 10),
+        ).format(),
+        surveyText:
+          'JTNDcCUzRWludHJvZHVjdGlvbi4lMjB0byUyMHN1cnZleSUzQyUyRnAlM0U=',
+        status: SurveyStatus.ACTIVE,
+      },
+    ]);
+  }
+
+  async function addSectionWithRepo() {
+    return await sectionRepo.createAll([
+      {
+        name: 'test section 1',
+        id: '1',
+        displayOrder: 1,
+        surveyId: '1',
+      },
+
+      {
+        name: 'test section 2',
+        id: '3',
+        displayOrder: 3,
+        surveyId: '1',
+      },
+      {
+        name: 'test section',
+        id: '2',
+        surveyId: '1',
       },
     ]);
   }

@@ -3,17 +3,24 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
-import {QuestionTemplateRepository} from '../../repositories';
+import {
+  QuestionRepository,
+  QuestionTemplateRepository,
+  TemplateQuestionRepository,
+} from '../../repositories';
 import {SurveyServiceApplication} from '../application';
 import {setUpApplication} from './helper';
 import {token} from '../datasources/userCredsAndPermission';
-import {QuestionTemplateStatus} from '../../enum';
-import {QuestionTemplate} from '../../models';
+import {QuestionTemplateStatus, QuestionType} from '../../enum';
+import {QuestionTemplate, QuestionTemplatesDto} from '../../models';
 
-describe('TemplateController', () => {
+describe('Template Controller', () => {
   let app: SurveyServiceApplication;
   let client: Client;
   let templateRepo: QuestionTemplateRepository;
+  let templateQuestionRepo: TemplateQuestionRepository;
+  let questionRepo: QuestionRepository;
+
   const basePath = '/templates';
 
   before('setupApplication', async () => {
@@ -45,9 +52,13 @@ describe('TemplateController', () => {
   });
 
   it('it gives 200 and returns created question template as response', async () => {
-    const questionTemplate = new QuestionTemplate({
+    addQuestion();
+    givenRepositories();
+    addTemplateQuestion();
+    const questionTemplate = new QuestionTemplatesDto({
       name: 'Question Template one',
       status: QuestionTemplateStatus.DRAFT,
+      existingTemplateId: '1',
     });
 
     const response = await client
@@ -92,10 +103,21 @@ describe('TemplateController', () => {
       .to.be.equal(`${questionTemplate.body.id}`);
   });
 
+  it('it gives status 400 if wromg id passed', async () => {
+    const questionTemplate = await addQuestionTemplate();
+    const response = await client
+      .get(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(400);
+    expect(response.body.error.message).to.be.equal('Entity not found');
+  });
+
   it('it gives 204 and updates the data respective to entity id', async () => {
+    await givenRepositories();
     const questionTemplate = await addQuestionTemplate();
     const questionTemplateValueToUpdate = {
       name: 'test question template patch',
+      existingTemplateId: '1',
     };
     await client
       .patch(`${basePath}/${questionTemplate.body.id}`)
@@ -110,6 +132,60 @@ describe('TemplateController', () => {
     expect(response.body.name).to.be.equal('test question template patch');
   });
 
+  it('it gives 400 if try to update approved template', async () => {
+    const questionTemplate = await givenRepositories();
+    const questionTemplateValueToUpdate = {
+      name: 'test question template patch',
+    };
+    await client
+      .patch(`${basePath}/2`)
+      .set('authorization', `Bearer ${token}`)
+      .send(questionTemplateValueToUpdate)
+      .expect(400);
+  });
+
+  it('it gives 404 if try to update with wrong id', async () => {
+    await givenRepositories();
+    const questionTemplateValueToUpdate = {
+      name: 'test question template patch',
+    };
+    await client
+      .patch(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .send(questionTemplateValueToUpdate)
+      .expect(404);
+  });
+
+  it('it gives 404 if try to update with wrong existingTemplateId id', async () => {
+    await givenRepositories();
+    const questionTemplateValueToUpdate = {
+      name: 'test question template patch',
+      existingTemplateId: 'existingTemplateId',
+    };
+    const response = await client
+      .patch(`${basePath}/1`)
+      .set('authorization', `Bearer ${token}`)
+      .send(questionTemplateValueToUpdate)
+      .expect(404);
+  });
+
+  async function addTemplateQuestion() {
+    await templateQuestionRepo.create({
+      id: '1',
+      questionId: 'questionId',
+      displayOrder: 1,
+      templateId: '1',
+    });
+  }
+
+  async function addQuestion() {
+    await questionRepo.create({
+      id: 'questionId',
+      questionType: QuestionType.SINGLE_SELECTION,
+      name: 'Question 101',
+    });
+  }
+
   async function addQuestionTemplate() {
     return client.post(basePath).set('authorization', `Bearer ${token}`).send({
       name: 'Question Template 1',
@@ -119,10 +195,16 @@ describe('TemplateController', () => {
 
   async function deleteMockData() {
     await templateRepo.deleteAllHard();
+    await questionRepo.deleteAllHard();
+    await templateQuestionRepo.deleteAllHard();
   }
 
   async function givenRepositories() {
     templateRepo = await app.getRepository(QuestionTemplateRepository);
+    questionRepo = await app.getRepository(QuestionRepository);
+
+    templateQuestionRepo = await app.getRepository(TemplateQuestionRepository);
+
     await templateRepo.createAll([
       {
         id: '1',
@@ -132,7 +214,7 @@ describe('TemplateController', () => {
       {
         id: '2',
         name: 'Question Template 2',
-        status: QuestionTemplateStatus.DRAFT,
+        status: QuestionTemplateStatus.APPROVED,
       },
     ]);
   }

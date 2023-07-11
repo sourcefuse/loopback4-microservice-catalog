@@ -244,7 +244,7 @@ export class TemplateQuestionController {
       .catch(err => this.logger.error(JSON.stringify(err)));
 
     const updateTemplateQuestionPromises: Promise<Count>[] = [];
-    templateQuestions.forEach(templateQuestion => {
+    templateQuestions?.forEach(templateQuestion => {
       updateTemplateQuestionPromises.push(
         this.templateQuestionRepository.updateAll(templateQuestion, {
           id: templateQuestion.id,

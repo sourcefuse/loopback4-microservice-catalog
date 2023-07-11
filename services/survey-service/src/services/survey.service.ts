@@ -73,7 +73,6 @@ export class SurveyService {
     }
     const surveyId = await this.generateSurveyId();
     survey.uid = surveyId;
-    survey.status = survey.status;
     delete survey.existingTemplateId;
     await this.surveyRepository.create(survey);
 
@@ -101,7 +100,7 @@ export class SurveyService {
           where: {templateId: templateId},
         });
       const surveyQuestionsToCreate: SurveyQuestion[] = [];
-      existingTemplateQuestions.forEach(existingTemplateQuestion => {
+      existingTemplateQuestions?.forEach(existingTemplateQuestion => {
         const surveyQuestion = new SurveyQuestion();
         surveyQuestion.displayOrder = (existingTemplateQuestion.displayOrder ??
           0) as number;
@@ -370,7 +369,12 @@ export class SurveyService {
       valueWithLeadingZero = '0' + valueWithLeadingZero;
     return valueWithLeadingZero;
   }
-
+  async checkDeleteValidation(surveyId: string) {
+    const survey = await this.surveyRepository.findById(surveyId);
+    if (survey.status !== SurveyStatus.DRAFT) {
+      throw new HttpErrors.BadRequest(ErrorKeys.SurveyCanNotBeDeleted);
+    }
+  }
   async deleteRelatedObjects(surveyId: string) {
     // delete related survey questions
     const surveyQuestions = await this.surveyQuestionRepository.find({

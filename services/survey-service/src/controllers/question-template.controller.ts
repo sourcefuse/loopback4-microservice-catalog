@@ -27,6 +27,7 @@ import {PermissionKey} from '../enum/permission-key.enum';
 import {QuestionTemplate} from '../models/question-template.model';
 import {QuestionTemplatesDto} from '../models/question-template-dto.model';
 import {QuestionTemplateResponse} from '../models/question-template-response.model';
+import {template} from 'lodash';
 
 const basePath = '/templates';
 
@@ -165,9 +166,9 @@ export class TemplateController {
         },
       },
     })
-    questionnaire: QuestionTemplatesDto,
+    template: QuestionTemplatesDto,
   ): Promise<void> {
-    return this.questionTemplateService.updateTemplate(id, questionnaire);
+    return this.questionTemplateService.updateTemplate(id, template);
   }
 
   @authenticate(STRATEGY.BEARER, {

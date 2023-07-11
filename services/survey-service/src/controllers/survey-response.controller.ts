@@ -82,7 +82,7 @@ export class SurveyResponseController {
           },
         });
       const responderEmails: string[] = [];
-      responders.forEach(responder => {
+      responders?.forEach(responder => {
         responderEmails.push(responder.email);
       });
       const validUser = responderEmails.includes(decodedToken.email);

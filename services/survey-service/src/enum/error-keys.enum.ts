@@ -28,4 +28,5 @@ export const ErrorKeys = {
   SurveyCannotBeActivatedInDraftState:
     'Survey Cannot Be Activated In A Draft State',
   EndDateCannotBeInPast: 'End Date Cannot Be In Past',
+  SurveyCanNotBeDeleted: 'Survey can not be deleted in this status',
 };

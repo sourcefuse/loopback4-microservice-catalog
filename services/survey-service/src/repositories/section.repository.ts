@@ -68,7 +68,7 @@ export class SectionRepository extends DefaultUserModifyCrudRepository<
     );
     const parameters = [surveyId, displayOrder];
     const query = `
-      UPDATE ${process.env.DB_DATABASE}.section
+      UPDATE ${process.env.SURVEY_DB_DATABASE}.section
       SET display_order = display_order - 1 
       WHERE survey_id = ? AND display_order > ?`;
     this.execute(query, parameters);

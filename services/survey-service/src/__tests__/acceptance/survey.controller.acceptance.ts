@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
-import {SurveyRepository} from '../../repositories';
+import {SurveyQuestionRepository, SurveyRepository} from '../../repositories';
 import {SurveyServiceApplication} from '../application';
 import {setUpApplication} from './helper';
 import {token} from '../datasources/userCredsAndPermission';
@@ -16,6 +16,8 @@ describe('Survey Controller', () => {
   let app: SurveyServiceApplication;
   let client: Client;
   let surveyRepo: SurveyRepository;
+  let surveyQuestionRepo: SurveyQuestionRepository;
+
   const basePath = '/surveys';
 
   before('setupApplication', async () => {
@@ -109,19 +111,54 @@ describe('Survey Controller', () => {
       .expect(204);
   });
 
-  async function addSurvey() {
+  it('gives 400 on delete if status is not draft', async () => {
+    const currentDate = new Date();
+    const surveyBody = new Survey({
+      id: 'surveyId',
+      name: 'Survey Test',
+      startDate: moment(currentDate).format(),
+      endDate: moment(currentDate.setDate(currentDate.getDate() + 10)).format(),
+      surveyText:
+        'JTNDcCUzRWludHJvZHVjdGlvbi4lMjB0byUyMHN1cnZleSUzQyUyRnAlM0U=',
+      status: SurveyStatus.ACTIVE,
+    });
+    surveyRepo.create(surveyBody);
+    await client
+      .del(`${basePath}/surveyId`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(400);
+  });
+  it('deletes survey questions on survey deletion', async () => {
+    await addSurveyQuestion();
+    await client
+      .del(`${basePath}/1`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(204);
+  });
+
+  async function addSurvey(surveyBody = surveyRequestBody) {
     return client
       .post(basePath)
       .set('authorization', `Bearer ${token}`)
-      .send(surveyRequestBody);
+      .send(surveyBody);
   }
 
   async function deleteMockData() {
     await surveyRepo.deleteAllHard();
   }
 
+  async function addSurveyQuestion() {
+    return await surveyQuestionRepo.create({
+      surveyId: '1',
+      questionId: '2',
+      displayOrder: 2,
+    });
+  }
+
   async function givenRepositories() {
     surveyRepo = await app.getRepository(SurveyRepository);
+    surveyQuestionRepo = await app.getRepository(SurveyQuestionRepository);
+
     const currentDate = new Date();
     await surveyRepo.createAll([
       {

@@ -149,7 +149,7 @@ export class SurveyResponseService {
     surveyResponseId: string,
   ) {
     const surveyResponseDetails: SurveyResponseDetail[] = [];
-    surveyResponseDetailsDto.forEach(questionResponse => {
+    surveyResponseDetailsDto?.forEach(questionResponse => {
       this.handleResponseWithType(
         questionResponse,
         surveyResponseDetails,

@@ -23,18 +23,19 @@ export class QuestionTemplateService {
 
   async createTemplate(questionTemplate: Omit<QuestionTemplatesDto, 'id'>) {
     questionTemplate.status = QuestionTemplateStatus.DRAFT;
+    const exisitingTemplateId = questionTemplate?.existingTemplateId;
 
     // create questionTemplate
     if (questionTemplate?.existingTemplateId) {
-      const existingQuestionnaire =
+      const existingQuestionTemplate =
         await this.questionTemplateRepository.findOne({
           fields: ['isEnableWeight'],
           where: {id: questionTemplate.existingTemplateId},
         });
-      if (!existingQuestionnaire) {
+      if (!existingQuestionTemplate) {
         throw new HttpErrors.NotFound('Invalid reference Id');
       }
-      if (existingQuestionnaire?.isEnableWeight) {
+      if (existingQuestionTemplate?.isEnableWeight) {
         questionTemplate.isEnableWeight = true;
       }
     }
@@ -55,15 +56,16 @@ export class QuestionTemplateService {
     }
 
     // add templateQuestions
-    if (questionTemplate?.existingTemplateId) {
+    if (exisitingTemplateId) {
       const existingQuestions = await this.templateQuestionRepository.find({
-        where: {templateId: questionTemplate.existingTemplateId},
+        where: {templateId: exisitingTemplateId},
       });
-      existingQuestions.forEach(existingQuestion => {
+      existingQuestions?.forEach(existingQuestion => {
         delete existingQuestion.createdOn;
         delete existingQuestion.createdBy;
         delete existingQuestion.modifiedBy;
         delete existingQuestion.modifiedOn;
+        delete existingQuestion.id;
         existingQuestion.templateId = createdTemplate.id as string;
       });
       await this.templateQuestionRepository.createAll(existingQuestions);
@@ -133,9 +135,9 @@ export class QuestionTemplateService {
       });
 
     const sequence = parseInt(
-      lastInsertedTemplate?.uid.substring(
+      lastInsertedTemplate?.uid?.substring(
         templateIdPrefix.length,
-        lastInsertedTemplate?.uid.length,
+        lastInsertedTemplate?.uid?.length,
       ) ?? sequenceStart,
     );
 
@@ -159,15 +161,12 @@ export class QuestionTemplateService {
     existingTemplateId: to copy questions from
     templateId: to copy questions to
   */
-  async addQuestionnaireQuestions(
-    existingTemplateId: string,
-    templateId: string,
-  ) {
+  async addTemplateQuestions(existingTemplateId: string, templateId: string) {
     try {
       const existingQuestions = await this.templateQuestionRepository.find({
         where: {templateId: existingTemplateId},
       });
-      existingQuestions.forEach(existingQuestion => {
+      existingQuestions?.forEach(existingQuestion => {
         delete existingQuestion.createdOn;
         delete existingQuestion.createdBy;
         delete existingQuestion.modifiedBy;
@@ -192,8 +191,7 @@ export class QuestionTemplateService {
         where: {templateId},
       });
     const updatePromiseArr: Promise<Count>[] = [];
-
-    existingTemplateQuestions.forEach(existingTemplateQuestion => {
+    existingTemplateQuestions?.forEach(existingTemplateQuestion => {
       if (existingTemplateQuestion.dependentOnQuestionId) {
         const oldTemplateQuestion = existingTemplateQuestions.find(
           templateQuestionObj =>
@@ -238,15 +236,15 @@ export class QuestionTemplateService {
     this.checkIfAllowedToUpdate(existingQuestionTemplate);
 
     if (questionTemplate.existingTemplateId) {
-      const referenceQuestionnaire =
+      const referenceQuestionTemplate =
         await this.questionTemplateRepository.count({
           id: questionTemplate.existingTemplateId,
         });
-      if (!referenceQuestionnaire.count) {
+      if (!referenceQuestionTemplate.count) {
         throw new HttpErrors.NotFound('Invalid reference Id');
       }
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.addQuestionnaireQuestions(
+      this.addTemplateQuestions(
         questionTemplate.existingTemplateId,
         templateId,
       );
@@ -264,26 +262,24 @@ export class QuestionTemplateService {
   }
 
   private checkIfAllowedToUpdate(existingQuestionnaire: QuestionTemplate) {
-    //Update not Allowed if Questionnaire existing status is Approved
-
+    //Update not Allowed if Template existing status is Approved
     if (existingQuestionnaire.status === QuestionTemplateStatus.APPROVED) {
       throw new HttpErrors.BadRequest(ErrorKeys.NotAuthorised);
     }
   }
 
   async checkIfAllowedTemplateQuestionToUpdate(templateId: string) {
-    const existingQuestionnaire = await this.questionTemplateRepository.findOne(
-      {
+    const existingQuestionTemplate =
+      await this.questionTemplateRepository.findOne({
         where: {id: templateId},
         fields: {id: true, status: true, createdBy: true},
-      },
-    );
-    if (!existingQuestionnaire) {
+      });
+    if (!existingQuestionTemplate) {
       throw new HttpErrors.NotFound();
     }
 
     //Update Allowed if Questionnaire status is in DRAFT
-    if (existingQuestionnaire.status === QuestionTemplateStatus.DRAFT) {
+    if (existingQuestionTemplate.status === QuestionTemplateStatus.DRAFT) {
       return true;
     }
     throw new HttpErrors.BadRequest(ErrorKeys.NotAuthorised);

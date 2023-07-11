@@ -263,49 +263,4 @@ export class SurveyCycleController {
       throw new HttpErrors.BadRequest('Entity not found.');
     }
   }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.CreateSurveyCycle,
-      PermissionKey.CreateAnySurveyCycle,
-    ],
-  })
-  @post(basePath)
-  @response(STATUS_CODE.OK, {
-    description: 'SurveyCycle model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(SurveyCycle)}},
-  })
-  async createSurveyCycle(
-    @requestBody({
-      content: {
-        [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(SurveyCycle, {
-            title: 'NewSurveyCycle',
-            exclude: ['id'],
-          }),
-        },
-      },
-    })
-    surveyCycle: Omit<SurveyCycle, 'id'>,
-    @param.path.string('surveyId') surveyId: string,
-  ): Promise<SurveyCycle> {
-    await this.surveyService.validateAndGetSurvey(surveyId);
-    surveyCycle.surveyId = surveyId;
-    await this.surveyCycleRepository.create(surveyCycle);
-
-    // fetch createdSurveyCycle with id
-    const createdSurveyCycle = await this.surveyCycleRepository.findOne({
-      order: [orderByCreatedOn],
-      where: {
-        surveyId,
-      },
-    });
-    if (!createdSurveyCycle) {
-      throw new HttpErrors.NotFound();
-    }
-    return createdSurveyCycle;
-  }
 }

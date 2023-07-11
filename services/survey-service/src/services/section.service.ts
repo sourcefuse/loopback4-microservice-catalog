@@ -62,12 +62,11 @@ export class SectionService {
       )?.id;
     }
 
-    this.surveyQuestionRepository
-      .updateAll({sectionId: sectionIdToUpdate}, {sectionId})
-      .catch(err => this.logger.error(JSON.stringify(err)));
-    this.sectionRepository
-      .reorder(surveyId, sectionToDelete.displayOrder)
-      .catch(err => this.logger.error(JSON.stringify(err)));
+    this.surveyQuestionRepository.updateAll(
+      {sectionId: sectionIdToUpdate},
+      {sectionId},
+    );
+    this.sectionRepository.reorder(surveyId, sectionToDelete.displayOrder);
   }
 
   async checkBasicSectionValidation(surveyId: string) {

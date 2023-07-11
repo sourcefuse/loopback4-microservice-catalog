@@ -72,7 +72,7 @@ export class CreateSurveyHelperService {
         3. then find from surveyQuestions where qId = qrow1.qid. We will get srow1.
         4. now we need to put the value of sq1 into dqid column of srow2. 
     */
-    existingTemplateQuestions.forEach(existingTemplateQuestion => {
+    existingTemplateQuestions?.forEach(existingTemplateQuestion => {
       // this if condition is step 1 of our algo. here we will get qrow2
       if (existingTemplateQuestion.dependentOnQuestionId) {
         // step 2. here we will get qrow1
@@ -117,7 +117,7 @@ export class CreateSurveyHelperService {
       where: {surveyId: baseSurveyId},
     });
     const duplicateSections = await Promise.all(
-      sections.map(section => {
+      sections?.map(section => {
         const toCreateSection = new Section();
         toCreateSection.name = section.name;
         toCreateSection.displayOrder = section.displayOrder;
@@ -191,7 +191,7 @@ export class CreateSurveyHelperService {
     //find survey questions with these question ids and base survey id
     //AND copy them
     const surveyQuestionsToCreate: SurveyQuestion[] = [];
-    existingSurveyQuestions.forEach(existingSurveyQuestion => {
+    existingSurveyQuestions?.forEach(existingSurveyQuestion => {
       const surveyQuestion = new SurveyQuestion();
       surveyQuestion.displayOrder = existingSurveyQuestion.displayOrder;
       surveyQuestion.isMandatory =

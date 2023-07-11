@@ -72,34 +72,32 @@ describe('Survey Responder Controller', () => {
         surveyResponderIds: responderIds,
       })
       .expect(200);
-    expect(response.body).to.have.property('accessToken');
-    console.log('ENV', process.env.JWT_SECRET);
-    console.log('t', response.body);
-    const responseSurvey = await client
-      .get(`${basePathSurvey}/1?token=${response.body.accessToken}`)
-      .set('authorization', `Bearer ${response.body.accessToken}`)
+
+    expect(response.body.tokens.length).to.be.equal(1);
+    await client
+      .get(`${basePathSurvey}/1`)
+      .set('authorization', `Bearer ${response.body.tokens[0]}`)
       .expect(200);
-    console.log(responseSurvey.body);
   });
-  // it('gives 401 if responder is not added to survey', async () => {
-  //   await createSurvey();
-  //   const cycle = await addSurveyCycle();
-  //   const responders = await addSurveyResponder(cycle.body.id);
-  //   const responderIds = [];
-  //   responderIds.push(responders.body.id);
-  //   const response = await client
-  //     .post(`${basePath}/token`)
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       surveyResponderIds: responderIds,
-  //     })
-  //     .expect(200);
-  //   expect(response.body).to.have.property('accessToken');
-  //   const responseSurvey = await client
-  //     .get(`${basePathSurvey}/2?token=${response.body.accessToken}`)
-  //     .set('authorization', `Bearer ${token}`)
-  //     .expect(401);
-  // });
+  it('gives 401 if responder is not added to survey', async () => {
+    await createSurvey();
+    const cycle = await addSurveyCycle();
+    const responders = await addSurveyResponder(cycle.body.id);
+    const responderIds = [];
+    responderIds.push(responders.body.id);
+    const response = await client
+      .post(`${basePath}/token`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        surveyResponderIds: responderIds,
+      })
+      .expect(200);
+    expect(response.body.tokens.length).to.be.equal(1);
+    const responseSurvey = await client
+      .get(`${basePathSurvey}/2`)
+      .set('authorization', `Bearer ${response.body.tokens[0]}`)
+      .expect(401);
+  });
 
   it('will return all the values with status 200', async () => {
     await createSurvey();
@@ -140,7 +138,6 @@ describe('Survey Responder Controller', () => {
       .get(`${basePath}`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    console.log(response.body[0]);
     expect(response.body[0].firstName).to.be.equal('testPatch');
   });
 

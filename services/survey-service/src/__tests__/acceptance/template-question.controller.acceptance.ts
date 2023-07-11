@@ -110,6 +110,18 @@ describe('TemplateQuestionController', () => {
     expect(response.body.displayOrder).to.be.equal(2);
   });
 
+  it('it gives 404 if wrong id is passed to patch', async () => {
+    await addTemplateQuestion();
+    const templateQuestionToUpdate = {
+      displayOrder: 2,
+    };
+    await client
+      .patch(`${basePath}/id`)
+      .set('authorization', `Bearer ${token}`)
+      .send(templateQuestionToUpdate)
+      .expect(404);
+  });
+
   async function addTemplate() {
     await templateRepo.createAll([
       {

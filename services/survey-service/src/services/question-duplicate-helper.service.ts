@@ -147,7 +147,7 @@ export class QuestionDuplicateHelperService {
     const options: Options[] = [];
     const optionsWithFollowUp: Options[] = [];
 
-    parentQuestionOptions.forEach(option => {
+    parentQuestionOptions?.forEach(option => {
       if (option.followupQuestionId) {
         optionsWithFollowUp.push(option);
       } else {
@@ -174,7 +174,7 @@ export class QuestionDuplicateHelperService {
       );
 
       const duplicateQuestions = await Promise.all(duplicateQuestionPromises);
-      optionsWithFollowUp.forEach((option, index) => {
+      optionsWithFollowUp?.forEach((option, index) => {
         options.push(
           new Options({
             name: option.name,

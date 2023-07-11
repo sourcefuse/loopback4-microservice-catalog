@@ -89,9 +89,10 @@ export class SectionController {
     }
 
     if (!existingSections.count) {
-      this.surveyQuestionRepository
-        .updateAll({sectionId: createdSection.id}, {surveyId})
-        .catch(err => this.logger.error(JSON.stringify(err)));
+      this.surveyQuestionRepository.updateAll(
+        {sectionId: createdSection.id},
+        {surveyId},
+      );
     }
     return createdSection;
   }
