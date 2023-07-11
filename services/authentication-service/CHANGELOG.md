@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.2.0 (2023-07-11)
+
+* feat(cli): add lambda cdk module in authentication service along with option in cli (#1445) ([0200f20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0200f20)), closes [#1445](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1445) [#1532](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1532)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>11.1.2 (2023-06-19)</small>
 
 * fix(chore): sonar code smells (#1453) ([01d64f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/01d64f2)), closes [#1453](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1453)

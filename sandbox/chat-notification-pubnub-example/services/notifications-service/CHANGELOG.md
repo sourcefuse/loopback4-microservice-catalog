@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.14 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1530) ([b581c22](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b581c22)), closes [#1530](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1530)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.4.13 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service

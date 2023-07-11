@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.4 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1481) ([8044245](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8044245)), closes [#1481](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1481)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.8.3 (2023-06-19)</small>
 
 * fix(all-services): add missing exports of repositories and enums (#1456) ([411df16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/411df16)), closes [#1456](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1456) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

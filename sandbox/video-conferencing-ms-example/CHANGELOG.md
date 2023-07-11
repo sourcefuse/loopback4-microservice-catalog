@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.13 (2023-07-11)</small>
+
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>4.0.12 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-ms-example

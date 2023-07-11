@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2023-07-11)
+
+* feat(feature-toggle): add handler service to handle anything specific after feature check (#1525) ([2317433](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2317433)), closes [#1525](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1525) [#1447](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1447)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.4.2 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/feature-toggle

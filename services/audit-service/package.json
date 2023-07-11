@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "7.0.2",
+  "version": "7.1.0",
   "description": "Audit logging microservice",
   "keywords": [
     "loopback-extension",
@@ -59,7 +59,7 @@
     "@loopback/repository": "^6.0.0",
     "@loopback/rest": "^13.0.0",
     "@sourceloop/audit-log": "^5.1.1",
-    "@sourceloop/core": "^8.0.1",
+    "@sourceloop/core": "^8.0.2",
     "aws-sdk": "^2.1360.0",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",

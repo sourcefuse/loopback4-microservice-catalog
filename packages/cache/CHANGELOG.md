@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.1 (2023-07-11)</small>
+
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+* docs(cache): fix arc logo and configure step (#1494) ([00e854d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/00e854d)), closes [#1494](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1494)
+* docs(cache): fix description cacheProvider (#1509) ([c7a1f93](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c7a1f93)), closes [#1509](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1509) [#1442](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1442)
+
+
+
+
+
 ## 0.6.0 (2023-06-19)
 
 * docs(cache): improve documentation and add arc branding (#1458) ([7da898e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7da898e)), closes [#1458](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1458) [#1442](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1442)

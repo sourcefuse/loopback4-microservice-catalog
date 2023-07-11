@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.4.5 (2023-07-11)</small>
+
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>5.4.4 (2023-06-08)</small>
 
 * docs(chore): openapi docs maintenance (#1438) ([8efbc6a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8efbc6a)), closes [#1438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1438)

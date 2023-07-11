@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.14 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1481) ([8044245](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8044245)), closes [#1481](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1481)
+* chore(deps): combine dependabot updates (#1504) ([10ab1b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10ab1b3)), closes [#1504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1504)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.5.13 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/pubnub-example

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.14 (2023-07-11)</small>
+
+* chore(deps): combine snyk updates (#1480) ([ef93ac6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef93ac6)), closes [#1480](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1480)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>5.0.13 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

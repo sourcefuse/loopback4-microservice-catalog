@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.16 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
+* chore(deps): combine snyk updates (#1493) ([46e11af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/46e11af)), closes [#1493](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1493) [#1489](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1489) [#1488](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1488)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>6.0.15 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example
