@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/4.0.4 darwin-arm64 node-v18.16.0
+@sourceloop/cli/4.0.4 linux-x64 node-v16.20.1
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -115,6 +115,9 @@ OPTIONS
 
   --[no-]baseOnService
       Base on sourceloop microservice or not
+
+  --[no-]cdk
+      include arc-cdk?
 
   --customMigrations
       Setup custom migration for this microservice

@@ -46,7 +46,11 @@
         "@sourceloop/oidc-basic-example",
         "@sourceloop/nestjs-auth-ms-example"
       ],
-      "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
+      "npmClientArgs": [
+        "--loglevel",
+        "verbose",
+        "--no-install-links"
+      ]
     },
     "version": {
       "conventionalCommits": true,
@@ -111,5 +115,7 @@
     "packages/core/locales/**",
     "packages/user-onboarding"
   ],
-  "version": "independent"
+  "version": "independent",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": false
 }

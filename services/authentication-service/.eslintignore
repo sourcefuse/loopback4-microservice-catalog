@@ -5,3 +5,7 @@ migrations/
 
 .eslintrc.js
 migration.js
+
+cdk/
+dependencies/
+scripts/

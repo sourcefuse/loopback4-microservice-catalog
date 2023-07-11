@@ -30,6 +30,10 @@ declare module '@loopback/cli/lib/project-generator' {
       dependencies: {
         [key: string]: string;
       };
+      devDependencies: {
+        [key: string]: string;
+      };
+      cdk?: boolean;
       migrationType?: string;
       datasourceName?: string;
       datasourceClassName?: string;
