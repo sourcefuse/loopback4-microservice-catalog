@@ -130,6 +130,7 @@
       "@loopback/boot": "^6.0.0",
       "@loopback/booter-lb3app": "^5.0.0",
       "@loopback/build": "^10.0.0",
+      "@vendia/serverless-express": "^4.10.1",
       "@loopback/cli": "^5.0.0",
       "@loopback/context": "^6.0.0",
       "@loopback/context-explorer": "^0.9.0",
@@ -251,7 +252,9 @@
       "npm-run-all": "^4.1.5",
       "db-migrate": "^1.0.0-beta.21",
       "symlink-resolver": "0.2.1",
-      "nodemon": "^2.0.21"
+      "nodemon": "^2.0.21",
+      "@types/i18n": "^0.13.6",
+      "@types/aws-lambda": "^8.10.110"
     }
   }
 }

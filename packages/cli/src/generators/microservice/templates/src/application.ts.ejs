@@ -26,6 +26,10 @@ import {
 <% } else { -%>
   ServiceSequence,
 <% } -%>
+  <% if(project.cdk) { -%>
+  CoreConfig,
+  LocaleKey,
+<% } -%>
   SFCoreBindings,
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -64,6 +68,9 @@ export class <%= project.applicationName %> extends BootMixin(
 -%>
 export class <%= project.applicationName %> extends BootMixin(RestApplication) {
 <% } -%>
+  <% if(project.cdk) { -%>
+  localeObj: i18nAPI = {} as i18nAPI;
+  <% } -%>
   constructor(options: ApplicationConfig = {}) {
     const port = 3000;
     dotenv.config();
@@ -92,14 +99,43 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     // To check if authorization is enabled for swagger stats or not
     const authentication =
       process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD ? true : false;
-    this.bind(SFCoreBindings.config).to({
-      enableObf,
-      obfPath: process.env.OBF_PATH ?? '/obf',
-      openapiSpec: openapi,
-      authentication: authentication,
-      swaggerUsername: process.env.SWAGGER_USER,
-      swaggerPassword: process.env.SWAGGER_PASSWORD,
-    });
+      <% if(project.cdk) { -%>
+      const configObject: CoreConfig["configObject"] = {        
+        locales: [
+          LocaleKey.en,
+          LocaleKey.es,
+          LocaleKey.ptBr,
+          LocaleKey.ptPt,
+          LocaleKey.esCo,
+        ],
+        fallbacks: {
+          [LocaleKey.es]: "en",
+          [LocaleKey.esCo]: "en",
+          [LocaleKey.ptBr]: "en",
+          [LocaleKey.ptPt]: "en",
+        },
+        register: this.localeObj,
+        directoryPermissions: "777",
+        directory: `/tmp`,
+        objectNotation: true,
+      };
+      <% } -%>
+      const obj={
+        enableObf,
+        obfPath: process.env.OBF_PATH ?? '/obf',
+        openapiSpec: openapi,
+        authentication: authentication,
+        swaggerUsername: process.env.SWAGGER_USER,
+        swaggerPassword: process.env.SWAGGER_PASSWORD,
+        
+      }
+    this.bind(SFCoreBindings.config).to({ 
+      <% if(project.cdk) { -%>
+      configObject,
+      <% } -%>
+      ...obj });
+    
+    
 
 <% if(!project.serviceDependency) { -%>
     this.component(CoreComponent);

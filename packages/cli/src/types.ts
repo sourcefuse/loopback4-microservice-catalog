@@ -15,6 +15,7 @@ export interface ProjectInfo {
 export interface MicroserviceOptions extends Generator.GeneratorOptions {
   name?: string;
   baseService?: SERVICES;
+  cdk?: boolean;
   baseOnService?: boolean;
   uniquePrefix?: string;
   help?: boolean;
