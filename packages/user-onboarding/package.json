@@ -13,7 +13,8 @@
     "coverage": "ng test --code-coverage --no-watch",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "userOnBoardingBuild": "ng build userOnboardingLib  && cp -r projects/user-onboarding-lib/src/assets projects/user-onboarding-lib/dist"
+    "build:docs": "rm -rf ./docs && typedoc --out docs && cp projects/user-onboarding-lib/README.md ./README.md",
+    "userOnBoardingBuild": "ng build userOnboardingLib && cp -r projects/user-onboarding-lib/src/assets  dist/user-onboarding-lib/"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,11 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "crypto": "^1.0.1",
+    "fs-extra": "^11.1.1",
+    "fs.promises": "^0.1.2",
+    "videogular2": "^7.0.2",
     "@angular/animations": "^14.0.1",
     "@angular/common": "^14.0.1",
     "@angular/compiler": "^14.0.1",
@@ -40,7 +46,9 @@
     "shepherd.js": "^10.0.0",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2",
-    "zone.js": "~0.11.5"
+    "zone.js": "~0.11.5",
+    "concat": "^1.0.3",
+    "ts-node": "^10.9.1"
   },
   "files": [
     "README.md",

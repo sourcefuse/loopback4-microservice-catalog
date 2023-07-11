@@ -37,6 +37,77 @@
           }
         }
       }
+    },
+    "user-onboarding-element":{
+      "projectType": "application",
+   "schematics": {
+      "@schematics/angular:component": {
+      "style": "scss"
+     },
+    "@schematics/angular:application": {
+      "strict": true
+     }
+    },
+   "root": "projects/user-onboarding-lib",
+   "sourceRoot": "projects/user-onboarding-lib/src",
+   "prefix": "app",
+   "architect": {
+    "build": {
+      "builder": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "projects/user-onboarding-lib/dist/user-onboarding-element",
+        "index": "projects/user-onboarding-lib/src/index.html",
+        "main": "projects/user-onboarding-lib/src/main.ts",
+        "polyfills": "projects/user-onboarding-lib/src/polyfills.ts",
+        "tsConfig": "projects/user-onboarding-lib/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "projects/user-onboarding-lib/src/favicon.ico",
+          "projects/user-onboarding-lib/src/assets"
+        ],
+        "scripts": []
+      },
+        "configurations": {
+          "production": {
+            "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+
+             "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "5mb",
+                "maximumError": "5mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "1mb",
+                "maximumError": "1mb"
+              }
+            ],
+            "outputHashing": "none"
+          },
+          "development": {
+            "buildOptimizer": false,
+            "optimization": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "sourceMap": true,
+            "namedChunks": true
+          }
+        },
+        "defaultConfiguration": "production"
+      },
+      "extract-i18n": {
+        "builder": "@angular-devkit/build-angular:extract-i18n",
+        "options": {
+          "browserTarget": "UserOnboardingElement:build"
+        }
+      }
     }
   }
+ }
 }
