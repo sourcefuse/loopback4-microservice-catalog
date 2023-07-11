@@ -1,5 +1,5 @@
 {
-  "name": "@sourceloop/user-onboarding-element",
+  "name": "@sourceloop/user-onboarding-client",
   "version": "4.0.2",
   "description": "Library for providing a smooth user onboarding.",
   "keywords": [

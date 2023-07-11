@@ -13,8 +13,7 @@ async function elementsBundler() {
   ];
   await ensureDir('./dist/user-onboarding-element/element');
   await concat(files, './dist/user-onboarding-element/element/user-onboarding-element.js');
-  //await rm('./dist/user-onboarding-element', {recursive: true});
-
+  
   //copy the package.json and change the name to element
   const packageJsonPath = './package.json';
   const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
