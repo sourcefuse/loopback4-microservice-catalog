@@ -289,7 +289,10 @@ export class TourServiceService {
     props?: Props,
     filterFn?: FilterFunction,
     inputs?: object,
+  
   ): void {
+    debugger;
+    console.log(tourId);
     this.tourStoreService
       .loadTour({
         tourId,

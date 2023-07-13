@@ -1,7 +1,7 @@
-
+const concat = require('concat');
 const {ensureDir, readFileSync, writeFileSync} = require('fs-extra');
 const {copyFile, rm} = require('fs-extra');
-const concat = require('concat');
+
 
 async function elementsBundler() {
   const space = 2;
@@ -17,7 +17,7 @@ async function elementsBundler() {
   //copy the package.json and change the name to element
   const packageJsonPath = './package.json';
   const jsonObj = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-  jsonObj.name = '@sourceloop/user-onboarding-element';
+  jsonObj.name = '@sourceloop/user-onboarding-client';
   delete jsonObj.peerDependencies;
   writeFileSync(packageJsonPath,
     JSON.stringify(jsonObj, null, space),

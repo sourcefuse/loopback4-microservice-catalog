@@ -9,6 +9,9 @@ import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { Router, RouterModule } from '@angular/router';
+import { TourServiceService } from './tour-service.service';
+import { TourStoreServiceService } from './tour-store-service.service';
 
 @NgModule({
   declarations: [
@@ -19,9 +22,14 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
-    VgBufferingModule
+    VgBufferingModule,
+    RouterModule
   ],
-  exports: [
+  providers:[
+    TourServiceService,
+    TourStoreServiceService
   ]
 })
-export class UserOnboardingLibModule { }
+export class UserOnboardingLibModule { 
+ 
+}
