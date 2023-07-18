@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.4 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
 ## <small>5.0.3 (2023-07-11)</small>
 
 * chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)

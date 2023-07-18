@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.15 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/pubnub-example
+
+
+
+
+
 ## <small>0.5.14 (2023-07-11)</small>
 
 * chore(deps): combine dependabot updates (#1481) ([8044245](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8044245)), closes [#1481](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1481)

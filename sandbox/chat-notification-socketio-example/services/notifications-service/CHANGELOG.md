@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.29 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-notif-socket
+
+
+
+
+
 ## <small>0.3.28 (2023-07-11)</small>
 
 * chore(deps): combine dependabot updates (#1530) ([b581c22](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b581c22)), closes [#1530](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1530)

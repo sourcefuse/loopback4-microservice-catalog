@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/bpmn-service",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "BPMN microservice",
   "keywords": [
     "loopback-extension",
@@ -60,7 +60,7 @@
     "@loopback/openapi-v3": "^9.1.0",
     "@loopback/repository": "^6.1.0",
     "@loopback/rest": "^13.1.0",
-    "@sourceloop/core": "^8.0.2",
+    "@sourceloop/core": "^8.0.3",
     "ajv": "^8.11.0",
     "camunda-external-task-client-js": "^2.3.1",
     "dotenv": "^16.0.3",

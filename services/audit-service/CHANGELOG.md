@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.1 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
 ## 7.1.0 (2023-07-11)
 
 * feat(audit-service): add export feature (#1500) ([b9b5c9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b9b5c9e)), closes [#1500](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1500) [#1449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1449) [#1449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1449) [#1449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1449)

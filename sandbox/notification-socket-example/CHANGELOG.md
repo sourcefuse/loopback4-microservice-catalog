@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.15 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>5.0.14 (2023-07-11)</small>
 
 * chore(deps): combine snyk updates (#1480) ([ef93ac6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef93ac6)), closes [#1480](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1480)

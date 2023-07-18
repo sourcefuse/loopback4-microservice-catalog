@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.1 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
 ## 4.1.0 (2023-07-11)
 
 * feat(cli): add lambda cdk module in authentication service along with option in cli (#1445) ([0200f20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0200f20)), closes [#1445](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1445) [#1532](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1532)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.15 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
 ## <small>0.6.14 (2023-07-11)</small>
 
 * chore(deps): combine dependabot updates (#1504) ([10ab1b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10ab1b3)), closes [#1504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1504)

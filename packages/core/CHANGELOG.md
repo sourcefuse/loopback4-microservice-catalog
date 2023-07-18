@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.0.3 (2023-07-18)</small>
+
+* fix(core): add ratelimit action on OBF path (#1548) ([9c42a9b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9c42a9b)), closes [#1548](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1548) [#1546](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1546)
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
 ## <small>8.0.2 (2023-07-11)</small>
 
 * chore(deps): combine snyk updates (#1529) ([098799b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/098799b)), closes [#1529](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1529)

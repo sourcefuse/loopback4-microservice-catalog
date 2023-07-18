@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.17 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
 ## <small>6.0.16 (2023-07-11)</small>
 
 * chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
