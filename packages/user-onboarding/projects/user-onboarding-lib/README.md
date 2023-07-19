@@ -381,7 +381,7 @@ There are also two themes available for use i.e. the light theme and the dark th
 ```bash
 npm install @sourceloop/user-onboarding-client
 ```
-In the modules you can find two files relevant to the element - `element/user-onboarding-element.js` and `/sourceloop-tour.scss`. How you serve and include these files in your non Angular project depend on the framework that you are using. For example, for Vanilla JS and HTML you can simply import the js and styles in your HTML ->
+In the modules you can find a file relevant to the element - `element/user-onboarding-element.js`. How you serve and include this file in your non Angular project depend on the framework that you are using. For example, for Vanilla JS and HTML you can simply import the js and styles in your HTML ->
 
 ```html
 <script type="text/javascript" src="user-onboarding-element.js"></script>
