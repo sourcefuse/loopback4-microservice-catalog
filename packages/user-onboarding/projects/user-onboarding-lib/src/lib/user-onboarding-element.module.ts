@@ -27,6 +27,7 @@ export class UserOnboardingElementModule {
   ngDoBootstrap() {
     const tourservice = this.injector.get(TourServiceService);
     const tourstoreservice = this.injector.get(TourStoreServiceService);
+    
 
     // to export the service for vanilla JS projects
     Object.assign(window, {

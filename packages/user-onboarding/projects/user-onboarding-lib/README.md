@@ -371,3 +371,26 @@ There are also two themes available for use i.e. the light theme and the dark th
 @import "../../node_modules/@sourceloop/user-onboarding-client/assets/default.scss";
 @include sourceloopTheme('dark');
 ```
+## Web Component
+
+- This library is also available as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) so users of frameworks like React and Vue
+  can also integrate this User -OnBoarding element in their application with minimal effort.
+
+### Installation
+
+```bash
+npm install @sourceloop/user-onboarding-client
+```
+In the modules you can find two files relevant to the element - `element/user-onboarding-element.js` and `/sourceloop-tour.scss`. How you serve and include these files in your non Angular project depend on the framework that you are using. For example, for Vanilla JS and HTML you can simply import the js and styles in your HTML ->
+
+```html
+<script type="text/javascript" src="user-onboarding-element.js"></script>
+```
+### Usage
+
+The web component accepts all the same inputs and services as the regular Angular Module, but instead of passing them through bindings and DI, you pass them as properties of the element as shown below.
+
+```html
+window.tourservice.run(TourId.DashboardTour)
+```
+

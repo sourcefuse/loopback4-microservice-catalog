@@ -28,7 +28,8 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@types/core-js": "^2.5.4"
+    "@types/core-js": "^2.5.4",
+    "@types/node": "^20.4.2"
   },
   "ngPackage": {
     "lib": {
