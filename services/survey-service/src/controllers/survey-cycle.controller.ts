@@ -26,6 +26,10 @@ import {SurveyCycle} from '../models';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyService} from '../services/survey.service';
 import {SurveyRepository} from '../repositories';
+import {
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+} from '../repositories/sequelize';
 
 const basePath = '/surveys/{surveyId}/survey-cycles';
 const orderByCreatedOn = 'created_on DESC';
@@ -33,11 +37,13 @@ const orderByCreatedOn = 'created_on DESC';
 export class SurveyCycleController {
   constructor(
     @repository(SurveyCycleRepository)
-    private surveyCycleRepository: SurveyCycleRepository,
+    public surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @repository(SurveyRepository)
-    private surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @service(SurveyService)
-    private surveyService: SurveyService,
+    public surveyService: SurveyService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

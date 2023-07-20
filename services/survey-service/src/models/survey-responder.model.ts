@@ -9,7 +9,7 @@ export class SurveyResponder extends UserModifiableEntity<SurveyResponder> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
@@ -33,14 +33,14 @@ export class SurveyResponder extends UserModifiableEntity<SurveyResponder> {
 
   @property({
     type: 'string',
-    required: true,
+    required: false,
     jsonSchema: {
       pattern: REGEX.EMAIL,
       minLength: 3,
       maxLength: 150,
     },
   })
-  email: string;
+  email?: string;
 
   @property({
     type: 'string',
@@ -65,6 +65,7 @@ export class SurveyResponder extends UserModifiableEntity<SurveyResponder> {
     },
     {
       name: 'survey_id',
+      type: 'string',
     },
   )
   surveyId: string;
@@ -77,6 +78,7 @@ export class SurveyResponder extends UserModifiableEntity<SurveyResponder> {
     },
     {
       name: 'survey_cycle_id',
+      type: 'string',
     },
   )
   surveyCycleId?: string;

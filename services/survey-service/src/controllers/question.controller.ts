@@ -28,17 +28,17 @@ import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
 import {QuestionDuplicateHelperService} from '../services/question-duplicate-helper.service';
 import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
 import {PermissionKey} from '../enum';
-
+import {QuestionRepository as QuestionSequelizeRepo} from '../repositories/sequelize';
 const basePath = '/questions';
 
 export class QuestionController {
   constructor(
     @repository(QuestionRepository)
-    private questionRepository: QuestionRepository,
+    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
     @service(QuestionHelperService)
-    private questionHelperService: QuestionHelperService,
+    public questionHelperService: QuestionHelperService,
     @service(QuestionDuplicateHelperService)
-    private questionDuplicateHelperService: QuestionDuplicateHelperService,
+    public questionDuplicateHelperService: QuestionDuplicateHelperService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

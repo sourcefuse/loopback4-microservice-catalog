@@ -34,18 +34,23 @@ import {PermissionKey} from '../enum/permission-key.enum';
 import {TemplateQuestion} from '../models/template-questions.model';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {AppErrorCodes} from '../enum/error-codes.enum';
-
+import {
+  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
+  QuestionRepository as QuestionSequelizeRepo,
+} from '../repositories/sequelize';
 const basePath = '/question-template/{templateId}/template-questions';
 const orderByCreatedOn = 'created_on DESC';
 
 export class TemplateQuestionController {
   constructor(
     @repository(TemplateQuestionRepository)
-    private templateQuestionRepository: TemplateQuestionRepository,
+    public templateQuestionRepository:
+      | TemplateQuestionRepository
+      | TemplateQuestionSequelizeRepo,
     @repository(QuestionRepository)
-    private questionRepository: QuestionRepository,
+    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
     @service(QuestionTemplateService)
-    private questionTemplateService: QuestionTemplateService,
+    public questionTemplateService: QuestionTemplateService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

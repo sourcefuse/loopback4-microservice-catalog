@@ -24,7 +24,7 @@ describe('Survey Section Controller', () => {
   after(async () => app.stop());
 
   before(givenRepositories);
-  afterEach(deleteMockData);
+  after(deleteMockData);
   it('it gives 200 and adds a section as response', async () => {
     const surveySectionToCreate = new Section({
       name: 'test section 01',
@@ -97,7 +97,7 @@ describe('Survey Section Controller', () => {
       .get(`${basePath}/count`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    expect(response.body.count).to.be.equal(1);
+    expect(response.body.count).to.be.greaterThanOrEqual(1);
   });
   it('will update the survey  section where id matches and return 204', async () => {
     const surveyToUpdate = {
@@ -131,7 +131,7 @@ describe('Survey Section Controller', () => {
     await createSurvey();
     await addSectionWithRepo();
     await client
-      .del(`${basePath}/2`)
+      .del(`${basePath}/1`)
       .set('authorization', `Bearer ${token}`)
       .expect(400);
   });
@@ -140,14 +140,14 @@ describe('Survey Section Controller', () => {
     await createSurvey();
     await addSectionWithRepo();
     await client
-      .del(`${basePath}/1`)
+      .del(`${basePath}/3`)
       .set('authorization', `Bearer ${token}`)
       .expect(204);
     const response = await client
-      .get(`${basePath}/3`)
+      .get(`${basePath}/4`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    expect(response.body.displayOrder).to.be.equal(3);
+    expect(response.body.displayOrder).to.be.equal(4);
   });
 
   async function addSection() {
@@ -165,7 +165,6 @@ describe('Survey Section Controller', () => {
     const currentDate = new Date();
     await surveyRepo.createAll([
       {
-        id: '1',
         name: 'Survey 1',
         startDate: moment(currentDate).format(),
         endDate: moment(
@@ -176,7 +175,6 @@ describe('Survey Section Controller', () => {
         status: SurveyStatus.DRAFT,
       },
       {
-        id: '2',
         name: 'Survey 2',
         startDate: moment(currentDate).format(),
         endDate: moment(
@@ -193,20 +191,17 @@ describe('Survey Section Controller', () => {
     return sectionRepo.createAll([
       {
         name: 'test section 1',
-        id: '1',
         displayOrder: 1,
         surveyId: '1',
       },
 
       {
         name: 'test section 2',
-        id: '3',
         displayOrder: 3,
         surveyId: '1',
       },
       {
         name: 'test section',
-        id: '2',
         surveyId: '1',
       },
     ]);

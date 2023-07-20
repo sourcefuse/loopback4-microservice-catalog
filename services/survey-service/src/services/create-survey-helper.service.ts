@@ -11,20 +11,33 @@ import {SurveyDto, SurveyQuestion, Section, Survey} from '../models';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
+import {
+  SurveyRepository as SurveySequelizeRepo,
+  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
+  SectionRepository as SectionsSequelizeRepo,
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyResponderRepository as SurveyResponderSequelizeRepo,
+} from '../repositories/sequelize';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class CreateSurveyHelperService {
   constructor(
     @repository(SurveyRepository)
-    private surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @repository(SurveyQuestionRepository)
-    private surveyQuestionRepository: SurveyQuestionRepository,
+    public surveyQuestionRepository:
+      | SurveyQuestionRepository
+      | SurveyQuestionSequelizeRepo,
     @repository(SectionRepository)
-    private sectionRepository: SectionRepository,
+    public sectionRepository: SectionRepository | SectionsSequelizeRepo,
     @repository(SurveyCycleRepository)
-    private surveyCycleRepository: SurveyCycleRepository,
+    public surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository: SurveyResponderRepository,
+    protected surveyResponderRepository:
+      | SurveyResponderRepository
+      | SurveyResponderSequelizeRepo,
   ) {}
 
   async copyFromBaseSurvey(survey: Omit<SurveyDto, 'id'>) {
@@ -205,11 +218,13 @@ export class CreateSurveyHelperService {
         : existingSurveyQuestion.questionId;
       surveyQuestion.weight = existingSurveyQuestion.weight;
       surveyQuestion.surveyId = createdSurvey?.id as string; //NOSONAR
-      surveyQuestion.sectionId = sectionIdMap.has(
-        existingSurveyQuestion.sectionId,
-      )
-        ? (sectionIdMap.get(existingSurveyQuestion.sectionId) as string)
-        : existingSurveyQuestion.sectionId;
+      if (existingSurveyQuestion.sectionId) {
+        surveyQuestion.sectionId = sectionIdMap.has(
+          existingSurveyQuestion.sectionId,
+        )
+          ? (sectionIdMap.get(existingSurveyQuestion.sectionId) as string)
+          : existingSurveyQuestion.sectionId;
+      }
       surveyQuestionsToCreate.push(surveyQuestion);
     });
 

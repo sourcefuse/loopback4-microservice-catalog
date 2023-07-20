@@ -27,15 +27,17 @@ import {PermissionKey} from '../enum/permission-key.enum';
 import {QuestionTemplate} from '../models/question-template.model';
 import {QuestionTemplatesDto} from '../models/question-template-dto.model';
 import {QuestionTemplateResponse} from '../models/question-template-response.model';
-
+import {QuestionTemplateRepository as QuestionTemplateSequelizeRepo} from '../repositories/sequelize';
 const basePath = '/templates';
 
 export class TemplateController {
   constructor(
     @repository(QuestionTemplateRepository)
-    private questionTemplateRepository: QuestionTemplateRepository,
+    public questionTemplateRepository:
+      | QuestionTemplateRepository
+      | QuestionTemplateSequelizeRepo,
     @service(QuestionTemplateService)
-    private questionTemplateService: QuestionTemplateService,
+    public questionTemplateService: QuestionTemplateService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

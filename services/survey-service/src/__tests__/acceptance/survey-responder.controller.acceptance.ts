@@ -33,7 +33,7 @@ describe('Survey Responder Controller', () => {
   after(async () => app.stop());
 
   before(givenRepositories);
-  afterEach(deleteMockData);
+  after(deleteMockData);
   it('it gives 200 and adds a survey responder as response', async () => {
     await createSurvey();
     const cycle = await addSurveyCycle();
@@ -80,11 +80,9 @@ describe('Survey Responder Controller', () => {
     expect(response).to.have.property('error');
   });
   it('gives access token for responders and verify it at the time of get survey', async () => {
-    await createSurvey();
-    const cycle = await addSurveyCycle();
-    const responders = await addSurveyResponder(cycle.body.id);
+    const responders = await surveyResponderRepo.findOne();
     const responderIds = [];
-    responderIds.push(responders.body.id);
+    responderIds.push(responders?.id);
     const response = await client
       .post(`${basePath}/token`)
       .set('Authorization', `Bearer ${token}`)
@@ -100,11 +98,9 @@ describe('Survey Responder Controller', () => {
       .expect(200);
   });
   it('gives 401 if responder is not added to survey', async () => {
-    await createSurvey();
-    const cycle = await addSurveyCycle();
-    const responders = await addSurveyResponder(cycle.body.id);
+    const responders = await surveyResponderRepo.findOne();
     const responderIds = [];
-    responderIds.push(responders.body.id);
+    responderIds.push(responders?.id);
     const response = await client
       .post(`${basePath}/token`)
       .set('Authorization', `Bearer ${token}`)
@@ -146,11 +142,9 @@ describe('Survey Responder Controller', () => {
     const surveyResponderToUpdate = {
       firstName: 'testPatch',
     };
-    await createSurvey();
-    const surveyCycle = await addSurveyCycle();
-    const responder = await addSurveyResponder(surveyCycle.body.id);
+    const responders = await surveyResponderRepo.findOne();
     await client
-      .patch(`${basePath}/${responder.body.id}`)
+      .patch(`${basePath}/${responders?.id}`)
       .set('authorization', `Bearer ${token}`)
       .send(surveyResponderToUpdate)
       .expect(200);
@@ -207,7 +201,6 @@ describe('Survey Responder Controller', () => {
     const currentDate = new Date();
     return surveyRepo.createAll([
       {
-        id: '1',
         name: 'Survey 1',
         startDate: moment(currentDate).format(),
         endDate: moment(
@@ -218,7 +211,6 @@ describe('Survey Responder Controller', () => {
         status: SurveyStatus.DRAFT,
       },
       {
-        id: '2',
         name: 'Survey 2',
         startDate: moment(currentDate).format(),
         endDate: moment(

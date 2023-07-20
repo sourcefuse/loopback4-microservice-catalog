@@ -15,7 +15,7 @@ export class SurveyResponse extends UserModifiableEntity<SurveyResponse> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
@@ -27,6 +27,7 @@ export class SurveyResponse extends UserModifiableEntity<SurveyResponse> {
     },
     {
       name: 'survey_responder_id',
+      type: 'string',
       required: true,
     },
   )
@@ -40,6 +41,7 @@ export class SurveyResponse extends UserModifiableEntity<SurveyResponse> {
     },
     {
       name: 'survey_cycle_id',
+      type: 'string',
       required: true,
     },
   )

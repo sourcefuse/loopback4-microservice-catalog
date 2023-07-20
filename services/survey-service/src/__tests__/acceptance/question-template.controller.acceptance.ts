@@ -40,14 +40,14 @@ describe('Template Controller', () => {
   it('gives status 200 when token is passed', async () => {
     await client
       .get(basePath)
-      .set('authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
   });
 
   it('should return count', async () => {
     await client
       .get(`${basePath}/count`)
-      .set('authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
   });
 
@@ -58,7 +58,7 @@ describe('Template Controller', () => {
     const questionTemplate = new QuestionTemplatesDto({
       name: 'Question Template one',
       status: QuestionTemplateStatus.DRAFT,
-      existingTemplateId: '1',
+      existingTemplateId: '3',
     });
 
     const response = await client
@@ -114,19 +114,19 @@ describe('Template Controller', () => {
 
   it('it gives 204 and updates the data respective to entity id', async () => {
     await givenRepositories();
-    const questionTemplate = await addQuestionTemplate();
+    await addQuestionTemplate();
     const questionTemplateValueToUpdate = {
       name: 'test question template patch01',
-      existingTemplateId: '1',
+      existingTemplateId: '11',
     };
     await client
-      .patch(`${basePath}/${questionTemplate.body.id}`)
+      .patch(`${basePath}/11`)
       .set('authorization', `Bearer ${token}`)
       .send(questionTemplateValueToUpdate)
       .expect(204);
 
     const response = await client
-      .get(`${basePath}/${questionTemplate.body.id}`)
+      .get(`${basePath}/11`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
     expect(response.body.name).to.be.equal('test question template patch01');
@@ -138,7 +138,7 @@ describe('Template Controller', () => {
       name: 'test question template patch 02',
     };
     await client
-      .patch(`${basePath}/2`)
+      .patch(`${basePath}/13`)
       .set('authorization', `Bearer ${token}`)
       .send(questionTemplateValueToUpdate)
       .expect(400);
@@ -171,16 +171,14 @@ describe('Template Controller', () => {
 
   async function addTemplateQuestion() {
     await templateQuestionRepo.create({
-      id: '1',
-      questionId: 'questionId',
+      questionId: '1',
       displayOrder: 1,
-      templateId: '1',
+      templateId: '3',
     });
   }
 
   async function addQuestion() {
     await questionRepo.create({
-      id: 'questionId',
       questionType: QuestionType.SINGLE_SELECTION,
       name: 'Question 101',
       uid: 'QR0000012',
@@ -189,7 +187,7 @@ describe('Template Controller', () => {
   }
 
   async function addQuestionTemplate() {
-    return client.post(basePath).set('authorization', `Bearer ${token}`).send({
+    return client.post(basePath).set('Authorization', `Bearer ${token}`).send({
       name: 'Question Template 1',
       status: QuestionTemplateStatus.DRAFT,
     });
@@ -209,12 +207,10 @@ describe('Template Controller', () => {
 
     await templateRepo.createAll([
       {
-        id: '1',
         name: 'Question Template 1',
         status: QuestionTemplateStatus.DRAFT,
       },
       {
-        id: '2',
         name: 'Question Template 2',
         status: QuestionTemplateStatus.APPROVED,
       },

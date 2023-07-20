@@ -26,6 +26,13 @@ import {SurveyRepository} from '../repositories/survey.repository';
 import {isArray} from 'lodash';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
+import {
+  SurveyResponseRepository as SurveyResponseSequelizeRepo,
+  SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyResponderRepository as SurveyResponderSequelizeRepo,
+} from '../repositories/sequelize';
 
 const sqlDateFormat = 'YYYY-MM-DD';
 
@@ -33,16 +40,24 @@ const sqlDateFormat = 'YYYY-MM-DD';
 export class SurveyResponseService {
   constructor(
     @repository(SurveyResponseRepository)
-    public surveyResponseRepository: SurveyResponseRepository,
+    public surveyResponseRepository:
+      | SurveyResponseRepository
+      | SurveyResponseSequelizeRepo,
     @repository(SurveyResponseDetailRepository)
-    public surveyResponseDetailRepository: SurveyResponseDetailRepository,
+    public surveyResponseDetailRepository:
+      | SurveyResponseDetailRepository
+      | SurveyResponseDetailSequelizeRepo,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @repository(SurveyCycleRepository)
-    protected surveyCycleRepository: SurveyCycleRepository,
+    protected surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository: SurveyResponderRepository,
+    protected surveyResponderRepository:
+      | SurveyResponderRepository
+      | SurveyResponderSequelizeRepo,
   ) {}
 
   async createResponse(surveyId: string, surveyResponseDto: SurveyResponseDto) {
@@ -100,6 +115,8 @@ export class SurveyResponseService {
     const surveyResponse = new SurveyResponse({
       surveyResponderId: surveyResponseDto.surveyResponderId,
       surveyCycleId: activeCycleId,
+      extId: surveyResponseDto.extId,
+      extMetadata: surveyResponseDto.extMetadata,
     });
 
     await this.surveyResponseRepository.create(surveyResponse);
@@ -129,7 +146,12 @@ export class SurveyResponseService {
       questions,
       createdSurveyResponse.id,
     );
-
+    if (createdSurveyResponse.extId || createdSurveyResponse.extMetadata) {
+      surveyResponseDetails.forEach(quesResp => {
+        quesResp.extId = createdSurveyResponse.extId;
+        quesResp.extMetadata = createdSurveyResponse.extMetadata;
+      });
+    }
     await this.surveyResponseDetailRepository.createAll(surveyResponseDetails);
 
     return createdSurveyResponse;

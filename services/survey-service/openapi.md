@@ -2797,7 +2797,7 @@ Status Code **200**
 |»»»»»» id|string|false|none|none|
 |»»»»»» firstName|string¦null|false|none|none|
 |»»»»»» lastName|string¦null|false|none|none|
-|»»»»»» email|string|true|none|none|
+|»»»»»» email|string|false|none|none|
 |»»»»»» fullName|string|false|none|none|
 |»»»»»» userId|string¦null|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
@@ -2835,8 +2835,8 @@ Status Code **200**
 |»»»»»»»»» createdBy|string|false|none|none|
 |»»»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»»»» id|string|false|none|none|
-|»»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»»» extId|string|false|none|none|
@@ -5153,7 +5153,7 @@ Status Code **200**
 |»»»»»» id|string|false|none|none|
 |»»»»»» firstName|string¦null|false|none|none|
 |»»»»»» lastName|string¦null|false|none|none|
-|»»»»»» email|string|true|none|none|
+|»»»»»» email|string|false|none|none|
 |»»»»»» fullName|string|false|none|none|
 |»»»»»» userId|string¦null|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
@@ -5191,8 +5191,8 @@ Status Code **200**
 |»»»»»»»»» createdBy|string|false|none|none|
 |»»»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»»»» id|string|false|none|none|
-|»»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»»» extId|string|false|none|none|
@@ -9907,7 +9907,7 @@ Status Code **200**
 |»»»»» id|string|false|none|none|
 |»»»»» firstName|string¦null|false|none|none|
 |»»»»» lastName|string¦null|false|none|none|
-|»»»»» email|string|true|none|none|
+|»»»»» email|string|false|none|none|
 |»»»»» fullName|string|false|none|none|
 |»»»»» userId|string¦null|false|none|none|
 |»»»»» surveyId|string|false|none|none|
@@ -9945,8 +9945,8 @@ Status Code **200**
 |»»»»»»»» createdBy|string|false|none|none|
 |»»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»»» id|string|false|none|none|
-|»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»» extId|string|false|none|none|
@@ -13294,7 +13294,7 @@ Status Code **200**
 |»»»» id|string|false|none|none|
 |»»»» firstName|string¦null|false|none|none|
 |»»»» lastName|string¦null|false|none|none|
-|»»»» email|string|true|none|none|
+|»»»» email|string|false|none|none|
 |»»»» fullName|string|false|none|none|
 |»»»» userId|string¦null|false|none|none|
 |»»»» surveyId|string|false|none|none|
@@ -13377,8 +13377,8 @@ Status Code **200**
 |»»»»»»» createdBy|string|false|none|none|
 |»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»» id|string|false|none|none|
-|»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»» surveyId|string|false|none|none|
 |»»»»»»» extId|string|false|none|none|
@@ -16393,7 +16393,7 @@ Status Code **200**
 |»»»»»»» id|string|false|none|none|
 |»»»»»»» firstName|string¦null|false|none|none|
 |»»»»»»» lastName|string¦null|false|none|none|
-|»»»»»»» email|string|true|none|none|
+|»»»»»»» email|string|false|none|none|
 |»»»»»»» fullName|string|false|none|none|
 |»»»»»»» userId|string¦null|false|none|none|
 |»»»»»»» surveyId|string|false|none|none|
@@ -16431,8 +16431,8 @@ Status Code **200**
 |»»»»»»»»»» createdBy|string|false|none|none|
 |»»»»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»»»»» id|string|false|none|none|
-|»»»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»»»» extId|string|false|none|none|
@@ -18383,8 +18383,8 @@ Status Code **200**
 |»» createdBy|string|false|none|none|
 |»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
-|»» startDate|string|true|none|Start date of the first survey cycle|
-|»» endDate|string|true|none|End date of the first survey cycle|
+|»» startDate|string|false|none|Start date of the first survey cycle|
+|»» endDate|string|false|none|End date of the first survey cycle|
 |»» isActivated|boolean|false|none|none|
 |»» surveyId|string|false|none|none|
 |»» extId|string|false|none|none|
@@ -18494,7 +18494,7 @@ Status Code **200**
 |»»»»»»»» id|string|false|none|none|
 |»»»»»»»» firstName|string¦null|false|none|none|
 |»»»»»»»» lastName|string¦null|false|none|none|
-|»»»»»»»» email|string|true|none|none|
+|»»»»»»»» email|string|false|none|none|
 |»»»»»»»» fullName|string|false|none|none|
 |»»»»»»»» userId|string¦null|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
@@ -20873,7 +20873,7 @@ fetch('/surveys/{surveyId}/survey-questions',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |surveyId|path|string|true|none|
-|filter|query|[survey_questions.Filter1](#schemasurvey_questions.filter1)|false|none|
+|filter|query|[survey_questions.Filter](#schemasurvey_questions.filter)|false|none|
 
 > Example responses
 
@@ -21628,7 +21628,7 @@ Status Code **200**
 |»» weight|number|false|none|none|
 |»» surveyId|string|false|none|none|
 |»» questionId|string|false|none|none|
-|»» sectionId|string|false|none|none|
+|»» sectionId|string¦null|false|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
 |»» dependentOnQuestion|[SurveyQuestionWithRelations](#schemasurveyquestionwithrelations)|false|none|(tsType: SurveyQuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -21737,7 +21737,7 @@ Status Code **200**
 |»»»»»»»» id|string|false|none|none|
 |»»»»»»»» firstName|string¦null|false|none|none|
 |»»»»»»»» lastName|string¦null|false|none|none|
-|»»»»»»»» email|string|true|none|none|
+|»»»»»»»» email|string|false|none|none|
 |»»»»»»»» fullName|string|false|none|none|
 |»»»»»»»» userId|string¦null|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
@@ -21754,8 +21754,8 @@ Status Code **200**
 |»»»»»»»»» createdBy|string|false|none|none|
 |»»»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»»»» id|string|false|none|none|
-|»»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»»» extId|string|false|none|none|
@@ -22906,7 +22906,7 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» firstName|string¦null|false|none|none|
 |»» lastName|string¦null|false|none|none|
-|»» email|string|true|none|none|
+|»» email|string|false|none|none|
 |»» fullName|string|false|none|none|
 |»» userId|string¦null|false|none|none|
 |»» surveyId|string|false|none|none|
@@ -23017,8 +23017,8 @@ Status Code **200**
 |»»»»»»»» createdBy|string|false|none|none|
 |»»»»»»»» modifiedBy|string|false|none|none|
 |»»»»»»»» id|string|false|none|none|
-|»»»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»»»» isActivated|boolean|false|none|none|
 |»»»»»»»» surveyId|string|false|none|none|
 |»»»»»»»» extId|string|false|none|none|
@@ -25882,7 +25882,7 @@ Status Code **200**
 |»»» id|string|false|none|none|
 |»»» firstName|string¦null|false|none|none|
 |»»» lastName|string¦null|false|none|none|
-|»»» email|string|true|none|none|
+|»»» email|string|false|none|none|
 |»»» fullName|string|false|none|none|
 |»»» userId|string¦null|false|none|none|
 |»»» surveyId|string|false|none|none|
@@ -25984,8 +25984,8 @@ Status Code **200**
 |»»»»»» createdBy|string|false|none|none|
 |»»»»»» modifiedBy|string|false|none|none|
 |»»»»»» id|string|false|none|none|
-|»»»»»» startDate|string|true|none|Start date of the first survey cycle|
-|»»»»»» endDate|string|true|none|End date of the first survey cycle|
+|»»»»»» startDate|string|false|none|Start date of the first survey cycle|
+|»»»»»» endDate|string|false|none|End date of the first survey cycle|
 |»»»»»» isActivated|boolean|false|none|none|
 |»»»»»» surveyId|string|false|none|none|
 |»»»»»» extId|string|false|none|none|
@@ -27110,8 +27110,8 @@ SurveyCycleWithRelations
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the first survey cycle|
+|endDate|string|false|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
 |extId|string|false|none|none|
@@ -28743,7 +28743,7 @@ SurveyResponderWithRelations
 |id|string|false|none|none|
 |firstName|string¦null|false|none|none|
 |lastName|string¦null|false|none|none|
-|email|string|true|none|none|
+|email|string|false|none|none|
 |fullName|string|false|none|none|
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
@@ -39684,7 +39684,7 @@ SurveyQuestionDto
 |weight|number|false|none|none|
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
-|sectionId|string|false|none|none|
+|sectionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |isPredefined|boolean|false|none|none|
@@ -39738,7 +39738,7 @@ NewSurveyQuestion
 |weight|number|false|none|none|
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
-|sectionId|string|false|none|none|
+|sectionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |isPredefined|boolean|false|none|none|
@@ -41205,7 +41205,7 @@ SurveyQuestionWithRelations
 |weight|number|false|none|none|
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
-|sectionId|string|false|none|none|
+|sectionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |dependentOnQuestion|[SurveyQuestionWithRelations](#schemasurveyquestionwithrelations)|false|none|(tsType: SurveyQuestionWithRelations, schemaOptions: { includeRelations: true })|
@@ -41263,7 +41263,7 @@ SurveyQuestionPartial
 |weight|number|false|none|none|
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
-|sectionId|string|false|none|none|
+|sectionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
@@ -41317,7 +41317,7 @@ SurveyQuestion
 |weight|number|false|none|none|
 |surveyId|string|false|none|none|
 |questionId|string|false|none|none|
-|sectionId|string|false|none|none|
+|sectionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
@@ -41498,8 +41498,8 @@ SurveyCycle
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the first survey cycle|
+|endDate|string|false|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
 |extId|string|false|none|none|
@@ -41544,8 +41544,8 @@ NewSurveyCycle
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|startDate|string|true|none|Start date of the first survey cycle|
-|endDate|string|true|none|End date of the first survey cycle|
+|startDate|string|false|none|Start date of the first survey cycle|
+|endDate|string|false|none|End date of the first survey cycle|
 |isActivated|boolean|false|none|none|
 |surveyId|string|false|none|none|
 |extId|string|false|none|none|
@@ -41645,7 +41645,7 @@ SurveyResponder
 |id|string|false|none|none|
 |firstName|string¦null|false|none|none|
 |lastName|string¦null|false|none|none|
-|email|string|true|none|none|
+|email|string|false|none|none|
 |fullName|string|false|none|none|
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
@@ -41697,7 +41697,7 @@ NewSurveyResponderInSurvey
 |modifiedBy|string|false|none|none|
 |firstName|string¦null|false|none|none|
 |lastName|string¦null|false|none|none|
-|email|string|true|none|none|
+|email|string|false|none|none|
 |fullName|string|false|none|none|
 |userId|string¦null|false|none|none|
 |surveyId|string|false|none|none|
@@ -43902,134 +43902,6 @@ survey_questions.IncludeFilter.Items
 <a id="schema_survey_questions.Filter"></a>
 <a id="tocSsurvey_questions.filter"></a>
 <a id="tocssurvey_questions.filter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "displayOrder": true,
-    "isMandatory": true,
-    "dependentOnQuestionId": true,
-    "weight": true,
-    "surveyId": true,
-    "questionId": true,
-    "sectionId": true,
-    "extId": true,
-    "extMetadata": true
-  },
-  "include": [
-    {
-      "relation": "dependentOnQuestion",
-      "scope": {
-        "offset": 0,
-        "limit": 100,
-        "skip": 0,
-        "order": "string",
-        "where": {},
-        "fields": {},
-        "include": [
-          {}
-        ]
-      }
-    }
-  ]
-}
-
-```
-
-survey_questions.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» displayOrder|boolean|false|none|none|
-|»» isMandatory|boolean|false|none|none|
-|»» dependentOnQuestionId|boolean|false|none|none|
-|»» weight|boolean|false|none|none|
-|»» surveyId|boolean|false|none|none|
-|»» questionId|boolean|false|none|none|
-|»» sectionId|boolean|false|none|none|
-|»» extId|boolean|false|none|none|
-|»» extMetadata|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|include|[anyOf]|false|none|none|
-
-anyOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[survey_questions.IncludeFilter.Items](#schemasurvey_questions.includefilter.items)|false|none|none|
-
-or
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-<h2 id="tocS_survey_questions.Filter1">survey_questions.Filter1</h2>
-<!-- backwards compatibility -->
-<a id="schemasurvey_questions.filter1"></a>
-<a id="schema_survey_questions.Filter1"></a>
-<a id="tocSsurvey_questions.filter1"></a>
-<a id="tocssurvey_questions.filter1"></a>
 
 ```json
 {

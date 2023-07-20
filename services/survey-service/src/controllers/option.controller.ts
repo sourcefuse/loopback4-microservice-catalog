@@ -28,19 +28,22 @@ import {PermissionKey} from '../enum/permission-key.enum';
 import {Options} from '../models';
 import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
 import {QuestionOptionService} from '../services/question-option.service';
-
+import {
+  OptionsRepository as OptionsSequelizeRepo,
+  QuestionRepository as QuestionSequelizeRepo,
+} from '../repositories/sequelize';
 const basePath = '/question/{questionId}/options';
 
 export class OptionController {
   constructor(
     @repository(OptionsRepository)
-    private optionsRepository: OptionsRepository,
+    public optionsRepository: OptionsRepository | OptionsSequelizeRepo,
     @repository(QuestionRepository)
-    private questionRepository: QuestionRepository,
+    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
     @service(QuestionHelperService)
-    private questionHelperService: QuestionHelperService,
+    public questionHelperService: QuestionHelperService,
     @service(QuestionOptionService)
-    private questionOptionService: QuestionOptionService,
+    public questionOptionService: QuestionOptionService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

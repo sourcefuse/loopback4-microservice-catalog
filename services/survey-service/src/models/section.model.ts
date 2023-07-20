@@ -6,7 +6,7 @@ export class Section extends UserModifiableEntity<Section> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 

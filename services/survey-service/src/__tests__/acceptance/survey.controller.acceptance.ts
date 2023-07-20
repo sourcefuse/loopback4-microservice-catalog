@@ -40,13 +40,13 @@ describe('Survey Controller', () => {
   });
   after(async () => app.stop());
 
-  beforeEach(givenRepositories);
-  afterEach(deleteMockData);
+  before(givenRepositories);
+  after(deleteMockData);
   it('it gives 200 and adds a survey as response', async () => {
     const surveyToCreate = new Survey({
       name: 'Survey Test 1',
-      startDate: moment().format(DATE_FORMAT),
-      endDate: moment().add(10, 'days').format(DATE_FORMAT),
+      startDate: moment().utc().format(DATE_FORMAT),
+      endDate: moment().utc().add(10, 'days').format(DATE_FORMAT),
       surveyText: surveyText,
       status: SurveyStatus.ACTIVE,
     });
@@ -105,35 +105,31 @@ describe('Survey Controller', () => {
   });
 
   it('deletes a survey successfully', async () => {
-    const reqToAddSurvey = await addSurvey();
     await client
-      .del(`${basePath}/${reqToAddSurvey.body.id}`)
+      .del(`${basePath}/3`)
       .set('authorization', `Bearer ${token}`)
       .expect(204);
   });
 
   it('gives 400 on delete if status is not draft', async () => {
-    const currentDate = new Date();
-    const surveyBody = new Survey({
-      id: 'surveyId',
-      name: 'Survey Test',
-      startDate: moment(currentDate).format(),
-      endDate: moment(currentDate.setDate(currentDate.getDate() + 10)).format(),
-      surveyText: surveyText,
-      status: SurveyStatus.ACTIVE,
-    });
-    await surveyRepo.create(surveyBody);
     await client
-      .del(`${basePath}/surveyId`)
+      .del(`${basePath}/2`)
       .set('authorization', `Bearer ${token}`)
       .expect(400);
   });
   it('deletes survey questions on survey deletion', async () => {
-    await addSurveyQuestion();
+    await addSurvey();
+    await surveyQuestionRepo.create({
+      surveyId: '4',
+      questionId: '2',
+      displayOrder: 2,
+    });
     await client
-      .del(`${basePath}/1`)
+      .del(`${basePath}/4`)
       .set('authorization', `Bearer ${token}`)
       .expect(204);
+    const ques = await surveyQuestionRepo.findOne({where: {surveyId: '4'}});
+    expect(ques).to.be.equal(null);
   });
   it('will return 400 if status in patch request is active and no start date is added', async () => {
     const surveyToUpdate = {
@@ -299,14 +295,13 @@ describe('Survey Controller', () => {
     await addSurveyQuestions();
     await addSurveyCycle();
     await addSurveyResponder();
-
     const surveyToAdd = {
-      endDate: moment().add(10, 'd').format(DATE_FORMAT),
-      startDate: moment().format(DATE_FORMAT),
+      endDate: moment().utc().add(10, 'd').format(DATE_FORMAT),
+      startDate: moment().utc().format(DATE_FORMAT),
       status: 'Active',
       name: 'Survey Base',
       surveyText: surveyText,
-      baseSurveyId: '1',
+      baseSurveyId: '5',
     };
 
     const response = await client
@@ -329,32 +324,21 @@ describe('Survey Controller', () => {
     await surveyRepo.deleteAllHard();
   }
 
-  async function addSurveyQuestion() {
-    return surveyQuestionRepo.create({
-      surveyId: '1',
-      questionId: '2',
-      displayOrder: 2,
-    });
-  }
-
   async function addSectionWithRepo() {
     return sectionRepo.createAll([
       {
         name: 'test section 1',
-        id: '1',
         displayOrder: 1,
         surveyId: '1',
       },
 
       {
         name: 'test section 2',
-        id: '3',
         displayOrder: 3,
         surveyId: '1',
       },
       {
         name: 'test section',
-        id: '2',
         surveyId: '1',
       },
     ]);
@@ -370,7 +354,6 @@ describe('Survey Controller', () => {
     sectionRepo = await app.getRepository(SectionRepository);
     return surveyRepo.createAll([
       {
-        id: '1',
         name: 'Survey 1',
         surveyText: surveyText,
         status: SurveyStatus.DRAFT,
@@ -381,7 +364,6 @@ describe('Survey Controller', () => {
   async function addSurveyCycle() {
     await surveyCycleRepo.createAll([
       {
-        id: 'cycleId',
         startDate: '2023-07-26 05:29:57.293',
         endDate: '2023-07-29 05:29:57.293',
         isActivated: true,
@@ -392,7 +374,6 @@ describe('Survey Controller', () => {
   async function addSurveyQuestions() {
     await surveyQuestionRepo.createAll([
       {
-        id: 'surveyQuestionId',
         surveyId: '1',
         questionId: '3',
         displayOrder: 3,
@@ -413,7 +394,6 @@ describe('Survey Controller', () => {
 
   async function addQuestion() {
     await questionRepo.create({
-      id: '3',
       uid: 'QR00001',
       questionType: QuestionType.SINGLE_SELECTION,
       name: 'Question 101',

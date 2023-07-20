@@ -18,7 +18,7 @@ export class SurveyQuestion<T = DataObject<Model>> extends UserModifiableEntity<
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
@@ -44,6 +44,7 @@ export class SurveyQuestion<T = DataObject<Model>> extends UserModifiableEntity<
     },
     {
       name: 'dependent_on_question_id',
+      type: 'string',
       jsonSchema: {
         nullable: true,
       },
@@ -72,6 +73,7 @@ export class SurveyQuestion<T = DataObject<Model>> extends UserModifiableEntity<
     },
     {
       name: 'survey_id',
+      type: 'string',
     },
   )
   surveyId: string;
@@ -84,6 +86,7 @@ export class SurveyQuestion<T = DataObject<Model>> extends UserModifiableEntity<
     },
     {
       name: 'question_id',
+      type: 'string',
     },
   )
   questionId: string;
@@ -95,9 +98,13 @@ export class SurveyQuestion<T = DataObject<Model>> extends UserModifiableEntity<
     },
     {
       name: 'section_id',
+      type: 'string',
+      jsonSchema: {
+        nullable: true,
+      },
     },
   )
-  sectionId: string;
+  sectionId?: string;
 
   @property({
     type: 'string',
