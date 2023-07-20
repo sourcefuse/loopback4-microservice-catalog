@@ -19,6 +19,8 @@ import {
   url,
 } from './mocks/search.component.mock';
 import {of, throwError} from 'rxjs';
+import {By} from '@angular/platform-browser';
+import {SimpleChanges} from '@angular/core';
 describe('SearchComponent', () => {
   let component: SearchComponent<IReturnType>;
   let fixture: ComponentFixture<SearchComponent<IReturnType>>;
@@ -190,9 +192,8 @@ describe('SearchComponent', () => {
     expect(model).toEqual(mockIModel);
   });
   it('Should fetch Model ImageUrl From Suggestion', () => {
-    const returnUrl = component.fetchModelImageUrlFromSuggestion(
-      mockSuggestionUrl,
-    );
+    const returnUrl =
+      component.fetchModelImageUrlFromSuggestion(mockSuggestionUrl);
     expect(returnUrl).toEqual(url);
   });
   it('Should populate searched input value from the user', () => {
@@ -222,13 +223,81 @@ describe('SearchComponent', () => {
   });
   it('Should fetch Model ImageUrl From Suggestion', () => {
     const urlValue = undefined;
-    const returnUrl = component.fetchModelImageUrlFromSuggestion(
-      mockSuggestion,
-    );
+    const returnUrl =
+      component.fetchModelImageUrlFromSuggestion(mockSuggestion);
     expect(returnUrl).toEqual(urlValue);
   });
   it('Should get Models With Suggestions', () => {
     const result = component.getModelsWithSuggestions();
     expect(result).toEqual([]);
+  });
+  it('Should not show toolbar search input', () => {
+    component.showOnlySearchResultOverlay = true;
+    fixture.detectChanges();
+    const result = fixture.debugElement.query(By.css('.toolbar-search'));
+    expect(result).toBeNull();
+  });
+  it('Should show toolbar search input', () => {
+    component.showOnlySearchResultOverlay = false;
+    fixture.detectChanges();
+    const result = fixture.debugElement.query(By.css('.toolbar-search'));
+    expect(result).toBeTruthy();
+  });
+  it('Should return [] when use custom all label', () => {
+    component.customAllLabel = 'Custom All Label';
+    const result = component._categoryToSourceName('Custom All Label');
+    expect(result).toEqual([]);
+  });
+  it('should return true on change of cutom search event for search value', () => {
+    const changes: SimpleChanges = {
+      customSearchEvent: {
+        previousValue: {searchValue: '', modelName: 'All'},
+        currentValue: {searchValue: 'Text', modelName: 'All'},
+      },
+    } as unknown as SimpleChanges;
+    const result = component['_isCustomSearchEventChange'](
+      changes,
+      'searchValue',
+    );
+    expect(result).toBeTruthy();
+  });
+  it('should return false on change of cutom search event for search value', () => {
+    const changes: SimpleChanges = {
+      customSearchEvent: {
+        previousValue: {searchValue: 'Text', modelName: 'All'},
+        currentValue: {searchValue: 'Text', modelName: 'All'},
+      },
+    } as unknown as SimpleChanges;
+    const result = component['_isCustomSearchEventChange'](
+      changes,
+      'searchValue',
+    );
+    expect(result).toBeFalsy();
+  });
+  it('should return true on change of cutom search event for model name', () => {
+    const changes: SimpleChanges = {
+      customSearchEvent: {
+        previousValue: {searchValue: '', modelName: 'All'},
+        currentValue: {searchValue: 'Text', modelName: 'Other'},
+      },
+    } as unknown as SimpleChanges;
+    const result = component['_isCustomSearchEventChange'](
+      changes,
+      'modelName',
+    );
+    expect(result).toBeTruthy();
+  });
+  it('should return false on change of cutom search event for model name', () => {
+    const changes: SimpleChanges = {
+      customSearchEvent: {
+        previousValue: {searchValue: '', modelName: 'Other'},
+        currentValue: {searchValue: 'Text', modelName: 'Other'},
+      },
+    } as unknown as SimpleChanges;
+    const result = component['_isCustomSearchEventChange'](
+      changes,
+      'modelName',
+    );
+    expect(result).toBeFalsy();
   });
 });
