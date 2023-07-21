@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.30 (2023-07-21)</small>
+
+* chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)
+
+
+
+
+
 ## <small>0.3.29 (2023-07-18)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example-notif-socket

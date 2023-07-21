@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.5 (2023-07-21)</small>
+
+* chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)
+
+
+
+
+
 ## <small>7.0.4 (2023-07-18)</small>
 
 * chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)

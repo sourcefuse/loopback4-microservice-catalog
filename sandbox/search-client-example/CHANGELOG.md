@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.9 (2023-07-21)</small>
+
+* chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.2.8 (2023-05-09)</small>
 
 **Note:** Version bump only for package @sourceloop/search-client-example

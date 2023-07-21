@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.3.0 (2023-07-21)
+
+* feat(search): add configuration to show only result overlay with custom search event (#1562) ([ecf6a3c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ecf6a3c)), closes [#1562](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1562)
+
+
+
+
+
 ## <small>5.2.5 (2023-05-09)</small>
 
 * fix(search-client): added missing test step (#1416) ([1ca700e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1ca700e)), closes [#1416](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1416) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
