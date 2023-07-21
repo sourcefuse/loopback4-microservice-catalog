@@ -30,19 +30,19 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
-<h1 id="audit-service-archivelogcontroller">ArchiveLogController</h1>
+<h1 id="audit-service-auditcontroller">AuditController</h1>
 
-## ArchiveLogController.archive
+## AuditController.archive
 
-<a id="opIdArchiveLogController.archive"></a>
+<a id="opIdAuditController.archive"></a>
 
 > Code samples
 
 ```javascript
 const inputBody = '{
   "date": {
-    "fromDate": "2023-06-24T09:15:57.060Z",
-    "toDate": "2023-06-24T09:15:57.060Z"
+    "fromDate": "2023-07-21T13:25:19.539Z",
+    "toDate": "2023-07-21T13:25:19.539Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -72,8 +72,8 @@ fetch('/audit-logs/archive',
 const fetch = require('node-fetch');
 const inputBody = {
   "date": {
-    "fromDate": "2023-06-24T09:15:57.060Z",
-    "toDate": "2023-06-24T09:15:57.060Z"
+    "fromDate": "2023-07-21T13:25:19.539Z",
+    "toDate": "2023-07-21T13:25:19.539Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -111,8 +111,8 @@ fetch('/audit-logs/archive',
 ```json
 {
   "date": {
-    "fromDate": "2023-06-24T09:15:57.060Z",
-    "toDate": "2023-06-24T09:15:57.060Z"
+    "fromDate": "2023-07-21T13:25:19.539Z",
+    "toDate": "2023-07-21T13:25:19.539Z"
   },
   "deleted": true,
   "entityId": "string",
@@ -120,7 +120,7 @@ fetch('/audit-logs/archive',
 }
 ```
 
-<h3 id="archivelogcontroller.archive-parameters">Parameters</h3>
+<h3 id="auditcontroller.archive-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -138,13 +138,13 @@ fetch('/audit-logs/archive',
 }
 ```
 
-<h3 id="archivelogcontroller.archive-responses">Responses</h3>
+<h3 id="auditcontroller.archive-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model instance|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Archive logs status|Inline|
 
-<h3 id="archivelogcontroller.archive-responseschema">Response Schema</h3>
+<h3 id="auditcontroller.archive-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -158,8 +158,6 @@ Status Code **200**
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
 </aside>
-
-<h1 id="audit-service-auditcontroller">AuditController</h1>
 
 ## AuditController.count
 
@@ -238,6 +236,100 @@ fetch('/audit-logs/count',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|AuditLog model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## AuditController.export
+
+<a id="opIdAuditController.export"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/export',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/audit-logs/export',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /audit-logs/export`
+
+| Permissions |
+| ------- |
+| ExportLogs   |
+| 5   |
+
+<h3 id="auditcontroller.export-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|includeArchivedLogs|query|boolean|false|none|
+|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "jobId": "string",
+  "message": "string"
+}
+```
+
+<h3 id="auditcontroller.export-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Responds with jobId if includeArchiveLogs  is true or the success message otherwise.|Inline|
+
+<h3 id="auditcontroller.export-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» jobId|string|false|none|none|
+|» message|string|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -684,122 +776,6 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-<h1 id="audit-service-exportlogscontroller">ExportLogsController</h1>
-
-## ExportLogsController.export
-
-<a id="opIdExportLogsController.export"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs/export',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/audit-logs/export',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /audit-logs/export`
-
-| Permissions |
-| ------- |
-| ExportLogs   |
-| 5   |
-
-<h3 id="exportlogscontroller.export-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|includeArchivedLogs|query|boolean|false|none|
-|filter|query|[audit_logs.Filter](#schemaaudit_logs.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "id": "string",
-    "action": "string",
-    "actedAt": "2019-08-24T14:15:22Z",
-    "actedOn": "string",
-    "actionKey": "string",
-    "entityId": "string",
-    "actor": "string",
-    "before": {},
-    "after": {},
-    "actionGroup": "string"
-  }
-]
-```
-
-<h3 id="exportlogscontroller.export-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of AuditLog model instances|Inline|
-
-<h3 id="exportlogscontroller.export-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[AuditLogWithRelations](#schemaauditlogwithrelations)]|false|none|[(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })]|
-|» AuditLogWithRelations|[AuditLogWithRelations](#schemaauditlogwithrelations)|false|none|(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|false|none|none|
-|»» action|string|true|none|none|
-|»» actedAt|string(date-time)|true|none|none|
-|»» actedOn|string|false|none|none|
-|»» actionKey|string|true|none|none|
-|»» entityId|string|true|none|none|
-|»» actor|string|true|none|none|
-|»» before|object|false|none|none|
-|»» after|object|false|none|none|
-|»» actionGroup|string|false|none|none|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
 # Schemas
 
 <h2 id="tocS_AuditLog">AuditLog</h2>
@@ -960,8 +936,8 @@ AuditLogWithRelations
 ```json
 {
   "date": {
-    "fromDate": "2023-06-24T09:15:57.060Z",
-    "toDate": "2023-06-24T09:15:57.060Z"
+    "fromDate": "2023-07-21T13:25:19.539Z",
+    "toDate": "2023-07-21T13:25:19.539Z"
   },
   "deleted": true,
   "entityId": "string",

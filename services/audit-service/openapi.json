@@ -11,10 +11,10 @@
   "paths": {
     "/audit-logs/archive": {
       "post": {
-        "x-controller-name": "ArchiveLogController",
+        "x-controller-name": "AuditController",
         "x-operation-name": "archive",
         "tags": [
-          "ArchiveLogController"
+          "AuditController"
         ],
         "security": [
           {
@@ -23,7 +23,7 @@
         ],
         "responses": {
           "200": {
-            "description": "AuditLog model instance",
+            "description": "Archive logs status",
             "content": {
               "application/json": {
                 "schema": {
@@ -54,7 +54,7 @@
             }
           }
         },
-        "operationId": "ArchiveLogController.archive"
+        "operationId": "AuditController.archive"
       }
     },
     "/audit-logs/count": {
@@ -103,10 +103,10 @@
     },
     "/audit-logs/export": {
       "get": {
-        "x-controller-name": "ExportLogsController",
+        "x-controller-name": "AuditController",
         "x-operation-name": "export",
         "tags": [
-          "ExportLogsController"
+          "AuditController"
         ],
         "security": [
           {
@@ -115,13 +115,18 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of AuditLog model instances",
+            "description": "Responds with jobId if includeArchiveLogs  is true or the success message otherwise.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AuditLogWithRelations"
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -149,7 +154,7 @@
             }
           }
         ],
-        "operationId": "ExportLogsController.export"
+        "operationId": "AuditController.export"
       }
     },
     "/audit-logs/jobs/{jobId}": {
@@ -511,11 +516,11 @@
             "properties": {
               "fromDate": {
                 "type": "string",
-                "default": "2023-06-24T09:15:57.060Z"
+                "default": "2023-07-21T13:25:19.539Z"
               },
               "toDate": {
                 "type": "string",
-                "default": "2023-06-24T09:15:57.060Z"
+                "default": "2023-07-21T13:25:19.539Z"
               }
             }
           },
