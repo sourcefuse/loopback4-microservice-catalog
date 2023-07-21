@@ -145,6 +145,30 @@ type RecentSearchEvent = {
 ></sourceloop-search>
 ```
 
+```
+`Configuration to show only result overlay without search input box`
+There are other parameters which you can configure to use only the search result overlay without search input box
+
+```html
+<sourceloop-search 
+  [config]="config" 
+  [(ngModel)]="value"   
+  [showOnlySearchResultOverlay]="true"
+  [customAllLabel]="customAllLabel"
+  [customSearchEvent]="customSearchEvent"
+></sourceloop-search>
+```
+You can pass `showOnlySearchResultOverlay` to true to use only search result overlay. You can also pass `customAllLabel` in case you have different model name configuration for performing search in All categories
+
+**Manadatory parameter when you configure `showOnlySearchResultOverlay` to true**
+You should pass `customSearchEvent`
+```ts
+interface CustomSearchEvent {
+  searchValue: string;
+  modelName: string;
+}
+```
+
 ### Icons
 
 To use the default icons you will have to import the following in your styles.scss:

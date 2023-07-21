@@ -1,10 +1,5 @@
 <ng-container *ngIf="!showOnlySearchResultOverlay">
-  <div
-    fxLayout
-    fxLayoutAlign="start center"
-    class="toolbar-search"
-    *ngIf="config"
-  >
+  <div fxLayout fxLayoutAlign="start center" class="toolbar-search" *ngIf="config">
     <mat-form-field appearance="outline" class="toolbar-search-input">
       <input
         matInput
@@ -33,12 +28,9 @@
         (click)="resetInput()"
       ></mat-icon>
     </mat-form-field>
-
+  
     <mat-form-field appearance="outline" class="toolbar-search-select">
-      <mat-icon
-        matSuffix
-        [className]="config.dropDownButtonIconClass"
-      ></mat-icon>
+      <mat-icon matSuffix [className]="config.dropDownButtonIconClass"></mat-icon>
       <mat-select
         [value]="category"
         (selectionChange)="setCategory($event.value)"

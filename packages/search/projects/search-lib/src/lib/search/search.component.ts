@@ -24,21 +24,21 @@ import {debounceTime, tap} from 'rxjs/operators';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {
   CustomSearchEvent,
+  ISearchService,
+  ISearchQuery,
+  SEARCH_SERVICE_TOKEN,
   DEBOUNCE_TIME,
   DEFAULT_LIMIT,
   DEFAULT_LIMIT_TYPE,
   DEFAULT_OFFSET,
-  DEFAULT_ORDER,
   DEFAULT_SAVE_IN_RECENTS,
-  IModel,
+  DEFAULT_ORDER,
   IReturnType,
-  ISearchQuery,
-  ISearchService,
-  ISearchServiceWithPromises,
-  ItemClickedEvent,
   RecentSearchEvent,
-  SEARCH_SERVICE_TOKEN,
   TypeEvent,
+  ItemClickedEvent,
+  IModel,
+  ISearchServiceWithPromises,
   isApiServiceWithPromise,
 } from '../types';
 import {isPlatformBrowser} from '@angular/common';

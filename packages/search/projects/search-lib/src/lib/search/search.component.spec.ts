@@ -192,8 +192,9 @@ describe('SearchComponent', () => {
     expect(model).toEqual(mockIModel);
   });
   it('Should fetch Model ImageUrl From Suggestion', () => {
-    const returnUrl =
-      component.fetchModelImageUrlFromSuggestion(mockSuggestionUrl);
+    const returnUrl = component.fetchModelImageUrlFromSuggestion(
+      mockSuggestionUrl,
+    );
     expect(returnUrl).toEqual(url);
   });
   it('Should populate searched input value from the user', () => {
@@ -223,8 +224,9 @@ describe('SearchComponent', () => {
   });
   it('Should fetch Model ImageUrl From Suggestion', () => {
     const urlValue = undefined;
-    const returnUrl =
-      component.fetchModelImageUrlFromSuggestion(mockSuggestion);
+    const returnUrl = component.fetchModelImageUrlFromSuggestion(
+      mockSuggestion,
+    );
     expect(returnUrl).toEqual(urlValue);
   });
   it('Should get Models With Suggestions', () => {
@@ -261,7 +263,7 @@ describe('SearchComponent', () => {
     );
     expect(result).toBeTruthy();
   });
-  it('should return false on change of cutom search event for search value', () => {
+  it('should return false on change of custom search event for search value', () => {
     const changes: SimpleChanges = {
       customSearchEvent: {
         previousValue: {searchValue: 'Text', modelName: 'All'},
@@ -274,7 +276,7 @@ describe('SearchComponent', () => {
     );
     expect(result).toBeFalsy();
   });
-  it('should return true on change of cutom search event for model name', () => {
+  it('should return true on change of custom search event for model name', () => {
     const changes: SimpleChanges = {
       customSearchEvent: {
         previousValue: {searchValue: '', modelName: 'All'},
@@ -287,7 +289,7 @@ describe('SearchComponent', () => {
     );
     expect(result).toBeTruthy();
   });
-  it('should return false on change of cutom search event for model name', () => {
+  it('should return false on change of custom search event for model name', () => {
     const changes: SimpleChanges = {
       customSearchEvent: {
         previousValue: {searchValue: '', modelName: 'Other'},
