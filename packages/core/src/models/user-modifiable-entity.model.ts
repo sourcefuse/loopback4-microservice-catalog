@@ -2,11 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {property} from '@loopback/repository';
+import {DataObject, Model, property} from '@loopback/repository';
 
 import {BaseEntity} from './base-entity.model';
 
-export abstract class UserModifiableEntity extends BaseEntity {
+export abstract class UserModifiableEntity<
+  T = DataObject<Model>,
+> extends BaseEntity<T> {
   @property({
     type: 'string',
     name: 'created_by',

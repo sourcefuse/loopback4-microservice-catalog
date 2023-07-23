@@ -75,10 +75,6 @@ const DEFAULT_NAME = 'microservice';
 const dbconfig = 'database.json';
 
 export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
-  constructor(args: string[], opts: MicroserviceOptions) {
-    super(args, opts);
-  }
-
   initializing() {
     if (!this.fs.exists(join(this.destinationPath(), 'lerna.json'))) {
       this.exit('Can create a microservice only from the root of a mono repo');

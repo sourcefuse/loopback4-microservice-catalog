@@ -2,19 +2,20 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {hasMany, model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 import {
   Message,
-  Receiver,
-  MessageType,
   MessageOptions,
+  MessageType,
+  Receiver,
 } from 'loopback4-notifications';
 import {NotificationUser} from './notification-user.model';
 
 @model({
   name: 'notifications',
 })
-export class Notification extends Entity implements Message {
+export class Notification extends CoreEntity<Notification> implements Message {
   @property({
     type: 'string',
     id: true,
@@ -60,10 +61,6 @@ export class Notification extends Entity implements Message {
 
   @hasMany(() => NotificationUser, {keyTo: 'notificationId'})
   notificationUsers: NotificationUser[];
-
-  constructor(data?: Partial<Notification>) {
-    super(data);
-  }
 }
 
 export interface NotificationRelations {

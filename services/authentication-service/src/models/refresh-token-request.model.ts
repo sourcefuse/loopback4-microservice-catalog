@@ -2,17 +2,16 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {DataObject, Model, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class RefreshTokenRequest extends Model {
+export class RefreshTokenRequest<T = DataObject<Model>> extends CoreModel<
+  T & RefreshTokenRequest
+> {
   @property({
     type: 'string',
     required: true,
   })
   refreshToken: string;
-
-  constructor(data?: Partial<RefreshTokenRequest>) {
-    super(data);
-  }
 }

@@ -10,7 +10,7 @@ import {ModelPropertyDescriptionString} from './model-property-description.enum'
 @model({
   description: `This is a signature for reset password.`,
 })
-export class ResetPassword extends RefreshTokenRequest {
+export class ResetPassword extends RefreshTokenRequest<ResetPassword> {
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
@@ -30,8 +30,4 @@ export class ResetPassword extends RefreshTokenRequest {
     description: ModelPropertyDescriptionString.reqStrPropDesc,
   })
   oldPassword?: string;
-
-  constructor(data?: Partial<ResetPassword>) {
-    super(data);
-  }
 }

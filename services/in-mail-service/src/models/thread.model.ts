@@ -2,19 +2,19 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, hasMany, AnyObject} from '@loopback/repository';
-import {Message} from './message.model';
-import {Group} from './group.model';
+import {AnyObject, hasMany, model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
+import {Group} from './group.model';
+import {Message} from './message.model';
 
 @model({
   name: 'thread',
 })
 export class Thread
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Thread>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -66,8 +66,4 @@ export class Thread
     name: 'group',
   })
   groups: Group[];
-
-  constructor(data?: Partial<Thread>) {
-    super(data);
-  }
 }

@@ -2,11 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {User} from './user.model';
 
 @model()
-export class ForgetPasswordResponseDto extends Model {
+export class ForgetPasswordResponseDto extends CoreModel<ForgetPasswordResponseDto> {
   @property({
     type: 'string',
     required: true,
@@ -29,8 +30,4 @@ export class ForgetPasswordResponseDto extends Model {
     type: User,
   })
   user: User;
-
-  constructor(data?: Partial<ForgetPasswordResponseDto>) {
-    super(data);
-  }
 }

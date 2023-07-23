@@ -2,10 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, Model, model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class ExecuteWorkflowDto<T = AnyObject> extends Model {
+export class ExecuteWorkflowDto<T = AnyObject> extends CoreModel<
+  ExecuteWorkflowDto<T>
+> {
   @property({
     type: 'number',
   })
@@ -16,8 +19,4 @@ export class ExecuteWorkflowDto<T = AnyObject> extends Model {
     required: true,
   })
   input: T;
-
-  constructor(data?: Partial<ExecuteWorkflowDto<T>>) {
-    super(data);
-  }
 }

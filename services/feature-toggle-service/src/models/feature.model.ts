@@ -9,7 +9,7 @@ import {UserModifiableEntity} from '@sourceloop/core';
   name: 'features',
   description: 'The features table',
 })
-export class Feature extends UserModifiableEntity {
+export class Feature extends UserModifiableEntity<Feature> {
   @property({
     type: 'string',
     id: true,
@@ -40,10 +40,6 @@ export class Feature extends UserModifiableEntity {
     name: 'default_value',
   })
   defaultValue: boolean;
-
-  constructor(data?: Partial<Feature>) {
-    super(data);
-  }
 }
 
 export type FeaturesWithRelations = Feature;

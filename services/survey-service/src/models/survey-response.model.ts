@@ -1,17 +1,17 @@
 import {
-  model,
-  property,
+  AnyObject,
   belongsTo,
   hasMany,
-  AnyObject,
+  model,
+  property,
 } from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {SurveyResponder} from './survey-responder.model';
 import {SurveyCycle} from './survey-cycle.model';
+import {SurveyResponder} from './survey-responder.model';
 import {SurveyResponseDetail} from './survey-response-detail.model';
 
 @model({name: 'survey_cycle_responses'})
-export class SurveyResponse extends UserModifiableEntity {
+export class SurveyResponse extends UserModifiableEntity<SurveyResponse> {
   @property({
     type: 'string',
     id: true,
@@ -66,10 +66,6 @@ export class SurveyResponse extends UserModifiableEntity {
     keyFrom: 'id',
   })
   surveyResponseDetails?: SurveyResponseDetail[];
-
-  constructor(data?: Partial<SurveyResponse>) {
-    super(data);
-  }
 }
 
 export interface SurveyResponseRelations {

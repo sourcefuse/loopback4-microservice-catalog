@@ -2,13 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
 @model({
   description: 'This is the signature for OTP login request.',
 })
-export class OtpLoginRequest extends Model {
+export class OtpLoginRequest extends CoreModel<OtpLoginRequest> {
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
@@ -22,8 +23,4 @@ export class OtpLoginRequest extends Model {
     required: true,
   })
   otp: string;
-
-  constructor(data?: Partial<OtpLoginRequest>) {
-    super(data);
-  }
 }

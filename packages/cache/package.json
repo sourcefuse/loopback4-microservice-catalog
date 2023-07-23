@@ -60,6 +60,7 @@
     "@loopback/repository": "^6.1.0",
     "@loopback/rest": "^13.1.0",
     "@loopback/testlab": "^6.1.0",
+    "@sourceloop/core": "^8.0.3",
     "@types/node": "^18.11.18",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",

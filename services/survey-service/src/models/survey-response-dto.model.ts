@@ -1,8 +1,9 @@
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {SurveyResponseDetailDto} from './survey-response-detail-dto.model';
-import {AnyObject, Model, model, property} from '@loopback/repository';
 
 @model()
-export class SurveyResponseDto extends Model {
+export class SurveyResponseDto extends CoreModel<SurveyResponseDto> {
   @property({
     type: 'array',
     itemType: 'object',
@@ -25,8 +26,4 @@ export class SurveyResponseDto extends Model {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<SurveyResponseDto>) {
-    super(data);
-  }
 }

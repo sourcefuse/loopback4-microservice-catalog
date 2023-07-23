@@ -9,7 +9,7 @@ import {UserModifiableEntity} from '@sourceloop/core';
   name: 'strategies',
   description: 'The strategies table',
 })
-export class Strategy extends UserModifiableEntity {
+export class Strategy extends UserModifiableEntity<Strategy> {
   @property({
     type: 'string',
     id: true,
@@ -32,10 +32,6 @@ export class Strategy extends UserModifiableEntity {
     type: 'number',
   })
   priority: string;
-
-  constructor(data?: Partial<Strategy>) {
-    super(data);
-  }
 }
 
 export type StrategiesWithRelations = Strategy;

@@ -9,14 +9,13 @@ import {AuthClient} from './auth-client.model';
 @model({
   name: 'auth_clients',
 })
-export class AuthSecureClient extends AuthClient implements IAuthSecureClient {
+export class AuthSecureClient
+  extends AuthClient<AuthSecureClient>
+  implements IAuthSecureClient
+{
   @property({
     type: 'string',
     name: 'client_type',
   })
   clientType: ClientType;
-
-  constructor(data?: Partial<AuthSecureClient>) {
-    super(data);
-  }
 }

@@ -2,11 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
 @model({description: 'This is signature for successful token response.'})
-export class TokenResponse extends Model {
+export class TokenResponse extends CoreModel<TokenResponse> {
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
@@ -31,8 +32,4 @@ export class TokenResponse extends Model {
     type: 'string',
   })
   pubnubToken?: string;
-
-  constructor(data?: Partial<TokenResponse>) {
-    super(data);
-  }
 }

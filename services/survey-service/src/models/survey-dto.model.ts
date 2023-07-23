@@ -1,8 +1,8 @@
-import {Survey} from './survey.model';
 import {model, property} from '@loopback/repository';
+import {Survey} from './survey.model';
 
 @model()
-export class SurveyDto extends Survey {
+export class SurveyDto extends Survey<SurveyDto> {
   @property({
     type: 'string',
   })
@@ -12,10 +12,6 @@ export class SurveyDto extends Survey {
     name: 'existing_template_id',
   })
   existingTemplateId?: string;
-
-  constructor(data?: Partial<SurveyDto>) {
-    super(data);
-  }
 }
 
 export type SurveyDtoWithRelations = SurveyDto;

@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, Entity, model, property} from '@loopback/repository';
-import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreEntity, ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
 /**
  * Audit Logs Model
@@ -24,7 +24,7 @@ import {ExternalIdentifierEnabledEntity} from '@sourceloop/core';
   name: 'audit_logs',
 })
 export class AuditLog
-  extends Entity
+  extends CoreEntity<AuditLog>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -106,8 +106,4 @@ export class AuditLog
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<AuditLog>) {
-    super(data);
-  }
 }

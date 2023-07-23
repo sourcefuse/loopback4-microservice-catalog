@@ -2,18 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
-import {Message} from './message.model';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
+import {Message} from './message.model';
 
 @model({
   name: 'attachment',
 })
 export class Attachment
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Attachment>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -73,8 +73,4 @@ export class Attachment
     {name: 'message_id'},
   )
   messageId: string;
-
-  constructor(data?: Partial<Attachment>) {
-    super(data);
-  }
 }

@@ -2,13 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model({
   description:
     'This is the signature for requesting the accessToken and refreshToken.',
 })
-export class AuthTokenRequest extends Model {
+export class AuthTokenRequest extends CoreModel<AuthTokenRequest> {
   @property({
     type: 'string',
     required: true,
@@ -20,8 +21,4 @@ export class AuthTokenRequest extends Model {
     required: true,
   })
   clientId: string;
-
-  constructor(data?: Partial<AuthTokenRequest>) {
-    super(data);
-  }
 }

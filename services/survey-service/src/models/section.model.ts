@@ -2,7 +2,7 @@ import {AnyObject, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({name: 'section'})
-export class Section extends UserModifiableEntity {
+export class Section extends UserModifiableEntity<Section> {
   @property({
     type: 'string',
     id: true,
@@ -48,8 +48,4 @@ export class Section extends UserModifiableEntity {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Section>) {
-    super(data);
-  }
 }

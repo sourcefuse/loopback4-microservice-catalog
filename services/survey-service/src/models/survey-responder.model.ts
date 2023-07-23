@@ -1,11 +1,11 @@
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
 import {REGEX} from '../utils';
 import {SurveyCycle} from './survey-cycle.model';
 import {Survey} from './survey.model';
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({name: 'survey_responders'})
-export class SurveyResponder extends UserModifiableEntity {
+export class SurveyResponder extends UserModifiableEntity<SurveyResponder> {
   @property({
     type: 'string',
     id: true,
@@ -96,10 +96,6 @@ export class SurveyResponder extends UserModifiableEntity {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<SurveyResponder>) {
-    super(data);
-  }
 }
 
 export interface SurveyResponderRelations {

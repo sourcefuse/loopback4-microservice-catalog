@@ -3,16 +3,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {belongsTo, model, property} from '@loopback/repository';
-import {UserPermission} from 'loopback4-authorization';
 import {UserModifiableEntity} from '@sourceloop/core';
-
+import {UserPermission} from 'loopback4-authorization';
 import {UserTenant} from './user-tenant.model';
 
 @model({
   name: 'user_permissions',
 })
 export class UserLevelPermission
-  extends UserModifiableEntity
+  extends UserModifiableEntity<UserLevelPermission>
   implements UserPermission<string>
 {
   @property({
@@ -43,8 +42,4 @@ export class UserLevelPermission
     default: true,
   })
   allowed: boolean;
-
-  constructor(data?: Partial<UserLevelPermission>) {
-    super(data);
-  }
 }

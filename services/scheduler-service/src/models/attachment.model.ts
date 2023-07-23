@@ -13,7 +13,7 @@ import {Event} from './event.model';
   name: 'attachments',
 })
 export class Attachment
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Attachment>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -73,10 +73,6 @@ export class Attachment
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Attachment>) {
-    super(data);
-  }
 }
 
 export interface AttachmentRelations {

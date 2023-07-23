@@ -2,10 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {DataObject, Model, property} from '@loopback/repository';
 import {SoftDeleteEntity} from 'loopback4-soft-delete';
-import {property} from '@loopback/repository';
 
-export abstract class BaseEntity extends SoftDeleteEntity {
+export abstract class BaseEntity<
+  T = DataObject<Model>,
+> extends SoftDeleteEntity {
   @property({
     type: 'date',
     default: () => new Date(),
@@ -19,4 +21,8 @@ export abstract class BaseEntity extends SoftDeleteEntity {
     name: 'modified_on',
   })
   modifiedOn?: Date;
+
+  constructor(data?: Partial<T>) {
+    super(data);
+  }
 }

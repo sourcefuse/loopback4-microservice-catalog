@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {belongsTo, hasMany, model, property} from '@loopback/repository';
-import {BaseEntity, UserStatus, IUserPrefs} from '@sourceloop/core';
+import {BaseEntity, IUserPrefs, UserStatus} from '@sourceloop/core';
 
 import {
   Role,
@@ -18,7 +18,7 @@ import {UserGroup, UserGroupWithRelations} from './user-group.model';
 @model({
   name: 'user_tenants',
 })
-export class UserTenant extends BaseEntity implements IUserPrefs {
+export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
   @property({
     type: 'string',
     id: true,
@@ -75,10 +75,6 @@ export class UserTenant extends BaseEntity implements IUserPrefs {
 
   @hasMany(() => UserGroup, {keyTo: 'userTenantId'})
   userGroups: UserGroup[];
-
-  constructor(data?: Partial<UserTenant>) {
-    super(data);
-  }
 }
 
 export interface UserTenantRelations {

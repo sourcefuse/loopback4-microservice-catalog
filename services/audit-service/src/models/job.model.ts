@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 import {OperationKey} from '../enums/operation-key.enum';
 
 @model({
@@ -7,7 +8,7 @@ import {OperationKey} from '../enums/operation-key.enum';
     strict: false,
   },
 })
-export class Job extends Entity {
+export class Job extends CoreEntity<Job> {
   @property({
     type: 'string',
     id: true,
@@ -36,10 +37,6 @@ export class Job extends Entity {
     type: 'string',
   })
   result: string;
-
-  constructor(data?: Partial<Job>) {
-    super(data);
-  }
 }
 
 export type JobWithRelations = Job;

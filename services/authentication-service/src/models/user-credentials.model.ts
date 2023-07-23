@@ -10,7 +10,7 @@ import {User, UserWithRelations} from './user.model';
 @model({
   name: 'user_credentials',
 })
-export class UserCredentials extends UserModifiableEntity {
+export class UserCredentials extends UserModifiableEntity<UserCredentials> {
   @property({
     type: 'string',
     id: true,
@@ -57,10 +57,6 @@ export class UserCredentials extends UserModifiableEntity {
     type: 'string',
   })
   password?: string;
-
-  constructor(data?: Partial<UserCredentials>) {
-    super(data);
-  }
 }
 
 export interface UserCredentialsRelations {

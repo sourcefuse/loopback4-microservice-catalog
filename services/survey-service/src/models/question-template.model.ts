@@ -1,8 +1,16 @@
-import {AnyObject, model, property} from '@loopback/repository';
+import {
+  AnyObject,
+  DataObject,
+  Model,
+  model,
+  property,
+} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({name: 'question_templates'})
-export class QuestionTemplate extends UserModifiableEntity {
+export class QuestionTemplate<
+  T = DataObject<Model>,
+> extends UserModifiableEntity<T & QuestionTemplate> {
   @property({
     type: 'string',
     id: true,
@@ -51,10 +59,6 @@ export class QuestionTemplate extends UserModifiableEntity {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<QuestionTemplate>) {
-    super(data);
-  }
 }
 
 export type QuestionTemplateWithRelations = QuestionTemplate;

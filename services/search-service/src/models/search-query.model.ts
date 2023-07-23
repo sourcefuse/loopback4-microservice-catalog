@@ -10,7 +10,7 @@ import {RecentSearch} from './recent-search.model';
 @model({
   name: 'search_query',
 })
-export class SearchQuery extends UserModifiableEntity {
+export class SearchQuery extends UserModifiableEntity<SearchQuery> {
   @property({
     id: true,
     type: 'String',
@@ -64,10 +64,6 @@ export class SearchQuery extends UserModifiableEntity {
 
   @belongsTo(() => RecentSearch, {name: 'params'}, {name: 'recent_search_id'})
   recentSearchId: string;
-
-  constructor(data?: Partial<SearchQuery>) {
-    super(data);
-  }
 }
 
 export type SearchQueryWithRelations = SearchQuery;

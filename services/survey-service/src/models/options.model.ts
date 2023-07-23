@@ -1,9 +1,9 @@
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Question} from './questions.model';
 
 @model({name: 'question_options'})
-export class Options extends UserModifiableEntity {
+export class Options extends UserModifiableEntity<Options> {
   @property({
     type: 'string',
     id: true,
@@ -73,10 +73,6 @@ export class Options extends UserModifiableEntity {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Options>) {
-    super(data);
-  }
 }
 
 export interface OptionsRelations {

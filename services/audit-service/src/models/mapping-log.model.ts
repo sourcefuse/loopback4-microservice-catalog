@@ -1,8 +1,9 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 @model({
   name: 'mapping_logs',
 })
-export class MappingLog extends Entity {
+export class MappingLog extends CoreEntity<MappingLog> {
   @property({
     type: 'string',
     id: true,
@@ -23,10 +24,6 @@ export class MappingLog extends Entity {
     required: true,
   })
   fileName: string;
-
-  constructor(data?: Partial<MappingLog>) {
-    super(data);
-  }
 }
 
 export type MappingLogsWithRelations = MappingLog;
