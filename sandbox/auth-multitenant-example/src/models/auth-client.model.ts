@@ -3,13 +3,13 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
-import {IAuthClient} from 'loopback4-authentication';
 import {BaseEntity} from '@sourceloop/core';
+import {IAuthClient} from 'loopback4-authentication';
 
 @model({
   name: 'auth_clients',
 })
-export class AuthClient extends BaseEntity implements IAuthClient {
+export class AuthClient extends BaseEntity<AuthClient> implements IAuthClient {
   @property({
     type: 'number',
     id: true,
@@ -62,8 +62,4 @@ export class AuthClient extends BaseEntity implements IAuthClient {
     name: 'auth_code_expiration',
   })
   authCodeExpiration: number;
-
-  constructor(data?: Partial<AuthClient>) {
-    super(data);
-  }
 }

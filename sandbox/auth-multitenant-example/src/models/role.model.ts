@@ -10,7 +10,7 @@ import {UserTenant, UserTenantRelations} from './user-tenant.model';
 @model({
   name: 'roles',
 })
-export class Role extends UserModifiableEntity {
+export class Role extends UserModifiableEntity<Role> {
   @property({
     type: 'string',
     id: true,
@@ -48,10 +48,6 @@ export class Role extends UserModifiableEntity {
 
   @hasMany(() => UserTenant, {keyTo: 'roleId'})
   userTenants: UserTenant[];
-
-  constructor(data?: Partial<Role>) {
-    super(data);
-  }
 }
 
 export interface RoleRelations {

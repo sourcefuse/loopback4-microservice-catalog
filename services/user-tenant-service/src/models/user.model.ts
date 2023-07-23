@@ -3,6 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {
+  DataObject,
+  Model,
   belongsTo,
   hasMany,
   hasOne,
@@ -24,7 +26,10 @@ import {
   name: 'users',
   description: 'This is signature for user model.',
 })
-export class User extends UserModifiableEntity<User> implements IAuthUser {
+export class User<T = DataObject<Model>>
+  extends UserModifiableEntity<T & User>
+  implements IAuthUser
+{
   @property({
     type: 'string',
     id: true,

@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({settings: {strict: false}})
-export class SocketNotification extends Entity {
+export class SocketNotification extends CoreEntity<SocketNotification> {
   @property({
     type: 'string',
     id: true,
@@ -36,8 +37,4 @@ export class SocketNotification extends Entity {
     required: true,
   })
   type: number;
-
-  constructor(data?: Partial<SocketNotification>) {
-    super(data);
-  }
 }

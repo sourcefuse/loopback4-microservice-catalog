@@ -10,7 +10,7 @@ import {IUserResource} from 'loopback4-authorization';
   name: 'user_resources',
 })
 export class UserLevelResource
-  extends UserModifiableEntity
+  extends UserModifiableEntity<UserLevelResource>
   implements IUserResource<string>
 {
   @property({
@@ -48,8 +48,4 @@ export class UserLevelResource
     name: 'allowed',
   })
   allowed: boolean;
-
-  constructor(data?: Partial<UserLevelResource>) {
-    super(data);
-  }
 }

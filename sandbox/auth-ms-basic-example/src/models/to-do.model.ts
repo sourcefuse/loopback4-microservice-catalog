@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model()
-export class ToDo extends Entity {
+export class ToDo extends CoreEntity<ToDo> {
   @property({
     type: 'string',
     id: true,
@@ -30,10 +31,6 @@ export class ToDo extends Entity {
     itemType: 'string',
   })
   items?: string[];
-
-  constructor(data?: Partial<ToDo>) {
-    super(data);
-  }
 }
 
 export type ToDoWithRelations = ToDo;
