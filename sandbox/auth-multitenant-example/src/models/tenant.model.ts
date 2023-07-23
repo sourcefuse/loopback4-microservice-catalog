@@ -11,7 +11,7 @@ import {UserTenant, UserTenantWithRelations} from '../models';
   name: 'tenants',
   description: 'signature for all tenants',
 })
-export class Tenant extends UserModifiableEntity {
+export class Tenant extends UserModifiableEntity<Tenant> {
   @property({
     type: 'string',
     id: true,
@@ -72,10 +72,6 @@ export class Tenant extends UserModifiableEntity {
 
   @hasMany(() => UserTenant, {keyTo: 'tenantId'})
   userTenants: UserTenant[];
-
-  constructor(data?: Partial<Tenant>) {
-    super(data);
-  }
 }
 
 export interface TenantRelations {

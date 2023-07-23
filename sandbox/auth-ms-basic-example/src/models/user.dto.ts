@@ -3,11 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
-import {Model} from '@loopback/repository-json-schema';
-import {UserStatus} from '@sourceloop/core';
+import {CoreModel, UserStatus} from '@sourceloop/core';
 
 @model()
-export class UserDto extends Model {
+export class UserDto extends CoreModel<UserDto> {
   @property({
     type: 'string',
     required: true,
@@ -71,8 +70,4 @@ export class UserDto extends Model {
     required: true,
   })
   clientId: string;
-
-  constructor(data?: Partial<UserDto>) {
-    super(data);
-  }
 }

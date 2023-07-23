@@ -25,7 +25,7 @@ import {
   name: 'users',
   description: 'This is signature for user model.',
 })
-export class User extends UserModifiableEntity implements IAuthUser {
+export class User extends UserModifiableEntity<User> implements IAuthUser {
   @property({
     type: 'string',
     id: true,
@@ -115,10 +115,6 @@ export class User extends UserModifiableEntity implements IAuthUser {
 
   @hasMany(() => UserTenant, {keyTo: 'userId'})
   userTenants: UserTenant[];
-
-  constructor(data?: Partial<User>) {
-    super(data);
-  }
 }
 
 export interface UserRelations {

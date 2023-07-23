@@ -10,7 +10,7 @@ import {User, UserWithRelations} from '.';
 @model({
   name: 'user_credentials',
 })
-export class UserCredentials extends BaseEntity {
+export class UserCredentials extends BaseEntity<UserCredentials> {
   @property({
     type: 'string',
     id: true,
@@ -51,10 +51,6 @@ export class UserCredentials extends BaseEntity {
     },
   )
   userId: string;
-
-  constructor(data?: Partial<UserCredentials>) {
-    super(data);
-  }
 }
 
 export interface UserCredentialsRelations {

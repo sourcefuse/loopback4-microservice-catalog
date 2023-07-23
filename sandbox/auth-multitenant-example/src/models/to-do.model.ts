@@ -8,7 +8,7 @@ import {UserModifiableEntity} from '@sourceloop/core';
 @model({
   name: 'todos',
 })
-export class ToDo extends UserModifiableEntity {
+export class ToDo extends UserModifiableEntity<ToDo> {
   @property({
     type: 'string',
     id: true,
@@ -33,10 +33,6 @@ export class ToDo extends UserModifiableEntity {
     itemType: 'string',
   })
   items?: string[];
-
-  constructor(data?: Partial<ToDo>) {
-    super(data);
-  }
 }
 
 export type ToDoWithRelations = ToDo;

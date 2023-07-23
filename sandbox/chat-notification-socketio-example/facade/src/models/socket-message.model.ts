@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({settings: {strict: false}})
-export class SocketMessage extends Entity {
+export class SocketMessage extends CoreEntity<SocketMessage> {
   @property({
     type: 'string',
     id: true,
@@ -46,8 +47,4 @@ export class SocketMessage extends Entity {
     type: 'string',
   })
   createdBy?: string;
-
-  constructor(data?: Partial<SocketMessage>) {
-    super(data);
-  }
 }
