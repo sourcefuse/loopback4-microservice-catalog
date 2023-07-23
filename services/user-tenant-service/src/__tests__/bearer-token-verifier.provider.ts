@@ -10,10 +10,6 @@ import {IAuthUserWithPermissions} from './keys';
 export class BearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
 {
-  constructor() {
-    // Empty constructor
-  }
-
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
       /*

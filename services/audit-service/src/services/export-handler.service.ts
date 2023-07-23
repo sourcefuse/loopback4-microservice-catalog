@@ -1,13 +1,9 @@
-import {injectable, BindingScope, Provider} from '@loopback/core';
-import {ExportHandlerFn} from '../types';
+import {BindingScope, Provider, injectable} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
+import {ExportHandlerFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ExportHandlerProvider implements Provider<ExportHandlerFn> {
-  constructor() {
-    //this is intentional
-  }
-
   value(): ExportHandlerFn {
     return async (fileBuffer: Buffer) => {
       throw new HttpErrors.NotImplemented(
