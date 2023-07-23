@@ -68,9 +68,9 @@ export class OcrParserComponent implements OnInit, OnDestroy {
     );
   }
 
-  checkAlreadyExistClause(clauses: FieldData[], clauseId: string): boolean {
+  checkAlreadyExistClause(clauses: FieldData[], clauseId: string) {
     const clause = clauses.find(data => data.id === clauseId);
-    return clause ? true : false;
+    return clause;
   }
 
   onCancelContract() {

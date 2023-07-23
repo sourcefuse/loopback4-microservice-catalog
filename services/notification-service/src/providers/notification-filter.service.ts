@@ -10,10 +10,6 @@ import {INotificationFilterFunc} from '../types';
 export class NotificationFilterProvider
   implements Provider<INotificationFilterFunc>
 {
-  constructor() {
-    // do nothing
-  }
-
   value() {
     return async (notif: Notification) => notif;
   }

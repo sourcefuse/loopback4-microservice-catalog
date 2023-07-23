@@ -23,6 +23,8 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {authenticator} from 'otplib';
+import qrcode from 'qrcode';
 import {User, UserCredentials} from '../../models';
 import {AuthCodeBindings, CodeReaderFn, CodeWriterFn} from '../../providers';
 import {
@@ -40,8 +42,6 @@ import {
 } from './';
 import {AuthUser} from './models/auth-user.model';
 import {OtpSendRequest} from './models/otp-send-request.dto';
-import {authenticator} from 'otplib';
-import qrcode from 'qrcode';
 
 export class OtpController {
   constructor(
@@ -183,7 +183,7 @@ export class OtpController {
         );
       }
       return {
-        isGenerated: userCreds.secretKey ? true : false,
+        isGenerated: Boolean(userCreds.secretKey),
       };
     } catch (error) {
       this.logger.error(error);
