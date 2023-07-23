@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class SearchResultBase extends Model {
+export class SearchResultBase extends CoreModel<SearchResultBase> {
   @property({
     type: 'string',
     required: true,
@@ -17,10 +18,6 @@ export class SearchResultBase extends Model {
     required: true,
   })
   rank: number;
-
-  constructor(data?: Partial<SearchResultBase>) {
-    super(data);
-  }
 }
 
 export type SearchResultBaseWithRelations = SearchResultBase;

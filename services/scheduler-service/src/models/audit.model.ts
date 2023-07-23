@@ -1,5 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
 import {Action} from '@sourceloop/audit-log';
+import {CoreEntity} from '@sourceloop/core';
 
 /**
  * Audit Logs Model to be Used for conditional audit log mixin.
@@ -7,7 +8,7 @@ import {Action} from '@sourceloop/audit-log';
 @model({
   name: 'audit_logs',
 })
-export class ConditionalAuditLog extends Entity {
+export class ConditionalAuditLog extends CoreEntity<ConditionalAuditLog> {
   @property({
     type: 'string',
     id: true,
@@ -63,8 +64,4 @@ export class ConditionalAuditLog extends Entity {
     type: 'object',
   })
   after?: object;
-
-  constructor(data?: Partial<ConditionalAuditLog>) {
-    super(data);
-  }
 }

@@ -4,11 +4,15 @@
 // https://opensource.org/licenses/MIT
 /* eslint-disable  @typescript-eslint/naming-convention */
 
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {IAuthClientDTO} from '..';
 
 @model()
-export class ResetPasswordWithClient extends Model implements IAuthClientDTO {
+export class ResetPasswordWithClient
+  extends CoreModel<ResetPasswordWithClient>
+  implements IAuthClientDTO
+{
   @property({
     type: 'string',
     required: true,
@@ -34,8 +38,4 @@ export class ResetPasswordWithClient extends Model implements IAuthClientDTO {
   })
   client_secret: string;
   // sonarignore:end
-
-  constructor(data?: Partial<ResetPasswordWithClient>) {
-    super(data);
-  }
 }

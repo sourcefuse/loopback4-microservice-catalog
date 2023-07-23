@@ -10,14 +10,10 @@ import {Group} from './group.model';
     defaultIdSort: false,
   },
 })
-export class UserGroupView extends Group {
+export class UserGroupView extends Group<UserGroupView> {
   @property({
     name: 'user_tenant_id',
     type: 'string',
   })
   userTenantId: string;
-
-  constructor(data?: Partial<UserGroupView>) {
-    super(data);
-  }
 }

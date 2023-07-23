@@ -14,7 +14,7 @@ import {Group} from './group.model';
   name: 'v_thread',
 })
 export class ThreadView
-  extends UserModifiableEntity
+  extends UserModifiableEntity<ThreadView>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -76,8 +76,4 @@ export class ThreadView
     itemType: 'object',
   })
   group?: Group[];
-
-  constructor(data?: Partial<ThreadView>) {
-    super(data);
-  }
 }

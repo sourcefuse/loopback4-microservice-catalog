@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {hasMany, model, property, hasOne} from '@loopback/repository';
+import {hasMany, hasOne, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {RoleType} from '../enums';
 
@@ -12,7 +12,7 @@ import {UserView} from './user-view.model';
 @model({
   name: 'roles',
 })
-export class Role extends UserModifiableEntity {
+export class Role extends UserModifiableEntity<Role> {
   @property({
     type: 'string',
     id: true,
@@ -57,10 +57,6 @@ export class Role extends UserModifiableEntity {
 
   @hasOne(() => UserView, {keyFrom: 'modifiedBy', keyTo: 'id'})
   modifiedByUser?: UserView;
-
-  constructor(data?: Partial<Role>) {
-    super(data);
-  }
 }
 
 export interface RoleRelations {

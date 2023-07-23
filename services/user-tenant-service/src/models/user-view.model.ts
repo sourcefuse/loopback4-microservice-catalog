@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property} from '@loopback/repository';
+import {DataObject, Model, model, property} from '@loopback/repository';
 import {Gender, UserModifiableEntity, UserStatus} from '@sourceloop/core';
 
 @model({
@@ -12,7 +12,9 @@ import {Gender, UserModifiableEntity, UserStatus} from '@sourceloop/core';
     defaultIdSort: false,
   },
 })
-export class UserView extends UserModifiableEntity {
+export class UserView<T = DataObject<Model>> extends UserModifiableEntity<
+  T & UserView
+> {
   @property({
     type: 'string',
     id: true,
@@ -164,8 +166,4 @@ export class UserView extends UserModifiableEntity {
     name: 'expires_on',
   })
   expiresOn?: Date;
-
-  constructor(data?: Partial<UserView>) {
-    super(data);
-  }
 }

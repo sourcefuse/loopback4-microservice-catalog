@@ -2,19 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {
-  AnyObject,
-  belongsTo,
-  Entity,
-  model,
-  property,
-} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 import {Workflow} from './workflow.model';
 
 @model({
   name: 'workflow_versions',
 })
-export class WorkflowVersion extends Entity {
+export class WorkflowVersion extends CoreEntity<WorkflowVersion> {
   @property({
     type: 'string',
     id: true,
@@ -63,10 +58,6 @@ export class WorkflowVersion extends Entity {
     },
   )
   workflowId: string;
-
-  constructor(data?: Partial<WorkflowVersion>) {
-    super(data);
-  }
 }
 
 export interface WorkflowVersionRelations {

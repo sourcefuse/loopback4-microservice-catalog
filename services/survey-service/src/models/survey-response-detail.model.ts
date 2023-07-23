@@ -1,12 +1,12 @@
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {SurveyResponse} from './survey-response.model';
-import {Question} from './questions.model';
 import {QuestionType} from '../enum/question.enum';
 import {Options} from './options.model';
+import {Question} from './questions.model';
+import {SurveyResponse} from './survey-response.model';
 
 @model({name: 'survey_response_details'})
-export class SurveyResponseDetail extends UserModifiableEntity {
+export class SurveyResponseDetail extends UserModifiableEntity<SurveyResponseDetail> {
   @property({
     type: 'string',
     id: true,
@@ -91,8 +91,4 @@ export class SurveyResponseDetail extends UserModifiableEntity {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<SurveyResponseDetail>) {
-    super(data);
-  }
 }

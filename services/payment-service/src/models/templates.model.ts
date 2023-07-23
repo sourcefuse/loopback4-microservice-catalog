@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({settings: {strict: false}})
-export class Templates extends Entity {
+export class Templates extends CoreEntity<Templates> {
   @property({
     type: 'string',
     id: true,
@@ -44,8 +45,4 @@ export class Templates extends Entity {
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any; //NOSONAR
-
-  constructor(data?: Partial<Templates>) {
-    super(data);
-  }
 }

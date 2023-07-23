@@ -1,7 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '../../../models';
 
 @model()
-export class TestModel extends Entity {
+export class TestModel extends CoreEntity<TestModel> {
   @property({
     id: true,
     type: 'string',
@@ -20,7 +21,4 @@ export class TestModel extends Entity {
     type: 'string',
   })
   tenantId: string;
-  constructor(data?: Partial<TestModel>) {
-    super(data);
-  }
 }

@@ -13,7 +13,7 @@ import {OwnerType} from './enums/owner-type.enum';
   name: 'settings',
 })
 export class Settings
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Settings>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -76,8 +76,4 @@ export class Settings
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Settings>) {
-    super(data);
-  }
 }

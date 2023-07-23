@@ -1,8 +1,9 @@
-import {AnyObject, Model, model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {QuestionType} from '../enum/question.enum';
 
 @model()
-export class QuestionDto extends Model {
+export class QuestionDto extends CoreModel<QuestionDto> {
   @property({
     type: 'string',
     id: true,
@@ -65,8 +66,4 @@ export class QuestionDto extends Model {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<QuestionDto>) {
-    super(data);
-  }
 }

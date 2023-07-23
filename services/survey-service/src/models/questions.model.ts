@@ -1,19 +1,19 @@
-import {Options} from './options.model';
 import {
-  model,
-  property,
+  AnyObject,
   belongsTo,
   hasMany,
   hasOne,
-  AnyObject,
+  model,
+  property,
 } from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {QuestionType} from '../enum/question.enum';
-import {Survey} from './survey.model';
+import {Options} from './options.model';
 import {SurveyResponseDetail} from './survey-response-detail.model';
+import {Survey} from './survey.model';
 
 @model({name: 'questions'})
-export class Question extends UserModifiableEntity {
+export class Question extends UserModifiableEntity<Question> {
   @property({
     type: 'string',
     id: true,
@@ -130,10 +130,6 @@ export class Question extends UserModifiableEntity {
     },
   )
   surveyId: string;
-
-  constructor(data?: Partial<Question>) {
-    super(data);
-  }
 }
 
 export interface QuestionRelations {

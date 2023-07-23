@@ -2,13 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, model, Model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {Attachment} from './attachment.model';
 import {Attendee} from './attendee.model';
 import {StatusType} from './enums/status.enum';
 
 @model()
-export class EventDTO extends Model {
+export class EventDTO extends CoreModel<EventDTO> {
   @property({
     type: 'string',
     id: true,
@@ -143,8 +144,4 @@ export class EventDTO extends Model {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<EventDTO>) {
-    super(data);
-  }
 }

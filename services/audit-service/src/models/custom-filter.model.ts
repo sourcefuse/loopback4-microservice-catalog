@@ -1,7 +1,8 @@
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class CustomFilter extends Model {
+export class CustomFilter extends CoreModel<CustomFilter> {
   @property({
     type: 'object',
     jsonSchema: {
@@ -36,10 +37,6 @@ export class CustomFilter extends Model {
     type: 'string',
   })
   actedOn?: string;
-
-  constructor(data?: Partial<CustomFilter>) {
-    super(data);
-  }
 }
 
 export type CustomFilterWithRelations = CustomFilter;

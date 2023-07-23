@@ -2,18 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model()
-export class RevokedToken extends Entity {
+export class RevokedToken extends CoreEntity<RevokedToken> {
   @property({
     type: 'string',
     id: true,
     required: true,
   })
   token: string;
-
-  constructor(data?: Partial<RevokedToken>) {
-    super(data);
-  }
 }

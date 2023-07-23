@@ -19,9 +19,9 @@ import {
 import {ILogger, LOGGER, SFCoreBindings} from '@sourceloop/core';
 import {isString} from 'lodash';
 import {
+  AuthErrorKeys,
   AuthenticateFn,
   AuthenticationBindings,
-  AuthErrorKeys,
 } from 'loopback4-authentication';
 import {
   AuthorizationBindings,

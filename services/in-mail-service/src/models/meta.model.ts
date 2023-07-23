@@ -2,18 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
-import {Message} from './message.model';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {
-  UserModifiableEntity,
   ExternalIdentifierEnabledEntity,
+  UserModifiableEntity,
 } from '@sourceloop/core';
+import {Message} from './message.model';
 
 @model({
   name: 'meta',
 })
 export class Meta
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Meta>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -60,8 +60,4 @@ export class Meta
     {name: 'message_id'},
   )
   messageId: string;
-
-  constructor(data?: Partial<Meta>) {
-    super(data);
-  }
 }

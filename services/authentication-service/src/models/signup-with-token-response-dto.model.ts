@@ -2,10 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class SignupWithTokenReponseDto<T> extends Model {
+export class SignupWithTokenReponseDto<T> extends CoreModel<
+  SignupWithTokenReponseDto<T>
+> {
   @property({
     type: 'string',
     required: true,
@@ -17,8 +20,4 @@ export class SignupWithTokenReponseDto<T> extends Model {
     required: true,
   })
   user: T;
-
-  constructor(data?: Partial<SignupWithTokenReponseDto<T>>) {
-    super(data);
-  }
 }

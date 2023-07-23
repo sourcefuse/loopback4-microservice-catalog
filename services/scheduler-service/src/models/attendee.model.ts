@@ -14,7 +14,7 @@ import {Event} from './event.model';
   name: 'attendees',
 })
 export class Attendee
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Attendee>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -88,10 +88,6 @@ export class Attendee
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Attendee>) {
-    super(data);
-  }
 }
 
 export interface AttendeeRelations {

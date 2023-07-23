@@ -1,13 +1,22 @@
-import {model, property, hasMany, AnyObject} from '@loopback/repository';
+import {
+  AnyObject,
+  DataObject,
+  Model,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {Question} from './questions.model';
-import {SurveyCycle} from './survey-cycle.model';
-import {SurveyResponder} from './survey-responder.model';
 import {Section} from './section.model';
+import {SurveyCycle} from './survey-cycle.model';
 import {SurveyQuestion} from './survey-question.model';
+import {SurveyResponder} from './survey-responder.model';
 
 @model({name: 'surveys'})
-export class Survey extends UserModifiableEntity {
+export class Survey<T = DataObject<Model>> extends UserModifiableEntity<
+  T & Survey
+> {
   @property({
     type: 'string',
     id: true,
@@ -113,10 +122,6 @@ export class Survey extends UserModifiableEntity {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Survey>) {
-    super(data);
-  }
 }
 
 export interface SurveyRelations {

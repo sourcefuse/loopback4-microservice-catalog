@@ -2,9 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {UserTenantGroupType} from '../enums';
-import {hasMany, model, property} from '@loopback/repository';
+import {
+  DataObject,
+  Model,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
+import {UserTenantGroupType} from '../enums';
 import {UserGroup, UserGroupWithRelations} from './user-group.model';
 @model({
   name: 'groups',
@@ -12,7 +18,9 @@ import {UserGroup, UserGroupWithRelations} from './user-group.model';
     defaultIdSort: false,
   },
 })
-export class Group extends UserModifiableEntity {
+export class Group<T = DataObject<Model>> extends UserModifiableEntity<
+  T & Group
+> {
   @property({
     type: 'string',
     id: true,
@@ -48,10 +56,6 @@ export class Group extends UserModifiableEntity {
 
   @hasMany(() => UserGroup, {keyTo: 'groupId'})
   userGroups: UserGroup[];
-
-  constructor(data?: Partial<Group>) {
-    super(data);
-  }
 }
 
 export interface GroupRelations {

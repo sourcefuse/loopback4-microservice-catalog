@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, Entity, model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({settings: {strict: true}})
-export class Orders extends Entity {
+export class Orders extends CoreEntity<Orders> {
   @property({
     type: 'string',
     id: true,
@@ -51,8 +52,4 @@ export class Orders extends Entity {
   // Indexer property to allow additional data
   // eslint-disable-next-line
   [prop: string]: any; //NOSONAR
-
-  constructor(data?: Partial<Orders>) {
-    super(data);
-  }
 }

@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class AuthRefreshTokenRequest extends Model {
+export class AuthRefreshTokenRequest extends CoreModel<AuthRefreshTokenRequest> {
   @property({
     type: 'string',
     required: true,
@@ -16,8 +17,4 @@ export class AuthRefreshTokenRequest extends Model {
     type: 'string',
   })
   tenantId?: string;
-
-  constructor(data?: Partial<AuthRefreshTokenRequest>) {
-    super(data);
-  }
 }

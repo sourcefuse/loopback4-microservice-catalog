@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, hasMany, belongsTo} from '@loopback/repository';
+import {belongsTo, hasMany, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {
   AttachmentFile,
@@ -13,7 +13,7 @@ import {MessageRecipient} from './message-recipient.model';
 @model({
   name: 'messages',
 })
-export class Message extends UserModifiableEntity {
+export class Message extends UserModifiableEntity<Message> {
   @property({
     type: 'string',
     id: true,
@@ -71,10 +71,6 @@ export class Message extends UserModifiableEntity {
 
   @hasMany(() => Message, {keyTo: 'parentMessageId'})
   messages: Message[];
-
-  constructor(data?: Partial<Message>) {
-    super(data);
-  }
 }
 
 export interface MessageRelations {

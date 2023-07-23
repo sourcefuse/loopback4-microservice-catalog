@@ -1,7 +1,8 @@
-import {AnyObject, Model, model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class QuestionDuplicateDto extends Model {
+export class QuestionDuplicateDto extends CoreModel<QuestionDuplicateDto> {
   @property({
     type: 'boolean',
   })
@@ -23,8 +24,4 @@ export class QuestionDuplicateDto extends Model {
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<QuestionDuplicateDto>) {
-    super(data);
-  }
 }

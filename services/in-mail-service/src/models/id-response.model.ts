@@ -2,16 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {property, model, Model} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class IdResponse extends Model {
+export class IdResponse extends CoreModel<IdResponse> {
   @property({
     type: 'string',
   })
   id: string;
-
-  constructor(data?: Partial<IdResponse>) {
-    super(data);
-  }
 }

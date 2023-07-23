@@ -14,7 +14,7 @@ import {DayOfWeekType} from './enums/day-of-week.enum';
   name: 'working_hours',
 })
 export class WorkingHour
-  extends UserModifiableEntity
+  extends UserModifiableEntity<WorkingHour>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -71,10 +71,6 @@ export class WorkingHour
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<WorkingHour>) {
-    super(data);
-  }
 }
 
 export interface WorkingHourRelations {

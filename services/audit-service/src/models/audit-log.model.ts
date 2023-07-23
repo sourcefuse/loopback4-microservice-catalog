@@ -2,8 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
 import {Action} from '@sourceloop/audit-log';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({
   name: 'audit_logs',
@@ -11,7 +12,7 @@ import {Action} from '@sourceloop/audit-log';
     strict: false,
   },
 })
-export class AuditLog extends Entity {
+export class AuditLog extends CoreEntity<AuditLog> {
   @property({
     type: 'string',
     id: true,
@@ -79,8 +80,4 @@ export class AuditLog extends Entity {
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any; //NOSONAR
-
-  constructor(data?: Partial<AuditLog>) {
-    super(data);
-  }
 }
