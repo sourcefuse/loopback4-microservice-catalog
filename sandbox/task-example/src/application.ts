@@ -1,23 +1,30 @@
-
-import {BootMixin} from "@loopback/boot";
-import {ApplicationConfig, BindingScope} from "@loopback/core";
-import {RepositoryMixin} from "@loopback/repository";
-import {RestApplication} from "@loopback/rest";
+import {BootMixin} from '@loopback/boot';
+import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
-} from "@loopback/rest-explorer";
-import {SQSConnector} from './providers/sqs.provider'
-import {ServiceMixin} from "@loopback/service-proxy";
-import {TaskServiceComponent, TaskServiceBindings} from "@sourceloop/task-service";
+} from '@loopback/rest-explorer';
+import {ServiceMixin} from '@loopback/service-proxy';
+import {
+  WorkflowServiceBindings,
+  WorkflowServiceComponent,
+} from '@sourceloop/bpmn-service';
+import {
+  TaskServiceBindings,
+  TaskServiceComponent,
+} from '@sourceloop/task-service';
+import {BpmnProvider} from './providers/bpmn.provider';
+import {SQSConnector} from './providers/sqs.provider';
 
-import path from "path";
-import {MySequence} from "./sequence";
+import path from 'path';
+import {MySequence} from './sequence';
 
 export {ApplicationConfig};
 
 export class TaskServiceUserApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication))
+  ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
@@ -26,17 +33,16 @@ export class TaskServiceUserApplication extends BootMixin(
     this.sequence(MySequence);
 
     // Set up default home page
-    this.static("/", path.join(__dirname, "../public"));
+    this.static('/', path.join(__dirname, '../public'));
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
-      path: "/explorer",
+      path: '/explorer',
     });
     this.component(RestExplorerComponent);
 
     // Add the component
     this.component(TaskServiceComponent);
-
 
     this.bind('config').to({
       accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
@@ -45,36 +51,25 @@ export class TaskServiceUserApplication extends BootMixin(
       queueUrl: process.env.AWS_QUEUE_URL,
     });
 
-    this.bind('name').to('myConn');
+    this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
 
-    this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(
-      SQSConnector
-    );
+    // bpmn component
+    this.component(WorkflowServiceComponent);
 
+    this.bind(WorkflowServiceBindings.Config).to({
+      useCustomSequence: true,
+      workflowEngineBaseUrl: process.env.CAMUNDA_URL,
+    });
 
-    // this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
-    // this.bind('event-queue.connector').toProvider(SQSConnector)
-
-    // Bind the event queue service and SQS connector
-    // this.bind('services.EventQueueService').toClass(EventQueueService);
-    // this.bind('config').to({
-    //   accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
-    //   secretAccessKey: process.env.AWS_SQS_SECRET_KEY,
-    //   region: process.env.AWS_SQS_REGION,
-    //   queueUrl: process.env.AWS_SQS_URL,
-    // });
-
-    // this.bind('providers.SQSConnector').toClass(SQSConnector);
-
-    // Bind the custom event queue service and SQS connector
+    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
       controllers: {
         // Customize ControllerBooter Conventions here
-        dirs: ["controllers"],
-        extensions: [".controller.js"],
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
         nested: true,
       },
     };
