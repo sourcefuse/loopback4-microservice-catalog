@@ -15,8 +15,7 @@ import {
   TaskServiceBindings,
   TaskServiceComponent,
 } from '@sourceloop/task-service';
-import {BpmnProvider} from './providers/bpmn.provider';
-import {SQSConnector} from './providers/sqs.provider';
+import {BpmnProvider, SQSConnector} from './providers';
 
 import path from 'path';
 import {MySequence} from './sequence';
