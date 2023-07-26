@@ -50,17 +50,19 @@ export class TaskServiceUserApplication extends BootMixin(
       queueUrl: process.env.AWS_QUEUE_URL,
     });
 
+    this.bind('name').to('myConn');
+
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
 
     // bpmn component
-    this.component(WorkflowServiceComponent);
+    // this.component(WorkflowServiceComponent);
 
-    this.bind(WorkflowServiceBindings.Config).to({
-      useCustomSequence: true,
-      workflowEngineBaseUrl: process.env.CAMUNDA_URL,
-    });
+    // this.bind(WorkflowServiceBindings.Config).to({
+    //   useCustomSequence: true,
+    //   workflowEngineBaseUrl: process.env.CAMUNDA_URL,
+    // });
 
-    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
+    // this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

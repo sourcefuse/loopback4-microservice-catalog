@@ -1,10 +1,10 @@
-import {inject, Provider, injectable, BindingScope} from "@loopback/core";
+import {inject, Provider, injectable, BindingScope} from '@loopback/core';
 import {
   EventQueueConnector,
   Event,
   EventProcessorService,
-} from "@sourceloop/task-service";
-import {SQS} from "aws-sdk";
+} from '@sourceloop/task-service';
+import {SQS} from 'aws-sdk';
 
 interface SQSEvent {
   MessageId: string;
@@ -21,8 +21,8 @@ export class SQSConnector implements Provider<EventQueueConnector> {
   isListening: boolean;
 
   constructor(
-    @inject("name") public name: string,
-    @inject("config") public settings: any,
+    @inject('name') public name: string,
+    @inject('config') public settings: any,
   ) {
     this.sqs = new SQS({
       region: settings.region,
@@ -34,7 +34,6 @@ export class SQSConnector implements Provider<EventQueueConnector> {
   value(): Promise<EventQueueConnector> {
     return Promise.resolve(this);
   }
-
 
   async connect(settings: any): Promise<SQS> {
     // Connection logic goes here
@@ -52,7 +51,7 @@ export class SQSConnector implements Provider<EventQueueConnector> {
     const response = await this.sqs
       .getQueueAttributes({
         QueueUrl: queueUrl,
-        AttributeNames: ["All"],
+        AttributeNames: ['All'],
       })
       .promise();
     return response;
