@@ -15,6 +15,11 @@
     "shepherd.js": "^10.0.0",
     "uuid": "^8.3.2"
   },
+  "overrides": {
+    "@videogular/ngx-videogular": {
+      "@angular/platform-browser-dynamic": "14.0.1"
+    }
+  },
   "scripts": {
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
