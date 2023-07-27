@@ -13,6 +13,15 @@ import {
   QuerySelectedFilesFn,
 } from './types';
 import {BINDING_PREFIX} from '@sourceloop/core';
+export namespace AWSS3Bindings {
+  export const Config = BindingKey.create<AwsS3Config>('sf.aws.s3.config');
+}
+
+export interface AwsS3Config {
+  accessKeyId: string;
+  secretAccessKey: string;
+  region?: string;
+}
 
 export namespace AuditServiceBindings {
   export const Config = BindingKey.create<IAuditServiceConfig | null>(
