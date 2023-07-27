@@ -19,10 +19,13 @@
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "libraryBuild": "ng build userOnboardingLib && cp -r src/assets dist/user-onboarding-lib",
-    "elementBuild": "ng build user-onboarding-element && node bundle-element.js",
+    "libraryBuild": "ng build userOnboardingLib && cp -r src/assets dist/assets",
+    "elementBuild": "ng build user-onboarding-element",
+    "postbuild": "node bundle-element.js",
     "build": "npm run libraryBuild && npm run elementBuild",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "test": "echo \"No tests available !\""
   },
   "dependencies": {
     "tslib": "^2.0.0"
@@ -44,7 +47,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",

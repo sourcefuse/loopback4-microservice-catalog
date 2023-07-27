@@ -5,6 +5,8 @@
     "packages/cache",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
+    "packages/user-onboarding/projects/user-onboarding-lib",
+    "packages/user-onboarding/projects/user-onboarding-element",
     "packages/search/projects/search-lib",
     "packages/search/projects/search-element",
     "services/*",
@@ -46,11 +48,7 @@
         "@sourceloop/oidc-basic-example",
         "@sourceloop/nestjs-auth-ms-example"
       ],
-      "npmClientArgs": [
-        "--loglevel",
-        "verbose",
-        "--no-install-links"
-      ]
+      "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
     },
     "version": {
       "conventionalCommits": true,
@@ -112,8 +110,7 @@
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**",
-    "packages/user-onboarding"
+    "packages/core/locales/**"
   ],
   "version": "independent",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
