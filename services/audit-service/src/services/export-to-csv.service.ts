@@ -1,18 +1,15 @@
-import {injectable, BindingScope, Provider, inject} from '@loopback/core';
+import {injectable, BindingScope, Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import AWS from 'aws-sdk';
 import {ExportToCsvFn} from '../types';
 import {HttpErrors} from '@loopback/rest';
-import {AWSS3Bindings, AwsS3Config} from '../keys';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
   constructor(
     @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
-    @inject(AWSS3Bindings.Config)
-    private readonly config: AwsS3Config,
   ) {}
   value(): ExportToCsvFn {
     return async (selectedAuditLogs: AuditLog[]) => {
@@ -59,12 +56,9 @@ export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
     const fileName = `audit_logs_${timestamp}.csv`;
 
     AWS.config = new AWS.Config({
-      credentials: {
-        accessKeyId: this.config.accessKeyId,
-        secretAccessKey: this.config.secretAccessKey,
-      },
-      region: this.config.region,
-      ...this.config,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: process.env.AWS_REGION,
     });
 
     const bucketName = process.env.AWS_S3_BUCKET_NAME;
