@@ -10,7 +10,6 @@ async function elementsBundler() {
     './dist/user-onboarding-element/polyfills.js',
     './dist/user-onboarding-element/main.js',
   ];
-  //await ensureDir('./dist/element');
   await ensureDir('../user-onboarding-element/dist');
   await concat(
     files,
