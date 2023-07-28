@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.20 (2023-07-28)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
 ## <small>0.2.19 (2023-07-18)</small>
 
 **Note:** Version bump only for package @sourceloop/oauth-example-api

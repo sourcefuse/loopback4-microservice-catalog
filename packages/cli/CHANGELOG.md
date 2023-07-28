@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.3 (2023-07-28)</small>
+
+* docs(chore): rewrite sourceloop headers and main readme (#1580) ([1105e3b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1105e3b)), closes [#1580](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1580)
+* refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
+
+
+
+
+
 ## <small>4.1.2 (2023-07-18)</small>
 
 * chore(cli): update `templateDependencies` for sourceloop services (#1554) ([c0b934e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c0b934e)), closes [#1554](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1554)

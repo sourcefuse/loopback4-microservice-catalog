@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.6 (2023-07-28)</small>
+
+* refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
+* refactor(chore): resolve sonar smells (#1579) ([692aef8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/692aef8)), closes [#1579](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1579)
+* refactor(sandbox): remove useless constructors (#1578) ([703b612](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703b612)), closes [#1578](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1578)
+
+
+
+
+
 ## <small>0.8.5 (2023-07-18)</small>
 
 * chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)

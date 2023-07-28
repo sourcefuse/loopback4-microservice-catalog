@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.4.0 (2023-07-28)
+
+* feat(user-onboarding): add element support and script for building (#1377) ([eebbe4e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eebbe4e)), closes [#1377](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1377) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352)
+
+
+
+
+
 ## 5.3.0 (2023-07-21)
 
 * feat(search): add configuration to show only result overlay with custom search event (#1562) ([ecf6a3c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ecf6a3c)), closes [#1562](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1562)

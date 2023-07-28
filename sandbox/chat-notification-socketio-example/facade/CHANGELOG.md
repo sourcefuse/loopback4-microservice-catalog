@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.25 (2023-07-28)</small>
+
+* refactor(sandbox): remove useless constructors (#1578) ([703b612](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703b612)), closes [#1578](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1578)
+
+
+
+
+
 ## <small>0.1.24 (2023-07-18)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket

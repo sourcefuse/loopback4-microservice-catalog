@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.31 (2023-07-28)</small>
+
+* chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/chat-notification-socketio-example/serv ([bd74395](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bd74395)), closes [#1572](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1572)
+* chore(deps): bump protobufjs and google-gax in /sandbox/chat-notification-socketio-example/services/ ([934d018](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/934d018)), closes [#1568](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1568)
+
+
+
+
+
 ## <small>0.3.30 (2023-07-21)</small>
 
 * chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)

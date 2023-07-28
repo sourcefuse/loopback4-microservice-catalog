@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.17 (2023-07-28)</small>
+
+* chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/chat-notification-pubnub-example/servic ([73e5040](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/73e5040)), closes [#1573](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1573)
+* chore(deps): bump protobufjs and google-gax in /sandbox/chat-notification-pubnub-example/services/no ([9230063](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9230063)), closes [#1569](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1569)
+
+
+
+
+
 ## <small>0.4.16 (2023-07-21)</small>
 
 * chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)

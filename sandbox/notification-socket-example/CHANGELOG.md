@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.17 (2023-07-28)</small>
+
+* chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/notification-socket-example (#1574) ([e8eb14a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e8eb14a)), closes [#1574](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1574)
+* chore(deps): bump protobufjs and google-gax in /sandbox/notification-socket-example (#1566) ([3c54b2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c54b2c)), closes [#1566](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1566)
+
+
+
+
+
 ## <small>5.0.16 (2023-07-21)</small>
 
 * chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)
