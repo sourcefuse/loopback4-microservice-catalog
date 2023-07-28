@@ -1,0 +1,26 @@
+{
+  "name": "@sourceloop/user-onboarding-element",
+  "version": "4.0.2",
+  "description": "Web Component for providing a smooth user onboarding.",
+  "keywords": [
+    "web-component"
+  ],
+  "main": "./user-onboarding-element.js",
+  "private": false,
+  "scripts": {
+    "prepublishOnly": "cp package.json dist/package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/user-onboarding"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "directory": "dist"
+  },
+  "hash": "bff17392a456dd869910a23833911ba9467068a74ce6f26051ace5ed4bfb7455"
+}
