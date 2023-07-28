@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/user-onboarding-element",
-  "version": "4.1.0",
-  "description": "Web Component for providing a smooth user onboarding.",
+  "version": "5.0.0",
+  "description": "Web Component for providing a smooth user onboarding",
   "keywords": [
     "web-component"
   ],
@@ -22,5 +22,5 @@
     "access": "public",
     "directory": "dist"
   },
-  "hash": "bff17392a456dd869910a23833911ba9467068a74ce6f26051ace5ed4bfb7455"
+  "hash": "a289e7937eca911bac5e82deb2113974eaedaab25579de5420efca6732915fe7"
 }

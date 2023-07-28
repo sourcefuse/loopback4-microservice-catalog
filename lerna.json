@@ -91,7 +91,6 @@
         "@sourceloop/chat-notif-example-chat-socket",
         "@sourceloop/chat-notif-example-notif-socket",
         "@sourceloop/example-socketio",
-        "@sourceloop/user-onboarding-client",
         "@sourceloop/oauth-example-api",
         "@sourceloop/oauth-example-ui",
         "@sourceloop/oidc-basic-example",
