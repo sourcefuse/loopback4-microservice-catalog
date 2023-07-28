@@ -53,14 +53,14 @@
     "db-migrate-pg": "^1.3.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.382.0",
     "@loopback/boot": "^6.1.0",
     "@loopback/core": "^5.1.0",
     "@loopback/openapi-v3": "^9.1.0",
     "@loopback/repository": "^6.1.0",
     "@loopback/rest": "^13.1.0",
-    "@sourceloop/audit-log": "^5.1.2",
+    "@sourceloop/audit-log": "^5.2.0",
     "@sourceloop/core": "^8.0.4",
-    "aws-sdk": "^2.1360.0",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",

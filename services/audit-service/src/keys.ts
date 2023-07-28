@@ -13,7 +13,19 @@ import {
   QuerySelectedFilesFn,
 } from './types';
 import {BINDING_PREFIX} from '@sourceloop/core';
+import {S3ClientConfig} from '@aws-sdk/client-s3';
 
+export namespace AWSS3Bindings {
+  export const Config = BindingKey.create<AwsS3Config>(
+    `${BINDING_PREFIX}.audit.s3.config`,
+  );
+}
+
+export interface AwsS3Config extends S3ClientConfig {
+  accessKeyId: string;
+  secretAccessKey: string;
+  region?: string;
+}
 export namespace AuditServiceBindings {
   export const Config = BindingKey.create<IAuditServiceConfig | null>(
     `${BINDING_PREFIX}.audit.config`,

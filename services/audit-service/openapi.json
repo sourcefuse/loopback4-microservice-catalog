@@ -12,8 +12,10 @@
     "/audit-logs/archive": {
       "post": {
         "x-controller-name": "AuditController",
+        "x-controller-name": "AuditController",
         "x-operation-name": "archive",
         "tags": [
+          "AuditController"
           "AuditController"
         ],
         "security": [
@@ -23,6 +25,7 @@
         ],
         "responses": {
           "200": {
+            "description": "Archive logs status",
             "description": "Archive logs status",
             "content": {
               "application/json": {
@@ -54,6 +57,7 @@
             }
           }
         },
+        "operationId": "AuditController.archive"
         "operationId": "AuditController.archive"
       }
     },
@@ -104,8 +108,10 @@
     "/audit-logs/export": {
       "get": {
         "x-controller-name": "AuditController",
+        "x-controller-name": "AuditController",
         "x-operation-name": "export",
         "tags": [
+          "AuditController"
           "AuditController"
         ],
         "security": [
@@ -116,9 +122,18 @@
         "responses": {
           "200": {
             "description": "Responds with jobId if includeArchiveLogs  is true or the success message otherwise.",
+            "description": "Responds with jobId if includeArchiveLogs  is true or the success message otherwise.",
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
                   "type": "object",
                   "properties": {
                     "jobId": {
@@ -154,6 +169,7 @@
             }
           }
         ],
+        "operationId": "AuditController.export"
         "operationId": "AuditController.export"
       }
     },
@@ -516,11 +532,11 @@
             "properties": {
               "fromDate": {
                 "type": "string",
-                "default": "2023-07-21T13:25:19.539Z"
+                "default": "2023-01-01T00:00:00.000Z"
               },
               "toDate": {
                 "type": "string",
-                "default": "2023-07-21T13:25:19.539Z"
+                "default": "2023-01-01T00:00:00.000Z"
               }
             }
           },
