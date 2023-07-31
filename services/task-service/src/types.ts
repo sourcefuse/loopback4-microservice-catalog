@@ -91,3 +91,5 @@ export enum TaskSeverity {}
 
 export enum TaskType {}
 // Define your task types as an enum
+
+export const TaskDbSourceName = 'taskdb';
