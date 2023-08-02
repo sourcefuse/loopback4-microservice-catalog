@@ -1,5 +1,5 @@
 {
-  "name": "arc-auth-cdktf",
+  "name": "@sourceloop/telemed-auth-cdktf",
   "version": "1.0.0",
   "main": "main.js",
   "types": "main.ts",
