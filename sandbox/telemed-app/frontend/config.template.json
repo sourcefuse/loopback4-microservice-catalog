@@ -1,0 +1,11 @@
+{
+  "clientId": "$CLIENT_ID",
+  "authApiBaseUrl": "$AUTH_API_BASE_URL",
+  "notificationApiBaseUrl": "$NOTIFICATION_API_BASE_URL",
+  "videoApiBaseUrl": "$VIDEO_API_BASE_URL",
+  "pubnubPublishKey": "$PUBNUB_PUBLISH_KEY",
+  "pubnubSubscribeKey": "$PUBNUB_SUBSCRIBE_KEY",
+  "notificationChannelUuid": "$NOTIFICATION_CHANNEL_UUID",
+  "chatChannelUuid": "$CHAT_CHANNEL_UUID",
+  "vonageApiKey": "$VONAGE_API_KEY"
+}

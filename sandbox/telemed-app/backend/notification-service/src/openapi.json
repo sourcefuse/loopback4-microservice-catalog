@@ -1,0 +1,1875 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "notification",
+    "version": "1.0.0",
+    "description": "notification",
+    "contact": {
+      "name": "surbhi.sharma1@sourcefuse.com",
+      "email": "surbhi.sharma1@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/notification-users/bulk": {
+      "post": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "createAll",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification User model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationUser"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NewNotificationUser"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "NotificationUserController.createAll"
+      }
+    },
+    "/notification-users/count": {
+      "get": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "count",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NotificationUser model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notification_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<NotificationUser>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationUserController.count"
+      }
+    },
+    "/notification-users/hard": {
+      "delete": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "deleteAllHard",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notification_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<NotificationUser>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationUserController.deleteAllHard"
+      }
+    },
+    "/notification-users/{id}/notification": {
+      "get": {
+        "x-controller-name": "NotificationUserNotificationController",
+        "x-operation-name": "getNotification",
+        "tags": [
+          "NotificationUserNotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification belonging to NotificationUser",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "NotificationUserNotificationController.getNotification"
+      }
+    },
+    "/notification-users/{id}": {
+      "put": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NotificationUser PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationUser"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "NotificationUserController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NotificationUser PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationUserPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "NotificationUserController.updateById"
+      },
+      "get": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "findById",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NotificationUser instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationUser"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "NotificationUserController.findById"
+      },
+      "delete": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NotificationUser DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "NotificationUserController.deleteById"
+      }
+    },
+    "/notification-users": {
+      "post": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "create",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NotificationUser model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationUser"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewNotificationUser"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationUserController.create"
+      },
+      "patch": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NotificationUser PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notification_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<NotificationUser>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationUserPartial"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationUserController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "find",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of NotificationUser model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationUser"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification_users.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationUserController.find"
+      },
+      "delete": {
+        "x-controller-name": "NotificationUserController",
+        "x-operation-name": "deleteAll",
+        "tags": [
+          "NotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notification_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<NotificationUser>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationUserController.deleteAll"
+      }
+    },
+    "/notifications/access/{id}": {
+      "patch": {
+        "x-controller-name": "PubnubNotificationController",
+        "x-operation-name": "grantAccess",
+        "tags": [
+          "PubnubNotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CanGetNotificationAccess   |\n| 5   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pubnubToken",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationAccess"
+              }
+            }
+          }
+        },
+        "operationId": "PubnubNotificationController.grantAccess"
+      },
+      "delete": {
+        "x-controller-name": "PubnubNotificationController",
+        "x-operation-name": "revokeAccess",
+        "tags": [
+          "PubnubNotificationController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Object with success"
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "PubnubNotificationController.revokeAccess"
+      }
+    },
+    "/notifications/bulk": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "createBulkNotificaitions",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Notifications",
+            "content": {
+              "application/json": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Notification",
+                  "definitions": {
+                    "Notification": {
+                      "$ref": "#/components/schemas/Notification"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NotificationExcluding_id_"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.createBulkNotificaitions"
+      }
+    },
+    "/notifications/count": {
+      "get": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "count",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notifications.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Notification>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationController.count"
+      }
+    },
+    "/notifications/{id}/notification-users": {
+      "post": {
+        "x-controller-name": "NotificationNotificationUserController",
+        "x-operation-name": "create",
+        "tags": [
+          "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationUser"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewNotificationUserInNotification"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "NotificationNotificationUserController.create"
+      },
+      "patch": {
+        "x-controller-name": "NotificationNotificationUserController",
+        "x-operation-name": "patch",
+        "tags": [
+          "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification.NotificationUser PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notification_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<NotificationUser>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationUserPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "NotificationNotificationUserController.patch"
+      },
+      "get": {
+        "x-controller-name": "NotificationNotificationUserController",
+        "x-operation-name": "find",
+        "tags": [
+          "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Notification has many NotificationUser",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationUser"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationNotificationUserController.find"
+      },
+      "delete": {
+        "x-controller-name": "NotificationNotificationUserController",
+        "x-operation-name": "delete",
+        "tags": [
+          "NotificationNotificationUserController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification.NotificationUser DELETE success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notification_users.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<NotificationUser>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationNotificationUserController.delete"
+      }
+    },
+    "/notifications/{id}": {
+      "patch": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "NotificationController.updateById"
+      },
+      "get": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "findById",
+        "tags": [
+          "NotificationController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotification   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "NotificationController.findById"
+      }
+    },
+    "/notifications": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "create",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationExcluding_id_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.create"
+      },
+      "patch": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notification PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotification   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notifications.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Notification>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationPartial"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "find",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Notification model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notifications.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationController.find"
+      },
+      "delete": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "deleteAll",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotification   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "notifications.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Notification>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "NotificationController.deleteAll"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "PingController.ping"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Home Page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Notification": {
+        "title": "Notification",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "body",
+          "receiver",
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "NotificationExcluding_id_": {
+        "title": "NotificationExcluding_id_",
+        "type": "object",
+        "description": "(tsType: Omit<Notification, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "body",
+          "receiver",
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Notification, 'id'>"
+      },
+      "NotificationPartial": {
+        "title": "NotificationPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Notification>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "options": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Notification>"
+      },
+      "NotificationUser": {
+        "title": "NotificationUser",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "actionMeta": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "notificationId",
+          "userId"
+        ],
+        "additionalProperties": true
+      },
+      "NewNotificationUser": {
+        "title": "NewNotificationUser",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationUser, 'id'>, schemaOptions: { title: 'NewNotificationUser', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "actionMeta": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "notificationId",
+          "userId"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "Omit<NotificationUser, 'id'>"
+      },
+      "NotificationUserPartial": {
+        "title": "NotificationUserPartial",
+        "type": "object",
+        "description": "(tsType: Partial<NotificationUser>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "actionMeta": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<NotificationUser>"
+      },
+      "AccessResponseDto": {
+        "title": "AccessResponseDto",
+        "type": "object",
+        "properties": {
+          "ttl": {
+            "type": "number"
+          },
+          "cipherKey": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotificationAccess": {
+        "title": "NotificationAccess",
+        "type": "object",
+        "properties": {
+          "receiver": {
+            "type": "object",
+            "description": "this will contain the list of reciever to give access"
+          },
+          "type": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object",
+            "description": "this will contain the ttl property for now"
+          }
+        },
+        "required": [
+          "receiver",
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "NewNotificationUserInNotification": {
+        "title": "NewNotificationUserInNotification",
+        "type": "object",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<NotificationUser, 'id'>, 'notificationId'>, schemaOptions: { title: 'NewNotificationUserInNotification', exclude: [ 'id' ], optional: [ 'notificationId' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "actionMeta": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "userId"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<NotificationUser, 'id'>, 'notificationId'>"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "notification_users.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "notification_users.ScopeFilter"
+      },
+      "notification_users.IncludeFilter.Items": {
+        "title": "notification_users.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "notification"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/notification_users.ScopeFilter"
+          }
+        }
+      },
+      "notification_users.Filter": {
+        "type": "object",
+        "title": "notification_users.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "notification_users.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "notificationId": {
+                    "type": "boolean"
+                  },
+                  "userId": {
+                    "type": "boolean"
+                  },
+                  "isRead": {
+                    "type": "boolean"
+                  },
+                  "actionMeta": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "notification_users.Fields"
+          },
+          "include": {
+            "title": "notification_users.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/notification_users.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<NotificationUser>"
+      },
+      "notifications.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "notifications.ScopeFilter"
+      },
+      "notifications.IncludeFilter.Items": {
+        "title": "notifications.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "notificationUsers"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/notifications.ScopeFilter"
+          }
+        }
+      },
+      "notifications.Filter": {
+        "type": "object",
+        "title": "notifications.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "notifications.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "subject": {
+                    "type": "boolean"
+                  },
+                  "body": {
+                    "type": "boolean"
+                  },
+                  "receiver": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "sentDate": {
+                    "type": "boolean"
+                  },
+                  "options": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "subject",
+                    "body",
+                    "receiver",
+                    "type",
+                    "sentDate",
+                    "options"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "notifications.Fields"
+          },
+          "include": {
+            "title": "notifications.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/notifications.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Notification>"
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

@@ -1,0 +1,2650 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Authentication Service",
+    "version": "1.0.0",
+    "description": "Sourceloop auth service deployed on AWS lambda",
+    "contact": {
+      "name": "Vishwas Yogi",
+      "email": "vishwas.yogi@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/audit-logs/count": {
+      "get": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "count",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "AuditLog model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "audit_logs.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AuditLog>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuditLogsController.count"
+      }
+    },
+    "/audit-logs/{id}": {
+      "put": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of AuditLogsController.replaceById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "AuditLog PUT success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditLog"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "AuditLogsController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of AuditLogsController.updateById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "AuditLog PATCH success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditLogPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "AuditLogsController.updateById"
+      },
+      "get": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "findById",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "AuditLog model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logs.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuditLogsController.findById"
+      },
+      "delete": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of AuditLogsController.deleteById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "AuditLog DELETE success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "AuditLogsController.deleteById"
+      }
+    },
+    "/audit-logs": {
+      "post": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "create",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "AuditLog model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLog"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewAuditLog"
+              }
+            }
+          }
+        },
+        "operationId": "AuditLogsController.create"
+      },
+      "patch": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "AuditLog PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "audit_logs.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<AuditLog>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditLogPartial"
+              }
+            }
+          }
+        },
+        "operationId": "AuditLogsController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "AuditLogsController",
+        "x-operation-name": "find",
+        "tags": [
+          "AuditLogsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Array of AuditLog model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuditLogWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/audit_logs.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "AuditLogsController.find"
+      }
+    },
+    "/auth/apple-oauth-redirect": {
+      "get": {
+        "x-controller-name": "AppleLoginController",
+        "x-operation-name": "appleCallback",
+        "tags": [
+          "AppleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Apple Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "AppleLoginController.appleCallback"
+      }
+    },
+    "/auth/azure": {
+      "post": {
+        "x-controller-name": "AzureLoginController",
+        "x-operation-name": "postLoginViaAzure",
+        "tags": [
+          "AzureLoginController"
+        ],
+        "description": "POST Call for azure based login",
+        "responses": {
+          "200": {
+            "description": "Azure Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "AzureLoginController.postLoginViaAzure"
+      },
+      "get": {
+        "x-controller-name": "AzureLoginController",
+        "x-operation-name": "getLoginViaAzure",
+        "tags": [
+          "AzureLoginController"
+        ],
+        "description": "POST Call for azure based login",
+        "responses": {
+          "200": {
+            "description": "Azure Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "AzureLoginController.getLoginViaAzure"
+      }
+    },
+    "/auth/azure-oauth-redirect": {
+      "get": {
+        "x-controller-name": "AzureLoginController",
+        "x-operation-name": "azureCallback",
+        "tags": [
+          "AzureLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Azure Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "AzureLoginController.azureCallback"
+      }
+    },
+    "/auth/change-password": {
+      "patch": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "resetPassword",
+        "tags": [
+          "LoginController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If User password successfully changed."
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordPartial"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.resetPassword"
+      }
+    },
+    "/auth/check-qr-code": {
+      "get": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "checkQr",
+        "tags": [
+          "OtpController"
+        ],
+        "description": "Returns isGenerated:true if secret_key already exist",
+        "responses": {
+          "200": {
+            "description": "secret_key already exists",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "OtpController.checkQr"
+      }
+    },
+    "/auth/cognito": {
+      "post": {
+        "x-controller-name": "CognitoLoginController",
+        "x-operation-name": "postLoginViaCognito",
+        "tags": [
+          "CognitoLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Cognito based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "CognitoLoginController.postLoginViaCognito"
+      },
+      "get": {
+        "x-controller-name": "CognitoLoginController",
+        "x-operation-name": "loginViaCognito",
+        "tags": [
+          "CognitoLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cognito Token Response (Deprecated: Possible security issue if secret is passed via query params, please use the post endpoint)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "CognitoLoginController.loginViaCognito"
+      }
+    },
+    "/auth/cognito-auth-redirect": {
+      "get": {
+        "x-controller-name": "CognitoLoginController",
+        "x-operation-name": "cognitoCallback",
+        "tags": [
+          "CognitoLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cognito Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "CognitoLoginController.cognitoCallback"
+      }
+    },
+    "/auth/create-qr-code": {
+      "post": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "createQr",
+        "tags": [
+          "OtpController"
+        ],
+        "description": "Generates a new qrCode for Authenticator App",
+        "responses": {
+          "200": {
+            "description": "qrCode that you can use to generate codes in Authenticator App",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "OtpController.createQr"
+      }
+    },
+    "/auth/facebook": {
+      "post": {
+        "x-controller-name": "FacebookLoginController",
+        "x-operation-name": "postLoginViaFacebook",
+        "tags": [
+          "FacebookLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Facebook based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "FacebookLoginController.postLoginViaFacebook"
+      }
+    },
+    "/auth/facebook-auth-redirect": {
+      "get": {
+        "x-controller-name": "FacebookLoginController",
+        "x-operation-name": "facebookCallback",
+        "tags": [
+          "FacebookLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Facebook Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "FacebookLoginController.facebookCallback"
+      }
+    },
+    "/auth/forget-password": {
+      "post": {
+        "x-controller-name": "ForgetPasswordController",
+        "x-operation-name": "forgetPassword",
+        "tags": [
+          "ForgetPasswordController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success Response."
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgetPasswordDto"
+              }
+            }
+          }
+        },
+        "operationId": "ForgetPasswordController.forgetPassword"
+      }
+    },
+    "/auth/google": {
+      "post": {
+        "x-controller-name": "GoogleLoginController",
+        "x-operation-name": "postLoginViaGoogle",
+        "tags": [
+          "GoogleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Google based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "GoogleLoginController.postLoginViaGoogle"
+      },
+      "get": {
+        "x-controller-name": "GoogleLoginController",
+        "x-operation-name": "loginViaGoogle",
+        "tags": [
+          "GoogleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Google Token Response,\n         (Deprecated: Possible security issue if secret is passed via query params, \n          please use the post endpoint)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "GoogleLoginController.loginViaGoogle"
+      }
+    },
+    "/auth/google-auth-redirect": {
+      "get": {
+        "x-controller-name": "GoogleLoginController",
+        "x-operation-name": "googleCallback",
+        "tags": [
+          "GoogleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Google Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "GoogleLoginController.googleCallback"
+      }
+    },
+    "/auth/instagram": {
+      "post": {
+        "x-controller-name": "InstagramLoginController",
+        "x-operation-name": "postLoginViaInstagram",
+        "tags": [
+          "InstagramLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Instagram based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "InstagramLoginController.postLoginViaInstagram"
+      }
+    },
+    "/auth/instagram-auth-redirect": {
+      "get": {
+        "x-controller-name": "InstagramLoginController",
+        "x-operation-name": "instagramCallback",
+        "tags": [
+          "InstagramLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Instagram Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "InstagramLoginController.instagramCallback"
+      }
+    },
+    "/auth/keycloak": {
+      "post": {
+        "x-controller-name": "KeycloakLoginController",
+        "x-operation-name": "postLoginViaKeycloak",
+        "tags": [
+          "KeycloakLoginController"
+        ],
+        "description": "POST Call for keycloak based login",
+        "responses": {
+          "200": {
+            "description": "Keycloak Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "KeycloakLoginController.postLoginViaKeycloak"
+      },
+      "get": {
+        "x-controller-name": "KeycloakLoginController",
+        "x-operation-name": "loginViaKeycloak",
+        "tags": [
+          "KeycloakLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Keycloak Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "KeycloakLoginController.loginViaKeycloak"
+      }
+    },
+    "/auth/keycloak-auth-redirect": {
+      "get": {
+        "x-controller-name": "KeycloakLoginController",
+        "x-operation-name": "keycloakCallback",
+        "tags": [
+          "KeycloakLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Keycloak Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "KeycloakLoginController.keycloakCallback"
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "login",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Gets you the code that will be used for getting token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.login"
+      }
+    },
+    "/auth/login-token": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "loginWithClientUser",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Gets you refresh token and access token in one hit. (mobile app)",
+        "responses": {
+          "200": {
+            "description": "Token Response Model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.loginWithClientUser"
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "me",
+        "tags": [
+          "LoginController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To get the user details",
+        "responses": {
+          "200": {
+            "description": "User Object",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "operationId": "LoginController.me"
+      }
+    },
+    "/auth/oauth-apple": {
+      "post": {
+        "x-controller-name": "AppleLoginController",
+        "x-operation-name": "postLoginViaApple",
+        "tags": [
+          "AppleLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for Apple based login",
+            "content": {}
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "AppleLoginController.postLoginViaApple"
+      }
+    },
+    "/auth/reset-password": {
+      "patch": {
+        "x-controller-name": "ForgetPasswordController",
+        "x-operation-name": "resetPassword",
+        "tags": [
+          "ForgetPasswordController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "If User password successfully changed."
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordWithClient"
+              }
+            }
+          }
+        },
+        "operationId": "ForgetPasswordController.resetPassword"
+      }
+    },
+    "/auth/saml": {
+      "post": {
+        "x-controller-name": "SamlLoginController",
+        "x-operation-name": "postLoginViaSaml",
+        "tags": [
+          "SamlLoginController"
+        ],
+        "description": "POST Call for saml based login",
+        "responses": {
+          "200": {
+            "description": "Saml Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "SamlLoginController.postLoginViaSaml"
+      }
+    },
+    "/auth/saml-auth-redirect": {
+      "get": {
+        "x-controller-name": "SamlLoginController",
+        "x-operation-name": "samlCallback",
+        "tags": [
+          "SamlLoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Saml Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "SamlLoginController.samlCallback"
+      }
+    },
+    "/auth/send-otp": {
+      "post": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "sendOtp",
+        "tags": [
+          "OtpController"
+        ],
+        "description": "Sends OTP",
+        "responses": {
+          "200": {
+            "description": "Sends otp to user",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpSendRequest"
+              }
+            }
+          }
+        },
+        "operationId": "OtpController.sendOtp"
+      }
+    },
+    "/auth/sign-up/create-token": {
+      "post": {
+        "x-controller-name": "SignupRequestController",
+        "x-operation-name": "requestSignup",
+        "tags": [
+          "SignupRequestController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucess Response."
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupRequestDto"
+              }
+            }
+          }
+        },
+        "operationId": "SignupRequestController.requestSignup"
+      }
+    },
+    "/auth/sign-up/create-user": {
+      "post": {
+        "x-controller-name": "SignupRequestController",
+        "x-operation-name": "signupWithToken",
+        "tags": [
+          "SignupRequestController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess Response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalUserProfileDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalUserProfileDto"
+              }
+            }
+          }
+        },
+        "operationId": "SignupRequestController.signupWithToken"
+      }
+    },
+    "/auth/sign-up/verify-token": {
+      "get": {
+        "x-controller-name": "SignupRequestController",
+        "x-operation-name": "verifyInviteToken",
+        "tags": [
+          "SignupRequestController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess Response."
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "description": "",
+        "operationId": "SignupRequestController.verifyInviteToken"
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "getToken",
+        "tags": [
+          "LoginController"
+        ],
+        "description": "Send the code received from the POST /auth/login api and get refresh token and access token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.getToken"
+      }
+    },
+    "/auth/token-refresh": {
+      "post": {
+        "x-controller-name": "LoginController",
+        "x-operation-name": "exchangeToken",
+        "tags": [
+          "LoginController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "Gets you a new access and refresh token once your access token is expired",
+        "responses": {
+          "200": {
+            "description": "New Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRefreshTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "LoginController.exchangeToken"
+      }
+    },
+    "/auth/verify-otp": {
+      "post": {
+        "x-controller-name": "OtpController",
+        "x-operation-name": "verifyOtp",
+        "tags": [
+          "OtpController"
+        ],
+        "description": "Gets you the code that will be used for getting token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Auth Code that you can use to generate access and refresh tokens using the POST /auth/token API",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpLoginRequest"
+              }
+            }
+          }
+        },
+        "operationId": "OtpController.verifyOtp"
+      }
+    },
+    "/auth/verify-reset-password-link": {
+      "get": {
+        "x-controller-name": "ForgetPasswordController",
+        "x-operation-name": "verifyResetPasswordLink",
+        "tags": [
+          "ForgetPasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Check if Token Is Valid and not Expired."
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "ForgetPasswordController.verifyResetPasswordLink"
+      }
+    },
+    "/keycloak/logout": {
+      "post": {
+        "x-controller-name": "LogoutController",
+        "x-operation-name": "keycloakLogout",
+        "tags": [
+          "LogoutController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "This API will log out the user from application as well as keycloak",
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "This is the access token which is required to authenticate user."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "LogoutController.keycloakLogout"
+      }
+    },
+    "/logout": {
+      "post": {
+        "x-controller-name": "LogoutController",
+        "x-operation-name": "logout",
+        "tags": [
+          "LogoutController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To logout",
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "This is the access token which is required to authenticate user."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "LogoutController.logout"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "PingController.ping"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Home Page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "LoginRequest": {
+        "title": "LoginRequest",
+        "type": "object",
+        "description": "This is the signature for login request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "TokenResponse": {
+        "title": "TokenResponse",
+        "type": "object",
+        "description": "This is signature for successful token response.",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "expires": {
+            "type": "number"
+          },
+          "pubnubToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "expires"
+        ],
+        "additionalProperties": false
+      },
+      "AuthTokenRequest": {
+        "title": "AuthTokenRequest",
+        "type": "object",
+        "description": "This is the signature for requesting the accessToken and refreshToken.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "clientId"
+        ],
+        "additionalProperties": false
+      },
+      "Function": {},
+      "AuthRefreshTokenRequest": {
+        "title": "AuthRefreshTokenRequest",
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "additionalProperties": false
+      },
+      "ResetPasswordPartial": {
+        "title": "ResetPasswordPartial",
+        "type": "object",
+        "description": "This is a signature for reset password. (tsType: Partial<ResetPassword>, schemaOptions: { partial: true })",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPassword": {
+        "title": "ResetPassword",
+        "type": "object",
+        "description": "This is a signature for reset password.",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "refreshToken",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "ClientAuthRequest": {
+        "title": "ClientAuthRequest",
+        "type": "object",
+        "description": "This is signature for client authentication request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret"
+        ],
+        "additionalProperties": false
+      },
+      "SuccessResponse": {
+        "title": "SuccessResponse",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      },
+      "RefreshTokenRequestPartial": {
+        "title": "RefreshTokenRequestPartial",
+        "type": "object",
+        "description": "(tsType: Partial<RefreshTokenRequest>, schemaOptions: { partial: true })",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<RefreshTokenRequest>"
+      },
+      "RefreshTokenRequest": {
+        "title": "RefreshTokenRequest",
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "additionalProperties": false
+      },
+      "OtpSendRequest": {
+        "title": "OtpSendRequest",
+        "type": "object",
+        "description": "This is the signature for OTP login request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "key": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "OtpLoginRequest": {
+        "title": "OtpLoginRequest",
+        "type": "object",
+        "description": "This is the signature for OTP login request.",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "otp": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "key",
+          "otp"
+        ],
+        "additionalProperties": false
+      },
+      "ForgetPasswordDto": {
+        "title": "ForgetPasswordDto",
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "client_id",
+          "client_secret"
+        ],
+        "additionalProperties": false
+      },
+      "AuthClient": {
+        "title": "AuthClient",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string",
+            "description": "Value can be a string or a private key."
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "clientId",
+          "clientSecret",
+          "secret",
+          "accessTokenExpiration",
+          "refreshTokenExpiration",
+          "authCodeExpiration"
+        ],
+        "additionalProperties": false
+      },
+      "ResetPasswordWithClient": {
+        "title": "ResetPasswordWithClient",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "password",
+          "client_id",
+          "client_secret"
+        ],
+        "additionalProperties": false
+      },
+      "SignupRequestDto": {
+        "title": "SignupRequestDto",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "LocalUserProfileDto": {
+        "title": "LocalUserProfileDto",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "additionalProperties": true
+      },
+      "SignupRequest": {
+        "title": "SignupRequest",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "expiry": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "AuditLog": {
+        "title": "AuditLog",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "action",
+          "actedAt",
+          "actionKey",
+          "entityId",
+          "actor"
+        ],
+        "additionalProperties": true
+      },
+      "NewAuditLog": {
+        "title": "NewAuditLog",
+        "type": "object",
+        "description": "(tsType: Omit<AuditLog, 'id'>, schemaOptions: { title: 'NewAuditLog', exclude: [ 'id' ] })",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "action",
+          "actedAt",
+          "actionKey",
+          "entityId",
+          "actor"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "Omit<AuditLog, 'id'>"
+      },
+      "AuditLogWithRelations": {
+        "title": "AuditLogWithRelations",
+        "type": "object",
+        "description": "(tsType: AuditLogWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "action",
+          "actedAt",
+          "actionKey",
+          "entityId",
+          "actor"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "AuditLogWithRelations"
+      },
+      "AuditLogPartial": {
+        "title": "AuditLogPartial",
+        "type": "object",
+        "description": "(tsType: Partial<AuditLog>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "actedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actedOn": {
+            "type": "string"
+          },
+          "actionKey": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<AuditLog>"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "audit_logs.Filter": {
+        "type": "object",
+        "title": "audit_logs.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "action": {
+                    "type": "boolean"
+                  },
+                  "actedAt": {
+                    "type": "boolean"
+                  },
+                  "actedOn": {
+                    "type": "boolean"
+                  },
+                  "actionKey": {
+                    "type": "boolean"
+                  },
+                  "entityId": {
+                    "type": "boolean"
+                  },
+                  "actor": {
+                    "type": "boolean"
+                  },
+                  "before": {
+                    "type": "boolean"
+                  },
+                  "after": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "audit_logs.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AuditLog>"
+      },
+      "audit_logs.Filter1": {
+        "type": "object",
+        "title": "audit_logs.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "audit_logs.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "action": {
+                    "type": "boolean"
+                  },
+                  "actedAt": {
+                    "type": "boolean"
+                  },
+                  "actedOn": {
+                    "type": "boolean"
+                  },
+                  "actionKey": {
+                    "type": "boolean"
+                  },
+                  "entityId": {
+                    "type": "boolean"
+                  },
+                  "actor": {
+                    "type": "boolean"
+                  },
+                  "before": {
+                    "type": "boolean"
+                  },
+                  "after": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "audit_logs.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<AuditLog>"
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
