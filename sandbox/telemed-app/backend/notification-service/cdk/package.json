@@ -1,5 +1,5 @@
 {
-  "name": "arc-notification-cdktf",
+  "name": "@sourceloop/telemed-notification-cdktf",
   "version": "1.0.0",
   "main": "main.js",
   "types": "main.ts",

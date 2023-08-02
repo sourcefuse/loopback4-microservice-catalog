@@ -98,7 +98,11 @@
         "@sourceloop/telemed-app-ui",
         "@sourceloop/telemed-auth-api",
         "@sourceloop/telemed-notification-api",
-        "@sourceloop/telemed-video-conferencing-api"
+        "@sourceloop/telemed-video-conferencing-api",
+        "@sourceloop/telemed-auth-cdktf",
+        "@sourceloop/telemed-video-conferencing-cdktf",
+        "@sourceloop/telemed-notification-cdktf",
+        "@sourceloop/telemed-ui-cdk"
       ]
     },
     "clean": {

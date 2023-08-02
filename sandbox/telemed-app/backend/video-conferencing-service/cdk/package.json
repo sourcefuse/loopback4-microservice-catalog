@@ -1,5 +1,5 @@
 {
-  "name": "arc-video-conferencing-cdktf",
+  "name": "@sourceloop/telemed-video-conferencing-cdktf",
   "version": "1.0.0",
   "main": "main.js",
   "types": "main.ts",
