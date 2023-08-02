@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`My CDKTF Application with all config set should match snapshot test 1`] = `
+{
+  "output": {
+    "function": {
+      "value": "\${aws_lambda_function.lambda-function.arn}"
+    },
+    "url": {
+      "value": "domainName"
+    }
+  },
+  "provider": {
+    "aws": [
+      {
+        "assume_role": [
+          {
+          }
+        ]
+      }
+    ],
+    "random": [
+      {
+      }
+    ]
+  },
+  "resource": {
+    "aws_apigatewayv2_api": {
+      "api-gw": {
+        "name": "test",
+        "protocol_type": "HTTP",
+        "target": "\${aws_lambda_function.lambda-function.arn}"
+      }
+    },
+    "aws_apigatewayv2_api_mapping": {
+      "api-gateway-custom-domain-name_path-mapping_6F5FF01F": {
+        "api_id": "\${aws_apigatewayv2_api.api-gw.id}",
+        "domain_name": "\${aws_apigatewayv2_domain_name.api-gateway-custom-domain-name_api-gw-domain_F7F49076.domain_name}",
+        "stage": "$default"
+      }
+    },
+    "aws_apigatewayv2_domain_name": {
+      "api-gateway-custom-domain-name_api-gw-domain_F7F49076": {
+        "domain_name": "domainName",
+        "domain_name_configuration": {
+          "certificate_arn": "arn:aws:acm:us-east-1:123456789123:certificate/12345678-1234-1234-1234-123456789123",
+          "endpoint_type": "REGIONAL",
+          "security_policy": "TLS_1_2"
+        }
+      }
+    },
+    "aws_iam_policy": {
+      "lambda-policy": {
+        "policy": "{\\"Version\\":\\"2012-10-17\\",\\"Statement\\":[{\\"Effect\\":\\"Allow\\",\\"Action\\":[\\"logs:CreateLogGroup\\",\\"logs:CreateLogStream\\",\\"logs:PutLogEvents\\",\\"ec2:CreateNetworkInterface\\",\\"ec2:DescribeNetworkInterfaces\\",\\"ec2:DeleteNetworkInterface\\",\\"ec2:AssignPrivateIpAddresses\\",\\"ec2:UnassignPrivateIpAddresses\\"],\\"Resource\\":\\"*\\"}]}"
+      }
+    },
+    "aws_iam_role": {
+      "lambda-exec": {
+        "assume_role_policy": "{\\"Version\\":\\"2012-10-17\\",\\"Statement\\":[{\\"Action\\":\\"sts:AssumeRole\\",\\"Principal\\":{\\"Service\\":\\"lambda.amazonaws.com\\"},\\"Effect\\":\\"Allow\\",\\"Sid\\":\\"\\"}]}",
+        "name": "lambda-role-test-\${random_pet.random-name.id}"
+      }
+    },
+    "aws_iam_role_policy_attachment": {
+      "lambda-managed-policy": {
+        "policy_arn": "\${aws_iam_policy.lambda-policy.arn}",
+        "role": "\${aws_iam_role.lambda-exec.name}"
+      }
+    },
+    "aws_lambda_function": {
+      "lambda-function": {
+        "filename": "assets/lambda-asset/ABC123/archive.zip",
+        "function_name": "cdktf-test-\${random_pet.random-name.id}",
+        "handler": "lambda.handler",
+        "layers": [
+          "\${aws_lambda_layer_version.lambda-layer.arn}"
+        ],
+        "memory_size": 256,
+        "role": "\${aws_iam_role.lambda-exec.arn}",
+        "runtime": "nodejs16.x",
+        "vpc_config": {
+          "security_group_ids": [
+            "sg-123456"
+          ],
+          "subnet_ids": [
+            "subnet-123456"
+          ]
+        }
+      }
+    },
+    "aws_lambda_layer_version": {
+      "lambda-layer": {
+        "filename": "assets/lambda-layer-asset/ABC123/archive.zip",
+        "layer_name": "test-layers-\${random_pet.random-name.id}"
+      }
+    },
+    "aws_lambda_permission": {
+      "apigw-lambda-permission": {
+        "action": "lambda:InvokeFunction",
+        "function_name": "\${aws_lambda_function.lambda-function.function_name}",
+        "principal": "apigateway.amazonaws.com",
+        "source_arn": "\${aws_apigatewayv2_api.api-gw.execution_arn}/*/*"
+      }
+    },
+    "aws_route53_record": {
+      "api-gateway-custom-domain-name_app_domain_records_4069DD36": {
+        "alias": {
+          "evaluate_target_health": false,
+          "name": "\${aws_apigatewayv2_domain_name.api-gateway-custom-domain-name_api-gw-domain_F7F49076.domain_name_configuration[0].target_domain_name}",
+          "zone_id": "\${aws_apigatewayv2_domain_name.api-gateway-custom-domain-name_api-gw-domain_F7F49076.domain_name_configuration[0].hosted_zone_id}"
+        },
+        "name": "\${aws_apigatewayv2_api_mapping.api-gateway-custom-domain-name_path-mapping_6F5FF01F.domain_name}",
+        "type": "A",
+        "zone_id": "hostedZoneId"
+      }
+    },
+    "random_pet": {
+      "random-name": {
+        "length": 2
+      }
+    }
+  },
+  "terraform": {
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "4.51.0"
+      },
+      "random": {
+        "source": "hashicorp/random",
+        "version": "3.4.3"
+      }
+    }
+  }
+}
+`;

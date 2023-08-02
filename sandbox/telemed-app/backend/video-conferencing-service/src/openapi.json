@@ -1,0 +1,533 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "video-conferencing",
+    "version": "1.0.0",
+    "description": "video-conferencing",
+    "contact": {
+      "name": "surbhi.sharma1@sourcefuse.com",
+      "email": "surbhi.sharma1@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/archives/storage-target": {
+      "put": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "setUploadTarget",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "description": "Configures custom storage target to a custom Amazon s3 bucket or Microsoft Azure Storage.\n\n| Permissions |\n| ------- |\n| SetMeetingUploadTarget   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "text"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatArchiveController.setUploadTarget"
+      }
+    },
+    "/archives/{archiveId}": {
+      "get": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "getArchive",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "description": "Used to fetch a specific archive w.r.t archiveId.\n       If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "archiveId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "VideoChatArchiveController.getArchive"
+      },
+      "delete": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "deleteArchive",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "description": "Used to delete a specific archive w.r.t archiveId.\n       If archive is not present, it will throw HTTP Not Found Error.\n\n| Permissions |\n| ------- |\n| DeleteMeetingArchive   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "text"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "archiveId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "VideoChatArchiveController.deleteArchive"
+      }
+    },
+    "/archives": {
+      "get": {
+        "x-controller-name": "VideoChatArchiveController",
+        "x-operation-name": "getArchives",
+        "tags": [
+          "VideoChatArchiveController"
+        ],
+        "description": "Used to fetch a list of archives (meetings that were recorded).\n\n| Permissions |\n| ------- |\n| GetMeetingArchives   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatArchiveController.getArchives"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "PingController.ping"
+      }
+    },
+    "/session/{meetingLinkId}/attendees": {
+      "get": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "getAttendeesList",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| GetMeetingAttendees   |\n",
+        "operationId": "VideoChatSessionController.getAttendeesList"
+      }
+    },
+    "/session/{meetingLinkId}/end": {
+      "patch": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "endSession",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "description": "Used to stop the current active meeting. Meeting cannot be stopped again if it is \n      already stopped. Successful execution will add the endTime attribute to a recently \n      ending session.\n\n| Permissions |\n| ------- |\n| StopMeeting   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "MessageRecipient PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "VideoChatSessionController.endSession"
+      }
+    },
+    "/session/{meetingLinkId}/token": {
+      "post": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "getMeetingToken",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "description": "Used for Generating token,\n     which is used for connecting to a room/session on a client side. \n      In vonage, there are three different roles (Moderator, Subscriber, Publisher). \n      We can use expire time for limited validity of a token. Successful \n      execution will send a token.\n\n| Permissions |\n| ------- |\n| GenerateMeetingToken   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "sessionId": "string",
+                  "token": "string"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.getMeetingToken"
+      }
+    },
+    "/session/{meetingLinkId}": {
+      "patch": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "editMeeting",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "description": "Used for editing the meeting\n\n| Permissions |\n| ------- |\n| EditMeeting   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Session details PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "meetingLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoChatSessionPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "VideoChatSessionController.editMeeting"
+      }
+    },
+    "/session": {
+      "post": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "getMeetingLink",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "description": "Used for Creating a session with options such as end to end encryption,\n     archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.\n\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.getMeetingLink"
+      }
+    },
+    "/webhooks/session": {
+      "post": {
+        "x-controller-name": "VideoChatSessionController",
+        "x-operation-name": "checkWebhookPayload",
+        "tags": [
+          "VideoChatSessionController"
+        ],
+        "description": "Webhook API hit from a third party to add/update session attendees in a meeting.",
+        "responses": {
+          "204": {
+            "description": "POST /webhooks/session Success"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "VideoChatSessionController.checkWebhookPayload"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Home Page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "VideoChatSessionPartial": {
+        "title": "VideoChatSessionPartial",
+        "type": "object",
+        "description": "(tsType: Partial<VideoChatSession>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "meetingLink": {
+            "type": "string"
+          },
+          "isScheduled": {
+            "type": "boolean"
+          },
+          "scheduleTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "archiveId": {
+            "type": "string"
+          },
+          "uploadTarget": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<VideoChatSession>"
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

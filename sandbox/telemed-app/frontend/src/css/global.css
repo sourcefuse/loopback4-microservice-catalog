@@ -1,0 +1,17 @@
+body {
+  margin: 0px;
+  font-family: "Montserrat", sans-serif;
+}
+* {
+  font-family: "Montserrat", sans-serif;
+}
+li.MuiGrid-root {
+  padding: 0;
+}
+#root > div > div.MuiGrid-root.MuiGrid-item li a {
+  padding: 1.4rem;
+}
+
+.OT_bar .OT_edge-bar-item {
+  display: none;
+}

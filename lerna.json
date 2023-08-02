@@ -94,7 +94,11 @@
         "@sourceloop/oauth-example-api",
         "@sourceloop/oauth-example-ui",
         "@sourceloop/oidc-basic-example",
-        "@sourceloop/nestjs-auth-ms-example"
+        "@sourceloop/nestjs-auth-ms-example",
+        "@sourceloop/telemed-app-ui",
+        "@sourceloop/telemed-auth-api",
+        "@sourceloop/telemed-notification-api",
+        "@sourceloop/telemed-video-conferencing-api"
       ]
     },
     "clean": {
