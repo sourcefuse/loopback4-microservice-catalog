@@ -27,19 +27,24 @@ import {inject, service} from '@loopback/core';
 import {Secret, verify, JwtPayload} from 'jsonwebtoken';
 import {SurveyRepository} from '../repositories';
 import {ErrorKeys} from '../enum';
-
+import {
+  SurveyRepository as SurveySequelizeRepo,
+  SurveyResponseRepository as SurveyResponseSequelizeRepo,
+} from '../repositories/sequelize';
 const basePath = '/surveys/{surveyId}/survey-responses';
 
 export class SurveyResponseController {
   constructor(
     @repository(SurveyResponseRepository)
-    private surveyResponseRepository: SurveyResponseRepository,
+    public surveyResponseRepository:
+      | SurveyResponseRepository
+      | SurveyResponseSequelizeRepo,
     @service(SurveyResponseService)
-    private surveyResponseService: SurveyResponseService,
+    public surveyResponseService: SurveyResponseService,
     @inject(RestBindings.Http.REQUEST)
-    private readonly request: Request,
+    public readonly request: Request,
     @repository(SurveyRepository)
-    private surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -82,7 +87,9 @@ export class SurveyResponseController {
         });
       const responderEmails: string[] = [];
       responders?.forEach(responder => {
-        responderEmails.push(responder.email);
+        if (responder.email) {
+          responderEmails.push(responder.email);
+        }
       });
       const validUser = responderEmails.includes(decodedToken.email);
       if (!validUser) {

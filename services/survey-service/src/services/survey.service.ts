@@ -20,6 +20,15 @@ import {SurveyCycleService} from './survey-cycle.service';
 import {QuestionRepository} from '../repositories';
 import {SurveyStatus} from '../enum';
 const {JSDOM} = jsdom;
+import {
+  QuestionRepository as QuestionSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
+  SurveyResponderRepository as SurveyResponderSequelizeRepo,
+  QuestionTemplateRepository as QuestionTemplateSequelizeRepo,
+  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
+} from '../repositories/sequelize';
 
 const orderByCreatedOn = 'created_on DESC';
 const defaultLeadingZero = 6;
@@ -30,24 +39,34 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 export class SurveyService {
   constructor(
     @repository(SurveyRepository)
-    private surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @repository(QuestionTemplateRepository)
-    private questionTemplateRepository: QuestionTemplateRepository,
+    public questionTemplateRepository:
+      | QuestionTemplateRepository
+      | QuestionTemplateSequelizeRepo,
     @repository(TemplateQuestionRepository)
-    private templateQuestionRepository: TemplateQuestionRepository,
+    public templateQuestionRepository:
+      | TemplateQuestionRepository
+      | TemplateQuestionSequelizeRepo,
     @repository(SurveyQuestionRepository)
-    private surveyQuestionRepository: SurveyQuestionRepository,
+    public surveyQuestionRepository:
+      | SurveyQuestionRepository
+      | SurveyQuestionSequelizeRepo,
     @repository(SurveyCycleRepository)
-    private surveyCycleRepository: SurveyCycleRepository,
+    public surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository: SurveyResponderRepository,
+    protected surveyResponderRepository:
+      | SurveyResponderRepository
+      | SurveyResponderSequelizeRepo,
     @repository(QuestionRepository)
-    protected questionRepository: QuestionRepository,
+    protected questionRepository: QuestionRepository | QuestionSequelizeRepo,
 
-    @inject('services.CreateSurveyHelperService')
-    private createSurveyHelperService: CreateSurveyHelperService,
     @service(SurveyCycleService)
-    private surveyCycleService: SurveyCycleService,
+    public surveyCycleService: SurveyCycleService,
+    @inject('services.CreateSurveyHelperService')
+    public createSurveyHelperService: CreateSurveyHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -202,7 +221,7 @@ export class SurveyService {
     if (survey?.startDate && survey?.status === SurveyStatus.ACTIVE) {
       if (
         moment(survey.startDate).format(DATE_FORMAT) !==
-        moment().format(DATE_FORMAT)
+        moment().utc().format(DATE_FORMAT)
       ) {
         //start date should be current date only and status active.
         throw new HttpErrors.BadRequest(
@@ -249,7 +268,7 @@ export class SurveyService {
   }
 
   checkPastDateValidation(survey: Survey) {
-    if (moment(survey?.endDate).isBefore(moment())) {
+    if (survey?.endDate && moment(survey?.endDate).isBefore(moment())) {
       throw new HttpErrors.BadRequest(ErrorKeys.EndDateCannotBeInPast);
     }
   }

@@ -24,7 +24,7 @@ describe('Survey Cycle Controller', () => {
   after(async () => app.stop());
 
   before(givenRepositories);
-  afterEach(deleteMockData);
+  after(deleteMockData);
   it('it gives 200 and adds a survey cycle as response', async () => {
     const currentDate = new Date();
     const surveyCycleToCreate = new SurveyCycle({
@@ -59,8 +59,6 @@ describe('Survey Cycle Controller', () => {
   });
 
   it('will return all the values with status 200', async () => {
-    await createSurvey();
-    await addSurveyCycle();
     const response = await client
       .get(`${basePath}`)
       .set('authorization', `Bearer ${token}`)
@@ -175,15 +173,14 @@ describe('Survey Cycle Controller', () => {
   }
 
   async function deleteMockData() {
-    await surveyCyclesRepo.deleteAllHard();
-    await surveyRepo.deleteAllHard();
+    await surveyCyclesRepo.deleteAll();
+    await surveyRepo.deleteAll();
   }
 
   async function createSurvey() {
     const currentDate = new Date();
     await surveyRepo.createAll([
       {
-        id: '1',
         name: 'Survey 1',
         startDate: moment(currentDate).format(),
         endDate: moment(

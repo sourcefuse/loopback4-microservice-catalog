@@ -7,13 +7,12 @@ export class SurveyCycle extends UserModifiableEntity<SurveyCycle> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
   @property({
     type: 'string',
-    required: true,
     name: 'start_date',
     description: 'Start date of the first survey cycle',
   })
@@ -21,7 +20,6 @@ export class SurveyCycle extends UserModifiableEntity<SurveyCycle> {
 
   @property({
     type: 'string',
-    required: true,
     name: 'end_date',
     description: 'End date of the first survey cycle',
   })
@@ -30,7 +28,6 @@ export class SurveyCycle extends UserModifiableEntity<SurveyCycle> {
   @property({
     type: 'boolean',
     name: 'is_activated',
-    default: false,
   })
   isActivated: boolean;
 

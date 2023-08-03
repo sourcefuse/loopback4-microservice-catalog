@@ -28,16 +28,17 @@ import {PermissionKey} from '../enum/permission-key.enum';
 import {Survey, SurveyDto} from '../models';
 import {JwtPayload, Secret, verify} from 'jsonwebtoken';
 import {ErrorKeys} from '../enum';
+import {SurveyRepository as SurveySequelizeRepo} from '../repositories/sequelize';
 
 const basePath = '/surveys';
 export class SurveyController {
   constructor(
     @inject(RestBindings.Http.REQUEST)
-    private readonly request: Request,
+    public readonly request: Request,
     @repository(SurveyRepository)
-    private surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @service(SurveyService)
-    private surveyService: SurveyService,
+    public surveyService: SurveyService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -163,7 +164,9 @@ export class SurveyController {
       });
       const responderEmails: string[] = [];
       responders?.forEach(responder => {
-        responderEmails.push(responder.email);
+        if (responder.email) {
+          responderEmails.push(responder.email);
+        }
       });
       const validUser = responderEmails.includes(decodedToken.email);
       if (!validUser) {

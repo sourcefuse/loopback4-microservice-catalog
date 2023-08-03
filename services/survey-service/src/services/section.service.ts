@@ -12,16 +12,22 @@ import {SurveyQuestionRepository} from '../repositories/survey-question.reposito
 import {SurveyRepository} from '../repositories/survey.repository';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {SurveyStatus} from '../enum';
-
+import {
+  SectionRepository as SectionSequelizeRepo,
+  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+} from '../repositories/sequelize';
 @injectable({scope: BindingScope.TRANSIENT})
 export class SectionService {
   constructor(
     @repository(SectionRepository)
-    public sectionRepository: SectionRepository,
+    public sectionRepository: SectionRepository | SectionSequelizeRepo,
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository: SurveyQuestionRepository,
+    public surveyQuestionRepository:
+      | SurveyQuestionRepository
+      | SurveyQuestionSequelizeRepo,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -46,6 +52,9 @@ export class SectionService {
       case3: If user removes section 3 - 
       Section 1 = 20 questions
       Section 2 = 40 questions
+
+      case4: if there is only one section then
+      remove the sectionID from survey Questions
     */
     if (!sectionToDelete?.displayOrder) {
       throw new HttpErrors.BadRequest(ErrorKeys.DisplayOrderMissing);
@@ -60,17 +69,27 @@ export class SectionService {
         existingSection =>
           existingSection.displayOrder === orderOfSectionToUpdate,
       )?.id;
+
+      this.surveyQuestionRepository
+        .updateAll({sectionId: sectionIdToUpdate}, {sectionId})
+        .then()
+        .catch(err => Promise.reject(err));
+
+      this.sectionRepository
+        .reorder(surveyId, sectionToDelete.displayOrder)
+        .then()
+        .catch(err => this.logger.error(JSON.stringify(err)));
     }
-
-    this.surveyQuestionRepository
-      .updateAll({sectionId: sectionIdToUpdate}, {sectionId})
-      .then()
-      .catch(err => Promise.reject(err));
-
-    this.sectionRepository
-      .reorder(surveyId, sectionToDelete.displayOrder)
-      .then()
-      .catch(err => this.logger.error(JSON.stringify(err)));
+    if (existingSections.length === 1) {
+      this.surveyQuestionRepository
+        /* ! is added below because we want to remove the sections
+      but keep the questions, adding string|null to the model has a problem 
+       while creating the entity it interprets as an object. thus throwing error.
+      */
+        .updateAll({sectionId: null!}, {sectionId})
+        .then()
+        .catch(err => Promise.reject(err));
+    }
   }
 
   async checkBasicSectionValidation(surveyId: string) {

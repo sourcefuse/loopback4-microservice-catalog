@@ -8,9 +8,7 @@ import {SurveyDbSourceName} from '../../types';
 
 const config = {
   name: SurveyDbSourceName,
-  connector: 'memory',
-  localStorage: '',
-  file: '',
+  connector: 'postgres',
 };
 
 export class SurveyeMockDataSource extends juggler.DataSource {

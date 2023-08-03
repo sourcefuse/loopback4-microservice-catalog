@@ -84,9 +84,9 @@ import {SurveyResponseDetailViewController} from './controllers/survey-response-
 export class SurveyServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: RestApplication,
+    public readonly application: RestApplication,
     @inject(SurveyServiceBindings.Config, {optional: true})
-    private readonly surveyConfig?: ISurveyServiceConfig,
+    public readonly surveyConfig?: ISurveyServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};

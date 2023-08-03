@@ -19,13 +19,15 @@ import {authorize} from 'loopback4-authorization';
 import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
-
+import {SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo} from '../repositories/sequelize';
 const basePath = '/survey-cycles/{surveyCycleId}/survey-response-detail-view';
 
 export class SurveyResponseDetailViewController {
   constructor(
     @repository(SurveyResponseDetailRepository)
-    private surveyResponseDetailRepository: SurveyResponseDetailRepository,
+    public surveyResponseDetailRepository:
+      | SurveyResponseDetailRepository
+      | SurveyResponseDetailSequelizeRepo,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

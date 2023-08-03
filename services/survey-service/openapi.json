@@ -2271,7 +2271,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/survey_questions.Filter1"
+                  "$ref": "#/components/schemas/survey_questions.Filter"
                 }
               }
             }
@@ -3455,10 +3455,6 @@
             "$ref": "#/components/schemas/SurveyWithRelations"
           }
         },
-        "required": [
-          "startDate",
-          "endDate"
-        ],
         "additionalProperties": false,
         "x-typescript-type": "SurveyCycleWithRelations"
       },
@@ -3692,9 +3688,6 @@
             "$ref": "#/components/schemas/SurveyCycleWithRelations"
           }
         },
-        "required": [
-          "email"
-        ],
         "additionalProperties": false,
         "x-typescript-type": "SurveyResponderWithRelations"
       },
@@ -5563,7 +5556,8 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "extId": {
             "type": "string"
@@ -5633,7 +5627,8 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "extId": {
             "type": "string"
@@ -5707,7 +5702,8 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "extId": {
             "type": "string"
@@ -5790,7 +5786,8 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "extId": {
             "type": "string"
@@ -5857,7 +5854,8 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "extId": {
             "type": "string"
@@ -6082,10 +6080,6 @@
             "type": "object"
           }
         },
-        "required": [
-          "startDate",
-          "endDate"
-        ],
         "additionalProperties": false
       },
       "NewSurveyCycle": {
@@ -6140,10 +6134,6 @@
             "type": "object"
           }
         },
-        "required": [
-          "startDate",
-          "endDate"
-        ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<SurveyCycle, 'id'>"
       },
@@ -6272,9 +6262,6 @@
             "type": "object"
           }
         },
-        "required": [
-          "email"
-        ],
         "additionalProperties": false
       },
       "NewSurveyResponderInSurvey": {
@@ -6342,9 +6329,6 @@
             "type": "object"
           }
         },
-        "required": [
-          "email"
-        ],
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<SurveyResponder, 'id'>, 'surveyId'>"
       },
@@ -8446,143 +8430,6 @@
         }
       },
       "survey_questions.Filter": {
-        "type": "object",
-        "title": "survey_questions.Filter",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "minimum": 1,
-            "example": 100
-          },
-          "skip": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "order": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "fields": {
-            "oneOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
-                  "id": {
-                    "type": "boolean"
-                  },
-                  "displayOrder": {
-                    "type": "boolean"
-                  },
-                  "isMandatory": {
-                    "type": "boolean"
-                  },
-                  "dependentOnQuestionId": {
-                    "type": "boolean"
-                  },
-                  "weight": {
-                    "type": "boolean"
-                  },
-                  "surveyId": {
-                    "type": "boolean"
-                  },
-                  "questionId": {
-                    "type": "boolean"
-                  },
-                  "sectionId": {
-                    "type": "boolean"
-                  },
-                  "extId": {
-                    "type": "boolean"
-                  },
-                  "extMetadata": {
-                    "type": "boolean"
-                  }
-                },
-                "additionalProperties": false
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
-                    "id",
-                    "displayOrder",
-                    "isMandatory",
-                    "dependentOnQuestionId",
-                    "weight",
-                    "surveyId",
-                    "questionId",
-                    "sectionId",
-                    "extId",
-                    "extMetadata"
-                  ],
-                  "example": "deleted"
-                },
-                "uniqueItems": true
-              }
-            ],
-            "title": "survey_questions.Fields"
-          },
-          "include": {
-            "title": "survey_questions.IncludeFilter",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/survey_questions.IncludeFilter.Items"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<SurveyQuestion>"
-      },
-      "survey_questions.Filter1": {
         "type": "object",
         "title": "survey_questions.Filter",
         "properties": {

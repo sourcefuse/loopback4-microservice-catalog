@@ -6,7 +6,6 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
@@ -29,6 +28,7 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {AppErrorCodes, ErrorKeys, PermissionKey} from '../enum';
+import {SurveyQuestionRepository as SurveyQuestionSequelizeRepo} from '../repositories/sequelize';
 
 const basePath = '/surveys/{surveyId}/survey-questions';
 const orderByCreatedOn = 'created_on DESC';
@@ -36,9 +36,11 @@ const orderByCreatedOn = 'created_on DESC';
 export class SurveyQuestionController {
   constructor(
     @repository(SurveyQuestionRepository)
-    private surveyQuestionRepository: SurveyQuestionRepository,
+    public surveyQuestionRepository:
+      | SurveyQuestionRepository
+      | SurveyQuestionSequelizeRepo,
     @service(SurveyService)
-    private surveyService: SurveyService,
+    public surveyService: SurveyService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -186,8 +188,8 @@ export class SurveyQuestionController {
   async findById(
     @param.path.string('id') id: string,
     @param.path.string('surveyId') surveyId: string,
-    @param.filter(SurveyQuestion, {exclude: 'where'})
-    filter?: FilterExcludingWhere<SurveyQuestion>,
+    @param.filter(SurveyQuestion)
+    filter?: Filter<SurveyQuestion>,
   ): Promise<SurveyQuestion> {
     const surveyQuestion = await this.surveyQuestionRepository.findOne(filter);
     if (!surveyQuestion) {

@@ -31,23 +31,34 @@ import {SurveyResponseRepository} from '../repositories/survey-response.reposito
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
 import {SurveyResponderService} from '../services/survey-responder.service';
-
+import {
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+  SurveyResponderRepository as SurveyResponderSequelizeRepo,
+  SurveyResponseRepository as SurveyResponseSequelizeRepo,
+} from '../repositories/sequelize';
 const basePath = '/surveys/{surveyId}/survey-responders';
 
 export class SurveyResponderController {
   constructor(
     @repository(SurveyRepository)
-    protected surveyRepository: SurveyRepository,
+    protected surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository: SurveyResponderRepository,
+    protected surveyResponderRepository:
+      | SurveyResponderRepository
+      | SurveyResponderSequelizeRepo,
     @repository(SurveyResponseRepository)
-    protected surveyResponseRepository: SurveyResponseRepository,
+    protected surveyResponseRepository:
+      | SurveyResponseRepository
+      | SurveyResponseSequelizeRepo,
     @repository(SurveyCycleRepository)
-    protected surveyCycleRepository: SurveyCycleRepository,
+    protected surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @service(SurveyService)
-    private surveyService: SurveyService,
+    public surveyService: SurveyService,
     @service(SurveyResponderService)
-    private surveyResponderService: SurveyResponderService,
+    public surveyResponderService: SurveyResponderService,
     @inject(LOGGER.LOGGER_INJECT)
     public logger: ILogger,
   ) {}
@@ -89,7 +100,7 @@ export class SurveyResponderController {
     surveyResponder.surveyId = surveyId;
     surveyResponder.firstName =
       surveyResponder.firstName ??
-      surveyResponder.email.substring(0, surveyResponder.email.indexOf('@'));
+      surveyResponder.email?.substring(0, surveyResponder.email.indexOf('@'));
     const resp = await this.surveyRepository
       .surveyResponders(surveyId)
       .create(surveyResponder);
@@ -115,7 +126,7 @@ export class SurveyResponderController {
     return resp;
   }
 
-  private async checkIfResponderAddedInActiveCycle(
+  public async checkIfResponderAddedInActiveCycle(
     surveyResponder: SurveyResponder,
   ) {
     const surveyCycle = await this.surveyCycleRepository.findById(

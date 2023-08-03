@@ -6,15 +6,21 @@ import moment from 'moment';
 import {SurveyResponder} from '../models';
 import {SurveyCycleRepository, SurveyRepository} from '../repositories';
 import {PermissionKey} from '../enum';
+import {
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+} from '../repositories/sequelize';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SurveyResponderService {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(SurveyCycleRepository)
-    protected surveyCycleRepository: SurveyCycleRepository,
+    protected surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @repository(SurveyRepository)
-    protected surveyRepository: SurveyRepository,
+    protected surveyRepository: SurveyRepository | SurveySequelizeRepo,
   ) {}
 
   async getAccessToken(surveyResponders: SurveyResponder[], surveyId: string) {
@@ -24,7 +30,9 @@ export class SurveyResponderService {
       );
       const emails: string[] = [];
       surveyResponders?.forEach(responder => {
-        emails.push(responder.email);
+        if (responder.email) {
+          emails.push(responder.email);
+        }
       });
       const tokens: string[] = [];
       const permissions = [

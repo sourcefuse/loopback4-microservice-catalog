@@ -8,15 +8,19 @@ import {QuestionRepository} from '../repositories';
 import {OptionsRepository} from '../repositories/options.repository';
 import {QuestionStatus, QuestionType} from '../enum/question.enum';
 import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
+import {
+  QuestionRepository as QuestionSequelizeRepo,
+  OptionsRepository as OptionsSequelizeRepo,
+} from '../repositories/sequelize';
 
 const orderByCreatedOn = 'created_on DESC';
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuestionDuplicateHelperService {
   constructor(
     @repository(QuestionRepository)
-    public questionRepository: QuestionRepository,
+    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
     @repository(OptionsRepository)
-    public optionsRepository: OptionsRepository,
+    public optionsRepository: OptionsRepository | OptionsSequelizeRepo,
     @service(QuestionHelperService)
     public questionHelperService: QuestionHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,

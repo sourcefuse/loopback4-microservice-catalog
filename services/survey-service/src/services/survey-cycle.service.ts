@@ -1,23 +1,23 @@
-import {
-  injectable,
-  /* inject, */
-  BindingScope,
-  inject,
-} from '@loopback/core';
+import {BindingScope, inject, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {SurveyRepository} from '../repositories/survey.repository';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import moment from 'moment';
 import {SurveyCycleRepository} from '../repositories';
-import {LOGGER, ILogger} from '@sourceloop/core';
+import {
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+} from '../repositories/sequelize';
+import {SurveyRepository} from '../repositories/survey.repository';
 const sqlDateFormat = 'YYYY-MM-DD';
-
 @injectable({scope: BindingScope.TRANSIENT})
 export class SurveyCycleService {
   constructor(
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository,
+    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
     @repository(SurveyCycleRepository)
-    public surveyCycleRepository: SurveyCycleRepository,
+    public surveyCycleRepository:
+      | SurveyCycleRepository
+      | SurveyCycleSequelizeRepo,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -26,7 +26,8 @@ export class SurveyCycleService {
     await this.surveyRepository.surveyCycles(surveyId).create({
       startDate: moment(new Date(survey.startDate)).format(sqlDateFormat),
       endDate: moment(new Date(survey.endDate)).format(sqlDateFormat),
-      surveyId: surveyId,
+      extId: survey.extId,
+      surveyId,
     });
     const surveyCycle = await this.surveyCycleRepository.findOne({
       where: {surveyId},

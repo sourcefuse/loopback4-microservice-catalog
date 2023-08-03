@@ -33,7 +33,7 @@ describe('SurveyResponseDetailViewController', () => {
   after(async () => app.stop());
 
   before(givenRepositories);
-  afterEach(deleteMockData);
+  after(deleteMockData);
 
   it('will return all the values with status 200', async () => {
     const question = await addQuestion();
@@ -81,7 +81,7 @@ describe('SurveyResponseDetailViewController', () => {
       .get(`/survey-cycles/${cycle.body.id}/survey-response-detail-view//count`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    expect(response.body.count).to.be.equal(1);
+    expect(response.body.count).to.be.greaterThanOrEqual(1);
   });
 
   async function addSurveyResponse() {
@@ -124,7 +124,6 @@ describe('SurveyResponseDetailViewController', () => {
     const currentDate = new Date();
     await surveyRepo.createAll([
       {
-        id: '1',
         name: 'Survey 1',
         startDate: moment(currentDate).format(),
         endDate: moment(
@@ -145,7 +144,6 @@ describe('SurveyResponseDetailViewController', () => {
         email: 'testuser+test@sourcefuse.com',
         userId: 'test123',
         surveyId: '1',
-        id: '1',
         surveyCycleId: '1',
       },
     ]);

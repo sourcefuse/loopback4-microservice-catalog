@@ -17,7 +17,7 @@ export class Question extends UserModifiableEntity<Question> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
@@ -104,6 +104,7 @@ export class Question extends UserModifiableEntity<Question> {
     {
       name: 'parent_question_id',
       jsonSchema: {nullable: true},
+      type: 'string',
     },
   )
   parentQuestionId?: string;
@@ -127,6 +128,7 @@ export class Question extends UserModifiableEntity<Question> {
     },
     {
       name: 'survey_id',
+      type: 'string',
     },
   )
   surveyId: string;

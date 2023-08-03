@@ -26,7 +26,7 @@ describe('TemplateQuestionController', () => {
   after(async () => app.stop());
 
   before(givenRepositories);
-  afterEach(deleteMockData);
+  after(deleteMockData);
 
   it('gives status 401 when no token is passed', async () => {
     const response = await client.get(basePath).expect(401);

@@ -26,19 +26,24 @@ import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SectionService} from '../services/section.service';
 import {PermissionKey} from '../enum/permission-key.enum';
-
+import {
+  SectionRepository as SectionSequelizeRepo,
+  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
+} from '../repositories/sequelize';
 const basePath = '/surveys/{surveyId}/sections';
 const orderByCreatedOn = 'created_on DESC';
 
 export class SectionController {
   constructor(
     @repository(SectionRepository)
-    private sectionRepository: SectionRepository,
+    public sectionRepository: SectionRepository | SectionSequelizeRepo,
     @repository(SurveyQuestionRepository)
-    private surveyQuestionRepository: SurveyQuestionRepository,
+    public surveyQuestionRepository:
+      | SurveyQuestionRepository
+      | SurveyQuestionSequelizeRepo,
 
     @service(SectionService)
-    private sectionService: SectionService,
+    public sectionService: SectionService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

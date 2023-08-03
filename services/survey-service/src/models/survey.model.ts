@@ -20,7 +20,7 @@ export class Survey<T = DataObject<Model>> extends UserModifiableEntity<
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 

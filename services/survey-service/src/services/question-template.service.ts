@@ -8,6 +8,10 @@ import {HttpErrors} from '@loopback/rest';
 import {TemplateQuestion} from '../models/template-questions.model';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {QuestionTemplate} from '../models/question-template.model';
+import {
+  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
+  QuestionTemplateRepository as QuestionTemplateSequelizeRepo,
+} from '../repositories/sequelize';
 
 const defaultLeadingZero = 6;
 const orderByCreatedOn = 'created_on DESC';
@@ -16,9 +20,13 @@ const orderByCreatedOn = 'created_on DESC';
 export class QuestionTemplateService {
   constructor(
     @repository(QuestionTemplateRepository)
-    public questionTemplateRepository: QuestionTemplateRepository,
+    public questionTemplateRepository:
+      | QuestionTemplateRepository
+      | QuestionTemplateSequelizeRepo,
     @repository(TemplateQuestionRepository)
-    public templateQuestionRepository: TemplateQuestionRepository,
+    public templateQuestionRepository:
+      | TemplateQuestionRepository
+      | TemplateQuestionSequelizeRepo,
   ) {}
 
   async createTemplate(questionTemplate: Omit<QuestionTemplatesDto, 'id'>) {

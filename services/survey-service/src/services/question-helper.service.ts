@@ -12,24 +12,33 @@ import {ErrorKeys} from '../enum/error-keys.enum';
 import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyService} from './survey.service';
-
+import {
+  QuestionRepository as QuestionSequelizeRepo,
+  OptionsRepository as OptionsSequelizeRepo,
+  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
+  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
+} from '../repositories/sequelize';
 const defaultLeadingZero = 5;
-const noOfOptionsByDefault = 4;
+const noOfOptionsByDefault = 2;
 const orderByCreatedOn = 'created_on DESC';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuestionHelperService {
   constructor(
     @repository(QuestionRepository)
-    private questionRepository: QuestionRepository,
+    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
     @repository(OptionsRepository)
-    private optionsRepository: OptionsRepository,
+    public optionsRepository: OptionsRepository | OptionsSequelizeRepo,
     @repository(TemplateQuestionRepository)
-    private templateQuestionRepository: TemplateQuestionRepository,
+    public templateQuestionRepository:
+      | TemplateQuestionRepository
+      | TemplateQuestionSequelizeRepo,
     @repository(SurveyQuestionRepository)
-    private surveyQuestionRepository: SurveyQuestionRepository,
+    public surveyQuestionRepository:
+      | SurveyQuestionRepository
+      | SurveyQuestionSequelizeRepo,
     @service(SurveyService)
-    private surveyService: SurveyService,
+    public surveyService: SurveyService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -90,14 +99,14 @@ export class QuestionHelperService {
     return this.findQuestionWithOptions(createdQuestion.id ?? '');
   }
 
-  private async _createFollowupQuestion(
+  async _createFollowupQuestion(
     question: Question,
     optionId: string,
   ): Promise<Question> {
     const option = await this.optionsRepository.findOne({
       where: {
         id: optionId,
-        questionId: question.id,
+        questionId: question?.parentQuestionId ?? undefined,
       },
     });
     if (!option) {
@@ -158,7 +167,7 @@ export class QuestionHelperService {
     )}`;
   }
 
-  private _addLeadingZero(number: number, size: number): string {
+  _addLeadingZero(number: number, size: number): string {
     let valueWithLeadingZero = number.toString();
     if (valueWithLeadingZero.length === defaultLeadingZero) {
       size += 1;
@@ -168,7 +177,7 @@ export class QuestionHelperService {
     return valueWithLeadingZero;
   }
 
-  private async _createDefaultOptions(
+  async _createDefaultOptions(
     questionId: string,
     questionType: QuestionType,
   ): Promise<void> {
@@ -227,7 +236,7 @@ export class QuestionHelperService {
     await this._deleteAllOptionsByQuestion(question);
   }
 
-  private async _deleteAllOptionsByQuestion(question: Question): Promise<void> {
+  async _deleteAllOptionsByQuestion(question: Question): Promise<void> {
     if (question.options?.length) {
       await this.optionsRepository.deleteAllHard({
         id: {inq: question.options.map(option => option.id)},
@@ -294,7 +303,7 @@ export class QuestionHelperService {
     return this.questionRepository.findById(questionId, {include: ['options']});
   }
 
-  private async _handleQuestionTypeChange(
+  async _handleQuestionTypeChange(
     question: Question,
     existingQuestion: Question,
     questionId: string,
@@ -311,11 +320,11 @@ export class QuestionHelperService {
     }
   }
 
-  private async handleApprove(id: string) {
+  async handleApprove(id: string) {
     await this.updateAllChildStatus(id, QuestionStatus.APPROVED);
   }
 
-  private async updateAllChildStatus(id: string, status: QuestionStatus) {
+  async updateAllChildStatus(id: string, status: QuestionStatus) {
     await this.questionRepository.updateAll(
       {
         status,
@@ -324,7 +333,7 @@ export class QuestionHelperService {
     );
   }
 
-  private checkIfAllowedToUpdate(
+  checkIfAllowedToUpdate(
     existingQuestion: Question,
     updateQuestion?: Question,
   ) {
@@ -353,7 +362,7 @@ export class QuestionHelperService {
     }
   }
 
-  private async handleOnStatusChange(id: string, updateQuestion: Question) {
+  async handleOnStatusChange(id: string, updateQuestion: Question) {
     if (updateQuestion?.status === QuestionStatus.APPROVED) {
       await this.handleApprove(id);
     } else {

@@ -7,7 +7,7 @@ export class Options extends UserModifiableEntity<Options> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 

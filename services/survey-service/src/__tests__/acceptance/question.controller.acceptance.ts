@@ -9,6 +9,7 @@ import {setUpApplication} from './helper';
 import {QuestionDto} from '../../models';
 import {QuestionStatus, QuestionType} from '../../enum';
 import {token} from '../datasources/userCredsAndPermission';
+import {SurveyDbSourceName} from '../..';
 
 describe('Question Controller', () => {
   let app: SurveyServiceApplication;
@@ -256,6 +257,10 @@ describe('Question Controller', () => {
   async function deleteMockData() {
     await questionRepo.deleteAllHard();
     await questionOptionRepo.deleteAllHard();
+    app.bind(`datasources.config.${SurveyDbSourceName}`).to({
+      name: SurveyDbSourceName,
+      connector: 'memory',
+    });
   }
 
   async function givenRepositories() {
@@ -263,14 +268,12 @@ describe('Question Controller', () => {
     questionOptionRepo = await app.getRepository(OptionsRepository);
     await questionRepo.createAll([
       {
-        id: '1',
         name: 'Question 1',
         questionType: QuestionType.MULTI_SELECTION,
         uid: 'QR000001',
         status: QuestionStatus.DRAFT,
       },
       {
-        id: '2',
         name: 'Question 2',
         questionType: QuestionType.DROPDOWN,
         uid: 'QR000002',
