@@ -14,8 +14,8 @@ import {
 import {Options} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {
-  AuthenticateErrorKeys,
   AuthProvider,
+  AuthenticateErrorKeys,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
   ILogger,
@@ -23,7 +23,9 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
+import * as fs from 'fs/promises';
+import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
+import NodeRSA from 'node-rsa';
 import {
   Tenant,
   User,
@@ -36,7 +38,6 @@ import {OtpRepository} from './otp.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
-
 const saltRounds = 10;
 export class UserRepository extends DefaultUserModifyCrudRepository<
   User,
@@ -126,6 +127,11 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   }
 
   async verifyPassword(username: string, password: string): Promise<User> {
+    let newPassword = password;
+    if (process.env.PRIVATE_DECRYPTION_KEY) {
+      const decryptedPassword = await this.decryptPassword(password);
+      newPassword = decryptedPassword;
+    }
     const user = await super.findOne({
       where: {username: username.toLowerCase()},
     });
@@ -135,7 +141,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     } else if (
       !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
-      !(await bcrypt.compare(password, creds.password))
+      !(await bcrypt.compare(newPassword, creds.password))
     ) {
       this.logger.error('User creds not found in DB or is invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -143,7 +149,17 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       return user;
     }
   }
-
+  async decryptPassword(password: string): Promise<string> {
+    if (!process.env.PRIVATE_DECRYPTION_KEY) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    }
+    const privateKey = (await fs.readFile(
+      process.env.PRIVATE_DECRYPTION_KEY ?? '',
+    )) as Buffer;
+    const key = new NodeRSA(privateKey);
+    const decryptedPassword = key.decrypt(password, 'utf8');
+    return decryptedPassword;
+  }
   async updatePassword(
     username: string,
     password: string,

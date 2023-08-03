@@ -5,14 +5,14 @@
 import {inject} from '@loopback/context';
 import {AnyObject, repository} from '@loopback/repository';
 import {
+  HttpErrors,
+  RequestContext,
   get,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
   requestBody,
-  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -27,21 +27,23 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
+import crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
 import {
-  authenticate,
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticate,
+  authenticateClient,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {ActorId, ExternalTokens, IUserActivity} from '../../types';
+import {LoginType} from '../../enums/login-type.enum';
 import {AuthServiceBindings} from '../../keys';
 import {
-  LoginActivity,
   AuthClient,
+  LoginActivity,
   RefreshToken,
   User,
   UserTenant,
@@ -50,13 +52,12 @@ import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
   CodeReaderFn,
-  JwtPayloadFn,
   JWTSignerFn,
+  JwtPayloadFn,
 } from '../../providers';
-import * as jwt from 'jsonwebtoken';
 import {
-  LoginActivityRepository,
   AuthClientRepository,
+  LoginActivityRepository,
   OtpCacheRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
@@ -69,6 +70,7 @@ import {
 } from '../../repositories';
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {LoginHelperService} from '../../services';
+import {ActorId, ExternalTokens, IUserActivity} from '../../types';
 import {
   AuthRefreshTokenRequest,
   AuthTokenRequest,
@@ -78,8 +80,6 @@ import {
 import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-import {LoginType} from '../../enums/login-type.enum';
-import crypto from 'crypto';
 
 export class LoginController {
   constructor(
@@ -370,16 +370,36 @@ export class LoginController {
     }
 
     let changePasswordResponse: User;
+
     if (req.oldPassword) {
+      let oldPassword = req.oldPassword;
+      let newPassword = req.password;
+      if (process.env.PRIVATE_DECRYPTION_KEY) {
+        const decryptedOldPassword = await this.userRepo.decryptPassword(
+          req.oldPassword,
+        );
+        const decryptedNewPassword = await this.userRepo.decryptPassword(
+          req.password,
+        );
+        oldPassword = decryptedOldPassword;
+        newPassword = decryptedNewPassword;
+      }
       changePasswordResponse = await this.userRepo.updatePassword(
         req.username,
-        req.oldPassword,
-        req.password,
+        oldPassword,
+        newPassword,
       );
     } else {
+      let newPassword = req.password;
+      if (process.env.PRIVATE_DECRYPTION_KEY) {
+        const decryptedPassword = await this.userRepo.decryptPassword(
+          req.password,
+        );
+        newPassword = decryptedPassword;
+      }
       changePasswordResponse = await this.userRepo.changePassword(
         req.username,
-        req.password,
+        newPassword,
       );
     }
 
