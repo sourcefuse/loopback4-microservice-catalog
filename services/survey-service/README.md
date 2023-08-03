@@ -1,6 +1,24 @@
-# @sourceloop/survey-service
+<a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-[![LoopBack](<https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+# [@sourceloop/survey-service](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/survey-service)
+
+<p align="left">
+<a href="https://www.npmjs.org/package/@sourceloop/survey-service">
+<img src="https://img.shields.io/npm/v/@sourceloop/survey-service.svg" alt="npm version" />
+</a>
+<a href="https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors" target="_blank">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
+</a>
+<a href="https://www.npmjs.com/@sourceloop/survey-service" target="_blank">
+<img alt="sourceloop survey-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/survey-service">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog" alt="License" />
+</a>
+<a href="https://loopback.io/" target="_blank">
+<img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
+</a>
+</p>
 
 ## Overview
 
@@ -37,6 +55,26 @@ $ [npm install | yarn add] @sourceloop/survey-service
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `SurveyDbSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
+
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1. Change the import statements from `@sourceloop/survey-service` to `@sourceloop/survey-service/sequelize`. This can be done easily with your IDEs find and replace feature.
+
+For example, from this:
+
+```ts
+import {SurveyServiceComponent} from '@sourceloop/survey-service';
+```
+
+to this:
+
+```ts
+import {SurveyServiceComponent} from '@sourceloop/survey-service/sequelize';
+```
+
+2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
 
 ### Environment Variables
 

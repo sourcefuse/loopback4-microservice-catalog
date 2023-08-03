@@ -1,31 +1,6 @@
 import {CoreBindings, inject} from '@loopback/core';
-import {SurveyServiceComponent as SurveyServiceJugglerComponent} from './component';
 import {RestApplication} from '@loopback/rest';
-import {SurveyServiceBindings} from './keys';
-import {ISurveyServiceConfig} from './types';
-import {
-  SurveyRepository,
-  OptionsRepository,
-  SectionRepository,
-  QuestionRepository,
-  SurveyCycleRepository,
-  SurveyResponseRepository,
-  SurveyQuestionRepository,
-  SurveyResponderRepository,
-  QuestionTemplateRepository,
-  TemplateQuestionRepository,
-  SurveyResponseDetailRepository,
-  CreateSurveyHelperService,
-  QuestionDuplicateHelperService,
-  QuestionOptionService,
-  QuestionTemplateService,
-  SectionService,
-  SurveyCycleService,
-  SurveyResponderService,
-  SurveyResponseService,
-  SurveyService,
-  QuestionHelperService,
-} from './sequelize.index';
+import {SurveyServiceComponent as SurveyServiceJugglerComponent} from './component';
 import {
   OptionController,
   QuestionController,
@@ -37,8 +12,33 @@ import {
   TemplateController,
   TemplateQuestionController,
 } from './controllers/sequelize';
+import {SurveyServiceBindings} from './keys';
+import {
+  CreateSurveyHelperService,
+  OptionsRepository,
+  QuestionDuplicateHelperService,
+  QuestionHelperService,
+  QuestionOptionService,
+  QuestionRepository,
+  QuestionTemplateRepository,
+  QuestionTemplateService,
+  SectionRepository,
+  SectionService,
+  SurveyCycleRepository,
+  SurveyCycleService,
+  SurveyQuestionRepository,
+  SurveyRepository,
+  SurveyResponderRepository,
+  SurveyResponderService,
+  SurveyResponseDetailRepository,
+  SurveyResponseRepository,
+  SurveyResponseService,
+  SurveyService,
+  TemplateQuestionRepository,
+} from './sequelize.index';
+import {ISurveyServiceConfig} from './types';
 
-export class SurveyServiceSequelizeComponent extends SurveyServiceJugglerComponent {
+export class SurveyServiceComponent extends SurveyServiceJugglerComponent {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     public application: RestApplication,
