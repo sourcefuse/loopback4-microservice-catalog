@@ -1,18 +1,20 @@
-export interface ICommand<T, N, E extends Error> {
-  parameters: T;
+interface CommandParams {
+  topic: string;
+  variables: any;
+}
+
+export interface ICommand<N, E extends Error> {
+  parameters: CommandParams;
   execute(): Promise<N | E>;
 }
 
-export type BPMNParams = {
-  bpmn: string;
-};
+class BPMNTaskCommand implements ICommand<void, BPMNTaskError> {
+  parameters: CommandParams;
 
-export type BPMNCb = {
-  cb: string;
-};
+  constructor(params: CommandParams) {
+    this.parameters = params;
+  }
 
-class BPMNTaskCommand implements ICommand<BPMNParams, void, BPMNTaskError> {
-  parameters: BPMNParams;
   async execute(): Promise<void | BPMNTaskError> {
     try {
       // do some operation here
@@ -36,29 +38,29 @@ export interface IBPMNTask<T, N> {
   runTask(data: T, done?: (data?: N) => void): Promise<void>;
 }
 
-export class BPMNTask implements IBPMNTask<BPMNParams, BPMNCb> {
-  command: BPMNTaskCommand;
+// export class BPMNTask implements IBPMNTask<BPMNParams, BPMNCb> {
+//   command: BPMNTaskCommand;
 
-  constructor(command?: BPMNTaskCommand) {
-    if (command) {
-      this.command = command;
-    }
-  }
+//   constructor(command?: BPMNTaskCommand) {
+//     if (command) {
+//       this.command = command;
+//     }
+//   }
 
-  async runTask(data: BPMNParams, done?: () => void): Promise<void> {
-    if (data) {
-      this.command.parameters = data;
-    }
-    try {
-      const response = await this.command.execute();
-      if (response instanceof BPMNTaskError) {
-        throw Error('BPMN Task error');
-      }
-      if (done) {
-        done();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-}
+//   async runTask(data: BPMNParams, done?: () => void): Promise<void> {
+//     if (data) {
+//       this.command.parameters = data;
+//     }
+//     try {
+//       const response = await this.command.execute();
+//       if (response instanceof BPMNTaskError) {
+//         throw Error('BPMN Task error');
+//       }
+//       if (done) {
+//         done();
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// }

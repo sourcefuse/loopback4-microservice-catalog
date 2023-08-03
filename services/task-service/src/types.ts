@@ -4,6 +4,8 @@
 // https://opensource.org/licenses/MIT
 /* eslint-disable  @typescript-eslint/naming-convention */
 
+import {AnyObject} from '@loopback/repository';
+
 export const AuthDbSourceName = 'AuthDB';
 export const AuthCacheSourceName = 'AuthCache';
 
@@ -19,7 +21,13 @@ export interface Event {
   key: EventKey;
   description: string;
   source: EventSource;
-  payload: any;
+  payload: EventPayload;
+}
+
+export interface EventPayload {
+  workflowId: string;
+  command: string;
+  commandParams: AnyObject;
 }
 
 export interface Workflow {
