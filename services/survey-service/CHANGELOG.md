@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.2.0 (2023-08-03)
+
+* feat(survey-service): add sequelize support (#1564) ([3efeb46](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3efeb46)), closes [#1564](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1564)
+
+
+### BREAKING CHANGE
+
+* model definitions are altered largely and few methods' access modifiers are changed
+
+
+
+
 ## <small>0.1.2 (2023-07-28)</small>
 
 * refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
