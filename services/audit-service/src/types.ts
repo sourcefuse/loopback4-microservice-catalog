@@ -17,9 +17,8 @@ export type QuerySelectedFilesFn = (
   filter: Filter<AuditLog>,
 ) => Promise<AuditLog[]>;
 
-export type ExportToCsvFn = (
-  selectedAuditLogs: AuditLog[],
-) => Promise<AWS.S3.ManagedUpload.SendData>;
+export type ExportToCsvFn = (selectedAuditLogs: AuditLog[]) => Promise<string>;
+
 export type ExportHandlerFn = (fileBuffer: Buffer) => Promise<void>;
 export type AuditLogExportFn = (data: AnyObject[]) => Promise<void>;
 export type ColumnBuilderFn = (auditLogs: AuditLog[]) => Promise<AnyObject[]>;

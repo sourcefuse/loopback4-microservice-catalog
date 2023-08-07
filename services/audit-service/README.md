@@ -82,6 +82,7 @@ AWS_SECRET_ACCESS_KEY=
 AWS_REGION=
 AWS_S3_BUCKET_NAME=
 PATH_TO_EXPORT_FILES_FOLDER=
+PATH_TO_UPLOAD_FILES=
 ```
 
 ### Configure DataSource
@@ -185,7 +186,15 @@ Here `key` repesents the [AWS S3 object key](https://docs.aws.amazon.com/AmazonS
 #### Archive audit logs
 
 This provides a function that is used to convert the selected data in csv format and the same is exported to AWS S3 bucket as specified in the variables `AWS_ACCESS_KEY_ID`,
-`AWS_SECRET_ACCESS_KEY`,`AWS_REGION`,`AWS_S3_BUCKET_NAME` variables of the `env` file. By default file is exported in csv format on a AWS S3 bucket which can be overwritten using this provider.
+`AWS_SECRET_ACCESS_KEY`,`AWS_REGION`,`AWS_S3_BUCKET_NAME` variables of the `env` file. By default file is exported in csv format on a AWS S3 bucket which can be overwritten using this provider. Value of these can be provided in the config file as well. Also it is necessary to provide the value of`PATH_TO_UPLOAD_FILES` variable in the `env` file. Config file can be binded in application like
+
+```ts
+this.bind(AWSS3Bindings.Config).to({
+  accessKeyId: '', // Replace with your actual access key
+  secretAccessKey: '', // Replace with your actual secret access key
+  region: '', // Replace with your desired AWS region
+} as AwsS3Config);
+```
 
 ```ts
 this.bind(ExportToCsvServiceBindings.EXPORT_LOGS.key).toProvider(
@@ -360,6 +369,12 @@ Implementation for this can be seen [here](src/services/export-handler.service.t
       <td>N</td>
       <td></td>
       <td>Specifies the path to store the exported files.</td>
+    </tr>
+    <tr>
+      <td><code>PATH_TO_UPLOAD_FILES</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Specifies the path to store the archived files on S3 bucket.</td>
     </tr>
     
     

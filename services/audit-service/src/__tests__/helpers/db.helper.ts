@@ -12,7 +12,7 @@ import {
   QuerySelectedFilesProvider,
 } from '../../services';
 import {createStubInstance} from '@loopback/testlab';
-import {listMappingLogs, uploaderResponse} from '../sample-data/mapping-log';
+import {listMappingLogs} from '../sample-data/mapping-log';
 import {AuditServiceApplication} from '../../application';
 import {ExportToCsvFn, AuditLogExportFn, ExportHandlerFn} from '../../types';
 import {AnyObject} from '@loopback/repository';
@@ -46,7 +46,7 @@ export function getTestAuditController() {
     return auditLogExportParam;
   }
   const exportToCsvService: ExportToCsvFn = () =>
-    Promise.resolve(uploaderResponse);
+    Promise.resolve('demoResponse');
   const jobRepository = createStubInstance(JobRepository);
   const mappingLogRepository = createStubInstance(MappingLogRepository);
 

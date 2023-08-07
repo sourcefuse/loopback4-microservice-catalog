@@ -38,9 +38,3 @@ export const listMappingLogs: MappingLog[] = [
     fileName: 'archive2.csv',
   }),
 ];
-export const uploaderResponse: AWS.S3.ManagedUpload.SendData = {
-  Location: 'https://s3.example.com/archive-logs/filename',
-  Bucket: 'archive-logs',
-  Key: 'filename',
-  ETag: 'abc123',
-};

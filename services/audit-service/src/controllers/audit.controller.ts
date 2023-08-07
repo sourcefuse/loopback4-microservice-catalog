@@ -310,11 +310,11 @@ export class AuditController {
       }
       return false;
     });
-    const s3Upload = await this.exportToCsv(selectedAuditLogs);
+    const uploadKey = await this.exportToCsv(selectedAuditLogs);
     /* Creating a mapping log to store the filename and filterused during the archival process*/
     const mappingLog = new MappingLog();
     mappingLog.filterUsed = customFilter;
-    mappingLog.fileName = s3Upload.Key;
+    mappingLog.fileName = uploadKey;
     await this.mappingLogRepository.create(mappingLog);
     /* After successful uploading of csv file and creation of mapping logs we need
     to delete the selected logs from the primary databse */
@@ -334,7 +334,7 @@ export class AuditController {
     return {
       message: 'Entries archived successfully',
       numberOfEntriesArchived: selectedAuditLogs.length,
-      key: s3Upload.Key,
+      key: uploadKey,
     };
   }
   @authenticate(STRATEGY.BEARER)

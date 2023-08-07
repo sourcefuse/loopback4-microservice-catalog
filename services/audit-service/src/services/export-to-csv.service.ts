@@ -1,13 +1,16 @@
-import {injectable, BindingScope, Provider} from '@loopback/core';
+import {PutObjectCommand, S3} from '@aws-sdk/client-s3';
+import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
-import AWS from 'aws-sdk';
-import {ExportToCsvFn} from '../types';
 import {HttpErrors} from '@loopback/rest';
+import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
+import {AWSS3Bindings, AwsS3Config} from '../keys';
+import {ExportToCsvFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
   constructor(
+    @inject(AWSS3Bindings.Config, {optional: true})
+    private readonly config: AwsS3Config,
     @repository(AuditLogRepository)
     public auditLogRepository: AuditLogRepository,
   ) {}
@@ -16,9 +19,7 @@ export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
       return this.exportToCsv(selectedAuditLogs);
     };
   }
-  async exportToCsv(
-    selectedAuditLogs: AuditLog[],
-  ): Promise<AWS.S3.ManagedUpload.SendData> {
+  async exportToCsv(selectedAuditLogs: AuditLog[]): Promise<string> {
     const csvRows = [];
     const header = Object.keys(selectedAuditLogs[0]);
 
@@ -53,25 +54,29 @@ export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
 
     const csvString = csvRows.join('\n');
     const timestamp = new Date().toISOString();
-    const fileName = `audit_logs_${timestamp}.csv`;
+    //Example: PATH_TO_UPLOAD_FILES='/uploads'
+    const fileName = `${process.env?.PATH_TO_UPLOAD_FILES}/audit_logs_${timestamp}.csv`;
 
-    AWS.config = new AWS.Config({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
-    });
-
+    const s3Config: AwsS3Config = {
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? this.config.accessKeyId,
+        secretAccessKey:
+          process.env.AWS_SECRET_ACCESS_KEY ?? this.config.secretAccessKey,
+      },
+      region: process.env.AWS_REGION ?? this.config.region,
+      ...this?.config,
+      // Other properties...
+    };
+    const s3Client: S3 = new S3(s3Config);
     const bucketName = process.env.AWS_S3_BUCKET_NAME;
+    const params = {
+      Body: csvString,
+      Key: fileName,
+      Bucket: bucketName as string,
+    };
     try {
-      const uploaderResponse = await new AWS.S3.ManagedUpload({
-        params: {
-          Body: csvString,
-          Key: fileName,
-          Bucket: bucketName as string,
-        },
-      }).promise();
-
-      return uploaderResponse;
+      await s3Client.send(new PutObjectCommand(params));
+      return params.Key;
     } catch (error) {
       throw new HttpErrors.UnprocessableEntity(error.message);
     }
