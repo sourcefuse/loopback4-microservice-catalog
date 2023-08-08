@@ -1,10 +1,25 @@
-import {injectable, BindingScope, inject, service} from '@loopback/core';
-import {Filter, repository} from '@loopback/repository';
+import {
+  injectable,
+  BindingScope,
+  service,
+  Getter,
+  inject,
+} from '@loopback/core';
+import {AnyObject, Filter, repository} from '@loopback/repository';
 import {EventRepository} from '../repositories/event.repository';
 import {EventModel, WorkflowModel} from '../models';
 import {WorkflowRepository} from '../repositories/workflow.repository';
 import {HttpErrors} from '@loopback/rest';
 import {CamundaService} from './camunda.service';
+import {
+  WorkflowServiceBindings,
+  WorkerRegisterFn,
+  WorkerMap,
+  WorkerImplementationFn,
+  BPMTask,
+} from '@sourceloop/bpmn-service';
+import {InvokeWorkflowCommand, SendNotificationCommand} from '../commands';
+import {TaskOperationService} from './task-operation.service';
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -17,15 +32,19 @@ export class EventProcessorService {
     private readonly workflowRepo: WorkflowRepository,
     @service(CamundaService)
     private readonly camundaService: CamundaService,
+    @service(TaskOperationService)
+    private readonly taskOpsService: TaskOperationService,
+    @inject(WorkflowServiceBindings.RegisterWorkerFunction)
+    private readonly regFn: WorkerRegisterFn,
+    @inject.getter(WorkflowServiceBindings.WORKER_MAP)
+    private readonly workerMapGetter: Getter<WorkerMap>,
+    @inject(WorkflowServiceBindings.WorkerImplementationFunction)
+    private readonly workerFn: WorkerImplementationFn,
   ) {
     // empty constuctor
   }
-  public async processEvent(event: EventModel): Promise<WorkflowModel> {
-    console.log('Event: ', event);
-    // Verify the event's body for proper task command
-    // Perform actions based on the verified command
-
-    // each event in queue should start a master workflow
+  public async processEvent(event: EventModel): Promise<void> {
+    console.log('PROCESSING EVENT - ', event.key);
 
     // adding event to database
     await this.eventRepo.create(event);
@@ -37,9 +56,19 @@ export class EventProcessorService {
     const workflow = await this.findWorkflowByKey(eventType);
 
     if (workflow) {
-      await this.camundaService.execute(workflow.id as string, {});
+      // register workers from topic names
+      const payloadTasks = event.payload.tasks;
+      for (const task of payloadTasks) {
+        this.registerWorkers(workflow, task);
+      }
 
-      return workflow;
+      // init the workers
+      await this.initWorkers(workflow.name);
+
+      // execute the workflow
+      await this.camundaService.execute(workflow.id!, {});
+
+      // return workflow;
     } else {
       throw HttpErrors[404];
     }
@@ -55,5 +84,37 @@ export class EventProcessorService {
     };
 
     return this.workflowRepo.findOne(filter);
+  }
+
+  private async registerWorkers(workflow: WorkflowModel, task: AnyObject) {
+    let cmd;
+    if (task.type == 'notification') {
+      cmd = new SendNotificationCommand(task.topic);
+    } else if (task.type == 'workflow') {
+      cmd = new InvokeWorkflowCommand(
+        task.topic[0],
+        task.topic[1],
+        this.camundaService,
+      );
+    }
+    if (!cmd) {
+      // throw an invalid error
+      return;
+    }
+    this.taskOpsService.addTaskToDB(task);
+    await this.regFn(workflow.name, cmd.topic, new BPMTask(cmd));
+  }
+
+  private async initWorkers(workflowName: string) {
+    const workerMap = await this.workerMapGetter();
+    if (workerMap?.[workflowName]) {
+      const workerList = workerMap[workflowName];
+      for (const worker of workerList) {
+        if (!worker.running) {
+          await this.workerFn(worker);
+          worker.running = true;
+        }
+      }
+    }
   }
 }
