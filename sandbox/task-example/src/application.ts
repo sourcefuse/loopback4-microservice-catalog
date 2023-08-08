@@ -8,14 +8,10 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {
-  WorkflowServiceBindings,
-  WorkflowServiceComponent,
-} from '@sourceloop/bpmn-service';
-import {
   TaskServiceBindings,
   TaskServiceComponent,
 } from '@sourceloop/task-service';
-import {BpmnProvider, SQSConnector} from './providers';
+import {SQSConnector} from './providers';
 
 import path from 'path';
 import {MySequence} from './sequence';
