@@ -9,6 +9,7 @@ import {inject} from '@loopback/core';
 import {EventQueueService} from '../services/event-queue.service';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {EventModel} from '../models';
+import {authorize} from 'loopback4-authorization';
 
 const baseUrl = '/event-queue';
 
@@ -18,6 +19,7 @@ export class EventQueueController {
     private eventQueueService: EventQueueService,
   ) {}
 
+  @authorize({permissions: ['*']})
   @post(`${baseUrl}/enqueue-event`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -47,6 +49,7 @@ export class EventQueueController {
     eventModel: Omit<EventModel, 'id'>,
   ): Promise<void> {
     try {
+      console.log(eventModel);
       await this.eventQueueService.enqueueEvent(eventModel);
     } catch (error) {
       console.log('Enque error', error);

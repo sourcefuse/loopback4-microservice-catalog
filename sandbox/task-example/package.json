@@ -69,6 +69,7 @@
     "@loopback/service-proxy": "^6.1.1",
     "@sourceloop/task-service": "file:../../services/task-service",
     "aws-sdk": "^2.1406.0",
+    "loopback-connector-postgresql": "^5.5.2",
     "node-fetch": "^2.6.12",
     "nodemon": "^2.0.22",
     "tslib": "^2.0.0"
