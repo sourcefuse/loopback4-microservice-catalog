@@ -17,6 +17,7 @@ export class TaskOperationService {
 
   public async addTaskToDB(task: AnyObject) {
     // add a task to DB
-    await this.taskRepo.create(task);
+    // await this.taskRepo.create(task);
+    console.log('Add task to DB ', task);
   }
 }

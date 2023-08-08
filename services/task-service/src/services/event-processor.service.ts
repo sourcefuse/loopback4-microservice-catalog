@@ -7,8 +7,7 @@ import {
 } from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {EventRepository} from '../repositories/event.repository';
-import {EventModel, WorkflowModel} from '../models';
-import {WorkflowRepository} from '../repositories/workflow.repository';
+import {EventModel} from '../models';
 import {HttpErrors} from '@loopback/rest';
 import {CamundaService} from './camunda.service';
 import {
@@ -17,6 +16,8 @@ import {
   WorkerMap,
   WorkerImplementationFn,
   BPMTask,
+  WorkflowRepository,
+  Workflow,
 } from '@sourceloop/bpmn-service';
 import {InvokeWorkflowCommand, SendNotificationCommand} from '../commands';
 import {TaskOperationService} from './task-operation.service';
@@ -47,7 +48,8 @@ export class EventProcessorService {
     console.log('PROCESSING EVENT - ', event.key);
 
     // adding event to database
-    await this.eventRepo.create(event);
+    // await this.eventRepo.create(event);
+    console.log('Added Event to DB- ', event);
 
     // read the event type
     const eventType = event.key;
@@ -66,7 +68,7 @@ export class EventProcessorService {
       await this.initWorkers(workflow.name);
 
       // execute the workflow
-      await this.camundaService.execute(workflow.id!, {});
+      await this.camundaService.execute(workflow.externalIdentifier, {});
 
       // return workflow;
     } else {
@@ -74,19 +76,17 @@ export class EventProcessorService {
     }
   }
 
-  private async findWorkflowByKey(
-    keyValue: string,
-  ): Promise<WorkflowModel | null> {
-    const filter: Filter<WorkflowModel> = {
+  private async findWorkflowByKey(keyValue: string): Promise<Workflow | null> {
+    const filter: Filter<Workflow> = {
       where: {
-        key: keyValue,
+        name: keyValue,
       },
     };
 
     return this.workflowRepo.findOne(filter);
   }
 
-  private async registerWorkers(workflow: WorkflowModel, task: AnyObject) {
+  private async registerWorkers(workflow: Workflow, task: AnyObject) {
     let cmd;
     if (task.type == 'notification') {
       cmd = new SendNotificationCommand(task.topic);
@@ -101,7 +101,7 @@ export class EventProcessorService {
       // throw an invalid error
       return;
     }
-    this.taskOpsService.addTaskToDB(task);
+    await this.taskOpsService.addTaskToDB(task);
     await this.regFn(workflow.name, cmd.topic, new BPMTask(cmd));
   }
 

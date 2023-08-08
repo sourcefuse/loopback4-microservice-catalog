@@ -5,6 +5,7 @@
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 import {AnyObject} from '@loopback/repository';
+import {WorkflowCacheSourceName} from '@sourceloop/bpmn-service';
 
 export const AuthDbSourceName = 'AuthDB';
 export const AuthCacheSourceName = 'AuthCache';
@@ -85,3 +86,4 @@ export enum TaskType {}
 // Define your task types as an enum
 
 export const TaskDbSourceName = 'taskdb';
+export const WorkflowServiceSourceName = WorkflowCacheSourceName;

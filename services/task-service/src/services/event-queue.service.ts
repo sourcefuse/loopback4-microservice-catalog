@@ -25,7 +25,7 @@ export class EventQueueService {
   async enqueueEvent(event: Partial<EventModel>): Promise<void> {
     const connection = await this.connector.connect(this.connector.settings);
     const params = {
-      MessageBody: JSON.stringify(event.payload),
+      MessageBody: JSON.stringify(event),
       QueueUrl: process.env.AWS_QUEUE_URL,
     };
     await connection.sendMessage(params, (err: any, data: any) => {

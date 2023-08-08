@@ -1,9 +1,9 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {TaskDbSourceName} from '@sourceloop/task-service';
+import {WorkflowServiceSourceName} from '@sourceloop/task-service';
 
 const config = {
-  name: TaskDbSourceName,
+  name: WorkflowServiceSourceName,
   connector: 'postgresql',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -18,15 +18,15 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class PgDbDataSource
+export class WorkflowsDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = TaskDbSourceName;
+  static dataSourceName = WorkflowServiceSourceName;
   static readonly defaultConfig = config;
 
   constructor(
-    @inject(`datasources.config.${TaskDbSourceName}`, {optional: true})
+    @inject(`datasources.config.${WorkflowServiceSourceName}`, {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);

@@ -17,11 +17,22 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {EventQueueService} from './services';
+import {
+  CamundaService,
+  EventProcessorService,
+  EventQueueService,
+  HttpClientService,
+  TaskOperationService,
+} from './services';
 import {Connector} from './providers';
 import * as controllers from './controllers';
-import * as services from './services';
 import {TaskServiceBindings} from './keys';
+import {EventRepository, TaskRepository} from './repositories';
+import {
+  WorkflowServiceBindings,
+  WorkflowServiceComponent,
+} from '@sourceloop/bpmn-service';
+import {BpmnProvider} from './providers/bpmn.provider';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -34,9 +45,17 @@ export class TaskServiceComponent implements Component {
 
   providers: ProviderMap = {
     [TaskServiceBindings.TASK_PROVIDER.key]: Connector,
+    [WorkflowServiceBindings.WorkflowManager.key]: BpmnProvider,
   };
 
-  services = [services.EventQueueService, services.EventProcessorService];
+  services = [
+    CamundaService,
+    EventProcessorService,
+    EventQueueService,
+    HttpClientService,
+    TaskOperationService,
+  ];
+
   /**
    * An array of controller classes
    */
@@ -60,7 +79,13 @@ export class TaskServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
+    this.application.component(WorkflowServiceComponent);
+    this.application.bind(WorkflowServiceBindings.Config).to({
+      useCustomSequence: true,
+      workflowEngineBaseUrl: 'http://localhost:8080/engine-rest',
+    });
     this.controllers = [controllers.EventQueueController];
+    this.repositories = [EventRepository, TaskRepository];
   }
 
   /**
