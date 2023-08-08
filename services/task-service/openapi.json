@@ -121,6 +121,9 @@
         "title": "EventModel",
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string"
+          },
           "key": {
             "type": "string"
           },

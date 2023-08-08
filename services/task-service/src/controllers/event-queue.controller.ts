@@ -7,7 +7,6 @@ import {
 } from '@loopback/rest';
 import {inject} from '@loopback/core';
 import {EventQueueService} from '../services/event-queue.service';
-import {Event} from '../types';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {EventModel} from '../models';
 

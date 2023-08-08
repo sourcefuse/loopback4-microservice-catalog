@@ -40,6 +40,7 @@ Base URLs:
 
 ```javascript
 const inputBody = '{
+  "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
@@ -67,6 +68,7 @@ fetch('/event-queue/enqueue-event',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
+  "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
@@ -97,6 +99,7 @@ fetch('/event-queue/enqueue-event',
 
 ```json
 {
+  "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
@@ -116,6 +119,7 @@ fetch('/event-queue/enqueue-event',
 
 ```json
 {
+  "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
@@ -316,6 +320,7 @@ This operation does not require authentication
 
 ```json
 {
+  "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
@@ -330,6 +335,7 @@ EventModel
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|id|string|false|none|none|
 |key|string|true|none|none|
 |description|string|true|none|none|
 |source|string|true|none|none|

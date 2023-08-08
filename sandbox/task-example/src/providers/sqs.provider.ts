@@ -1,9 +1,5 @@
 import {inject, Provider, injectable, BindingScope} from '@loopback/core';
-import {
-  EventQueueConnector,
-  Event,
-  EventProcessorService,
-} from '@sourceloop/task-service';
+import {EventQueueConnector} from '@sourceloop/task-service';
 import {SQS} from 'aws-sdk';
 
 interface SQSEvent {
