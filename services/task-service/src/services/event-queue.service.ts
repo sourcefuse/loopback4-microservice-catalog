@@ -1,5 +1,5 @@
 import {BindingScope, inject, injectable} from '@loopback/context';
-import {EventQueueConnector, Event} from '../types';
+import {EventQueueConnector} from '../types';
 import {asLifeCycleObserver} from '@loopback/core';
 import {TaskServiceBindings} from '../keys';
 import {EventModel} from '../models';
@@ -40,7 +40,7 @@ export class EventQueueService {
 
   async startListening(): Promise<void> {
     const connection = await this.connector.connect(this.connector.settings);
-    connection.onEvent((event: Event) => {
+    connection.onEvent((event: EventModel) => {
       console.log(`Received event: ${JSON.stringify(event)}`);
     });
   }
@@ -68,10 +68,10 @@ export class EventQueueService {
         const messages = data.Messages;
         if (messages && messages.length) {
           for (const message of messages) {
-            const event: Event = JSON.parse(message.Body || '{}');
+            const event: EventModel = JSON.parse(message.Body || '{}');
 
             // Logic to process this event
-            this.eventProcessorService.processEvent(event);
+            await this.eventProcessorService.processEvent(event);
 
             // Delete the processed message from the SQS queue
             await connection

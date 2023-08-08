@@ -12,6 +12,11 @@ import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+import {
+  WorkflowServiceComponent,
+  WorkflowServiceBindings,
+} from '@sourceloop/bpmn-service';
+import {BpmnProvider} from './providers/bpmn.provider';
 
 export {ApplicationConfig};
 
@@ -30,6 +35,15 @@ export class TaskServiceApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+
+    this.component(WorkflowServiceComponent);
+
+    this.bind(WorkflowServiceBindings.Config).to({
+      useCustomSequence: true,
+      workflowEngineBaseUrl: process.env.CAMUNDA_URL,
+    });
+
+    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
 
     this.bootOptions = {
       controllers: {

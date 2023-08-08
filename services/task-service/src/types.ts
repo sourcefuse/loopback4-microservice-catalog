@@ -17,13 +17,6 @@ export interface EventQueueConnector {
   ping(): Promise<any>;
 }
 
-export interface Event {
-  key: EventKey;
-  description: string;
-  source: EventSource;
-  payload: EventPayload;
-}
-
 export interface EventPayload {
   workflowId: string;
   command: string;
@@ -78,15 +71,6 @@ export enum TaskKey {}
 
 export enum WorkflowKey {}
 // Define your workflow keys as an enum
-
-export enum EventKey {}
-// Define your event keys as an enum
-
-export enum EventSource {}
-// Define your event sources as an enum
-
-export enum TaskKey {}
-// Define your task keys as an enum
 
 export enum TaskStatus {}
 // Define your task statuses as an enum
