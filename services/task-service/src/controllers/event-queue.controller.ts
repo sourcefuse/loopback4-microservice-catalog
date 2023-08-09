@@ -49,7 +49,6 @@ export class EventQueueController {
     eventModel: Omit<EventModel, 'id'>,
   ): Promise<void> {
     try {
-      console.log(eventModel);
       await this.eventQueueService.enqueueEvent(eventModel);
     } catch (error) {
       console.log('Enque error', error);

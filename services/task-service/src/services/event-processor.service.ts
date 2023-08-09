@@ -61,7 +61,7 @@ export class EventProcessorService {
       // register workers from topic names
       const payloadTasks = event.payload.tasks;
       for (const task of payloadTasks) {
-        this.registerWorkers(workflow, task);
+        await this.registerWorkers(workflow, task);
       }
 
       // init the workers
@@ -69,8 +69,6 @@ export class EventProcessorService {
 
       // execute the workflow
       await this.camundaService.execute(workflow.externalIdentifier, {});
-
-      // return workflow;
     } else {
       throw HttpErrors[404];
     }
