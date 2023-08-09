@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.0 (2023-08-09)
+
+* feat(audit-service): allow forwarding aws s3 config via binding (#1582) ([8492407](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8492407)), closes [#1582](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1582) [#1581](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1581)
+
+
+
+
+
 ## <small>7.1.3 (2023-07-28)</small>
 
 * refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
