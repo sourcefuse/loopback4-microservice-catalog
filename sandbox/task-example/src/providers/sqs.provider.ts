@@ -1,4 +1,5 @@
 import {inject, Provider, injectable, BindingScope} from '@loopback/core';
+// @ts-ignore
 import {EventQueueConnector} from '@sourceloop/task-service';
 import {SQS} from 'aws-sdk';
 

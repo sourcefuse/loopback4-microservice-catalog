@@ -49,7 +49,6 @@ export class EventProcessorService {
 
     // adding event to database
     // await this.eventRepo.create(event);
-    console.log('Added Event to DB- ', event);
 
     // read the event type
     const eventType = event.key;
