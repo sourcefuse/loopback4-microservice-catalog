@@ -23,9 +23,8 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import * as fs from 'fs/promises';
 import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
-import NodeRSA from 'node-rsa';
+import {AuthServiceBindings} from '../keys';
 import {
   Tenant,
   User,
@@ -33,6 +32,7 @@ import {
   UserRelations,
   UserTenant,
 } from '../models';
+import {PasswordDecryptionFn} from '../providers';
 import {AuthDbSourceName} from '../types';
 import {OtpRepository} from './otp.repository';
 import {TenantRepository} from './tenant.repository';
@@ -71,6 +71,8 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER)
+    private readonly passwordDecryptionFn: PasswordDecryptionFn,
   ) {
     super(User, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
@@ -129,7 +131,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   async verifyPassword(username: string, password: string): Promise<User> {
     let newPassword = password;
     if (process.env.PRIVATE_DECRYPTION_KEY) {
-      const decryptedPassword = await this.decryptPassword(password);
+      const decryptedPassword = await this.passwordDecryptionFn(password);
       newPassword = decryptedPassword;
     }
     const user = await super.findOne({
@@ -150,14 +152,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     }
   }
   async decryptPassword(password: string): Promise<string> {
-    if (!process.env.PRIVATE_DECRYPTION_KEY) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-    }
-    const privateKey = (await fs.readFile(
-      process.env.PRIVATE_DECRYPTION_KEY ?? '',
-    )) as Buffer;
-    const key = new NodeRSA(privateKey);
-    const decryptedPassword = key.decrypt(password, 'utf8');
+    const decryptedPassword = await this.passwordDecryptionFn(password);
     return decryptedPassword;
   }
   async updatePassword(

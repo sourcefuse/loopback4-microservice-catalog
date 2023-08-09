@@ -4,7 +4,11 @@
 // https://opensource.org/licenses/MIT
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
-import {ForgotPasswordHandlerFn, JwtPayloadFn} from './providers';
+import {
+  ForgotPasswordHandlerFn,
+  JwtPayloadFn,
+  PasswordDecryptionFn,
+} from './providers';
 import {
   ActorId,
   IAuthServiceConfig,
@@ -29,7 +33,10 @@ export namespace AuthServiceBindings {
   export const JWTPayloadProvider = BindingKey.create<JwtPayloadFn>(
     `${BINDING_PREFIX}.auth.jwt.payload`,
   );
-
+  export const PASSWORD_DECRYPTION_PROVIDER =
+    BindingKey.create<PasswordDecryptionFn>(
+      `sf.auth.password.decryption.provider`,
+    );
   export const ForgotPasswordHandler =
     BindingKey.create<ForgotPasswordHandlerFn>(
       `${BINDING_PREFIX}.forgetpassword.handler.provider`,

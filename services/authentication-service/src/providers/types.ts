@@ -3,6 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {DataObject} from '@loopback/repository';
+import * as SamlStrategy from '@node-saml/passport-saml';
+import {SignOptions, VerifyOptions} from 'jsonwebtoken';
 import {
   Cognito,
   IAuthClient,
@@ -10,11 +12,10 @@ import {
   Keycloak,
 } from 'loopback4-authentication';
 import * as AppleStrategy from 'passport-apple';
+import * as AzureADStrategy from 'passport-azure-ad';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
 import * as InstagramStrategy from 'passport-instagram';
-import * as AzureADStrategy from 'passport-azure-ad';
-import * as SamlStrategy from '@node-saml/passport-saml';
 import {
   AuthClient,
   ForgetPasswordResponseDto,
@@ -23,7 +24,6 @@ import {
   UserRelations,
 } from '../models';
 import {AuthUser, OtpResponse} from '../modules/auth';
-import {SignOptions, VerifyOptions} from 'jsonwebtoken';
 
 export type GoogleSignUpFn = (
   profile: GoogleStrategy.Profile,
@@ -40,7 +40,7 @@ export type GooglePostVerifyFn = (
   profile: GoogleStrategy.Profile,
   user: IAuthUser | null,
 ) => Promise<IAuthUser | null>;
-
+export type PasswordDecryptionFn = (password: string) => Promise<string>;
 export type InstagramSignUpFn = (
   profile: InstagramStrategy.Profile,
 ) => Promise<(User & UserRelations) | null>;
