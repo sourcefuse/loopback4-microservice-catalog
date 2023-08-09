@@ -1,5 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+// @ts-ignore
 import {TaskDbSourceName} from '@sourceloop/task-service';
 
 const config = {

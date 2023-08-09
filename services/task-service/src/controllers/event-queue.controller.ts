@@ -10,6 +10,7 @@ import {EventQueueService} from '../services/event-queue.service';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {EventModel} from '../models';
 import {authorize} from 'loopback4-authorization';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 
 const baseUrl = '/event-queue';
 
@@ -19,6 +20,7 @@ export class EventQueueController {
     private eventQueueService: EventQueueService,
   ) {}
 
+  // @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
   @post(`${baseUrl}/enqueue-event`, {
     responses: {

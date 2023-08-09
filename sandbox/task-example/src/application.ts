@@ -7,9 +7,11 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+
 import {
   TaskServiceBindings,
   TaskServiceComponent,
+  // @ts-ignore
 } from '@sourceloop/task-service';
 import {SQSConnector} from './providers';
 
