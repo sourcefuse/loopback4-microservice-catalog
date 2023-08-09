@@ -98,6 +98,7 @@ import {KeyCloakSignupProvider} from './providers/keycloak-signup.provider';
 import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MfaProvider} from './providers/mfa.provider';
+import {PasswordDecryptionProvider} from './providers/password-decryption.provider';
 import {repositories} from './repositories';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
@@ -250,6 +251,8 @@ export class AuthenticationServiceComponent implements Component {
       CognitoOauth2SignupProvider;
     this.providers[SignUpBindings.LOCAL_SIGNUP_PROVIDER.key] =
       LocalSignupProvider;
+    this.providers[AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER.key] =
+      PasswordDecryptionProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
       LocalPreSignupProvider;
     this.providers[SignUpBindings.SIGNUP_HANDLER_PROVIDER.key] =
