@@ -80,6 +80,8 @@ export class EventQueueService {
                 ReceiptHandle: message.ReceiptHandle!,
               })
               .promise();
+
+            // broadcast that the event has been processed
           }
         }
       } catch (error) {
