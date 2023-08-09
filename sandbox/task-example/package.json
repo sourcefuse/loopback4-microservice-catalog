@@ -35,7 +35,9 @@
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "dev": "nodemon src/index.ts",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "db-migrate": "./node_modules/db-migrate/bin/db-migrate up --config './database.json'",
+    "db-migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './database.json'"
   },
   "nodemonConfig": {
     "verbose": true,
@@ -67,8 +69,13 @@
     "@loopback/rest": "^13.1.1",
     "@loopback/rest-explorer": "^6.1.1",
     "@loopback/service-proxy": "^6.1.1",
+    "@sourceloop/core": "^8.0.4",
     "@sourceloop/task-service": "file:../../services/task-service",
     "aws-sdk": "^2.1406.0",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.3.0",
+    "kv-redis": "^0.1.3",
+    "loopback-connector-kv-redis": "^3.0.3",
     "loopback-connector-postgresql": "^5.5.2",
     "node-fetch": "^2.6.12",
     "nodemon": "^2.0.22",

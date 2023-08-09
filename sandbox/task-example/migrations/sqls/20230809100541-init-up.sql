@@ -43,7 +43,7 @@ CREATE TABLE "main".task_assignements
     id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
     task_id              uuid,
     assignee_id          uuid    NOT NULL,
-    assignment_date      timestamptz,,
+    assignment_date      timestamptz,
     status               varchar,
     CONSTRAINT pk_task_assignments_id PRIMARY KEY (id),
     CONSTRAINT fk_tasks FOREIGN KEY (task_id) REFERENCES "main".tasks (id),
