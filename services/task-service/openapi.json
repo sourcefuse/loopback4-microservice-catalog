@@ -22,7 +22,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventModel"
+                  "$ref": "#/components/schemas/Events"
                 }
               }
             }
@@ -39,7 +39,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EventModel"
+                "$ref": "#/components/schemas/Events"
               }
             }
           }
@@ -528,8 +528,8 @@
         ],
         "additionalProperties": false
       },
-      "EventModel": {
-        "title": "EventModel",
+      "Events": {
+        "title": "Events",
         "type": "object",
         "properties": {
           "id": {

@@ -54,24 +54,28 @@ export class Tasks extends Entity {
   @property({
     type: 'date',
     required: false,
+    name: 'start_date',
   })
   startDate?: Date;
 
   @property({
     type: 'date',
     required: false,
+    name: 'due_date',
   })
   dueDate?: Date;
 
   @property({
     type: 'date',
     required: false,
+    name: 'end_date',
   })
   endDate?: Date;
 
   @property({
     type: 'string',
     required: true,
+    name: 'assignee_id',
   })
   assigneeId: string;
 }

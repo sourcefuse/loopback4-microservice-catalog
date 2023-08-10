@@ -12,6 +12,7 @@ const config = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   schema: process.env.DB_SCHEMA,
+  debug: true,
 };
 
 // Observe application's life cycle to disconnect the datasource when
