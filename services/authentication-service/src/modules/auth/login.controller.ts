@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {AnyObject, repository} from '@loopback/repository';
+import {AnyObject, DataObject, Model, repository} from '@loopback/repository';
 import {
   HttpErrors,
   RequestContext,
@@ -372,34 +372,15 @@ export class LoginController {
     let changePasswordResponse: User;
 
     if (req.oldPassword) {
-      let oldPassword = req.oldPassword;
-      let newPassword = req.password;
-      if (process.env.PRIVATE_DECRYPTION_KEY) {
-        const decryptedOldPassword = await this.userRepo.decryptPassword(
-          req.oldPassword,
-        );
-        const decryptedNewPassword = await this.userRepo.decryptPassword(
-          req.password,
-        );
-        oldPassword = decryptedOldPassword;
-        newPassword = decryptedNewPassword;
-      }
-      changePasswordResponse = await this.userRepo.updatePassword(
+      changePasswordResponse = await this.getPasswordResponse(
         req.username,
-        oldPassword,
-        newPassword,
+        req.password,
+        req.oldPassword,
       );
     } else {
-      let newPassword = req.password;
-      if (process.env.PRIVATE_DECRYPTION_KEY) {
-        const decryptedPassword = await this.userRepo.decryptPassword(
-          req.password,
-        );
-        newPassword = decryptedPassword;
-      }
-      changePasswordResponse = await this.userRepo.changePassword(
+      changePasswordResponse = await this.getPasswordResponse(
         req.username,
-        newPassword,
+        req.password,
       );
     }
 
@@ -428,7 +409,34 @@ export class LoginController {
       success: true,
     });
   }
-
+  async getPasswordResponse(
+    userName: string,
+    password: string,
+    prevPassword?: string,
+  ): Promise<User<DataObject<Model>>> {
+    if (prevPassword) {
+      let oldPassword = prevPassword;
+      let newPassword = password;
+      if (process.env.PRIVATE_DECRYPTION_KEY) {
+        const decryptedOldPassword = await this.userRepo.decryptPassword(
+          oldPassword,
+        );
+        const decryptedNewPassword = await this.userRepo.decryptPassword(
+          password,
+        );
+        oldPassword = decryptedOldPassword;
+        newPassword = decryptedNewPassword;
+      }
+      return this.userRepo.updatePassword(userName, oldPassword, newPassword);
+    } else {
+      let newPassword = password;
+      if (process.env.PRIVATE_DECRYPTION_KEY) {
+        const decryptedPassword = await this.userRepo.decryptPassword(password);
+        newPassword = decryptedPassword;
+      }
+      return this.userRepo.changePassword(userName, newPassword);
+    }
+  }
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
