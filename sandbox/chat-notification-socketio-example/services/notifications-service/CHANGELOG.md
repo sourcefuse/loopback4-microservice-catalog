@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.32 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-notif-socket
+
+
+
+
+
 ## <small>0.3.31 (2023-07-28)</small>
 
 * chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/chat-notification-socketio-example/serv ([bd74395](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bd74395)), closes [#1572](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1572)

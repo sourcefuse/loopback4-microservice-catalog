@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.20 (2023-08-10)</small>
+
+* [Snyk] Upgrade loopback-connector-postgresql from 6.0.5 to 6.0.6 (#1584) ([a798606](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a798606)), closes [#1584](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1584)
+
+
+
+
+
 ## <small>6.0.19 (2023-08-09)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

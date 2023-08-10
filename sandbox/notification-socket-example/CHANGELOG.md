@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.18 (2023-08-10)</small>
+
+* [Snyk] Upgrade firebase-admin from 11.9.0 to 11.10.1 (#1595) ([0b32429](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b32429)), closes [#1595](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1595)
+* [Snyk] Upgrade nodemailer from 6.9.3 to 6.9.4 (#1599) ([b5db0cc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b5db0cc)), closes [#1599](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1599)
+
+
+
+
+
 ## <small>5.0.17 (2023-07-28)</small>
 
 * chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/notification-socket-example (#1574) ([e8eb14a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e8eb14a)), closes [#1574](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1574)

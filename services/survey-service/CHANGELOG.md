@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/survey-service
+
+
+
+
+
 ## 0.2.0 (2023-08-03)
 
 * feat(survey-service): add sequelize support (#1564) ([3efeb46](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3efeb46)), closes [#1564](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1564)

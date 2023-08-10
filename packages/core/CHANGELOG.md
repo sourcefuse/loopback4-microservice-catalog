@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.0.5 (2023-08-10)</small>
+
+* fix(core): move `findRoute` to the top in SecureSequence (#1601) ([a751e65](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a751e65)), closes [#1601](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1601) [#1600](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1600)
+
+
+
+
+
 ## <small>8.0.4 (2023-07-28)</small>
 
 * refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)

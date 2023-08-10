@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.2.4 (2023-08-10)</small>
+
+* refactor(authentication-service): fix sonar code smell (#1598) ([48d7afc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/48d7afc)), closes [#1598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1598) [#1597](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1597)
+
+
+
+
+
 ## <small>11.2.3 (2023-08-09)</small>
 
 * fix(authentication-service): submission of encrypted password in authentication service. (#1593) ([3dcee5c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3dcee5c)), closes [#1593](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1593) [#1592](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1592) [#1592](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1592)

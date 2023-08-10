@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.1 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## 7.2.0 (2023-08-09)
 
 * feat(audit-service): allow forwarding aws s3 config via binding (#1582) ([8492407](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8492407)), closes [#1582](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1582) [#1581](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1581)

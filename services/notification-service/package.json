@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-service",
-  "version": "7.0.6",
+  "version": "7.0.7",
   "description": "notification microservice",
   "keywords": [
     "loopback-extension",
@@ -61,7 +61,7 @@
     "@loopback/rest": "^13.1.0",
     "@loopback/rest-explorer": "^6.1.0",
     "@loopback/service-proxy": "^6.1.0",
-    "@sourceloop/core": "^8.0.4",
+    "@sourceloop/core": "^8.0.5",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^9.0.0",

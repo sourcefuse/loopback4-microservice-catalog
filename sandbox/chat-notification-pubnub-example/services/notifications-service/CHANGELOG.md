@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.18 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
 ## <small>0.4.17 (2023-07-28)</small>
 
 * chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/chat-notification-pubnub-example/servic ([73e5040](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/73e5040)), closes [#1573](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1573)
