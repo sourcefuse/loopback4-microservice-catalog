@@ -2,27 +2,27 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {
-  SessionOptions,
-  MeetingOptions,
-  SessionResponse,
-  VideoChatInterface,
-  ArchiveResponse,
-  ArchiveResponseList,
-  MeetingResponse,
-} from '../types';
-import {VideoChatSession, SessionAttendees} from '../models';
+import {sinon} from '@loopback/testlab';
+import moment from 'moment';
+import {RecordingInstance} from 'twilio/lib/rest/video/v1/recording';
+import {RoomInstance} from 'twilio/lib/rest/video/v1/room';
+import {TwilioMeetingOptions} from '..';
+import {VonageEnums} from '../enums/video-chat.enum';
+import {SessionAttendees, VideoChatSession} from '../models';
 import {
   VonageMeetingOptions,
   VonageSessionOptions,
   VonageSessionWebhookPayload,
 } from '../providers/vonage';
-import {VonageEnums} from '../enums/video-chat.enum';
-import moment from 'moment';
-import {sinon} from '@loopback/testlab';
-import {TwilioMeetingOptions} from '..';
-import {RoomInstance} from 'twilio/lib/rest/video/v1/room';
-import {RecordingInstance} from 'twilio/lib/rest/video/v1/recording';
+import {
+  ArchiveResponse,
+  ArchiveResponseList,
+  MeetingOptions,
+  MeetingResponse,
+  SessionOptions,
+  SessionResponse,
+  VideoChatInterface,
+} from '../types';
 
 const meetingLink = 'dummy-meeting-link-id';
 const sessionId = 'dummy-session-id';
@@ -30,15 +30,12 @@ const sessionId = 'dummy-session-id';
 export function getVideoChatSession(
   videoChatSession: Partial<VideoChatSession>,
 ) {
-  const data = Object.assign(
-    {
-      sessionId: sessionId,
-      meetingLink: meetingLink,
-      isScheduled: false,
-    },
-    videoChatSession,
-  );
-
+  const data = {
+    sessionId: sessionId,
+    meetingLink: meetingLink,
+    isScheduled: false,
+    ...videoChatSession,
+  };
   return new VideoChatSession(data);
 }
 
@@ -61,18 +58,16 @@ export function getDatePastThreshold(threshold: number) {
 }
 
 export function setUpMockProvider(providerStub: Partial<VideoChatInterface>) {
-  return Object.assign(
-    {
-      getMeetingLink: sinon.stub().returnsThis(),
-      getToken: sinon.stub().returnsThis(),
-      getArchives: sinon.stub().returnsThis(),
-      deleteArchive: sinon.stub().returnsThis(),
-      setUploadTarget: sinon.stub().returnsThis(),
-      getFeatures: sinon.stub().returns(getVideoChatFeatures()),
-      checkWebhookPayload: sinon.stub().returnsThis(),
-    },
-    providerStub,
-  );
+  const stubbedProvider = {
+    getMeetingLink: sinon.stub().returnsThis(),
+    getToken: sinon.stub().returnsThis(),
+    getArchives: sinon.stub().returnsThis(),
+    deleteArchive: sinon.stub().returnsThis(),
+    setUploadTarget: sinon.stub().returnsThis(),
+    getFeatures: sinon.stub().returns(getVideoChatFeatures()),
+    checkWebhookPayload: sinon.stub().returnsThis(),
+  };
+  return Object.assign(stubbedProvider, providerStub);
 }
 
 export function getVideoChatFeatures() {
@@ -82,94 +77,78 @@ export function getVideoChatFeatures() {
   };
 }
 export function getMeetingOptions(meetingOptions: Partial<MeetingOptions>) {
-  return Object.assign(
-    {
-      enableArchiving: true,
-      isScheduled: false,
-    },
-    meetingOptions,
-  );
+  return {
+    enableArchiving: true,
+    isScheduled: false,
+    ...meetingOptions,
+  };
 }
 
 export function getSessionOptions(sessionOptions: Partial<SessionOptions>) {
-  return Object.assign(
-    {
-      meetingLink: meetingLink,
-      expireTime: getFutureDate(),
-    },
-    sessionOptions,
-  );
+  return {
+    meetingLink: meetingLink,
+    expireTime: getFutureDate(),
+    ...sessionOptions,
+  };
 }
 
 export function getVonageMeetingResponse(
   meetingResponse: Partial<MeetingResponse>,
 ) {
-  return Object.assign(
-    {
-      mediaMode: VonageEnums.MediaMode.Routed,
-      archiveMode: VonageEnums.ArchiveMode.Always,
-      sessionId: sessionId,
-    },
-    meetingResponse,
-  );
+  return {
+    mediaMode: VonageEnums.MediaMode.Routed,
+    archiveMode: VonageEnums.ArchiveMode.Always,
+    sessionId: sessionId,
+    ...meetingResponse,
+  };
 }
 
 export function getSessionResponse(sessionResponse: Partial<SessionResponse>) {
-  return Object.assign(
-    {
-      sessionId: sessionId,
-      token: 'token',
-    },
-    sessionResponse,
-  );
+  return {
+    sessionId: sessionId,
+    token: 'token',
+    ...sessionResponse,
+  };
 }
 
 export function getArchiveResponse(archiveResponse: Partial<ArchiveResponse>) {
-  return Object.assign(
-    {
-      sessionId: sessionId,
-    },
-    archiveResponse,
-  );
+  return {
+    sessionId: sessionId,
+    ...archiveResponse,
+  };
 }
 
 export function getArchiveResponseList(
   archiveResponseList: Partial<ArchiveResponseList>,
 ) {
   const dummyCount = 1;
-  return Object.assign(
-    {
-      count: dummyCount,
-      items: [getArchiveResponse],
-    },
-    archiveResponseList,
-  );
+  return {
+    count: dummyCount,
+    items: [getArchiveResponse],
+    ...archiveResponseList,
+  };
 }
 
 export function getVonageMeetingOptions(
   vonageMeetingOptions: Partial<VonageMeetingOptions>,
 ) {
-  return Object.assign(
-    {
-      isScheduled: false,
-    },
-    vonageMeetingOptions,
-  );
+  return {
+    isScheduled: false,
+    ...vonageMeetingOptions,
+  };
 }
 
 export function getVonageSessionOptions(
   vonageSessionOptions: Partial<VonageSessionOptions>,
 ) {
-  return Object.assign(
-    {
-      meetingLink: meetingLink,
-      meetingId: 'dummy-meeting-id',
-      expireTime: getFutureDate(),
-      role: VonageEnums.Role.Subscriber,
-      sessionId: 'dummy-session-id',
-    },
-    vonageSessionOptions,
-  );
+  return {
+    meetingLink: meetingLink,
+    meetingId: 'dummy-meeting-id',
+    expireTime: getFutureDate(),
+    role: VonageEnums.Role.Subscriber,
+    sessionId: 'dummy-session-id',
+    ...vonageSessionOptions,
+  };
 }
 
 export function getVonageArchive() {
@@ -214,20 +193,18 @@ export function getVonageArchiveList() {
 export function getWebhookPayload(
   vonageSessionWebhookPayload: Partial<VonageSessionWebhookPayload>,
 ) {
-  return Object.assign(
-    {
-      sessionId: sessionId,
-      projectId: '123456',
-      event: 'connectionCreated',
-      timestamp: 1470257688309,
-      connection: {
-        id: 'c053fcc8-c681-41d5-8ec2-7a9e1434a21e',
-        createdAt: 1470257688143,
-        data: 'TOKENDATA',
-      },
+  return {
+    sessionId: sessionId,
+    projectId: '123456',
+    event: 'connectionCreated',
+    timestamp: 1470257688309,
+    connection: {
+      id: 'c053fcc8-c681-41d5-8ec2-7a9e1434a21e',
+      createdAt: 1470257688143,
+      data: 'TOKENDATA',
     },
-    vonageSessionWebhookPayload,
-  );
+    ...vonageSessionWebhookPayload,
+  } as VonageSessionWebhookPayload;
 }
 
 export const stream = {
@@ -270,12 +247,10 @@ export function getAttendeesList() {
 export function getTwilioMeetingOptions(
   twilioMeetingOptions: Partial<TwilioMeetingOptions>,
 ) {
-  return Object.assign(
-    {
-      isScheduled: false,
-    },
-    twilioMeetingOptions,
-  );
+  return {
+    isScheduled: false,
+    ...twilioMeetingOptions,
+  };
 }
 
 export function getRoomInstance(): Promise<RoomInstance> {

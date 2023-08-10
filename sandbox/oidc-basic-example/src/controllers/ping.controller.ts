@@ -1,10 +1,10 @@
 import {inject} from '@loopback/core';
 import {
   Request,
+  ResponseObject,
   RestBindings,
   get,
   response,
-  ResponseObject,
 } from '@loopback/rest';
 
 /**
@@ -50,7 +50,7 @@ export class PingController {
       greeting: 'Hello from LoopBack',
       date: new Date(),
       url: this.req.url,
-      headers: Object.assign({}, this.req.headers),
+      headers: {...this.req.headers},
     };
   }
 }

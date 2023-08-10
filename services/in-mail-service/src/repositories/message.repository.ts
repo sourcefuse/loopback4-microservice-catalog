@@ -105,7 +105,7 @@ export class MessageRepository extends DefaultTransactionSoftCrudRepository<
         createdOn: new Date(),
       };
 
-      const transactionOptions = Object.assign({}, options, {transaction});
+      const transactionOptions = {...options, transaction};
 
       Object.assign(extractedEntity.message, createdOnBy);
       const message = await this.create(extractedEntity.message);

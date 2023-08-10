@@ -1,5 +1,5 @@
 import {inject} from '@loopback/core';
-import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
+import {Request, ResponseObject, RestBindings, get} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 
 /**
@@ -50,7 +50,7 @@ export class PingController {
       greeting: 'Hello from LoopBack',
       date: new Date(),
       url: this.req.url,
-      headers: Object.assign({}, this.req.headers),
+      headers: {...this.req.headers},
     };
   }
 }

@@ -73,7 +73,7 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       delete user.authClientIds;
 
       // Create user DTO for payload to JWT
-      const authUser: AuthUser = new AuthUser(Object.assign({}, user));
+      const authUser: AuthUser = new AuthUser({...user});
       this._removeUnnecessaryData(authUser);
 
       // Add locale info
