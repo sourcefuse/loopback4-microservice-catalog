@@ -62,7 +62,7 @@
     "firebase-admin": "^11.9.0",
     "loopback4-authorization": "^5.0.9",
     "loopback4-soft-delete": "^7.0.2",
-    "nodemailer": "^6.7.5",
+    "nodemailer": "^6.9.4",
     "prom-client": "^14.0.1",
     "socket.io-client": "^4.5.1",
     "tslib": "^2.0.0"
