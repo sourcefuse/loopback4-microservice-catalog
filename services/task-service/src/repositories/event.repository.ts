@@ -1,16 +1,11 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {EventModel} from '../models';
-import {Getter, inject} from '@loopback/core';
+import {Events} from '../models';
+import {inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class EventRepository extends DefaultCrudRepository<
-  EventModel,
-  typeof EventModel.prototype.id
+  Events,
+  typeof Events.prototype.id
 > {
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
@@ -20,6 +15,6 @@ export class EventRepository extends DefaultCrudRepository<
     //   IAuthUserWithPermissions | undefined
     // >,
   ) {
-    super(EventModel, dataSource);
+    super(Events, dataSource);
   }
 }

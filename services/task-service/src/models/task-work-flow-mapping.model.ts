@@ -1,7 +1,9 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model()
-export class Events extends Entity {
+@model({
+  name: 'task_workflow_mappings',
+})
+export class TaskWorkFlowMapping extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -12,24 +14,14 @@ export class Events extends Entity {
   @property({
     type: 'string',
     required: true,
+    name: 'workflow_key',
   })
-  key: string;
+  workflowKey: string;
 
   @property({
     type: 'string',
     required: true,
+    name: 'task_key',
   })
-  description: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  source: string;
-
-  @property({
-    type: 'object',
-    required: true,
-  })
-  payload: any;
+  taskKey: string;
 }

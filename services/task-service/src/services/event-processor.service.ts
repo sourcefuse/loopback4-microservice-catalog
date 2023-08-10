@@ -7,7 +7,12 @@ import {
 } from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {EventRepository} from '../repositories/event.repository';
-import {EventModel} from '../models';
+import {
+  Events,
+  EventWorkflowMapping,
+  Tasks,
+  TaskWorkFlowMapping,
+} from '../models';
 import {HttpErrors} from '@loopback/rest';
 import {CamundaService} from './camunda.service';
 import {
@@ -21,6 +26,10 @@ import {
 } from '@sourceloop/bpmn-service';
 import {InvokeWorkflowCommand, SendNotificationCommand} from '../commands';
 import {TaskOperationService} from './task-operation.service';
+import {
+  EventWorkflowMappingRepository,
+  TaskWorkFlowMappingRepository,
+} from '../repositories';
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -31,6 +40,10 @@ export class EventProcessorService {
     private readonly eventRepo: EventRepository,
     @repository(WorkflowRepository)
     private readonly workflowRepo: WorkflowRepository,
+    @repository(EventWorkflowMappingRepository)
+    private readonly eventWorkflowMappingRepo: EventWorkflowMappingRepository,
+    @repository(TaskWorkFlowMappingRepository)
+    private readonly taskWorkflowMappingRepo: TaskWorkFlowMappingRepository,
     @service(CamundaService)
     private readonly camundaService: CamundaService,
     @service(TaskOperationService)
@@ -44,32 +57,36 @@ export class EventProcessorService {
   ) {
     // empty constuctor
   }
-  public async processEvent(event: EventModel): Promise<void> {
+  public async processEvent(event: Events): Promise<void> {
     console.log('PROCESSING EVENT - ', event.key);
 
     // adding event to database
-    // await this.eventRepo.create(event);
+    await this.eventRepo.create(event);
 
-    // read the event type
-    const eventType = event.key;
+    //get workflow key from event key
+    const eventWorkflowMapping = await this.findEventWorkflowByKey(event.key);
 
-    // fetch workflow by key and return it
-    const workflow = await this.findWorkflowByKey(eventType);
+    if (eventWorkflowMapping) {
+      // fetch workflow by key and return it
+      const workflow = await this.findWorkflowByKey(
+        eventWorkflowMapping.workflowKey,
+      );
 
-    if (workflow) {
-      // register workers from topic names
-      const payloadTasks = event.payload.tasks;
-      for (const task of payloadTasks) {
-        await this.registerWorkers(workflow, task);
+      if (workflow) {
+        // register workers from topic names
+        const payloadTasks = event.payload.tasks;
+        for (const task of payloadTasks) {
+          await this.registerWorkers(workflow, task);
+        }
+
+        // init the workers
+        await this.initWorkers(workflow.name);
+
+        // execute the workflow
+        await this.camundaService.execute(workflow.externalIdentifier, {});
+      } else {
+        throw HttpErrors[404];
       }
-
-      // init the workers
-      await this.initWorkers(workflow.name);
-
-      // execute the workflow
-      await this.camundaService.execute(workflow.externalIdentifier, {});
-    } else {
-      throw HttpErrors[404];
     }
   }
 
@@ -83,22 +100,53 @@ export class EventProcessorService {
     return this.workflowRepo.findOne(filter);
   }
 
+  private async findEventWorkflowByKey(
+    keyValue: string,
+  ): Promise<EventWorkflowMapping | null> {
+    const filter: Filter<EventWorkflowMapping> = {
+      where: {
+        eventKey: keyValue,
+      },
+    };
+
+    return this.eventWorkflowMappingRepo.findOne(filter);
+  }
+
+  private async findTaskWorkflowByKey(
+    keyValue: string,
+  ): Promise<TaskWorkFlowMapping | null> {
+    const filter: Filter<TaskWorkFlowMapping> = {
+      where: {
+        taskKey: keyValue,
+      },
+    };
+
+    return this.taskWorkflowMappingRepo.findOne(filter);
+  }
+
   private async registerWorkers(workflow: Workflow, task: AnyObject) {
+    await this.taskOpsService.addTaskToDB(task);
     let cmd;
     if (task.type == 'notification') {
       cmd = new SendNotificationCommand(task.topic);
     } else if (task.type == 'workflow') {
-      cmd = new InvokeWorkflowCommand(
-        task.topic[0],
-        task.topic[1],
-        this.camundaService,
-      );
+      const workflowKey = await this.findTaskWorkflowByKey(task.topic);
+      if (workflowKey) {
+        const wf = await this.findWorkflowByKey(workflowKey.workflowKey);
+        if (wf) {
+          cmd = new InvokeWorkflowCommand(
+            wf.externalIdentifier,
+            task.topic,
+            this.camundaService,
+          );
+        }
+      }
     }
     if (!cmd) {
       // throw an invalid error
       return;
     }
-    await this.taskOpsService.addTaskToDB(task);
+
     await this.regFn(workflow.name, cmd.topic, new BPMTask(cmd));
   }
 

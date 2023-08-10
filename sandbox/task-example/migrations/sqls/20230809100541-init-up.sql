@@ -53,8 +53,8 @@ CREATE TABLE "main".task_assignements
 CREATE TABLE "main".task_workflow_mappings
 (
     id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
-    task_id              uuid,
-    workflow_id          uuid    NOT NULL,
+    workflow_key         varchar,
+    task_key             varchar,
     CONSTRAINT pk_task_workflow_mappings_id PRIMARY KEY (id)
 );
 
@@ -80,4 +80,23 @@ CREATE TABLE "main".activity_events
     event_data           json,
     CONSTRAINT pk_activity_events_id PRIMARY KEY (id),
     CONSTRAINT fk_activities_events_to_activities FOREIGN KEY (activity_id) REFERENCES "main".activities (id)
+);
+
+CREATE TABLE "main".events
+(
+    id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+    "key"                varchar,
+    "description"        varchar,
+    source               varchar,
+    payload              json,
+    created_on           timestamptz DEFAULT current_timestamp NOT NULL,
+    CONSTRAINT pk_events_id PRIMARY KEY (id)
+);
+
+CREATE TABLE "main".event_workflow_mapping
+(
+    id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+    event_key            varchar,
+    workflow_key         varchar,
+    CONSTRAINT pk_event_workflow_mapping_id PRIMARY KEY (id)
 );

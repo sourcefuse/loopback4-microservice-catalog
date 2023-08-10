@@ -8,7 +8,7 @@ import {
 import {inject} from '@loopback/core';
 import {EventQueueService} from '../services/event-queue.service';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
-import {EventModel} from '../models';
+import {Events} from '../models';
 import {authorize} from 'loopback4-authorization';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 
@@ -27,7 +27,7 @@ export class EventQueueController {
       [STATUS_CODE.OK]: {
         description: 'Enque model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(EventModel)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Events)},
         },
       },
       [STATUS_CODE.NO_CONTENT]: {
@@ -42,16 +42,16 @@ export class EventQueueController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(EventModel, {
-            title: 'EventModel',
+          schema: getModelSchemaRef(Events, {
+            title: 'Events',
           }),
         },
       },
     })
-    eventModel: Omit<EventModel, 'id'>,
+    Events: Omit<Events, 'id'>,
   ): Promise<void> {
     try {
-      await this.eventQueueService.enqueueEvent(eventModel);
+      await this.eventQueueService.enqueueEvent(Events);
     } catch (error) {
       console.log('Enque error', error);
       throw new HttpErrors.InternalServerError('Failed to enqueue event');

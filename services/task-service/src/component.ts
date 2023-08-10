@@ -27,12 +27,17 @@ import {
 import {Connector} from './providers';
 import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
-import {EventRepository, TaskRepository} from './repositories';
+import {
+  EventRepository,
+  TaskRepository,
+  TaskWorkFlowMappingRepository,
+} from './repositories';
 import {
   WorkflowServiceBindings,
   WorkflowServiceComponent,
 } from '@sourceloop/bpmn-service';
 import {BpmnProvider} from './providers/bpmn.provider';
+import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -85,7 +90,12 @@ export class TaskServiceComponent implements Component {
       workflowEngineBaseUrl: 'http://localhost:8080/engine-rest',
     });
     this.controllers = [controllers.EventQueueController];
-    this.repositories = [EventRepository, TaskRepository];
+    this.repositories = [
+      EventRepository,
+      TaskRepository,
+      EventWorkflowMappingRepository,
+      TaskWorkFlowMappingRepository,
+    ];
   }
 
   /**

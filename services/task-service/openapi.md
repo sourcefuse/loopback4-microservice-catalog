@@ -111,7 +111,7 @@ fetch('/event-queue/enqueue-event',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[EventModel](#schemaeventmodel)|false|none|
+|body|body|[Events](#schemaevents)|false|none|
 
 > Example responses
 
@@ -131,7 +131,7 @@ fetch('/event-queue/enqueue-event',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Enque model instance|[EventModel](#schemaeventmodel)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Enque model instance|[Events](#schemaevents)|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Event enqueued successfully|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Failed to enqueue event|None|
 
@@ -1107,12 +1107,12 @@ ExecuteWorkflowDto
 |workflowVersion|number|false|none|none|
 |input|object|true|none|none|
 
-<h2 id="tocS_EventModel">EventModel</h2>
+<h2 id="tocS_Events">Events</h2>
 <!-- backwards compatibility -->
-<a id="schemaeventmodel"></a>
-<a id="schema_EventModel"></a>
-<a id="tocSeventmodel"></a>
-<a id="tocseventmodel"></a>
+<a id="schemaevents"></a>
+<a id="schema_Events"></a>
+<a id="tocSevents"></a>
+<a id="tocsevents"></a>
 
 ```json
 {
@@ -1125,7 +1125,7 @@ ExecuteWorkflowDto
 
 ```
 
-EventModel
+Events
 
 ### Properties
 
