@@ -99,6 +99,9 @@ export class SecureSequence implements SequenceHandler {
         Remote Address = ${request.connection.remoteAddress}
         Remote Address (Proxy) = ${request.headers['x-forwarded-for']}`,
       );
+
+      const route = this.findRoute(request);
+
       if (this.rateLimitConfig) {
         await this.rateLimitAction(request, response);
       }
@@ -112,7 +115,6 @@ export class SecureSequence implements SequenceHandler {
 
       const finished = await this.invokeMiddleware(context);
       if (finished) return;
-      const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
 
       if (this.helmetConfig) {
