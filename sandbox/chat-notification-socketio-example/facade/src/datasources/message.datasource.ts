@@ -22,9 +22,7 @@ export class MessageDataSource
     @inject('datasources.config.message', {optional: true})
     dsConfig: object = config,
   ) {
-    dsConfig = Object.assign({}, dsConfig, {
-      options: {baseUrl: process.env.CHAT_SERVICE_URL},
-    });
+    dsConfig = {...dsConfig, options: {baseUrl: process.env.CHAT_SERVICE_URL}};
     super(dsConfig);
   }
 }
