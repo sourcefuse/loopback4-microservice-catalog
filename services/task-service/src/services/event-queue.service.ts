@@ -60,10 +60,8 @@ export class EventQueueService {
     };
 
     const receiveMessages = async () => {
+      const connection = await this.connector.connect(this.connector.settings);
       try {
-        const connection = await this.connector.connect(
-          this.connector.settings,
-        );
         const data = await connection.receiveMessage(receiveParams).promise();
         const messages = data.Messages;
         if (messages && messages.length) {
@@ -80,14 +78,11 @@ export class EventQueueService {
                 ReceiptHandle: message.ReceiptHandle!,
               })
               .promise();
-
-            // broadcast that the event has been processed
           }
         }
       } catch (error) {
         console.error('Error receiving message from SQS:', error);
       }
-
       // Call the function recursively to continuously listen for new messages
       receiveMessages();
     };
