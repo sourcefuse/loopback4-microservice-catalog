@@ -24,7 +24,7 @@ import {
   HttpClientService,
   TaskOperationService,
 } from './services';
-import {Connector} from './providers';
+import {BpmnRunner, Connector} from './providers';
 import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
 import {
@@ -84,6 +84,9 @@ export class TaskServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
+    this.application
+      .bind(TaskServiceBindings.BPMN_RUNNER)
+      .toProvider(BpmnRunner);
     this.application.component(WorkflowServiceComponent);
     this.application.bind(WorkflowServiceBindings.Config).to({
       useCustomSequence: true,

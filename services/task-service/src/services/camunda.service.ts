@@ -53,6 +53,12 @@ export class CamundaService {
     return this.http.get<T>(`${this.baseUrl}/process-definition/${id}`);
   }
 
+  async getCurrentExternalTask<T>(id: string) {
+    return this.http.post<T>(`${this.baseUrl}/external-task`, {
+      processDefinitionId: id,
+    });
+  }
+
   async execute<T>(id: string, input: AnyObject) {
     return this.http.post<T>(`${this.baseUrl}/process-definition/${id}/start`, {
       variables: this.formatInput(input),
