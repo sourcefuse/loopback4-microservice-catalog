@@ -39,7 +39,7 @@ export interface EventWorkflowMapping {
 }
 
 export interface Task {
-  id: string;
+  id?: string;
   key: TaskKey;
   name: string;
   description?: string;
@@ -61,28 +61,53 @@ export interface Message {
   taskKey: TaskKey;
 }
 
+export type TaskReturnMap = {
+  workerFunctions: Record<string, ProccessorFunction>;
+  tasksArray: Task[];
+};
+
+export type ProccessorFunction = (
+  task: AnyObject,
+  taskService: AnyObject,
+  payload?: AnyObject | null,
+) => {
+  payload: AnyObject;
+  vars: AnyObject | null;
+};
+
 export enum EventKey {}
 // Define your event keys as an enum
 
 export enum EventSource {}
 // Define your event sources as an enum
 
-export enum TaskKey {}
+export enum TaskKey {
+  sample_key = 'sample',
+}
 // Define your task keys as an enum
 
 export enum WorkflowKey {}
 // Define your workflow keys as an enum
 
-export enum TaskStatus {}
+export enum TaskStatus {
+  pending = 'pending',
+}
 // Define your task statuses as an enum
 
-export enum TaskPriority {}
+export enum TaskPriority {
+  high = 'high',
+}
 // Define your task priorities as an enum
 
-export enum TaskSeverity {}
+export enum TaskSeverity {
+  high = 'high',
+}
 // Define your task severities as an enum
 
-export enum TaskType {}
+export enum TaskType {
+  user = 'user',
+  workflow = 'worflow',
+}
 // Define your task types as an enum
 
 export const TaskDbSourceName = 'taskdb';
