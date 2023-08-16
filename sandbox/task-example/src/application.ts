@@ -13,7 +13,7 @@ import {
   TaskServiceComponent,
   // @ts-ignore
 } from '@sourceloop/task-service';
-import {SQSConnector} from './providers';
+import {BpmnRunner, SQSConnector} from './providers';
 
 import path from 'path';
 import {MySequence} from './sequence';
@@ -51,16 +51,7 @@ export class TaskServiceUserApplication extends BootMixin(
     this.bind('name').to('myConn');
 
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
-
-    // bpmn component
-    // this.component(WorkflowServiceComponent);
-
-    // this.bind(WorkflowServiceBindings.Config).to({
-    //   useCustomSequence: true,
-    //   workflowEngineBaseUrl: process.env.CAMUNDA_URL,
-    // });
-
-    // this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
+    this.bind(TaskServiceBindings.BPMN_RUNNER).toProvider(BpmnRunner);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

@@ -24,7 +24,7 @@ import {
   HttpClientService,
   TaskOperationService,
 } from './services';
-import {BpmnRunner, Connector} from './providers';
+import {Connector} from './providers';
 import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
 import {
@@ -36,7 +36,6 @@ import {
   WorkflowServiceBindings,
   WorkflowServiceComponent,
 } from '@sourceloop/bpmn-service';
-import {BpmnProvider} from './providers/bpmn.provider';
 import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 
 export class TaskServiceComponent implements Component {
@@ -50,7 +49,6 @@ export class TaskServiceComponent implements Component {
 
   providers: ProviderMap = {
     [TaskServiceBindings.TASK_PROVIDER.key]: Connector,
-    [WorkflowServiceBindings.WorkflowManager.key]: BpmnProvider,
   };
 
   services = [
@@ -84,9 +82,6 @@ export class TaskServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
-    this.application
-      .bind(TaskServiceBindings.BPMN_RUNNER)
-      .toProvider(BpmnRunner);
     this.application.component(WorkflowServiceComponent);
     this.application.bind(WorkflowServiceBindings.Config).to({
       useCustomSequence: true,

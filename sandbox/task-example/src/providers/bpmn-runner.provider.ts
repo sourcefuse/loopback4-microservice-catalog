@@ -1,17 +1,30 @@
 import {BindingScope, Provider, bind} from '@loopback/core';
 import {Variables} from 'camunda-external-task-client-js';
+import {
+  ProccessorFunction,
+  Task,
+  TaskKey,
+  TaskPriority,
+  TaskReturnMap,
+  TaskSeverity,
+  TaskStatus,
+  TaskType,
+  // @ts-ignore
+} from '@sourceloop/task-service';
 
-@bind({scope: BindingScope.TRANSIENT})
-export class BpmnRunner implements Provider<any> {
-  value() {
-    // custom methods
-    return {
-      wf: this.getWorkerFunctions(),
-      ta: this.getTasksArray(),
+@bind({scope: BindingScope.SINGLETON})
+export class BpmnRunner implements Provider<TaskReturnMap> {
+  tasksArray: Task[] = [];
+
+  value(): TaskReturnMap {
+    const returnMap: TaskReturnMap = {
+      workerFunctions: this.getWorkerFunctions(),
+      tasksArray: this.tasksArray,
     };
+    return returnMap;
   }
 
-  private getWorkerFunctions() {
+  private getWorkerFunctions(): Record<string, ProccessorFunction> {
     return {
       'read-payload': (task: any, taskService: any, payload?: any) => {
         return {payload, vars: null};
@@ -34,19 +47,17 @@ export class BpmnRunner implements Provider<any> {
         return {payload, vars: null};
       },
       'create-tasks': (task: any, taskService: any, payload?: any) => {
-        const tasksArray = this.getTasksArray();
-        tasksArray.push({
+        this.tasksArray.push({
           name: 'task1',
-          assignee: 'testuser',
+          key: TaskKey.sample_key,
+          assigneeId: '05b496c7-c3b8-3b45-afc1-98ff4e395416',
+          status: TaskStatus.pending,
+          priority: TaskPriority.high,
+          severity: TaskSeverity.high,
+          type: TaskType.user,
         });
         return {payload, vars: null};
       },
     };
-  }
-
-  private getTasksArray(): any[] {
-    return [
-      // You can initialize with some default tasks if needed
-    ];
   }
 }

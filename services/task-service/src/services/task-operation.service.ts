@@ -1,6 +1,6 @@
 import {
   injectable,
-  /* inject, */ BindingScope,
+  BindingScope,
   service,
   inject,
   Getter,
@@ -24,7 +24,7 @@ import {
   TaskWorkFlowMappingRepository,
 } from '../repositories';
 import {TaskServiceBindings} from '../keys';
-import {BpmnRunner} from '../providers';
+import {Task, TaskReturnMap, TaskType} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -46,41 +46,37 @@ export class TaskOperationService {
     @repository(WorkflowRepository)
     private readonly workflowRepo: WorkflowRepository,
     @inject(TaskServiceBindings.BPMN_RUNNER)
-    private readonly bpmnRunner: () => any,
+    private readonly bpmnRunner: TaskReturnMap,
   ) {
-    // empty
     this.providedVal = this.bpmnRunner;
   }
 
-  providedVal: any = {};
+  providedVal: TaskReturnMap = {
+    workerFunctions: {},
+    tasksArray: [],
+  };
 
-  /*
-   * Add service methods here
-   */
-
-  public async addTaskToDB(task: AnyObject) {
+  private async addTaskToDB(task: Task) {
     // add a task to DB
     await this.taskRepo.create({
       key: task.key,
       name: task.name,
+      description: task.description,
       status: task.status,
       severity: task.severity,
       priority: task.priority,
       type: task.type,
       assigneeId: task.assigneeId,
+      startDate: task.startDate,
+      dueDate: task.dueDate,
+      endDate: task.endDate,
     });
   }
 
   private createTaskProcessorFunction(updatedPayload: any, task: any) {
-    // Deep clone the payload
-    // const clonedPayload = JSON.parse(JSON.stringify(updatedPayload));
-
-    // console.log('closure fn - ', clonedPayload);
-
     return (taskOfWorkerFn: any, taskServiceOfWorkerFn: any) => {
       // logic given by the consumer to be plugged in
-      console.log('worker fn plugin- ', updatedPayload);
-      return this.providedVal['wf'][task.topicName](
+      return this.providedVal.workerFunctions[task.topicName](
         taskOfWorkerFn,
         taskServiceOfWorkerFn,
         updatedPayload,
@@ -92,26 +88,56 @@ export class TaskOperationService {
     const tasks: any[] = await this.camundaService.getCurrentExternalTask(id);
     if (tasks && tasks.length > 0) {
       for (const task of tasks) {
-        const topic = task.topicName;
-        const tpf = this.createTaskProcessorFunction(payload, task);
-
-        const toStart = await this.check(name, topic);
-        if (!toStart) {
-          const cmd = new TaskProcessorCommand(id, name, this, tpf, payload);
-          await this.regFn(name, topic, new BPMTask(cmd));
-        }
+        await this.registerOrUpdateCommand(task, {payload, name, id});
       }
     } else {
       // no tasks left
-      console.log('tasks array: ');
-      if (this.providedVal['ta'].length > 0) {
-        for (const t of this.providedVal['ta']) {
-          console.log(t);
+      console.log('ALL ACTIVITIES PROCESSED - SENDING BROADCAST MESSAGE');
+      // add tasks to db
+      if (this.providedVal.tasksArray.length > 0) {
+        for (const task of this.providedVal.tasksArray) {
+          await this.addTaskToDB(task);
+          // if there are any workflow based tasks execute them
+          if (task.type == TaskType.workflow) {
+            await this.execWorkflow(task.key, 'task');
+          }
         }
       }
-      console.log('ALL ACTIVITIES PROCESSED - SENDING BROADCAST MESSAGE');
+
+      // reset tasks array
+      this.providedVal.tasksArray.length = 0;
     }
     await this.initWorkers(name);
+  }
+
+  private async registerOrUpdateCommand(task: AnyObject, data: AnyObject) {
+    const topic = task.topicName;
+    const tpf = this.createTaskProcessorFunction(data.payload, task);
+
+    const toStart = await this.check(data.name, topic);
+    const cmd = new TaskProcessorCommand(data.id, data.name, this, tpf);
+    if (!toStart) {
+      await this.regFn(data.name, topic, new BPMTask(cmd));
+    } else {
+      await this.updateCommand(data.name, task.topicName, new BPMTask(cmd));
+    }
+  }
+
+  private async updateCommand(
+    workflowName: string,
+    topic: string,
+    cmd: BPMTask<AnyObject, AnyObject>,
+  ) {
+    const workerMap = await this.workerMapGetter();
+    if (workerMap[workflowName]) {
+      for (const m of workerMap[workflowName]) {
+        if (m.topic == topic && m.running) {
+          // change the command
+          m.command = cmd;
+          return;
+        }
+      }
+    }
   }
 
   private async check(workflowName: string, topic: string): Promise<boolean> {
@@ -194,7 +220,6 @@ export class TaskOperationService {
         name: keyValue,
       },
     };
-
     return this.workflowRepo.findOne(filter);
   }
 }

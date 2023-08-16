@@ -1,11 +1,9 @@
-import {injectable, BindingScope, service, inject} from '@loopback/core';
+import {injectable, BindingScope, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {EventRepository} from '../repositories/event.repository';
 import {Events} from '../models';
 import {HttpErrors} from '@loopback/rest';
 import {TaskOperationService} from './task-operation.service';
-import {TaskServiceBindings} from '../keys';
-import {BpmnRunner} from '../providers';
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -16,8 +14,6 @@ export class EventProcessorService {
     private readonly eventRepo: EventRepository,
     @service(TaskOperationService)
     private readonly taskOpsService: TaskOperationService,
-    @inject(TaskServiceBindings.BPMN_RUNNER)
-    private readonly bpmnRunner: BpmnRunner,
   ) {
     // empty constuctor
   }
