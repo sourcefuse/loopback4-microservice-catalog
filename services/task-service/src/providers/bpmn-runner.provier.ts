@@ -1,7 +1,5 @@
-// in task-example
-import {bind, BindingScope} from '@loopback/core';
+import {BindingScope, Provider, bind} from '@loopback/core';
 import {
-  BaseBpmnRunner,
   ProccessorFunction,
   Task,
   TaskPriority,
@@ -9,12 +7,12 @@ import {
   TaskSeverity,
   TaskStatus,
   TaskType,
-} from '@sourceloop/task-service'; // adjust the import path
+} from '../types';
 import {Variables} from 'camunda-external-task-client-js';
 import {design_group_users, dev_group_users} from '../mock_users';
 
 @bind({scope: BindingScope.SINGLETON})
-export class CustomBpmnRunner extends BaseBpmnRunner {
+export class BpmnRunner implements Provider<TaskReturnMap> {
   tasksArray: Task[] = [];
 
   value(): TaskReturnMap {
@@ -25,7 +23,7 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
     return returnMap;
   }
 
-  getWorkerFunctions(): Record<string, ProccessorFunction> {
+  private getWorkerFunctions(): Record<string, ProccessorFunction> {
     return {
       'read-payload': (task: any, taskService: any, payload?: any) => {
         return {payload, vars: null};
