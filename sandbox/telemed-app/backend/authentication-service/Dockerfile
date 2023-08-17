@@ -9,7 +9,7 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 # Install app dependencies
 COPY package*.json ./
 
-RUN npm install --ignore-scripts
+RUN npm install
 
 # Bundle app source code
 COPY . .
@@ -17,4 +17,4 @@ COPY . .
 # Build Loopback app
 RUN npm run build
 
-CMD [ "./dist/main.handler" ]
+CMD [ "./dist/lambda.handler" ]

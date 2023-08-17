@@ -3,6 +3,7 @@ import {TerraformStack} from "cdktf";
 import {Construct} from "constructs";
 import {ILambdaWithApiGateway, LambdaWithApiGateway} from "arc-cdk";
 import {AwsProvider} from "../constructs/awsProvider";
+import path = require("path");
 
 export class LambdaStack extends TerraformStack {
   constructor(
@@ -20,7 +21,10 @@ export class LambdaStack extends TerraformStack {
       length: 2,
     });
 
-    new LambdaWithApiGateway(this, "lambda-apiGateway", {// NOSONAR
+    // overwrite codePath based on useImage as deploy via docker needs different codePath
+    config.codePath = path.resolve(config.codePath, `../${config.useImage ? '' : 'dist'}`);
+
+    new LambdaWithApiGateway(this, 'lambda-apiGateway', {// NOSONAR
       ...config,
       name: pet.id,
     });

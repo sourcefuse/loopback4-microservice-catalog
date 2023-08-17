@@ -10,8 +10,6 @@ LAYER_DIR="$ROOT_DIR/layers/nodejs"
 rm -rf $LAYER_DIR
 mkdir -p "$LAYER_DIR"
 
-cp "loopback4-authentication-9.0.1.tgz" "$LAYER_DIR"
-cp "sourceloop-notification-service-7.0.6.tgz" "$LAYER_DIR"
 cp "package.json" "$LAYER_DIR"
 cd "$LAYER_DIR"
 npm i --omit=dev
