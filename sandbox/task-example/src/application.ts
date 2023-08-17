@@ -11,9 +11,8 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import {
   TaskServiceBindings,
   TaskServiceComponent,
-  // @ts-ignore
 } from '@sourceloop/task-service';
-import {BpmnRunner, SQSConnector} from './providers';
+import {CustomBpmnRunner, SQSConnector} from './providers';
 
 import path from 'path';
 import {MySequence} from './sequence';
@@ -51,7 +50,9 @@ export class TaskServiceUserApplication extends BootMixin(
     this.bind('name').to('myConn');
 
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
-    this.bind(TaskServiceBindings.BPMN_RUNNER).toProvider(BpmnRunner);
+    this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(
+      CustomBpmnRunner,
+    );
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

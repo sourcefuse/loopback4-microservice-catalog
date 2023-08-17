@@ -1,6 +1,7 @@
 import {service} from '@loopback/core';
 import {ICommand} from '@sourceloop/core';
 import {TaskOperationService} from '../services';
+import {Variables} from 'camunda-external-task-client-js';
 
 export class TaskProcessorCommand implements ICommand {
   parameters?: any;
@@ -23,6 +24,13 @@ export class TaskProcessorCommand implements ICommand {
     const taskService = this.parameters.taskService;
 
     const {payload, vars} = this.callbackFn(task, taskService);
+
+    // const toSetupVariables = new Variables();
+    // toSetupVariables.setAll({
+    //   payload_users: 'false',
+    //   payload_user_groups: 'false',
+    //   payload_user_roles: 'false',
+    // });
 
     await taskService.complete(task, vars);
     await this.taskOperationService.processTask(this.id, this.name, payload);

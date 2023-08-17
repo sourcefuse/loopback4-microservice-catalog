@@ -106,7 +106,7 @@ export enum TaskSeverity {
 
 export enum TaskType {
   user = 'user',
-  workflow = 'worflow',
+  workflow = 'workflow',
 }
 // Define your task types as an enum
 

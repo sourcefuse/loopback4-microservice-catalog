@@ -37,6 +37,7 @@ import {
   WorkflowServiceComponent,
 } from '@sourceloop/bpmn-service';
 import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
+import {BpmnRunner} from './providers/bpmn-runner.provier';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -82,6 +83,9 @@ export class TaskServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
+    this.application
+      .bind(TaskServiceBindings.BASE_BPMN_RUNNER)
+      .toProvider(BpmnRunner);
     this.application.component(WorkflowServiceComponent);
     this.application.bind(WorkflowServiceBindings.Config).to({
       useCustomSequence: true,

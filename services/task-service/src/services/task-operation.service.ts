@@ -7,7 +7,7 @@ import {
 } from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {TaskRepository} from '../repositories/task.repository';
-import {EventWorkflowMapping, TaskWorkFlowMapping, Tasks} from '../models';
+import {EventWorkflowMapping, TaskWorkFlowMapping} from '../models';
 import {CamundaService} from './camunda.service';
 import {
   WorkflowServiceBindings,
@@ -45,7 +45,7 @@ export class TaskOperationService {
     private readonly eventWorkflowMappingRepo: EventWorkflowMappingRepository,
     @repository(WorkflowRepository)
     private readonly workflowRepo: WorkflowRepository,
-    @inject(TaskServiceBindings.BPMN_RUNNER)
+    @inject(TaskServiceBindings.CUSTOM_BPMN_RUNNER)
     private readonly bpmnRunner: TaskReturnMap,
   ) {
     this.providedVal = this.bpmnRunner;
@@ -96,11 +96,10 @@ export class TaskOperationService {
       // add tasks to db
       if (this.providedVal.tasksArray.length > 0) {
         for (const task of this.providedVal.tasksArray) {
-          await this.addTaskToDB(task);
-          // if there are any workflow based tasks execute them
-          if (task.type == TaskType.workflow) {
-            await this.execWorkflow(task.key, 'task');
-          }
+          // await this.addTaskToDB(task);
+          // execute the tasks workflows
+          // console.log(task);
+          // await this.execWorkflow(task.key, 'task');
         }
       }
 
