@@ -4,6 +4,7 @@ import {EventRepository} from '../repositories/event.repository';
 import {Events} from '../models';
 import {HttpErrors} from '@loopback/rest';
 import {TaskOperationService} from './task-operation.service';
+import {TaskServiceNames} from '../types';
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -18,12 +19,12 @@ export class EventProcessorService {
     // empty constuctor
   }
   public async processEvent(event: Events): Promise<void> {
-    console.log('PROCESSING EVENT - ', event.key);
-
-    // adding event to database
     await this.eventRepo.create(event);
 
-    const workflow = await this.taskOpsService.execWorkflow(event.key, 'event');
+    const workflow = await this.taskOpsService.execWorkflow(
+      event.key,
+      TaskServiceNames.EVENT,
+    );
 
     if (workflow) {
       await this.taskOpsService.processTask(

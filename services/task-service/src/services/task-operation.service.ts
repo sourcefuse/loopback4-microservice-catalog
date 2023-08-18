@@ -24,7 +24,7 @@ import {
   TaskWorkFlowMappingRepository,
 } from '../repositories';
 import {TaskServiceBindings} from '../keys';
-import {Task, TaskReturnMap, TaskType} from '../types';
+import {Task, TaskReturnMap, TaskServiceNames} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -73,7 +73,7 @@ export class TaskOperationService {
     });
   }
 
-  private createTaskProcessorFunction(updatedPayload: any, task: any) {
+  private _createTaskProcessorFunction(updatedPayload: any, task: any) {
     return (taskOfWorkerFn: any, taskServiceOfWorkerFn: any) => {
       // logic given by the consumer to be plugged in
       return this.providedVal.workerFunctions[task.topicName](
@@ -88,62 +88,60 @@ export class TaskOperationService {
     const tasks: any[] = await this.camundaService.getCurrentExternalTask(id);
     if (tasks && tasks.length > 0) {
       for (const task of tasks) {
-        await this.registerOrUpdateCommand(task, {payload, name, id});
+        await this._registerOrUpdateCommand(task, {payload, name, id});
       }
     } else {
-      // no tasks left
-      console.log('ALL ACTIVITIES PROCESSED - SENDING BROADCAST MESSAGE');
-      // add tasks to db
       if (this.providedVal.tasksArray.length > 0) {
         for (const task of this.providedVal.tasksArray) {
-          // await this.addTaskToDB(task);
-          // execute the tasks workflows
-          // console.log(task);
-          // await this.execWorkflow(task.key, 'task');
+          await this.addTaskToDB(task);
+          await this.execWorkflow(task.key, 'task');
         }
       }
 
-      // reset tasks array
       this.providedVal.tasksArray.length = 0;
     }
-    await this.initWorkers(name);
+    await this._initWorkers(name);
   }
 
-  private async registerOrUpdateCommand(task: AnyObject, data: AnyObject) {
+  private async _registerOrUpdateCommand(task: AnyObject, data: AnyObject) {
     const topic = task.topicName;
-    const tpf = this.createTaskProcessorFunction(data.payload, task);
+    const tpf = this._createTaskProcessorFunction(data.payload, task);
 
-    const toStart = await this.check(data.name, topic);
+    const toStart = await this._runCommand(
+      TaskServiceNames.CHECK,
+      data.name,
+      topic,
+    );
     const cmd = new TaskProcessorCommand(data.id, data.name, this, tpf);
     if (!toStart) {
       await this.regFn(data.name, topic, new BPMTask(cmd));
     } else {
-      await this.updateCommand(data.name, task.topicName, new BPMTask(cmd));
+      await this._runCommand(
+        TaskServiceNames.UPDATE,
+        data.name,
+        task.topicName,
+        new BPMTask(cmd),
+      );
     }
   }
 
-  private async updateCommand(
+  private async _runCommand(
+    type: string,
     workflowName: string,
     topic: string,
-    cmd: BPMTask<AnyObject, AnyObject>,
-  ) {
+    cmd?: BPMTask<AnyObject, AnyObject>,
+  ): Promise<boolean> {
     const workerMap = await this.workerMapGetter();
     if (workerMap[workflowName]) {
       for (const m of workerMap[workflowName]) {
         if (m.topic == topic && m.running) {
-          // change the command
-          m.command = cmd;
-          return;
+          if (type == TaskServiceNames.UPDATE && cmd) {
+            m.command = cmd;
+            return true;
+          } else if (type == TaskServiceNames.CHECK) {
+            return true;
+          }
         }
-      }
-    }
-  }
-
-  private async check(workflowName: string, topic: string): Promise<boolean> {
-    const workerMap = await this.workerMapGetter();
-    if (workerMap[workflowName]) {
-      for (const m of workerMap[workflowName]) {
-        if (m.topic == topic && m.running) return true;
       }
     }
     return false;
@@ -155,17 +153,17 @@ export class TaskOperationService {
   ): Promise<Workflow | null> {
     let taskOrWorkflowItem;
     switch (taskOrEvent) {
-      case 'task':
-        taskOrWorkflowItem = await this.findTaskWorkflowByKey(keyVal);
+      case TaskServiceNames.TASK:
+        taskOrWorkflowItem = await this._findTaskWorkflowByKey(keyVal);
         break;
-      case 'event':
-        taskOrWorkflowItem = await this.findEventWorkflowByKey(keyVal);
+      case TaskServiceNames.EVENT:
+        taskOrWorkflowItem = await this._findEventWorkflowByKey(keyVal);
         break;
       default:
         break;
     }
     if (taskOrWorkflowItem) {
-      const workflow = await this.findWorkflowByKey(
+      const workflow = await this._findWorkflowByKey(
         taskOrWorkflowItem.workflowKey,
       );
       if (workflow) {
@@ -176,7 +174,7 @@ export class TaskOperationService {
     return null;
   }
 
-  private async initWorkers(workflowName: string) {
+  private async _initWorkers(workflowName: string) {
     const workerMap = await this.workerMapGetter();
     if (workerMap?.[workflowName]) {
       const workerList = workerMap[workflowName];
@@ -189,7 +187,7 @@ export class TaskOperationService {
     }
   }
 
-  private async findTaskWorkflowByKey(
+  private async _findTaskWorkflowByKey(
     keyValue: string,
   ): Promise<TaskWorkFlowMapping | null> {
     const filter: Filter<TaskWorkFlowMapping> = {
@@ -201,7 +199,7 @@ export class TaskOperationService {
     return this.taskWorkflowMapping.findOne(filter);
   }
 
-  private async findEventWorkflowByKey(
+  private async _findEventWorkflowByKey(
     keyValue: string,
   ): Promise<EventWorkflowMapping | null> {
     const filter: Filter<EventWorkflowMapping> = {
@@ -213,7 +211,7 @@ export class TaskOperationService {
     return this.eventWorkflowMappingRepo.findOne(filter);
   }
 
-  private async findWorkflowByKey(keyValue: string): Promise<Workflow | null> {
+  private async _findWorkflowByKey(keyValue: string): Promise<Workflow | null> {
     const filter: Filter<Workflow> = {
       where: {
         name: keyValue,
