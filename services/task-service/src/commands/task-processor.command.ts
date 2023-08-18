@@ -25,13 +25,6 @@ export class TaskProcessorCommand implements ICommand {
 
     const {payload, vars} = this.callbackFn(task, taskService);
 
-    // const toSetupVariables = new Variables();
-    // toSetupVariables.setAll({
-    //   payload_users: 'false',
-    //   payload_user_groups: 'false',
-    //   payload_user_roles: 'false',
-    // });
-
     await taskService.complete(task, vars);
     await this.taskOperationService.processTask(this.id, this.name, payload);
   }
