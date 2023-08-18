@@ -1,6 +1,6 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {TaskWorkFlowMapping} from '../models';
-import {Getter, inject} from '@loopback/core';
+import {inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
 
 export class TaskWorkFlowMappingRepository extends DefaultCrudRepository<

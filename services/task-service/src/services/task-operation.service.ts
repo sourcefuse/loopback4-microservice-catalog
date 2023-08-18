@@ -46,12 +46,12 @@ export class TaskOperationService {
     @repository(WorkflowRepository)
     private readonly workflowRepo: WorkflowRepository,
     @inject(TaskServiceBindings.CUSTOM_BPMN_RUNNER)
-    private readonly bpmnRunner: TaskReturnMap,
+    private readonly customBpmnRunner: TaskReturnMap,
   ) {
-    this.providedVal = this.bpmnRunner;
+    this.clientBpmnRunner = this.customBpmnRunner;
   }
 
-  providedVal: TaskReturnMap = {
+  clientBpmnRunner: TaskReturnMap = {
     workerFunctions: {},
     tasksArray: [],
   };
@@ -76,7 +76,7 @@ export class TaskOperationService {
   private _createTaskProcessorFunction(updatedPayload: any, task: any) {
     return (taskOfWorkerFn: any, taskServiceOfWorkerFn: any) => {
       // logic given by the consumer to be plugged in
-      return this.providedVal.workerFunctions[task.topicName](
+      return this.clientBpmnRunner.workerFunctions[task.topicName](
         taskOfWorkerFn,
         taskServiceOfWorkerFn,
         updatedPayload,
@@ -91,14 +91,14 @@ export class TaskOperationService {
         await this._registerOrUpdateCommand(task, {payload, name, id});
       }
     } else {
-      if (this.providedVal.tasksArray.length > 0) {
-        for (const task of this.providedVal.tasksArray) {
+      if (this.clientBpmnRunner.tasksArray.length > 0) {
+        for (const task of this.clientBpmnRunner.tasksArray) {
           await this.addTaskToDB(task);
           await this.execWorkflow(task.key, 'task');
         }
       }
 
-      this.providedVal.tasksArray.length = 0;
+      this.clientBpmnRunner.tasksArray.length = 0;
     }
     await this._initWorkers(name);
   }

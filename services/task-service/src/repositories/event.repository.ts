@@ -10,10 +10,6 @@ export class EventRepository extends DefaultCrudRepository<
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
-    // @inject.getter(AuthenticationBindings.CURRENT_USER)
-    // protected readonly getCurrentUser: Getter<
-    //   IAuthUserWithPermissions | undefined
-    // >,
   ) {
     super(Events, dataSource);
   }

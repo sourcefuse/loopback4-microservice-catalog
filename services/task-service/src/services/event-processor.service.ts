@@ -33,7 +33,7 @@ export class EventProcessorService {
         event.payload,
       );
     } else {
-      throw HttpErrors[404];
+      throw new HttpErrors.NotFound('Workflow not found');
     }
   }
 }

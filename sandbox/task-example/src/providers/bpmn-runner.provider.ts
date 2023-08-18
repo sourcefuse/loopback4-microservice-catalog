@@ -1,4 +1,3 @@
-// in task-example
 import {bind, BindingScope} from '@loopback/core';
 import {
   BaseBpmnRunner,
@@ -9,7 +8,7 @@ import {
   TaskSeverity,
   TaskStatus,
   TaskType,
-} from '@sourceloop/task-service'; // adjust the import path
+} from '@sourceloop/task-service';
 import {Variables} from 'camunda-external-task-client-js';
 import {design_group_users, dev_group_users} from '../mock_users';
 
@@ -33,8 +32,6 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
       'check-vars': (task: any, taskService: any, payload?: any) => {
         const vars = new Variables();
 
-        // console.log(task.variables.getAll());
-
         if (payload['users'].length == 0) {
           vars.set('payload_users', 'false');
         } else {
@@ -52,8 +49,6 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
         } else {
           vars.set('payload_user_groups', 'true');
         }
-
-        // console.log(vars.getAll());
 
         return {payload, vars};
       },
@@ -118,15 +113,12 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
         return {payload, vars: null};
       },
       'create-tasks': (task: any, taskService: any, payload?: any) => {
-        console.log(task.variables.getAll());
-
         if (payload['assignedTasks'] && payload['assignedTasks'].length > 0) {
           for (const task of payload['assignedTasks']) {
             this.tasksArray.push(task);
           }
         }
-        // console.log(payload);
-        // console.log(this.tasksArray);
+
         return {payload, vars: null};
       },
     };

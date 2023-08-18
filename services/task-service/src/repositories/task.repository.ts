@@ -1,12 +1,7 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {Tasks} from '../models';
-import {Getter, inject} from '@loopback/core';
+import {inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class TaskRepository extends DefaultCrudRepository<
   Tasks,
@@ -15,10 +10,6 @@ export class TaskRepository extends DefaultCrudRepository<
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
-    // @inject.getter(AuthenticationBindings.CURRENT_USER)
-    // protected readonly getCurrentUser: Getter<
-    //   IAuthUserWithPermissions | undefined
-    // >,
   ) {
     super(Tasks, dataSource);
   }

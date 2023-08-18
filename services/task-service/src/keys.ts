@@ -9,4 +9,12 @@ export namespace TaskServiceBindings {
   export const CUSTOM_BPMN_RUNNER = BindingKey.create(
     `${BINDING_PREFIX}.custom_task.runner`,
   );
+
+  export const CONNECTOR_CONFIG = BindingKey.create(
+    `${BINDING_PREFIX}.connector.config`,
+  );
+
+  export const CONNECTOR_NAME = BindingKey.create(
+    `${BINDING_PREFIX}.connector.name`,
+  );
 }

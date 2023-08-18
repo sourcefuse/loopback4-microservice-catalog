@@ -7,7 +7,6 @@ import {
 } from '@loopback/core';
 import {EventQueueConnector} from '../types';
 import {TaskServiceBindings} from '../keys';
-import {EventProcessorService} from '../services';
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -20,9 +19,7 @@ export class Connector implements Provider<EventQueueConnector> {
 
   constructor(
     name: string,
-    @inject('config') settings: any,
-    @inject('services.EventProcessorService')
-    private eventProcessor: EventProcessorService,
+    @inject(TaskServiceBindings.CONNECTOR_CONFIG) settings: any,
   ) {
     this.name = name;
     this.settings = settings;
