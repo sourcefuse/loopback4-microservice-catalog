@@ -19,9 +19,15 @@ export class WebhookService {
     });
   }
 
-  public async triggerWebhook(event: string) {
+  public async triggerWebhook(event: string, data: any) {
     const subscribers = await this.webhookSubscriptionsRepo.find({
       where: {event},
     });
+    if (subscribers.length > 0) {
+      for (const subscriber of subscribers) {
+        const url = subscriber.url;
+        await this.httpService.post(url, data);
+      }
+    }
   }
 }
