@@ -1,9 +1,10 @@
 import {BindingScope, inject, injectable} from '@loopback/context';
 import {EventQueueConnector} from '../types';
-import {asLifeCycleObserver} from '@loopback/core';
+import {asLifeCycleObserver, service} from '@loopback/core';
 import {TaskServiceBindings} from '../keys';
 import {Events} from '../models';
 import {EventProcessorService} from './index';
+import {AnyObject} from '@loopback/repository';
 
 @injectable(
   {
@@ -13,10 +14,11 @@ import {EventProcessorService} from './index';
 )
 export class EventQueueService {
   constructor(
-    @inject('config') private queueSettings: any,
+    @inject(TaskServiceBindings.CONNECTOR_CONFIG)
+    private settings: AnyObject,
     @inject(TaskServiceBindings.TASK_PROVIDER)
     private connector: EventQueueConnector,
-    @inject('services.EventProcessorService')
+    @service(EventProcessorService)
     public eventProcessorService: EventProcessorService,
   ) {
     this.listenForEvents();
@@ -26,7 +28,7 @@ export class EventQueueService {
     const connection = await this.connector.connect(this.connector.settings);
     const params = {
       MessageBody: JSON.stringify(event),
-      QueueUrl: process.env.AWS_QUEUE_URL,
+      QueueUrl: this.settings.queueUrl,
     };
     await connection.sendMessage(params, (err: any, data: any) => {
       if (err) {
@@ -92,7 +94,6 @@ export class EventQueueService {
   }
 
   async healthCheck(): Promise<any> {
-    console.log('Performing health check on event queue');
     const healthCheckResponse = await this.connector.ping();
     return healthCheckResponse;
   }

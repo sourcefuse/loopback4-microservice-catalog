@@ -10,8 +10,6 @@ import {EventQueueService} from '../services/event-queue.service';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {Events} from '../models';
 import {authorize} from 'loopback4-authorization';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {CamundaService} from '../services';
 
 const baseUrl = '/event-queue';
 
@@ -19,11 +17,8 @@ export class EventQueueController {
   constructor(
     @inject('services.EventQueueService')
     private eventQueueService: EventQueueService,
-    @service(CamundaService)
-    private camundaService: CamundaService,
   ) {}
 
-  // @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
   @post(`${baseUrl}/enqueue-event`, {
     responses: {

@@ -1,14 +1,9 @@
 import {inject, Provider, injectable, BindingScope} from '@loopback/core';
-// @ts-ignore
-import {EventQueueConnector} from '@sourceloop/task-service';
+import {
+  EventQueueConnector,
+  TaskServiceBindings,
+} from '@sourceloop/task-service';
 import {SQS} from 'aws-sdk';
-
-interface SQSEvent {
-  MessageId: string;
-  ReceiptHandle: string;
-  MD5OfBody: string;
-  Body: string;
-}
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -18,8 +13,8 @@ export class SQSConnector implements Provider<EventQueueConnector> {
   isListening: boolean;
 
   constructor(
-    @inject('name') public name: string,
-    @inject('config') public settings: any,
+    @inject(TaskServiceBindings.CONNECTOR_NAME) public name: string,
+    @inject(TaskServiceBindings.CONNECTOR_CONFIG) public settings: any,
   ) {
     this.sqs = new SQS({
       region: settings.region,

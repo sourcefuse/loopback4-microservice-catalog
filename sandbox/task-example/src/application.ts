@@ -40,14 +40,14 @@ export class TaskServiceUserApplication extends BootMixin(
     // Add the component
     this.component(TaskServiceComponent);
 
-    this.bind('config').to({
+    this.bind(TaskServiceBindings.CONNECTOR_CONFIG).to({
       accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
       secretAccessKey: process.env.AWS_SQS_SECRET_KEY,
       region: process.env.AWS_SQS_REGION,
       queueUrl: process.env.AWS_QUEUE_URL,
     });
 
-    this.bind('name').to('myConn');
+    this.bind(TaskServiceBindings.CONNECTOR_NAME).to('myConn');
 
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
     this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(

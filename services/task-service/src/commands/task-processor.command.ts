@@ -1,7 +1,6 @@
 import {service} from '@loopback/core';
 import {ICommand} from '@sourceloop/core';
 import {TaskOperationService} from '../services';
-import {Variables} from 'camunda-external-task-client-js';
 
 export class TaskProcessorCommand implements ICommand {
   parameters?: any;
