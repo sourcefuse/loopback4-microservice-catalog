@@ -1,10 +1,10 @@
 import {BindingScope, inject, injectable} from '@loopback/context';
-import {asLifeCycleObserver} from '@loopback/core';
+import {asLifeCycleObserver, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {TaskServiceBindings} from '../keys';
 import {Events} from '../models';
 import {EventQueueConnector} from '../types';
-import {EventProcessorService} from './index';
+import {EventProcessorService} from './event-processor.service';
 
 @injectable(
   {
@@ -14,7 +14,7 @@ import {EventProcessorService} from './index';
 )
 export class EventQueueService {
   constructor(
-    @inject('services.EventProcessorService')
+    @service(EventProcessorService)
     private readonly eventProcessorService: EventProcessorService,
     @inject(TaskServiceBindings.CONNECTOR_CONFIG)
     private settings: AnyObject,
