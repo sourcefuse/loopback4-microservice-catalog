@@ -18,6 +18,13 @@ export interface EventQueueConnector {
   ping(): Promise<any>;
 }
 
+export enum TaskServiceNames {
+  EVENT = 'event',
+  TASK = 'task',
+  UPDATE = 'update',
+  CHECK = 'check',
+}
+
 export interface EventPayload {
   workflowId: string;
   command: string;
