@@ -1,15 +1,14 @@
-import {inject} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {inject} from '@loopback/context';
+import {AnyObject, repository} from '@loopback/repository';
 import {
-  get,
-  getModelSchemaRef,
   HttpErrors,
-  param,
-  post,
   Request,
-  requestBody,
   Response,
   RestBindings,
+  getModelSchemaRef,
+  param,
+  post,
+  requestBody,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -19,49 +18,39 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {
+  AuthErrorKeys,
+  AuthenticationBindings,
+  STRATEGY,
   authenticate,
   authenticateClient,
-  AuthenticationBindings,
-  AuthErrorKeys,
-  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
+import {AuthCodeBindings} from '../../providers/keys';
+import {AuthCodeGeneratorFn} from '../../providers/types';
 import {AuthClientRepository} from '../../repositories';
 import {AuthUser} from './models/auth-user.model';
 import {ClientAuthRequest} from './models/client-auth-request.dto';
 import {TokenResponse} from './models/token-response.dto';
 
-const queryGen = (from: 'body' | 'query') => {
-  return (req: Request) => {
-    return {
-      customState: `client_id=${req[from].client_id}`,
-    };
-  };
-};
 export class SamlLoginController {
   constructor(
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
-    @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT)
+    public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.SAML,
-    {
-      accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.SAML_URL,
-      callbackURL: process.env.SAML_CALLBACK_URL,
-      clientID: process.env.SAML_CLIENT_ID,
-      clientSecret: process.env.SAML_CLIENT_SECRET,
-      tokenURL: process.env.SAML_TOKEN_URL,
-    },
-    queryGen('body'),
-  )
+  @authenticate(STRATEGY.SAML, {
+    accessType: 'offline',
+    scope: ['profile', 'email'],
+    callbackURL: process.env.SAML_CALLBACK_URL,
+    issuer: process.env.SAML_ISSUER,
+    cert: process.env.SAML_CERT,
+    entryPoint: process.env.SAML_URL,
+  })
   @authorize({permissions: ['*']})
   @post('/auth/saml', {
     description: 'POST Call for saml based login',
@@ -89,24 +78,22 @@ export class SamlLoginController {
     //do nothing
   }
 
-  @authenticate(
-    STRATEGY.SAML,
-    {
-      accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.SAML_URL,
-      callbackURL: process.env.SAML_CALLBACK_URL,
-      clientID: process.env.SAML_CLIENT_ID,
-      clientSecret: process.env.SAML_CLIENT_SECRET,
-      tokenURL: process.env.SAML_TOKEN_URL,
-    },
-    queryGen('query'),
-  )
+  @authenticate(STRATEGY.SAML, {
+    accessType: 'offline',
+    scope: ['profile', 'email'],
+    issuer: process.env.SAML_ISSUER,
+    cert: process.env.SAML_CERT,
+    entryPoint: process.env.SAML_URL,
+    audience: process.env.SAML_AUDIENCE,
+    logoutUrl: process.env.SAML_LOGOUT_URL,
+    passReqToCallback: false,
+    validateInResponseTo: true,
+  })
   @authorize({permissions: ['*']})
-  @get('/auth/saml-auth-redirect', {
+  @post(`/auth/saml-redirect`, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Saml Redirect Token Response',
+        description: 'okta auth callback',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -115,15 +102,19 @@ export class SamlLoginController {
       },
     },
   })
-  async samlCallback(
-    @param.query.string('code') code: string, //NOSONAR
-    @param.query.string('state') state: string,
-    @param.query.string('session_state') sessionState: string, //NOSONAR
-    @inject(RestBindings.Http.RESPONSE) response: Response,
+  async oktaSamlCallback(
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
+    @inject(RestBindings.Http.REQUEST) request: Request,
+    @param.query.string('client') clientId: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.FORM_URLENCODED]: {},
+      },
+    })
+    oktaData: AnyObject,
   ): Promise<void> {
-    const clientId = new URLSearchParams(state).get('client_id');
     if (!clientId || !user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
