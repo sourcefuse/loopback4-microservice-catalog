@@ -1,13 +1,13 @@
-import {injectable, BindingScope, service} from '@loopback/core';
+import {BindingScope, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {EventRepository} from '../repositories/event.repository';
-import {Events} from '../models';
 import {HttpErrors} from '@loopback/rest';
-import {TaskOperationService} from './task-operation.service';
+import {Events} from '../models';
+import {EventRepository} from '../repositories/event.repository';
 import {TaskServiceNames} from '../types';
+import {TaskOperationService} from './task-operation.service';
 
 @injectable({
-  scope: BindingScope.SINGLETON,
+  scope: BindingScope.TRANSIENT,
 })
 export class EventProcessorService {
   constructor(
