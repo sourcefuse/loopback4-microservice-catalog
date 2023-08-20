@@ -5,9 +5,8 @@ import {
   inject,
   Getter,
 } from '@loopback/core';
-import {AnyObject, Filter, repository} from '@loopback/repository';
+import {AnyObject, repository} from '@loopback/repository';
 import {TaskRepository} from '../repositories/task.repository';
-import {EventWorkflowMapping, TaskWorkFlowMapping} from '../models';
 import {CamundaService} from './camunda.service';
 import {
   WorkflowServiceBindings,
@@ -15,17 +14,13 @@ import {
   BPMTask,
   WorkerMap,
   WorkerImplementationFn,
-  WorkflowRepository,
-  Workflow,
 } from '@sourceloop/bpmn-service';
 import {TaskProcessorCommand} from '../commands';
-import {
-  EventWorkflowMappingRepository,
-  TaskWorkFlowMappingRepository,
-} from '../repositories';
+
 import {TaskServiceBindings} from '../keys';
 import {Task, TaskReturnMap, TaskServiceNames} from '../types';
-import {HttpErrors} from '@loopback/rest';
+import {WorkflowOperationService} from './workflow-operation.service';
+import {UtilityService} from './utility-service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -34,18 +29,16 @@ export class TaskOperationService {
     private readonly taskRepo: TaskRepository,
     @service(CamundaService)
     private readonly camundaService: CamundaService,
+    @service(WorkflowOperationService)
+    private readonly workflowOpsService: WorkflowOperationService,
+    @service(UtilityService)
+    private readonly utilityService: UtilityService,
     @inject(WorkflowServiceBindings.RegisterWorkerFunction)
     private readonly regFn: WorkerRegisterFn,
     @inject.getter(WorkflowServiceBindings.WORKER_MAP)
     private readonly workerMapGetter: Getter<WorkerMap>,
     @inject(WorkflowServiceBindings.WorkerImplementationFunction)
     private readonly workerFn: WorkerImplementationFn,
-    @repository(TaskWorkFlowMappingRepository)
-    private readonly taskWorkflowMapping: TaskWorkFlowMappingRepository,
-    @repository(EventWorkflowMappingRepository)
-    private readonly eventWorkflowMappingRepo: EventWorkflowMappingRepository,
-    @repository(WorkflowRepository)
-    private readonly workflowRepo: WorkflowRepository,
     @inject(TaskServiceBindings.CUSTOM_BPMN_RUNNER)
     private readonly customBpmnRunner: TaskReturnMap,
   ) {
@@ -95,7 +88,10 @@ export class TaskOperationService {
       if (this.clientBpmnRunner.tasksArray.length > 0) {
         for (const task of this.clientBpmnRunner.tasksArray) {
           await this.addTaskToDB(task);
-          await this.execWorkflow(task.key, TaskServiceNames.TASK);
+          await this.workflowOpsService.execWorkflow(
+            task.key,
+            TaskServiceNames.TASK,
+          );
         }
       }
 
@@ -105,9 +101,10 @@ export class TaskOperationService {
   }
 
   public async taskUpdateFlow(taskKey: string, payload?: AnyObject) {
-    const taskWorkflowMapping = await this._findTaskWorkflowByKey(taskKey);
+    const taskWorkflowMapping =
+      await this.workflowOpsService.findTaskWorkflowByKey(taskKey);
     if (taskWorkflowMapping) {
-      const workflow = await this._findWorkflowByKey(
+      const workflow = await this.workflowOpsService.findWorkflowByKey(
         taskWorkflowMapping.workflowKey,
       );
       if (workflow) {
@@ -117,7 +114,8 @@ export class TaskOperationService {
         if (userTasks && userTasks.length > 0) {
           // match the variables
           for (const ut of userTasks) {
-            const transformedPayload = this._transformObject(payload);
+            const transformedPayload =
+              this.utilityService.transformObject(payload);
             await this.camundaService.completeUserTask(
               ut.id,
               transformedPayload,
@@ -127,18 +125,6 @@ export class TaskOperationService {
         }
       }
     }
-  }
-
-  private _transformObject(obj?: AnyObject) {
-    const transformed: AnyObject = {};
-
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        transformed[key] = {value: obj[key]};
-      }
-    }
-
-    return transformed;
   }
 
   private async _registerOrUpdateCommand(task: AnyObject, data: AnyObject) {
@@ -185,37 +171,6 @@ export class TaskOperationService {
     return false;
   }
 
-  public async execWorkflow(
-    keyVal: string,
-    taskOrEvent: string,
-  ): Promise<Workflow | null> {
-    let taskOrWorkflowItem;
-    switch (taskOrEvent) {
-      case TaskServiceNames.TASK:
-        taskOrWorkflowItem = await this._findTaskWorkflowByKey(keyVal);
-        break;
-      case TaskServiceNames.EVENT:
-        taskOrWorkflowItem = await this._findEventWorkflowByKey(keyVal);
-        break;
-      default:
-        break;
-    }
-    if (taskOrWorkflowItem) {
-      const workflow = await this._findWorkflowByKey(
-        taskOrWorkflowItem.workflowKey,
-      );
-      if (workflow) {
-        try {
-          await this.camundaService.execute(workflow.externalIdentifier, {});
-          return workflow;
-        } catch (e) {
-          throw new HttpErrors.NotFound('Workflow not found');
-        }
-      }
-    }
-    return null;
-  }
-
   private async _initWorkers(workflowName: string) {
     const workerMap = await this.workerMapGetter();
     if (workerMap?.[workflowName]) {
@@ -227,38 +182,5 @@ export class TaskOperationService {
         }
       }
     }
-  }
-
-  private async _findTaskWorkflowByKey(
-    keyValue: string,
-  ): Promise<TaskWorkFlowMapping | null> {
-    const filter: Filter<TaskWorkFlowMapping> = {
-      where: {
-        taskKey: keyValue,
-      },
-    };
-
-    return this.taskWorkflowMapping.findOne(filter);
-  }
-
-  private async _findEventWorkflowByKey(
-    keyValue: string,
-  ): Promise<EventWorkflowMapping | null> {
-    const filter: Filter<EventWorkflowMapping> = {
-      where: {
-        eventKey: keyValue,
-      },
-    };
-
-    return this.eventWorkflowMappingRepo.findOne(filter);
-  }
-
-  private async _findWorkflowByKey(keyValue: string): Promise<Workflow | null> {
-    const filter: Filter<Workflow> = {
-      where: {
-        name: keyValue,
-      },
-    };
-    return this.workflowRepo.findOne(filter);
   }
 }
