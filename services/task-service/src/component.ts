@@ -37,6 +37,8 @@ import {
   WorkflowServiceComponent,
 } from '@sourceloop/bpmn-service';
 import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
+import {UtilityService} from './services/utility.service';
+import {WorkflowOperationService} from './services/workflow-operation.service';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -57,6 +59,8 @@ export class TaskServiceComponent implements Component {
     EventQueueService,
     HttpClientService,
     TaskOperationService,
+    UtilityService,
+    WorkflowOperationService,
   ];
 
   /**
@@ -67,6 +71,8 @@ export class TaskServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(TaskServiceBindings.CAMUNDA_ENGINE_URL)
+    private readonly workflowEngineURL: string,
   ) {
     this.application.component(CoreComponent);
 
@@ -85,7 +91,7 @@ export class TaskServiceComponent implements Component {
     this.application.component(WorkflowServiceComponent);
     this.application.bind(WorkflowServiceBindings.Config).to({
       useCustomSequence: true,
-      workflowEngineBaseUrl: 'http://localhost:8080/engine-rest',
+      workflowEngineBaseUrl: workflowEngineURL,
     });
     this.controllers = [
       controllers.EventQueueController,

@@ -17,4 +17,8 @@ export namespace TaskServiceBindings {
   export const CONNECTOR_NAME = BindingKey.create(
     `${BINDING_PREFIX}.connector.name`,
   );
+
+  export const CAMUNDA_ENGINE_URL = BindingKey.create(
+    `${BINDING_PREFIX}.engine.camunda`,
+  );
 }
