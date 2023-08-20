@@ -108,6 +108,32 @@
         "operationId": "EventQueueController.stopListening"
       }
     },
+    "/task-service/task": {
+      "post": {
+        "x-controller-name": "TaskServiceController",
+        "x-operation-name": "updateTask",
+        "tags": [
+          "TaskServiceController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of TaskServiceController.updateTask",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "TaskServiceController.updateTask"
+      }
+    },
     "/workflows/{id}/execute": {
       "post": {
         "x-controller-name": "WorkflowController",
