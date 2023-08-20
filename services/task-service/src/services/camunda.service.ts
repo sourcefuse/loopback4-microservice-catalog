@@ -59,6 +59,18 @@ export class CamundaService {
     });
   }
 
+  async getCurrentUserTask<T>(id: string) {
+    return this.http.post<T>(`${this.baseUrl}/task`, {
+      processDefinitionId: id,
+    });
+  }
+
+  async completeUserTask<T>(id: string, variables?: AnyObject) {
+    return this.http.post(`${this.baseUrl}/task/${id}/complete`, {
+      variables,
+    });
+  }
+
   async execute<T>(id: string, input: AnyObject) {
     return this.http.post<T>(`${this.baseUrl}/process-definition/${id}/start`, {
       variables: this.formatInput(input),

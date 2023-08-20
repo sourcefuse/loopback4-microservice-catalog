@@ -87,7 +87,10 @@ export class TaskServiceComponent implements Component {
       useCustomSequence: true,
       workflowEngineBaseUrl: 'http://localhost:8080/engine-rest',
     });
-    this.controllers = [controllers.EventQueueController];
+    this.controllers = [
+      controllers.EventQueueController,
+      controllers.TaskServiceController,
+    ];
     this.repositories = [
       EventRepository,
       TaskRepository,

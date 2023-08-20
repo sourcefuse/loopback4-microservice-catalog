@@ -25,6 +25,7 @@ import {
 } from '../repositories';
 import {TaskServiceBindings} from '../keys';
 import {Task, TaskReturnMap, TaskServiceNames} from '../types';
+import {HttpErrors} from '@loopback/rest';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -94,13 +95,50 @@ export class TaskOperationService {
       if (this.clientBpmnRunner.tasksArray.length > 0) {
         for (const task of this.clientBpmnRunner.tasksArray) {
           await this.addTaskToDB(task);
-          await this.execWorkflow(task.key, 'task');
+          await this.execWorkflow(task.key, TaskServiceNames.TASK);
         }
       }
 
       this.clientBpmnRunner.tasksArray.length = 0;
     }
     await this._initWorkers(name);
+  }
+
+  public async taskUpdateFlow(taskKey: string, payload?: AnyObject) {
+    const taskWorkflowMapping = await this._findTaskWorkflowByKey(taskKey);
+    if (taskWorkflowMapping) {
+      const workflow = await this._findWorkflowByKey(
+        taskWorkflowMapping.workflowKey,
+      );
+      if (workflow) {
+        const userTasks: any[] = await this.camundaService.getCurrentUserTask(
+          workflow.externalIdentifier,
+        );
+        if (userTasks && userTasks.length > 0) {
+          // match the variables
+          for (const ut of userTasks) {
+            const transformedPayload = this._transformObject(payload);
+            await this.camundaService.completeUserTask(
+              ut.id,
+              transformedPayload,
+            );
+            // update the task data in the db
+          }
+        }
+      }
+    }
+  }
+
+  private _transformObject(obj?: AnyObject) {
+    const transformed: AnyObject = {};
+
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        transformed[key] = {value: obj[key]};
+      }
+    }
+
+    return transformed;
   }
 
   private async _registerOrUpdateCommand(task: AnyObject, data: AnyObject) {
@@ -167,8 +205,12 @@ export class TaskOperationService {
         taskOrWorkflowItem.workflowKey,
       );
       if (workflow) {
-        await this.camundaService.execute(workflow.externalIdentifier, {});
-        return workflow;
+        try {
+          await this.camundaService.execute(workflow.externalIdentifier, {});
+          return workflow;
+        } catch (e) {
+          throw new HttpErrors.NotFound('Workflow not found');
+        }
       }
     }
     return null;

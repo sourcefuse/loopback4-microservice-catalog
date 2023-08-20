@@ -4,3 +4,4 @@
 // https://opensource.org/licenses/MIT
 
 export * from './event-queue.controller';
+export * from './task-service.controller';
