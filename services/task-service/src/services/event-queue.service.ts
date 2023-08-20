@@ -66,7 +66,7 @@ export class EventQueueService {
       try {
         const data = await connection.receiveMessage(receiveParams).promise();
         const messages = data.Messages;
-        if (messages && messages.length) {
+        if (messages?.length) {
           for (const message of messages) {
             const event: Events = JSON.parse(message.Body || '{}');
 
