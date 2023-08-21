@@ -1,9 +1,10 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({
   name: 'event_workflow_mapping',
 })
-export class EventWorkflowMapping extends Entity {
+export class EventWorkflowMapping extends CoreEntity<EventWorkflowMapping> {
   @property({
     type: 'string',
     id: true,
@@ -15,6 +16,8 @@ export class EventWorkflowMapping extends Entity {
     type: 'string',
     required: true,
     name: 'event_key',
+    description:
+      'An identifier for a particular event queued by a service or a user',
   })
   eventKey: string;
 
@@ -22,6 +25,7 @@ export class EventWorkflowMapping extends Entity {
     type: 'string',
     required: true,
     name: 'workflow_key',
+    description: 'An identifier for a particular workflow',
   })
   workflowKey: string;
 }
