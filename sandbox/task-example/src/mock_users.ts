@@ -1,4 +1,4 @@
-export const dev_group_users = [
+export const devGroupUsers = [
   {
     id: 'be4c1d22-686b-4f9d-a9d8-7119f0dfab5d',
     name: 'dev_user1',
@@ -10,7 +10,7 @@ export const dev_group_users = [
     type: 'developer',
   },
 ];
-export const design_group_users = [
+export const designGroupUsers = [
   {
     id: 'f04257af-971c-e9f7-aedf-102a61e7533f',
     name: 'design_user1',

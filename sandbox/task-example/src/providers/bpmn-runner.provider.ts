@@ -11,7 +11,7 @@ import {
   TaskType,
 } from '@sourceloop/task-service';
 import {Variables} from 'camunda-external-task-client-js';
-import {design_group_users, dev_group_users} from '../mock_users';
+import {designGroupUsers, devGroupUsers} from '../mock_users';
 
 @bind({scope: BindingScope.SINGLETON})
 export class CustomBpmnRunner extends BaseBpmnRunner {
@@ -105,10 +105,10 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
       for (const group of groups) {
         switch (group) {
           case 'dev_group':
-            users = [...users, ...dev_group_users];
+            users = [...users, ...devGroupUsers];
             break;
           case 'design_group':
-            users = [...users, ...design_group_users];
+            users = [...users, ...designGroupUsers];
             break;
           // Add more groups if needed
         }
@@ -118,24 +118,20 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
   }
 
   assignTasksToUsers(users: AnyObject[], tasks: AnyObject[]): AnyObject[] {
-    let assignedTasks = [];
-    if (users.length > 0 && tasks.length > 0) {
-      for (const task of tasks) {
-        for (const user of users) {
-          if (task.assignee == user.name) {
-            assignedTasks.push({
-              assigneeId: user.id,
-              name: task.name,
-              key: task.key,
-              status: TaskStatus.pending,
-              priority: TaskPriority.high,
-              severity: TaskSeverity.high,
-              type: TaskType.user,
-            });
-          }
-        }
-      }
-    }
-    return assignedTasks;
+    if (!users.length || !tasks.length) return [];
+
+    return tasks.flatMap(task =>
+      users
+        .filter(user => task.assignee === user.name)
+        .map(user => ({
+          assigneeId: user.id,
+          name: task.name,
+          key: task.key,
+          status: TaskStatus.pending,
+          priority: TaskPriority.high,
+          severity: TaskSeverity.high,
+          type: TaskType.user,
+        })),
+    );
   }
 }

@@ -16,16 +16,18 @@ export async function main(options: ApplicationConfig = {}) {
 
 if (require.main === module) {
   // Run the application
+  const port = 3000;
+  const gracePeriodForClose = 5000;
   const config = {
     rest: {
-      port: +(process.env.PORT ?? 3000),
+      port: +(process.env.PORT ?? port),
       host: process.env.HOST,
       // The `gracePeriodForClose` provides a graceful close for http/https
       // servers with keep-alive clients. The default value is `Infinity`
       // (don't force-close). If you want to immediately destroy all sockets
       // upon stop, set its value to `0`.
       // See https://www.npmjs.com/package/stoppable
-      gracePeriodForClose: 5000, // 5 seconds
+      gracePeriodForClose, // 5 seconds
       openApiSpec: {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,

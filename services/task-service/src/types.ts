@@ -14,7 +14,7 @@ export interface EventQueueConnector {
   name: string;
   settings: {[key: string]: AnyObject};
   connect(settings: {[key: string]: AnyObject}): Promise<AnyObject>;
-  disconnect(settings: {[key: string]: AnyObject}): Promise<AnyObject>;
+  disconnect(settings: {[key: string]: AnyObject}): Promise<void>;
   ping(): Promise<AnyObject>;
 }
 
