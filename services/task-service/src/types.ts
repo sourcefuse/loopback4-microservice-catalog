@@ -98,6 +98,8 @@ export enum WorkflowKey {}
 
 export enum TaskStatus {
   pending = 'pending',
+  in_progress = 'in progress',
+  completed = 'completed',
 }
 // Define your task statuses as an enum
 
