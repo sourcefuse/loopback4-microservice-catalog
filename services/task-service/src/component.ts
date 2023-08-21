@@ -13,32 +13,33 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
+  WorkflowServiceBindings,
+  WorkflowServiceComponent,
+} from '@sourceloop/bpmn-service';
+import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import * as controllers from './controllers';
+import {TaskServiceBindings} from './keys';
+import {Connector} from './providers';
+import {
+  EventRepository,
+  TaskRepository,
+  TaskWorkFlowMappingRepository,
+} from './repositories';
+import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 import {
   CamundaService,
   EventProcessorService,
   EventQueueService,
   HttpClientService,
   TaskOperationService,
+  WebhookService,
+  UtilityService,
+  WorkflowOperationService,
 } from './services';
-import {Connector} from './providers';
-import * as controllers from './controllers';
-import {TaskServiceBindings} from './keys';
-import {
-  EventRepository,
-  TaskRepository,
-  TaskWorkFlowMappingRepository,
-} from './repositories';
-import {
-  WorkflowServiceBindings,
-  WorkflowServiceComponent,
-} from '@sourceloop/bpmn-service';
-import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
-import {UtilityService} from './services/utility.service';
-import {WorkflowOperationService} from './services/workflow-operation.service';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
