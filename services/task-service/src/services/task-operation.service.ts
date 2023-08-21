@@ -10,10 +10,11 @@ import {
 import {TaskProcessorCommand} from '../commands';
 
 import {TaskServiceBindings} from '../keys';
-import {TaskReturnMap, TaskServiceNames, TaskStatus} from '../types';
+import {Task, TaskReturnMap, TaskServiceNames, TaskStatus} from '../types';
 import {WorkflowOperationService} from './workflow-operation.service';
 import {UtilityService} from './utility.service';
 import {TaskDbService} from './task-db.service';
+import {HttpErrors} from '@loopback/rest';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -41,8 +42,11 @@ export class TaskOperationService {
     tasksArray: [],
   };
 
-  private _createTaskProcessorFunction(updatedPayload: any, task: any) {
-    return (taskOfWorkerFn: any, taskServiceOfWorkerFn: any) => {
+  private _createTaskProcessorFunction(
+    updatedPayload: AnyObject,
+    task: AnyObject,
+  ) {
+    return (taskOfWorkerFn: AnyObject, taskServiceOfWorkerFn: AnyObject) => {
       // logic given by the consumer to be plugged in
       return this.clientBpmnRunner.workerFunctions[task.topicName](
         taskOfWorkerFn,
@@ -52,8 +56,10 @@ export class TaskOperationService {
     };
   }
 
-  public async processTask(id: string, name: string, payload?: any) {
-    const tasks: any[] = await this.camundaService.getCurrentExternalTask(id);
+  public async processTask(id: string, name: string, payload?: AnyObject) {
+    const tasks: AnyObject[] = await this.camundaService.getCurrentExternalTask(
+      id,
+    );
     if (tasks && tasks.length > 0) {
       for (const task of tasks) {
         await this._registerOrUpdateCommand(task, {payload, name, id});
@@ -77,34 +83,32 @@ export class TaskOperationService {
   public async taskUpdateFlow(taskKey: string, payload?: AnyObject) {
     const taskWorkflowMapping =
       await this.workflowOpsService.findTaskWorkflowByKey(taskKey);
-    if (taskWorkflowMapping) {
-      const workflow = await this.workflowOpsService.findWorkflowByKey(
-        taskWorkflowMapping.workflowKey,
-      );
-      if (workflow) {
-        const userTasks: any[] = await this.camundaService.getCurrentUserTask(
-          workflow.externalIdentifier,
-        );
-        if (userTasks?.length > 0) {
-          for (const ut of userTasks) {
-            const transformedPayload =
-              this.utilityService.transformObject(payload);
-            await this.camundaService.completeUserTask(
-              ut.id,
-              transformedPayload,
-            );
-            // check if there are any tasks left
-            const pendingTasks: any[] =
-              await this.camundaService.getCurrentUserTask(
-                workflow.externalIdentifier,
-              );
+    if (!taskWorkflowMapping)
+      throw new HttpErrors.NotFound('No workflow mapped to task');
 
-            if (pendingTasks.length > 0) ut.status = TaskStatus.in_progress;
-            ut.status = TaskStatus.completed;
-            await this.taskDbService.updateTask(ut);
-          }
-        }
-      }
+    const workflow = await this.workflowOpsService.findWorkflowByKey(
+      taskWorkflowMapping.workflowKey,
+    );
+    if (!workflow) throw new HttpErrors.NotFound('No workflow found with key');
+
+    const userTasks: Task[] = await this.camundaService.getCurrentUserTask(
+      workflow.externalIdentifier,
+    );
+    if (!userTasks || userTasks.length === 0) return;
+
+    const transformedPayload = this.utilityService.transformObject(payload);
+
+    for (const ut of userTasks) {
+      await this.camundaService.completeUserTask(ut.id!, transformedPayload);
+
+      // check if there are Task tasks left
+      const pendingTasks: Task[] = await this.camundaService.getCurrentUserTask(
+        workflow.externalIdentifier,
+      );
+      ut.status =
+        pendingTasks.length > 0 ? TaskStatus.in_progress : TaskStatus.completed;
+
+      await this.taskDbService.updateTask(ut);
     }
   }
 
@@ -143,6 +147,8 @@ export class TaskOperationService {
           return true;
         } else if (type === TaskServiceNames.CHECK) {
           return true;
+        } else {
+          return false;
         }
       }
       return false;

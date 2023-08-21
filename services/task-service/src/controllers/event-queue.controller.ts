@@ -10,6 +10,7 @@ import {EventQueueService} from '../services/event-queue.service';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {Events} from '../models';
 import {authorize} from 'loopback4-authorization';
+import {AnyObject} from '@loopback/repository';
 
 const baseUrl = '/event-queue';
 
@@ -51,7 +52,6 @@ export class EventQueueController {
     try {
       await this.eventQueueService.enqueueEvent(Events);
     } catch (error) {
-      console.log('Enque error', error);
       throw new HttpErrors.InternalServerError('Failed to enqueue event');
     }
   }
@@ -70,7 +70,6 @@ export class EventQueueController {
     try {
       await this.eventQueueService.startListening();
     } catch (error) {
-      console.log('Error', error);
       throw new HttpErrors.InternalServerError(
         'Failed to start listening to events',
       );
@@ -114,7 +113,7 @@ export class EventQueueController {
       },
     },
   })
-  async healthCheck(): Promise<any> {
+  async healthCheck(): Promise<AnyObject> {
     try {
       const healthCheckResponse = await this.eventQueueService.healthCheck();
       return healthCheckResponse;
