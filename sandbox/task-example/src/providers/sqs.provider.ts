@@ -1,4 +1,5 @@
-import {inject, Provider, injectable, BindingScope} from '@loopback/core';
+import {BindingScope, Provider, inject, injectable} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
 import {
   EventQueueConnector,
   TaskServiceBindings,
@@ -14,7 +15,7 @@ export class SQSConnector implements Provider<EventQueueConnector> {
 
   constructor(
     @inject(TaskServiceBindings.CONNECTOR_NAME) public name: string,
-    @inject(TaskServiceBindings.CONNECTOR_CONFIG) public settings: any,
+    @inject(TaskServiceBindings.CONNECTOR_CONFIG) public settings: AnyObject,
   ) {
     this.sqs = new SQS({
       region: settings.region,
@@ -27,17 +28,17 @@ export class SQSConnector implements Provider<EventQueueConnector> {
     return Promise.resolve(this);
   }
 
-  async connect(settings: any): Promise<SQS> {
+  async connect(settings: AnyObject): Promise<SQS> {
     // Connection logic goes here
     return this.sqs;
   }
 
-  async disconnect(settings: any): Promise<void> {
+  async disconnect(settings: AnyObject): Promise<void> {
     // Disconnection logic goes here
     // Note: Since the SQS instance is created per request, you might not need to disconnect explicitly.
   }
 
-  async ping(): Promise<any> {
+  async ping(): Promise<AnyObject> {
     // Health check logic goes here
     const queueUrl = this.settings.queueUrl;
     const response = await this.sqs

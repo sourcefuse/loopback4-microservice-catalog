@@ -99,7 +99,8 @@ export class TaskOperationService {
     const transformedPayload = this.utilityService.transformObject(payload);
 
     for (const ut of userTasks) {
-      await this.camundaService.completeUserTask(ut.id!, transformedPayload);
+      if (!ut.id) continue;
+      await this.camundaService.completeUserTask(ut.id, transformedPayload);
 
       // check if there are Task tasks left
       const pendingTasks: Task[] = await this.camundaService.getCurrentUserTask(
