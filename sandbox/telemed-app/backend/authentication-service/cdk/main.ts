@@ -1,8 +1,8 @@
-import {App} from 'cdktf';
+import { App } from 'cdktf';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import {resolve} from 'path';
-import {LambdaStack, MigrationStack, RedisStack} from './common';
+import { resolve } from 'path';
+import { LambdaStack, MigrationStack, RedisStack } from './common';
 
 dotenv.config();
 dotenvExt.load({
@@ -36,7 +36,7 @@ const getSecurityGroup = () => {
 new MigrationStack(app, 'migration', { // NOSONAR
   codePath: resolve(__dirname, '../migration'),
   handler: 'lambda.handler',
-  runtime: 'nodejs16.x',
+  runtime: 'nodejs18.x',
   vpcConfig: {
     securityGroupIds: getSecurityGroup(),
     subnetIds: getSubnetIds(),
@@ -59,7 +59,7 @@ new LambdaStack(app, 'lambda', {// NOSONAR
   s3Bucket: process.env.S3_BUCKET!,
   codePath: __dirname,
   handler: 'lambda.handler',
-  runtime: 'nodejs16.x',
+  runtime: 'nodejs18.x',
   layerPath: resolve(__dirname, '../layers'),
   vpcConfig: {
     securityGroupIds: getSecurityGroup(),
@@ -73,41 +73,42 @@ new LambdaStack(app, 'lambda', {// NOSONAR
   },
   namespace: process.env.NAMESPACE || '',
   environment: process.env.ENV || '',
-  createRole: { iamPolicy:JSON.stringify( {
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Effect: "Allow",
-        Action: [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "ec2:CreateNetworkInterface",
-          "ec2:DescribeNetworkInterfaces",
-          "ec2:DeleteNetworkInterface",
-          "ec2:AssignPrivateIpAddresses",
-          "ec2:UnassignPrivateIpAddresses",
-          "secretsmanager:GetSecretValue",
-        ],
-        Resource: "*",
-      },
-    ],
-  }),
-  iamRole: JSON.stringify({
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Action: "sts:AssumeRole",
-        Principal: {
-          Service: "lambda.amazonaws.com",
+  createRole: {
+    iamPolicy: JSON.stringify({
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Allow",
+          Action: [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+            "ec2:CreateNetworkInterface",
+            "ec2:DescribeNetworkInterfaces",
+            "ec2:DeleteNetworkInterface",
+            "ec2:AssignPrivateIpAddresses",
+            "ec2:UnassignPrivateIpAddresses",
+            "secretsmanager:GetSecretValue",
+          ],
+          Resource: "*",
         },
-        Effect: "Allow",
-        Sid: "",
-      },
-    ],
-  })
- },
- useImage: true,
+      ],
+    }),
+    iamRole: JSON.stringify({
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Action: "sts:AssumeRole",
+          Principal: {
+            Service: "lambda.amazonaws.com",
+          },
+          Effect: "Allow",
+          Sid: "",
+        },
+      ],
+    })
+  },
+  useImage: true,
 });
 
 new RedisStack(app, 'redis', {// NOSONAR

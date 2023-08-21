@@ -1,24 +1,24 @@
 // https://cdk.tf/testing
-import {AcmCertificate} from '@cdktf/provider-aws/lib/acm-certificate';
-import {AcmCertificateValidation} from '@cdktf/provider-aws/lib/acm-certificate-validation';
-import {Apigatewayv2Api} from '@cdktf/provider-aws/lib/apigatewayv2-api';
-import {Apigatewayv2ApiMapping} from '@cdktf/provider-aws/lib/apigatewayv2-api-mapping';
-import {Apigatewayv2DomainName} from '@cdktf/provider-aws/lib/apigatewayv2-domain-name';
-import {IamPolicy} from '@cdktf/provider-aws/lib/iam-policy';
-import {IamRole} from '@cdktf/provider-aws/lib/iam-role';
-import {IamRolePolicyAttachment} from '@cdktf/provider-aws/lib/iam-role-policy-attachment';
+import { AcmCertificate } from '@cdktf/provider-aws/lib/acm-certificate';
+import { AcmCertificateValidation } from '@cdktf/provider-aws/lib/acm-certificate-validation';
+import { Apigatewayv2Api } from '@cdktf/provider-aws/lib/apigatewayv2-api';
+import { Apigatewayv2ApiMapping } from '@cdktf/provider-aws/lib/apigatewayv2-api-mapping';
+import { Apigatewayv2DomainName } from '@cdktf/provider-aws/lib/apigatewayv2-domain-name';
+import { IamPolicy } from '@cdktf/provider-aws/lib/iam-policy';
+import { IamRole } from '@cdktf/provider-aws/lib/iam-role';
+import { IamRolePolicyAttachment } from '@cdktf/provider-aws/lib/iam-role-policy-attachment';
 import {
   LambdaFunction,
   LambdaFunctionConfig,
 } from '@cdktf/provider-aws/lib/lambda-function';
-import {LambdaLayerVersion} from '@cdktf/provider-aws/lib/lambda-layer-version';
-import {LambdaPermission} from '@cdktf/provider-aws/lib/lambda-permission';
-import {Route53Record} from '@cdktf/provider-aws/lib/route53-record';
-import {Pet} from '@cdktf/provider-random/lib/pet';
-import {Testing} from 'cdktf';
+import { LambdaLayerVersion } from '@cdktf/provider-aws/lib/lambda-layer-version';
+import { LambdaPermission } from '@cdktf/provider-aws/lib/lambda-permission';
+import { Route53Record } from '@cdktf/provider-aws/lib/route53-record';
+import { Pet } from '@cdktf/provider-random/lib/pet';
+import { Testing } from 'cdktf';
 import 'cdktf/lib/testing/adapters/jest'; // Load types for expect matchers
-import {LambdaStack} from '../common';
-import {defaultLambdaMemory} from '../common/utils/constants';
+import { LambdaStack } from '../common';
+import { defaultLambdaMemory } from '../common/utils/constants';
 
 expect.addSnapshotSerializer({
   test: val => typeof val === 'string',
@@ -32,7 +32,7 @@ expect.addSnapshotSerializer({
 });
 
 const handler = 'lambda.handler';
-const runtime = 'nodejs16.x';
+const runtime = 'nodejs18.x';
 const version = 'v0.0.1';
 const subnetIds = ['subnet-123456'];
 const securityGroupIds = ['sg-123456'];
@@ -85,7 +85,7 @@ describe('My CDKTF Application with all config set', () => {
     expect(stack).toHaveResource(IamRolePolicyAttachment);
     expect(stack).toHaveResource(Apigatewayv2Api);
     expect(stack).toHaveResource(LambdaPermission);
-    expect(stack).toHaveResourceWithProperties(Pet, {length: 2});
+    expect(stack).toHaveResourceWithProperties(Pet, { length: 2 });
     expect(stack).toHaveResourceWithProperties(Apigatewayv2DomainName, {
       domain_name: domainName,
     });
@@ -134,7 +134,7 @@ describe('My CDKTF Application with config change', () => {
     expect(stack).toHaveResource(IamPolicy);
     expect(stack).toHaveResource(IamRolePolicyAttachment);
     expect(stack).toHaveResource(LambdaPermission);
-    expect(stack).toHaveResourceWithProperties(Pet, {length: 2});
+    expect(stack).toHaveResourceWithProperties(Pet, { length: 2 });
     expect(stack).toHaveResource(IamRole);
   });
 
@@ -159,7 +159,7 @@ describe('My CDKTF Application with config change', () => {
     expect(stack).toHaveResource(IamRolePolicyAttachment);
     expect(stack).not.toHaveResource(Apigatewayv2Api);
     expect(stack).not.toHaveResource(LambdaPermission);
-    expect(stack).toHaveResourceWithProperties(Pet, {length: 2});
+    expect(stack).toHaveResourceWithProperties(Pet, { length: 2 });
   });
 
   it('should not create lambda layer if layer path is not set', () => {
@@ -182,7 +182,7 @@ describe('My CDKTF Application with config change', () => {
     expect(stack).toHaveResource(IamRolePolicyAttachment);
     expect(stack).toHaveResource(Apigatewayv2Api);
     expect(stack).toHaveResource(LambdaPermission);
-    expect(stack).toHaveResourceWithProperties(Pet, {length: 2});
+    expect(stack).toHaveResourceWithProperties(Pet, { length: 2 });
     expect(stack).not.toHaveResource(Apigatewayv2DomainName);
     expect(stack).not.toHaveResource(Apigatewayv2ApiMapping);
     expect(stack).not.toHaveResource(Route53Record);
