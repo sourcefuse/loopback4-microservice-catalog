@@ -5,6 +5,7 @@ import {TaskServiceBindings} from '../keys';
 import {Events} from '../models';
 import {EventQueueConnector} from '../types';
 import {EventProcessorService} from './event-processor.service';
+import {HttpErrors} from '@loopback/rest';
 
 @injectable(
   {
@@ -30,21 +31,18 @@ export class EventQueueService {
       MessageBody: JSON.stringify(event),
       QueueUrl: this.settings.queueUrl,
     };
-    await connection.sendMessage(params, (err: any, data: any) => {
+    await connection.sendMessage(params, (err: AnyObject, data: AnyObject) => {
       if (err) {
-        console.error('Error sending message:', err);
-      } else {
-        console.log('Message sent:', data.MessageId);
+        throw new HttpErrors.InternalServerError(
+          `Error sending message: ${err.message}`,
+        );
       }
     });
-    // Todo: Disconnect from the underlying system (optional)
   }
 
   async startListening(): Promise<void> {
     const connection = await this.connector.connect(this.connector.settings);
-    connection.onEvent((event: Events) => {
-      console.log(`Received event: ${JSON.stringify(event)}`);
-    });
+    connection.onEvent((event: Events) => {});
   }
 
   async stopListening(): Promise<void> {
@@ -83,7 +81,7 @@ export class EventQueueService {
           }
         }
       } catch (error) {
-        console.error('Error receiving message from SQS:', error);
+        throw new HttpErrors.InternalServerError(`Error with Queue, ${error}`);
       }
       // Call the function recursively to continuously listen for new messages
       receiveMessages();
@@ -93,7 +91,7 @@ export class EventQueueService {
     receiveMessages();
   }
 
-  async healthCheck(): Promise<any> {
+  async healthCheck(): Promise<AnyObject> {
     const healthCheckResponse = await this.connector.ping();
     return healthCheckResponse;
   }

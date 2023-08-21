@@ -1,4 +1,5 @@
 import {bind, BindingScope} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
 import {
   BaseBpmnRunner,
   ProccessorFunction,
@@ -26,10 +27,18 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
 
   getWorkerFunctions(): Record<string, ProccessorFunction> {
     return {
-      'read-payload': (task: any, taskService: any, payload?: any) => {
+      'read-payload': (
+        task: AnyObject,
+        taskService: AnyObject,
+        payload: AnyObject,
+      ) => {
         return {payload, vars: null};
       },
-      'check-vars': (task: any, taskService: any, payload?: any) => {
+      'check-vars': (
+        task: AnyObject,
+        taskService: AnyObject,
+        payload: AnyObject,
+      ) => {
         const vars = new Variables();
 
         if (payload['users'].length == 0) {
@@ -53,66 +62,32 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
         return {payload, vars};
       },
       'fetch-users-from-group': (
-        task: any,
-        taskService: any,
-        payload?: any,
+        task: AnyObject,
+        taskService: AnyObject,
+        payload: AnyObject,
       ) => {
-        // mock an api call to an external service
-        // and get users
-
-        // got users from external db or
-        // some service
-
         const userGroupsFromPayload = payload['fetch_from_groups'];
-        let users: any[] = [];
-        if (userGroupsFromPayload && userGroupsFromPayload.length > 0) {
-          for (const group of userGroupsFromPayload) {
-            // for example- make an api call to fetch users
-            // here for demonstrations purposes, we just get
-            // some static users
+        let users: AnyObject[] = this.getUsersFromGroups(userGroupsFromPayload);
+        let assignedTasks = this.assignTasksToUsers(users, payload['tasks']);
 
-            if (group == 'dev_group') {
-              users = [...users, ...dev_group_users];
-            }
-
-            if (group == 'design_group') {
-              users = [...users, ...design_group_users];
-            }
-          }
-
-          let assignedTasks = [];
-
-          if (users.length > 0 && payload['tasks'].length > 0) {
-            // assign tasks to the users
-            // make an array and pass it in the payload
-            for (const task of payload['tasks']) {
-              for (const user of users) {
-                if (task.assignee == user.name) {
-                  assignedTasks.push({
-                    assigneeId: user.id,
-                    name: task.name,
-                    key: task.key,
-                    status: TaskStatus.pending,
-                    priority: TaskPriority.high,
-                    severity: TaskSeverity.high,
-                    type: TaskType.user,
-                  });
-                }
-              }
-            }
-          }
-
-          if (assignedTasks.length > 0) {
-            payload['assignedTasks'] = assignedTasks;
-          }
+        if (assignedTasks.length > 0) {
+          payload['assignedTasks'] = assignedTasks;
         }
 
         return {payload, vars: null};
       },
-      'fetch-users-from-role': (task: any, taskService: any, payload?: any) => {
+      'fetch-users-from-role': (
+        task: AnyObject,
+        taskService: AnyObject,
+        payload: AnyObject,
+      ) => {
         return {payload, vars: null};
       },
-      'create-tasks': (task: any, taskService: any, payload?: any) => {
+      'create-tasks': (
+        task: AnyObject,
+        taskService: AnyObject,
+        payload: AnyObject,
+      ) => {
         if (payload['assignedTasks'] && payload['assignedTasks'].length > 0) {
           for (const task of payload['assignedTasks']) {
             this.tasksArray.push(task);
@@ -122,5 +97,45 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
         return {payload, vars: null};
       },
     };
+  }
+
+  getUsersFromGroups(groups: string[]): AnyObject[] {
+    let users: AnyObject[] = [];
+    if (groups && groups.length > 0) {
+      for (const group of groups) {
+        switch (group) {
+          case 'dev_group':
+            users = [...users, ...dev_group_users];
+            break;
+          case 'design_group':
+            users = [...users, ...design_group_users];
+            break;
+          // Add more groups if needed
+        }
+      }
+    }
+    return users;
+  }
+
+  assignTasksToUsers(users: AnyObject[], tasks: AnyObject[]): AnyObject[] {
+    let assignedTasks = [];
+    if (users.length > 0 && tasks.length > 0) {
+      for (const task of tasks) {
+        for (const user of users) {
+          if (task.assignee == user.name) {
+            assignedTasks.push({
+              assigneeId: user.id,
+              name: task.name,
+              key: task.key,
+              status: TaskStatus.pending,
+              priority: TaskPriority.high,
+              severity: TaskSeverity.high,
+              type: TaskType.user,
+            });
+          }
+        }
+      }
+    }
+    return assignedTasks;
   }
 }

@@ -1,6 +1,10 @@
 import {BindingScope, Getter, inject, injectable} from '@loopback/context';
 import {AnyObject} from '@loopback/repository';
-import {WorkflowServiceBindings, WorkerMap} from '@sourceloop/bpmn-service';
+import {
+  WorkflowServiceBindings,
+  WorkerMap,
+  WorkerNameCmdPair,
+} from '@sourceloop/bpmn-service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UtilityService {
@@ -23,7 +27,9 @@ export class UtilityService {
 
   public async iterateWorkerMap(
     workflowName: string,
-    callback: (worker: any) => Promise<boolean>,
+    callback: (
+      worker: WorkerNameCmdPair<AnyObject, AnyObject>,
+    ) => Promise<boolean>,
   ): Promise<boolean> {
     const workerMap = await this.workerMapGetter();
     if (workerMap?.[workflowName]) {

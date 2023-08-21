@@ -1,9 +1,10 @@
 import {service} from '@loopback/core';
 import {ICommand} from '@sourceloop/core';
 import {TaskOperationService} from '../services';
+import {AnyObject} from '@loopback/repository';
 
 export class TaskProcessorCommand implements ICommand {
-  parameters?: any;
+  parameters: AnyObject;
   id: string;
   name: string;
 
@@ -18,10 +19,8 @@ export class TaskProcessorCommand implements ICommand {
     this.name = name;
   }
 
-  async execute(): Promise<any> {
-    const task = this.parameters.task;
-    const taskService = this.parameters.taskService;
-
+  async execute(): Promise<void> {
+    const {task, taskService} = this.parameters;
     const {payload, vars} = this.callbackFn(task, taskService);
 
     await taskService.complete(task, vars);

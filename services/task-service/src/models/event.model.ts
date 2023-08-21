@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import {AnyObject, Entity, model, property} from '@loopback/repository';
 
 @model()
 export class Events extends Entity {
@@ -31,5 +31,5 @@ export class Events extends Entity {
     type: 'object',
     required: true,
   })
-  payload: any;
+  payload: AnyObject;
 }

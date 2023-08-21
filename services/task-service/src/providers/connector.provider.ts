@@ -7,6 +7,7 @@ import {
 } from '@loopback/core';
 import {EventQueueConnector} from '../types';
 import {TaskServiceBindings} from '../keys';
+import {AnyObject} from '@loopback/repository';
 
 @injectable({
   scope: BindingScope.SINGLETON,
@@ -14,12 +15,12 @@ import {TaskServiceBindings} from '../keys';
 })
 export class Connector implements Provider<EventQueueConnector> {
   name: string;
-  settings: any;
+  settings: AnyObject;
   connector: EventQueueConnector;
 
   constructor(
     name: string,
-    @inject(TaskServiceBindings.CONNECTOR_CONFIG) settings: any,
+    @inject(TaskServiceBindings.CONNECTOR_CONFIG) settings: AnyObject,
   ) {
     this.name = name;
     this.settings = settings;
@@ -31,18 +32,18 @@ export class Connector implements Provider<EventQueueConnector> {
     return Promise.resolve(this.connector);
   }
 
-  async connect(settings: any): Promise<EventQueueConnector> {
+  async connect(settings: AnyObject): Promise<EventQueueConnector> {
     // Connection logic goes here
     // Example: this.connector.connect(settings);
     return this.connector;
   }
 
-  async disconnect(settings: any): Promise<void> {
+  async disconnect(settings: AnyObject): Promise<void> {
     // Disconnection logic goes here
     // Example: this.connector.disconnect(settings);
   }
 
-  async ping(): Promise<any> {
+  async ping(): Promise<void> {
     // Health check logic goes here
     // Example: return this.connector.ping();
   }

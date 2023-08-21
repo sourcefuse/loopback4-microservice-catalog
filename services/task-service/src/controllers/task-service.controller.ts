@@ -21,7 +21,6 @@ export class TaskServiceController {
     try {
       await this.taskOpsService.taskUpdateFlow(Tasks.taskKey, Tasks.payload);
     } catch (e) {
-      console.log(e);
       throw new HttpErrors.InternalServerError('Failed to update task');
     }
   }

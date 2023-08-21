@@ -12,10 +12,10 @@ export const AuthCacheSourceName = 'AuthCache';
 
 export interface EventQueueConnector {
   name: string;
-  settings: {[key: string]: any};
-  connect(settings: {[key: string]: any}): Promise<any>;
-  disconnect(settings: {[key: string]: any}): Promise<any>;
-  ping(): Promise<any>;
+  settings: {[key: string]: AnyObject};
+  connect(settings: {[key: string]: AnyObject}): Promise<AnyObject>;
+  disconnect(settings: {[key: string]: AnyObject}): Promise<AnyObject>;
+  ping(): Promise<AnyObject>;
 }
 
 export enum TaskServiceNames {
@@ -36,13 +36,13 @@ export interface Workflow {
   name: string;
   description: string;
   provider: string;
-  inputSchema: any;
+  inputSchema: AnyObject;
 }
 
 export interface EventWorkflowMapping {
   eventKey: EventKey;
   workflowKey: WorkflowKey;
-  config: any;
+  config: AnyObject;
 }
 
 export interface Task {
@@ -63,7 +63,7 @@ export interface Task {
 export interface Message {
   message: string;
   key: string;
-  payload?: any;
+  payload?: AnyObject;
   eventKey: EventKey;
   taskKey: TaskKey;
 }
@@ -76,7 +76,7 @@ export type TaskReturnMap = {
 export type ProccessorFunction = (
   task: AnyObject,
   taskService: AnyObject,
-  payload?: AnyObject | null,
+  payload: AnyObject,
 ) => {
   payload: AnyObject;
   vars: AnyObject | null;

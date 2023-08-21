@@ -1,4 +1,4 @@
-import {model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
 
 @model()
 export class Message {
@@ -18,7 +18,7 @@ export class Message {
     type: 'any',
     required: false,
   })
-  payload?: any;
+  payload?: AnyObject;
 
   @property({
     type: 'string',
