@@ -1,6 +1,5 @@
 import {injectable, BindingScope, service, inject} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {TaskRepository} from '../repositories/task.repository';
 import {CamundaService} from './camunda.service';
 import {
   WorkflowServiceBindings,
@@ -11,7 +10,7 @@ import {
 import {TaskProcessorCommand} from '../commands';
 
 import {TaskServiceBindings} from '../keys';
-import {Task, TaskReturnMap, TaskServiceNames} from '../types';
+import {TaskReturnMap, TaskServiceNames} from '../types';
 import {WorkflowOperationService} from './workflow-operation.service';
 import {UtilityService} from './utility.service';
 import {TaskDbService} from './task-db.service';

@@ -18,9 +18,7 @@ export class EventProcessorService {
     private readonly taskOpsService: TaskOperationService,
     @service(WorkflowOperationService)
     private readonly workflowOpsService: WorkflowOperationService,
-  ) {
-    // empty constuctor
-  }
+  ) {}
   public async processEvent(event: Events): Promise<void> {
     await this.eventRepo.create(event);
 

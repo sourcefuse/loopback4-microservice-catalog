@@ -1,5 +1,3 @@
-// Uncomment these imports to begin using these cool features!
-
 import {service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {HttpErrors, post, requestBody} from '@loopback/rest';

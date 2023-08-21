@@ -5,7 +5,7 @@ import {
   HttpErrors,
   getModelSchemaRef,
 } from '@loopback/rest';
-import {inject, service} from '@loopback/core';
+import {inject} from '@loopback/core';
 import {EventQueueService} from '../services/event-queue.service';
 import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {Events} from '../models';
