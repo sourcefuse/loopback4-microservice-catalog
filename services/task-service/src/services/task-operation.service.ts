@@ -10,7 +10,7 @@ import {
 import {TaskProcessorCommand} from '../commands';
 
 import {TaskServiceBindings} from '../keys';
-import {TaskReturnMap, TaskServiceNames} from '../types';
+import {TaskReturnMap, TaskServiceNames, TaskStatus} from '../types';
 import {WorkflowOperationService} from './workflow-operation.service';
 import {UtilityService} from './utility.service';
 import {TaskDbService} from './task-db.service';
@@ -93,7 +93,15 @@ export class TaskOperationService {
               ut.id,
               transformedPayload,
             );
-            // update the task data in the db
+            // check if there are any tasks left
+            const pendingTasks: any[] =
+              await this.camundaService.getCurrentUserTask(
+                workflow.externalIdentifier,
+              );
+
+            if (pendingTasks.length > 0) ut.status = TaskStatus.in_progress;
+            ut.status = TaskStatus.completed;
+            await this.taskDbService.updateTask(ut);
           }
         }
       }

@@ -28,4 +28,13 @@ export class TaskDbService {
       endDate: task.endDate,
     });
   }
+
+  public async updateTask(task: Task) {
+    const dbTask = await this.taskRepo.findById(task.id);
+
+    if (dbTask) {
+      dbTask.status = task.status;
+      await this.taskRepo.update(dbTask);
+    }
+  }
 }
