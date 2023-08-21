@@ -1,7 +1,10 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
-@model()
-export class Tasks extends Entity {
+@model({
+  name: 'tasks',
+})
+export class Task extends CoreEntity<Task> {
   @property({
     type: 'string',
     id: true,
@@ -12,24 +15,28 @@ export class Tasks extends Entity {
   @property({
     type: 'string',
     required: true,
+    description: 'An identifier for a particular task within an event',
   })
   key: string;
 
   @property({
     type: 'string',
     required: true,
+    description: 'A name given by the consumer service for this task',
   })
   name: string;
 
   @property({
     type: 'string',
     required: false,
+    description: 'A short description of this task',
   })
   description?: string;
 
   @property({
     type: 'string',
     required: true,
+    description: 'A short message to indicate the progression of the task',
   })
   status: string;
 
