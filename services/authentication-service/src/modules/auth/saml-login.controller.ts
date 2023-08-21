@@ -49,7 +49,13 @@ export class SamlLoginController {
     callbackURL: process.env.SAML_CALLBACK_URL,
     issuer: process.env.SAML_ISSUER,
     cert: process.env.SAML_CERT,
-    entryPoint: process.env.SAML_URL,
+    entryPoint: process.env.SAML_ENTRY_POINT,
+    audience: process.env.SAML_AUDIENCE,
+    logoutUrl: process.env.SAML_LOGOUT_URL,
+    passReqToCallback: !!+(process.env.SAML_AUTH_PASS_REQ_CALLBACK ?? 0),
+    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 1),
+    idpIssuer: process.env.IDP_ISSUER,
+    logoutCallbackUrl: process.env.SAML_LOGOUT_CALLBACK_URL,
   })
   @authorize({permissions: ['*']})
   @post('/auth/saml', {
@@ -82,12 +88,15 @@ export class SamlLoginController {
     accessType: 'offline',
     scope: ['profile', 'email'],
     issuer: process.env.SAML_ISSUER,
+    callbackURL: process.env.SAML_CALLBACK_URL,
     cert: process.env.SAML_CERT,
-    entryPoint: process.env.SAML_URL,
+    entryPoint: process.env.SAML_ENTRY_POINT,
     audience: process.env.SAML_AUDIENCE,
     logoutUrl: process.env.SAML_LOGOUT_URL,
-    passReqToCallback: false,
-    validateInResponseTo: true,
+    passReqToCallback: !!+(process.env.SAML_AUTH_PASS_REQ_CALLBACK ?? 0),
+    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 1),
+    idpIssuer: process.env.IDP_ISSUER,
+    logoutCallbackUrl: process.env.SAML_LOGOUT_CALLBACK_URL,
   })
   @authorize({permissions: ['*']})
   @post(`/auth/saml-redirect`, {
