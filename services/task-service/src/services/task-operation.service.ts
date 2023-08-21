@@ -130,7 +130,7 @@ export class TaskOperationService {
             ? TaskStatus.in_progress
             : TaskStatus.completed;
 
-        await this.taskDbService.updateTask(ut);
+        await this.taskDbService.updateTask(taskKey, ut);
         if (payload)
           await this.webhookService.triggerWebhook(taskKey, {
             message: 'Event Proccessed',
@@ -141,7 +141,7 @@ export class TaskOperationService {
           });
       }
     } catch (error) {
-      console.log(error);
+      throw new HttpErrors.InternalServerError('could not update the task');
     }
   }
 

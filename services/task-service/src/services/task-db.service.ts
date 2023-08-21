@@ -29,10 +29,10 @@ export class TaskDbService {
     });
   }
 
-  public async updateTask(task: Task) {
+  public async updateTask(key: string, task: Task) {
     const dbTask = await this.taskRepo.findOne({
       where: {
-        key: task.key,
+        key,
       },
     });
 
