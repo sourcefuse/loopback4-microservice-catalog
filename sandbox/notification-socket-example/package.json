@@ -56,7 +56,7 @@
     "@loopback/rest-explorer": "^6.0.0",
     "@loopback/service-proxy": "^6.0.0",
     "@sourceloop/core": "^8.0.5",
-    "@sourceloop/notification-service": "^7.0.7",
+    "@sourceloop/notification-service": "^7.0.6",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "firebase-admin": "^11.10.1",
