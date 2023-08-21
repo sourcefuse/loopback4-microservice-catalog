@@ -1,6 +1,8 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model()
+@model({
+  name: 'webhook_subscriptions',
+})
 export class WebhookSubscriptions extends Entity {
   @property({
     type: 'string',

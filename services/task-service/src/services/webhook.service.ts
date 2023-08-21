@@ -13,21 +13,51 @@ export class WebhookService {
   ) {}
 
   public async addToSubscription(url: string, event: string) {
-    await this.webhookSubscriptionsRepo.create({
-      event,
-      url,
+    try {
+      const webhookSubscriptions = await this.webhookSubscriptionsRepo.find({
+        where: {
+          url,
+          event,
+        },
+      });
+      if (webhookSubscriptions.length == 0) {
+        await this.webhookSubscriptionsRepo.create({
+          event,
+          url,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async getUrlOfSubscritption(event: string) {
+    const webhookSubscriptions = await this.webhookSubscriptionsRepo.find({
+      where: {
+        event,
+      },
     });
+    if (webhookSubscriptions.length == 1) {
+      return webhookSubscriptions[0].url;
+    }
+    return null;
   }
 
   public async triggerWebhook(event: string, data: any) {
-    const subscribers = await this.webhookSubscriptionsRepo.find({
-      where: {event},
-    });
-    if (subscribers.length > 0) {
-      for (const subscriber of subscribers) {
-        const url = subscriber.url;
-        await this.httpService.post(url, data);
+    try {
+      const subscribers = await this.webhookSubscriptionsRepo.find({
+        where: {event},
+      });
+      console.log(event);
+      console.log(subscribers);
+      if (subscribers.length > 0) {
+        for (const subscriber of subscribers) {
+          const url = subscriber.url;
+          await this.httpService.post(url, data);
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   }
 }
