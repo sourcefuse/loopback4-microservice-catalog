@@ -6,6 +6,7 @@ import {EventRepository} from '../repositories/event.repository';
 import {TaskServiceNames} from '../types';
 import {TaskOperationService} from './task-operation.service';
 import {WorkflowOperationService} from './workflow-operation.service';
+import {WebhookService} from './webhook.service';
 
 @injectable({
   scope: BindingScope.TRANSIENT,
@@ -18,6 +19,8 @@ export class EventProcessorService {
     private readonly taskOpsService: TaskOperationService,
     @service(WorkflowOperationService)
     private readonly workflowOpsService: WorkflowOperationService,
+    @service(WebhookService)
+    private readonly webhookService: WebhookService,
   ) {}
   public async processEvent(event: Events): Promise<void> {
     await this.eventRepo.create(event);
@@ -28,9 +31,18 @@ export class EventProcessorService {
     );
 
     if (workflow) {
+      // subscribe to tasks
+      const url = await this.webhookService.getUrlOfSubscritption(event.key);
+      if (url && event.payload.tasks) {
+        for (const task of event.payload.tasks) {
+          await this.webhookService.addToSubscription(url, task.key);
+        }
+      }
+
       await this.taskOpsService.processTask(
         workflow.externalIdentifier,
         workflow.name,
+        event.key,
         event.payload,
       );
     } else {

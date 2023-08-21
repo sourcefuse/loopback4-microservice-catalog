@@ -30,7 +30,11 @@ export class TaskDbService {
   }
 
   public async updateTask(task: Task) {
-    const dbTask = await this.taskRepo.findById(task.id);
+    const dbTask = await this.taskRepo.findOne({
+      where: {
+        key: task.key,
+      },
+    });
 
     if (dbTask) {
       dbTask.status = task.status;

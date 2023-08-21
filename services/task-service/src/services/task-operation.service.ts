@@ -15,6 +15,7 @@ import {WorkflowOperationService} from './workflow-operation.service';
 import {UtilityService} from './utility.service';
 import {TaskDbService} from './task-db.service';
 import {HttpErrors} from '@loopback/rest';
+import {WebhookService} from './webhook.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -33,6 +34,8 @@ export class TaskOperationService {
     private readonly workerFn: WorkerImplementationFn,
     @inject(TaskServiceBindings.CUSTOM_BPMN_RUNNER)
     private readonly customBpmnRunner: TaskReturnMap,
+    @service(WebhookService)
+    private readonly webhookService: WebhookService,
   ) {
     this.clientBpmnRunner = this.customBpmnRunner;
   }
@@ -56,13 +59,18 @@ export class TaskOperationService {
     };
   }
 
-  public async processTask(id: string, name: string, payload?: AnyObject) {
+  public async processTask(
+    id: string,
+    name: string,
+    key: string,
+    payload?: AnyObject,
+  ) {
     const tasks: AnyObject[] = await this.camundaService.getCurrentExternalTask(
       id,
     );
     if (tasks && tasks.length > 0) {
       for (const task of tasks) {
-        await this._registerOrUpdateCommand(task, {payload, name, id});
+        await this._registerOrUpdateCommand(task, {key, payload, name, id});
       }
     } else {
       if (this.clientBpmnRunner.tasksArray.length > 0) {
@@ -75,41 +83,65 @@ export class TaskOperationService {
         }
       }
 
+      if (payload)
+        await this.webhookService.triggerWebhook(key, {
+          message: 'Event Proccessed',
+          key: key,
+          payload,
+          eventKey: key,
+          taskKey: 'none',
+        });
       this.clientBpmnRunner.tasksArray.length = 0;
     }
     await this._initWorkers(name);
   }
 
   public async taskUpdateFlow(taskKey: string, payload?: AnyObject) {
-    const taskWorkflowMapping =
-      await this.workflowOpsService.findTaskWorkflowByKey(taskKey);
-    if (!taskWorkflowMapping)
-      throw new HttpErrors.NotFound('No workflow mapped to task');
+    try {
+      const taskWorkflowMapping =
+        await this.workflowOpsService.findTaskWorkflowByKey(taskKey);
+      if (!taskWorkflowMapping)
+        throw new HttpErrors.NotFound('No workflow mapped to task');
 
-    const workflow = await this.workflowOpsService.findWorkflowByKey(
-      taskWorkflowMapping.workflowKey,
-    );
-    if (!workflow) throw new HttpErrors.NotFound('No workflow found with key');
+      const workflow = await this.workflowOpsService.findWorkflowByKey(
+        taskWorkflowMapping.workflowKey,
+      );
+      if (!workflow)
+        throw new HttpErrors.NotFound('No workflow found with key');
 
-    const userTasks: Task[] = await this.camundaService.getCurrentUserTask(
-      workflow.externalIdentifier,
-    );
-    if (!userTasks || userTasks.length === 0) return;
-
-    const transformedPayload = this.utilityService.transformObject(payload);
-
-    for (const ut of userTasks) {
-      if (!ut.id) continue;
-      await this.camundaService.completeUserTask(ut.id, transformedPayload);
-
-      // check if there are Task tasks left
-      const pendingTasks: Task[] = await this.camundaService.getCurrentUserTask(
+      const userTasks: Task[] = await this.camundaService.getCurrentUserTask(
         workflow.externalIdentifier,
       );
-      ut.status =
-        pendingTasks.length > 0 ? TaskStatus.in_progress : TaskStatus.completed;
+      if (!userTasks || userTasks.length === 0) return;
 
-      await this.taskDbService.updateTask(ut);
+      const transformedPayload = this.utilityService.transformObject(payload);
+
+      for (const ut of userTasks) {
+        if (!ut.id) continue;
+        await this.camundaService.completeUserTask(ut.id, transformedPayload);
+
+        // check if there are Task tasks left
+        const pendingTasks: Task[] =
+          await this.camundaService.getCurrentUserTask(
+            workflow.externalIdentifier,
+          );
+        ut.status =
+          pendingTasks?.length > 0
+            ? TaskStatus.in_progress
+            : TaskStatus.completed;
+
+        await this.taskDbService.updateTask(ut);
+        if (payload)
+          await this.webhookService.triggerWebhook(taskKey, {
+            message: 'Event Proccessed',
+            key: taskKey,
+            payload,
+            eventKey: 'none',
+            taskKey: taskKey,
+          });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -122,7 +154,13 @@ export class TaskOperationService {
       data.name,
       topic,
     );
-    const cmd = new TaskProcessorCommand(data.id, data.name, this, tpf);
+    const cmd = new TaskProcessorCommand(
+      data.id,
+      data.name,
+      this,
+      tpf,
+      data.key,
+    );
     if (!toStart) {
       await this.regFn(data.name, topic, new BPMTask(cmd));
     } else {

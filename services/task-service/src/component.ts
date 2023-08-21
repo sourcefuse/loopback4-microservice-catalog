@@ -28,6 +28,7 @@ import {
   EventRepository,
   TaskRepository,
   TaskWorkFlowMappingRepository,
+  WebhookSubscriptionsRepository,
 } from './repositories';
 import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 import {
@@ -39,6 +40,7 @@ import {
   WebhookService,
   UtilityService,
   WorkflowOperationService,
+  TaskDbService,
 } from './services';
 
 export class TaskServiceComponent implements Component {
@@ -62,6 +64,8 @@ export class TaskServiceComponent implements Component {
     TaskOperationService,
     UtilityService,
     WorkflowOperationService,
+    WebhookService,
+    TaskDbService,
   ];
 
   /**
@@ -101,6 +105,7 @@ export class TaskServiceComponent implements Component {
       TaskRepository,
       EventWorkflowMappingRepository,
       TaskWorkFlowMappingRepository,
+      WebhookSubscriptionsRepository,
     ];
   }
 

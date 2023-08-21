@@ -100,3 +100,11 @@ CREATE TABLE "main".event_workflow_mapping
     workflow_key         varchar,
     CONSTRAINT pk_event_workflow_mapping_id PRIMARY KEY (id)
 );
+
+CREATE TABLE "main".webhook_subscriptions
+(
+    id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+    "event"              varchar,
+    "url"                varchar,
+    CONSTRAINT pk_webhook_subscriptions_id PRIMARY KEY (id)
+);

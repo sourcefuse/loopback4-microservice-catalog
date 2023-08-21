@@ -3,7 +3,7 @@
   "info": {
     "title": "Bpmn Service",
     "version": "1.0.0",
-    "description": "Task microservice",
+    "description": "a Reusable, customizable and workflow based task service",
     "contact": {
       "name": "SourceFuse"
     }
@@ -106,6 +106,32 @@
           }
         },
         "operationId": "EventQueueController.stopListening"
+      }
+    },
+    "/task-service/subscribe": {
+      "post": {
+        "x-controller-name": "TaskServiceController",
+        "x-operation-name": "subscribeToWebhook",
+        "tags": [
+          "TaskServiceController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of TaskServiceController.subscribeToWebhook",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "TaskServiceController.subscribeToWebhook"
       }
     },
     "/task-service/task": {
