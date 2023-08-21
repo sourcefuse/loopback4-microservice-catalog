@@ -40,7 +40,6 @@ export class TaskServiceController {
         Registerer.event,
       );
     } catch (e) {
-      console.log(e);
       throw new HttpErrors.InternalServerError('Failed to subscribe webhook');
     }
   }

@@ -2,6 +2,7 @@ import {BindingScope, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {WebhookSubscriptionsRepository} from '../repositories';
 import {HttpClientService} from './http.service';
+import {HttpErrors} from '@loopback/rest';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class WebhookService {
@@ -27,7 +28,7 @@ export class WebhookService {
         });
       }
     } catch (error) {
-      console.log(error);
+      throw new HttpErrors.InternalServerError('Could not add to subscription');
     }
   }
 
@@ -48,8 +49,6 @@ export class WebhookService {
       const subscribers = await this.webhookSubscriptionsRepo.find({
         where: {event},
       });
-      console.log(event);
-      console.log(subscribers);
       if (subscribers.length > 0) {
         for (const subscriber of subscribers) {
           const url = subscriber.url;
@@ -57,7 +56,7 @@ export class WebhookService {
         }
       }
     } catch (error) {
-      console.log(error);
+      throw new HttpErrors.InternalServerError('could not trigger webhook');
     }
   }
 }
