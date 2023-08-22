@@ -1,5 +1,5 @@
 import {injectable, BindingScope, service, inject} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
+import {AnyObject, DataObject} from '@loopback/repository';
 import {CamundaService} from './camunda.service';
 import {
   WorkflowServiceBindings,
@@ -16,6 +16,7 @@ import {UtilityService} from './utility.service';
 import {TaskDbService} from './task-db.service';
 import {HttpErrors} from '@loopback/rest';
 import {WebhookService} from './webhook.service';
+import {MessageDTO} from '../models';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -83,14 +84,16 @@ export class TaskOperationService {
         }
       }
 
-      if (payload)
-        await this.webhookService.triggerWebhook(key, {
+      if (payload) {
+        const messageDTO: DataObject<MessageDTO> = {
           message: 'Event Proccessed',
           key: key,
           payload,
           eventKey: key,
           taskKey: 'none',
-        });
+        };
+        await this.webhookService.triggerWebhook(key, messageDTO);
+      }
       this.clientBpmnRunner.tasksArray.length = 0;
     }
     await this._initWorkers(name);
@@ -131,14 +134,17 @@ export class TaskOperationService {
             : TaskStatus.completed;
 
         await this.taskDbService.updateTask(taskKey, ut);
-        if (payload)
-          await this.webhookService.triggerWebhook(taskKey, {
+        if (payload) {
+          const messageDTO: DataObject<MessageDTO> = {
             message: 'Event Proccessed',
             key: taskKey,
             payload,
             eventKey: 'none',
             taskKey: taskKey,
-          });
+          };
+
+          await this.webhookService.triggerWebhook(taskKey, messageDTO);
+        }
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError('could not update the task');
