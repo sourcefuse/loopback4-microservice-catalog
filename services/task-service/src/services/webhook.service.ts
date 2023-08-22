@@ -50,11 +50,12 @@ export class WebhookService {
       const subscribers = await this.webhookSubscriptionsRepo.find({
         where: {key},
       });
+
       if (subscribers.length > 0) {
-        for (const subscriber of subscribers) {
-          const url = subscriber.url;
-          await this.httpService.post(url, data);
-        }
+        const postPromises = subscribers.map(subscriber =>
+          this.httpService.post(subscriber.url, data),
+        );
+        await Promise.all(postPromises);
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError('could not trigger webhook');

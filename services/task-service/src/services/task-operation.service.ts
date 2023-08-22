@@ -70,18 +70,22 @@ export class TaskOperationService {
       id,
     );
     if (tasks && tasks.length > 0) {
-      for (const task of tasks) {
-        await this._registerOrUpdateCommand(task, {key, payload, name, id});
-      }
+      const tasksPromises = tasks.map(task =>
+        this._registerOrUpdateCommand(task, {key, payload, name, id}),
+      );
+      await Promise.all(tasksPromises);
     } else {
       if (this.clientBpmnRunner.tasksArray.length > 0) {
-        for (const task of this.clientBpmnRunner.tasksArray) {
-          await this.taskDbService.addTaskToDB(task);
-          await this.workflowOpsService.execWorkflow(
-            task.key,
-            TaskServiceNames.TASK,
-          );
-        }
+        const tasksArrayPromises = this.clientBpmnRunner.tasksArray.map(
+          async task => {
+            await this.taskDbService.addTaskToDB(task);
+            await this.workflowOpsService.execWorkflow(
+              task.key,
+              TaskServiceNames.TASK,
+            );
+          },
+        );
+        await Promise.all(tasksArrayPromises);
       }
 
       if (payload) {
@@ -96,6 +100,7 @@ export class TaskOperationService {
       }
       this.clientBpmnRunner.tasksArray.length = 0;
     }
+
     await this._initWorkers(name);
   }
 

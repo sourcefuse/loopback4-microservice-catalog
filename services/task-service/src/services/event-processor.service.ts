@@ -1,5 +1,5 @@
 import {BindingScope, injectable, service} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Event} from '../models';
 import {EventRepository} from '../repositories/event.repository';
@@ -34,9 +34,10 @@ export class EventProcessorService {
       // subscribe to tasks
       const url = await this.webhookService.getUrlOfSubscritption(event.key);
       if (url && event.payload.tasks) {
-        for (const task of event.payload.tasks) {
-          await this.webhookService.addToSubscription(url, task.key);
-        }
+        const tasksPromises = event.payload.tasks.map((task: AnyObject) =>
+          this.webhookService.addToSubscription(url, task.key),
+        );
+        await Promise.all(tasksPromises);
       }
 
       await this.taskOpsService.processTask(
