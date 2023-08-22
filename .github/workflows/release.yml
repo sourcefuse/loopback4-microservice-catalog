@@ -1,3 +1,5 @@
+# This Manually Executable Workflow is for NPM Releases
+
 name: Release [Manual]
 on: workflow_dispatch
 permissions:
@@ -13,9 +15,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
       - name: Setup Node
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Configure CI Git User
         run: |
           git config --global user.name '@shubhamp-sf'
