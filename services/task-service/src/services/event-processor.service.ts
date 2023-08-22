@@ -1,7 +1,7 @@
 import {BindingScope, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {Events} from '../models';
+import {Event} from '../models';
 import {EventRepository} from '../repositories/event.repository';
 import {TaskServiceNames} from '../types';
 import {TaskOperationService} from './task-operation.service';
@@ -22,7 +22,7 @@ export class EventProcessorService {
     @service(WebhookService)
     private readonly webhookService: WebhookService,
   ) {}
-  public async processEvent(event: Events): Promise<void> {
+  public async processEvent(event: Event): Promise<void> {
     await this.eventRepo.create(event);
 
     const workflow = await this.workflowOpsService.execWorkflow(

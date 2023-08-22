@@ -111,7 +111,7 @@ fetch('/event-queue/enqueue-event',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[Events](#schemaevents)|false|none|
+|body|body|[Event](#schemaevent)|false|none|
 
 > Example responses
 
@@ -131,7 +131,7 @@ fetch('/event-queue/enqueue-event',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Enque model instance|[Events](#schemaevents)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Enque model instance|[Event](#schemaevent)|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Event enqueued successfully|None|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Failed to enqueue event|None|
 
@@ -1259,12 +1259,12 @@ ExecuteWorkflowDto
 |workflowVersion|number|false|none|none|
 |input|object|true|none|none|
 
-<h2 id="tocS_Events">Events</h2>
+<h2 id="tocS_Event">Event</h2>
 <!-- backwards compatibility -->
-<a id="schemaevents"></a>
-<a id="schema_Events"></a>
-<a id="tocSevents"></a>
-<a id="tocsevents"></a>
+<a id="schemaevent"></a>
+<a id="schema_Event"></a>
+<a id="tocSevent"></a>
+<a id="tocsevent"></a>
 
 ```json
 {
@@ -1277,17 +1277,17 @@ ExecuteWorkflowDto
 
 ```
 
-Events
+Event
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|string|false|none|none|
-|key|string|true|none|none|
-|description|string|true|none|none|
-|source|string|true|none|none|
-|payload|object|true|none|none|
+|key|string|true|none|An identifier for a particular event queued by a service or a user|
+|description|string|true|none|A short description of an event|
+|source|string|true|none|Origination of an event- can be a service or from a user|
+|payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
 
 <h2 id="tocS_workflows.ScopeFilter">workflows.ScopeFilter</h2>
 <!-- backwards compatibility -->
