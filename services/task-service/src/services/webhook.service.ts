@@ -1,8 +1,9 @@
 import {BindingScope, injectable, service} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {DataObject, repository} from '@loopback/repository';
 import {WebhookSubscriptionsRepository} from '../repositories';
 import {HttpClientService} from './http.service';
 import {HttpErrors} from '@loopback/rest';
+import {MessageDTO} from '../models';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class WebhookService {
@@ -13,17 +14,17 @@ export class WebhookService {
     private readonly httpService: HttpClientService,
   ) {}
 
-  public async addToSubscription(url: string, event: string) {
+  public async addToSubscription(url: string, key: string) {
     try {
       const webhookSubscriptions = await this.webhookSubscriptionsRepo.find({
         where: {
           url,
-          event,
+          key,
         },
       });
       if (webhookSubscriptions.length == 0) {
         await this.webhookSubscriptionsRepo.create({
-          event,
+          key,
           url,
         });
       }
@@ -32,10 +33,10 @@ export class WebhookService {
     }
   }
 
-  public async getUrlOfSubscritption(event: string) {
+  public async getUrlOfSubscritption(key: string) {
     const webhookSubscriptions = await this.webhookSubscriptionsRepo.find({
       where: {
-        event,
+        key,
       },
     });
     if (webhookSubscriptions.length == 1) {
@@ -44,10 +45,10 @@ export class WebhookService {
     return null;
   }
 
-  public async triggerWebhook(event: string, data: any) {
+  public async triggerWebhook(key: string, data: DataObject<MessageDTO>) {
     try {
       const subscribers = await this.webhookSubscriptionsRepo.find({
-        where: {event},
+        where: {key},
       });
       if (subscribers.length > 0) {
         for (const subscriber of subscribers) {

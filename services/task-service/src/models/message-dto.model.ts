@@ -1,7 +1,7 @@
-import {AnyObject, model, property} from '@loopback/repository';
+import {AnyObject, Model, model, property} from '@loopback/repository';
 
 @model()
-export class Message {
+export class MessageDTO extends Model {
   @property({
     type: 'string',
     required: true,

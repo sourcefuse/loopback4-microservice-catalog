@@ -4,6 +4,8 @@ import {HttpErrors, post, requestBody} from '@loopback/rest';
 import {TaskOperationService} from '../services/task-operation.service';
 import {authorize} from 'loopback4-authorization';
 import {WebhookService} from '../services';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {SubscriberDTO, TaskDto} from '../models';
 
 const baseUrl = 'task-service';
 
@@ -15,11 +17,12 @@ export class TaskServiceController {
     private readonly webhookService: WebhookService,
   ) {}
 
+  @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
   @post(`${baseUrl}/task`)
   async updateTask(
     @requestBody()
-    Tasks: AnyObject,
+    Tasks: TaskDto,
   ) {
     try {
       await this.taskOpsService.taskUpdateFlow(Tasks.taskKey, Tasks.payload);
@@ -28,16 +31,17 @@ export class TaskServiceController {
     }
   }
 
+  @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
   @post(`${baseUrl}/subscribe`)
   async subscribeToWebhook(
     @requestBody()
-    Registerer: AnyObject,
+    Subscriber: SubscriberDTO,
   ) {
     try {
       await this.webhookService.addToSubscription(
-        Registerer.url,
-        Registerer.event,
+        Subscriber.url,
+        Subscriber.key,
       );
     } catch (e) {
       throw new HttpErrors.InternalServerError('Failed to subscribe webhook');

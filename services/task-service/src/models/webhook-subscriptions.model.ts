@@ -23,5 +23,5 @@ export class WebhookSubscriptions extends CoreEntity<WebhookSubscriptions> {
     required: true,
     description: 'An identifier for a particular event or task',
   })
-  event: string;
+  key: string;
 }

@@ -11,6 +11,8 @@ import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
 import {Event} from '../models';
 import {authorize} from 'loopback4-authorization';
 import {AnyObject} from '@loopback/repository';
+import {TaskPermssionKey} from '../enums/permission-key.enum';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 
 const baseUrl = '/event-queue';
 
@@ -20,7 +22,8 @@ export class EventQueueController {
     private eventQueueService: EventQueueService,
   ) {}
 
-  @authorize({permissions: ['*']})
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [TaskPermssionKey.AddToQueue]})
   @post(`${baseUrl}/enqueue-event`, {
     responses: {
       [STATUS_CODE.OK]: {
@@ -55,7 +58,8 @@ export class EventQueueController {
       throw new HttpErrors.InternalServerError('Failed to enqueue event');
     }
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [TaskPermssionKey.StartListening]})
   @get(`${baseUrl}/start-listening`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -76,6 +80,8 @@ export class EventQueueController {
     }
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [TaskPermssionKey.StopListening]})
   @get(`${baseUrl}/stop-listening`, {
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -96,6 +102,7 @@ export class EventQueueController {
     }
   }
 
+  @authorize({permissions: ['*']})
   @get(`${baseUrl}/health-check`, {
     responses: {
       [STATUS_CODE.OK]: {
