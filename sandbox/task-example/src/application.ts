@@ -9,6 +9,7 @@ import {
 import {ServiceMixin} from '@loopback/service-proxy';
 
 import {
+  ExportedWorkflowServiceBindingConfig,
   TaskServiceBindings,
   TaskServiceComponent,
 } from '@sourceloop/task-service';
@@ -48,7 +49,10 @@ export class TaskServiceUserApplication extends BootMixin(
     });
 
     this.bind(TaskServiceBindings.CONNECTOR_NAME).to('myConn');
-
+    this.bind(ExportedWorkflowServiceBindingConfig).to({
+      useCustomSequence: true,
+      workflowEngineBaseUrl: process.env.CAMUNDA_URL,
+    });
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
     this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(
       CustomBpmnRunner,

@@ -34,7 +34,7 @@
             "description": "Failed to enqueue event"
           }
         },
-        "description": "",
+        "description": "\n\n| Permissions |\n| ------- |\n| AddToQueue   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -69,6 +69,7 @@
             "description": "Failed to perform health check"
           }
         },
+        "description": "",
         "operationId": "EventQueueController.healthCheck"
       }
     },
@@ -87,6 +88,7 @@
             "description": "Failed to start listening to events"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| StartListening   |\n",
         "operationId": "EventQueueController.startListening"
       }
     },
@@ -105,6 +107,7 @@
             "description": "Failed to stop listening to events"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| StopListening   |\n",
         "operationId": "EventQueueController.stopListening"
       }
     },
@@ -126,7 +129,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/SubscriberDTO"
               }
             }
           }
@@ -152,7 +155,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/TaskDto"
               }
             }
           }
@@ -609,6 +612,49 @@
           "description",
           "source",
           "payload"
+        ],
+        "additionalProperties": false
+      },
+      "TaskDto": {
+        "title": "TaskDto",
+        "type": "object",
+        "properties": {
+          "taskKey": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          },
+          "payload": {
+            "type": "object",
+            "description": "A dynamic object that contains information to be run in the user task of a bpmn engine"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "taskKey"
+        ],
+        "additionalProperties": false
+      },
+      "SubscriberDTO": {
+        "title": "SubscriberDTO",
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "url of the regsiterer who is subscribed to the webhook"
+          },
+          "key": {
+            "type": "string",
+            "description": "identifier of an event key or task key"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "key"
         ],
         "additionalProperties": false
       },

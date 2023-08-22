@@ -95,6 +95,10 @@ fetch('/event-queue/enqueue-event',
 
 `POST /event-queue/enqueue-event`
 
+| Permissions |
+| ------- |
+| AddToQueue   |
+
 > Body parameter
 
 ```json
@@ -248,6 +252,10 @@ fetch('/event-queue/start-listening',
 
 `GET /event-queue/start-listening`
 
+| Permissions |
+| ------- |
+| StartListening   |
+
 <h3 id="eventqueuecontroller.startlistening-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
@@ -298,6 +306,10 @@ fetch('/event-queue/stop-listening',
 
 `GET /event-queue/stop-listening`
 
+| Permissions |
+| ------- |
+| StopListening   |
+
 <h3 id="eventqueuecontroller.stoplistening-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
@@ -318,7 +330,11 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "url": "string",
+  "key": "string",
+  "id": "string"
+}';
 const headers = {
   'Content-Type':'application/json'
 };
@@ -339,7 +355,11 @@ fetch('/task-service/subscribe',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {};
+const inputBody = {
+  "url": "string",
+  "key": "string",
+  "id": "string"
+};
 const headers = {
   'Content-Type':'application/json'
 };
@@ -363,14 +383,18 @@ fetch('/task-service/subscribe',
 > Body parameter
 
 ```json
-{}
+{
+  "url": "string",
+  "key": "string",
+  "id": "string"
+}
 ```
 
 <h3 id="taskservicecontroller.subscribetowebhook-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|false|none|
+|body|body|[SubscriberDTO](#schemasubscriberdto)|false|none|
 
 > Example responses
 
@@ -393,7 +417,11 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "taskKey": "string",
+  "payload": {},
+  "id": "string"
+}';
 const headers = {
   'Content-Type':'application/json'
 };
@@ -414,7 +442,11 @@ fetch('/task-service/task',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {};
+const inputBody = {
+  "taskKey": "string",
+  "payload": {},
+  "id": "string"
+};
 const headers = {
   'Content-Type':'application/json'
 };
@@ -438,14 +470,18 @@ fetch('/task-service/task',
 > Body parameter
 
 ```json
-{}
+{
+  "taskKey": "string",
+  "payload": {},
+  "id": "string"
+}
 ```
 
 <h3 id="taskservicecontroller.updatetask-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|false|none|
+|body|body|[TaskDto](#schemataskdto)|false|none|
 
 > Example responses
 
@@ -1288,6 +1324,58 @@ Event
 |description|string|true|none|A short description of an event|
 |source|string|true|none|Origination of an event- can be a service or from a user|
 |payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
+
+<h2 id="tocS_TaskDto">TaskDto</h2>
+<!-- backwards compatibility -->
+<a id="schemataskdto"></a>
+<a id="schema_TaskDto"></a>
+<a id="tocStaskdto"></a>
+<a id="tocstaskdto"></a>
+
+```json
+{
+  "taskKey": "string",
+  "payload": {},
+  "id": "string"
+}
+
+```
+
+TaskDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|taskKey|string|true|none|An identifier for a particular task within an event|
+|payload|object|false|none|A dynamic object that contains information to be run in the user task of a bpmn engine|
+|id|string|false|none|none|
+
+<h2 id="tocS_SubscriberDTO">SubscriberDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemasubscriberdto"></a>
+<a id="schema_SubscriberDTO"></a>
+<a id="tocSsubscriberdto"></a>
+<a id="tocssubscriberdto"></a>
+
+```json
+{
+  "url": "string",
+  "key": "string",
+  "id": "string"
+}
+
+```
+
+SubscriberDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|url|string|true|none|url of the regsiterer who is subscribed to the webhook|
+|key|string|true|none|identifier of an event key or task key|
+|id|string|false|none|none|
 
 <h2 id="tocS_workflows.ScopeFilter">workflows.ScopeFilter</h2>
 <!-- backwards compatibility -->

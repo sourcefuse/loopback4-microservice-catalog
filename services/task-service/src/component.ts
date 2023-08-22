@@ -12,10 +12,7 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {
-  WorkflowServiceBindings,
-  WorkflowServiceComponent,
-} from '@sourceloop/bpmn-service';
+import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
 import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
@@ -92,10 +89,6 @@ export class TaskServiceComponent implements Component {
       servers: [{url: '/'}],
     });
     this.application.component(WorkflowServiceComponent);
-    this.application.bind(WorkflowServiceBindings.Config).to({
-      useCustomSequence: true,
-      workflowEngineBaseUrl: 'http://localhost:8080/engine-rest',
-    });
     this.controllers = [
       controllers.EventQueueController,
       controllers.TaskServiceController,
