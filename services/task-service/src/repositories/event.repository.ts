@@ -1,16 +1,16 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {Events} from '../models';
+import {Event} from '../models';
 import {inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
 
 export class EventRepository extends DefaultCrudRepository<
-  Events,
-  typeof Events.prototype.id
+  Event,
+  typeof Event.prototype.id
 > {
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
   ) {
-    super(Events, dataSource);
+    super(Event, dataSource);
   }
 }

@@ -2,7 +2,7 @@ import {BindingScope, inject, injectable} from '@loopback/context';
 import {asLifeCycleObserver, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {TaskServiceBindings} from '../keys';
-import {Events} from '../models';
+import {Event} from '../models';
 import {EventQueueConnector} from '../types';
 import {EventProcessorService} from './event-processor.service';
 import {HttpErrors} from '@loopback/rest';
@@ -25,7 +25,7 @@ export class EventQueueService {
     this.listenForEvents();
   }
 
-  async enqueueEvent(event: Partial<Events>): Promise<void> {
+  async enqueueEvent(event: Partial<Event>): Promise<void> {
     const connection = await this.connector.connect(this.connector.settings);
     const params = {
       MessageBody: JSON.stringify(event),
@@ -42,7 +42,7 @@ export class EventQueueService {
 
   async startListening(): Promise<void> {
     const connection = await this.connector.connect(this.connector.settings);
-    connection.onEvent((event: Events) => {});
+    connection.onEvent((event: Event) => {});
   }
 
   async stopListening(): Promise<void> {
@@ -66,7 +66,7 @@ export class EventQueueService {
         const messages = data.Messages;
         if (messages?.length) {
           for (const message of messages) {
-            const event: Events = JSON.parse(message.Body || '{}');
+            const event: Event = JSON.parse(message.Body || '{}');
 
             // Logic to process this event
             await this.eventProcessorService.processEvent(event);

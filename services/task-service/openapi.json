@@ -22,7 +22,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Events"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -39,7 +39,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Events"
+                "$ref": "#/components/schemas/Event"
               }
             }
           }
@@ -580,24 +580,28 @@
         ],
         "additionalProperties": false
       },
-      "Events": {
-        "title": "Events",
+      "Event": {
+        "title": "Event",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           },
           "key": {
-            "type": "string"
+            "type": "string",
+            "description": "An identifier for a particular event queued by a service or a user"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "A short description of an event"
           },
           "source": {
-            "type": "string"
+            "type": "string",
+            "description": "Origination of an event- can be a service or from a user"
           },
           "payload": {
-            "type": "object"
+            "type": "object",
+            "description": "A dynamic object that contains information to be run in the workers of a bpmn engine"
           }
         },
         "required": [
