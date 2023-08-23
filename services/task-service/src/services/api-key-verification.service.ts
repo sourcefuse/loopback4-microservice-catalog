@@ -26,7 +26,6 @@ export class ApiKeyVerificationService {
         return false; // Invalid API key and/or secret
       }
     } catch (error) {
-      console.log(error);
       throw new HttpErrors.InternalServerError('Error verifying API keys');
     }
   }
