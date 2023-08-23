@@ -108,3 +108,11 @@ CREATE TABLE "main".webhook_subscriptions
     "url"                varchar,
     CONSTRAINT pk_webhook_subscriptions_id PRIMARY KEY (id)
 );
+
+CREATE TABLE "main".api_keys
+(
+    id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
+    "api_key"            varchar,
+    "api_secret"         varchar,
+    CONSTRAINT pk_api_keys_id PRIMARY KEY (id)
+);

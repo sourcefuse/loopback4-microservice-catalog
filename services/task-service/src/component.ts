@@ -22,6 +22,7 @@ import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
 import {Connector} from './providers';
 import {
+  ApiKeyRepository,
   EventRepository,
   TaskRepository,
   TaskWorkFlowMappingRepository,
@@ -38,6 +39,7 @@ import {
   UtilityService,
   WorkflowOperationService,
   TaskDbService,
+  ApiKeyVerificationService,
 } from './services';
 
 export class TaskServiceComponent implements Component {
@@ -63,6 +65,7 @@ export class TaskServiceComponent implements Component {
     WorkflowOperationService,
     WebhookService,
     TaskDbService,
+    ApiKeyVerificationService,
   ];
 
   /**
@@ -92,6 +95,7 @@ export class TaskServiceComponent implements Component {
     this.controllers = [
       controllers.EventQueueController,
       controllers.TaskServiceController,
+      controllers.ApiKeyController,
     ];
     this.repositories = [
       EventRepository,
@@ -99,6 +103,7 @@ export class TaskServiceComponent implements Component {
       EventWorkflowMappingRepository,
       TaskWorkFlowMappingRepository,
       WebhookSubscriptionsRepository,
+      ApiKeyRepository,
     ];
   }
 

@@ -69,7 +69,8 @@
     "loopback4-authorization": "^6.1.0",
     "node-fetch": "^2.6.6",
     "prom-client": "^14.1.0",
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -83,6 +84,7 @@
     "@types/node": "^14.18.33",
     "@types/node-fetch": "^2.6.1",
     "@types/sinon": "^10.0.11",
+    "@types/uuid": "^9.0.2",
     "db-migrate": "^1.0.0-beta.18",
     "db-migrate-pg": "^1.2.2",
     "eslint": "^8.28.0",

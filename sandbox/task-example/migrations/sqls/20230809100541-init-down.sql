@@ -7,3 +7,4 @@ DROP TABLE "main".activity_events CASCADE;
 DROP TABLE "main".events CASCADE;
 DROP TABLE "main".event_workflow_mapping CASCADE;
 DROP TABLE "main".webhook_subscriptions CASCADE;
+DROP TABLE "main".api_keys CASCADE;
