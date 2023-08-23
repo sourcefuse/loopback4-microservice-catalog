@@ -78,7 +78,7 @@
     "openapi3-ts": "^2.0.2",
     "request-ip": "^3.3.0",
     "swagger-stats": "^0.99.5",
-    "tslib": "^2.5.3",
+    "tslib": "^2.6.1",
     "winston": "^3.7.2"
   },
   "peerDependencies": {
