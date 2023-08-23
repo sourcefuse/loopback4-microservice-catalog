@@ -68,7 +68,7 @@ export class MyApplication extends BootMixin(
 
     // Bind a provider to write custom logic for node workers in a BPMN Engine
     // in this case we are using camunda external tasks, which are configured
-    // as service tasks
+    // as service tasks. More info availabe in the sandbox/task-ms-example
     this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(
       CustomBpmnRunner,
     );
@@ -76,18 +76,22 @@ export class MyApplication extends BootMixin(
 }
 ```
 
+## Usage
+
+1. Generate API key and secret for webhook subscription
+2. Subscribe to the webhook
+3. Send Events
+
 ### Environment Variables
 
 The service comes with a default `DataSource` using PostgreSQL, if you intend to use this, you have to provide the following variables in the environment -
 
-| Name          | Required | Default Value | Description                                                                                                                        |
-| ------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                  |
-| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                      |
-| `DB_USER`     | Y        |               | User for the database.                                                                                                             |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                    |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                     |
-| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `main` unless a schema is made explicitly for the service.   |
-| `CAMUNDA_URL` | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
-| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
+| Name          | Required | Default Value | Description                                                                                                                      |
+| ------------- | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                |
+| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                    |
+| `DB_USER`     | Y        |               | User for the database.                                                                                                           |
+| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                  |
+| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                   |
+| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `main` unless a schema is made explicitly for the service. |
+| `CAMUNDA_URL` | Y        |               | Camunda REST Engine URL.                                                                                                         |
