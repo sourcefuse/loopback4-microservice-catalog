@@ -9,6 +9,23 @@
     }
   },
   "paths": {
+    "/api-keys": {
+      "post": {
+        "x-controller-name": "ApiKeyController",
+        "x-operation-name": "generateApiKeys",
+        "tags": [
+          "ApiKeyController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| APIAdmin   |\n",
+        "responses": {
+          "200": {
+            "description": "Return value of ApiKeyController.generateApiKeys",
+            "content": {}
+          }
+        },
+        "operationId": "ApiKeyController.generateApiKeys"
+      }
+    },
     "/event-queue/enqueue-event": {
       "post": {
         "x-controller-name": "EventQueueController",

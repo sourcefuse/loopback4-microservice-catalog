@@ -6,6 +6,8 @@ import {
   WorkerNameCmdPair,
 } from '@sourceloop/bpmn-service';
 
+import {v4 as uuidv4} from 'uuid';
+
 @injectable({scope: BindingScope.TRANSIENT})
 export class UtilityService {
   constructor(
@@ -41,5 +43,11 @@ export class UtilityService {
       }
     }
     return false;
+  }
+
+  public generateApiKeyAndSecret(): {apiKey: string; apiSecret: string} {
+    const apiKey = uuidv4();
+    const apiSecret = uuidv4();
+    return {apiKey, apiSecret};
   }
 }

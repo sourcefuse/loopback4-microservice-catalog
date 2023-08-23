@@ -7,3 +7,4 @@ export * from './webhook.service';
 export * from './utility.service';
 export * from './workflow-operation.service';
 export * from './task-db.service';
+export * from './api-key-verification.service';

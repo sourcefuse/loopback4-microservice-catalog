@@ -30,6 +30,65 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
+<h1 id="bpmn-service-apikeycontroller">ApiKeyController</h1>
+
+## ApiKeyController.generateApiKeys
+
+<a id="opIdApiKeyController.generateApiKeys"></a>
+
+> Code samples
+
+```javascript
+
+fetch('/api-keys',
+{
+  method: 'POST'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+fetch('/api-keys',
+{
+  method: 'POST'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /api-keys`
+
+| Permissions |
+| ------- |
+| APIAdmin   |
+
+> Example responses
+
+<h3 id="apikeycontroller.generateapikeys-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of ApiKeyController.generateApiKeys|None|
+
+<h3 id="apikeycontroller.generateapikeys-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 <h1 id="bpmn-service-eventqueuecontroller">EventQueueController</h1>
 
 ## EventQueueController.enqueueEvent

@@ -1,11 +1,17 @@
-import {service} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
-import {HttpErrors, post, requestBody} from '@loopback/rest';
+import {inject, service} from '@loopback/core';
+import {
+  HttpErrors,
+  Request,
+  RestBindings,
+  post,
+  requestBody,
+} from '@loopback/rest';
 import {TaskOperationService} from '../services/task-operation.service';
 import {authorize} from 'loopback4-authorization';
-import {WebhookService} from '../services';
+import {WebhookService} from '../services/webhook.service';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {SubscriberDTO, TaskDto} from '../models';
+import {ApiKeyVerificationService} from '../services/api-key-verification.service';
 
 const baseUrl = 'task-service';
 
@@ -15,6 +21,8 @@ export class TaskServiceController {
     private readonly taskOpsService: TaskOperationService,
     @service(WebhookService)
     private readonly webhookService: WebhookService,
+    @service(ApiKeyVerificationService)
+    private readonly apiKeyVerificationService: ApiKeyVerificationService,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -37,14 +45,22 @@ export class TaskServiceController {
   async subscribeToWebhook(
     @requestBody()
     Subscriber: SubscriberDTO,
+    @inject(RestBindings.Http.REQUEST) request: Request,
   ) {
-    try {
-      await this.webhookService.addToSubscription(
-        Subscriber.url,
-        Subscriber.key,
+    const apiKey = request.headers['x-api-key'];
+    const apiSecret = request.headers['x-api-secret'];
+    let isValidKeys = false;
+    if (apiKey && apiSecret) {
+      isValidKeys = await this.apiKeyVerificationService.verifyApiKeys(
+        apiKey as string,
+        apiSecret as string,
       );
-    } catch (e) {
-      throw new HttpErrors.InternalServerError('Failed to subscribe webhook');
     }
+
+    if (!isValidKeys) {
+      throw new HttpErrors.Unauthorized('Invalid API key or secret');
+    }
+
+    await this.webhookService.addToSubscription(Subscriber.url, Subscriber.key);
   }
 }
