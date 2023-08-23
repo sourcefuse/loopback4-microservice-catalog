@@ -66,6 +66,6 @@ export class PingController {
     MessageEvent: AnyObject,
   ) {
     // Reply with a greeting, the current time, the url, and request headers
-    console.log(MessageEvent);
+    console.log(MessageEvent); // NOSONAR
   }
 }
