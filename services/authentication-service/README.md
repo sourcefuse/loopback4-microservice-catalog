@@ -467,6 +467,15 @@ openssl rsa -in private.pem -pubout -out public.pem
   for example: private.pem file for private key and public.pem file for public key.
   (refer [this](https://cryptotools.net/rsagen))
 
+### Authenticating Password using RSA Encryption
+
+In order to authenticate password using RSA encrytion we need to provide private key through an env variable called `PRIVATE_DECRYPTION_KEY`.
+By employing RSA encryption and the private key through the environment variable, this approach enhances the security of password authentication, ensuring that passwords are transmitted and stored in an encrypted manner, and can only be deciphered using the designated private key.
+
+Its implemented through password decryption provider [here](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/authentication-service/src/providers/password-decryption.provider.ts) which accepts password in encrypted format.It uses node-forge as default for decryption but can be overriden through this password decryption provider for using any other library.
+
+Note: When using `.env` file put your private key in single line with line breaks escaped with `\n`, one of the ways of doing so can be found [here](https://serverfault.com/questions/466683/can-an-ssl-certificate-be-on-a-single-line-in-a-file-no-line-breaks).
+
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.
