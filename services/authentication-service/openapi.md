@@ -3300,22 +3300,23 @@ client_secret: string
 This operation does not require authentication
 </aside>
 
-## SamlLoginController.samlCallback
+## SamlLoginController.oktaSamlCallback
 
-<a id="opIdSamlLoginController.samlCallback"></a>
+<a id="opIdSamlLoginController.oktaSamlCallback"></a>
 
 > Code samples
 
 ```javascript
-
+const inputBody = '{}';
 const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
   'Accept':'application/json'
 };
 
-fetch('/auth/saml-auth-redirect',
+fetch('/auth/saml-redirect',
 {
-  method: 'GET',
-
+  method: 'POST',
+  body: inputBody,
   headers: headers
 })
 .then(function(res) {
@@ -3328,15 +3329,16 @@ fetch('/auth/saml-auth-redirect',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-
+const inputBody = {};
 const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
   'Accept':'application/json'
 };
 
-fetch('/auth/saml-auth-redirect',
+fetch('/auth/saml-redirect',
 {
-  method: 'GET',
-
+  method: 'POST',
+  body: JSON.stringify(inputBody),
   headers: headers
 })
 .then(function(res) {
@@ -3347,15 +3349,21 @@ fetch('/auth/saml-auth-redirect',
 
 ```
 
-`GET /auth/saml-auth-redirect`
+`POST /auth/saml-redirect`
 
-<h3 id="samllogincontroller.samlcallback-parameters">Parameters</h3>
+> Body parameter
+
+```yaml
+{}
+
+```
+
+<h3 id="samllogincontroller.oktasamlcallback-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|code|query|string|false|none|
-|state|query|string|false|none|
-|session_state|query|string|false|none|
+|client|query|string|false|none|
+|body|body|object|false|none|
 
 > Example responses
 
@@ -3370,11 +3378,11 @@ fetch('/auth/saml-auth-redirect',
 }
 ```
 
-<h3 id="samllogincontroller.samlcallback-responses">Responses</h3>
+<h3 id="samllogincontroller.oktasamlcallback-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Saml Redirect Token Response|[TokenResponse](#schematokenresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|okta auth callback|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication

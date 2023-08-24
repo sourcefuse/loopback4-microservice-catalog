@@ -1051,16 +1051,16 @@
         "operationId": "SamlLoginController.postLoginViaSaml"
       }
     },
-    "/auth/saml-auth-redirect": {
-      "get": {
+    "/auth/saml-redirect": {
+      "post": {
         "x-controller-name": "SamlLoginController",
-        "x-operation-name": "samlCallback",
+        "x-operation-name": "oktaSamlCallback",
         "tags": [
           "SamlLoginController"
         ],
         "responses": {
           "200": {
-            "description": "Saml Redirect Token Response",
+            "description": "okta auth callback",
             "content": {
               "application/json": {
                 "schema": {
@@ -1073,28 +1073,24 @@
         "description": "",
         "parameters": [
           {
-            "name": "code",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "state",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "session_state",
+            "name": "client",
             "in": "query",
             "schema": {
               "type": "string"
             }
           }
         ],
-        "operationId": "SamlLoginController.samlCallback"
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "SamlLoginController.oktaSamlCallback"
       }
     },
     "/auth/send-otp": {
