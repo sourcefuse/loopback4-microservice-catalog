@@ -30,10 +30,10 @@ export class TaskServiceController {
   @post(`${baseUrl}/task`)
   async updateTask(
     @requestBody()
-    Tasks: TaskDto,
+    tasks: TaskDto,
   ) {
     try {
-      await this.taskOpsService.taskUpdateFlow(Tasks.taskKey, Tasks.payload);
+      await this.taskOpsService.taskUpdateFlow(tasks.taskKey, tasks.payload);
     } catch (e) {
       throw new HttpErrors.InternalServerError('Failed to update task');
     }
@@ -44,7 +44,7 @@ export class TaskServiceController {
   @post(`${baseUrl}/subscribe`)
   async subscribeToWebhook(
     @requestBody()
-    Subscriber: SubscriberDTO,
+    subscriber: SubscriberDTO,
     @inject(RestBindings.Http.REQUEST) request: Request,
   ) {
     const apiKey = request.headers['x-api-key'];
@@ -61,6 +61,6 @@ export class TaskServiceController {
       throw new HttpErrors.Unauthorized('Invalid API key or secret');
     }
 
-    await this.webhookService.addToSubscription(Subscriber.url, Subscriber.key);
+    await this.webhookService.addToSubscription(subscriber.url, subscriber.key);
   }
 }

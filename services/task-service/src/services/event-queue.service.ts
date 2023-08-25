@@ -1,11 +1,11 @@
 import {BindingScope, inject, injectable} from '@loopback/context';
 import {asLifeCycleObserver, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {TaskServiceBindings} from '../keys';
 import {Event} from '../models';
 import {EventQueueConnector} from '../types';
 import {EventProcessorService} from './event-processor.service';
-import {HttpErrors} from '@loopback/rest';
 
 @injectable(
   {
