@@ -1,9 +1,9 @@
 import {BindingScope, injectable, service} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
-import {WebhookSubscriptionsRepository} from '../repositories';
-import {HttpClientService} from './http.service';
 import {HttpErrors} from '@loopback/rest';
 import {MessageDTO} from '../models';
+import {WebhookSubscriptionsRepository} from '../repositories';
+import {HttpClientService} from './http.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class WebhookService {
@@ -22,7 +22,7 @@ export class WebhookService {
           key,
         },
       });
-      if (webhookSubscriptions.length == 0) {
+      if (webhookSubscriptions.length === 0) {
         await this.webhookSubscriptionsRepo.create({
           key,
           url,
@@ -39,7 +39,7 @@ export class WebhookService {
         key,
       },
     });
-    if (webhookSubscriptions.length == 1) {
+    if (webhookSubscriptions.length === 1) {
       return webhookSubscriptions[0].url;
     }
     return null;

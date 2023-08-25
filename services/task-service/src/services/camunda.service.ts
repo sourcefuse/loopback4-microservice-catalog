@@ -65,7 +65,7 @@ export class CamundaService {
     });
   }
 
-  async completeUserTask<T>(id: string, variables?: AnyObject) {
+  async completeUserTask(id: string, variables?: AnyObject) {
     return this.http.post(`${this.baseUrl}/task/${id}/complete`, {
       variables,
     });

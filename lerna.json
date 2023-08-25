@@ -46,7 +46,8 @@
         "@sourceloop/oauth-example-api",
         "@sourceloop/oauth-example-ui",
         "@sourceloop/oidc-basic-example",
-        "@sourceloop/nestjs-auth-ms-example"
+        "@sourceloop/nestjs-auth-ms-example",
+        "@sourceloop/task-service-example"
       ],
       "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
     },
@@ -102,7 +103,8 @@
         "@sourceloop/telemed-auth-cdktf",
         "@sourceloop/telemed-video-conferencing-cdktf",
         "@sourceloop/telemed-notification-cdktf",
-        "@sourceloop/telemed-ui-cdk"
+        "@sourceloop/telemed-ui-cdk",
+        "@sourceloop/task-service-example"
       ]
     },
     "clean": {

@@ -1,18 +1,18 @@
-import {
-  post,
-  get,
-  requestBody,
-  HttpErrors,
-  getModelSchemaRef,
-} from '@loopback/rest';
 import {inject} from '@loopback/core';
-import {EventQueueService} from '../services/event-queue.service';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
-import {Event} from '../models';
-import {authorize} from 'loopback4-authorization';
 import {AnyObject} from '@loopback/repository';
-import {TaskPermssionKey} from '../enums/permission-key.enum';
+import {
+  HttpErrors,
+  get,
+  getModelSchemaRef,
+  post,
+  requestBody,
+} from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {TaskPermssionKey} from '../enums/permission-key.enum';
+import {Event} from '../models';
+import {EventQueueService} from '../services/event-queue.service';
 
 const baseUrl = '/event-queue';
 
@@ -50,10 +50,10 @@ export class EventQueueController {
         },
       },
     })
-    Event: Omit<Event, 'id'>,
+    event: Omit<Event, 'id'>,
   ): Promise<void> {
     try {
-      await this.eventQueueService.enqueueEvent(Event);
+      await this.eventQueueService.enqueueEvent(event);
     } catch (error) {
       throw new HttpErrors.InternalServerError('Failed to enqueue event');
     }

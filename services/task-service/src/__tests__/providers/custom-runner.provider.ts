@@ -1,5 +1,6 @@
 import {bind, BindingScope} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
+import {Variables} from 'camunda-external-task-client-js';
 import {
   BaseBpmnRunner,
   ProccessorFunction,
@@ -10,7 +11,6 @@ import {
   TaskStatus,
   TaskType,
 } from '../../';
-import {Variables} from 'camunda-external-task-client-js';
 
 @bind({scope: BindingScope.SINGLETON})
 export class CustomBpmnRunner extends BaseBpmnRunner {
@@ -46,13 +46,13 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
           vars.set('payload_users', 'true');
         }
 
-        if (payload['fetch_from_roles'].length == 0) {
+        if (payload['fetch_from_roles'].length === 0) {
           vars.set('payload_user_roles', 'false');
         } else {
           vars.set('payload_user_roles', 'true');
         }
 
-        if (payload['fetch_from_groups'].length == 0) {
+        if (payload['fetch_from_groups'].length === 0) {
           vars.set('payload_user_groups', 'false');
         } else {
           vars.set('payload_user_groups', 'true');
@@ -66,8 +66,10 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
         payload: AnyObject,
       ) => {
         const userGroupsFromPayload = payload['fetch_from_groups'];
-        let users: AnyObject[] = this.getUsersFromGroups(userGroupsFromPayload);
-        let assignedTasks = this.assignTasksToUsers(users, payload['tasks']);
+        const users: AnyObject[] = this.getUsersFromGroups(
+          userGroupsFromPayload,
+        );
+        const assignedTasks = this.assignTasksToUsers(users, payload['tasks']);
 
         if (assignedTasks.length > 0) {
           payload['assignedTasks'] = assignedTasks;
@@ -88,8 +90,8 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
         payload: AnyObject,
       ) => {
         if (payload['assignedTasks'] && payload['assignedTasks'].length > 0) {
-          for (const task of payload['assignedTasks']) {
-            this.tasksArray.push(task);
+          for (const assignedTask of payload['assignedTasks']) {
+            this.tasksArray.push(assignedTask);
           }
         }
 
