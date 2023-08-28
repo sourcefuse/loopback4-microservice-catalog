@@ -1,10 +1,11 @@
-import {DATASOURCES, SERVICES} from '../../enum';
+import { DATASOURCES, SERVICES } from '../../enum';
 
 export const microservicePromptsSuite = [
   {
     name: 'microservice command to create a facade',
     options: {
       name: 'test',
+      cdk: false,
       facade: true,
       uniquePrefix: 'base',
     },
@@ -17,6 +18,15 @@ export const microservicePromptsSuite = [
           required: true,
         },
         output: 'test',
+      },
+      {
+        input: {
+          type: 'confirm',
+          name: 'cdk',
+          message: 'include arc-cdk?',
+          default: false,
+        },
+        output: false,
       },
       {
         input: {
@@ -41,6 +51,7 @@ export const microservicePromptsSuite = [
     name: 'microservice command to create a microservice including migrations',
     options: {
       name: 'test',
+      cdk: false,
       facade: false,
       uniquePrefix: 'base',
       baseOnService: true,
@@ -58,6 +69,15 @@ export const microservicePromptsSuite = [
           required: true,
         },
         output: 'test',
+      },
+      {
+        input: {
+          type: 'confirm',
+          name: 'cdk',
+          message: 'include arc-cdk?',
+          default: false,
+        },
+        output: false,
       },
       {
         input: {
@@ -126,6 +146,7 @@ export const microservicePromptsSuite = [
     name: 'microservice command to create a microservice with custom migrations',
     options: {
       name: 'test',
+      cdk: false,
       facade: false,
       uniquePrefix: 'base',
       baseOnService: true,
@@ -144,6 +165,15 @@ export const microservicePromptsSuite = [
           required: true,
         },
         output: 'test',
+      },
+      {
+        input: {
+          type: 'confirm',
+          name: 'cdk',
+          message: 'include arc-cdk?',
+          default: false,
+        },
+        output: false,
       },
       {
         input: {

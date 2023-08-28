@@ -14,6 +14,7 @@ import {
   Optional,
   Output,
   PLATFORM_ID,
+  SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -22,6 +23,7 @@ import {Subject} from 'rxjs';
 import {debounceTime, tap} from 'rxjs/operators';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {
+  CustomSearchEvent,
   ISearchService,
   ISearchQuery,
   SEARCH_SERVICE_TOKEN,
@@ -109,6 +111,21 @@ export class SearchComponent<T extends IReturnType>
 
   @Input() titleTemplate?: TemplateRef<any>;
   @Input() subtitleTemplate?: TemplateRef<any>;
+  /**
+   * configure when application has own search input and use different all label
+   */
+  @Input() customAllLabel = ALL_LABEL;
+  /**
+   * configure to true when to show only search result overlay without search bar
+   */
+  @Input() showOnlySearchResultOverlay = false;
+  /**
+   * provide custom search event when showOnlySearchResultOverlay configure to true
+   */
+  @Input() customSearchEvent: CustomSearchEvent = {
+    searchValue: '',
+    modelName: this.customAllLabel,
+  };
   // emitted when user clicks one of the suggested results (including recent search sugestions)
   @Output() clicked = new EventEmitter<ItemClickedEvent<T>>();
   @Output() searched = new EventEmitter<RecentSearchEvent>();
@@ -325,7 +342,10 @@ export class SearchComponent<T extends IReturnType>
   }
 
   focusInput() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (
+      isPlatformBrowser(this.platformId) &&
+      !this.showOnlySearchResultOverlay
+    ) {
       this.searchInputElement.nativeElement.focus();
     }
   }
@@ -363,7 +383,7 @@ export class SearchComponent<T extends IReturnType>
   }
 
   _categoryToSourceName(category: string) {
-    if (category === ALL_LABEL) {
+    if ([ALL_LABEL, this.customAllLabel].includes(category)) {
       return [];
     } else {
       return [category];
@@ -391,5 +411,37 @@ export class SearchComponent<T extends IReturnType>
       }
     });
     return modelsWithSuggestions;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.customSearchEvent) {
+      if (this._isCustomSearchEventChange(changes, 'searchValue')) {
+        this.searchBoxInput = this.customSearchEvent?.searchValue ?? '';
+        this.searchOnCustomEventValueChange(this.searchBoxInput);
+      }
+      if (this._isCustomSearchEventChange(changes, 'modelName')) {
+        this.setCategory(this.customSearchEvent?.modelName);
+      }
+    }
+  }
+
+  searchOnCustomEventValueChange(value: string) {
+    if (value?.length) {
+      this.showSuggestions();
+      this.hitSearchApi();
+    } else {
+      this.hideSuggestions();
+    }
+  }
+
+  private _isCustomSearchEventChange(
+    changes: SimpleChanges,
+    propertyName: string,
+  ) {
+    return (
+      !changes.customSearchEvent?.previousValue ||
+      changes.customSearchEvent?.previousValue[propertyName] !==
+        changes.customSearchEvent?.currentValue[propertyName]
+    );
   }
 }

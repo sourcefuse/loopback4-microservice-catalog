@@ -14,8 +14,8 @@ import {
 import {Options} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {
-  AuthenticateErrorKeys,
   AuthProvider,
+  AuthenticateErrorKeys,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
   ILogger,
@@ -23,7 +23,8 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
+import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
+import {AuthServiceBindings} from '../keys';
 import {
   Tenant,
   User,
@@ -31,12 +32,12 @@ import {
   UserRelations,
   UserTenant,
 } from '../models';
+import {PasswordDecryptionFn} from '../providers';
 import {AuthDbSourceName} from '../types';
 import {OtpRepository} from './otp.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
-
 const saltRounds = 10;
 export class UserRepository extends DefaultUserModifyCrudRepository<
   User,
@@ -70,6 +71,8 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER)
+    private readonly passwordDecryptionFn: PasswordDecryptionFn,
   ) {
     super(User, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
@@ -126,6 +129,11 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   }
 
   async verifyPassword(username: string, password: string): Promise<User> {
+    let newPassword = password;
+    if (process.env.PRIVATE_DECRYPTION_KEY) {
+      const decryptedPassword = await this.passwordDecryptionFn(password);
+      newPassword = decryptedPassword;
+    }
     const user = await super.findOne({
       where: {username: username.toLowerCase()},
     });
@@ -135,7 +143,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     } else if (
       !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
-      !(await bcrypt.compare(password, creds.password))
+      !(await bcrypt.compare(newPassword, creds.password))
     ) {
       this.logger.error('User creds not found in DB or is invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -143,7 +151,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       return user;
     }
   }
-
+  async decryptPassword(password: string): Promise<string> {
+    const decryptedPassword = await this.passwordDecryptionFn(password);
+    return decryptedPassword;
+  }
   async updatePassword(
     username: string,
     password: string,

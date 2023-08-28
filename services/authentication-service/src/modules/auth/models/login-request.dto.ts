@@ -4,13 +4,14 @@
 // https://opensource.org/licenses/MIT
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
 
 @model({
   description: 'This is the signature for login request.',
 })
-export class LoginRequest extends Model {
+export class LoginRequest extends CoreModel<LoginRequest> {
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
@@ -37,8 +38,4 @@ export class LoginRequest extends Model {
     required: true,
   })
   password: string;
-
-  constructor(data?: Partial<LoginRequest>) {
-    super(data);
-  }
 }

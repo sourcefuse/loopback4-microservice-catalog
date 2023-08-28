@@ -10,15 +10,11 @@ import {Group} from './group.model';
     defaultIdSort: false,
   },
 })
-export class GroupUserCountView extends Group {
+export class GroupUserCountView extends Group<GroupUserCountView> {
   @property({
     name: 'user_count',
     type: 'number',
     default: 0,
   })
   userCount?: number;
-
-  constructor(data?: Partial<GroupUserCountView>) {
-    super(data);
-  }
 }

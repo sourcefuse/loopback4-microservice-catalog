@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.3 (2023-07-28)</small>
+
+* docs(chore): rewrite sourceloop headers and main readme (#1580) ([1105e3b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1105e3b)), closes [#1580](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1580)
+* refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
+
+
+
+
+
+## <small>4.1.2 (2023-07-18)</small>
+
+* chore(cli): update `templateDependencies` for sourceloop services (#1554) ([c0b934e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c0b934e)), closes [#1554](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1554)
+
+
+
+
+
+## <small>4.1.1 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
+## 4.1.0 (2023-07-11)
+
+* feat(cli): add lambda cdk module in authentication service along with option in cli (#1445) ([0200f20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0200f20)), closes [#1445](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1445) [#1532](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1532)
+* chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>4.0.4 (2023-06-10)</small>
 
 * chore(cli): update template deps ([77da538](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/77da538))

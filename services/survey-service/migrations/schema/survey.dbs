@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="localhost" id="Project-1837" database="MySql" >
+	<schema name="arc" >
+		<table name="migrations" row_count="2" spec="" >
+			<column name="id" type="INT" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="name" type="VARCHAR" length="255" jt="12" mandatory="y" />
+			<column name="run_on" type="DATETIME" jt="93" mandatory="y" />
+			<index name="pk_migrations" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="question_options" row_count="13" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="name" type="VARCHAR" length="500" jt="12" />
+			<column name="display_order" type="INT" jt="4" mandatory="y" />
+			<column name="score" type="DECIMAL" length="10" decimal="0" jt="3" />
+			<column name="followup_question_id" type="VARCHAR" length="50" jt="12" />
+			<column name="question_id" type="VARCHAR" length="100" jt="12" mandatory="y" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_question_options" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_option_question" unique="NORMAL" >
+				<column name="question_id" />
+			</index>
+			<index name="fk_option_follow_up_question" unique="NORMAL" >
+				<column name="followup_question_id" />
+			</index>
+			<fk name="fk_option_follow_up_question" to_schema="arc" to_table="questions" options="" >
+				<fk_column name="followup_question_id" pk="id" />
+			</fk>
+			<fk name="fk_option_question" to_schema="arc" to_table="questions" options="" >
+				<fk_column name="question_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="question_templates" row_count="0" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="uid" type="VARCHAR" length="20" jt="12" mandatory="y" />
+			<column name="name" type="VARCHAR" length="500" jt="12" mandatory="y" />
+			<column name="status" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="is_enable_weight" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_question_templates" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_question_templates_status" unique="NORMAL" >
+				<column name="status" />
+			</index>
+			<index name="idx_question_templates_is_enable_weight" unique="NORMAL" >
+				<column name="is_enable_weight" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="questions" row_count="7" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="uid" type="VARCHAR" length="20" jt="12" mandatory="y" />
+			<column name="name" type="LONGTEXT" jt="-1" />
+			<column name="status" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="question_type" type="ENUM" jt="12" mandatory="y" >
+				<enumeration><![CDATA['Drop Down','Multi Selection','Scale','Single Selection','Text']]></enumeration>
+			</column>
+			<column name="is_score_enabled" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="is_followup_enabled" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="root_question_id" type="VARCHAR" length="50" jt="12" />
+			<column name="parent_question_id" type="VARCHAR" length="50" jt="12" />
+			<column name="validation" type="JSON" jt="2000" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="survey_id" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_questions" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_question_root" unique="NORMAL" >
+				<column name="root_question_id" />
+			</index>
+			<index name="fk_question_parent" unique="NORMAL" >
+				<column name="parent_question_id" />
+			</index>
+			<index name="idx_question_question_type" unique="NORMAL" >
+				<column name="question_type" />
+			</index>
+			<fk name="fk_question_parent" to_schema="arc" to_table="questions" options="" >
+				<fk_column name="parent_question_id" pk="id" />
+			</fk>
+			<fk name="fk_question_root" to_schema="arc" to_table="questions" options="" >
+				<fk_column name="root_question_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="section" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="name" type="VARCHAR" length="500" jt="12" mandatory="y" />
+			<column name="display_order" type="INT" jt="4" mandatory="y" />
+			<column name="survey_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_section" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_section_survey_id" unique="NORMAL" >
+				<column name="survey_id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="survey_cycle_responses" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="survey_responder_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="survey_cycle_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="total_score" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_survey_cycle_responses" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_survey_cycle_responses_survey_responder_id" unique="NORMAL" >
+				<column name="survey_responder_id" />
+			</index>
+			<index name="idx_survey_response_survey_cycle_id" unique="NORMAL" >
+				<column name="survey_cycle_id" />
+			</index>
+			<fk name="fk_survey_cycle_responses_survey_cycle" to_schema="arc" to_table="survey_cycles" >
+				<fk_column name="survey_cycle_id" pk="id" />
+			</fk>
+			<fk name="fk_survey_response_survey_cycle" to_schema="arc" to_table="survey_cycles" >
+				<fk_column name="survey_cycle_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="survey_cycles" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="survey_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="start_date" type="DATE" jt="91" mandatory="y" />
+			<column name="end_date" type="DATE" jt="91" mandatory="y" />
+			<column name="is_activated" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_survey_cycles" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_survey_cycles_survey_id" unique="NORMAL" >
+				<column name="survey_id" />
+			</index>
+			<index name="idx_survey_cycles_start_date" unique="NORMAL" >
+				<column name="start_date" />
+			</index>
+			<index name="idx_survey_cycles_end_date" unique="NORMAL" >
+				<column name="end_date" />
+			</index>
+			<fk name="fk_survey_cycles_survey_id" to_schema="arc" to_table="surveys" >
+				<fk_column name="survey_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="survey_questions" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="survey_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="question_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="display_order" type="INT" jt="4" mandatory="y" />
+			<column name="is_mandatory" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="dependent_on_question_id" type="VARCHAR" length="50" jt="12" />
+			<column name="weight" type="DECIMAL" length="5" decimal="2" jt="3" >
+				<defo><![CDATA['0.00']]></defo>
+			</column>
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="section_id" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_survey_questions" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_unique" unique="UNIQUE_KEY" >
+				<column name="survey_id" />
+				<column name="question_id" />
+			</index>
+			<index name="idx_survey_questions_survey_id" unique="NORMAL" >
+				<column name="survey_id" />
+			</index>
+			<index name="idx_survey_questions_question_id" unique="NORMAL" >
+				<column name="question_id" />
+			</index>
+			<index name="fk_survey_questions_dependent_on_question_id" unique="NORMAL" >
+				<column name="dependent_on_question_id" />
+			</index>
+			<fk name="fk_survey_questions_dependent_on_question_id_0" to_schema="arc" to_table="survey_questions" >
+				<fk_column name="dependent_on_question_id" pk="id" />
+			</fk>
+			<fk name="fk_survey_questions_question_id" to_schema="arc" to_table="questions" >
+				<fk_column name="question_id" pk="id" />
+			</fk>
+			<fk name="fk_survey_questions_survey_id" to_schema="arc" to_table="surveys" >
+				<fk_column name="survey_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="survey_responders" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="first_name" type="VARCHAR" length="50" jt="12" />
+			<column name="last_name" type="VARCHAR" length="50" jt="12" />
+			<column name="full_name" type="VARCHAR" length="101" jt="12" >
+				<identity><![CDATA[GENERATED  ALWAYS AS (trim(concat(ifnull(`first_name`, _utf8mb4''), if(((`first_name` is not null) and (`last_name` is not null)), _utf8mb4' ', _utf8mb4''), ifnull(`last_name`, _utf8mb4''))))]]></identity>
+			</column>
+			<column name="email" type="VARCHAR" length="150" jt="12" mandatory="y" />
+			<column name="user_id" type="VARCHAR" length="50" jt="12" />
+			<column name="survey_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="survey_cycle_id" type="VARCHAR" length="50" jt="12" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_survey_responders" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_survey_responders_survey_id" unique="NORMAL" >
+				<column name="survey_id" />
+			</index>
+			<index name="idx_survey_responders_survey_cycle_id" unique="NORMAL" >
+				<column name="survey_cycle_id" />
+			</index>
+			<fk name="fk_survey_responders_survey_id" to_schema="arc" to_table="surveys" >
+				<fk_column name="survey_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="survey_response_details" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="survey_response_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="question_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="score" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="option_id" type="VARCHAR" length="50" jt="12" />
+			<column name="text_answer" type="TEXT" jt="-1" />
+			<column name="response_type" type="ENUM" jt="12" >
+				<enumeration><![CDATA['Drop Down','Multi Selection','Scale','Single Selection','Text']]></enumeration>
+			</column>
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_survey_response_details" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_survey_response_details_survey_response_id" unique="NORMAL" >
+				<column name="survey_response_id" />
+			</index>
+			<index name="idx_survey_response_details_question_id" unique="NORMAL" >
+				<column name="question_id" />
+			</index>
+			<fk name="fk_survey_response_details_question" to_schema="arc" to_table="questions" >
+				<fk_column name="question_id" pk="id" />
+			</fk>
+			<fk name="fk_survey_response_details_survey_response" to_schema="arc" to_table="survey_cycle_responses" >
+				<fk_column name="survey_response_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="surveys" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="uid" type="VARCHAR" length="20" jt="12" mandatory="y" />
+			<column name="name" type="VARCHAR" length="500" jt="12" mandatory="y" />
+			<column name="start_date" type="DATE" jt="91" />
+			<column name="end_date" type="DATE" jt="91" />
+			<column name="status" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="is_enable_weights" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="survey_text" type="LONGTEXT" jt="-1" />
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="base_survey_id" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_surveys" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_surveys_start_date" unique="NORMAL" >
+				<column name="start_date" />
+			</index>
+			<index name="idx_surveys_end_date" unique="NORMAL" >
+				<column name="end_date" />
+			</index>
+			<index name="idx_surveys_status" unique="NORMAL" >
+				<column name="status" />
+			</index>
+			<index name="idx_surveys_is_enable_weights" unique="NORMAL" >
+				<column name="is_enable_weights" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="template_questions" row_count="0" spec="" >
+			<column name="id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="template_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="question_id" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="display_order" type="INT" jt="4" mandatory="y" />
+			<column name="is_mandatory" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="dependent_on_question_id" type="VARCHAR" length="50" jt="12" />
+			<column name="weight" type="DECIMAL" length="5" decimal="2" jt="3" >
+				<defo><![CDATA['0.00']]></defo>
+			</column>
+			<column name="created_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="modified_on" type="TIMESTAMP" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="deleted" type="TINYINT" length="1" jt="-6" >
+				<defo><![CDATA['0']]></defo>
+			</column>
+			<column name="created_by" type="VARCHAR" length="50" jt="12" />
+			<column name="modified_by" type="VARCHAR" length="50" jt="12" />
+			<column name="deleted_on" type="TIMESTAMP" jt="93" />
+			<column name="deleted_by" type="VARCHAR" length="50" jt="12" />
+			<column name="ext_id" type="VARCHAR" length="100" jt="12" />
+			<column name="ext_metadata" type="JSON" jt="2000" />
+			<index name="pk_template_questions" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_template_questions_question_id" unique="NORMAL" >
+				<column name="question_id" />
+			</index>
+			<index name="idx_template_questions_template_id" unique="NORMAL" >
+				<column name="template_id" />
+			</index>
+			<index name="idx_template_questions_display_order" unique="NORMAL" >
+				<column name="display_order" />
+			</index>
+			<fk name="fk_template_questions_question" to_schema="arc" to_table="questions" options="" >
+				<fk_column name="question_id" pk="id" />
+			</fk>
+			<fk name="fk_template_questions_question_templates" to_schema="arc" to_table="question_templates" options="" >
+				<fk_column name="template_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<trigger name="options_before_insert" table="question_options" id="Trigger-19a4" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.options_before_insert BEFORE INSERT ON question_options FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="options_before_update" table="question_options" id="Trigger-1d6b" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.options_before_update BEFORE UPDATE ON question_options FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+		<trigger name="question_templates_before_insert" table="question_templates" id="Trigger-1a6e" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.question_templates_before_insert BEFORE INSERT ON question_templates FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="question_templates_before_update" table="question_templates" id="Trigger-455" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.question_templates_before_update BEFORE UPDATE ON question_templates FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+		<trigger name="questions_before_insert" table="questions" id="Trigger-f89" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.questions_before_insert BEFORE INSERT ON questions FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="questions_before_update" table="questions" id="Trigger-eba" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.questions_before_update BEFORE UPDATE ON questions FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+		<trigger name="section_before_insert" table="section" id="Trigger-2635" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.section_before_insert BEFORE INSERT ON section FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="section_before_update" table="section" id="Trigger-192a" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.section_before_update BEFORE UPDATE ON section FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_cycle_responses_before_insert" table="survey_cycle_responses" id="Trigger-1af7" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_cycle_responses_before_insert BEFORE INSERT ON survey_cycle_responses FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_cycle_responses_before_update" table="survey_cycle_responses" id="Trigger-129a" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_cycle_responses_before_update BEFORE UPDATE ON survey_cycle_responses FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_cycles_before_insert" table="survey_cycles" id="Trigger-e89" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_cycles_before_insert BEFORE INSERT ON survey_cycles FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_cycles_before_update" table="survey_cycles" id="Trigger-1f81" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_cycles_before_update BEFORE UPDATE ON survey_cycles FOR EACH ROW BEGIN
+SET
+    new.modified_on = now();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_questions_before_insert" table="survey_questions" id="Trigger-1f6b" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_questions_before_insert BEFORE INSERT ON survey_questions FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_questions_before_update" table="survey_questions" id="Trigger-247d" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_questions_before_update BEFORE UPDATE ON survey_questions FOR EACH ROW BEGIN
+SET
+    new.modified_on = now();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_responders_before_insert" table="survey_responders" id="Trigger-15f7" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_responders_before_insert BEFORE INSERT ON survey_responders FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_responders_before_update" table="survey_responders" id="Trigger-19cb" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_responders_before_update BEFORE UPDATE ON survey_responders FOR EACH ROW BEGIN
+SET
+    new.modified_on = now();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_response_details_before_insert" table="survey_response_details" id="Trigger-11c" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_response_details_before_insert BEFORE INSERT ON survey_response_details FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="survey_response_details_before_update" table="survey_response_details" id="Trigger-80b" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.survey_response_details_before_update BEFORE UPDATE ON survey_response_details FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+		<trigger name="surveys_before_insert" table="surveys" id="Trigger-16e2" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.surveys_before_insert BEFORE INSERT ON surveys FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="surveys_before_update" table="surveys" id="Trigger-1a96" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.surveys_before_update BEFORE UPDATE ON surveys FOR EACH ROW BEGIN
+SET
+    new.modified_on = now();
+END;]]></string>
+		</trigger>
+		<trigger name="template_questions_before_insert" table="template_questions" id="Trigger-147" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.template_questions_before_insert BEFORE INSERT ON template_questions FOR EACH ROW BEGIN
+SET
+    new.id = uuid();
+END;]]></string>
+		</trigger>
+		<trigger name="template_questions_before_update" table="template_questions" id="Trigger-139" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER arc.template_questions_before_update BEFORE UPDATE ON template_questions FOR EACH ROW BEGIN
+SET
+    new.modified_on = UTC_TIMESTAMP();
+END;]]></string>
+		</trigger>
+	</schema>
+	<connector name="localhost" database="MySql" driver_class="com.mysql.cj.jdbc.Driver" driver_jar="mysql-connector-j-8.0.32.jar" driver_desc="Standard" host="localhost" port="3306" user="root" passwd="cGFzc3dvcmQ=" useSystemProxy="false" />
+	<layout name="Layout" id="Layout-1da0" show_relation="columns" />
+	<layout name="Main Layout" id="Layout-205" joined_routing="y" show_relation="columns" >
+		<entity schema="arc" name="migrations" color="3986C1" x="1024" y="272" />
+		<entity schema="arc" name="question_options" color="BED3F4" x="48" y="672" />
+		<entity schema="arc" name="question_templates" color="BED3F4" x="416" y="256" />
+		<entity schema="arc" name="questions" color="BED3F4" x="48" y="272" />
+		<entity schema="arc" name="section" color="3986C1" x="256" y="80" />
+		<entity schema="arc" name="survey_cycle_responses" color="3986C1" x="928" y="400" />
+		<entity schema="arc" name="survey_cycles" color="3986C1" x="816" y="96" />
+		<entity schema="arc" name="survey_questions" color="3986C1" x="1136" y="96" />
+		<entity schema="arc" name="survey_responders" color="3986C1" x="640" y="80" />
+		<entity schema="arc" name="survey_response_details" color="3986C1" x="1120" y="528" />
+		<entity schema="arc" name="surveys" color="3986C1" x="624" y="496" />
+		<entity schema="arc" name="template_questions" color="BED3F4" x="256" y="560" />
+		<callout x="64" y="128" pointer="Round" >
+			<comment><![CDATA[This is a layout. 
+- Double-click table headers, columns, or foreign keys to edit 
+- Drag tables to the layout from the structure tree, or 
+   add them by pressing the arrow icon near columns 
+- Create multiple layouts with the same or different tables 
+- Right-click the layout to create new tables]]></comment>
+		</callout>
+		<group name="questions" color="ECF0F7" >
+			<entity schema="arc" name="questions" />
+			<entity schema="arc" name="question_options" />
+			<entity schema="arc" name="template_questions" />
+			<entity schema="arc" name="question_templates" />
+		</group>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-7fe" show_column_type="y" show_relation="columns" >
+		<entity schema="arc" name="migrations" color="3986C1" x="1136" y="48" />
+		<entity schema="arc" name="question_options" color="BED3F4" x="416" y="464" />
+		<entity schema="arc" name="question_templates" color="BED3F4" x="784" y="48" />
+		<entity schema="arc" name="questions" color="BED3F4" x="48" y="48" />
+		<entity schema="arc" name="template_questions" color="BED3F4" x="416" y="48" />
+		<script name="SQL Editor" id="Editor-383" language="SQL" >
+			<string><![CDATA[SELECT
+	id, uid, name, `status`, question_type, is_score_enabled, is_followup_enabled, root_question_id, parent_question_id, 
+	validation, created_on, modified_on, deleted, created_by, modified_by, deleted_on, deleted_by
+FROM
+	arc.questions s;]]></string>
+		</script>
+		<browser id="Browse-8fe" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="arc" entity="questions" x="20" y="20" width="400" height="300" >
+				<browse_table schema="arc" entity="question_options" fk="fk_option_follow_up_question" x="440" y="20" width="500" height="350" />
+			</browse_table>
+		</browser>
+		<query id="Query-1bd6" name="Query Builder" >
+			<query_table schema="arc" name="questions" alias="q" x="48" y="48" >
+				<column name="id" />
+				<column name="uid" />
+				<column name="name" />
+				<column name="status" />
+				<column name="question_type" />
+				<column name="is_score_enabled" />
+				<column name="is_followup_enabled" />
+				<column name="root_question_id" />
+				<column name="parent_question_id" />
+				<column name="validation" />
+				<column name="created_on" />
+				<column name="modified_on" />
+				<column name="deleted" />
+				<column name="created_by" />
+				<column name="modified_by" />
+				<column name="deleted_on" />
+				<column name="deleted_by" />
+				<query_table schema="arc" name="question_options" alias="qo" x="304" y="48" fk="fk_option_follow_up_question" type="Inner Join" >
+					<column name="id" />
+					<column name="name" />
+					<column name="display_order" />
+					<column name="score" />
+					<column name="followup_question_id" />
+					<column name="question_id" />
+					<column name="created_on" />
+					<column name="modified_on" />
+					<column name="deleted" />
+					<column name="created_by" />
+					<column name="modified_by" />
+					<column name="deleted_on" />
+					<column name="deleted_by" />
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Report" id="Report-1dde" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Questions Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="id" type="-1" />
+						<var name="uid" type="-1" />
+						<var name="name" type="-1" />
+						<var name="status" type="-1" />
+						<var name="question_type" type="-1" />
+						<var name="is_score_enabled" type="-6" />
+						<var name="is_followup_enabled" type="-6" />
+						<var name="root_question_id" type="-1" />
+						<var name="parent_question_id" type="-1" />
+						<var name="validation" type="2000" />
+						<var name="created_on" type="93" />
+						<var name="modified_on" type="93" />
+						<var name="deleted" type="-6" />
+						<var name="created_by" type="-1" />
+						<var name="modified_by" type="-1" />
+						<var name="deleted_on" type="93" />
+						<var name="deleted_by" type="-1" />
+						<script ><![CDATA[SELECT * FROM arc.questions]]></script>
+					</form_script>
+					<param name="i0" value="question_type" />
+					<param name="width" value="100%" />
+					<param name="v0" value="is_score_enabled" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="id" type="-1" />
+						<var name="uid" type="-1" />
+						<var name="name" type="-1" />
+						<var name="status" type="-1" />
+						<var name="question_type" type="-1" />
+						<var name="is_score_enabled" type="-6" />
+						<var name="is_followup_enabled" type="-6" />
+						<var name="root_question_id" type="-1" />
+						<var name="parent_question_id" type="-1" />
+						<var name="validation" type="2000" />
+						<var name="created_on" type="93" />
+						<var name="modified_on" type="93" />
+						<var name="deleted" type="-6" />
+						<var name="created_by" type="-1" />
+						<var name="modified_by" type="-1" />
+						<var name="deleted_on" type="93" />
+						<var name="deleted_by" type="-1" />
+						<script ><![CDATA[SELECT * FROM arc.questions]]></script>
+					</form_script>
+					<cell type="label" name="id" pos="0,0,0,0,c,c" />
+					<cell type="label" name="uid" pos="1,0,1,0,c,c" />
+					<cell type="label" name="name" pos="2,0,2,0,c,c" />
+					<cell type="label" name="status" pos="3,0,3,0,c,c" />
+					<cell type="label" name="question_type" pos="4,0,4,0,c,c" />
+					<cell type="label" name="is_score_enabled" pos="5,0,5,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="6,0,6,0,c,c" />
+					<cell type="label" name="${id}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${uid}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${name}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${status}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="label" name="${question_type}" template="Plain" pos="4,1,4,1,l,c" />
+					<cell type="label" name="${is_score_enabled}" template="Plain" pos="5,1,5,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="6,1,6,1,c,c" ref_id="Report-1dde" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-1dde" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-1dde" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-1dde" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>

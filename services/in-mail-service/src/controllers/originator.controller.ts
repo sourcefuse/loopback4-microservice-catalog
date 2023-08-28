@@ -11,17 +11,17 @@ import {
   requestBody,
 } from '@loopback/openapi-v3';
 import {DataObject, Filter, repository} from '@loopback/repository';
-import {api, del, HttpErrors, post, ResponseObject} from '@loopback/rest';
+import {HttpErrors, ResponseObject, api, del, post} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
-  STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {
@@ -226,30 +226,21 @@ export class OriginatorController {
           m.extMetadata = extMetadata;
         });
       }
-      const mail = await this.messageRepository.createRelational(
-        Object.assign(
-          Object.assign(
-            {},
-            {
-              sender:
-                process.env.INMAIL_IDENTIFIER_TYPE === 'user'
-                  ? this.user.id
-                  : this.user.email,
-              threadId: thread.id,
-              extId,
-              extMetadata,
-              status,
-              body,
-              subject,
-            },
-          ),
-          {
-            group: groups,
-            meta: meta,
-            attachments,
-          },
-        ),
-      );
+      const mail = await this.messageRepository.createRelational({
+        sender:
+          process.env.INMAIL_IDENTIFIER_TYPE === 'user'
+            ? this.user.id
+            : this.user.email,
+        threadId: thread.id,
+        extId,
+        extMetadata,
+        status,
+        body,
+        subject,
+        group: groups,
+        meta: meta,
+        attachments,
+      });
       await transaction.commit();
       return {id: mail.id};
     } catch (e) {

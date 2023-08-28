@@ -12,7 +12,7 @@ import {
   name: 'themes',
 })
 export class Theme
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Theme>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -68,8 +68,4 @@ export class Theme
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Theme>) {
-    super(data);
-  }
 }

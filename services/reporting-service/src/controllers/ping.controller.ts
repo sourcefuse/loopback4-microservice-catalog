@@ -3,8 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
-import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
-import {STATUS_CODE, CONTENT_TYPE} from '@sourceloop/core';
+import {Request, ResponseObject, RestBindings, get} from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 
 /**
  * OpenAPI response for ping()
@@ -53,7 +53,7 @@ export class PingController {
       greeting: 'Hello from LoopBack',
       date: new Date(),
       url: this.req.url,
-      headers: Object.assign({}, this.req.headers),
+      headers: {...this.req.headers},
     };
   }
 }

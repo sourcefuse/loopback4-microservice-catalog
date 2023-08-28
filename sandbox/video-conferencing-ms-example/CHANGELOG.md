@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.16 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-ms-example
+
+
+
+
+
+## <small>4.0.15 (2023-07-28)</small>
+
+* fix(deps): multiple vulnerabilities fix in sandbox examples (#1571) ([1bd6226](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1bd6226)), closes [#1571](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1571)
+
+
+
+
+
+## <small>4.0.14 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-ms-example
+
+
+
+
+
+## <small>4.0.13 (2023-07-11)</small>
+
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>4.0.12 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-ms-example

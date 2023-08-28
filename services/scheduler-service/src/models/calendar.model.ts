@@ -15,7 +15,7 @@ import {WorkingHour} from './working-hour.model';
   name: 'calendars',
 })
 export class Calendar
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Calendar>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -90,10 +90,6 @@ export class Calendar
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Calendar>) {
-    super(data);
-  }
 }
 
 export interface CalendarRelations {

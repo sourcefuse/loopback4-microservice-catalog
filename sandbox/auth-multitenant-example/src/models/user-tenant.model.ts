@@ -17,7 +17,7 @@ import {
 @model({
   name: 'user_tenants',
 })
-export class UserTenant extends BaseEntity implements IUserPrefs {
+export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
   @property({
     type: 'string',
     id: true,
@@ -71,10 +71,6 @@ export class UserTenant extends BaseEntity implements IUserPrefs {
 
   @hasMany(() => UserLevelPermission, {keyTo: 'userTenantId'})
   userLevelPermissions: UserLevelPermission[];
-
-  constructor(data?: Partial<UserTenant>) {
-    super(data);
-  }
 }
 
 export interface UserTenantRelations {

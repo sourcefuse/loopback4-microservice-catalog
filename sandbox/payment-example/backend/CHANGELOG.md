@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.10 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
+## <small>0.4.9 (2023-07-28)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
+## <small>0.4.8 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
+## <small>0.4.7 (2023-07-11)</small>
+
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.4.6 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-example-backend

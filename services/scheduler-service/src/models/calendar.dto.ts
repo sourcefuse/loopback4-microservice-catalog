@@ -2,12 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, model, Model, property} from '@loopback/repository';
+import {AnyObject, model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 import {Subscription} from './subscription.model';
 import {WorkingHour} from './working-hour.model';
 
 @model()
-export class CalendarDTO extends Model {
+export class CalendarDTO extends CoreModel<CalendarDTO> {
   @property({
     type: 'string',
     id: true,
@@ -79,8 +80,4 @@ export class CalendarDTO extends Model {
     type: 'object',
   })
   subscription?: Subscription;
-
-  constructor(data?: Partial<CalendarDTO>) {
-    super(data);
-  }
 }

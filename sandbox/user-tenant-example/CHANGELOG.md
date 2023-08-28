@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.23 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-example
+
+
+
+
+
+## <small>0.4.22 (2023-08-09)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-example
+
+
+
+
+
+## <small>0.4.21 (2023-07-28)</small>
+
+* refactor(sandbox): remove useless constructors (#1578) ([703b612](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703b612)), closes [#1578](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1578)
+* fix(deps): multiple vulnerabilities fix in sandbox examples (#1571) ([1bd6226](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1bd6226)), closes [#1571](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1571)
+
+
+
+
+
+## <small>0.4.20 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-example
+
+
+
+
+
+## <small>0.4.19 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
+* chore(deps): combine dependabot updates (#1481) ([8044245](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8044245)), closes [#1481](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1481)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.4.18 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-example

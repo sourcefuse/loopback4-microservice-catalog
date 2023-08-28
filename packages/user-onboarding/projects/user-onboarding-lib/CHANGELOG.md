@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.1.0 (2023-07-28)
+
+* feat(user-onboarding): changes to publish user onboarding element (#1583) ([5c992b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c992b0)), closes [#1583](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1583) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 5.0.0 (2023-07-28)
+
+* feat(user-onboarding): add element support and script for building (#1377) ([eebbe4e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eebbe4e)), closes [#1377](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1377) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352) [#1352](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1352)
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* test(user-onboarding): add unit test for TourStoreService and TourService (#915) ([973f30b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/973f30b)), closes [#915](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/915) [#867](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/867) [#867](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/867) [#867](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/867)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+
+
+### BREAKING CHANGE
+
+* 
+
+
+
+
 ## <small>4.0.2 (2022-08-26)</small>
 
 * build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

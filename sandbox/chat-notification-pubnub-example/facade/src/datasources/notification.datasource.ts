@@ -22,9 +22,7 @@ export class NotificationDataSource
     @inject('datasources.config.notification', {optional: true})
     dsConfig: object = config,
   ) {
-    dsConfig = Object.assign({}, dsConfig, {
-      options: {baseUrl: process.env.NOTIF_SERVICE_URL},
-    });
+    dsConfig = {...dsConfig, options: {baseUrl: process.env.NOTIF_SERVICE_URL}};
     super(dsConfig);
   }
 }

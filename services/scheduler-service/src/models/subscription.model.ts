@@ -14,7 +14,7 @@ import {AccessRoleType} from './enums/access-role.enum';
   name: 'subscriptions',
 })
 export class Subscription
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Subscription>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -104,10 +104,6 @@ export class Subscription
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Subscription>) {
-    super(data);
-  }
 }
 
 export interface SubscriptionRelations {

@@ -3,13 +3,13 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
-import {Event} from './event.model';
 import {ResponseStatusType} from './enums/response-status.enum';
+import {Event} from './event.model';
 
 @model({
   name: 'events_attendees_view',
 })
-export class EventAttendeeView extends Event {
+export class EventAttendeeView extends Event<EventAttendeeView> {
   @property({
     type: 'string',
     name: 'attendee_id',
@@ -63,8 +63,4 @@ export class EventAttendeeView extends Event {
     name: 'event_id',
   })
   eventId: string;
-
-  constructor(data?: Partial<EventAttendeeView>) {
-    super(data);
-  }
 }

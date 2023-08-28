@@ -3,12 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {model, property} from '@loopback/repository';
-import {UserModifiableEntity, RoleTypes} from '@sourceloop/core';
+import {RoleTypes, UserModifiableEntity} from '@sourceloop/core';
 
 @model({
   name: 'roles',
 })
-export class Role extends UserModifiableEntity {
+export class Role extends UserModifiableEntity<Role> {
   @property({
     type: 'string',
     id: true,
@@ -37,9 +37,5 @@ export class Role extends UserModifiableEntity {
     itemType: 'string',
   })
   permissions: string[];
-
-  constructor(data?: Partial<Role>) {
-    super(data);
-  }
 }
 export type RoleWithRelations = Role;

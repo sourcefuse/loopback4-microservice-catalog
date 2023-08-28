@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.26 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_facade
+
+
+
+
+
+## <small>0.3.25 (2023-07-28)</small>
+
+* refactor(sandbox): remove useless constructors (#1578) ([703b612](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703b612)), closes [#1578](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1578)
+
+
+
+
+
+## <small>0.3.24 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_facade
+
+
+
+
+
+## <small>0.3.23 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1504) ([10ab1b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10ab1b3)), closes [#1504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1504)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.3.22 (2023-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_facade

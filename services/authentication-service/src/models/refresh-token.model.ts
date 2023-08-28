@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model()
-export class RefreshToken extends Entity {
+export class RefreshToken extends CoreEntity<RefreshToken> {
   @property({
     type: 'string',
     required: true,
@@ -49,8 +50,4 @@ export class RefreshToken extends Entity {
     type: 'string',
   })
   tenantId?: string;
-
-  constructor(data?: Partial<RefreshToken>) {
-    super(data);
-  }
 }

@@ -43,7 +43,7 @@ Once installed, you can create your custom tour service to trigger tours. In thi
       super(apiService, adapter, `${environment.userApiUrl}/user-tenant-prefs`);
     }
     execute() {
-      this.parameters.data = Object.assign({}, this.parameters) as unknown as T;
+      this.parameters.data = {...this.parameters} as unknown as T;
       return super.execute();
     }
   }

@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class AccessResponseDto extends Model {
+export class AccessResponseDto extends CoreModel<AccessResponseDto> {
   @property({
     type: 'number',
   })
@@ -15,8 +16,4 @@ export class AccessResponseDto extends Model {
     type: 'string',
   })
   cipherKey?: string;
-
-  constructor(data?: Partial<AccessResponseDto>) {
-    super(data);
-  }
 }

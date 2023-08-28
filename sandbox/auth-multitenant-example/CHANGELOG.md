@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.20 (2023-08-10)</small>
+
+* [Snyk] Upgrade loopback-connector-postgresql from 6.0.5 to 6.0.6 (#1584) ([a798606](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a798606)), closes [#1584](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1584)
+
+
+
+
+
+## <small>6.0.19 (2023-08-09)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
+## <small>6.0.18 (2023-07-28)</small>
+
+* refactor(sandbox): remove useless constructors (#1578) ([703b612](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703b612)), closes [#1578](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1578)
+* fix(deps): multiple vulnerabilities fix in sandbox examples (#1571) ([1bd6226](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1bd6226)), closes [#1571](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1571)
+
+
+
+
+
+## <small>6.0.17 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
+## <small>6.0.16 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
+* chore(deps): combine snyk updates (#1493) ([46e11af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/46e11af)), closes [#1493](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1493) [#1489](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1489) [#1488](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1488)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>6.0.15 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

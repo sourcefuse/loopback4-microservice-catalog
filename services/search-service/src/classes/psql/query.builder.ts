@@ -2,15 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {
-  AnyObject,
-  DataObject,
-  Model,
-  ShortHandEqualType,
-} from '@loopback/repository';
+import {AnyObject, Model, ShortHandEqualType} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Errors} from '../../const';
-import {SearchQuery} from '../../models';
 import {ColumnMap} from '../../types';
 import {SearchQueryBuilder} from '../base';
 
@@ -18,10 +12,6 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
   unionString = ' UNION ALL ';
   schema: string;
   _placeholderIndex = 1;
-
-  constructor(query: DataObject<SearchQuery>, schema?: string) {
-    super(query, schema);
-  }
 
   search(
     model: typeof Model,

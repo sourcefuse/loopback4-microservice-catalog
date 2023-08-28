@@ -5,6 +5,8 @@
     "packages/cache",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
+    "packages/user-onboarding/projects/user-onboarding-lib",
+    "packages/user-onboarding/projects/user-onboarding-element",
     "packages/search/projects/search-lib",
     "packages/search/projects/search-element",
     "services/*",
@@ -89,11 +91,18 @@
         "@sourceloop/chat-notif-example-chat-socket",
         "@sourceloop/chat-notif-example-notif-socket",
         "@sourceloop/example-socketio",
-        "@sourceloop/user-onboarding-client",
         "@sourceloop/oauth-example-api",
         "@sourceloop/oauth-example-ui",
         "@sourceloop/oidc-basic-example",
-        "@sourceloop/nestjs-auth-ms-example"
+        "@sourceloop/nestjs-auth-ms-example",
+        "@sourceloop/telemed-app-ui",
+        "@sourceloop/telemed-auth-api",
+        "@sourceloop/telemed-notification-api",
+        "@sourceloop/telemed-video-conferencing-api",
+        "@sourceloop/telemed-auth-cdktf",
+        "@sourceloop/telemed-video-conferencing-cdktf",
+        "@sourceloop/telemed-notification-cdktf",
+        "@sourceloop/telemed-ui-cdk"
       ]
     },
     "clean": {
@@ -108,8 +117,9 @@
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/*.md",
-    "packages/core/locales/**",
-    "packages/user-onboarding"
+    "packages/core/locales/**"
   ],
-  "version": "independent"
+  "version": "independent",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": false
 }

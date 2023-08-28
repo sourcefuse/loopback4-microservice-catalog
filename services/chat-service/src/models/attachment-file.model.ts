@@ -5,7 +5,7 @@ import {Message, MessageWithRelations} from './message.model';
 @model({
   name: 'message_files',
 })
-export class AttachmentFile extends UserModifiableEntity {
+export class AttachmentFile extends UserModifiableEntity<AttachmentFile> {
   @property({
     type: 'string',
     id: true,
@@ -41,10 +41,6 @@ export class AttachmentFile extends UserModifiableEntity {
     name: 'meta_data',
   })
   metaData?: object;
-
-  constructor(data?: Partial<AttachmentFile>) {
-    super(data);
-  }
 }
 
 export interface AttachmentFileRelations {

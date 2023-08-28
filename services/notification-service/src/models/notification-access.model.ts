@@ -2,14 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, Entity} from '@loopback/repository';
-import {Config, MessageType, MessageOptions} from 'loopback4-notifications';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
+import {Config, MessageOptions, MessageType} from 'loopback4-notifications';
 import {PubNubReceiver} from 'loopback4-notifications/pubnub';
 
 @model({
   name: 'notification_access',
 })
-export class NotificationAccess extends Entity implements Config {
+export class NotificationAccess
+  extends CoreEntity<NotificationAccess>
+  implements Config
+{
   @property({
     type: 'object',
     description: 'this will contain the list of reciever to give access',
@@ -28,8 +32,4 @@ export class NotificationAccess extends Entity implements Config {
     description: 'this will contain the ttl property for now',
   })
   options?: MessageOptions;
-
-  constructor(data?: Partial<NotificationAccess>) {
-    super(data);
-  }
 }

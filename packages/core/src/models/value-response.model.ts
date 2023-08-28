@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from './core-model';
 
 @model()
-export class ValueResponse extends Model {
+export class ValueResponse extends CoreModel<ValueResponse> {
   @property({
     type: 'number',
     jsonSchema: {
@@ -21,10 +22,4 @@ export class ValueResponse extends Model {
     },
   })
   oldValue?: number;
-
-  constructor(data?: Partial<ValueResponse>) {
-    super(data);
-    this.currValue = data?.currValue;
-    this.oldValue = data?.oldValue;
-  }
 }

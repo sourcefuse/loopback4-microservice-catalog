@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.22 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## <small>0.2.21 (2023-08-09)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## <small>0.2.20 (2023-07-28)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## <small>0.2.19 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## <small>0.2.18 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1474) ([c333a9c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c333a9c)), closes [#1474](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1474)
+* chore(deps): combine snyk updates (#1480) ([ef93ac6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef93ac6)), closes [#1480](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1480)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.2.17 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/oauth-example-api

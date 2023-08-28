@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.4 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
+## <small>0.6.3 (2023-07-28)</small>
+
+* refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
+
+
+
+
+
+## <small>0.6.2 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
+## <small>0.6.1 (2023-07-11)</small>
+
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+* docs(cache): fix arc logo and configure step (#1494) ([00e854d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/00e854d)), closes [#1494](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1494)
+* docs(cache): fix description cacheProvider (#1509) ([c7a1f93](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c7a1f93)), closes [#1509](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1509) [#1442](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1442)
+
+
+
+
+
 ## 0.6.0 (2023-06-19)
 
 * docs(cache): improve documentation and add arc branding (#1458) ([7da898e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7da898e)), closes [#1458](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1458) [#1442](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1442)

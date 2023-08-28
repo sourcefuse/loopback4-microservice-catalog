@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.18 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.4.17 (2023-07-28)</small>
+
+* chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/chat-notification-pubnub-example/servic ([73e5040](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/73e5040)), closes [#1573](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1573)
+* chore(deps): bump protobufjs and google-gax in /sandbox/chat-notification-pubnub-example/services/no ([9230063](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9230063)), closes [#1569](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1569)
+
+
+
+
+
+## <small>0.4.16 (2023-07-21)</small>
+
+* chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)
+
+
+
+
+
+## <small>0.4.15 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.4.14 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1530) ([b581c22](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b581c22)), closes [#1530](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1530)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.4.13 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service

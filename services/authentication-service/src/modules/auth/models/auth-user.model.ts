@@ -19,7 +19,10 @@ export class DeviceInfo {
   description: `This is the signature for authenticated user which holds permissions and role.`,
   settings: {strict: true},
 })
-export class AuthUser extends User implements IAuthUserWithPermissions {
+export class AuthUser
+  extends User<AuthUser>
+  implements IAuthUserWithPermissions
+{
   @property({
     type: 'array',
     itemType: 'string',
@@ -96,9 +99,5 @@ export class AuthUser extends User implements IAuthUserWithPermissions {
 
   getIdentifier() {
     return this.id;
-  }
-
-  constructor(data?: Partial<AuthUser>) {
-    super(data);
   }
 }

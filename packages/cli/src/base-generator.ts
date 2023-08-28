@@ -11,9 +11,6 @@ export abstract class BaseGenerator<
 > extends Generator<T> {
   root = '';
   private exitGeneration?: string;
-  constructor(args: string[], opts: T) {
-    super(args, opts);
-  }
 
   copyTemplates() {
     readdirSync(this.templatePath()).forEach(file => {

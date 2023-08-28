@@ -1,46 +1,48 @@
-<div fxLayout fxLayoutAlign="start center" class="toolbar-search" *ngIf="config">
-  <mat-form-field appearance="outline" class="toolbar-search-input">
-    <input
-      matInput
-      autocomplete="off"
-      type="text"
-      [placeholder]="
-        config.placeholderFunction
-          ? config.placeholderFunction(searchInput.value, category)
-          : config.placeholder || 'Search'
-      "
-      #searchInput
-      name="searchInput"
-      (focus)="showSuggestions()"
-      (blur)="hideSuggestions()"
-      [(ngModel)]="searchBoxInput"
-      (keyup)="hitSearchApi($event)"
-      placeholder="Search"
-      (ngModelChange)="onChange(this.searchBoxInput)"
-      [disabled]="disabled"
-    />
-    <mat-icon matPrefix [className]="config.searchIconClass"></mat-icon>
-    <mat-icon
-      *ngIf="searchBoxInput"
-      matSuffix
-      [className]="config.crossIconClass"
-      (click)="resetInput()"
-    ></mat-icon>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="toolbar-search-select">
-    <mat-icon matSuffix [className]="config.dropDownButtonIconClass"></mat-icon>
-    <mat-select
-      [value]="category"
-      (selectionChange)="setCategory($event.value)"
-      panelClass="search-select"
-    >
-      <mat-option [value]="model.name" *ngFor="let model of config.models">
-        {{ model.displayName }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+<ng-container *ngIf="!showOnlySearchResultOverlay">
+  <div fxLayout fxLayoutAlign="start center" class="toolbar-search" *ngIf="config">
+    <mat-form-field appearance="outline" class="toolbar-search-input">
+      <input
+        matInput
+        autocomplete="off"
+        type="text"
+        [placeholder]="
+          config.placeholderFunction
+            ? config.placeholderFunction(searchInput.value, category)
+            : config.placeholder || 'Search'
+        "
+        #searchInput
+        name="searchInput"
+        (focus)="showSuggestions()"
+        (blur)="hideSuggestions()"
+        [(ngModel)]="searchBoxInput"
+        (keyup)="hitSearchApi($event)"
+        placeholder="Search"
+        (ngModelChange)="onChange(this.searchBoxInput)"
+        [disabled]="disabled"
+      />
+      <mat-icon matPrefix [className]="config.searchIconClass"></mat-icon>
+      <mat-icon
+        *ngIf="searchBoxInput"
+        matSuffix
+        [className]="config.crossIconClass"
+        (click)="resetInput()"
+      ></mat-icon>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" class="toolbar-search-select">
+      <mat-icon matSuffix [className]="config.dropDownButtonIconClass"></mat-icon>
+      <mat-select
+        [value]="category"
+        (selectionChange)="setCategory($event.value)"
+        panelClass="search-select"
+      >
+        <mat-option [value]="model.name" *ngFor="let model of config.models">
+          {{ model.displayName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-container>
 
 <div class="search-container">
   <div

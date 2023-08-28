@@ -27,7 +27,7 @@ export enum StatusMarker {
   name: 'message',
 })
 export class Message
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Message>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -112,10 +112,6 @@ export class Message
     {name: 'thread_id'},
   )
   threadId: string;
-
-  constructor(data?: Partial<Message>) {
-    super(data);
-  }
 }
 
 export interface MessageRelations {

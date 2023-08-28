@@ -9,7 +9,7 @@ import {UserModifiableEntity} from '@sourceloop/core';
   name: 'feature_toggles',
   description: 'The feature-toggle table',
 })
-export class FeatureToggle extends UserModifiableEntity {
+export class FeatureToggle extends UserModifiableEntity<FeatureToggle> {
   @property({
     type: 'string',
     id: true,
@@ -38,10 +38,6 @@ export class FeatureToggle extends UserModifiableEntity {
     type: 'boolean',
   })
   status: boolean;
-
-  constructor(data?: Partial<FeatureToggle>) {
-    super(data);
-  }
 }
 
 export type FeatureToggleWithRelations = FeatureToggle;

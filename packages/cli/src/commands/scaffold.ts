@@ -3,20 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
-import {IConfig} from '@oclif/config';
-import Environment from 'yeoman-environment';
 import Base from '../command-base';
-import {PromptFunction, ScaffoldOptions} from '../types';
+import {ScaffoldOptions} from '../types';
 
 export class Scaffold extends Base<ScaffoldOptions> {
-  constructor(
-    argv: string[],
-    config: IConfig,
-    prompt: PromptFunction,
-    env?: Environment<ScaffoldOptions>,
-  ) {
-    super(argv, config, prompt, env);
-  }
   static description = 'create a project scaffold';
 
   static flags = {

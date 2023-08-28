@@ -2,10 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {flags} from '@oclif/command';
+import { flags } from '@oclif/command';
 import Base from '../command-base';
-import {DATASOURCES, SERVICES} from '../enum';
-import {MicroserviceOptions} from '../types';
+import { DATASOURCES, SERVICES } from '../enum';
+import { MicroserviceOptions } from '../types';
 
 export class Microservice extends Base<MicroserviceOptions> {
   static description = 'add a microservice';
@@ -14,6 +14,11 @@ export class Microservice extends Base<MicroserviceOptions> {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
+    }),
+    cdk: flags.boolean({
+      name: 'cdk',
+      description: 'include arc-cdk?',
+      allowNo: true,
     }),
     facade: flags.boolean({
       name: 'facade',
@@ -67,7 +72,7 @@ export class Microservice extends Base<MicroserviceOptions> {
     }),
   };
   static args = [
-    {name: 'name', description: 'Name of the microservice', required: false},
+    { name: 'name', description: 'Name of the microservice', required: false },
   ];
 
   async run() {

@@ -3,13 +3,13 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {AnyObject, hasMany, model, property} from '@loopback/repository';
-import {WorkflowVersion} from './workflow-version.model';
 import {UserModifiableEntity} from '@sourceloop/core';
+import {WorkflowVersion} from './workflow-version.model';
 
 @model({
   name: 'workflows',
 })
-export class Workflow extends UserModifiableEntity {
+export class Workflow extends UserModifiableEntity<Workflow> {
   @property({
     type: 'string',
     id: true,
@@ -67,10 +67,6 @@ export class Workflow extends UserModifiableEntity {
     name: 'workflowVersions',
   })
   workflowVersions: WorkflowVersion[];
-
-  constructor(data?: Partial<Workflow>) {
-    super(data);
-  }
 }
 
 export interface WorkflowRelations {

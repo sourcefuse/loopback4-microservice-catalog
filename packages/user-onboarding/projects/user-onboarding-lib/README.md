@@ -43,7 +43,7 @@ Once installed, you can create your custom tour service to trigger tours. In thi
       super(apiService, adapter, `${environment.userApiUrl}/user-tenant-prefs`);
     }
     execute() {
-      this.parameters.data = Object.assign({}, this.parameters) as unknown as T;
+      this.parameters.data = {...this.parameters} as unknown as T;
       return super.execute();
     }
   }
@@ -370,4 +370,29 @@ There are also two themes available for use i.e. the light theme and the dark th
 ```typescript
 @import "../../node_modules/@sourceloop/user-onboarding-client/assets/default.scss";
 @include sourceloopTheme('dark');
+```
+
+## Web Component
+
+- This library is also available as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) so users of frameworks like React and Vue
+  can also integrate this User -OnBoarding element in their application with minimal effort.
+
+### Installation
+
+```bash
+npm install @sourceloop/user-onboarding-client
+```
+
+In the modules you can find a file relevant to the element - `element/user-onboarding-element.js`. How you serve and include this file in your non Angular project depend on the framework that you are using. For example, for Vanilla JS and HTML you can simply import the js and styles in your HTML ->
+
+```html
+<script type="text/javascript" src="user-onboarding-element.js"></script>
+```
+
+### Usage
+
+The web component accepts all the same inputs and services as the regular Angular Module, but instead of passing them through bindings and DI, you pass them as properties of the element as shown below.
+
+```html
+window.tourservice.run(TourId.DashboardTour)
 ```

@@ -81,6 +81,8 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_REGION=
 AWS_S3_BUCKET_NAME=
+PATH_TO_EXPORT_FILES_FOLDER=
+PATH_TO_UPLOAD_FILES=
 ```
 
 ### Configure DataSource
@@ -169,7 +171,7 @@ The audit logs can be archived via the REST endpoint [`/audit-logs/archive`](ope
 
 #### Archival Response
 
-You'll a similar response like this after requesting the archival:
+You'll get a similar response like this after requesting the archival:
 
 ```json
 {
@@ -181,6 +183,27 @@ You'll a similar response like this after requesting the archival:
 
 Here `key` repesents the [AWS S3 object key](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html#BasicsKeys) of the file which contains the archived logs.
 
+#### Archive audit logs
+
+This provides a function that is used to convert the selected data in csv format and the same is exported to AWS S3 bucket as specified in the variables `AWS_ACCESS_KEY_ID`,
+`AWS_SECRET_ACCESS_KEY`,`AWS_REGION`,`AWS_S3_BUCKET_NAME` variables of the `env` file. By default file is exported in csv format on a AWS S3 bucket which can be overwritten using this provider. Value of these can be provided in the config file as well. Also it is necessary to provide the value of`PATH_TO_UPLOAD_FILES` variable in the `env` file. Config file can be binded in application like
+
+```ts
+this.bind(AWSS3Bindings.Config).to({
+  accessKeyId: '', // Replace with your actual access key
+  secretAccessKey: '', // Replace with your actual secret access key
+  region: '', // Replace with your desired AWS region
+} as AwsS3Config);
+```
+
+```ts
+this.bind(ExportToCsvServiceBindings.EXPORT_LOGS.key).toProvider(
+  ExportToCsvProvider,
+);
+```
+
+Implementation for this can be seen [here](src/services/export-to-csv.service.ts)
+
 ### Get Logs
 
 This feature is used to query the logs present in the Audit Database or the archive storage (eg. AWS S3). A sefault LoopBack filter is accepted based on which logs can be fetched. Along with this a boolean variable called `includeArchivedLogs` is also provided which accepts `true` or `false` resulting in whether to include the archieved logs in response.
@@ -188,6 +211,62 @@ This feature is used to query the logs present in the Audit Database or the arch
 If `includeArchivedLogs` is set to `true` the data will be fetched from both Audit database and archive storage based on the filter provided as an input **but it is not immediately returned**, a `jobId` is returned which represents the operation happening in the background to fetch and parse logs from archive storage. This `jobId` can be used to check the status of this process and get the result when it is done.
 
 If `includeArchivedLogs` option is set to `false` (which is default if not provided) the data is fetched from only Audit Database and not from the archive storage and in this case the response contains the data requested.
+
+### Export Logs
+
+This feature is used to export the logs present in Audit Database or the archive storage(eg. AWS.S3). A default loopback filter is accepted based on which logs are exported to the desired location as specified as an excel file(by default). Along with this a boolean variable called `includeArchivedLogs` is also provided which accepts `true` or `false` resulting in whether to include the archieved logs in response.
+
+If `includeArchivedLogs` is set to `true` then data will be fetched from both Audit database and archive storage based on the filter provided as an input **but it is not immediately returned**, a `jobId` is returned which represents the operation happening in the background to fetch and parse logs from archive storage. This `jobId` can be used to check the status of this process and get the result when it is done.
+
+If `includeArchivedLogs` option is set to `false` (which is default if not provided) the data is fetched from only Audit Database and not from the archive storage and in this case the response contains the data requested.
+
+This feature also allows custom column names to be given to the data or clubbing of specific columns together. This can be done with the help of providers which can be overwritten as mentioned below
+
+#### Create custom columns
+
+This provides a function which is used to customize the column present in the original data. The names of custom columns can also be specified in the function. By default no change is made to the original data. For making the change desired changes the provider can overwritten as shown below.
+
+Sample implementation-
+
+The provider for this key is to create custom column and custom column names
+
+```ts
+this.bind(ColumnBuilderServiceBindings.COLUMN_BUILDER.key).toProvider(
+  ColumnBuilderProvider,
+);
+```
+
+```ts
+export class ColumnBuilderProvider implements Provider<ColumnBuilderFn> {
+  constructor() {}
+
+  value(): ColumnBuilderFn {
+    return async (auditLogs: AuditLog[]) => {
+      return this.columnBuilder(auditLogs);
+    };
+  }
+  async columnBuilder(auditLogs: AuditLog[]): Promise<AnyObject[]> {
+    return auditLogs.map(log => ({
+      beforeAfterCombined: `${JSON.stringify(log.before)} ${JSON.stringify(
+        log.after,
+      )}`,
+      actedOnActionCombined: `${log.actedOn} ${log.actionKey}`,
+    }));
+  }
+}
+```
+
+#### Process audit logs
+
+This provides a function that takes excel file buffer as an input and any whatever desired operation can be performed on the excel file buffer.
+
+```ts
+this.bind(ExportHandlerServiceBindings.PROCESS_FILE.key).toProvider(
+  ExportHandlerProvider,
+);
+```
+
+Implementation for this can be seen [here](src/services/export-handler.service.ts)
 
 ### Environment Variables
 
@@ -285,6 +364,20 @@ If `includeArchivedLogs` option is set to `false` (which is default if not provi
       <td></td>
       <td>Name of the AWS S3 bucket you want to save the archived audit logs in.</td>
     </tr>
+    <tr>
+      <td><code>PATH_TO_EXPORT_FILES_FOLDER</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Specifies the path to store the exported files.</td>
+    </tr>
+    <tr>
+      <td><code>PATH_TO_UPLOAD_FILES</code></td>
+      <td>N</td>
+      <td></td>
+      <td>Specifies the path to store the archived files on S3 bucket.</td>
+    </tr>
+    
+    
   </tbody>
 </table>
 

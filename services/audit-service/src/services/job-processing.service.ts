@@ -1,18 +1,31 @@
 import {injectable, BindingScope, inject} from '@loopback/core';
-import {QuerySelectedFilesServiceBindings} from '../keys';
+import {
+  AuditLogExportServiceBindings,
+  ColumnBuilderServiceBindings,
+  QuerySelectedFilesServiceBindings,
+} from '../keys';
 import {repository, Filter} from '@loopback/repository';
 import {JobRepository, MappingLogRepository} from '../repositories';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
-import {CustomFilter, Job, MappingLog} from '../models';
+import {CustomFilter, MappingLog} from '../models';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {HttpErrors} from '@loopback/rest';
-import {QuerySelectedFilesFn} from '../types';
+import {
+  AuditLogExportFn,
+  ColumnBuilderFn,
+  QuerySelectedFilesFn,
+} from '../types';
+import {OperationKey} from '../enums/operation-key.enum';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class JobProcessingService {
   constructor(
     @inject(QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS)
     public querySelectedFiles: QuerySelectedFilesFn,
+    @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+    public auditLogExport: AuditLogExportFn,
+    @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
+    public columnBuilder: ColumnBuilderFn,
     @repository(MappingLogRepository)
     public mappingLogRepository: MappingLogRepository,
     @repository(JobRepository)
@@ -22,6 +35,8 @@ export class JobProcessingService {
   ) {}
 
   async start(jobId: string) {
+    const job = await this.jobRepository.findById(jobId);
+
     try {
       const filter: Filter<AuditLog> = (
         await this.jobRepository.findById(jobId)
@@ -70,21 +85,17 @@ export class JobProcessingService {
       }
       //logs from db
       finalData.push(...(await this.auditLogRepository.find(filter)));
-      const newJob = new Job({
-        id: jobId,
-        filterUsed: filter,
-        status: FileStatusKey.Completed,
-        result: JSON.stringify(finalData),
-      });
 
-      await this.jobRepository.updateById(jobId, newJob);
+      if (job.operation === OperationKey.EXPORT) {
+        const customColumnData = await this.columnBuilder(finalData);
+        await this.auditLogExport(customColumnData);
+      }
+      job.status = FileStatusKey.COMPLETED;
+      job.result = JSON.stringify(finalData);
+      await this.jobRepository.updateById(jobId, job);
     } catch (error) {
-      const newJob = new Job({
-        id: jobId,
-        status: FileStatusKey.Failed,
-        result: '',
-      });
-      await this.jobRepository.updateById(jobId, newJob);
+      job.status = FileStatusKey.COMPLETED;
+      await this.jobRepository.updateById(jobId, job);
       throw new HttpErrors.UnprocessableEntity(error.message);
     }
   }

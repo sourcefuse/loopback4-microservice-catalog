@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
+import axios from 'axios';
 import {
-  MDBContainer,
-  MDBCol,
-  MDBRow,
+  MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBBtn,
+  MDBCol,
+  MDBContainer,
   MDBNav,
   MDBNavItem,
   MDBNavLink,
-  MDBTabPane,
+  MDBRow,
   MDBTabContent,
+  MDBTabPane,
 } from 'mdbreact';
-import axios from 'axios';
+import React, {Component} from 'react';
 
 class CheckoutPage extends Component {
   state = {
@@ -102,8 +102,7 @@ class CheckoutPage extends Component {
   };
   getOrdersApiUrl() {
     const env = process.env;
-    const isPortExists =
-      env.REACT_APP_BASE_API_PORT_EXISTS === 'true' ? true : false;
+    const isPortExists = env.REACT_APP_BASE_API_PORT_EXISTS === 'true';
     let ordersApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${env.REACT_APP_BASE_API_URL}`;
     ordersApiUrl += isPortExists ? `:${env.REACT_APP_BASE_API_PORT}/` : '/';
     ordersApiUrl += `${env.REACT_APP_ORDERS_API_PATH}`;
@@ -111,8 +110,7 @@ class CheckoutPage extends Component {
   }
   getSubscriptionApiUrl() {
     const env = process.env;
-    const isPortExists =
-      env.REACT_APP_BASE_API_PORT_EXISTS === 'true' ? true : false;
+    const isPortExists = env.REACT_APP_BASE_API_PORT_EXISTS === 'true';
     let subscriptionApiUrl = `${env.REACT_APP_BASE_API_PROTOCOL}://${env.REACT_APP_BASE_API_URL}`;
     subscriptionApiUrl += isPortExists
       ? `:${env.REACT_APP_BASE_API_PORT}/`
@@ -314,7 +312,7 @@ class CheckoutPage extends Component {
                             style={{height: '34px', width: '20px'}}
                             className="form-check-input with-gap"
                             id="radioWithGap4"
-                            checked={this.state.radio === 1 ? true : false}
+                            checked={this.state.radio === 1}
                             required
                             onClick={this.onClick(1)}
                           />
@@ -338,7 +336,7 @@ class CheckoutPage extends Component {
                             style={{height: '34px', width: '20px'}}
                             className="form-check-input with-gap"
                             id="radioWithGap5"
-                            checked={this.state.radio === 2 ? true : false}
+                            checked={this.state.radio === 2}
                             required
                             onClick={this.onClick(2)}
                           />

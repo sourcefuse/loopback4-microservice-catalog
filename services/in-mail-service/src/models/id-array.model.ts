@@ -3,10 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 // array containing array of Ids.
-import {property, model, Model} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model()
-export class IdArrays extends Model {
+export class IdArrays extends CoreModel<IdArrays> {
   @property({
     type: 'array',
     itemType: 'string',
@@ -20,8 +21,4 @@ export class IdArrays extends Model {
     required: false,
   })
   threadIds?: string[];
-
-  constructor(data?: Partial<IdArrays>) {
-    super(data);
-  }
 }

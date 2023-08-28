@@ -15,7 +15,7 @@ import {Thread} from './thread.model';
   name: 'group',
 })
 export class Group
-  extends UserModifiableEntity
+  extends UserModifiableEntity<Group>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -103,8 +103,4 @@ export class Group
     {name: 'thread_id'},
   )
   threadId: string;
-
-  constructor(data?: Partial<Group>) {
-    super(data);
-  }
 }

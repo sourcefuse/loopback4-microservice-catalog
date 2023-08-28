@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "handlebars": "^4.7.7",
-    "patch-package": "^6.4.7"
+    "patch-package": "^8.0.0"
   }
 }

@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.19 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.6.18 (2023-08-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.6.17 (2023-07-28)</small>
+
+* refactor(sandbox): remove useless constructors (#1578) ([703b612](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/703b612)), closes [#1578](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1578)
+* fix(deps): multiple vulnerabilities fix in sandbox examples (#1571) ([1bd6226](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1bd6226)), closes [#1571](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1571)
+
+
+
+
+
+## <small>0.6.16 (2023-07-21)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.6.15 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.6.14 (2023-07-11)</small>
+
+* chore(deps): combine dependabot updates (#1504) ([10ab1b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/10ab1b3)), closes [#1504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1504)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>0.6.13 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-ms-example

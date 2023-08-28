@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -59,7 +59,11 @@ const MIGRATION_TEMPLATE = join(
   'templates',
   'database.json.tpl',
 );
+
 const MIGRATION_FOLDER = join('packages', 'migrations');
+
+const sourceloopCdkPath = (packageName: SERVICES) =>
+  join('node_modules', `@sourceloop/${packageName}`, 'iac');
 
 const sourceloopMigrationPath = (packageName: SERVICES) =>
   join('node_modules', `@sourceloop/${packageName}`, 'migrations');
@@ -68,11 +72,9 @@ const BACK_TO_ROOT = join('..', '..');
 
 const DEFAULT_NAME = 'microservice';
 
-export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
-  constructor(args: string[], opts: MicroserviceOptions) {
-    super(args, opts);
-  }
+const dbconfig = 'database.json';
 
+export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
   initializing() {
     if (!this.fs.exists(join(this.destinationPath(), 'lerna.json'))) {
       this.exit('Can create a microservice only from the root of a mono repo');
@@ -95,6 +97,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (this.options.baseService) {
       this.projectInfo.serviceDependency = this.options.baseService;
     }
+  }
+
+  async setCdk() {
+    this.projectInfo.cdk = this.options.cdk;
   }
 
   //Loopback4 prompts
@@ -209,6 +215,27 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         'docker:push:dev'
       ] = `sudo docker push $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION`;
       scripts['coverage'] = 'nyc npm run test';
+      if (this.options.cdk) {
+        packageJson.devDependencies = packageJson.devDependencies ?? {};
+        packageJson.devDependencies['@types/i18n'] = getDependencyVersion(
+          this.projectInfo.dependencies,
+          '@types/i18n',
+        );
+        packageJson.dependencies['@types/aws-lambda'] = getDependencyVersion(
+          this.projectInfo.dependencies,
+          '@types/aws-lambda',
+        );
+        scripts['build:layers'] = 'scripts/build-dependency-layer.sh';
+        scripts['build:migrations'] = 'scripts/build-migrations.sh';
+        scripts['build:all'] =
+          'npm run build && npm run build:layers && npm run build:migrations';
+        scripts['db:migrate'] =
+          "../../node_modules/db-migrate/bin/db-migrate up --config './migration/migrations/database.json'";
+        scripts['db:migrate:down'] =
+          "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'";
+        scripts['db:migrate:reset'] =
+          "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'";
+      }
       packageJson.scripts = scripts;
       if (this.options.baseService) {
         packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
@@ -217,6 +244,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             `@sourceloop/${this.options.baseService}`,
           );
       }
+
       fs.writeFileSync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
@@ -224,22 +252,92 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this.spawnCommandSync('npm', ['i']);
       this.spawnCommandSync('npm', ['run', 'prettier:fix']);
       this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
-      if (this.options.migrations) {
-        if (!this._migrationExists()) {
-          this._createMigrationPackage();
-        }
-        if (this.options.customMigrations) {
-          this._createCustomMigration();
-        } else if (this.options.includeMigrations) {
-          this._includeSourceloopMigrations();
-        } else {
-          // do nothing
-        }
-        this._addMigrationScripts();
+
+      this.addMigrations();
+
+      if (this.options.cdk) {
+        this._includeCdk();
+      } else {
+        const name = this.options.name ?? DEFAULT_NAME;
+        fs.unlink(
+          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
+          () => {},
+        );
+        this.log(
+          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
+        );
       }
       return true;
+    }
+    return false;
+  }
+
+  private addMigrations() {
+    if (this.options.migrations) {
+      if (!this._migrationExists()) {
+        this._createMigrationPackage();
+      }
+      if (this.options.customMigrations) {
+        this._createCustomMigration();
+      } else if (this.options.includeMigrations) {
+        this._includeSourceloopMigrations();
+      } else {
+        // do nothing
+      }
+      this._addMigrationScripts();
+    }
+  }
+  private _includeCdk() {
+    const name = this.options.name ?? DEFAULT_NAME;
+
+    if (
+      !this.shouldExit() &&
+      this.options.baseService &&
+      fs.existsSync(
+        this.destinationPath(
+          join('services', name, sourceloopCdkPath(this.options.baseService)),
+        ),
+      )
+    ) {
+      this.fs.copy(
+        this.destinationPath(
+          join(
+            'services',
+            name,
+            sourceloopCdkPath(this.options.baseService),
+            'cdk',
+          ),
+        ),
+        this.destinationPath(join('services', name, 'cdk')),
+      );
+
+      if (!fs.existsSync(this.destinationPath(join('iac', 'dependencies')))) {
+        this.fs.copy(
+          this.destinationPath(
+            join(
+              'services',
+              name,
+              sourceloopCdkPath(this.options.baseService),
+              'dependencies',
+            ),
+          ),
+          this.destinationPath(join('iac', 'dependencies')),
+        );
+      }
+
+      this.fs.copy(
+        this.destinationPath(
+          join(
+            'services',
+            name,
+            sourceloopCdkPath(this.options.baseService),
+            'scripts',
+          ),
+        ),
+        this.destinationPath(join('services', name, 'scripts')),
+      );
     } else {
-      return false;
+      // do nothing
     }
   }
 
@@ -286,13 +384,17 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   private _createDataSource() {
     const baseServiceDSList = this._setDataSourceName();
-    if (this.options.datasourceName) {
+    if (this.options.datasourceName && baseServiceDSList.length === 0) {
       baseServiceDSList?.push({
         type: 'store',
         name: this.options.datasourceName,
         fileName: this.options.datasourceName,
         isNotBase: true,
       });
+    } else if (this.options.datasourceName && baseServiceDSList.length !== 0) {
+      baseServiceDSList[0].fileName = this.options.datasourceName;
+    } else {
+      //do nothing
     }
     baseServiceDSList.forEach(ds => {
       if (ds.type === 'store') {
@@ -413,12 +515,42 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
     this.fs.copyTpl(
       this.templatePath(MIGRATION_TEMPLATE),
-      this.destinationPath(join(MIGRATION_FOLDER, name, 'database.json')),
+      this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
       {
         name: name.toUpperCase(),
         connector,
       },
     );
+
+    if (
+      this.options.cdk &&
+      this.options.baseService &&
+      fs.existsSync(
+        this.destinationPath(
+          join('services', name, sourceloopCdkPath(this.options.baseService)),
+        ),
+      )
+    ) {
+      this.fs.copyTpl(
+        this.templatePath(MIGRATION_TEMPLATE),
+        this.destinationPath(join('services', name, 'migration', dbconfig)),
+        {
+          name: name.toUpperCase(),
+          connector,
+        },
+      );
+      this.fs.copy(
+        this.destinationPath(
+          join(
+            'services',
+            name,
+            sourceloopMigrationPath(this.options.baseService),
+            'lambda.js',
+          ),
+        ),
+        this.destinationPath(join('services', name, 'migration', 'lambda.js')),
+      );
+    }
   }
 
   private _includeSourceloopMigrations() {
@@ -442,6 +574,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         );
         return;
       }
+
       this.fs.copy(
         this.destinationPath(
           join(
@@ -458,12 +591,54 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       }
       this.fs.copyTpl(
         this.templatePath(MIGRATION_TEMPLATE),
-        this.destinationPath(join(MIGRATION_FOLDER, name, 'database.json')),
+        this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
         {
           name: name.toUpperCase(),
           connector,
         },
       );
+
+      if (
+        this.options.cdk &&
+        fs.existsSync(
+          this.destinationPath(
+            join('services', name, sourceloopCdkPath(this.options.baseService)),
+          ),
+        )
+      ) {
+        this.fs.copy(
+          this.destinationPath(
+            join(
+              'services',
+              name,
+              sourceloopMigrationPath(this.options.baseService),
+            ),
+          ),
+          this.destinationPath(
+            join('services', name, 'migration', 'migrations'),
+          ),
+        );
+
+        this.fs.copy(
+          this.destinationPath(
+            join(
+              'services',
+              name,
+              sourceloopMigrationPath(this.options.baseService),
+              'lambda.js',
+            ),
+          ),
+          this.destinationPath(
+            join('services', name, 'migration', 'lambda.js'),
+          ),
+        );
+        this.fs.copy(
+          this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
+          this.destinationPath(join('services', name, 'migration', dbconfig)),
+        );
+      } else {
+        // do nothing
+      }
     }
   }
 

@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, belongsTo, AnyObject} from '@loopback/repository';
+import {AnyObject, belongsTo, model, property} from '@loopback/repository';
 import {BaseEntity} from '@sourceloop/core';
 import {Notification} from './notification.model';
 
@@ -12,7 +12,7 @@ import {Notification} from './notification.model';
     strict: false,
   },
 })
-export class NotificationUser extends BaseEntity {
+export class NotificationUser extends BaseEntity<NotificationUser> {
   @property({
     type: 'string',
     id: true,
@@ -55,10 +55,6 @@ export class NotificationUser extends BaseEntity {
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any; //NOSONAR
-
-  constructor(data?: Partial<NotificationUser>) {
-    super(data);
-  }
 }
 
 export interface NotificationUserRelations {

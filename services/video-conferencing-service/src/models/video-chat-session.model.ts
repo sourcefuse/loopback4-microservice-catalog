@@ -12,7 +12,7 @@ import {
   name: 'video_session_details',
 })
 export class VideoChatSession
-  extends UserModifiableEntity
+  extends UserModifiableEntity<VideoChatSession>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -93,10 +93,6 @@ export class VideoChatSession
     name: 'ext_metadata',
   })
   extMetadata?: object;
-
-  constructor(data?: Partial<VideoChatSession>) {
-    super(data);
-  }
 }
 
 export interface VideoChatSessionRelation {}

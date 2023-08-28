@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.1 (2023-08-10)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
+## 7.2.0 (2023-08-09)
+
+* feat(audit-service): allow forwarding aws s3 config via binding (#1582) ([8492407](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8492407)), closes [#1582](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1582) [#1581](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1581)
+
+
+
+
+
+## <small>7.1.3 (2023-07-28)</small>
+
+* refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
+* refactor(chore): resolve sonar smells (#1579) ([692aef8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/692aef8)), closes [#1579](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1579)
+
+
+
+
+
+## <small>7.1.2 (2023-07-21)</small>
+
+* fix(audit-service): xlsx module updated (#1565) ([eaca9ad](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eaca9ad)), closes [#1565](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1565)
+
+
+
+
+
+## <small>7.1.1 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
+## 7.1.0 (2023-07-11)
+
+* feat(audit-service): add export feature (#1500) ([b9b5c9e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b9b5c9e)), closes [#1500](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1500) [#1449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1449) [#1449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1449) [#1449](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1449)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+* docs(audit-service): revamp documentation and use arc branding (#1446) ([033ee00](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/033ee00)), closes [#1446](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1446) [#1443](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1443)
+
+
+
+
+
 ## <small>7.0.2 (2023-06-19)</small>
 
 * fix(all-services): add missing exports of repositories and enums (#1456) ([411df16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/411df16)), closes [#1456](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1456) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

@@ -7,7 +7,7 @@ export const JSON_SPACING = 4;
 export function appendDependencies(dependencies: Record<string, string>) {
   const packageJson = require('../package.json');
 
-  const deps = Object.assign({}, dependencies);
+  const deps = {...dependencies};
   const newDependencies = packageJson?.config?.templateDependencies ?? {};
   for (const i in newDependencies) {
     if (newDependencies[i]) {

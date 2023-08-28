@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`My CDKTF Application should match snapshot test 1`] = `
+{
+  "data": {
+    "aws_security_groups": {
+      "redis_user_sg": {
+        "filter": [
+          {
+            "name": "tag:redis-user",
+            "values": [
+              "yes"
+            ]
+          },
+          {
+            "name": "vpc-id",
+            "values": [
+              "\${data.aws_vpc.vpc.id}"
+            ]
+          }
+        ]
+      }
+    },
+    "aws_subnet": {
+      "subnet": {
+        "for_each": "\${toset(toset(data.aws_subnets.private.ids))}",
+        "id": "\${each.value}"
+      }
+    },
+    "aws_subnets": {
+      "private": {
+        "filter": [
+          {
+            "name": "tag:Name",
+            "values": [
+              "test-test-privatesubnet-private-undefineda",
+              "test-test-privatesubnet-private-undefinedb"
+            ]
+          },
+          {
+            "name": "vpc-id",
+            "values": [
+              "\${data.aws_vpc.vpc.id}"
+            ]
+          }
+        ]
+      }
+    },
+    "aws_vpc": {
+      "vpc": {
+        "filter": [
+          {
+            "name": "tag:Name",
+            "values": [
+              "test-test-vpc"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "module": {
+    "redis": {
+      "allowed_security_group_ids": "\${data.aws_security_groups.redis_user_sg.ids}",
+      "apply_immediately": true,
+      "at_rest_encryption_enabled": true,
+      "description": "Elasticache redis instance for ref arch devops infra",
+      "environment": "test",
+      "namespace": "test",
+      "source": "cloudposse/elasticache-redis/aws",
+      "subnets": "\${data.aws_subnets.private.ids}",
+      "transit_encryption_enabled": true,
+      "vpc_id": "\${data.aws_vpc.vpc.id}"
+    }
+  },
+  "provider": {
+    "aws": [
+      {
+        "assume_role": [
+          {
+          }
+        ]
+      }
+    ]
+  },
+  "resource": {
+    "aws_security_group": {
+      "ec_security_group": {
+        "description": "Security Group for ElastiCache redis users",
+        "egress": [
+          {
+            "cidr_blocks": "\${[for s in data.aws_subnet.subnet : s.cidr_block]}",
+            "description": "Rule to allow Redis users to access the Redis cluster",
+            "from_port": 0,
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": null,
+            "protocol": "TCP",
+            "security_groups": null,
+            "self": null,
+            "to_port": 6379
+          }
+        ],
+        "name": "test-test-Redis-user",
+        "tags": {
+          "Name": "test-test-Redis-user",
+          "redis-user": "yes"
+        },
+        "vpc_id": "\${data.aws_vpc.vpc.id}"
+      }
+    }
+  },
+  "terraform": {
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "4.51.0"
+      }
+    }
+  }
+}
+`;

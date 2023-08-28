@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" id="Project_44c1484" template="Default" database="PostgreSQL" >
+	<schema name="public" catalogname="videochatDb" schemaname="public" >
+		<table name="audit_logs" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="action" type="varchar" jt="12" mandatory="y" />
+			<column name="action_type" type="varchar" jt="12" mandatory="y" />
+			<column name="actor" type="varchar" jt="12" />
+			<column name="acted_at" type="timestamptz" jt="93" >
+				<defo>current_timestamp</defo>
+			</column>
+			<column name="acted_entity" type="varchar" jt="12" mandatory="y" />
+			<column name="before" type="json" jt="2000" />
+			<column name="after" type="json" jt="2000" />
+			<column name="reference" type="varchar" jt="12" />
+			<index name="pk_audit_logs_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="session_attendees" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="session_id" type="varchar" jt="12" mandatory="y" />
+			<column name="attendee" type="integer" jt="4" mandatory="y" />
+			<index name="pk_session_attendees_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="upload_target" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="upload_target" type="varchar" jt="12" mandatory="y" />
+			<column name="sp_fallback" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<index name="pk_upload_target_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="video_session_details" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="session_id" type="varchar" jt="12" mandatory="y" />
+			<column name="meeting_link" type="varchar" jt="12" />
+			<column name="is_scheduled" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="schedule_time" type="timestamptz" jt="93" />
+			<column name="created_on" type="timestamptz" jt="93" mandatory="y" >
+				<defo>current_timestamp</defo>
+			</column>
+			<column name="modified_on" type="timestamptz" jt="93" />
+			<column name="is_deleted" type="bool" jt="-7" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="created_by" type="integer" jt="4" />
+			<column name="modified_by" type="integer" jt="4" />
+			<column name="is_archived" type="bool" jt="-7" />
+			<column name="archive_id" type="varchar" jt="12" />
+			<column name="upload_target" type="varchar" jt="12" />
+			<column name="end_time" type="timestamptz" jt="93" />
+			<column name="start_time" type="timestamptz" jt="93" />
+			<index name="pk_video_session_details_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.2.5.jar" driver_desc="Standard" host="localhost" port="5432" instance="videochatDb" user="postgres" passwd="cG9zdGdyZXM=" />
+	<layout name="Default Layout" id="Layout_10818e9" show_relation="columns" >
+		<entity schema="public" name="session_attendees" color="C1D8EE" x="224" y="48" />
+		<entity schema="public" name="audit_logs" color="C1D8EE" x="240" y="160" />
+		<entity schema="public" name="video_session_details" color="C1D8EE" x="48" y="48" />
+	</layout>
+</project>

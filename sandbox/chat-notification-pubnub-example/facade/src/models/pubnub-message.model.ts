@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model({settings: {strict: false}})
-export class PubnubMessage extends Entity {
+export class PubnubMessage extends CoreEntity<PubnubMessage> {
   @property({
     type: 'string',
     id: true,
@@ -46,8 +47,4 @@ export class PubnubMessage extends Entity {
     type: 'string',
   })
   createdBy?: string;
-
-  constructor(data?: Partial<PubnubMessage>) {
-    super(data);
-  }
 }

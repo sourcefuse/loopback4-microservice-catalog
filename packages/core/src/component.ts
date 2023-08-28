@@ -6,12 +6,14 @@ import {
   Binding,
   Component,
   CoreBindings,
+  ProviderMap,
   createBindingFromClass,
   inject,
-  ProviderMap,
 } from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
+import {cloneDeep} from 'lodash';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import * as swstats from 'swagger-stats';
@@ -44,29 +46,10 @@ export class CoreComponent implements Component {
     this.application.component(Loopback4HelmetComponent);
     this.application.component(RateLimiterComponent);
 
-    // Enable OBF
-    if (this.coreConfig?.enableObf && this.coreConfig?.openapiSpec) {
-      const middlewareConfig = Object.assign(
-        this.coreConfig.swaggerStatsConfig ?? {},
-        {
-          name: this.coreConfig?.name,
-          uriPath: this.coreConfig?.obfPath ?? `/obf`,
-          swaggerSpec: this.coreConfig?.openapiSpec,
-          authentication: this.coreConfig.authentication ?? false,
-        },
-      );
-      const swStatsMiddleware = swstats.getMiddleware({
-        ...middlewareConfig,
-        onAuthenticate: this.coreConfig.swaggerAuthenticate
-          ? this.coreConfig.swaggerAuthenticate
-          : (req, username, password) => {
-              return (
-                username === this.coreConfig.swaggerUsername &&
-                password === this.coreConfig.swaggerPassword
-              );
-            },
-      });
-      middlewares.push(swStatsMiddleware);
+    // Setup OBF
+    const swaggerStatsMiddleware = this._setupSwaggerStats();
+    if (swaggerStatsMiddleware) {
+      middlewares.push(swaggerStatsMiddleware);
     }
 
     if (this.coreConfig?.authenticateSwaggerUI) {
@@ -105,6 +88,52 @@ export class CoreComponent implements Component {
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
+  }
+
+  private _setupSwaggerStats(): ExpressRequestHandler | undefined {
+    if (!(this.coreConfig?.enableObf && this.coreConfig?.openapiSpec)) {
+      return;
+    }
+
+    const sanitizedSpec = cloneDeep(this.coreConfig.openapiSpec) as {
+      paths: AnyObject;
+    };
+
+    for (const path in sanitizedSpec.paths) {
+      if (!this.coreConfig.modifyPathDefinition) {
+        break;
+      }
+      const updatedDefinition = this.coreConfig.modifyPathDefinition(
+        path,
+        sanitizedSpec.paths[path],
+      );
+      if (updatedDefinition === null) {
+        delete sanitizedSpec.paths[path];
+        continue;
+      }
+      sanitizedSpec.paths[path] = updatedDefinition;
+    }
+    const middlewareConfig = Object.assign(
+      this.coreConfig.swaggerStatsConfig ?? {},
+      {
+        name: this.coreConfig?.name,
+        uriPath: this.coreConfig?.obfPath ?? `/obf`,
+        swaggerSpec: sanitizedSpec,
+        authentication: this.coreConfig.authentication ?? false,
+      },
+    );
+    const swStatsMiddleware = swstats.getMiddleware({
+      ...middlewareConfig,
+      onAuthenticate: this.coreConfig.swaggerAuthenticate
+        ? this.coreConfig.swaggerAuthenticate
+        : (req, username, password) => {
+            return (
+              username === this.coreConfig.swaggerUsername &&
+              password === this.coreConfig.swaggerPassword
+            );
+          },
+    });
+    return swStatsMiddleware;
   }
 
   localeObj: i18nAPI = {} as i18nAPI;

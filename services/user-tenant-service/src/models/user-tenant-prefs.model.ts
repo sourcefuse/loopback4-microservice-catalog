@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {UserConfigKey} from '../enums';
 import {UserTenant} from './user-tenant.model';
@@ -13,7 +13,7 @@ import {UserTenant} from './user-tenant.model';
     defaultIdSort: false,
   },
 })
-export class UserTenantPrefs extends UserModifiableEntity {
+export class UserTenantPrefs extends UserModifiableEntity<UserTenantPrefs> {
   @property({
     type: 'string',
     id: true,
@@ -44,8 +44,4 @@ export class UserTenantPrefs extends UserModifiableEntity {
     },
   )
   userTenantId: string;
-
-  constructor(data?: Partial<UserTenantPrefs>) {
-    super(data);
-  }
 }

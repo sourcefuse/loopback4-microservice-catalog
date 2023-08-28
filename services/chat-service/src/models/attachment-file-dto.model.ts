@@ -2,7 +2,7 @@ import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({settings: {strict: false}})
-export class AttachmentFileDto extends UserModifiableEntity {
+export class AttachmentFileDto extends UserModifiableEntity<AttachmentFileDto> {
   @property({
     type: 'array',
     itemType: 'any',
@@ -17,8 +17,4 @@ export class AttachmentFileDto extends UserModifiableEntity {
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any; //NOSONAR
-
-  constructor(data?: Partial<AttachmentFileDto>) {
-    super(data);
-  }
 }

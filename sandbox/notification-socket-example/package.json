@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/notification-socket-example",
-  "version": "5.0.13",
+  "version": "5.0.18",
   "description": "sandbox",
   "keywords": [
     "loopback-application",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "12 || 14 || 16 || 17"
+    "node": "16 || 17 || 18"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -46,31 +46,31 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^5.0.5",
-    "@loopback/context": "^5.0.5",
-    "@loopback/core": "^4.0.5",
-    "@loopback/openapi-v3": "^8.0.5",
-    "@loopback/repository": "^5.1.0",
-    "@loopback/repository-json-schema": "^6.0.5",
-    "@loopback/rest": "^12.0.5",
-    "@loopback/rest-explorer": "^5.0.5",
-    "@loopback/service-proxy": "^5.0.5",
-    "@sourceloop/core": "^8.0.1",
-    "@sourceloop/notification-service": "^7.0.2",
+    "@loopback/boot": "^6.0.0",
+    "@loopback/context": "^6.0.0",
+    "@loopback/core": "^5.0.0",
+    "@loopback/openapi-v3": "^9.0.0",
+    "@loopback/repository": "^6.0.0",
+    "@loopback/repository-json-schema": "^7.0.0",
+    "@loopback/rest": "^13.0.0",
+    "@loopback/rest-explorer": "^6.0.0",
+    "@loopback/service-proxy": "^6.0.0",
+    "@sourceloop/core": "^8.0.5",
+    "@sourceloop/notification-service": "^7.0.7",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
-    "firebase-admin": "^11.4.1",
+    "firebase-admin": "^11.10.1",
     "loopback4-authorization": "^5.0.9",
     "loopback4-soft-delete": "^7.0.2",
-    "nodemailer": "^6.7.5",
+    "nodemailer": "^6.9.4",
     "prom-client": "^14.0.1",
     "socket.io-client": "^4.5.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.6.1"
   },
   "devDependencies": {
-    "@loopback/build": "^9.0.5",
-    "@loopback/eslint-config": "^13.0.5",
-    "@loopback/testlab": "^5.0.5",
+    "@loopback/build": "^10.0.0",
+    "@loopback/eslint-config": "^14.0.0",
+    "@loopback/testlab": "^6.0.0",
     "@types/node": "^14.18.33",
     "eslint": "^8.28.0",
     "source-map-support": "^0.5.21",

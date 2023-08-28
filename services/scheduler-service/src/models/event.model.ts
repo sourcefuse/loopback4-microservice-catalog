@@ -4,6 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {
   AnyObject,
+  DataObject,
+  Model,
   belongsTo,
   hasMany,
   model,
@@ -20,8 +22,8 @@ import {StatusType} from './enums/status.enum';
 @model({
   name: 'events',
 })
-export class Event
-  extends UserModifiableEntity
+export class Event<T = DataObject<Model>>
+  extends UserModifiableEntity<T & Event>
   implements ExternalIdentifierEnabledEntity
 {
   @property({
@@ -166,10 +168,6 @@ export class Event
     name: 'ext_metadata',
   })
   extMetadata?: AnyObject;
-
-  constructor(data?: Partial<Event>) {
-    super(data);
-  }
 }
 
 export interface EventRelations {

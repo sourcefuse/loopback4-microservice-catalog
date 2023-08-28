@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/user-onboarding-client",
-  "version": "4.0.2",
-  "description": "Library for providing a smooth user onboarding.",
+  "version": "5.1.0",
+  "description": "Library for providing a smooth user onboarding",
   "keywords": [
     "angular-library"
   ],
@@ -15,18 +15,29 @@
     "shepherd.js": "^10.0.0",
     "uuid": "^8.3.2"
   },
+  "overrides": {
+    "@videogular/ngx-videogular": {
+      "@angular/platform-browser-dynamic": "14.0.1"
+    }
+  },
   "scripts": {
     "checkIfNodeModulesExist": "[ -d \"../../node_modules\" ]",
     "installNodeModules": "cd ../../ && npm i",
     "prebuild": "npm run checkIfNodeModulesExist || npm run installNodeModules",
-    "build": "ng build  && cp -r src/assets dist",
-    "prepublishOnly": "npm run build"
+    "libraryBuild": "ng build userOnboardingLib && cp -r src/assets dist/assets",
+    "elementBuild": "ng build user-onboarding-element",
+    "postbuild": "node bundle-element.js",
+    "build": "npm run libraryBuild && npm run elementBuild",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "test": "echo \"No tests available !\""
   },
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@types/core-js": "^2.5.4"
+    "@types/core-js": "^2.5.4",
+    "@types/node": "^20.4.2"
   },
   "ngPackage": {
     "lib": {
@@ -41,7 +52,7 @@
   },
   "author": "Sourcefuse",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",

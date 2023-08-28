@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-client",
-  "version": "5.2.5",
+  "version": "5.4.0",
   "description": "A global search component for search microservice.",
   "peerDependencies": {
     "@angular/animations": "~13.3.11",

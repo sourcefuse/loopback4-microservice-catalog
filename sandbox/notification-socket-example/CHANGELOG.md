@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.18 (2023-08-10)</small>
+
+* [Snyk] Upgrade firebase-admin from 11.9.0 to 11.10.1 (#1595) ([0b32429](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b32429)), closes [#1595](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1595)
+* [Snyk] Upgrade nodemailer from 6.9.3 to 6.9.4 (#1599) ([b5db0cc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b5db0cc)), closes [#1599](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1599)
+
+
+
+
+
+## <small>5.0.17 (2023-07-28)</small>
+
+* chore(deps-dev): bump semver from 5.7.1 to 5.7.2 in /sandbox/notification-socket-example (#1574) ([e8eb14a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e8eb14a)), closes [#1574](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1574)
+* chore(deps): bump protobufjs and google-gax in /sandbox/notification-socket-example (#1566) ([3c54b2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3c54b2c)), closes [#1566](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1566)
+
+
+
+
+
+## <small>5.0.16 (2023-07-21)</small>
+
+* chore(deps-dev): bump word-wrap from 1.2.3 to 1.2.4 (#1558) ([5754937](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5754937)), closes [#1558](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1558)
+
+
+
+
+
+## <small>5.0.15 (2023-07-18)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>5.0.14 (2023-07-11)</small>
+
+* chore(deps): combine snyk updates (#1480) ([ef93ac6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef93ac6)), closes [#1480](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1480)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>5.0.13 (2023-06-19)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

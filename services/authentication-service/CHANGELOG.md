@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.2.4 (2023-08-10)</small>
+
+* refactor(authentication-service): fix sonar code smell (#1598) ([48d7afc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/48d7afc)), closes [#1598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1598) [#1597](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1597)
+
+
+
+
+
+## <small>11.2.3 (2023-08-09)</small>
+
+* fix(authentication-service): submission of encrypted password in authentication service. (#1593) ([3dcee5c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3dcee5c)), closes [#1593](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1593) [#1592](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1592) [#1592](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1592)
+
+
+
+
+
+## <small>11.2.2 (2023-07-28)</small>
+
+* refactor(chore): remove useless constructors in all services (#1577) ([8df9f0d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8df9f0d)), closes [#1577](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1577)
+* refactor(chore): resolve sonar smells (#1579) ([692aef8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/692aef8)), closes [#1579](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1579)
+
+
+
+
+
+## <small>11.2.1 (2023-07-18)</small>
+
+* chore(deps): sourceloop and loopback version updates (#1552) ([7010428](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7010428)), closes [#1552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1552) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436) [#1436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1436)
+
+
+
+
+
+## 11.2.0 (2023-07-11)
+
+* feat(cli): add lambda cdk module in authentication service along with option in cli (#1445) ([0200f20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0200f20)), closes [#1445](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1445) [#1532](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1532)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+
+
+
+
+
 ## <small>11.1.2 (2023-06-19)</small>
 
 * fix(chore): sonar code smells (#1453) ([01d64f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/01d64f2)), closes [#1453](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1453)

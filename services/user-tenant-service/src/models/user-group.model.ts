@@ -13,7 +13,7 @@ import {UserTenant, UserTenantWithRelations} from './user-tenant.model';
     defaultIdSort: false,
   },
 })
-export class UserGroup extends UserModifiableEntity {
+export class UserGroup extends UserModifiableEntity<UserGroup> {
   @property({
     type: 'string',
     id: true,
@@ -47,10 +47,6 @@ export class UserGroup extends UserModifiableEntity {
     default: false,
   })
   isOwner?: boolean;
-
-  constructor(data?: Partial<UserGroup>) {
-    super(data);
-  }
 }
 
 export interface UserGroupRelations {

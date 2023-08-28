@@ -9,7 +9,10 @@ import {IAuthClient} from 'loopback4-authentication';
 @model({
   name: 'auth_clients',
 })
-export class AuthClient extends UserModifiableEntity implements IAuthClient {
+export class AuthClient
+  extends UserModifiableEntity<AuthClient>
+  implements IAuthClient
+{
   @property({
     type: 'number',
     id: true,
@@ -77,8 +80,4 @@ export class AuthClient extends UserModifiableEntity implements IAuthClient {
     name: 'auth_code_expiration',
   })
   authCodeExpiration: number;
-
-  constructor(data?: Partial<AuthClient>) {
-    super(data);
-  }
 }

@@ -2,15 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {model, property, hasMany} from '@loopback/repository';
+import {hasMany, model, property} from '@loopback/repository';
 
-import {UserModifiableEntity, TenantStatus} from '@sourceloop/core';
+import {TenantStatus, UserModifiableEntity} from '@sourceloop/core';
 import {TenantConfig} from './tenant-config.model';
 
 @model({
   name: 'tenants',
 })
-export class Tenant extends UserModifiableEntity {
+export class Tenant extends UserModifiableEntity<Tenant> {
   @property({
     type: 'string',
     id: true,
@@ -66,10 +66,6 @@ export class Tenant extends UserModifiableEntity {
 
   @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];
-
-  constructor(data?: Partial<Tenant>) {
-    super(data);
-  }
 }
 
 export type TenantWithRelations = Tenant;

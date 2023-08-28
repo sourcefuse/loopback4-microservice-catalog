@@ -1,11 +1,12 @@
-import {Entity, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 import {LoginType} from '../enums/login-type.enum';
 
 @model({
   description: `This is to maintain the daily login activity.`,
   name: 'login_activity',
 })
-export class LoginActivity extends Entity {
+export class LoginActivity extends CoreEntity<LoginActivity> {
   @property({
     type: 'string',
     id: true,
@@ -54,8 +55,4 @@ export class LoginActivity extends Entity {
     name: 'ip_address',
   })
   ipAddress: string;
-
-  constructor(data?: Partial<LoginActivity>) {
-    super(data);
-  }
 }

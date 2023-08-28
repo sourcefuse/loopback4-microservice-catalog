@@ -1,6 +1,6 @@
+import * as crypto from 'crypto';
 import {ensureDir, readFileSync, writeFileSync} from 'fs-extra';
 import {copyFile, rm} from 'fs/promises';
-import * as crypto from 'crypto';
 const concat = require('concat');
 
 async function elementsBundler() {

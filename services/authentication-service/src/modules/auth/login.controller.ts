@@ -3,16 +3,16 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {AnyObject, repository} from '@loopback/repository';
+import {AnyObject, DataObject, Model, repository} from '@loopback/repository';
 import {
+  HttpErrors,
+  RequestContext,
   get,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
   requestBody,
-  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -27,21 +27,23 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
+import crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
 import {
-  authenticate,
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticate,
+  authenticateClient,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {ActorId, ExternalTokens, IUserActivity} from '../../types';
+import {LoginType} from '../../enums/login-type.enum';
 import {AuthServiceBindings} from '../../keys';
 import {
-  LoginActivity,
   AuthClient,
+  LoginActivity,
   RefreshToken,
   User,
   UserTenant,
@@ -50,13 +52,12 @@ import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
   CodeReaderFn,
-  JwtPayloadFn,
   JWTSignerFn,
+  JwtPayloadFn,
 } from '../../providers';
-import * as jwt from 'jsonwebtoken';
 import {
-  LoginActivityRepository,
   AuthClientRepository,
+  LoginActivityRepository,
   OtpCacheRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
@@ -69,6 +70,7 @@ import {
 } from '../../repositories';
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {LoginHelperService} from '../../services';
+import {ActorId, ExternalTokens, IUserActivity} from '../../types';
 import {
   AuthRefreshTokenRequest,
   AuthTokenRequest,
@@ -78,8 +80,6 @@ import {
 import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-import {LoginType} from '../../enums/login-type.enum';
-import crypto from 'crypto';
 
 export class LoginController {
   constructor(
@@ -370,14 +370,15 @@ export class LoginController {
     }
 
     let changePasswordResponse: User;
+
     if (req.oldPassword) {
-      changePasswordResponse = await this.userRepo.updatePassword(
+      changePasswordResponse = await this.getPasswordResponse(
         req.username,
-        req.oldPassword,
         req.password,
+        req.oldPassword,
       );
     } else {
-      changePasswordResponse = await this.userRepo.changePassword(
+      changePasswordResponse = await this.getPasswordResponse(
         req.username,
         req.password,
       );
@@ -408,7 +409,34 @@ export class LoginController {
       success: true,
     });
   }
-
+  async getPasswordResponse(
+    userName: string,
+    password: string,
+    prevPassword?: string,
+  ): Promise<User<DataObject<Model>>> {
+    if (prevPassword) {
+      let oldPassword = prevPassword;
+      let newPassword = password;
+      if (process.env.PRIVATE_DECRYPTION_KEY) {
+        const decryptedOldPassword = await this.userRepo.decryptPassword(
+          oldPassword,
+        );
+        const decryptedNewPassword = await this.userRepo.decryptPassword(
+          password,
+        );
+        oldPassword = decryptedOldPassword;
+        newPassword = decryptedNewPassword;
+      }
+      return this.userRepo.updatePassword(userName, oldPassword, newPassword);
+    } else {
+      let newPassword = password;
+      if (process.env.PRIVATE_DECRYPTION_KEY) {
+        const decryptedPassword = await this.userRepo.decryptPassword(password);
+        newPassword = decryptedPassword;
+      }
+      return this.userRepo.changePassword(userName, newPassword);
+    }
+  }
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })

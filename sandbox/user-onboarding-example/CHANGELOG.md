@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2023-07-28)</small>
+
+**Note:** Version bump only for package @sourceloop/user-onboarding-example
+
+
+
+
+
+## 0.2.0 (2023-07-28)
+
+* fix(deps): multiple vulnerabilities fix in sandbox examples (#1571) ([1bd6226](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1bd6226)), closes [#1571](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1571)
+* chore(all-services): update license and copyright headers (#1405) ([7493640](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7493640)), closes [#1405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1405)
+* chore(deps): fixing typescript version for cli (#1005) ([9e561f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e561f2)), closes [#1005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1005) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): ignore angular libraries for release (#998) ([f2a8e8c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2a8e8c)), closes [#998](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/998) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): package lock upgrade (#1519) ([5aaddbf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5aaddbf)), closes [#1519](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1519)
+* refactor(chore): changes in the docker-compose (#1123) ([5704835](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5704835)), closes [#1123](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1123) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* refactor(chore): fix sonar code smells (#1063) ([b4dee2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b4dee2c)), closes [#1063](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1063) [#1052](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1052)
+* refactor(chore): fix sonar code smells (#1402) ([9244178](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9244178)), closes [#1402](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1402)
+
+
+
+
+
 ## <small>0.1.6 (2022-08-26)</small>
 
 * build(packages): versions update in packages (#979) ([149edf7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/149edf7)), closes [#979](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/979) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

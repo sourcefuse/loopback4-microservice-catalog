@@ -2,14 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Model, model, property} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
+import {CoreModel} from '@sourceloop/core';
 
 @model({
   settings: {
     strict: false,
   },
 })
-export class LocalUserProfileDto extends Model {
+export class LocalUserProfileDto extends CoreModel<LocalUserProfileDto> {
   @property({
     type: 'string',
     required: true,
@@ -21,8 +22,4 @@ export class LocalUserProfileDto extends Model {
     required: true,
   })
   password: string;
-
-  constructor(data?: Partial<LocalUserProfileDto>) {
-    super(data);
-  }
 }

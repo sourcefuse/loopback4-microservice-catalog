@@ -2,10 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Entity, model, property} from '@loopback/repository';
+
+import {model, property} from '@loopback/repository';
+import {CoreEntity} from '@sourceloop/core';
 
 @model()
-export class User extends Entity {
+export class User extends CoreEntity<User> {
   @property({
     type: 'string',
     required: true,
@@ -23,10 +25,6 @@ export class User extends Entity {
     required: true,
   })
   about: string;
-
-  constructor(data?: Partial<User>) {
-    super(data);
-  }
 }
 
 export type UserWithRelations = User;
