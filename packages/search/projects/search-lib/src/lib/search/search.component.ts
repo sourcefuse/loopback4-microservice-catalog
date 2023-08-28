@@ -419,7 +419,10 @@ export class SearchComponent<T extends IReturnType>
         this.searchBoxInput = this.customSearchEvent?.searchValue ?? '';
         this.searchOnCustomEventValueChange(this.searchBoxInput);
       }
-      if (this._isCustomSearchEventChange(changes, 'modelName')) {
+      if (
+        this._isCustomSearchEventChange(changes, 'modelName') &&
+        this.customSearchEvent?.modelName
+      ) {
         this.setCategory(this.customSearchEvent?.modelName);
       }
     }
