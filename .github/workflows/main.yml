@@ -22,17 +22,14 @@ jobs:
       - run: node --version
       - run: npm --version
 
-      - name: lerna-bootstrap
-        uses: m19c/action-lerna@1.0.0
-        with:
-          args: 'bootstrap'
+      - name: Install Monorepo Deps
+        run: npm ci
 
-      - name: lerna-lint
-        uses: m19c/action-lerna@1.0.0
-        with:
-          args: 'run lint'
+      - name: Bootstrap Monorepo
+        run: npx lerna bootstrap
 
-      - name: lerna-test
-        uses: m19c/action-lerna@1.0.0
-        with:
-          args: 'run test'
+      - name: Run Test Cases
+        run: npx lerna run test
+
+      - name: Run Lint Checks
+        run: npx lerna run lint
