@@ -25,7 +25,6 @@
     "version": "oclif-dev readme && git add README.md",
     "pretest": "npm run build",
     "test": "nyc mocha --timeout 20000",
-    "posttest": "npm run lint",
     "prepack": "npm run build",
     "postpack": "rimraf oclif.manifest.json",
     "tsc": "tsc -b"

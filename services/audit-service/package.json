@@ -27,8 +27,7 @@
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "coverage": "lb-nyc npm run test",
     "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
-    "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "postinstall": "node migration.js"
   },

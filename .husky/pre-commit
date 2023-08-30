@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-lerna run test
+npx lerna run test
+npx lerna run lint
