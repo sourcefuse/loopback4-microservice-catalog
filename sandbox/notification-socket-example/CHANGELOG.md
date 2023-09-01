@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.19 (2023-09-01)</small>
+
+* [Snyk] Upgrade tslib from 2.6.0 to 2.6.1 (#1604) ([7a307f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7a307f5)), closes [#1604](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1604)
+* refactor(all-services): fix sonar code smells (#1602) ([51f1cc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51f1cc3)), closes [#1602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1602)
+
+
+
+
+
 ## <small>5.0.18 (2023-08-10)</small>
 
 * [Snyk] Upgrade firebase-admin from 11.9.0 to 11.10.1 (#1595) ([0b32429](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b32429)), closes [#1595](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1595)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.10.8 (2023-09-01)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
 ## <small>0.10.7 (2023-08-10)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-ms-basic-example

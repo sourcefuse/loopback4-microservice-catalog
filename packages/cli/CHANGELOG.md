@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.4 (2023-09-01)</small>
+
+* refactor(all-services): fix sonar code smells (#1602) ([51f1cc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51f1cc3)), closes [#1602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1602)
+
+
+
+
+
 ## <small>4.1.3 (2023-07-28)</small>
 
 * docs(chore): rewrite sourceloop headers and main readme (#1580) ([1105e3b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1105e3b)), closes [#1580](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1580)

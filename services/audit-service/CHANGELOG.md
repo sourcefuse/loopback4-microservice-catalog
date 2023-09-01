@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.2 (2023-09-01)</small>
+
+* fix(audit-service): remove duplicate keys in openapi.json ([5b1e375](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b1e375))
+
+
+
+
+
 ## <small>7.2.1 (2023-08-10)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-service

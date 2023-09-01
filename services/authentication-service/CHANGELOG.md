@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.2.5 (2023-09-01)</small>
+
+* fix(authentication-service): change saml redirect api endpoint  (#1608) ([21dca33](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/21dca33)), closes [#1608](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1608) [#1607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1607) [#1607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1607)
+* fix(deps): update loopback4-authentication version to latest (#1669) ([16df1a0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/16df1a0)), closes [#1669](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1669) [#1668](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1668)
+* refactor(all-services): fix sonar code smells (#1602) ([51f1cc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51f1cc3)), closes [#1602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1602)
+
+
+
+
+
 ## <small>11.2.4 (2023-08-10)</small>
 
 * refactor(authentication-service): fix sonar code smell (#1598) ([48d7afc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/48d7afc)), closes [#1598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1598) [#1597](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1597)

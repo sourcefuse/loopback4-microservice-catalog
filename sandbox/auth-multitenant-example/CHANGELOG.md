@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.21 (2023-09-01)</small>
+
+* [Snyk] Upgrade casbin from 5.26.1 to 5.26.2 (#1609) ([b63a4c8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b63a4c8)), closes [#1609](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1609)
+* refactor(all-services): fix sonar code smells (#1602) ([51f1cc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51f1cc3)), closes [#1602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1602)
+
+
+
+
+
 ## <small>6.0.20 (2023-08-10)</small>
 
 * [Snyk] Upgrade loopback-connector-postgresql from 6.0.5 to 6.0.6 (#1584) ([a798606](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a798606)), closes [#1584](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1584)

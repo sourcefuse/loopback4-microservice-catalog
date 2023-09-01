@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.1.0 (2023-09-01)
+
+* [Snyk] Upgrade tslib from 2.6.0 to 2.6.1 (#1606) ([f65b2d3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f65b2d3)), closes [#1606](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1606)
+* refactor(deps): remove explicit dependency of casbin in core (#1661) ([8d0b078](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8d0b078)), closes [#1661](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1661) [#1658](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1658)
+* feat(core): add ability alter the paths definition received by swagger stats (#1655) ([d5c841e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d5c841e)), closes [#1655](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1655) [#1613](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1613)
+
+
+
+
+
 ## <small>8.0.5 (2023-08-10)</small>
 
 * fix(core): move `findRoute` to the top in SecureSequence (#1601) ([a751e65](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a751e65)), closes [#1601](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1601) [#1600](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1600)
