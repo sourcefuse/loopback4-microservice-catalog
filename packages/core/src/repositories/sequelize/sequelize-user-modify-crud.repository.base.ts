@@ -4,9 +4,9 @@
 // https://opensource.org/licenses/MIT
 import {Count, DataObject, Entity, Getter, Where} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {SequelizeDataSource} from '@loopback/sequelize';
 import {Options} from 'loopback-datasource-juggler';
 import {AuthErrorKeys} from 'loopback4-authentication';
-import {SequelizeDataSource} from '@loopback/sequelize';
 import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
 
 import {IAuthUserWithPermissions} from '../../components';
