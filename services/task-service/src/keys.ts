@@ -7,18 +7,18 @@ export namespace TaskServiceBindings {
     BindingKey.create<EventQueueConnector>('sf.task.provider');
 
   export const CUSTOM_BPMN_RUNNER = BindingKey.create(
-    `${BINDING_PREFIX}.custom_task.runner`,
+    `${BINDING_PREFIX}.task.custom_task.runner`,
   );
 
   export const CONNECTOR_CONFIG = BindingKey.create(
-    `${BINDING_PREFIX}.connector.config`,
+    `${BINDING_PREFIX}.task.connector.config`,
   );
 
   export const CONNECTOR_NAME = BindingKey.create(
-    `${BINDING_PREFIX}.connector.name`,
+    `${BINDING_PREFIX}.task.connector.name`,
   );
 
   export const CAMUNDA_ENGINE_URL = BindingKey.create(
-    `${BINDING_PREFIX}.engine.camunda`,
+    `${BINDING_PREFIX}.task.engine.camunda`,
   );
 }

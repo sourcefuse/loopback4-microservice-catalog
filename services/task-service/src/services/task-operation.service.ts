@@ -158,7 +158,10 @@ export class TaskOperationService {
 
   private async _registerOrUpdateCommand(task: AnyObject, data: AnyObject) {
     const topic = task.topicName;
-    const tpf = this._createTaskProcessorFunction(data.payload, task);
+    const taskProcessorFn = this._createTaskProcessorFunction(
+      data.payload,
+      task,
+    );
 
     const toStart = await this._runCommand(
       TaskServiceNames.CHECK,
@@ -169,7 +172,7 @@ export class TaskOperationService {
       data.id,
       data.name,
       this,
-      tpf,
+      taskProcessorFn,
       data.key,
     );
     if (!toStart) {

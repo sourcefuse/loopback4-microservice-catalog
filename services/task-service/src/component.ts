@@ -20,7 +20,7 @@ import {
 } from '@sourceloop/core';
 import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
-import {Connector} from './providers';
+import {QueueConnector} from './providers';
 import {
   ApiKeyRepository,
   EventRepository,
@@ -52,7 +52,7 @@ export class TaskServiceComponent implements Component {
   models?: Class<Model>[];
 
   providers: ProviderMap = {
-    [TaskServiceBindings.TASK_PROVIDER.key]: Connector,
+    [TaskServiceBindings.TASK_PROVIDER.key]: QueueConnector,
   };
 
   services = [

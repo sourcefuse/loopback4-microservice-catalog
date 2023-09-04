@@ -1,16 +1,23 @@
-import {DefaultCrudRepository, juggler} from '@loopback/repository';
+import {juggler} from '@loopback/repository';
 import {EventWorkflowMapping} from '../models';
-import {inject} from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
 
-export class EventWorkflowMappingRepository extends DefaultCrudRepository<
+export class EventWorkflowMappingRepository extends DefaultUserModifyCrudRepository<
   EventWorkflowMapping,
   typeof EventWorkflowMapping.prototype.id
 > {
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(EventWorkflowMapping, dataSource);
+    super(EventWorkflowMapping, dataSource, getCurrentUser);
   }
 }

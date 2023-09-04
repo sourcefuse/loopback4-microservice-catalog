@@ -13,7 +13,7 @@ import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {SubscriberDTO, TaskDto} from '../models';
 import {ApiKeyVerificationService} from '../services/api-key-verification.service';
 
-const baseUrl = 'task-service';
+const baseUrl = 'tasks';
 
 export class TaskServiceController {
   constructor(
@@ -27,7 +27,7 @@ export class TaskServiceController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(`${baseUrl}/task`)
+  @post(`${baseUrl}`)
   async updateTask(
     @requestBody()
     tasks: TaskDto,

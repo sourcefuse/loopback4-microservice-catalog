@@ -13,7 +13,7 @@ import {AnyObject} from '@loopback/repository';
   scope: BindingScope.SINGLETON,
   tags: {[ContextTags.KEY]: TaskServiceBindings.TASK_PROVIDER},
 })
-export class Connector implements Provider<EventQueueConnector> {
+export class QueueConnector implements Provider<EventQueueConnector> {
   name: string;
   settings: AnyObject;
   connector: EventQueueConnector;
