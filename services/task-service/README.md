@@ -35,16 +35,16 @@ You can start using `@sourceloop/task-service` in just 4 steps:
 Bind the `TaskServiceComponent` to your application constructor as shown below, this will load all controllers, repositories or any other artifact provided by this service in your application to use.
 
 ```ts
-import {TaskServiceComponent} from '@sourceloop/audit-service';
+import {TaskServiceComponent} from '@sourceloop/task-service';
 // ...
 export class MyApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
-    // Bind the component
+    // STEP 1: Bind the component
     this.component(TaskServiceComponent);
 
-    // Bind a connector, in this case, we are using AWS SQS
+    // STEP 2: Bind a connector, in this case, we are using AWS SQS
     this.bind(TaskServiceBindings.CONNECTOR_CONFIG).to({
       accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
       secretAccessKey: process.env.AWS_SQS_SECRET_KEY,
@@ -52,21 +52,21 @@ export class MyApplication extends BootMixin(
       queueUrl: process.env.AWS_QUEUE_URL,
     });
 
-    // Bind the name of the connector
+    // STEP 3: Bind the name of the connector
     this.bind(TaskServiceBindings.CONNECTOR_NAME).to('myConn');
 
-    // Bind the BPMN Engine rest url, in this case, we are using
+    // STEP 4: Bind the BPMN Engine rest url, in this case, we are using
     // Camunda version 7
     this.bind(ExportedWorkflowServiceBindingConfig).to({
       useCustomSequence: true,
       workflowEngineBaseUrl: process.env.CAMUNDA_URL,
     });
 
-    // Bind a provider for the event queue, more info can be found
+    // STEP 5: Bind a provider for the event queue, more info can be found
     // in the sandbox/task-ms-example
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
 
-    // Bind a provider to write custom logic for node workers in a BPMN Engine
+    // STEP 6: Bind a provider to write custom logic for node workers in a BPMN Engine
     // in this case we are using camunda external tasks, which are configured
     // as service tasks. More info availabe in the sandbox/task-ms-example
     this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(
@@ -76,11 +76,14 @@ export class MyApplication extends BootMixin(
 }
 ```
 
-## Usage
+## Example Usage
 
-1. Generate API key and secret for webhook subscription
-2. Subscribe to the webhook
-3. Send Events
+1. ### Generate API key and secret for webhook subscription
+   Currently, this service broadcasts messages through a secured webhook, which requires api key and secret, to subscribe in the next step.
+2. ### Subscribe to the webhook
+   Hit the post API details with client app details to register a POST URL into the subscription registry, so the service can broadcast messages.
+3. ### Send Events
+   Start sending events!
 
 ### Environment Variables
 
