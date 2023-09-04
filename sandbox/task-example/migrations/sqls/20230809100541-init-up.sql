@@ -33,7 +33,7 @@ CREATE TABLE "main".tasks
     deleted_by          uuid,
     deleted             boolean,
     assignee_id         uuid,
-    CONSTRAINT pk_workflows_id PRIMARY KEY (id),
+    CONSTRAINT pk_tasks_id PRIMARY KEY (id),
     CONSTRAINT fk_tasks_assignees FOREIGN KEY (assignee_id) REFERENCES "main".assignees (id)
 );
 

@@ -15,7 +15,9 @@ import {
 } from '@sourceloop/task-service';
 import {CustomBpmnRunner, SQSConnector} from './providers';
 
+import {WorkflowServiceBindings} from '@sourceloop/bpmn-service';
 import path from 'path';
+import {BpmnProvider} from './providers/bpmn.provider';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};
@@ -40,6 +42,8 @@ export class TaskServiceUserApplication extends BootMixin(
 
     // Add the component
     this.component(TaskServiceComponent);
+
+    this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
 
     this.bind(TaskServiceBindings.CONNECTOR_CONFIG).to({
       accessKeyId: process.env.AWS_SQS_ACCESS_KEY,

@@ -1,16 +1,16 @@
 import {inject} from '@loopback/core';
-import {authorize} from 'loopback4-authorization';
+import {AnyObject} from '@loopback/repository';
 import {
   Request,
   ResponseObject,
   RestBindings,
   get,
-  response,
   post,
   requestBody,
+  response,
 } from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
-import {AnyObject} from '@loopback/repository';
+import {authorize} from 'loopback4-authorization';
 /**
  * OpenAPI response for ping()
  */
@@ -66,6 +66,6 @@ export class PingController {
     MessageEvent: AnyObject,
   ) {
     // Reply with a greeting, the current time, the url, and request headers
-    console.log(MessageEvent); // NOSONAR
+    console.log('Webhook call - MessageEvent:', MessageEvent); // NOSONAR
   }
 }
