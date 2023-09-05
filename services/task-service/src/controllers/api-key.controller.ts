@@ -8,7 +8,7 @@ import {UtilityService} from '../services/utility.service';
 import {repository} from '@loopback/repository';
 import {ApiKeyRepository} from '../repositories';
 import {ClientAppDTO} from '../models';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {CONTENT_TYPE, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 
 @injectable()
 export class ApiKeyController {
@@ -21,7 +21,7 @@ export class ApiKeyController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [TaskPermssionKey.APIAdmin]})
-  @post('/api-keys')
+  @post('/api-keys', {security: OPERATION_SECURITY_SPEC, responses: {}})
   async generateApiKeys(
     @requestBody({
       content: {

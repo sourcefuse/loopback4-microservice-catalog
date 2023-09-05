@@ -16,13 +16,13 @@
         "tags": [
           "ApiKeyController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| APIAdmin   |\n",
-        "responses": {
-          "200": {
-            "description": "Return value of ApiKeyController.generateApiKeys",
-            "content": {}
+        "security": [
+          {
+            "HTTPBearer": []
           }
-        },
+        ],
+        "responses": {},
+        "description": "\n\n| Permissions |\n| ------- |\n| APIAdmin   |\n",
         "requestBody": {
           "content": {
             "application/json": {

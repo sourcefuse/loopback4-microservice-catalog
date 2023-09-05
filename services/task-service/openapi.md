@@ -45,7 +45,8 @@ const inputBody = '{
   "id": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/api-keys',
@@ -70,7 +71,8 @@ const inputBody = {
   "id": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/api-keys',
@@ -109,18 +111,14 @@ fetch('/api-keys',
 |---|---|---|---|---|
 |body|body|[ClientApp](#schemaclientapp)|false|none|
 
-> Example responses
-
 <h3 id="apikeycontroller.generateapikeys-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of ApiKeyController.generateApiKeys|None|
 
-<h3 id="apikeycontroller.generateapikeys-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="bpmn-service-eventqueuecontroller">EventQueueController</h1>
