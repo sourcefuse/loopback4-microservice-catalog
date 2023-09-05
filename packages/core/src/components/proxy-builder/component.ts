@@ -12,6 +12,7 @@ import {
   injectable,
 } from '@loopback/core';
 import {AnyObject, Entity, juggler} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {getService} from '@loopback/service-proxy';
 import debugFactory from 'debug';
 import {CONTENT_TYPE} from '../../constants';
@@ -53,6 +54,14 @@ export class ProxyBuilderComponent implements Component {
       createBindingFromClass(BelongsToRestResolver),
       createBindingFromClass(HasManyRestResolver),
       createBindingFromClass(HasOneRestResolver),
+      Binding.bind(ProxyBuilderBindings.TOKEN_VALIDATOR).to(
+        (context: AnyObject, token?: string) => {
+          if (!token && !context.token) {
+            throw new HttpErrors.Unauthorized('No token provided');
+          }
+          return token ?? context.token;
+        },
+      ),
     ];
     if (options.length) {
       options.forEach(config => {

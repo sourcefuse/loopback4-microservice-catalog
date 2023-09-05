@@ -6,7 +6,16 @@ import {AnyObject, Entity} from '@loopback/repository';
 import {ModelConstructor, RestRelationConfig} from './services';
 
 export type ProxyBuilderConfig = Array<{
+  /**
+   * The `configs` property in the `ProxyBuilderConfig` type is an array of either {@link EntityRestConfig} objects
+   * or constructor of Entities.
+   */
   configs: (EntityRestConfig | ModelConstructor<Entity>)[];
+  /**
+   * The `baseUrl` property in the `ProxyBuilderConfig` type is a string that represents the base URL for
+   * the REST API endpoints associated with the configured entities. It is used to define the URL prefix for all the
+   * endpoints related to the configured entities.
+   * */
   baseUrl: string;
 }>;
 
@@ -31,9 +40,33 @@ export function isEntityRestConfig(
  * performed on the entity.
  */
 export type EntityRestConfig = {
+  /**
+   * The `model` property in the `EntityRestConfig` type is used to specify the constructor function of
+   * the entity model. It represents the data structure and behavior of the entity in your application.
+   * */
   model: ModelConstructor<Entity>;
+
+  /**
+   * The `basePath?: string;` property in the `EntityRestConfig` type is an optional property that
+   * represents the base path for the REST API endpoints associated with the entity. It is used to
+   * define the URL prefix for all the endpoints related to this entity.
+   */
   basePath?: string;
+
+  /**
+   * The `relations?: RestRelationConfig[];` property in the `EntityRestConfig` type is used to define
+   * the relations between the current entity and an entity of another microservice.
+   */
   relations?: RestRelationConfig[];
+
+  /**
+   * The `restOperations` property in the `EntityRestConfig` type is an optional array of
+   * `RestOperationTemplate` objects. These objects define the REST operations that can be performed on
+   * the entity. Each `RestOperationTemplate` object contains a `template` property that defines the
+   * details of a REST operation, such as the method, URL, headers, path, query, options, body, and
+   * response configuration. The `functions` property in the `RestOperationTemplate` object maps
+   * function names to an array of strings, where each string represents a specific argument for the request
+   */
   restOperations?: RestOperationTemplate[];
 };
 
@@ -43,10 +76,14 @@ export type EntityRestConfig = {
  * @property template - The `template` property is an object that defines the details of a REST
  * operation like method, url, headers, etc.
  * @property functions - The `functions` property is an object that maps function names to an array of
- * strings. Each string represents a path to a specific property in the response object. This allows
- * you to extract specific data from the response and use it in your code.
+ * arguments for the request. Each of these arguments replaces a value in the `template` property that is
+ * written between `{}` .
  */
 export type RestOperationTemplate = {
+  /**
+   *  The `template` property is an object that defines the details of a REST
+   *  operation like method, url, headers, etc
+   */
   template: {
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
     url: string;
@@ -65,6 +102,11 @@ export type RestOperationTemplate = {
     fullResponse?: boolean;
     responsePath?: string;
   };
+  /**
+   * The `functions` property is an object that maps function names to an array of
+   * arguments for the request. Each of these arguments replaces a value in the `template` property that is
+   * written between `{}`
+   */
   functions: {
     [key: string]: string[];
   };

@@ -21,7 +21,7 @@ import {
 } from '@loopback/repository';
 import {HttpErrors, Request, RestBindings} from '@loopback/rest';
 
-import {ServiceBuilderExtensionPoint} from '../keys';
+import {ProxyBuilderBindings, ServiceBuilderExtensionPoint} from '../keys';
 import {
   CrudRestService,
   CrudRestServiceModifier,
@@ -42,6 +42,11 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
   constructor(
     @extensions()
     private resolverGetter: Getter<IRestResolver<T, S>[]>,
+    @inject(ProxyBuilderBindings.TOKEN_VALIDATOR)
+    private _validateToken: (
+      context: RestServiceModifier<T, S>,
+      token?: string,
+    ) => string,
     @inject(RestBindings.Http.REQUEST, {optional: true}) private req?: Request,
   ) {
     if (req?.headers.authorization) {
@@ -71,7 +76,7 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
   }
 
   create(service: CrudRestService<T>, data: DataObject<T>, token?: string) {
-    return service.create(this._validateToken(token), data);
+    return service.create(this._validateToken(this, token), data);
   }
   async findById(
     service: CrudRestService<T>,
@@ -83,7 +88,7 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
   ) {
     const {restRelations, scopeMap} = this._relationsFromFilter(config, filter);
     const result = await service.findById(
-      this._validateToken(token),
+      this._validateToken(this, token),
       id,
       JSON.stringify(filter),
     );
@@ -110,7 +115,7 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
       ? filter
       : JSON.stringify(filter);
     const results = await service.find(
-      this._validateToken(token),
+      this._validateToken(this, token),
       passedFilter,
     );
     return this._resolveRelations(
@@ -123,7 +128,10 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
   }
 
   count(service: CrudRestService<T>, where?: Where<T>, token?: string) {
-    return service.count(this._validateToken(token), JSON.stringify(where));
+    return service.count(
+      this._validateToken(this, token),
+      JSON.stringify(where),
+    );
   }
   updateById(
     service: CrudRestService<T>,
@@ -131,13 +139,13 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
     data: DataObject<T>,
     token?: string,
   ) {
-    return service.updateById(this._validateToken(token), id, data);
+    return service.updateById(this._validateToken(this, token), id, data);
   }
   deleteById(service: CrudRestService<T>, id: string, token?: string) {
-    return service.deleteById(this._validateToken(token), id);
+    return service.deleteById(this._validateToken(this, token), id);
   }
   delete(service: CrudRestService<T>, where?: Where<T>, token?: string) {
-    return service.delete(this._validateToken(token), where);
+    return service.delete(this._validateToken(this, token), where);
   }
   update(
     service: CrudRestService<T>,
@@ -146,7 +154,7 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
     token?: string,
   ) {
     return service.update(
-      this._validateToken(token),
+      this._validateToken(this, token),
       data,
       JSON.stringify(where),
     );
@@ -157,16 +165,8 @@ export class RestServiceModifier<T extends Entity, S extends Entity>
     data: DataObject<T>,
     token?: string,
   ) {
-    return service.replaceById(this._validateToken(token), id, data);
+    return service.replaceById(this._validateToken(this, token), id, data);
   }
-
-  private _validateToken(token?: string) {
-    if (!token && !this.token) {
-      throw new HttpErrors.Unauthorized('No token provided');
-    }
-    return token ?? this.token;
-  }
-
   /**
    * It takes a filter and a list of relations, and returns a list of relations that are REST relations,
    * and a map of scopes for those relations
