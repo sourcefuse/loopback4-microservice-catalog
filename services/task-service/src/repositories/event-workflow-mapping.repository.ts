@@ -6,6 +6,7 @@ import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class EventWorkflowMappingRepository extends DefaultUserModifyCrudRepository<
   EventWorkflowMapping,
@@ -14,6 +15,7 @@ export class EventWorkflowMappingRepository extends DefaultUserModifyCrudReposit
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,

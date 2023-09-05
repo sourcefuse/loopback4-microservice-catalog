@@ -380,7 +380,183 @@ fetch('/event-queue/stop-listening',
 This operation does not require authentication
 </aside>
 
+<h1 id="bpmn-service-eventscontroller">EventsController</h1>
+
+## EventsController.mapTaskToWorkflow
+
+<a id="opIdEventsController.mapTaskToWorkflow"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "eventKey": "string",
+  "workflowKey": "string"
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/events/mapping',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "eventKey": "string",
+  "workflowKey": "string"
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/events/mapping',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /events/mapping`
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "eventKey": "string",
+  "workflowKey": "string"
+}
+```
+
+<h3 id="eventscontroller.maptasktoworkflow-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[EventWorkflowMapping](#schemaeventworkflowmapping)|false|none|
+
+> Example responses
+
+<h3 id="eventscontroller.maptasktoworkflow-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of EventsController.mapTaskToWorkflow|None|
+
+<h3 id="eventscontroller.maptasktoworkflow-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 <h1 id="bpmn-service-taskservicecontroller">TaskServiceController</h1>
+
+## TaskServiceController.mapTaskToWorkflow
+
+<a id="opIdTaskServiceController.mapTaskToWorkflow"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "workflowKey": "string",
+  "taskKey": "string"
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/tasks/mapping',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "workflowKey": "string",
+  "taskKey": "string"
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/tasks/mapping',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /tasks/mapping`
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "workflowKey": "string",
+  "taskKey": "string"
+}
+```
+
+<h3 id="taskservicecontroller.maptasktoworkflow-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[TaskWorkFlowMapping](#schemataskworkflowmapping)|false|none|
+
+> Example responses
+
+<h3 id="taskservicecontroller.maptasktoworkflow-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of TaskServiceController.mapTaskToWorkflow|None|
+
+<h3 id="taskservicecontroller.maptasktoworkflow-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
 
 ## TaskServiceController.subscribeToWebhook
 
@@ -398,7 +574,7 @@ const headers = {
   'Content-Type':'application/json'
 };
 
-fetch('/task-service/subscribe',
+fetch('/tasks/subscribe',
 {
   method: 'POST',
   body: inputBody,
@@ -423,7 +599,7 @@ const headers = {
   'Content-Type':'application/json'
 };
 
-fetch('/task-service/subscribe',
+fetch('/tasks/subscribe',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -437,7 +613,7 @@ fetch('/task-service/subscribe',
 
 ```
 
-`POST /task-service/subscribe`
+`POST /tasks/subscribe`
 
 > Body parameter
 
@@ -485,7 +661,7 @@ const headers = {
   'Content-Type':'application/json'
 };
 
-fetch('/task-service/task',
+fetch('/tasks',
 {
   method: 'POST',
   body: inputBody,
@@ -510,7 +686,7 @@ const headers = {
   'Content-Type':'application/json'
 };
 
-fetch('/task-service/task',
+fetch('/tasks',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -524,7 +700,7 @@ fetch('/task-service/task',
 
 ```
 
-`POST /task-service/task`
+`POST /tasks`
 
 > Body parameter
 
@@ -1435,6 +1611,58 @@ SubscriberDTO
 |url|string|true|none|url of the regsiterer who is subscribed to the webhook|
 |key|string|true|none|identifier of an event key or task key|
 |id|string|false|none|none|
+
+<h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
+<!-- backwards compatibility -->
+<a id="schemataskworkflowmapping"></a>
+<a id="schema_TaskWorkFlowMapping"></a>
+<a id="tocStaskworkflowmapping"></a>
+<a id="tocstaskworkflowmapping"></a>
+
+```json
+{
+  "id": "string",
+  "workflowKey": "string",
+  "taskKey": "string"
+}
+
+```
+
+TaskWorkFlowMapping
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|workflowKey|string|true|none|An identifier for a particular workflow|
+|taskKey|string|true|none|An identifier for a particular task within an event|
+
+<h2 id="tocS_EventWorkflowMapping">EventWorkflowMapping</h2>
+<!-- backwards compatibility -->
+<a id="schemaeventworkflowmapping"></a>
+<a id="schema_EventWorkflowMapping"></a>
+<a id="tocSeventworkflowmapping"></a>
+<a id="tocseventworkflowmapping"></a>
+
+```json
+{
+  "id": "string",
+  "eventKey": "string",
+  "workflowKey": "string"
+}
+
+```
+
+EventWorkflowMapping
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
+|workflowKey|string|true|none|An identifier for a particular workflow|
 
 <h2 id="tocS_workflows.ScopeFilter">workflows.ScopeFilter</h2>
 <!-- backwards compatibility -->

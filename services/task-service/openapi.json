@@ -128,7 +128,59 @@
         "operationId": "EventQueueController.stopListening"
       }
     },
-    "/task-service/subscribe": {
+    "/events/mapping": {
+      "post": {
+        "x-controller-name": "EventsController",
+        "x-operation-name": "mapTaskToWorkflow",
+        "tags": [
+          "EventsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of EventsController.mapTaskToWorkflow",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventWorkflowMapping"
+              }
+            }
+          }
+        },
+        "operationId": "EventsController.mapTaskToWorkflow"
+      }
+    },
+    "/tasks/mapping": {
+      "post": {
+        "x-controller-name": "TaskServiceController",
+        "x-operation-name": "mapTaskToWorkflow",
+        "tags": [
+          "TaskServiceController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of TaskServiceController.mapTaskToWorkflow",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskWorkFlowMapping"
+              }
+            }
+          }
+        },
+        "operationId": "TaskServiceController.mapTaskToWorkflow"
+      }
+    },
+    "/tasks/subscribe": {
       "post": {
         "x-controller-name": "TaskServiceController",
         "x-operation-name": "subscribeToWebhook",
@@ -154,7 +206,7 @@
         "operationId": "TaskServiceController.subscribeToWebhook"
       }
     },
-    "/task-service/task": {
+    "/tasks": {
       "post": {
         "x-controller-name": "TaskServiceController",
         "x-operation-name": "updateTask",
@@ -674,6 +726,54 @@
           "key"
         ],
         "additionalProperties": false
+      },
+      "TaskWorkFlowMapping": {
+        "title": "TaskWorkFlowMapping",
+        "type": "object",
+        "description": "(tsType: TaskWorkFlowMapping, schemaOptions: { title: 'TaskWorkFlowMapping' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workflowKey": {
+            "type": "string",
+            "description": "An identifier for a particular workflow"
+          },
+          "taskKey": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          }
+        },
+        "required": [
+          "workflowKey",
+          "taskKey"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "TaskWorkFlowMapping"
+      },
+      "EventWorkflowMapping": {
+        "title": "EventWorkflowMapping",
+        "type": "object",
+        "description": "(tsType: EventWorkflowMapping, schemaOptions: { title: 'EventWorkflowMapping' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "eventKey": {
+            "type": "string",
+            "description": "An identifier for a particular event queued by a service or a user"
+          },
+          "workflowKey": {
+            "type": "string",
+            "description": "An identifier for a particular workflow"
+          }
+        },
+        "required": [
+          "eventKey",
+          "workflowKey"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "EventWorkflowMapping"
       },
       "workflows.ScopeFilter": {
         "type": "object",

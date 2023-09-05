@@ -6,3 +6,4 @@
 export * from './event-queue.controller';
 export * from './task-service.controller';
 export * from './api-key.controller';
+export * from './events.controller';

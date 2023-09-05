@@ -12,14 +12,14 @@ import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
 import {Event} from '../models';
-import {EventQueueService} from '../services/event-queue.service';
+import {EventQueueServiceSQS} from '../services/event-queue.service';
 
 const baseUrl = '/event-queue';
 
 export class EventQueueController {
   constructor(
-    @inject('services.EventQueueService')
-    private eventQueueService: EventQueueService,
+    @inject('services.EventQueueServiceSQS')
+    private eventQueueService: EventQueueServiceSQS,
   ) {}
 
   @authenticate(STRATEGY.BEARER)

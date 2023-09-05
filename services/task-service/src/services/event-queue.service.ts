@@ -13,7 +13,7 @@ import {EventProcessorService} from './event-processor.service';
   },
   asLifeCycleObserver,
 )
-export class EventQueueService {
+export class EventQueueServiceSQS {
   constructor(
     @service(EventProcessorService)
     private readonly eventProcessorService: EventProcessorService,

@@ -19,8 +19,7 @@ import {
   ServiceSequence,
 } from '@sourceloop/core';
 import * as controllers from './controllers';
-import {TaskServiceBindings} from './keys';
-import {QueueConnector} from './providers';
+
 import {
   ApiKeyRepository,
   EventRepository,
@@ -32,7 +31,7 @@ import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapp
 import {
   CamundaService,
   EventProcessorService,
-  EventQueueService,
+  EventQueueServiceSQS,
   HttpClientService,
   TaskOperationService,
   WebhookService,
@@ -51,14 +50,12 @@ export class TaskServiceComponent implements Component {
    */
   models?: Class<Model>[];
 
-  providers: ProviderMap = {
-    [TaskServiceBindings.TASK_PROVIDER.key]: QueueConnector,
-  };
+  providers: ProviderMap = {};
 
   services = [
     CamundaService,
     EventProcessorService,
-    EventQueueService,
+    EventQueueServiceSQS,
     HttpClientService,
     TaskOperationService,
     UtilityService,
@@ -96,6 +93,7 @@ export class TaskServiceComponent implements Component {
       controllers.EventQueueController,
       controllers.TaskServiceController,
       controllers.ApiKeyController,
+      controllers.EventsController,
     ];
     this.repositories = [
       EventRepository,

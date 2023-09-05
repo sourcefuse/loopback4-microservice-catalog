@@ -3,6 +3,7 @@ import {
   HttpErrors,
   Request,
   RestBindings,
+  getModelSchemaRef,
   post,
   requestBody,
 } from '@loopback/rest';
@@ -10,8 +11,11 @@ import {TaskOperationService} from '../services/task-operation.service';
 import {authorize} from 'loopback4-authorization';
 import {WebhookService} from '../services/webhook.service';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {SubscriberDTO, TaskDto} from '../models';
+import {SubscriberDTO, TaskDto, TaskWorkFlowMapping} from '../models';
 import {ApiKeyVerificationService} from '../services/api-key-verification.service';
+import {repository} from '@loopback/repository';
+import {TaskWorkFlowMappingRepository} from '../repositories';
+import {CONTENT_TYPE} from '@sourceloop/core';
 
 const baseUrl = 'tasks';
 
@@ -23,6 +27,8 @@ export class TaskServiceController {
     private readonly webhookService: WebhookService,
     @service(ApiKeyVerificationService)
     private readonly apiKeyVerificationService: ApiKeyVerificationService,
+    @repository(TaskWorkFlowMappingRepository)
+    private readonly taskWorkflowMapping: TaskWorkFlowMappingRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -62,5 +68,23 @@ export class TaskServiceController {
     }
 
     await this.webhookService.addToSubscription(subscriber.url, subscriber.key);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @post(`${baseUrl}/mapping`)
+  async mapTaskToWorkflow(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(TaskWorkFlowMapping, {
+            title: 'TaskWorkFlowMapping',
+          }),
+        },
+      },
+    })
+    taskWorkflowMapping: Omit<TaskWorkFlowMapping, 'id'>,
+  ) {
+    await this.taskWorkflowMapping.create(taskWorkflowMapping);
   }
 }
