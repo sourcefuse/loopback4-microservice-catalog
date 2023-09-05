@@ -39,11 +39,20 @@ Base URLs:
 > Code samples
 
 ```javascript
+const inputBody = '{
+  "key": "string",
+  "secret": "string",
+  "id": "string"
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
 
 fetch('/api-keys',
 {
-  method: 'POST'
-
+  method: 'POST',
+  body: inputBody,
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -55,11 +64,20 @@ fetch('/api-keys',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
+const inputBody = {
+  "key": "string",
+  "secret": "string",
+  "id": "string"
+};
+const headers = {
+  'Content-Type':'application/json'
+};
 
 fetch('/api-keys',
 {
-  method: 'POST'
-
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -74,6 +92,22 @@ fetch('/api-keys',
 | Permissions |
 | ------- |
 | APIAdmin   |
+
+> Body parameter
+
+```json
+{
+  "key": "string",
+  "secret": "string",
+  "id": "string"
+}
+```
+
+<h3 id="apikeycontroller.generateapikeys-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientApp](#schemaclientapp)|false|none|
 
 > Example responses
 
@@ -1637,6 +1671,58 @@ TaskWorkFlowMapping
 |id|string|false|none|none|
 |workflowKey|string|true|none|An identifier for a particular workflow|
 |taskKey|string|true|none|An identifier for a particular task within an event|
+
+<h2 id="tocS_ClientApp">ClientApp</h2>
+<!-- backwards compatibility -->
+<a id="schemaclientapp"></a>
+<a id="schema_ClientApp"></a>
+<a id="tocSclientapp"></a>
+<a id="tocsclientapp"></a>
+
+```json
+{
+  "key": "string",
+  "secret": "string",
+  "id": "string"
+}
+
+```
+
+ClientApp
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|key|string|true|none|An identifier for a client|
+|secret|string|false|none|An extra layer of auth|
+|id|string|false|none|none|
+
+<h2 id="tocS_ClientAppDTO">ClientAppDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaclientappdto"></a>
+<a id="schema_ClientAppDTO"></a>
+<a id="tocSclientappdto"></a>
+<a id="tocsclientappdto"></a>
+
+```json
+{
+  "key": "string",
+  "secret": "string",
+  "id": "string"
+}
+
+```
+
+ClientAppDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|key|string|true|none|An identifier for a client|
+|secret|string|false|none|An extra layer of auth|
+|id|string|false|none|none|
 
 <h2 id="tocS_EventWorkflowMapping">EventWorkflowMapping</h2>
 <!-- backwards compatibility -->

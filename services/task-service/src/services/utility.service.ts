@@ -7,6 +7,7 @@ import {
 } from '@sourceloop/bpmn-service';
 
 import {v4 as uuidv4} from 'uuid';
+import {ClientAppDTO} from '../models';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UtilityService {
@@ -45,9 +46,12 @@ export class UtilityService {
     return false;
   }
 
-  public generateApiKeyAndSecret(): {apiKey: string; apiSecret: string} {
-    const apiKey = uuidv4();
-    const apiSecret = uuidv4();
+  public generateApiKeyAndSecret(clientApp: ClientAppDTO): {
+    apiKey: string;
+    apiSecret: string;
+  } {
+    const apiKey = `${clientApp.key}-${uuidv4()}`;
+    const apiSecret = `${clientApp.secret}-${uuidv4()}`;
     return {apiKey, apiSecret};
   }
 }

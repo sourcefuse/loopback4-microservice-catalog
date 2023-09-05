@@ -50,17 +50,8 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^6.1.1",
-    "@loopback/context": "^6.1.1",
-    "@loopback/core": "^5.1.1",
-    "@loopback/openapi-v3": "^9.1.1",
-    "@loopback/repository": "^6.1.1",
-    "@loopback/rest": "^13.1.1",
-    "@loopback/rest-explorer": "^6.1.1",
-    "@loopback/service-proxy": "^6.1.1",
     "@sourceloop/bpmn-service": "^7.0.5",
-    "@sourceloop/core": "^8.0.3",
-    "body-parser": "^1.20.0",
+    "@sourceloop/core": "^8.1.0",
     "camunda-external-task-client-js": "^2.3.1",
     "check-code-coverage": "^1.10.0",
     "dotenv": "^16.0.3",
@@ -71,6 +62,16 @@
     "prom-client": "^14.1.0",
     "tslib": "^2.4.1",
     "uuid": "^9.0.0"
+  },
+  "peerDependencies": {
+    "@loopback/boot": "^6.1.1",
+    "@loopback/context": "^6.1.1",
+    "@loopback/core": "^5.1.1",
+    "@loopback/openapi-v3": "^9.1.1",
+    "@loopback/repository": "^6.1.1",
+    "@loopback/rest": "^13.1.1",
+    "@loopback/rest-explorer": "^6.1.1",
+    "@loopback/service-proxy": "^6.1.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",

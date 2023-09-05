@@ -23,6 +23,15 @@
             "content": {}
           }
         },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientApp"
+              }
+            }
+          }
+        },
         "operationId": "ApiKeyController.generateApiKeys"
       }
     },
@@ -750,6 +759,50 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "TaskWorkFlowMapping"
+      },
+      "ClientApp": {
+        "title": "ClientApp",
+        "type": "object",
+        "description": "(tsType: ClientAppDTO, schemaOptions: { title: 'ClientApp' })",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "An identifier for a client"
+          },
+          "secret": {
+            "type": "string",
+            "description": "An extra layer of auth"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "ClientAppDTO"
+      },
+      "ClientAppDTO": {
+        "title": "ClientAppDTO",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "An identifier for a client"
+          },
+          "secret": {
+            "type": "string",
+            "description": "An extra layer of auth"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
       },
       "EventWorkflowMapping": {
         "title": "EventWorkflowMapping",
