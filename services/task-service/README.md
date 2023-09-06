@@ -79,11 +79,28 @@ export class MyApplication extends BootMixin(
 ## Example Usage
 
 1. ### Generate API key and secret for webhook subscription
+
    Currently, this service broadcasts messages through a secured webhook, which requires api key and secret, to subscribe in the next step.
+
+   `POST: /api-keys` with your unique client key and secret
+
 2. ### Subscribe to the webhook
-   Hit the post API details with client app details to register a POST URL into the subscription registry, so the service can broadcast messages.
-3. ### Send Events
-   Start sending events!
+   `POST: /tasks/subscribe` with your post URL and an event key to listen for broadcast messages. Include the previously generated apiKey and apiSecret in the headers
+3. ### Setup Mappings
+
+   `POST: /events/mapping` - with a particular eventKey and workflowKey, to map an event to a bpmn workflow
+
+   `POST: /tasks/mapping` - with a particular taskKey and workflowKey, to map a task to a bpmn workflow
+
+   These keys are required to dynamically map workflows and execute them.
+
+4. ### Send Events
+   `POST: /enque-event` with your dynamic payload according to your custom bpmn to start the task service!  
+   The task ms will create tasks according to the payload and configuration of your bpmn.
+5. ### Listen for messages
+   The task ms will send a broadcast message once the event has been processed. You can verify various bpmn instances in the camunda cockpit.
+6. ### Move the BPMN process through API
+   `POST: /tasks` with your particular task key and required variables to move the bpmn process forward
 
 ### Environment Variables
 
