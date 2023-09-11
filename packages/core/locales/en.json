@@ -38,5 +38,18 @@
 	"Invalid data \"{where": "{\\n        \\\"id\\\":\\\"feature_1\\\"\\n      }}\" for parameter \"filter\".",
 	"Cannot set properties of undefined (setting 'modifiedBy')": "Cannot set properties of undefined (setting 'modifiedBy')",
 	"Entity not found": " strategies with id \"feature_2\"",
-	"The `tenants` instance is not valid. Details": " `status` can't be blank (value: NaN)."
+	"The `tenants` instance is not valid. Details": " `status` can't be blank (value: NaN).",
+	"Action prohibited.": "Action prohibited.",
+	"Bad Request": "Bad Request",
+	"Display Order is missing in the request": "Display Order is missing in the request",
+	"Invalid survey Id": "Invalid survey Id",
+	"Entity not found.": "Entity not found.",
+	"Survey Id in path and body does not match": "Survey Id in path and body does not match",
+	"Responder Already Added": "Responder Already Added",
+	"Survey can not be deleted in this status": "Survey can not be deleted in this status",
+	"Survey start date should be current date only and status should be active": "Survey start date should be current date only and status should be active",
+	"End date can not be less than start date": "End date can not be less than start date",
+	"Survey can not be activated without a start date": "Survey can not be activated without a start date",
+	"Survey Cannot Be Activated In A Draft State": "Survey Cannot Be Activated In A Draft State",
+	"Invalid value entered in name": "Invalid value entered in name"
 }

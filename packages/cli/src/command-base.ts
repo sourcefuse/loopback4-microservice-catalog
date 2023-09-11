@@ -3,15 +3,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import Command from '@oclif/command';
-import Environment, {createEnv} from 'yeoman-environment';
-import {IArg} from '@oclif/parser/lib/args';
-import {Input as FlagInput} from '@oclif/parser/lib/flags';
-import Parser from '@oclif/parser';
-import inquirer, {Question} from 'inquirer';
-import {AnyObject, PromptFunction} from './types';
 import {IFlag} from '@oclif/command/lib/flags';
 import {IConfig} from '@oclif/config';
+import Parser from '@oclif/parser';
+import {IArg} from '@oclif/parser/lib/args';
+import {Input as FlagInput} from '@oclif/parser/lib/flags';
+import inquirer, {Question} from 'inquirer';
 import fetch from 'node-fetch';
+import Environment, {createEnv} from 'yeoman-environment';
+import {AnyObject, PromptFunction} from './types';
 const chalk = require('chalk'); //NOSONAR
 
 const IGNORED_FLAGS = ['help', 'cwd'];

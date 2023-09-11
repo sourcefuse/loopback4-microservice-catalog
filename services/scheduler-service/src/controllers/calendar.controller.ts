@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {inject, service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -14,39 +15,38 @@ import {
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
   put,
   requestBody,
-  HttpErrors,
 } from '@loopback/rest';
 import {
-  authenticate,
-  STRATEGY,
-  AuthenticationBindings,
-} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {Calendar, WorkingHour, Subscription, IdentifierType} from '../models';
-import {CalendarDTO} from '../models/calendar.dto';
-import {PermissionKey} from '../models/enums/permission-key.enum';
-import {
-  CalendarRepository,
-  WorkingHourRepository,
-  SubscriptionRepository,
-} from '../repositories';
-import {
-  STATUS_CODE,
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
-import {AccessRoleType} from '../models/enums/access-role.enum';
-import {inject, service} from '@loopback/core';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY,
+} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import {SchedulerBindings} from '../keys';
-import {ISchedulerConfig} from '../types';
+import {Calendar, IdentifierType, Subscription, WorkingHour} from '../models';
+import {CalendarDTO} from '../models/calendar.dto';
+import {AccessRoleType} from '../models/enums/access-role.enum';
 import {ErrorKeys} from '../models/enums/error-keys';
+import {PermissionKey} from '../models/enums/permission-key.enum';
+import {
+  CalendarRepository,
+  SubscriptionRepository,
+  WorkingHourRepository,
+} from '../repositories';
 import {CalendarService} from '../services/calendar.service';
+import {ISchedulerConfig} from '../types';
 
 const basePath = '/calendars';
 const calendarModelInstance = 'Calendar model instance';
@@ -176,9 +176,8 @@ export class CalendarController {
         throw new HttpErrors.NotFound(ErrorKeys.SubscriptionIdentifierNotExist);
       }
       subscription.accessRole = AccessRoleType.Owner;
-      const subscriptionResponse = await this.subscriptionRepository.create(
-        subscription,
-      );
+      const subscriptionResponse =
+        await this.subscriptionRepository.create(subscription);
       const calendarDTOResp: CalendarDTO = new CalendarDTO();
       calendarDTOResp.subscription = subscriptionResponse;
       response = Object.assign(calendarDTOResp, response);

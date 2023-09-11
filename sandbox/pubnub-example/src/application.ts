@@ -4,17 +4,17 @@
 // https://opensource.org/licenses/MIT
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import path from 'path';
 import {NotificationServiceComponent} from '@sourceloop/notification-service';
 import {NotificationBindings} from 'loopback4-notifications';
-import {PubnubBindings, PubNubProvider} from 'loopback4-notifications/pubnub';
+import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
+import path from 'path';
 
 export {ApplicationConfig};
 
@@ -48,11 +48,11 @@ export class PubnubExampleApplication extends BootMixin(
     */
 
     this.bind(PubnubBindings.Config).to({
-      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY as string,
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
       ssl: process.env.SSL,
       logVerbosity: process.env.LOG_VERBOSITY,
-      uuid: process.env.UUID,
+      uuid: process.env.UUID as string,
       apns2Env: process.env.APP_ENV,
       apns2BundleId: process.env.APP_BUNDLE_ID,
     });

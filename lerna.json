@@ -10,43 +10,6 @@
     "sandbox/**"
   ],
   "command": {
-    "bootstrap": {
-      "concurrency": 1,
-      "ignore": [
-        "@sourceloop/audit-ms-example",
-        "@sourceloop/auth-ms-basic-example",
-        "@sourceloop/auth-multitenant-example",
-        "@sourceloop/in-mail-example",
-        "@sourceloop/schedular-example",
-        "@sourceloop/notification-socket-example",
-        "@sourceloop/video-conferencing-ms-example",
-        "@sourceloop/workflow-ms-example",
-        "@sourceloop/pubnub-example",
-        "@sourceloop/chat-notif-example_facade",
-        "@sourceloop/chat-notif-example_ui",
-        "@sourceloop/chat-notif-example_chat-service",
-        "@sourceloop/chat-notif-example_notif-service",
-        "@sourceloop/search-ms-example",
-        "@sourceloop/search-client-example",
-        "@sourceloop/feature-toggle-example",
-        "@sourceloop/payment-example-backend",
-        "@sourceloop/payment-example-frontend",
-        "@sourceloop/user-onboarding-example",
-        "@sourceloop/cache-example",
-        "@sourceloop/user-tenant-example",
-        "@sourceloop/chat-notif-example-facade-socket",
-        "@sourceloop/chat-notif-example-ui-socket",
-        "@sourceloop/chat-notif-example-chat-socket",
-        "@sourceloop/chat-notif-example-notif-socket",
-        "@sourceloop/example-socketio",
-        "@sourceloop/oauth-example-api",
-        "@sourceloop/oauth-example-ui",
-        "@sourceloop/oidc-basic-example",
-        "@sourceloop/nestjs-auth-ms-example",
-        "@sourceloop/task-service-example"
-      ],
-      "npmClientArgs": ["--loglevel", "verbose", "--no-install-links"]
-    },
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
@@ -118,6 +81,5 @@
     "packages/core/locales/**"
   ],
   "version": "independent",
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "useWorkspaces": false
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }

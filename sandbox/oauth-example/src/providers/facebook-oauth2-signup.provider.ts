@@ -1,9 +1,13 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   AuthClientRepository,
-  AzureAdSignUpFn,
+  FacebookSignUpFn,
   User,
   UserRelations,
 } from '@sourceloop/authentication-service';
@@ -13,7 +17,9 @@ import {
   UserRepository,
 } from '../repositories';
 
-export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
+export class FacebookOauth2SignupProvider
+  implements Provider<FacebookSignUpFn>
+{
   constructor(
     @repository(RoleRepository)
     private readonly roleRepo: RoleRepository,
@@ -25,7 +31,7 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
     private readonly userRepo: UserRepository,
   ) {}
 
-  value(): AzureAdSignUpFn {
+  value(): FacebookSignUpFn {
     return async profile => {
       const [tenant, role, client] = await Promise.all([
         this.tenantRepo.findOne({
@@ -49,7 +55,7 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
 
       const userExists = await this.userRepo.findOne({
         where: {
-          or: [{username: profile.upn}, {email: profile.upn}],
+          or: [{username: profile._json.email}, {email: profile._json.email}],
         },
       });
       if (userExists) {
@@ -57,18 +63,18 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
       }
 
       const user = await this.userRepo.createWithoutPassword({
-        firstName: profile.name!.givenName,
+        firstName: profile.name!.givenName ?? profile.displayName,
         lastName: profile.name!.familyName,
-        username: profile.upn,
-        email: profile.upn,
+        username: profile._json.email ?? profile.displayName,
+        email: profile._json.email,
         defaultTenantId: tenant?.id,
         authClientIds: `{${client?.id}}`,
       });
 
       await this.userRepo.credentials(user.id).create({
         userId: user.id,
-        authProvider: 'azure',
-        authId: profile.oid,
+        authProvider: 'facebook',
+        authId: profile.id,
       });
 
       await this.userRepo.userTenants(user.id).create({

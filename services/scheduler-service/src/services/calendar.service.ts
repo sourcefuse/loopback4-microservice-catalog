@@ -4,11 +4,11 @@
 // https://opensource.org/licenses/MIT
 import {bind, BindingScope} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {WorkingHourRepository, CalendarRepository} from '../repositories';
-import {ErrorKeys} from '../models/enums/error-keys';
 import {HttpErrors} from '@loopback/rest';
 import {WorkingHour} from '../models';
 import {CalendarDTO} from '../models/calendar.dto';
+import {ErrorKeys} from '../models/enums/error-keys';
+import {CalendarRepository, WorkingHourRepository} from '../repositories';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class CalendarService {
@@ -48,9 +48,8 @@ export class CalendarService {
         response['workingHours'] = [];
         for (const workingHour of workingHours) {
           workingHour.calendarId = calendarId;
-          const workigHourResp = await this.workingHourRepository.create(
-            workingHour,
-          );
+          const workigHourResp =
+            await this.workingHourRepository.create(workingHour);
           response.workingHours.push(workigHourResp);
         }
       }
@@ -72,9 +71,8 @@ export class CalendarService {
         id: {nin: workingHourIds},
       },
     };
-    const workingHourToDelete = await this.workingHourRepository.find(
-      workingHourFilter,
-    );
+    const workingHourToDelete =
+      await this.workingHourRepository.find(workingHourFilter);
     for (const workingHour of workingHourToDelete) {
       await this.workingHourRepository.deleteById(workingHour.id);
     }

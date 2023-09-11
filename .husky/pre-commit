@@ -2,4 +2,3 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx lerna run test
-npx lerna run lint

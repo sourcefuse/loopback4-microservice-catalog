@@ -1,23 +1,23 @@
-import {Question} from '../models';
-import {injectable, BindingScope, inject, service} from '@loopback/core';
+import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
+import {ErrorKeys} from '../enum/error-keys.enum';
+import {QuestionStatus, QuestionType} from '../enum/question.enum';
+import {Question} from '../models';
+import {QuestionDto} from '../models/question-dto.model';
 import {QuestionRepository} from '../repositories';
 import {OptionsRepository} from '../repositories/options.repository';
-import {QuestionDto} from '../models/question-dto.model';
-import {QuestionStatus, QuestionType} from '../enum/question.enum';
-import {ErrorKeys} from '../enum/error-keys.enum';
-import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
-import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
-import {SurveyService} from './survey.service';
 import {
-  QuestionRepository as QuestionSequelizeRepo,
   OptionsRepository as OptionsSequelizeRepo,
-  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
+  QuestionRepository as QuestionSequelizeRepo,
   SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
+  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
 } from '../repositories/sequelize';
+import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
+import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
+import {SurveyService} from './survey.service';
 const defaultLeadingZero = 5;
 const noOfOptionsByDefault = 2;
 const orderByCreatedOn = 'created_on DESC';
@@ -372,9 +372,8 @@ export class QuestionHelperService {
 
   async validateParentQuestion(parentQuestionId: string | undefined) {
     if (parentQuestionId) {
-      const parentQuestion = await this.questionRepository.findById(
-        parentQuestionId,
-      );
+      const parentQuestion =
+        await this.questionRepository.findById(parentQuestionId);
       if (!parentQuestion) {
         throw new HttpErrors.NotFound('Parent question not found');
       } else if (
