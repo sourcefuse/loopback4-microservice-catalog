@@ -48,11 +48,11 @@ export class PubnubExampleApplication extends BootMixin(
     */
 
     this.bind(PubnubBindings.Config).to({
-      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY as string,
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY ?? '',
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
-      ssl: process.env.SSL,
-      logVerbosity: process.env.LOG_VERBOSITY,
-      uuid: process.env.UUID as string,
+      ssl: !!process.env.SSL,
+      logVerbosity: !!process.env.LOG_VERBOSITY,
+      uuid: process.env.UUID ?? '',
       apns2Env: process.env.APP_ENV,
       apns2BundleId: process.env.APP_BUNDLE_ID,
     });

@@ -26,10 +26,10 @@ jobs:
         run: npm ci
 
       - name: Bootstrap Monorepo
-        run: npx lerna bootstrap
+        run: npm ci
 
       - name: Run Test Cases
-        run: npx lerna run test
+        run: npm run test --workspaces --if-present
 
       - name: Run Lint Checks
-        run: npx lerna run lint
+        run: npm run lint --workspaces --if-present

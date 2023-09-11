@@ -14,8 +14,8 @@ import {
 import {Options} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {
-  AuthenticateErrorKeys,
   AuthProvider,
+  AuthenticateErrorKeys,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
   ILogger,
@@ -23,7 +23,7 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
+import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
 import {
   Tenant,
   User,
@@ -151,6 +151,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   ): Promise<User> {
     const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
+    // eslint-disable-next-line
     if (!user || user.deleted || !creds || !creds.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (creds.authProvider !== AuthProvider.INTERNAL) {
@@ -193,7 +194,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
         AuthenticateErrorKeys.PasswordCannotBeChanged,
       );
     }
-
+    // eslint-disable-next-line
     if (!user || user.deleted || !creds || !creds.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (await bcrypt.compare(newPassword, creds.password)) {

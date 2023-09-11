@@ -2,13 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {get} from '@loopback/openapi-v3';
-import * as fs from 'fs';
-import * as path from 'path';
 import {inject} from '@loopback/context';
-import {RestBindings, Response} from '@loopback/rest';
+import {get} from '@loopback/openapi-v3';
+import {Response, RestBindings} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
+import * as fs from 'fs';
 import {authorize} from 'loopback4-authorization';
+import * as path from 'path';
 
 export class HomePageController {
   private readonly html: string;
@@ -27,7 +27,6 @@ export class HomePageController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Home Page',
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         content: {'text/html': {schema: {type: 'string'}}},
       },
     },
