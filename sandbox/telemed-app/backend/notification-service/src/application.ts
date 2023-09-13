@@ -35,7 +35,6 @@ export {ApplicationConfig};
 export class NotificationApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
-
   localeObj: i18nAPI = {} as i18nAPI;
 
   constructor(options: ApplicationConfig = {}) {
@@ -62,8 +61,10 @@ export class NotificationApplication extends BootMixin(
     super(options);
 
     // To check if monitoring is enabled from env or not
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
     // To check if authorization is enabled for swagger stats or not
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authentication =
       process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD ? true : false;
 
@@ -98,10 +99,10 @@ export class NotificationApplication extends BootMixin(
     this.component(NotificationServiceComponent);
     this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
     this.bind(PubnubBindings.Config).to({
-      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY ?? '',
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
       secretKey: process.env.PUBNUB_SECRET_KEY,
-      uuid: 'ea24d84f-ef69-403c-b6c4-7758ea9c2093',//while interacting with pubnub infrastructure when its object is initialised.
+      uuid: 'ea24d84f-ef69-403c-b6c4-7758ea9c2093', //while interacting with pubnub infrastructure when its object is initialised.
     });
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({

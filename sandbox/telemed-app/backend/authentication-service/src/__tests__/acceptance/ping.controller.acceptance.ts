@@ -1,7 +1,7 @@
-import { Client, expect } from '@loopback/testlab';
-import { AuthenticationServiceApplication } from '../..';
-import { STATUS_CODE } from '../../enums/status-codes.enum';
-import { setupApplication } from './test-helper';
+import {Client, expect} from '@loopback/testlab';
+import {AuthenticationServiceApplication} from '../..';
+import {STATUS_CODE} from '../../enums/status-codes.enum';
+import {setupApplication} from './test-helper';
 
 describe('PingController', () => {
   let app: AuthenticationServiceApplication;

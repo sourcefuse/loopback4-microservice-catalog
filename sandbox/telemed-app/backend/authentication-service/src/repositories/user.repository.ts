@@ -2,14 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject, Constructor} from '@loopback/core';
+import {Constructor, Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   DataObject,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
-  juggler,
   Options,
+  juggler,
   repository,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
@@ -31,8 +31,8 @@ import {
   UserTenantRepository,
 } from '@sourceloop/authentication-service';
 import {
-  AuthenticateErrorKeys,
   AuthProvider,
+  AuthenticateErrorKeys,
   DefaultSoftCrudRepository,
   IAuthUserWithPermissions,
   ILogger,
@@ -40,7 +40,7 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
+import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
 
 const saltRounds = 10;
 
@@ -147,6 +147,7 @@ export class UserRepository extends AuditRepositoryMixin<
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       !creds ||
       !creds.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||

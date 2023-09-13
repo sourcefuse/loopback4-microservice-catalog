@@ -22,9 +22,13 @@ export class LambdaStack extends TerraformStack {
     });
 
     // overwrite codePath based on useImage as deploy via docker needs different codePath
-    config.codePath = path.resolve(config.codePath, `../${config.useImage ? '' : 'dist'}`);
+    config.codePath = path.resolve(
+      config.codePath,
+      `../${config.useImage ? '' : 'dist'}`,
+    );
 
-    new LambdaWithApiGateway(this, 'lambda-apiGateway', {// NOSONAR
+    new LambdaWithApiGateway(this, 'lambda-apiGateway', {
+      // NOSONAR
       ...config,
       name: pet.id,
     });

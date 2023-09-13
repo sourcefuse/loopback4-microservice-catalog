@@ -14,13 +14,10 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import {NotificationServiceComponent} from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
-import {
-  NotificationBindings,
-  PubnubBindings,
-  PubNubProvider,
-  SESBindings,
-  SNSBindings,
-} from 'loopback4-notifications';
+import {NotificationBindings} from 'loopback4-notifications';
+import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
+import {SESBindings} from 'loopback4-notifications/ses';
+import {SNSBindings} from 'loopback4-notifications/sns';
 import path from 'path';
 import {MySequence} from './sequence';
 
@@ -51,11 +48,11 @@ export class ChatAndNotifApplication extends BootMixin(
     this.component(NotificationServiceComponent);
 
     this.bind(PubnubBindings.Config).to({
-      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY ?? '',
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
-      ssl: process.env.SSL,
-      logVerbosity: process.env.LOG_VERBOSITY,
-      uuid: process.env.UUID,
+      ssl: !!process.env.SSL,
+      logVerbosity: !!process.env.LOG_VERBOSITY,
+      uuid: process.env.UUID ?? '',
       apns2Env: process.env.APP_ENV,
       apns2BundleId: process.env.APP_BUNDLE_ID,
     });

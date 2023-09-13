@@ -1,13 +1,10 @@
-import { getSecretValue } from './config';
+import {getSecretValue} from './config';
 export * from './application';
 
 const PORT = 3000;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function main(options: any = {}) {
-
-  const {
-      AuthenticationServiceApplication,
-    }=require('./application');
+  const {AuthenticationServiceApplication} = require('./application');
   const app = new AuthenticationServiceApplication(options);
   await app.boot();
   await app.start();
@@ -37,13 +34,12 @@ if (require.main === module) {
       },
     },
   };
-
-  getSecretValue().then(res=>{
-    Object.assign(process.env,res);    
+  // eslint-disable-next-line
+  getSecretValue().then(res => {
+    Object.assign(process.env, res);
     main(config).catch(err => {
       console.error('Cannot start the application.', err); // NOSONAR
       process.exit(1);
     });
-  })
-  
+  });
 }

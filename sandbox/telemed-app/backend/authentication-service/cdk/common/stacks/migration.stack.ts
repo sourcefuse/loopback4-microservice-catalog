@@ -16,7 +16,8 @@ export class MigrationStack extends TerraformStack {
       length: 2,
     });
 
-    new Lambda(this, 'lambda', {// NOSONAR
+    new Lambda(this, 'lambda', {
+      // NOSONAR
       ...config,
       name: pet.id,
     });

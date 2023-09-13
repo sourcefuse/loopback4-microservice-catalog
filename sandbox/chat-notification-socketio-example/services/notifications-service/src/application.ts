@@ -12,15 +12,15 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {
-  NotificationServiceComponent,
   NotifServiceBindings,
+  NotificationServiceComponent,
 } from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
 import {NotificationBindings} from 'loopback4-notifications';
 import {
-  SocketIOProvider,
   SocketBindings,
+  SocketIOProvider,
 } from 'loopback4-notifications/socketio';
 import path from 'path';
 import {MySequence} from './sequence';
@@ -52,9 +52,6 @@ export class ChatAndNotifApplication extends BootMixin(
     this.component(NotificationServiceComponent);
 
     this.bind(NotifServiceBindings.Config).to({
-      useCustomEmailProvider: true,
-      useCustomSMSProvider: true,
-      useCustomPushProvider: true,
       useCustomSequence: true,
     });
     // sonarignore:start
