@@ -4,7 +4,7 @@ import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {EventWorkflowMapping} from '../models';
 import {repository} from '@loopback/repository';
 import {EventWorkflowMappingRepository} from '../repositories';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {CONTENT_TYPE, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 
 const baseUrl = '/events';
 
@@ -16,7 +16,10 @@ export class EventsController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(`${baseUrl}/mapping`)
+  @post(`${baseUrl}/mapping`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {},
+  })
   async mapTaskToWorkflow(
     @requestBody({
       content: {

@@ -15,7 +15,7 @@ import {SubscriberDTO, TaskDto, TaskWorkFlowMapping} from '../models';
 import {ApiKeyVerificationService} from '../services/api-key-verification.service';
 import {repository} from '@loopback/repository';
 import {TaskWorkFlowMappingRepository} from '../repositories';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {CONTENT_TYPE, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 
 const baseUrl = 'tasks';
 
@@ -33,7 +33,7 @@ export class TaskServiceController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(`${baseUrl}`)
+  @post(`${baseUrl}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   async updateTask(
     @requestBody()
     tasks: TaskDto,
@@ -47,7 +47,10 @@ export class TaskServiceController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(`${baseUrl}/subscribe`)
+  @post(`${baseUrl}/subscribe`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {},
+  })
   async subscribeToWebhook(
     @requestBody()
     subscriber: SubscriberDTO,
@@ -72,7 +75,10 @@ export class TaskServiceController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: ['*']})
-  @post(`${baseUrl}/mapping`)
+  @post(`${baseUrl}/mapping`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {},
+  })
   async mapTaskToWorkflow(
     @requestBody({
       content: {
