@@ -2,13 +2,11 @@ const {
   SecretsManagerClient,
   GetSecretValueCommand,
 } = require('@aws-sdk/client-secrets-manager');
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const secret_name = 'telemed-app-service-notification';
+const secretName = 'telemed-app-service-notification';
 const client = new SecretsManagerClient({
   region: 'us-east-1',
 });
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export interface secretEnv {
+export interface SecretEnv {
   DB_HOST: string;
   DB_PORT: string;
   DB_USER: string;
@@ -19,7 +17,7 @@ export interface secretEnv {
   ENV: string;
 }
 
-let secret: secretEnv;
+let secret: SecretEnv;
 
 export async function getSecretValue() {
   let response;
@@ -27,7 +25,7 @@ export async function getSecretValue() {
   try {
     response = await client.send(
       new GetSecretValueCommand({
-        SecretId: secret_name,
+        SecretId: secretName,
         VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
       }),
     );
