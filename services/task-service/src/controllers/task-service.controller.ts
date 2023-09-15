@@ -38,11 +38,7 @@ export class TaskServiceController {
     @requestBody()
     tasks: TaskDto,
   ) {
-    try {
-      await this.taskOpsService.taskUpdateFlow(tasks.taskKey, tasks.payload);
-    } catch (e) {
-      throw new HttpErrors.InternalServerError('Failed to update task');
-    }
+    await this.taskOpsService.taskUpdateFlow(tasks.taskKey, tasks.payload);
   }
 
   @authenticate(STRATEGY.BEARER)

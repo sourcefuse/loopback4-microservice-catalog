@@ -28,4 +28,16 @@ export class EventWorkflowMapping extends CoreEntity<EventWorkflowMapping> {
     description: 'An identifier for a particular workflow',
   })
   workflowKey: string;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  createdBy?: string;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  modifiedBy?: string;
 }

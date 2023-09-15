@@ -1,7 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import {setupApplication} from '../helper';
 import {TaskServiceApplication} from '../../application';
-import {samplePayload} from '../data';
 import * as jwt from 'jsonwebtoken';
 
 const testUser = {
@@ -16,7 +15,7 @@ const token = jwt.sign(testUser, 'task-Service-Secret', {
   issuer: 'sf',
 });
 
-describe('EventQueueController', () => {
+describe('APIKey Controller', () => {
   let app: TaskServiceApplication;
   let client: Client;
 
@@ -28,22 +27,31 @@ describe('EventQueueController', () => {
     await app.stop();
   });
 
-  it('gives status 401 when no token is passed', async () => {
+  it('should generate API keys successfully', async () => {
+    const clientApp = {
+      key: 'testApp',
+      secret: 'testAppDescription',
+    };
+
     const response = await client
-      .post('/event-queue/enqueue-event')
-      .expect(401);
-    expect(response).to.have.property('error');
+      .post('/api-keys')
+      .set('Authorization', `Bearer ${token}`)
+      .send(clientApp)
+      .expect(200);
+
+    expect(response.body).to.have.properties(['apiKey', 'apiSecret']);
   });
 
-  it('enqueueEvent successfully', async () => {
-    const eventPayload = {
-      ...samplePayload,
+  it('should not allow generating API keys with invalid input', async () => {
+    const clientApp = {
+      key: '',
+      description: 'testAppDescription',
     };
 
     await client
-      .post('/event-queue/enqueue-event')
-      .set('authorization', `Bearer ${token}`)
-      .send(eventPayload)
-      .expect(204); // No Content status
+      .post('/api-keys')
+      .set('Authorization', `Bearer ${token}`)
+      .send(clientApp)
+      .expect(422);
   });
 });

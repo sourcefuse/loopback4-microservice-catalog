@@ -152,7 +152,7 @@ export class TaskOperationService {
         }
       }
     } catch (error) {
-      throw new HttpErrors.InternalServerError('could not update the task');
+      throw new HttpErrors.InternalServerError(`could not update the task`);
     }
   }
 

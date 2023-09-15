@@ -144,13 +144,13 @@
         "tags": [
           "EventsController"
         ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Return value of EventsController.mapTaskToWorkflow",
-            "content": {}
+        "security": [
+          {
+            "HTTPBearer": []
           }
-        },
+        ],
+        "responses": {},
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -170,13 +170,13 @@
         "tags": [
           "TaskServiceController"
         ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Return value of TaskServiceController.mapTaskToWorkflow",
-            "content": {}
+        "security": [
+          {
+            "HTTPBearer": []
           }
-        },
+        ],
+        "responses": {},
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -196,13 +196,13 @@
         "tags": [
           "TaskServiceController"
         ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Return value of TaskServiceController.subscribeToWebhook",
-            "content": {}
+        "security": [
+          {
+            "HTTPBearer": []
           }
-        },
+        ],
+        "responses": {},
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -222,13 +222,13 @@
         "tags": [
           "TaskServiceController"
         ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Return value of TaskServiceController.updateTask",
-            "content": {}
+        "security": [
+          {
+            "HTTPBearer": []
           }
-        },
+        ],
+        "responses": {},
+        "description": "",
         "requestBody": {
           "content": {
             "application/json": {
@@ -819,6 +819,12 @@
           "workflowKey": {
             "type": "string",
             "description": "An identifier for a particular workflow"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
           }
         },
         "required": [

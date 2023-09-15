@@ -11,6 +11,8 @@ import {WorkflowDataSource} from './datasource/workflow.datasource';
 import {TaskServiceBindings} from '../keys';
 import {CustomBpmnRunner} from './providers/custom-runner.provider';
 import {SQSConnector} from './providers/sqs-connector.provider';
+import {Strategies} from 'loopback4-authentication';
+import {BearerTokenVerifyProvider} from './providers/bearer-token-verifier.provider';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const app = new TaskServiceApplication({
@@ -33,6 +35,9 @@ export async function setupApplication(): Promise<AppWithClient> {
     useCustomSequence: true,
     workflowEngineBaseUrl: 'http://',
   });
+  app
+    .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER)
+    .toProvider(BearerTokenVerifyProvider);
   app.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(CustomBpmnRunner);
   app.bind(TaskServiceBindings.CONNECTOR_CONFIG).to({
     region: '',

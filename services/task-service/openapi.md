@@ -424,10 +424,13 @@ This operation does not require authentication
 const inputBody = '{
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string"
+  "workflowKey": "string",
+  "createdBy": "string",
+  "modifiedBy": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/mapping',
@@ -449,10 +452,13 @@ const fetch = require('node-fetch');
 const inputBody = {
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string"
+  "workflowKey": "string",
+  "createdBy": "string",
+  "modifiedBy": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/events/mapping',
@@ -477,7 +483,9 @@ fetch('/events/mapping',
 {
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string"
+  "workflowKey": "string",
+  "createdBy": "string",
+  "modifiedBy": "string"
 }
 ```
 
@@ -487,18 +495,14 @@ fetch('/events/mapping',
 |---|---|---|---|---|
 |body|body|[EventWorkflowMapping](#schemaeventworkflowmapping)|false|none|
 
-> Example responses
-
 <h3 id="eventscontroller.maptasktoworkflow-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of EventsController.mapTaskToWorkflow|None|
 
-<h3 id="eventscontroller.maptasktoworkflow-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="bpmn-service-taskservicecontroller">TaskServiceController</h1>
@@ -516,7 +520,8 @@ const inputBody = '{
   "taskKey": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks/mapping',
@@ -541,7 +546,8 @@ const inputBody = {
   "taskKey": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks/mapping',
@@ -576,18 +582,14 @@ fetch('/tasks/mapping',
 |---|---|---|---|---|
 |body|body|[TaskWorkFlowMapping](#schemataskworkflowmapping)|false|none|
 
-> Example responses
-
 <h3 id="taskservicecontroller.maptasktoworkflow-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of TaskServiceController.mapTaskToWorkflow|None|
 
-<h3 id="taskservicecontroller.maptasktoworkflow-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## TaskServiceController.subscribeToWebhook
@@ -603,7 +605,8 @@ const inputBody = '{
   "id": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks/subscribe',
@@ -628,7 +631,8 @@ const inputBody = {
   "id": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks/subscribe',
@@ -663,18 +667,14 @@ fetch('/tasks/subscribe',
 |---|---|---|---|---|
 |body|body|[SubscriberDTO](#schemasubscriberdto)|false|none|
 
-> Example responses
-
 <h3 id="taskservicecontroller.subscribetowebhook-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of TaskServiceController.subscribeToWebhook|None|
 
-<h3 id="taskservicecontroller.subscribetowebhook-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 ## TaskServiceController.updateTask
@@ -690,7 +690,8 @@ const inputBody = '{
   "id": "string"
 }';
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks',
@@ -715,7 +716,8 @@ const inputBody = {
   "id": "string"
 };
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks',
@@ -750,18 +752,14 @@ fetch('/tasks',
 |---|---|---|---|---|
 |body|body|[TaskDto](#schemataskdto)|false|none|
 
-> Example responses
-
 <h3 id="taskservicecontroller.updatetask-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of TaskServiceController.updateTask|None|
 
-<h3 id="taskservicecontroller.updatetask-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
 </aside>
 
 <h1 id="bpmn-service-workflowcontroller">WorkflowController</h1>
@@ -1733,7 +1731,9 @@ ClientAppDTO
 {
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string"
+  "workflowKey": "string",
+  "createdBy": "string",
+  "modifiedBy": "string"
 }
 
 ```
@@ -1747,6 +1747,8 @@ EventWorkflowMapping
 |id|string|false|none|none|
 |eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
 |workflowKey|string|true|none|An identifier for a particular workflow|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 
 <h2 id="tocS_workflows.ScopeFilter">workflows.ScopeFilter</h2>
 <!-- backwards compatibility -->
