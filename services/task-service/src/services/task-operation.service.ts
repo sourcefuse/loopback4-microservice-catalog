@@ -169,11 +169,9 @@ export class TaskOperationService {
       topic,
     );
     const cmd = new TaskProcessorCommand(
-      data.id,
-      data.name,
-      this,
       taskProcessorFn,
-      data.key,
+      this.processTask.bind(this),
+      [data.id, data.name, data.key],
     );
     if (!toStart) {
       await this.regFn(data.name, topic, new BPMTask(cmd));
