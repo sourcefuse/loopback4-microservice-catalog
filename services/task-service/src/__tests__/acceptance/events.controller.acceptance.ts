@@ -1,8 +1,7 @@
-import {Client, expect} from '@loopback/testlab';
+import {Client} from '@loopback/testlab';
 import {setupApplication} from '../helper';
 import {TaskServiceApplication} from '../../application';
 import * as jwt from 'jsonwebtoken';
-import {EventWorkflowMappingRepository} from '../../repositories';
 
 const testUser = {
   id: 1,
@@ -10,6 +9,8 @@ const testUser = {
   password: 'test_pass',
   permissions: ['StartListening', 'StopListening', 'AddToQueue', 'APIAdmin'],
 };
+
+const eventMapping = '/events/mapping';
 
 const token = jwt.sign(testUser, 'task-Service-Secret', {
   expiresIn: 180000,
@@ -35,7 +36,7 @@ describe('Events Mapping Controller', () => {
     };
 
     await client
-      .post('/events/mapping')
+      .post(eventMapping)
       .send(requestBody)
       .set('Authorization', `Bearer ${token}`)
       .expect(204);
@@ -47,7 +48,7 @@ describe('Events Mapping Controller', () => {
     };
 
     await client
-      .post('/events/mapping')
+      .post(eventMapping)
       .send(requestBody)
       .set('Authorization', `Bearer ${token}`)
       .expect(422);
@@ -59,7 +60,7 @@ describe('Events Mapping Controller', () => {
     };
 
     await client
-      .post('/events/mapping')
+      .post(eventMapping)
       .send(requestBody)
       .set('Authorization', `Bearer ${token}`)
       .expect(422);
@@ -69,7 +70,7 @@ describe('Events Mapping Controller', () => {
     const requestBody = {};
 
     await client
-      .post('/events/mapping')
+      .post(eventMapping)
       .send(requestBody)
       .set('Authorization', `Bearer ${token}`)
       .expect(422);

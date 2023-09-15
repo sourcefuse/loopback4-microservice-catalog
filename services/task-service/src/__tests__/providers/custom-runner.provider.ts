@@ -108,9 +108,6 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
           case 'dev_group':
             users = [];
             break;
-          case 'design_group':
-            users = [];
-            break;
           // Add more groups if needed
         }
       }
